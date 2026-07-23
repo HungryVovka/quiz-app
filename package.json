@@ -1,0 +1,34 @@
+{
+  "name": "quiz-app",
+  "version": "1.0.0",
+  "description": "Universal Quiz Engine Pro",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.quiz.app",
+    "productName": "Quiz Engine Pro",
+    "win": {
+      "target": ["portable"],
+      "icon": "assets/icon.ico"
+    },
+    "extraResources": [
+      {
+        "from": "data",
+        "to": "data"
+      }
+    ]
+  },
+  "overrides": {
+    "@noble/hashes": "1.3.2"
+  }
+}
