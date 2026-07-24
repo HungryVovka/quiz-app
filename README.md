@@ -21,7 +21,7 @@
 7. [Knowledge Base Format (Custom Questions)](#-knowledge-base-format-custom-questions)
 8. [Electron Integration & Security Features](#-electron-integration--security-features)
 9. [Version History](#-version-history)
-10. [Author & Contact Information](#-author--contact-information)
+10. [Author & Contact Information](#author)
 
 ---
 
@@ -275,6 +275,10 @@ Minimum window dimensions are enforced (`minWidth: 600`, `minHeight: 500`) to el
 </details>
 
 ---
+
+---
+
+<a id="author"></a>
 
 ## 👨‍💻 Author & Contact Information
 
