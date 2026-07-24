@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Quiz Engine Pro</title>
+    
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- KaTeX (LaTeX) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"></script>
+
+    <!-- Prism.js (Подсветка синтаксиса кода) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ЭКРАН 1: НАСТРОЙКИ ТЕСТА -->
+    <div id="setup-screen" class="card slide-in">
+        <div class="scrollable-content">
+            
+            <!-- ВЕРХНИЙ БЛОК: Слева Настройки и Язык, Справа — Лисичка -->
+            <div class="setup-top-section">
+                <div class="setup-top-left">
+                    <h1 id="ui-title">Настройки Тестирования</h1>
+                    
+                    <div class="form-group">
+                        <label id="ui-lang-label">Язык интерфейса и тестов:</label>
+                        
+                        <!-- Кастомный выбор языка -->
+                        <div class="custom-select" id="custom-lang-dropdown">
+                            <div class="custom-select-trigger" onclick="toggleLangDropdown(event)">
+                                <span id="custom-lang-selected">Русский (RU)</span>
+                                <span class="custom-arrow"></span>
+                            </div>
+                            <div class="custom-options-container" id="custom-lang-options">
+                                <div class="custom-option selected" onclick="selectLanguage('ru', 'Русский (RU)', this)">Русский (RU)</div>
+                                <div class="custom-option" onclick="selectLanguage('it', 'Italiano (IT)', this)">Italiano (IT)</div>
+                                <div class="custom-option" onclick="selectLanguage('en', 'English (EN)', this)">English (EN)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Маскот Лисичка -->
+                <div class="setup-top-right">
+                    <img src="assets/icon.png" alt="Fox Mascot" class="fox-img">
+                </div>
+            </div>
+
+            <!-- ПРЕДМЕТ: На всю ширину -->
+            <div class="form-group">
+                <label id="ui-subject-label">Предмет / База знаний:</label>
+                
+                <div class="custom-select" id="custom-subject-dropdown">
+                    <div class="custom-select-trigger" onclick="toggleSubjectDropdown(event)">
+                        <span id="custom-subject-selected">Загрузка...</span>
+                        <span class="custom-arrow"></span>
+                    </div>
+                    <div class="custom-options-container" id="custom-subject-options"></div>
+                </div>
+
+                <input type="hidden" id="setting-subject" value="">
+            </div>
+
+            <!-- Количество вопросов -->
+            <div class="form-group">
+                <label id="ui-count-label">Количество вопросов в сессии:</label>
+                <div class="stepper-container">
+                    <button type="button" class="stepper-btn" onclick="stepInput('setting-count', -1)">−</button>
+                    <input type="number" id="setting-count" value="10" min="1" max="200">
+                    <button type="button" class="stepper-btn" onclick="stepInput('setting-count', 1)">+</button>
+                </div>
+            </div>
+
+            <!-- Таймер -->
+            <div class="form-group">
+                <label id="ui-timer-label">Таймер (в минутах, 0 = без таймера):</label>
+                <div class="stepper-container">
+                    <button type="button" class="stepper-btn" onclick="stepInput('setting-timer', -1)">−</button>
+                    <input type="number" id="setting-timer" value="0" min="0" max="180">
+                    <button type="button" class="stepper-btn" onclick="stepInput('setting-timer', 1)">+</button>
+                </div>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="setting-back" checked>
+                <label for="setting-back" id="ui-back-label">Разрешить возврат к предыдущему вопросу</label>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="setting-hints" checked>
+                <label for="setting-hints" id="ui-hints-label">Показывать подсказки</label>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn" onclick="startQuiz()" id="ui-start-btn">Начать тест</button>
+            <button class="btn btn-secondary" onclick="resetStats()" id="ui-reset-btn">Сбросить статистику</button>
+        </div>
+    </div>
+
+    <!-- ЭКРАН 2: ПРОХОЖДЕНИЕ ТЕСТА -->
+    <div id="quiz-screen" class="card hidden">
+        <div class="quiz-header">
+            <div>
+                <span id="ui-q-num">Вопрос</span> <span id="current-index">1</span>/<span id="total-count">10</span>
+                <span class="stat-badge" id="attempts-badge">Отвечено ранее: 0 раз</span>
+            </div>
+            <div id="timer-display" class="stat-badge timer">--:--</div>
+        </div>
+
+        <div class="scrollable-content">
+            <div id="question-text" class="rich-content">Текст вопроса...</div>
+            <div class="options-list" id="options-container"></div>
+            <div id="hint-container" class="hint-box rich-content hidden"></div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-secondary" id="prev-btn" onclick="navQuestion(-1)">Назад</button>
+            <button class="btn btn-secondary" id="exit-btn" onclick="exitQuizEarly()">Прервать</button>
+            <button class="btn" id="next-btn" onclick="navQuestion(1)">Далее</button>
+        </div>
+    </div>
+
+    <!-- ЭКРАН 3: РЕЗУЛЬТАТЫ И РАЗБОР -->
+    <div id="results-screen" class="card hidden">
+        <h1 id="ui-results-title">Результаты тестов</h1>
+        
+        <div class="scrollable-content">
+            <div id="results-summary"></div>
+            <div id="review-container"></div>
+
+            <!-- ВЫДВИГАЮЩИЙСЯ БЛОК СО ВСЕМИ ВОПРОСАМИ И ОТВЕТАМИ -->
+            <div id="full-answers-container" class="review-answers-wrapper hidden">
+                <h2 style="margin-top: 0; margin-bottom: 14px; font-size: 16px;">Разбор всех вопросов</h2>
+                <div id="questions-review-list"></div>
+            </div>
+        </div>
+
+        <!-- КНОПКИ В НИЖНЕЙ ЧАСТИ -->
+        <div class="btn-group" style="flex-direction: column; gap: 8px;">
+            <button class="btn" onclick="restartApp()" id="ui-restart-btn">Пройти еще раз</button>
+            <button class="btn btn-secondary" onclick="toggleReviewAnswers()" id="toggle-answers-btn">Показать ответы</button>
+        </div>
+    </div>
+
+    <!-- ЭКРАН 4: ИСТОРИЯ ОБНОВЛЕНИЙ (CHANGELOG) -->
+    <div id="changelog-screen" class="card hidden">
+        <h1 id="ui-changelog-title">История обновлений</h1>
+        
+        <div class="scrollable-content" id="changelog-container">
+            <!-- Динамически заполняется из changelog.js -->
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-secondary" onclick="closeChangelog()" id="ui-changelog-back">← Назад к настройкам</button>
+        </div>
+    </div>
+
+    <!-- ФУТЕР ПРИЛОЖЕНИЯ -->
+    <footer class="app-footer">
+        <!-- ЛЕВО: УПО ДИСИТ -->
+        <div class="footer-left">
+            <span class="univ-upo">UPO</span> <span class="univ-disit">DISIT</span>
+        </div>
+
+        <!-- ЦЕНТР: Донат -->
+        <div class="footer-center">
+            <a href="https://ko-fi.com/HungryVovka" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="kofi-donate-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 12.25 15.488 12.028 15.488 12.028 3.812-.04 5.084-2.228 5.084-2.228 3.821-3.642 3.287-13.827 3.287-13.827zM18.847 12h-2.592c.105-1.004.082-2.115-.082-3.136h2.729c1.623 0 2.012 1.583 1.815 3.136-.188 1.488-.868 2.001-1.87 2.001z"/>
+                </svg>
+                <span>Donate on Ko-fi</span>
+            </a>
+        </div>
+
+        <!-- ПРАВО: Копирайт -->
+        <div class="footer-right">
+            <span class="copyright-text">© 2026 Vladimir Rukavishnikov, Matr. 20063686</span>
+        </div>
+    </footer>
+
+    <!-- ВЕРСИЯ ПРИЛОЖЕНИЯ ПОД ФУТЕРОМ -->
+    <div class="version-bar">
+        <button class="version-tag" onclick="openChangelog()">v0.1.0-alpha</button>
+    </div>
+
+</div>
+
+<!-- Подключение логики -->
+<script src="js/changelog.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/algos.js"></script>
+<script src="js/app.js"></script>
+<script src="js/app_2.js"></script>
+</body>
+</html>
