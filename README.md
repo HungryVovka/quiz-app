@@ -277,5 +277,5 @@ Minimum window dimensions are enforced (`minWidth: 600`, `minHeight: 500`) to el
 * **Author:** Vladimir Rukavishnikov
 * **Matricola (Student ID):** 20063686
 * **Institution:** UPO DISIT (*Università del Piemonte Orientale*)
-* **Support / Donate:** [Donate on Ko-fi](https://ko-fi.com)
+* **Support / Donate:** [Donate on Ko-fi](https://ko-fi.com/HungryVovka)
 * **Copyright:** © 2026 Vladimir Rukavishnikov. All Rights Reserved.
