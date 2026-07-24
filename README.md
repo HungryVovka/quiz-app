@@ -258,17 +258,21 @@ Minimum window dimensions are enforced (`minWidth: 600`, `minHeight: 500`) to el
 
 ## 🔄 Version History
 
-* **Current Version:** `v0.1.0-alpha`
-* **Release Date:** 2026
-* **Status:** Alpha Release (Active Development)
+<details>
+  <summary><b>v0.1.0-alpha</b> — <i>2026 (Active Development)</i></summary>
 
-### 🚀 Changelog Summary
+  <br>
 
-* ➕ **Slide-out Review Drawer:** Added a "Show Answers" / "Hide Answers" toggle button on the results screen that slides open a panel containing all session questions along with option-specific explanations.
-* 👁️ **Focus Mode (Distraction-Free UI):** Automated auto-hiding of the bottom footer (`.app-footer`) and version tag (`.version-bar`) upon quiz initiation to prevent student distraction.
-* 🔗 **System Browser Handlers:** Configured click interception for external web links (e.g., Ko-fi donation) using Electron's `shell.openExternal` API.
-* 🌍 **Expanded Localization Dictionary:** Introduced new i18n keys for answer review controls across all supported locales (`RU`, `IT`, `EN`).
-* 🧮 **Integrated KaTeX & Prism.js:** Enabled real-time client-side typesetting for mathematical equations and syntax highlighting for technical code snippets.
+  * **Status:** Alpha Release
+
+  ### 🚀 Changelog Summary
+  * ➕ **Slide-out Review Drawer:** Added a "Show Answers" / "Hide Answers" toggle button on the results screen that slides open a panel containing all session questions along with option-specific explanations.
+  * 👁️ **Focus Mode (Distraction-Free UI):** Automated auto-hiding of the bottom footer (`.app-footer`) and version tag (`.version-bar`) upon quiz initiation to prevent student distraction.
+  * 🔗 **System Browser Handlers:** Configured click interception for external web links (e.g., Ko-fi donation) using Electron's `shell.openExternal` API.
+  * 🌍 **Expanded Localization Dictionary:** Introduced new i18n keys for answer review controls across all supported locales (`RU`, `IT`, `EN`).
+  * 🧮 **Integrated KaTeX & Prism.js:** Enabled real-time client-side typesetting for mathematical equations and syntax highlighting for technical code snippets.
+
+</details>
 
 ---
 
