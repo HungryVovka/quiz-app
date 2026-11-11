@@ -1,0 +1,605 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2291",
+      "widget_id": "widget_clang_2291",
+      "topic": "Raggruppamento delle stringhe letterali identiche (String Pooling)",
+      "q": "Cosa restituirà il confronto s1 == s2 in caso di stringhe letterali identiche sulla maggior parte dei compilatori?",
+      "hint": "Per ottimizzare le dimensioni dell'eseguibile, i compilatori C spesso deduplicano le stringhe letterali nel segmento delle costanti.",
+      "options": [
+        "1",
+        "0",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'ottimizzazione tramite String Pooling fa sì che le stringhe letterali identiche puntino allo stesso indirizzo nel segmento di dati di sola lettura (.rodata). Il confronto dei loro puntatori restituisce 1 (true).",
+        "Errato. Nella pratica la maggior parte dei compilatori moderni unisce i letterali duplicati.",
+        "Errato. Il confronto di puntatori in C è sintatticamente corretto.",
+        "Errato. Sebbene lo standard lasci il comportamento esatto dell'ottimizzatore dipendente dall'implementazione, questo non causa Undefined Behavior."
+      ]
+    },
+    {
+      "id": "it_clang_2292",
+      "widget_id": "widget_clang_2292",
+      "topic": "Modifica di una stringa letterale tramite puntatore",
+      "q": "Quale sarà il risultato dell'esecuzione dell'istruzione str[0] = 'W' per il puntatore char *str = \"Read-Only\"?",
+      "hint": "Le stringhe letterali vengono inserite in un'area di memoria protetta da scrittura (segmento .rodata / text).",
+      "options": [
+        "Comportamento indefinito (terminazione anomala Segmentation Fault)",
+        "La scrittura avrà successo, la stringa diventerà \"Wead-Only\"",
+        "Errore di compilazione",
+        "La stringa verrà duplicata automaticamente nello stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il tentativo di modificare gli elementi di una stringa letterale è considerato Undefined Behavior secondo lo standard C. Sui sistemi operativi con protezione della memoria, ciò causa un errore fatale di Segmentation Fault.",
+        "Errato. La memoria delle stringhe letterali è allocata in un segmento con stato read-only.",
+        "Errato. Il tipo `char *str` consente formalmente di compilare il codice senza il qualificatore `const`, quindi il compilatore non genererà un errore senza un flag rigido.",
+        "Errato. Non avviene alcuna copia automatica del puntatore nello stack."
+      ]
+    },
+    {
+      "id": "it_clang_2293",
+      "widget_id": "widget_clang_2293",
+      "topic": "Memorizzazione di una stringa nella dichiarazione char arr[]",
+      "q": "Perché la modifica arr[0] = 's' è sicura nel caso dell'array char arr[] = \"Stack Data\"?",
+      "hint": "Confronta l'inizializzazione dell'array nello stack con la scrittura diretta dell'indirizzo del letterale in un puntatore.",
+      "options": [
+        "I caratteri del letterale vengono copiati nella memoria dell'array locale (stack), accessibile in lettura e scrittura",
+        "L'array memorizza i caratteri nella memoria dinamica dell'heap (Heap)",
+        "Viene modificata solo una copia del letterale in un registro",
+        "Gli array di char hanno sempre l'attributo static"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con la sintassi `char arr[] = \"...\"`, viene allocata memoria nello stack della funzione corrente, dove vengono copiati i byte del letterale. L'array nello stack è completamente accessibile in scrittura.",
+        "Errato. La memoria viene allocata nello stack (Stack) e non nell'heap (Heap).",
+        "Errato. Le modifiche avvengono direttamente nella RAM dello stack frame.",
+        "Errato. Gli array locali hanno per impostazione predefinita una durata di memorizzazione automatica (auto)."
+      ]
+    },
+    {
+      "id": "it_clang_2294",
+      "widget_id": "widget_clang_2294",
+      "topic": "Durata di memorizzazione delle stringhe letterali (Static Storage Duration)",
+      "q": "È sicuro restituire un puntatore a una stringa letterale da una funzione?",
+      "hint": "Le stringhe letterali vengono create in fase di compilazione e rimangono attive per tutta la durata dell'esecuzione del programma.",
+      "options": [
+        "Sì, poiché le stringhe letterali hanno durata di memorizzazione statica (static storage duration) ed esistono per l'intero ciclo di vita del programma",
+        "No, il puntatore diventa pendente (dangling pointer) all'uscita dalla funzione",
+        "Sì, ma solo se la funzione è dichiarata con la parola chiave static",
+        "No, questo causa un memory leak nell'heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le stringhe letterali non vengono distrutte al termine della funzione, poiché risiedono nella memoria statica globale. I loro indirizzi rimangono validi per tutta la durata dell'applicazione.",
+        "Errato. Questa regola riguarda gli array locali, non le stringhe letterali.",
+        "Errato. Il qualificatore di funzione `static` non influisce sulla durata di vita dei letterali al suo interno.",
+        "Errato. L'heap non viene utilizzato quando si lavora con le stringhe letterali."
+      ]
+    },
+    {
+      "id": "it_clang_2295",
+      "widget_id": "widget_clang_2295",
+      "topic": "Restituzione dell'indirizzo di un array locale char",
+      "q": "Cosa succederà tentando di utilizzare un puntatore a un array locale char str[] restituito da una funzione?",
+      "hint": "L'array locale si trova nello stack frame della funzione, che viene liberato immediatamente dopo l'istruzione return.",
+      "options": [
+        "Comportamento indefinito (utilizzo dell'indirizzo di uno stack frame distrutto)",
+        "La stringa verrà salvata e stampata correttamente",
+        "Il compilatore sposterà automaticamente l'array nel segmento dati",
+        "La memoria verrà riallocata automaticamente tramite realloc"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La memoria dell'array locale cessa di essere valida dopo l'uscita dalla funzione. Restituire l'indirizzo di tale array porta a un puntatore pendente (dangling pointer) e Undefined Behavior.",
+        "Errato. La lettura di uno stack frame liberato non garantisce la conservazione dei dati.",
+        "Errato. I compilatori generano un avviso (warning), ma non modificano automaticamente il tipo di memorizzazione.",
+        "Errato. Non esiste alcuna riallocazione automatica della memoria."
+      ]
+    },
+    {
+      "id": "it_clang_2296",
+      "widget_id": "widget_clang_2296",
+      "topic": "Stringhe dinamiche nell'Heap (memoria dinamica)",
+      "q": "In quale area di memoria verrà allocato lo spazio per una stringa chiamando la funzione malloc()?",
+      "hint": "La memoria richiesta tramite le funzioni malloc/calloc/realloc è gestita dal programmatore e si trova nella sezione dinamica.",
+      "options": [
+        "Heap (memoria dinamica)",
+        "Stack (pila)",
+        "Segmento di sola lettura (.rodata)",
+        "Sezione del codice (.text)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Tutte le funzioni di allocazione della memoria di sistema (`malloc`, `calloc`) allocano byte nell'heap. I dati rimangono memorizzati lì fino alla chiamata di `free()`.",
+        "Errato. Nello stack sono memorizzate le variabili automatiche.",
+        "Errato. In `.rodata` si trovano le stringhe letterali costanti.",
+        "Errato. In `.text` si trova il codice macchina eseguibile."
+      ]
+    },
+    {
+      "id": "it_clang_2297",
+      "widget_id": "widget_clang_2297",
+      "topic": "Confronto di sizeof tra un puntatore e un array di caratteri",
+      "q": "Cosa restituirà il confronto sizeof(ptr) == sizeof(arr) su un'architettura a 64 bit?",
+      "hint": "ptr è un puntatore (dimensione dell'indirizzo di 8 byte), mentre arr è un array di caratteri composto da 6 lettere e dal terminatore nullo (6 + 1 = 7 byte).",
+      "options": [
+        "0 (falso: 8 non è uguale a 7)",
+        "1 (vero: entrambi uguali a 7)",
+        "1 (vero: entrambi uguali a 8)",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `sizeof(ptr)` restituisce la dimensione di un puntatore su un sistema a 64 bit (8 byte). `sizeof(arr)` restituisce la dimensione dell'array `\"Buffer\"` incluso il terminatore (7 byte). `8 == 7` è falso, il programma stamperà `0`.",
+        "Errato. Il valore di `sizeof` per un puntatore non dipende dalla lunghezza della stringa a cui punta.",
+        "Errato. La dimensione dell'array `arr` è determinata dalla lunghezza della stringa 'Buffer' + 1 byte.",
+        "Errato. L'espressione è sintatticamente corretta."
+      ]
+    },
+    {
+      "id": "it_clang_2298",
+      "widget_id": null,
+      "topic": "Array statici locali (static char)",
+      "q": "Dove verrà allocato in memoria l'array static char str[] = \"Data\" dichiarato all'interno di una funzione?",
+      "hint": "Il modificatore static cambia la specifica di memorizzazione di una variabile locale dallo stack a una sezione di dati permanente.",
+      "options": [
+        "Segmento dati (Data Segment / BSS)",
+        "Stack frame della funzione (Stack)",
+        "Memoria dinamica (Heap)",
+        "Registro cache del processore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'uso di `static` alloca l'array nel segmento dei dati inizializzati (Data Segment). Viene inizializzato una sola volta all'avvio del programma e mantiene il suo stato tra le chiamate di funzione.",
+        "Errato. Le variabili con `static` non finiscono nello stack.",
+        "Errato. L'heap viene utilizzato solo con una chiamata esplicita a `malloc`.",
+        "Errato. Gli array non possono essere allocati direttamente nei registri del processore."
+      ]
+    },
+    {
+      "id": "it_clang_2299",
+      "widget_id": "widget_clang_2299",
+      "topic": "Aritmetica dei puntatori e continuità dell'array char",
+      "q": "A quanto equivale la differenza tra i puntatori &str[2] - &str[0] per l'array char str[] = \"ABC\"?",
+      "hint": "La sottrazione tra puntatori dello stesso array restituisce il numero di elementi (passi di tipo char) compresi tra di essi.",
+      "options": [
+        "2",
+        "1",
+        "3",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'aritmetica dei puntatori in C tiene conto della dimensione del tipo. Gli elementi degli array sono disposti rigorosamente in sequenza. Tra gli elementi con indici 2 e 0 vi sono esattamente 2 elementi di tipo `char`.",
+        "Errato. La differenza degli indici 2 - 0 è pari a 2.",
+        "Errato. 3 è la lunghezza della stringa \"ABC\" senza terminatore, non la differenza tra puntatori.",
+        "Errato. I puntatori si riferiscono a celle di memoria diverse."
+      ]
+    },
+    {
+      "id": "it_clang_2300",
+      "widget_id": "widget_clang_2300",
+      "topic": "Concatenazione di stringhe letterali adiacenti",
+      "q": "Come gestirà il compilatore due stringhe \"Hello, \" \"World!\" scritte di seguito senza separatori?",
+      "hint": "Lo standard del linguaggio C unisce automaticamente le stringhe letterali consecutive in fase di traduzione.",
+      "options": [
+        "Le unirà in una singola stringa \"Hello, World!\"",
+        "Genererà un errore di sintassi durante la compilazione",
+        "Salverà solo la prima stringa \"Hello, \"",
+        "Creerà un array di due puntatori distinti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo la specifica C, durante la fase di preprocessamento/traduzione le stringhe letterali adiacenti vengono concatenate in un unico letterale `\"Hello, World!\"`.",
+        "Errato. È una funzionalità standard del linguaggio C (String Literal Concatenation).",
+        "Errato. La seconda stringa non viene persa.",
+        "Errato. Viene creato un unico array di caratteri."
+      ]
+    },
+    {
+      "id": "it_clang_2301",
+      "widget_id": "widget_clang_2301",
+      "topic": "Conservazione del carattere di nuova riga in fgets()",
+      "q": "A quanto equivarrà la lunghezza della stringa strlen(buf) dopo la lettura del testo \"ABC\\n\" tramite fgets()?",
+      "hint": "La funzione fgets() salva il carattere di nuova riga '\\n' nel buffer di destinazione se c'è abbastanza spazio.",
+      "options": [
+        "4",
+        "3",
+        "5",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza della deprecata `gets()`, la funzione `fgets()` legge il carattere `'\\n'` e lo memorizza nell'array prima del terminatore nullo. Caratteri: 'A', 'B', 'C', '\\n', '\\0'. La lunghezza è 4.",
+        "Errato. La lunghezza sarebbe 3 senza considerare il carattere di nuova riga `'\\n'`.",
+        "Errato. Il terminatore nullo non viene conteggiato dalla funzione `strlen()`.",
+        "Errato. La lettura ha esito positivo."
+      ]
+    },
+    {
+      "id": "it_clang_2302",
+      "widget_id": "widget_clang_2202",
+      "topic": "Carattere automatico di nuova riga in puts()",
+      "q": "In che modo la funzione puts() stamperà a schermo le stringhe \"Hello\" e \"World\" trasmesse in sequenza?",
+      "hint": "A differenza di fputs(), la funzione puts() aggiunge automaticamente un carattere di nuova riga alla fine dell'output.",
+      "options": [
+        "Due righe: Hello e World su righe diverse",
+        "Una sola riga: HelloWorld",
+        "Una sola riga: Hello World",
+        "Tre righe con un separatore speciale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `puts()` invia la stringa a `stdout` e aggiunge automaticamente il carattere `'\\n'` alla fine. Di conseguenza le parole verranno stampate su due righe separate.",
+        "Errato. Le parole non verranno unite, poiché `puts()` stampa una nuova riga dopo ogni chiamata.",
+        "Errato. Non viene inserito alcuno spazio tra le chiamate a `puts()`.",
+        "Errato. Produrrà esattamente 2 interruzioni di riga."
+      ]
+    },
+    {
+      "id": "it_clang_2303",
+      "widget_id": "widget_clang_2303",
+      "topic": "Valore restituito dalla funzione sprintf()",
+      "q": "Cosa restituirà la chiamata alla funzione sprintf(buf, \"%s %d\", \"Item\", 42)?",
+      "hint": "La funzione sprintf() restituisce il numero totale di caratteri formattati e scritti nel buffer.",
+      "options": [
+        "7",
+        "8",
+        "1",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La stringa risultante è `\"Item 42\"`. È composta da 7 caratteri ('I','t','e','m',' ','4','2'). Il terminatore nullo non viene incluso nel conteggio restituito.",
+        "Errato. 8 sarebbe considerando il `'\\0'` finale, ma `sprintf()` non lo conta.",
+        "Errato. Viene restituito il numero di byte scritti e non lo stato di successo (1/0).",
+        "Errato. In questo esempio non si verificano errori di scrittura."
+      ]
+    },
+    {
+      "id": "it_clang_2304",
+      "widget_id": "widget_clang_2304",
+      "topic": "Valore restituito dalla funzione sscanf()",
+      "q": "Cosa restituirà la chiamata sscanf(\"10 20\", \"%d %d\", &a, &b) in caso di lettura con successo di due numeri?",
+      "hint": "Il valore restituito da sscanf() è pari al numero di argomenti confrontati e assegnati con successo.",
+      "options": [
+        "2",
+        "5",
+        "0",
+        "1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `sscanf()` restituisce il numero di elementi letti e assegnati con successo in base agli specificatori di formato. Sono stati analizzati con successo 2 numeri, quindi il risultato è uguale a 2.",
+        "Errato. 5 è la lunghezza della stringa di input, non il numero di variabili lette.",
+        "Errato. Viene restituito 0 se nessuno specificatore corrisponde alla stringa di input.",
+        "Errato. Gli specificatori standard hanno riempito entrambe le variabili `a` e `b`."
+      ]
+    },
+    {
+      "id": "it_clang_2305",
+      "widget_id": "widget_clang_2305",
+      "topic": "Limitazione della dimensione del buffer in fgets()",
+      "q": "Cosa conterrà un buffer di dimensione 4 dopo la lettura della stringa \"12345\" tramite fgets(buf, 4, f)?",
+      "hint": "fgets(buf, size, stream) legge al massimo (size - 1) caratteri, lasciando un byte per il terminatore nullo.",
+      "options": [
+        "123",
+        "1234",
+        "12345",
+        "12"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per un buffer di dimensione 4, `fgets()` legge `4 - 1 = 3` caratteri (`'1'`, `'2'`, `'3'`) e scrive alla fine `buf[3] = '\\0'`. Verrà stampato `123`.",
+        "Errato. Il carattere '4' non entrerà nel buffer, poiché il 4° byte è obbligatoriamente riservato al terminatore nullo `'\\0'`.",
+        "Errato. `fgets()` garantisce l'assenza di buffer overflow grazie alla limitazione della lunghezza.",
+        "Errato. Viene letto il maggior numero possibile di caratteri (3)."
+      ]
+    },
+    {
+      "id": "it_clang_2306",
+      "widget_id": null,
+      "topic": "Vantaggio di sicurezza di snprintf() rispetto a sprintf()",
+      "q": "Qual è il principale vantaggio in termini di sicurezza della funzione snprintf() rispetto a sprintf()?",
+      "hint": "sprintf() non conosce la dimensione massima del buffer di destinazione, il che può causare un buffer overflow.",
+      "options": [
+        "snprintf() accetta la dimensione massima del buffer e previene il buffer overflow (Buffer Overflow)",
+        "snprintf() funziona in modo significativamente più veloce grazie all'output asincrono",
+        "snprintf() alloca automaticamente memoria dinamica per il risultato",
+        "snprintf() può scrivere dati direttamente nei file sul disco"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In `snprintf()` viene passata esplicitamente la dimensione del buffer di destinazione `size`. La funzione non scriverà mai più di `size` byte, garantendo la protezione contro lo sforamento dei limiti dell'array.",
+        "Errato. La velocità di esecuzione delle funzioni è paragonabile.",
+        "Errato. La memoria deve essere fornita dal programmatore, non avviene alcuna allocazione dinamica.",
+        "Errato. Per i file si utilizza la funzione `fprintf()`."
+      ]
+    },
+    {
+      "id": "it_clang_2307",
+      "widget_id": "widget_clang_2307",
+      "topic": "Interruzione di sscanf() in caso di errore di formato",
+      "q": "Cosa restituirà sscanf(\"ABC 123\", \"%d %s\", &num, str) se gli argomenti non corrispondono allo specificatore %d?",
+      "hint": "L'analisi della stringa si interrompe al primo mancato riscontro dei caratteri con lo specificatore di formato specificato.",
+      "options": [
+        "0",
+        "1",
+        "2",
+        "EOF"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il primo specificatore `%d` si aspetta delle cifre, ma rileva le lettere `\"ABC\"`. L'analisi si interrompe immediatamente per un errore di corrispondenza (matching failure), nessuna variabile viene assegnata e `sscanf` restituisce 0.",
+        "Errato. La variabile `str` non inizierà neppure a essere elaborata.",
+        "Errato. 2 viene restituito in caso di lettura riuscita di entrambi gli argomenti.",
+        "Errato. `EOF` viene restituito in caso di errore di lettura o stringa vuota prima della prima lettura."
+      ]
+    },
+    {
+      "id": "it_clang_2308",
+      "widget_id": "widget_clang_2308",
+      "topic": "Differenza tra fputs() e puts()",
+      "q": "Qual è la differenza principale tra fputs(str, stdout) e puts(str) quando si lavora con lo standard output?",
+      "hint": "fputs() scrive esattamente la stringa che le viene passata, senza aggiungere caratteri di servizio.",
+      "options": [
+        "fputs() non aggiunge il carattere di nuova riga '\\n' alla fine dell'output",
+        "fputs() aggiunge automaticamente un carattere di spazio alla fine della stringa",
+        "fputs() funziona solo con le stringhe letterali",
+        "fputs() non richiede stringhe terminate da zero"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `fputs()` scrive la stringa «così com'è», senza aggiungere automaticamente `'\\n'`. Nell'esempio verrà stampato `TestLine` su una sola riga.",
+        "Errato. Gli spazi non vengono aggiunti automaticamente.",
+        "Errato. `fputs()` accetta qualsiasi puntatore a stringhe C valide.",
+        "Errato. `fputs()` individua la fine della stringa proprio tramite il terminatore nullo."
+      ]
+    },
+    {
+      "id": "it_clang_2309",
+      "widget_id": null,
+      "topic": "Gestione degli errori e di EOF in fgets()",
+      "q": "Cosa restituisce la funzione fgets() quando si raggiunge la fine del file (EOF) o in caso di errore di lettura?",
+      "hint": "Il tipo del valore restituito da fgets() è char*, quindi in caso di fallimento viene restituito un puntatore speciale.",
+      "options": [
+        "NULL",
+        "EOF",
+        "0",
+        "Una stringa vuota \"\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La firma della funzione è `char *fgets(...)`. Se viene raggiunta la fine del file prima di leggere qualsiasi carattere o in caso di errore di lettura, la funzione restituisce un puntatore nullo `NULL`.",
+        "Errato. `EOF` è una costante intera (`int`), mentre `fgets` restituisce un puntatore.",
+        "Errato. Viene restituito proprio `NULL`.",
+        "Errato. Il contenuto del buffer in caso di errore non è garantito, ma la funzione stessa restituisce `NULL`."
+      ]
+    },
+    {
+      "id": "it_clang_2310",
+      "widget_id": "widget_clang_2310",
+      "topic": "Formattazione dei dati in una stringa tramite sprintf()",
+      "q": "Cosa verrà stampato come risultato della chiamata sprintf(buf, \"%c-%d\", 'X', 100)?",
+      "hint": "Lo specificatore %c stampa un singolo carattere, mentre %d stampa un numero intero.",
+      "options": [
+        "X-100",
+        "X100",
+        "88-100",
+        "X-d"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `%c` inserisce il carattere `'X'`, il trattino `-` viene conservato come separatore di testo e `%d` inserisce il numero `100`. Nel buffer verrà scritta la stringa `\"X-100\"`.",
+        "Errato. Il trattino fa parte della stringa di formato e verrà conservato.",
+        "Errato. 88 è il codice ASCII di 'X', ma `%c` stampa il carattere stesso.",
+        "Errato. La lettera 'd' viene sostituita dal valore dell'argomento."
+      ]
+    },
+    {
+      "id": "it_clang_2311",
+      "widget_id": "widget_clang_2311",
+      "topic": "Interruzione della lettura dello specificatore %s all'incontro di uno spazio",
+      "q": "Cosa stamperà il programma leggendo la stringa \"Hello World\" con lo specificatore %s?",
+      "hint": "Lo specificatore %s legge una sequenza di caratteri fino al primo carattere di spaziatura incontrato (spazio, tabulazione, nuova riga).",
+      "options": [
+        "Hello",
+        "Hello World",
+        "World",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `%s` legge la prima parola `\"Hello\"` e si ferma subito prima dello spazio. Il programma stamperà `Hello`.",
+        "Errato. La seconda parola `\"World\"` rimarrà nel buffer di input, poiché lo spazio interrompe l'esecuzione dello specificatore `%s`.",
+        "Errato. La prima parola non viene saltata; la lettura inizia dal primo carattere diverso da uno spazio.",
+        "Errato. La sintassi del programma è corretta."
+      ]
+    },
+    {
+      "id": "it_clang_2312",
+      "widget_id": "widget_clang_2312",
+      "topic": "Assenza dell'operatore & durante la lettura di una stringa in un array",
+      "q": "Perché quando si passa l'array di caratteri buffer a scanf(\"%s\", buffer) non è necessario l'operatore unario di indirizzo (&)?",
+      "hint": "Ricorda in cosa si converte automaticamente il nome di un array quando viene passato a una funzione in C.",
+      "options": [
+        "Il nome dell'array viene convertito automaticamente in un puntatore al suo primo elemento",
+        "Lo specificatore %s aggiunge esso stesso l'operatore & durante l'esecuzione",
+        "L'operatore & è obbligatorio, senza di esso il programma non verrà compilato",
+        "Lo specificatore %s funziona solo con variabili statiche"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella maggior parte dei contesti, incluso il passaggio di argomenti a una funzione, il nome dell'array (`buffer`) si converte implicitamente in un puntatore al suo elemento iniziale `&buffer[0]`, quindi l'operatore `&` non è necessario.",
+        "Errato. Il passaggio degli argomenti è determinato dalle regole del linguaggio C per gli array, e non dalla logica di funzionamento di `scanf`.",
+        "Errato. Il codice `scanf(\"%s\", buffer)` è del tutto valido e comunemente utilizzato.",
+        "Errato. La classe di memorizzazione dell'array (auto o static) non influisce su questa sintassi."
+      ]
+    },
+    {
+      "id": "it_clang_2313",
+      "widget_id": "widget_clang_2313",
+      "topic": "Limitazione della larghezza di input tramite lo specificatore %Ns",
+      "q": "Quale risultato stamperà il programma limitando la larghezza dello specificatore a %4s sulla stringa \"123456789\"?",
+      "hint": "Il numero N nello specificatore %Ns indica il numero massimo di caratteri da leggere, escluso il terminatore nullo obbligatorio.",
+      "options": [
+        "1234",
+        "12345",
+        "123",
+        "4567"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `%4s` leggerà esattamente 4 caratteri (`'1'`, `'2'`, `'3'`, `'4'`) e scriverà il terminatore nullo `'\\0'` come 5° byte. Verrà stampato `1234`.",
+        "Errato. Il 5° carattere `'5'` non verrà letto, poiché il limite è impostato a 4 caratteri.",
+        "Errato. Il limite indica esattamente il numero di caratteri da scrivere (senza considerare `'\\0'`), quindi verranno stampati 4 caratteri e non 3.",
+        "Errato. La lettura inizierà dall'inizio della stringa."
+      ]
+    },
+    {
+      "id": "it_clang_2314",
+      "widget_id": null,
+      "topic": "Vulnerabilità di %s non protetto in scanf()",
+      "q": "Qual è la principale vulnerabilità di sicurezza legata all'uso dello specificatore %s in scanf() senza specificare una larghezza massima?",
+      "hint": "La funzione scanf() non accetta la dimensione dell'array di destinazione allocato e leggerà i caratteri senza restrizioni.",
+      "options": [
+        "Buffer overflow (Buffer Overflow) all'inserimento di una stringa che supera l'array allocato",
+        "Blocco del programma quando si utilizzano caratteri cirillici",
+        "Cancellazione automatica dei dati in ingresso dalla memoria",
+        "Memory leak della memoria dinamica nell'heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore non limitato `%s` legge i dati fino al primo spazio indipendentemente dalla lunghezza dell'array. L'inserimento di una parola troppo lunga porterà alla scrittura oltre i limiti dell'array e al buffer overflow (Buffer Overflow).",
+        "Errato. Il cirillico non causa il blocco della funzione.",
+        "Errato. I dati sovrascrivono le celle di memoria adiacenti invece di essere \"cancellati\".",
+        "Errato. Nell'heap non viene allocata memoria con una chiamata standard a `scanf`."
+      ]
+    },
+    {
+      "id": "it_clang_2315",
+      "widget_id": "widget_clang_2315",
+      "topic": "Ignorare i caratteri di spaziatura iniziali con %s",
+      "q": "In che modo lo specificatore %s gestisce gli spazi iniziali e le tabulazioni nello stream di input?",
+      "hint": "Presta attenzione a quale carattere inizia la lettura diretta dei dati utili da parte dello specificatore %s.",
+      "options": [
+        "Ignora automaticamente tutti i caratteri di spaziatura iniziali e legge la prima parola",
+        "Scrive gli spazi iniziali all'inizio dell'array",
+        "Restituisce un errore di lettura 0",
+        "Interrompe la lettura e lascia il buffer vuoto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `%s` ignora qualsiasi spazio, tabulazione o nuova riga precedente, avanzando fino al primo carattere diverso da uno spazio (`'C'`), dopo di che legge la parola `\"Code\"`.",
+        "Errato. Gli spazi iniziali vengono scartati e non finiscono nell'array finale.",
+        "Errato. Saltare gli spazi è il comportamento standard della maggior parte degli specificatori `scanf`.",
+        "Errato. L'analisi non si interrompe sugli spazi iniziali."
+      ]
+    },
+    {
+      "id": "it_clang_2316",
+      "widget_id": "widget_clang_2316",
+      "topic": "Scan-set %[^\\n] per la lettura di stringhe con spazi",
+      "q": "Cosa stamperà il programma leggendo una stringa tramite lo specificatore di formato %[^\\n]?",
+      "hint": "Il carattere ^ nello scan-set indica una negazione: leggere assolutamente tutti i caratteri FINO A QUANDO non si incontra il simbolo specificato.",
+      "options": [
+        "Hello C World",
+        "Hello",
+        "\\n",
+        "Errore di formato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La struttura `%[^\\n]` configura lo scan-set per leggere tutti i caratteri, inclusi gli spazi, fino al carattere di nuova riga `\\n`. Il risultato conterrà la frase `Hello C World`.",
+        "Errato. Gli spazi non fermeranno la lettura, poiché l'unica condizione di arresto è `\\n`.",
+        "Errato. Il carattere `\\n` stesso non viene letto nell'array, ma rimane nello stream di input.",
+        "Errato. Gli scan-set sono una funzionalità standard delle funzioni della famiglia `scanf`."
+      ]
+    },
+    {
+      "id": "it_clang_2317",
+      "widget_id": null,
+      "topic": "Calcolo della dimensione dell'array per lo specificatore %Ns",
+      "q": "Qual è la dimensione minima di un array char da allocare per l'uso sicuro dello specificatore %10s in scanf()?",
+      "hint": "Ricorda che oltre ai N caratteri letti, l'array deve obbligatoriamente contenere il terminatore nullo finale.",
+      "options": [
+        "11 byte",
+        "10 byte",
+        "9 byte",
+        "12 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `%10s` legge fino a 10 caratteri visibili inclusi e aggiunge 1 carattere terminatore nullo (`'\\0'`). In totale è necessario un buffer di dimensione non inferiore a `10 + 1 = 11` byte.",
+        "Errato. Un array di 10 byte causerà un out-of-bounds di 1 byte quando si tenta di scrivere il terminatore nullo.",
+        "Errato. 9 byte non sono sufficienti.",
+        "Errato. 12 byte garantiscono la sicurezza, ma la dimensione minima necessaria è pari a 11."
+      ]
+    },
+    {
+      "id": "it_clang_2318",
+      "widget_id": "widget_clang_2318",
+      "topic": "Input sequenziale di più parole tramite %s",
+      "q": "Cosa stamperà il programma analizzando la stringa \"One Two\" con l'aiuto di due specificatori %s?",
+      "hint": "Ogni %s legge esattamente una parola fino allo spazio, e sscanf restituisce il numero di variabili compilate con successo.",
+      "options": [
+        "2: One-Two",
+        "1: One Two-",
+        "2: One Two-Two",
+        "0: -"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il primo `%s` inserirà `\"One\"` in `w1`, lo spazio separatore verrà ignorato e il secondo `%s` inserirà `\"Two\"` in `w2`. La variabile `count` diventerà pari a 2. Risultato: `2: One-Two`.",
+        "Errato. Entrambi gli specificatori corrisponderanno con successo alle parole.",
+        "Errato. La seconda parola verrà scritta solo in `w2`.",
+        "Errato. `sscanf` restituirà 2."
+      ]
+    },
+    {
+      "id": "it_clang_2319",
+      "widget_id": "widget_clang_2319",
+      "topic": "Differenza di comportamento tra %c e %s con spazi iniziali",
+      "q": "Cosa stamperà il programma eseguendo il formato \"%c%s\" sulla stringa \" X Y\"?",
+      "hint": "Lo specificatore %c legge qualsiasi carattere successivo (incluso uno spazio iniziale), mentre %s ignora gli spazi prima dell'inizio della parola.",
+      "options": [
+        "' ' 'X'",
+        "'X' 'Y'",
+        "' ' 'X Y'",
+        "'X' ''"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `%c` legge il primissimo carattere della stringa, ovvero lo spazio `' '`. Successivamente `%s` ignora gli spazi rimanenti e legge la parola seguente `\"X\"`. Verrà stampato `' ' 'X'`.",
+        "Errato. `%c` non ignora lo spazio iniziale se non vi è uno spazio esplicito nella stringa di formato.",
+        "Errato. `%s` interromperà la lettura prima dello spazio che precede `'Y'`.",
+        "Errato. Il carattere `'X'` verrà letto dal secondo specificatore `%s`."
+      ]
+    },
+    {
+      "id": "it_clang_2320",
+      "widget_id": "widget_clang_2320",
+      "topic": "Uso dello spazio nel formato \" %c\" in scanf",
+      "q": "A cosa serve uno spazio esplicito prima dello specificatore nel formato \" %c\"?",
+      "hint": "Uno spazio singolo nella stringa di formato di scanf ordina di ignorare qualsiasi quantità di caratteri di spaziatura precedenti.",
+      "options": [
+        "Per ignorare tutti gli spazi, le tabulazioni e le nuove righe iniziali prima di leggere un carattere",
+        "Lo spazio azzera il valore della variabile prima della scrittura",
+        "Per scrivere il carattere spazio nella variabile c",
+        "Si tratta di un errore di sintassi del formato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per impostazione predefinita `%c` legge qualsiasi byte senza ignorare gli spazi. Uno spazio prima dello specificatore (`\" %c\"`) indica a `scanf` di ignorare tutti i separatori non visibili (spazi, `\\t`, `\\n`) e di scrivere il primo carattere diverso da uno spazio (`'Z'`).",
+        "Errato. Lo spazio nel formato non modifica direttamente i valori delle variabili.",
+        "Errato. Per scrivere uno spazio in una variabile si sarebbe dovuto usare `%c` senza lo spazio nel formato.",
+        "Errato. È una tecnica idiomatica comune e standard in C."
+      ]
+    }
+  ]
+}

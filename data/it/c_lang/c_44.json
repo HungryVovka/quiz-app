@@ -1,0 +1,605 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_1361",
+      "widget_id": "widget_clang_1361",
+      "topic": "Aritmetica — Incremento e sizeof",
+      "q": "Di quanti byte si sposta l'indirizzo in p++, se p è di tipo double *p (assumendo sizeof(double) == 8)?",
+      "hint": "L'aritmetica dei puntatori moltiplica automaticamente il numero di passi per la dimensione del tipo indirizzato.",
+      "options": [
+        "Di 8 byte (la dimensione del tipo double)",
+        "Di 1 byte",
+        "Di 4 byte (la dimensione di int)",
+        "Di 16 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operazione `p++` sposta l'indirizzo di `1 * sizeof(T)` byte. Per un `double*`, l'indirizzo aumenterà esattamente di 8 byte, passando all'elemento successivo di tipo `double`.",
+        "Errato. Uno spostamento di 1 byte si verifica solo per i puntatori a tipi da 1 byte (ad esempio `char*` o `uint8_t*`).",
+        "Errato. La dimensione di `int` non influisce sull'incremento di un puntatore di tipo `double*`.",
+        "Errato. L'incremento sposta il puntatore di un solo elemento, non di due."
+      ]
+    },
+    {
+      "id": "it_clang_1362",
+      "widget_id": "widget_clang_1362",
+      "topic": "Aritmetica — Tipo ptrdiff_t",
+      "q": "Qual è il tipo del risultato della sottrazione tra due puntatori (p2 - p1) secondo lo standard C?",
+      "hint": "Questo tipo intero con segno è dichiarato nell'header file <stddef.h>.",
+      "options": [
+        "ptrdiff_t da <stddef.h>",
+        "size_t",
+        "int",
+        "void*"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard C definisce il tipo intero con segno speciale `ptrdiff_t` per memorizzare la differenza tra due puntatori dello stesso tipo.",
+        "Errato. `size_t` è un tipo non firmato (senza segno), mentre la differenza tra puntatori può essere negativa.",
+        "Errato. Un normale `int` potrebbe non essere sufficiente per contenere la differenza tra indirizzi su piattaforme a 64 bit.",
+        "Errato. La differenza tra due puntatori è un numero (conteggio di elementi), non un indirizzo."
+      ]
+    },
+    {
+      "id": "it_clang_1363",
+      "widget_id": "widget_clang_1363",
+      "topic": "Precedenza — *(p + i) contro *p + i",
+      "q": "Qual è la differenza fondamentale tra le espressioni *(p + i) e *p + i?",
+      "hint": "Fai attenzione a cosa viene applicata l'addizione: all'indirizzo o al valore dereferenziato.",
+      "options": [
+        "*(p + i) accede all'i-esimo elemento a partire da p, mentre *p + i aggiunge il numero i al valore del primo elemento *p",
+        "Entrambe le espressioni producono esattamente lo stesso risultato",
+        "*(p + i) aggiunge i al valore, mentre *p + i sposta l'indirizzo",
+        "*(p + i) funziona solo con array di char"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In `*(p + i)` avviene prima uno spostamento dell'indirizzo di `i` elementi e poi la dereferenziazione (equivalente a `p[i]`). In `*p + i` si prende prima il valore `*p` (il primo elemento) e poi gli si somma il numero `i`.",
+        "Errato. In un caso l'operazione di addizione si applica al puntatore, nell'altro a un numero.",
+        "Errato. Hai invertito l'ordine delle operazioni.",
+        "Errato. Le espressioni funzionano con puntatori a qualsiasi tipo."
+      ]
+    },
+    {
+      "id": "it_clang_1364",
+      "widget_id": "widget_clang_1364",
+      "topic": "Precedenza — *p++",
+      "q": "Come viene valutata l'espressione int val = *p++;?",
+      "hint": "L'incremento postfisso ++ ha una precedenza maggiore, ma restituisce il valore precedente prima dell'incremento.",
+      "options": [
+        "La variabile val riceve il valore *p, dopodiché il puntatore p stesso si sposta all'elemento successivo",
+        "Il puntatore p si sposta prima all'elemento successivo, dopodiché val riceve il nuovo valore",
+        "Il valore di *p aumenta di 1, mentre l'indirizzo p non cambia",
+        "Si verifica una moltiplicazione del puntatore p per 2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A causa delle regole dell'incremento postfisso `++`, l'espressione restituisce il valore all'indirizzo corrente `*p`, e poi l'indirizzo `p` viene avanzato di un elemento (`p = p + 1`).",
+        "Errato. Lo spostamento dell'indirizzo con la successiva lettura del valore avviene con l'incremento prefisso `*++p`.",
+        "Errato. L'incremento del valore all'indirizzo si ottiene con le parentesi `(*p)++`.",
+        "Errato. Il simbolo `*` qui esegue una dereferenziazione unaria."
+      ]
+    },
+    {
+      "id": "it_clang_1365",
+      "widget_id": "widget_clang_1365",
+      "topic": "Precedenza — *++p",
+      "q": "Come viene valutata l'espressione int val = *++p;?",
+      "hint": "L'incremento prefisso ++ viene eseguito prima che il risultato dell'espressione venga utilizzato.",
+      "options": [
+        "Il puntatore p viene prima spostato all'elemento successivo, dopodiché val riceve il valore al nuovo indirizzo",
+        "val riceve il valore corrente *p, e p viene spostato in seguito",
+        "Il valore all'indirizzo *p viene incrementato di 1 prima dell'assegnazione",
+        "Il codice causa un errore di compilazione a causa dei due operatori unari"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'incremento prefisso `++p` aumenta prima l'indirizzo `p` di 1 elemento, e poi l'operatore unario `*` dereferenzia questo indirizzo già aggiornato.",
+        "Errato. Questo è il comportamento della forma postfissa `*p++`.",
+        "Errato. Per modificare il valore all'indirizzo si usa `++(*p)`.",
+        "Errato. La combinazione di operatori unari con associatività da destra a sinistra è perfettamente valida."
+      ]
+    },
+    {
+      "id": "it_clang_1366",
+      "widget_id": "widget_clang_1366",
+      "topic": "Standard — Aritmetica su void*",
+      "q": "L'aritmetica dei puntatori di tipo void * è consentita dallo standard ISO C?",
+      "hint": "Rifletti se la dimensione del tipo void sia nota al compilatore per calcolare lo spostamento.",
+      "options": [
+        "È vietata, poiché il tipo void non ha una dimensione (sizeof(void) non è definito in ISO C)",
+        "È consentita, e il passo è sempre pari a 4 byte",
+        "È consentita e assolutamente sicura su tutti i compilatori",
+        "È vietata solo per la sottrazione di puntatori"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard ISO C, l'aritmetica su `void*` è vietata poiché `sizeof(void)` non ha significato. (Nota: il compilatore GCC ha un'estensione in cui `sizeof(void) == 1`, ma in stretta conformità con lo standard è un errore).",
+        "Errato. Secondo lo standard, la dimensione non è definita.",
+        "Errato. Non è portabile e viola lo standard ISO C.",
+        "Errato. Qualsiasi operazione aritmetica su `void*` (addizione, sottrazione, incremento) è vietata."
+      ]
+    },
+    {
+      "id": "it_clang_1367",
+      "widget_id": "widget_clang_1367",
+      "topic": "Limiti — Puntatore oltre la fine (One-past-the-end)",
+      "q": "Cosa consente di fare lo standard C con un puntatore che punta all'elemento subito dopo la fine dell'array (&arr[N] per un array di N elementi)?",
+      "hint": "Pensa alla formulazione delle condizioni di terminazione dei cicli (ad esempio, ptr < end).",
+      "options": [
+        "Consente di ottenerne l'indirizzo e di usarlo nei confronti, ma vieta tassativamente la sua dereferenziazione",
+        "Consente sia l'ottenimento dell'indirizzo sia la dereferenziazione",
+        "Vieta tassativamente persino il calcolo di tale indirizzo (causerebbe immediatamente un UB)",
+        "Azzera automaticamente tale puntatore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard garantisce che il calcolo dell'indirizzo `arr + N` (puntatore all'elemento subito dopo l'array) è legale e può essere usato nei confronti all'interno dei cicli (es. `p < arr + N`). Tuttavia, la dereferenziazione `*(arr + N)` costituisce Comportamento Indefinito (UB).",
+        "Errato. La dereferenziazione oltre i limiti dell'array è vietata.",
+        "Errato. Il calcolo dell'indirizzo dell'elemento oltre la fine è esplicitamente consentito dallo standard.",
+        "Errato. Il puntatore mantiene l'indirizzo valido calcolato."
+      ]
+    },
+    {
+      "id": "it_clang_1368",
+      "widget_id": "widget_clang_1368",
+      "topic": "Confronto — Limitazioni degli operatori di confronto",
+      "q": "In quale condizione il confronto tra due puntatori tramite gli operatori < o > è corretto e ha un comportamento definito dallo standard?",
+      "hint": "È possibile confrontare gli indirizzi di due variabili completamente casuali provenienti da parti diverse della memoria?",
+      "options": [
+        "Solo se entrambi i puntatori puntano a elementi dello stesso array (o all'elemento subito dopo la sua fine)",
+        "I puntatori possono essere sempre confrontati, indipendentemente dalla loro origine",
+        "Solo se entrambi i puntatori sono pari a NULL",
+        "Il confronto tra puntatori con gli operatori < e > è vietato in C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il confronto tra puntatori tramite `<, >, <=, >=` è strettamente definito dallo standard solo quando essi si riferiscono a oggetti all'interno dello stesso array (o struttura). Il confronto degli indirizzi di variabili indipendenti costituisce Comportamento Indefinito (UB).",
+        "Errato. Il confronto di puntatori a oggetti diversi porta a un UB, poiché il loro ordine relativo in memoria non è garantito.",
+        "Errato. I puntatori nulli sono uguali tra loro, ma il confronto 'minore/maggiore' è rilevante per gli array.",
+        "Errato. Il confronto è consentito per gli elementi dello stesso array."
+      ]
+    },
+    {
+      "id": "it_clang_1369",
+      "widget_id": "widget_clang_1369",
+      "topic": "Aritmetica — Offset negativi",
+      "q": "Se p punta all'elemento arr[3], a quanto equivale l'espressione *(p - 2)?",
+      "hint": "La sottrazione di un numero intero da un puntatore lo sposta indietro nella memoria.",
+      "options": [
+        "Al valore dell'elemento arr[1]",
+        "Al valore dell'elemento arr[5]",
+        "Al valore dell'elemento arr[2]",
+        "Un errore: sottrarre numeri dai puntatori è vietato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sottrazione di `2` sposta il puntatore indietro di 2 elementi: dall'indice 3 all'indice 1. La dereferenziazione `*(p - 2)` restituirà il valore di `arr[1]`.",
+        "Errato. Lo spostamento all'indice 5 si otterrebbe con l'addizione `*(p + 2)`.",
+        "Errato. All'indice 2 sposta l'espressione `*(p - 1)`.",
+        "Errato. Sottrarre numeri dai puntatori è un'operazione standard dell'aritmetica dei puntatori."
+      ]
+    },
+    {
+      "id": "it_clang_1370",
+      "widget_id": "widget_clang_1370",
+      "topic": "Limitazioni — Operazioni vietate",
+      "q": "Quale delle seguenti operazioni aritmetiche sui puntatori è TASSATIVAMENTE vietata nel linguaggio C?",
+      "hint": "Rifletti se la 'somma di due indirizzi di memoria RAM' abbia un senso fisico.",
+      "options": [
+        "La somma di due puntatori (p1 + p2)",
+        "La sottrazione di un puntatore da un altro (p2 - p1)",
+        "L'addizione di un numero intero a un puntatore (p + 5)",
+        "La sottrazione di un numero intero da un puntatore (p - 3)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La somma di due indirizzi di memoria `p1 + p2` non ha alcun senso fisico né matematico nell'indirizzamento, pertanto è vietata dal compilatore. La sottrazione tra puntatori (`p2 - p1`), invece, fornisce la distanza tra di essi ed è del tutto legale.",
+        "Errato. La sottrazione di puntatori restituisce il numero di elementi compresi tra di essi ed è consentita.",
+        "Errato. L'addizione di un numero sposta il puntatore in avanti.",
+        "Errato. La sottrazione di un numero sposta il puntatore indietro."
+      ]
+    },
+    {
+      "id": "it_clang_1371",
+      "widget_id": "widget_clang_1371",
+      "topic": "Decadimento — Array Decay nelle funzioni",
+      "q": "A quanto equivarrà sizeof(arr) all'interno della funzione void foo(int arr[100]), eseguita su un sistema a 64 bit?",
+      "hint": "Ricorda cosa succede a un array quando viene passato come parametro a una funzione.",
+      "options": [
+        "8 byte (la dimensione del puntatore int*, poiché l'array decade implicitamente a puntatore)",
+        "400 byte (100 * sizeof(int))",
+        "100 byte",
+        "4 byte (la dimensione di un singolo int)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando un array viene passato a una funzione, il suo nome viene automaticamente convertito (decay) in un puntatore al primo elemento (`int*`). La dimensione dell'array `[100]` nella firma della funzione viene ignorata dal compilatore, quindi `sizeof(arr)` restituisce la dimensione del puntatore stesso (8 byte su architettura a 64 bit).",
+        "Errato. 400 byte viene restituito solo nell'ambito di visibilità (scope) in cui l'array è stato direttamente dichiarato.",
+        "Errato. Il numero di elementi non determina la dimensione del tipo di dato.",
+        "Errato. 4 byte è la dimensione del tipo `int`, non del puntatore."
+      ]
+    },
+    {
+      "id": "it_clang_1372",
+      "widget_id": "widget_clang_1372",
+      "topic": "Sintassi — Commutatività dell'indicizzazione i[arr]",
+      "q": "L'espressione 3[arr] è sintatticamente valida in C, e a quanto equivale per l'array int arr[] = {10, 20, 30, 40, 50};?",
+      "hint": "Ricorda in cosa il compilatore espande implicitamente l'operatore parentesi quadre [].",
+      "options": [
+        "L'espressione è valida e pari a 40, poiché i[arr] si espande in *(i + arr), che è identico a *(arr + i)",
+        "È un errore di sintassi in fase di compilazione",
+        "L'espressione restituirà il valore 3",
+        "Il codice verrà compilato, ma causerà un errore di segmentazione in runtime"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C le parentesi quadre sono zucchero sintattico: `A[B]` è rigorosamente equivalente a `*(A + B)`. Data la proprietà commutativa dell'addizione, `*(3 + arr)` è totalmente equivalente a `*(arr + 3)`, cioè `arr[3]`, che restituisce `40`.",
+        "Errato. Il compilatore C accetta perfettamente questa scrittura.",
+        "Errato. Il valore viene estratto dall'indice 3 dell'array.",
+        "Errato. L'espressione viene eseguita in modo del tutto corretto."
+      ]
+    },
+    {
+      "id": "it_clang_1373",
+      "widget_id": "widget_clang_1373",
+      "topic": "Tipi — arr contro &arr",
+      "q": "Qual è la differenza tra le espressioni arr + 1 e &arr + 1 per l'array int arr[5] (dove sizeof(int) == 4)?",
+      "hint": "Fai attenzione ai tipi delle espressioni: puntatore a un elemento (int*) e puntatore all'intero array (int(*)[5]).",
+      "options": [
+        "arr + 1 sposta l'indirizzo di 4 byte (1 int), mentre &arr + 1 sposta l'indirizzo di 20 byte (l'intero array di 5 int)",
+        "Entrambe le espressioni spostano l'indirizzo dello stesso numero di byte",
+        "&arr + 1 causa un errore di compilazione",
+        "arr + 1 sposta l'indirizzo di 20 byte, mentre &arr + 1 di 4 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Sebbene l'indirizzo base di `arr` e `&arr` sia lo stesso, i loro tipi differiscono. `arr` ha tipo `int*`, quindi `arr + 1` sposta l'indirizzo di `sizeof(int)` (4 byte). `&arr` ha tipo 'puntatore a un array di 5 int' (`int(*)[5]`), quindi `&arr + 1` sposta l'indirizzo della dimensione dell'intero array (5 * 4 = 20 byte).",
+        "Errato. La dimensione dello spostamento nell'aritmetica dei puntatori dipende dal tipo a cui è applicato `+ 1`.",
+        "Errato. L'operazione `&arr` è del tutto legale.",
+        "Errato. Lo spostamento per `&arr` è maggiore, non minore."
+      ]
+    },
+    {
+      "id": "it_clang_1374",
+      "widget_id": "widget_clang_1374",
+      "topic": "Array bidimensionali — Ordine di allocazione in memoria",
+      "q": "Come sono disposti gli elementi di un array bidimensionale int matrix[2][3] nella memoria RAM?",
+      "hint": "Il C memorizza gli elementi in ordine per riga (Row-Major Order).",
+      "options": [
+        "In un unico blocco continuo di byte riga per riga (matrix[0][0], matrix[0][1], matrix[0][2], matrix[1][0]...)",
+        "Sotto forma di array di puntatori separati a regioni di memoria diverse",
+        "In ordine per colonna (Column-Major Order: prima tutta la prima colonna, poi la seconda)",
+        " L'ordine degli elementi viene determinato in modo casuale all'avvio"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Tutti gli array multidimensionali in C sono allocati in memoria come un unico blocco contiguo di dati. La memoria viene riempita sequenzialmente, elemento per elemento, da sinistra a destra (Row-Major Order).",
+        "Errato. Un array di puntatori separati si crea con l'allocazione dinamica tramite `int**`, ma non con un normale `int matrix[2][3]`.",
+        "Errato. L'ordine per colonna (Column-Major) è utilizzato nel linguaggio Fortran, ma non in C.",
+        "Errato. L'ordine è rigorosamente determinato dallo standard."
+      ]
+    },
+    {
+      "id": "it_clang_1375",
+      "widget_id": "widget_clang_1375",
+      "topic": "Array bidimensionali — Dereferenziazione *(*(m + i) + j)",
+      "q": "Quale espressione con dereferenziazione di puntatori è identica all'accesso all'elemento matrix[i][j]?",
+      "hint": "Espandi prima l'indice esterno i, poi quello interno j tramite l'aritmetica dei puntatori.",
+      "options": [
+        "*(*(matrix + i) + j)",
+        "*(matrix + i + j)",
+        "(*(matrix + i))[j + 1]",
+        "**matrix + i + j"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `matrix + i` sposta il puntatore di `i` righe. La dereferenziazione `*(matrix + i)` fornisce un puntatore all'inizio della riga `i`-esima. L'aggiunta di `+ j` lo sposta di `j` elementi all'interno della riga, e la dereferenziazione esterna `*(*(matrix + i) + j)` ottiene l'elemento stesso.",
+        "Errato. `*(matrix + i + j)` sommerà gli indici di riga e colonna come un semplice numero intero.",
+        "Errato. L'espressione accederà all'elemento `j + 1`.",
+        "Errato. `**matrix` prende l'elemento `matrix[0][0]` e aggiunge al suo valore i numeri `i` e `j`."
+      ]
+    },
+    {
+      "id": "it_clang_1376",
+      "widget_id": "widget_clang_1376",
+      "topic": "Sintassi — Parametri array nelle funzioni",
+      "q": "Quale delle seguenti dichiarazioni di parametri di funzione NON è equivalente alle altre due in C?",
+      "hint": "Rifletti su come il compilatore interpreta le parentesi quadre nella dichiarazione di un argomento di funzione.",
+      "options": [
+        "Tutte e tre le dichiarazioni (void f(int a[]), void f(int a[10]), void f(int *a)) sono assolutamente equivalenti",
+        "void f(int a[10]) si distingue per il fatto che il compilatore controlla il passaggio di esattamente 10 elementi",
+        "void f(int *a) crea un puntatore, mentre void f(int a[]) alloca un nuovo array",
+        "void f(int a[]) è consentito solo per le funzioni globali"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Al livello dei parametri di funzione, la sintassi `int a[]` e `int a[10]` è soltanto un'alternativa sintattica alla scrittura `int *a`. Le dimensioni all'interno delle parentesi vengono totalmente ignorate dal compilatore, e in tutti e tre i casi il parametro diventa un normale puntatore `int*`.",
+        "Errato. La dimensione `10` viene ignorata dal compilatore e non produce alcun controllo in runtime né in fase di compilazione.",
+        "Errato. La memoria per l'array nei parametri non viene mai riallocata ex novo.",
+        "Errato. La sintassi funziona allo stesso modo per tutte le funzioni."
+      ]
+    },
+    {
+      "id": "it_clang_1377",
+      "widget_id": "widget_clang_1377",
+      "topic": "Dichiarazioni — int *p[10] contro int (*p)[10]",
+      "q": "Che cos'è la variabile p nella dichiarazione int *p[10];?",
+      "hint": "Ricorda la precedenza degli operatori: le parentesi quadre [] si legano al nome prima dell'asterisco *.",
+      "options": [
+        "Un array di 10 puntatori a int",
+        "Un puntatore a un array di 10 elementi int",
+        "Un puntatore a una funzione che restituisce un array",
+        "Un array di numeri interi di dimensione 10 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le parentesi quadre `[]` hanno una precedenza maggiore rispetto alla dereferenziazione `*`. Di conseguenza, `p[10]` viene interpretato come 'array di 10 elementi', e `int *` ne definisce il tipo: 'puntatore a int'.",
+        "Errato. Un puntatore a un array di 10 elementi si scriverebbe con le parentesi: `int (*p)[10]`.",
+        "Errato. Nella dichiarazione mancano le parentesi tonde di chiamata di funzione.",
+        "Errato. Non è un array di numeri, ma un array di puntatori."
+      ]
+    },
+    {
+      "id": "it_clang_1378",
+      "widget_id": "widget_clang_1378",
+      "topic": "Memoria — char a[] contro char *p",
+      "q": "Qual è la differenza fondamentale nell'allocazione di memoria tra char a[] = \"Hello\"; e char *p = \"Hello\";?",
+      "hint": "Rifletti su quale di queste stringhe possa essere modificata nel codice (a[0] = 'h' contro p[0] = 'h').",
+      "options": [
+        "a alloca 6 byte sullo stack e vi copia il testo (la stringa si può modificare), mentre p punta a un letterale costante nella memoria di sola lettura (.rodata)",
+        "Entrambe le definizioni creano un array allocato sullo stack",
+        "La variabile p viene creata sullo stack, mentre a nella memoria dinamica (heap)",
+        "Non c'è alcuna differenza tra queste due dichiarazioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `char a[]` alloca un proprio array locale di byte sullo stack e vi copia i caratteri, consentendone la modifica (`a[0] = 'h'`). `char *p` crea solo una variabile puntatore che fa riferimento a un letterale stringa immutabile nella sezione protetta `.rodata` (un tentativo di scrittura causerà un crash).",
+        "Errato. `char *p` punta a un letterale stringa in `.rodata`, non crea un array sullo stack.",
+        "Errato. La memoria nello heap si alloca solo tramite `malloc()`.",
+        "Errato. La differenza è fondamentale dal punto di vista della modificabilità dei dati."
+      ]
+    },
+    {
+      "id": "it_clang_1379",
+      "widget_id": "widget_clang_1379",
+      "topic": "Aritmetica — Navigazione in un array 2D",
+      "q": "Dichiarando int matrix[3][4];, di quanti elementi int si sposterà l'indirizzo valutando l'espressione matrix + 1?",
+      "hint": "Rifletti su qual è la dimensione di un singolo elemento per l'array di primo livello in matrix.",
+      "options": [
+        "Di 4 elementi int (un'intera riga da 4 elementi)",
+        "Di 1 elemento int",
+        "Di 12 elementi int (l'intero array)",
+        "Di 3 elementi int"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `matrix` è considerato come un array i cui elementi sono righe di tipo `int[4]`. Pertanto, `matrix + 1` salta esattamente una riga, spostando l'indirizzo di `4 * sizeof(int)` (4 elementi `int`).",
+        "Errato. Di 1 elemento `int` sposta un puntatore di tipo `int*` (ad esempio `(int*)matrix + 1`).",
+        "Errato. Lo spostamento dell'intero array è prodotto dall'espressione `&matrix + 1`.",
+        "Errato. Il numero 3 è il numero di righe, non il numero di colonne in una riga."
+      ]
+    },
+    {
+      "id": "it_clang_1380",
+      "widget_id": "widget_clang_1380",
+      "topic": "Passaggio a funzione — Array bidimensionali",
+      "q": "Quale firma di funzione è corretta per ricevere un array bidimensionale int matrix[3][4]?",
+      "hint": "Il compilatore deve necessariamente conoscere la dimensione dell'ultima dimensione (la larghezza della riga) per calcolare gli indirizzi degli elementi.",
+      "options": [
+        "void process(int matrix[][4], int rows)",
+        "void process(int matrix[][], int rows, int cols)",
+        "void process(int **matrix, int rows, int cols)",
+        "void process(int matrix[3][])"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando si passa un array 2D, il compilatore deve conoscere la dimensione della riga (numero di colonne `4`) per calcolare correttamente l'offset `matrix[i][j]` come `*(matrix + i * 4 + j)`. La prima dimensione `rows` può essere omessa.",
+        "Errato. Non si possono lasciare entrambe le dimensioni vuote `matrix[][]`, altrimenti il compilatore non sarà in grado di calcolare il passo in memoria.",
+        "Errato. Il doppio puntatore `int **` non è compatibile con un array 2D contiguo `int[3][4]` a causa della diversa struttura di memoria.",
+        "Errato. La seconda dimensione deve essere obbligatoriamente specificata."
+      ]
+    },
+    {
+      "id": "it_clang_1381",
+      "widget_id": "widget_clang_1381",
+      "topic": "Sintassi — Indicizzazione p[i] per i puntatori",
+      "q": "È possibile utilizzare le parentesi quadre p[i] su un normale puntatore allocato tramite malloc(), ad esempio int *p = malloc(10 * sizeof(int));?",
+      "hint": "Ricorda in cosa il compilatore espande l'operatore [].",
+      "options": [
+        "Sì, poiché l'espressione p[i] è completamente equivalente a *(p + i) per qualsiasi puntatore p",
+        "No, l'operatore [] funziona solo con array statici",
+        "Sì, ma solo se p viene prima convertito al tipo array",
+        "No, questo causerà un errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C l'espressione `p[i]` viene tradotta per definizione in `*(p + i)`. Questo funziona esattamente allo stesso modo sia per i nomi di array statici che per qualsiasi puntatore a memoria dinamica.",
+        "Errato. L'operatore `[]` non fa distinzione tra il nome di un array e un normale puntatore.",
+        "Errato. Non è richiesto alcun cast esplicito di tipo.",
+        "Errato. La sintassi è del tutto valida."
+      ]
+    },
+    {
+      "id": "it_clang_1382",
+      "widget_id": "widget_clang_1382",
+      "topic": "Array — Immutabilità del nome dell'array",
+      "q": "Perché il tentativo di eseguire arr++ causerà un errore di compilazione per l'array int arr[5];, mentre p++ per int *p = arr; verrà compilato con successo?",
+      "hint": "Rifletti se il nome dell'array sia una variabile modificabile (lvalue) che memorizza un indirizzo.",
+      "options": [
+        "Il nome dell'array arr è un indirizzo costante (lvalue non modificabile), mentre p è una variabile puntatore che memorizza un indirizzo",
+        "arr++ è vietato poiché la dimensione di int non è nota al compilatore",
+        "p++ funziona solo perché p si trova nello heap",
+        "arr++ modificherebbe la dimensione dell'array, il che è vietato in C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il nome dell'array `arr` indica il blocco di memoria stesso e non è una variabile modificabile (non-modifiable lvalue). Non puoi assegnargli un nuovo indirizzo né applicargli l'incremento. Al contrario, `p` è una variabile puntatore distinta in cui si possono scrivere nuovi indirizzi.",
+        "Errato. La dimensione di `int` è sempre nota al compilatore.",
+        "Errato. `p` può puntare allo stack esattamente come allo heap.",
+        "Errato. Le operazioni `++` spostano l'indirizzo, non modificano la dimensione allocata."
+      ]
+    },
+    {
+      "id": "it_clang_1383",
+      "widget_id": "widget_clang_1383",
+      "topic": "Idiomi — Scorrimento di un array tramite *p++",
+      "q": "Cosa fa il codice: int *p = arr; while (p < arr + 5) { *p++ = 0; }?",
+      "hint": "Analizza le azioni in sequenza: assegnazione all'indirizzo e spostamento del puntatore.",
+      "options": [
+        "Azzera i primi 5 elementi dell'array arr, spostando il puntatore p a ogni passo",
+        "Riempie l'array con numeri casuali",
+        "Causa un ciclo infinito a causa della condizione non corretta p < arr + 5",
+        "Azzera solo l'ultimo elemento arr[4]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel ciclo viene dereferenziato l'indirizzo corrente `*p`, vi viene scritto `0`, dopodiché l'incremento postfisso `p++` sposta il puntatore all'elemento successivo. Il ciclo si arresta quando `p` raggiunge l'indirizzo subito dopo la fine dell'array (`arr + 5`).",
+        "Errato. Nelle celle viene scritto esplicitamente il numero `0`.",
+        "Errato. La condizione di confronto tra puntatori `p < arr + 5` è del tutto corretta e terminerà il ciclo dopo 5 iterazioni.",
+        "Errato. Vengono azzerati tutti e 5 gli elementi."
+      ]
+    },
+    {
+      "id": "it_clang_1384",
+      "widget_id": "widget_clang_1384",
+      "topic": "Array di puntatori — char *names[]",
+      "q": "A quanto equivale il carattere c nel codice: char *names[] = {\"Alice\", \"Bob\"}; char c = names[1][2];?",
+      "hint": "Il primo indice seleziona la stringa dall'array di puntatori, il secondo il carattere all'interno di quella stringa.",
+      "options": [
+        "Al carattere 'b' (terzo carattere della stringa \"Bob\")",
+        "Al carattere 'o' (secondo carattere della stringa \"Bob\")",
+        "Al carattere 'i' (terzo carattere della stringa \"Alice\")",
+        "Al terminatore nullo '\\0'"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `names[1]` seleziona il secondo elemento dell'array di puntatori — la stringa `\"Bob\"`. Successivamente `[2]` seleziona il carattere con indice 2 (il terzo in ordine, partendo da 0): 'B' (0), 'o' (1), 'b' (2).",
+        "Errato. Il carattere 'o' si trova all'indice `names[1][1]`.",
+        "Errato. La stringa \"Alice\" si trova all'indice `names[0]`.",
+        "Errato. Il terminatore nullo si trova all'indice `names[1][3]`."
+      ]
+    },
+    {
+      "id": "it_clang_1385",
+      "widget_id": "widget_clang_1385",
+      "topic": "Stringhe — Carattere terminatore nullo",
+      "q": "Come determinano le funzioni standard per la gestione delle stringhe (ad esempio strlen) la fine di un array di caratteri quando ricevono un puntatore char *s?",
+      "hint": "Le stringhe in C non memorizzano la propria lunghezza separatamente in memoria.",
+      "options": [
+        "Scansionano la memoria tramite il puntatore finché non incontrano un byte con valore 0 ('\\0')",
+        "La lunghezza della stringa viene sempre passata in un intestazione di servizio nascosta prima della stringa",
+        "Il compilatore passa automaticamente la dimensione dell'array in una seconda variabile",
+        "La scansione avviene fino al primo spazio incontrato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le stringhe in C sono array di caratteri terminati da zero (null-terminated strings). Passando `char*`, la funzione legge sequenzialmente i byte fino al primo byte nullo (`'\\0'`), determinando così la fine della stringa.",
+        "Errato. In C le stringhe non hanno metadati o intestazioni con la lunghezza.",
+        "Errato. La dimensione dell'array decade a puntatore e viene persa.",
+        "Errato. Gli spazi sono caratteri validi all'interno di una stringa."
+      ]
+    },
+    {
+      "id": "it_clang_1386",
+      "widget_id": "widget_clang_1386",
+      "topic": "Memoria dinamica — Array 2D nello heap",
+      "q": "Come allocare correttamente nello heap un unico blocco continuo di memoria per un array 2D di N righe e 4 colonne usando un puntatore a un array?",
+      "hint": "Usa la sintassi del puntatore a un array di dimensione fissa per le colonne: int (*arr)[4].",
+      "options": [
+        "int (*arr)[4] = malloc(N * sizeof(*arr));",
+        "int **arr = malloc(N * 4 * sizeof(int));",
+        "int *arr[4] = malloc(N * sizeof(int));",
+        "int arr[][] = malloc(N * 4);"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La struttura `int (*arr)[4]` dichiara un puntatore a un array di 4 numeri interi. La chiamata `malloc(N * sizeof(*arr))` alloca un blocco continuo di memoria per `N` righe di questo tipo, consentendo l'accesso agli elementi tramite la consueta sintassi `arr[i][j]` senza allocazioni multiple.",
+        "Errato. `int **arr` con un singolo `malloc` non permette l'indicizzazione bidimensionale `arr[i][j]` senza un array di puntatori intermedi.",
+        "Errato. `int *arr[4]` è un array statico di 4 puntatori sullo stack.",
+        "Errato. La sintassi `arr[][]` non è consentita per l'assegnazione del risultato di `malloc`."
+      ]
+    },
+    {
+      "id": "it_clang_1387",
+      "widget_id": "widget_clang_1387",
+      "topic": "Operatore sizeof — arr contro &arr",
+      "q": "A quanto equivalgono i valori di sizeof(arr) e sizeof(&arr) per l'array int arr[10] su una piattaforma a 64 bit (sizeof(int) == 4)?",
+      "hint": "Rifletti su dove l'operatore sizeof vede l'array per intero e dove vede un tipo puntatore.",
+      "options": [
+        "sizeof(arr) == 40 byte, mentre sizeof(&arr) == 8 byte",
+        "Entrambe le espressioni restituiscono 40 byte",
+        "Entrambe le espressioni restituiscono 8 byte",
+        "sizeof(arr) == 8 byte, mentre sizeof(&arr) == 40 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `sizeof(arr)` calcola la dimensione dell'intero array (10 elementi * 4 byte = 40 byte). Tuttavia, `&arr` ha tipo 'puntatore a un array' (`int(*)[10]`), e `sizeof(&arr)` restituisce la dimensione del puntatore stesso (8 byte su un sistema a 64 bit).",
+        "Errato. `&arr` è un puntatore, quindi la sua dimensione è pari a quella di un puntatore di indirizzamento.",
+        "Errato. `sizeof(arr)` non trasforma l'array in un puntatore all'interno della sua espressione.",
+        "Errato. Hai invertito i valori."
+      ]
+    },
+    {
+      "id": "it_clang_1388",
+      "widget_id": "widget_clang_1388",
+      "topic": "Algoritmi — Idioma di copia delle stringhe",
+      "q": "Come funziona il classico idioma C di copia delle stringhe: while (*dest++ = *src++);?",
+      "hint": "Fai attenzione al valore restituito dall'operatore di assegnazione =.",
+      "options": [
+        "Copia il carattere dall'indirizzo src a dest, sposta entrambi i puntatori e termina il ciclo quando il carattere copiato è '\\0' (0)",
+        "Confronta le stringhe dest e src per verificare l'uguaglianza",
+        "Copia la stringa in ordine inverso",
+        "Causa un errore di compilazione a causa della combinazione di = e ++"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `*dest++ = *src++` copia prima il carattere corrente da `src` a `dest`, poi incrementa entrambi i puntatori. Il valore dell'intera espressione è il carattere copiato. Quando viene copiato il terminatore nullo `'\\0'` (valore 0), la condizione `while(0)` diventa falsa e il ciclo termina.",
+        "Errato. L'operatore `=` esegue un'assegnazione, non un confronto `==`.",
+        "Errato. I puntatori vengono avanzati `++`, non arretrati.",
+        "Errato. È un codice fondamentale e perfettamente valido negli standard C."
+      ]
+    },
+    {
+      "id": "it_clang_1389",
+      "widget_id": "widget_clang_1389",
+      "topic": "Sicurezza — Accesso oltre i limiti dell'array",
+      "q": "A cosa porterà la lettura di un elemento tramite puntatore: int x = *(arr + 10); per un array int arr[5];?",
+      "hint": "L'accesso oltre i limiti di un array allocato in C è una grave violazione di gestione della memoria.",
+      "options": [
+        "A un Comportamento Indefinito (Undefined Behavior), alla lettura di dati «spazzatura» o all'arresto anomalo del programma",
+        "Il compilatore solleverà un'eccezione IndexOutOfBoundsException",
+        "La variabile x riceverà automaticamente il valore 0",
+        "L'array arr si espanderà automaticamente a 11 elementi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C manca il controllo automatico dei limiti degli array. L'accesso a un indirizzo oltre l'array `*(arr + 10)` costituisce Comportamento Indefinito. Il programma può leggere dati estranei dallo stack oppure cadere in Segmentation Fault.",
+        "Errato. In C non esiste un meccanismo di eccezioni (exceptions).",
+        "Errato. Non si verifica alcun azzeramento automatico.",
+        "Errato. Gli array statici non si possono espandere dinamicamente."
+      ]
+    },
+    {
+      "id": "it_clang_1390",
+      "widget_id": "widget_clang_1390",
+      "topic": "Standard C99 — Parametri VLA",
+      "q": "Quale vantaggio offre l'uso della sintassi VLA nei parametri di funzione (C99): void print_matrix(int n, int m, int matrix[n][m])?",
+      "hint": "Rifletti su come il compilatore calcola l'indice matrix[i][j] conoscendo la larghezza m.",
+      "options": [
+        "Consente di passare array 2D di dimensione dinamica e di accedervi tramite la sintassi naturale matrix[i][j]",
+        "Alloca automaticamente la memoria per la matrice nello heap",
+        "Vieta la modifica degli elementi della matrice all'interno della funzione",
+        "Velocizza l'esecuzione del programma di 10 volte grazie all'uso della GPU"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Specificando le dimensioni `n` e `m` prima dell'array stesso nell'elenco dei parametri, il compilatore C99 conosce la dimensione della riga `m` e può calcolare automaticamente gli indirizzi degli elementi `matrix[i][j]` come `*(matrix + i * m + j)` per array di qualsiasi dimensione.",
+        "Errato. Il passaggio di un parametro non alloca memoria nello heap.",
+        "Errato. Per vietare le modifiche si usa il qualificatore `const`.",
+        "Errato. È una comodità sintattica per il calcolo degli indirizzi, non un'accelerazione su GPU."
+      ]
+    }
+  ]
+}

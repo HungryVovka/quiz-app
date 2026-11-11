@@ -1,0 +1,605 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_1811",
+      "widget_id": "widget_clang_1811",
+      "topic": "Passaggio di array alle funzioni",
+      "q": "Cosa viene passato alla funzione print_val durante la chiamata print_val(numbers)?",
+      "hint": "Ricorda il concetto di array decay nel linguaggio C.",
+      "options": [
+        "L'indirizzo del primo elemento dell'array (&numbers[0])",
+        "Una copia completa dell'intero array numbers",
+        "Il valore del primo elemento (il numero 10)",
+        "La dimensione dell'array in byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel linguaggio C, il nome di un array nella maggior parte delle espressioni viene convertito implicitamente (array decay) in un puntatore al suo primo elemento (&numbers[0]).",
+        "Errato. In C, gli array non vengono mai passati alle funzioni per valore mediante la copia di tutti gli elementi.",
+        "Errato. Viene passato un puntatore alla memoria in cui sono memorizzati gli elementi, non il valore.",
+        "Errato. Le informazioni sulla dimensione dell'array vanno perse durante il passaggio."
+      ]
+    },
+    {
+      "id": "it_clang_1812",
+      "widget_id": "widget_clang_1812",
+      "topic": "Passaggio di array alle funzioni",
+      "q": "Cosa restituirà la funzione foo, chiamata con l'array data[10], su un sistema a 64 bit?",
+      "hint": "Rifletti su cosa diventa la sintassi int arr[] nei parametri di una funzione.",
+      "options": [
+        "La dimensione di un puntatore (di solito 8 byte), poiché il parametro int arr[] è sintatticamente equivalente a int *arr",
+        "La dimensione dell'intero array in byte (40 byte)",
+        "Il numero di elementi nell'array (10)",
+        "Un errore di compilazione a causa dell'incompatibilità dei tipi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nelle intestazioni delle funzioni, la sintassi `int arr[]` è solo «zucchero sintattico» per `int *arr`. All'interno di `foo`, `arr` è un normale puntatore, quindi `sizeof(arr)` restituirà la dimensione di un puntatore (8 byte).",
+        "Errato. All'interno della funzione, le informazioni sulla dimensione originale dell'array vanno perse.",
+        "Errato. L'operatore sizeof restituisce la dimensione in byte per il tipo di puntatore, non il numero di elementi.",
+        "Errato. La sintassi `int arr[]` è del tutto corretta e valida."
+      ]
+    },
+    {
+      "id": "it_clang_1813",
+      "widget_id": "widget_clang_1813",
+      "topic": "Passaggio di array alle funzioni",
+      "q": "Quale valore stamperà printf nella funzione main dopo l'esecuzione di modify(nums)?",
+      "hint": "Ricorda se l'array viene passato per indirizzo o se viene creata una copia.",
+      "options": [
+        "99, poiché la funzione riceve l'indirizzo della prima cella e modifica l'elemento dell'array originale in loco",
+        "1, poiché l'array viene passato per valore e viene creata una copia isolata",
+        "0",
+        "Comportamento indefinito (Undefined Behavior)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché la funzione `modify` riceve l'indirizzo del primo elemento, l'operatore `arr[0] = 99` dereferenzia questo indirizzo e sovrascrive la memoria dell'array originale `nums` in `main`.",
+        "Errato. Gli array in C non vengono copiati quando vengono passati alle funzioni.",
+        "Errato. All'indice 0 ci sarà il valore modificato 99.",
+        "Errato. La chiamata è del tutto corretta e non causa un comportamento indefinito."
+      ]
+    },
+    {
+      "id": "it_clang_1814",
+      "widget_id": "widget_clang_1814",
+      "topic": "Passaggio di array alle funzioni",
+      "q": "La chiamata show_first(&arr[0]) è equivalente a show_first(arr)?",
+      "hint": "Confronta gli indirizzi a cui fanno riferimento queste due espressioni.",
+      "options": [
+        "Sì, poiché il nome dell'array arr si converte automaticamente in un puntatore al suo primo elemento &arr[0]",
+        "No, &arr[0] passa una copia dell'elemento, mentre arr passa l'intero array",
+        "No, la chiamata &arr[0] provoca un errore di compilazione",
+        "Sì, ma solo se l'array è stato inizializzato al momento della dichiarazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le espressioni `arr` e `&arr[0]` passano esattamente lo stesso indirizzo di memoria: l'indirizzo della prima cella dell'array.",
+        "Errato. Entrambe le opzioni passano un indirizzo, non una copia dei dati.",
+        "Errato. La sintassi `&arr[0]` è assolutamente valida.",
+        "Errato. Questa regola funziona indipendentemente da come e quando l'array è stato inizializzato."
+      ]
+    },
+    {
+      "id": "it_clang_1815",
+      "widget_id": "widget_clang_1815",
+      "topic": "Passaggio di array alle funzioni",
+      "q": "Cosa stamperà la chiamata alla funzione print_second(values)?",
+      "hint": "Fai attenzione allo scostamento di indirizzo *(arr + 1).",
+      "options": [
+        "15 (il secondo elemento dell'array, ottenuto tramite scostamento dall'indirizzo della prima cella)",
+        "5",
+        "6",
+        "L'indirizzo di memoria del secondo elemento"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `*(arr + 1)` esegue l'aritmetica dei puntatori: si sposta di 1 elemento di tipo `int` dall'indirizzo della prima cella e lo dereferenzia, ottenendo il valore 15.",
+        "Errato. 5 è il primo elemento `*(arr + 0)`.",
+        "Errato. L'aritmetica dei puntatori sposta l'indirizzo della dimensione del tipo (`sizeof(int)`), non aggiunge 1 al valore `5`.",
+        "Errato. L'operatore `*` dereferenzia il puntatore, restituendo il valore dell'elemento."
+      ]
+    },
+    {
+      "id": "it_clang_1816",
+      "widget_id": "widget_clang_1816",
+      "topic": "Passaggio di array alle funzioni",
+      "q": "Cosa succederà durante la compilazione e l'esecuzione di questo codice?",
+      "hint": "Il compilatore presta attenzione alla costante di dimensione all'interno delle parentesi quadre del parametro della funzione?",
+      "options": [
+        "Il codice verrà compilato ed eseguito con successo stampando 42, poiché la dimensione [100] nel parametro della funzione viene ignorata dal compilatore",
+        "Errore di compilazione, poiché la dimensione dell'array small è inferiore a 100",
+        "Errore a tempo di esecuzione (Buffer Overflow)",
+        "La funzione creerà una copia di 100 elementi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il numero all'interno delle parentesi quadre nei parametri della funzione (ad es. `int arr[100]`) viene completamente ignorato dal compilatore C. L'intera dichiarazione viene compilata come `int *arr`.",
+        "Errato. Il compilatore C non verifica la corrispondenza delle dimensioni degli array negli argomenti delle funzioni.",
+        "Errato. La funzione accede solo all'indice `arr[0]`, che esiste in `small`.",
+        "Errato. Non viene effettuata alcuna copia degli array."
+      ]
+    },
+    {
+      "id": "it_clang_1817",
+      "widget_id": "widget_clang_1817",
+      "topic": "Passaggio di array alle funzioni",
+      "q": "Cosa stamperà la funzione print_first se le viene passato &numbers[2]?",
+      "hint": "Determina a quale elemento specifico punta questo indirizzo.",
+      "options": [
+        "30, poiché alla funzione viene passato l'indirizzo dell'elemento con indice 2",
+        "10",
+        "20",
+        "Un errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione riceve un puntatore al terzo elemento dell'array (indice 2, con valore 30). Per la funzione questo indirizzo diventa quello iniziale (`*p` restituirà 30).",
+        "Errato. 10 è il valore di `numbers[0]`.",
+        "Errato. 20 è il valore di `numbers[1]`.",
+        "Errato. Il passaggio dell'indirizzo di qualsiasi elemento dell'array a una funzione che si aspetta un puntatore è del tutto corretto."
+      ]
+    },
+    {
+      "id": "it_clang_1818",
+      "widget_id": "widget_clang_1818",
+      "topic": "Passaggio di array alle funzioni",
+      "q": "In che modo il comportamento di sizeof(arr) in main differisce da sizeof(arr) all'interno della funzione check?",
+      "hint": "Le informazioni sul tipo di array a dimensione fissa vengono conservate quando viene passato a una funzione?",
+      "options": [
+        "In main restituisce la dimensione totale dell'array in byte, mentre all'interno di check restituisce la dimensione del puntatore int*",
+        "In entrambi i casi viene restituita la dimensione del puntatore",
+        "In entrambi i casi viene restituita la dimensione totale dell'array",
+        "All'interno di check si verificherà un errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel punto di dichiarazione in `main`, il compilatore conosce il tipo reale `int[5]` (dimensione 20 byte). Ma quando viene passato a `check`, l'array decade a un puntatore `int*`, e `sizeof` calcola la dimensione di questo puntatore.",
+        "Errato. Nel campo di visibilità della dichiarazione in `main`, l'array non è ancora decaduto.",
+        "Errato. All'interno della funzione `check`, la dimensione dell'array è già andata persa.",
+        "Errato. `sizeof(arr)` all'interno della funzione è valido e restituirà la dimensione del puntatore."
+      ]
+    },
+    {
+      "id": "it_clang_1819",
+      "widget_id": "widget_clang_1819",
+      "topic": "Passaggio di array alle funzioni",
+      "q": "Cosa stamperà printf nella funzione main dopo la chiamata a shift_ptr(nums)?",
+      "hint": "Rifletti se p++ modifica il puntatore originale in main o solo la sua copia locale.",
+      "options": [
+        "10 50 (la copia locale del puntatore si è spostata all'indice 1 e ha modificato nums[1])",
+        "50 20",
+        "10 20",
+        "Errore di accesso alla memoria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il puntatore `p` viene passato per valore (viene copiato l'indirizzo stesso). L'operazione `p++` sposta la copia locale del puntatore sull'elemento `nums[1]`. L'istruzione `*p = 50` modifica il valore di `nums[1]`. `nums[0]` rimane pari a 10.",
+        "Errato. `p++` ha spostato il puntatore sul secondo elemento (`nums[1]`), non sul primo.",
+        "Errato. La modifica tramite il puntatore spostato ha interessato l'array reale `nums`.",
+        "Errato. Lo spostamento all'interno dei limiti dell'array (dall'indice 0 all'indice 1) è assolutamente sicuro."
+      ]
+    },
+    {
+      "id": "it_clang_1820",
+      "widget_id": "widget_clang_1820",
+      "topic": "Passaggio di array alle funzioni",
+      "q": "Perché quando si passa un array tramite l'indirizzo della prima cella si passa quasi sempre esplicitamente un secondo parametro size?",
+      "hint": "Rifletti se il puntatore di per sé memorizza informazioni sui limiti della memoria allocata.",
+      "options": [
+        "Perché quando si passa un array avviene il suo decadimento a puntatore e la funzione perde le informazioni sul numero di elementi",
+        "Perché gli standard del C vietano i cicli senza una lunghezza passata",
+        "Per bloccare automaticamente l'accesso agli indici negativi",
+        "Non è obbligatorio, poiché la dimensione di qualsiasi array può essere ricavata tramite sizeof(arr) all'interno della funzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un puntatore memorizza solo l'indirizzo di memoria del primo elemento. Non «sa» quante celle sono allocate dopo di esso. Per evitare di andare oltre i limiti dell'array, la dimensione deve essere passata esplicitamente come argomento separato.",
+        "Errato. Il linguaggio C non limita la sintassi dei cicli.",
+        "Errato. Il passaggio della dimensione non crea barriere hardware di protezione automatiche.",
+        "Errato. All'interno della funzione `sizeof(arr)` restituirà solo la dimensione della variabile puntatore stessa."
+      ]
+    },
+    {
+      "id": "it_clang_1821",
+      "widget_id": "widget_clang_1821",
+      "topic": "Stampa di un array",
+      "q": "Cosa stamperà questo programma durante l'attraversamento dell'array fino al marcatore -1?",
+      "hint": "Gli elementi posizionati dopo il delimitatore entrano nel ciclo di stampa?",
+      "options": [
+        "10 20 30 ",
+        "10 20 30 -1 ",
+        "10 20 30 -1 40 50 ",
+        "Non stamperà nulla, si verificherà un errore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo stampa in sequenza gli elementi 10, 20 e 30. Non appena il contatore raggiunge l'indice 3 (dove si trova -1), la condizione arr[i] != -1 diventa falsa e l'attraversamento viene interrotto. I valori 40 e 50 non vengono stampati.",
+        "Errato. L'elemento -1 è un marcatore di arresto e non entra nel corpo del ciclo per la stampa.",
+        "Errato. L'attraversamento si interrompe al primo marcatore -1 trovato.",
+        "Errato. La funzione funziona correttamente e stamperà i primi 3 elementi."
+      ]
+    },
+    {
+      "id": "it_clang_1822",
+      "widget_id": "widget_clang_1822",
+      "topic": "Stampa di un array",
+      "q": "Cosa verrà visualizzato sullo schermo durante l'esecuzione di questo ciclo con dereferenziazione e avanzamento del puntatore?",
+      "hint": "Il marcatore di arresto viene stampato a condizione che *p != -1?",
+      "options": [
+        "5 15 25 ",
+        "5 15 25 -1 ",
+        "15 25 ",
+        "Ciclo infinito a causa di un lavoro errato con il puntatore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione *p++ restituisce prima il valore all'indirizzo corrente per printf, poi sposta il puntatore p all'elemento successivo. Il ciclo termina quando *p diventa uguale a -1.",
+        "Errato. La condizione *p != -1 impedisce la stampa del marcatore stesso.",
+        "Errato. L'output inizia dal primissimo elemento (5).",
+        "Errato. L'incremento postfisso p++ garantisce l'avanzamento lungo l'array."
+      ]
+    },
+    {
+      "id": "it_clang_1823",
+      "widget_id": "widget_clang_1823",
+      "topic": "Stampa di un array",
+      "q": "Quale valore della variabile count verrà stampato alla fine della riga dopo l'attraversamento dell'array?",
+      "hint": "Conta solo gli elementi che si trovavano rigorosamente prima del marcatore.",
+      "options": [
+        "1 2 3 4 | count=4",
+        "1 2 3 4 -1 | count=5",
+        "1 2 3 4 | count=5",
+        "count=0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo stamperà 4 elementi utili (1, 2, 3, 4) ed eseguirà count++ esattamente 4 volte. All'elemento -1 il ciclo terminerà e il valore finale di count sarà 4.",
+        "Errato. Il marcatore -1 non viene elaborato nel corpo del ciclo e non incrementa count.",
+        "Errato. La variabile count viene conteggiata solo per gli elementi diversi da -1.",
+        "Errato. Il ciclo eseguirà 4 iterazioni."
+      ]
+    },
+    {
+      "id": "it_clang_1824",
+      "widget_id": "widget_clang_1824",
+      "topic": "Stampa di un array",
+      "q": "A quale conseguenza porterà la chiamata print_arr(arr) per un array in cui manca il marcatore -1?",
+      "hint": "Rifletti su dove è fissato il limite di arresto del ciclo in assenza di un elemento terminatore.",
+      "options": [
+        "Si verificherà un comportamento indefinito (Undefined Behavior) e un potenziale superamento dei limiti dell'array durante la ricerca di -1 nella memoria non pertinente",
+        "Il programma stamperà solo i primi 3 elementi e si arresterà correttamente",
+        "Il compilatore restituirà un errore in fase di build",
+        "L'array aggiungerà automaticamente -1 alla fine"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché la lunghezza dell'array non viene passata esplicitamente e il marcatore -1 è assente, il ciclo continuerà a leggere la memoria oltre arr[2] alla ricerca del valore -1, causando Undefined Behavior.",
+        "Errato. Senza un controllo esplicito della dimensione o la presenza di -1, il ciclo non si fermerà al 3° elemento.",
+        "Errato. L'errore si verifica durante l'esecuzione (runtime) e non durante la compilazione.",
+        "Errato. In C gli array non modificano automaticamente il proprio contenuto."
+      ]
+    },
+    {
+      "id": "it_clang_1825",
+      "widget_id": "widget_clang_1825",
+      "topic": "Stampa di un array",
+      "q": "Cosa stamperà il programma se il primissimo elemento dell'array è -1?",
+      "hint": "Il corpo del ciclo while con precondizione verrà eseguito almeno una volta?",
+      "options": [
+        "La stringa DONE (il ciclo non eseguirà alcuna iterazione)",
+        "-1 DONE",
+        "-1 10 20 30 DONE",
+        "Un errore di fuoriuscita dai limiti dell'array"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Alla primissima iterazione con i = 0 la condizione data[0] != -1 risulterà falsa. Il ciclo while non verrà eseguito nemmeno una volta e il programma stamperà subito DONE.",
+        "Errato. La condizione while viene verificata prima dell'esecuzione del corpo del ciclo, quindi -1 non verrà stampato.",
+        "Errato. Gli elementi rimanenti 10, 20, 30 vengono ignorati al primo delimitatore.",
+        "Errato. La lettura dell'elemento all'indice 0 è del tutto legittima."
+      ]
+    },
+    {
+      "id": "it_clang_1826",
+      "widget_id": "widget_clang_1826",
+      "topic": "Stampa di un array",
+      "q": "Qual è la differenza principale tra il funzionamento di questo ciclo do-while e del ciclo while durante la stampa degli elementi?",
+      "hint": "Ricorda l'ordine di esecuzione delle istruzioni di stampa e della verifica della condizione nel ciclo do-while.",
+      "options": [
+        "Il ciclo do-while stamperà il marcatore -1 stesso (output: 100 200 -1 ), poiché la stampa avviene prima della verifica della condizione di uscita",
+        "Il ciclo do-while non stamperà nulla",
+        "L'output sarà del tutto identico al ciclo while (100 200 )",
+        "Si verificherà un ciclo infinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella struttura do-while il corpo viene prima eseguito (stampa arr[i]), e solo successivamente viene verificata la condizione `arr[i++] != -1`. Pertanto con i = 2 verrà stampato -1 e poi il ciclo si interromperà.",
+        "Errato. Il ciclo do-while esegue garantito almeno un'iterazione.",
+        "Errato. A differenza di while, do-while farà in tempo a stampare il delimitatore.",
+        "Errato. L'incremento postfisso i++ fa avanzare correttamente l'indice."
+      ]
+    },
+    {
+      "id": "it_clang_1827",
+      "widget_id": "widget_clang_1827",
+      "topic": "Stampa di un array",
+      "q": "Quale sarà il formato esatto dell'output della funzione show per l'array {7, 8, 9, -1}?",
+      "hint": "Fai attenzione se il separatore viene stampato prima del primissimo elemento.",
+      "options": [
+        "7, 8, 9",
+        ", 7, 8, 9",
+        "7, 8, 9, -1",
+        "7 8 9 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La condizione `if (i > 0) printf(\", \");` stampa la virgola solo prima del 2° elemento e di quelli successivi. Gli elementi 7, 8 e 9 verranno stampati separati da virgola e spazio senza separatori finali.",
+        "Errato. Con i = 0 la condizione i > 0 è falsa, quindi la virgola iniziale non verrà stampata.",
+        "Errato. Il marcatore -1 non viene stampato.",
+        "Errato. Il separatore è la stringa \", \", non uno spazio singolo."
+      ]
+    },
+    {
+      "id": "it_clang_1828",
+      "widget_id": "widget_clang_1828",
+      "topic": "Stampa di un array",
+      "q": "Quale valore restituirà la funzione sum_until_sentinel per l'array {10, -5, 15, -1, 100}?",
+      "hint": "Vengono presi in considerazione gli elementi presi dopo il marcatore di arresto?",
+      "options": [
+        "20 (somma degli elementi 10 + (-5) + 15 fino al marcatore -1)",
+        "120",
+        "19",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione somma gli elementi: 10 + (-5) + 15 = 20. Non appena il puntatore raggiunge -1, il ciclo si interrompe e il valore 100 dopo il marcatore viene ignorato.",
+        "Errato. Il valore 100 si trova dopo il delimitatore e non partecipa alla somma.",
+        "Errato. Il marcatore -1 non viene aggiunto alla somma totale.",
+        "Errato. La variabile sum accumula correttamente i valori."
+      ]
+    },
+    {
+      "id": "it_clang_1829",
+      "widget_id": "widget_clang_1829",
+      "topic": "Stampa di un array",
+      "q": "Come gestirà il ciclo i numeri negativi -2 e -3 prima del marcatore -1?",
+      "hint": "Verifica se la condizione controlla un qualsiasi numero negativo o solo un valore specifico.",
+      "options": [
+        "Stamperà -2 -3 5 , poiché viene verificata l'uguaglianza stretta *p != -1",
+        "Interromperà l'esecuzione al numero -2, prendendo il primo numero negativo come marcatore",
+        "Ignorerà i numeri negativi e stamperà solo 5",
+        "Provocherà un errore di compilazione a causa del puntatore nel ciclo for"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La condizione `*p != -1` verifica la corrispondenza esatta con il valore -1. Gli altri numeri negativi (-2, -3) sono considerati dati normali e vengono stampati a schermo.",
+        "Errato. Il marcatore di arresto è rigorosamente il numero -1, non un qualsiasi numero negativo.",
+        "Errato. I numeri -2 e -3 verranno stampati.",
+        "Errato. L'inizializzazione del puntatore `int *p = data` all'interno del ciclo for è del tutto legale in C99+."
+      ]
+    },
+    {
+      "id": "it_clang_1830",
+      "widget_id": "widget_clang_1830",
+      "topic": "Stampa di un array",
+      "q": "Quale funzione importante svolge la condizione composta i < max_len && arr[i] != -1?",
+      "hint": "Rifletti su cosa accadrebbe se nell'array passato mancasse accidentalmente -1.",
+      "options": [
+        "Fornisce una «doppia protezione»: previene il buffer overflow se il marcatore -1 manca per errore nell'array",
+        "Filtra solo gli elementi dispari dell'array",
+        "Consente di velocizzare la stampa dell'array di due volte",
+        "È richiesta dallo standard C per l'uso della funzione printf"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La condizione `i < max_len` garantisce che il ciclo non vada mai oltre i limiti della memoria allocata, anche se l'array viene passato senza il marcatore finale -1.",
+        "Errato. La condizione controlla l'indice e il valore, non la parità.",
+        "Errato. La condizione composta non influisce in modo fondamentale sulla velocità di esecuzione.",
+        "Errato. È un pattern di programmazione sicura, non un requisito di printf."
+      ]
+    },
+    {
+      "id": "it_clang_1831",
+      "widget_id": "widget_clang_1831",
+      "topic": "Stampa di un array",
+      "q": "Cosa succederà quando viene chiamata la funzione print_sentinel con una struttura vuota composta solo dal delimitatore {-1}?",
+      "hint": "Il corpo del ciclo si attiverà se la condizione di controllo restituisce falso proprio all'inizio?",
+      "options": [
+        "Il ciclo while terminerà immediatamente al primissimo controllo della condizione e il programma non stamperà nulla",
+        "Il programma stamperà il numero -1",
+        "Si verificherà un arresto anomalo a causa dell'accesso alla cella zero",
+        "Si verificherà un ciclo infinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con i = 0 la condizione arr[0] != -1 è subito falsa, poiché arr[0] == -1. Il corpo del ciclo non verrà eseguito nemmeno una volta.",
+        "Errato. Il controllo viene eseguito prima di entrare nel ciclo, quindi -1 non viene stampato.",
+        "Errato. L'espressione arr[0] accede a una memoria allocata correttamente.",
+        "Errato. La condizione di terminazione viene soddisfatta all'istante."
+      ]
+    },
+    {
+      "id": "it_clang_1832",
+      "widget_id": "widget_clang_1832",
+      "topic": "Stampa di un array",
+      "q": "Perché nella funzione print_with_check viene utilizzato il controllo di input size <= 0?",
+      "hint": "Ricorda il ruolo delle strutture guard clause durante l'elaborazione dei valori limite.",
+      "options": [
+        "Per intercettare il passaggio di una dimensione vuota o non valida e stampare in modo sicuro il messaggio personalizzato [Empty]",
+        "Per riallocare automaticamente la memoria dell'array",
+        "È un requisito del compilatore C per il funzionamento del ciclo for",
+        "Per azzerare tutti gli elementi dell'array"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il controllo «guard clause» (size <= 0) consente di evitare iterazioni insensate del ciclo e fornisce uno stato esplicito del fatto che l'array è vuoto.",
+        "Errato. Il controllo della dimensione non gestisce la memoria dinamica.",
+        "Errato. Il ciclo for gestirebbe correttamente di per sé size = 0, semplicemente non stampando nulla.",
+        "Errato. La funzione opera in modalità «sola lettura» (const int *)."
+      ]
+    },
+    {
+      "id": "it_clang_1833",
+      "widget_id": "widget_clang_1833",
+      "topic": "Stampa di un array",
+      "q": "Come si determina in C il fatto che un array di stringhe (array char) è vuoto?",
+      "hint": "Rifletti su quale byte deve trovarsi all'indice zero di una stringa C vuota.",
+      "options": [
+        "Il suo primissimo carattere è subito uguale al carattere di terminazione nullo '\\0' (indice 0)",
+        "La sua dimensione sizeof è sempre pari a 0 byte",
+        "Il puntatore ad esso è automaticamente uguale a NULL",
+        "La stringa viene riempita con caratteri spazio ' '"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Una stringa vuota in C è un array il cui primo elemento è il byte nullo finale `'\\0'`. La lunghezza di tale stringa `strlen` è pari a 0.",
+        "Errato. L'array `char empty_str[] = \"\"` ha una dimensione di 1 byte (per il carattere `'\\0'`).",
+        "Errato. L'array allocato ha un indirizzo di memoria valido diverso da NULL.",
+        "Errato. Lo spazio è un carattere stampabile con codice ASCII 32, non una stringa vuota."
+      ]
+    },
+    {
+      "id": "it_clang_1834",
+      "widget_id": "widget_clang_1834",
+      "topic": "Stampa di un array",
+      "q": "Cosa stamperà la funzione print_formatted quando viene passato un array vuoto con delimitatore {-1}?",
+      "hint": "Verifica se le parentesi di apertura e chiusura verranno stampate con 0 iterazioni del ciclo.",
+      "options": [
+        "[] — parentesi formate correttamente senza elementi interni",
+        "[]",
+        "[-1]",
+        "Non stamperà nulla"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione stamperà la parentesi aperta `[`, il ciclo per l'array `{-1}` farà 0 iterazioni e verrà subito stampata la parentesi chiusa `]`.",
+        "Errato. La virgola viene stampata solo all'interno del ciclo `if (i > 0)`, che non viene eseguito.",
+        "Errato. Il marcatore -1 non viene stampato nel corpo del ciclo.",
+        "Errato. Le parentesi `[` e `]` vengono stampate fuori dal ciclo."
+      ]
+    },
+    {
+      "id": "it_clang_1835",
+      "widget_id": "widget_clang_1835",
+      "topic": "Stampa di un array",
+      "q": "Perché il controllo arr == NULL || size == 0 è obbligatorio durante l'elaborazione di array potenzialmente vuoti?",
+      "hint": "Rifletti sui rischi del tentativo di accesso a un indirizzo di memoria nullo.",
+      "options": [
+        "Protegge il programma dalla dereferenziazione di un puntatore nullo (Segmentation Fault) e dall'elaborazione di dati vuoti",
+        "Inizializza automaticamente il puntatore arr con un indirizzo valido",
+        "Senza di esso la funzione genererà un errore di compilazione",
+        "Converte NULL in un array vuoto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il tentativo di leggere `arr[0]` con `arr == NULL` porterà al blocco del programma (Segmentation Fault). L'operatore `||` utilizza la valutazione a corto circuito, prevenendo la chiamata con un puntatore nullo.",
+        "Errato. Il controllo legge solo il puntatore e non alloca memoria per esso.",
+        "Errato. Il C consente di scrivere codice senza controlli, ma ciò causerà errori durante l'esecuzione.",
+        "Errato. Qui non avviene alcuna conversione di tipi o indirizzi."
+      ]
+    },
+    {
+      "id": "it_clang_1836",
+      "widget_id": "widget_clang_1836",
+      "topic": "Stampa di un array",
+      "q": "A quanto sarà uguale la variabile count dopo il conteggio degli elementi nell'array {-1}?",
+      "hint": "Il valore della variabile count aumenterà se il marcatore viene incontrato all'inizio?",
+      "options": [
+        "0, poiché nell'array non sono presenti elementi utili",
+        "1",
+        "-1",
+        "A un valore indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La condizione `arr[0] != -1` è falsa alla 0-esima iterazione, quindi `count++` non verrà chiamato nemmeno una volta e la variabile manterrà il valore iniziale 0.",
+        "Errato. Il marcatore -1 non viene considerato un elemento utile.",
+        "Errato. Il contatore non può diminuire.",
+        "Errato. La variabile è inizializzata a zero e non è soggetta a comportamento indefinito."
+      ]
+    },
+    {
+      "id": "it_clang_1837",
+      "widget_id": "widget_clang_1837",
+      "topic": "Stampa di un array",
+      "q": "Perché il ciclo do-while non è adatto per stampare un array vuoto con delimitatore {-1}?",
+      "hint": "Quante iterazioni garantite esegue la struttura do-while?",
+      "options": [
+        "Il ciclo do-while esegue sempre il corpo almeno una volta, motivo per cui stamperà erroneamente il delimitatore -1 stesso",
+        "Il ciclo do-while non si compila con gli array",
+        "Il ciclo do-while entrerà in un ciclo infinito",
+        "Il ciclo do-while cancellerà automaticamente il delimitatore -1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per sua natura `do-while` esegue prima le istruzioni (stampa `arr[0]`, cioè `-1`), e solo successivamente controlla la condizione `while`. Per le strutture dati vuote occorre utilizzare `while` o `for` con precondizione.",
+        "Errato. La sintassi del ciclo con gli array è assolutamente valida.",
+        "Errato. L'incremento postfisso `i++` funzionerà correttamente e terminerà il ciclo alla seconda iterazione.",
+        "Errato. La stampa tramite `printf` non modifica i dati dell'array."
+      ]
+    },
+    {
+      "id": "it_clang_1838",
+      "widget_id": "widget_clang_1838",
+      "topic": "Stampa di un array",
+      "q": "Cosa succederà quando si passa l'array data[] = {-1} alla funzione process_array?",
+      "hint": "Segui la ramificazione del programma durante la dereferenziazione di *arr nella condizione if (*arr == -1).",
+      "options": [
+        "Si attiverà la condizione *arr == -1, verrà stampato \"Array is empty\" e la funzione terminerà l'esecuzione tramite return",
+        "Verrà stampato \"First element: -1\"",
+        "Si verificherà un errore di accesso alla memoria",
+        "La funzione entrerà in un'attesa infinita di input"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La dereferenziazione `*arr` fornisce il valore del primo elemento `arr[0]`, che è pari a -1. La condizione `if (*arr == -1)` è vera, viene stampato il messaggio e `return` esce anticipatamente dalla funzione.",
+        "Errato. La seconda riga del codice di output non verrà eseguita a causa dell'istruzione `return`.",
+        "Errato. Il puntatore punta a un array inizializzato `data`.",
+        "Errato. La funzione non esegue operazioni di lettura (scanf/getchar)."
+      ]
+    },
+    {
+      "id": "it_clang_1839",
+      "widget_id": "widget_clang_1839",
+      "topic": "Stampa di un array",
+      "q": "Cosa stamperà il programma per un array inizializzato come int arr[5] = {0}, se come delimitatore è stato scelto -1?",
+      "hint": "Il numero 0 è un marcatore di arresto quando si verifica esplicitamente la disuguaglianza con -1?",
+      "options": [
+        "0 0 0 0 0 (poiché 0 è un numero valido e non il marcatore -1)",
+        "Non stamperà nulla, considerando 0 come un array vuoto",
+        "-1 -1 -1 -1 -1",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'inizializzazione parziale `{0}` riempie l'intero array di zeri. Poiché il marcatore di arresto è `-1`, gli zeri vengono percepiti come dati normali e il ciclo stamperà tutti e 5 gli zeri.",
+        "Errato. Lo zero non è riconosciuto come marcatore di arresto se si controlla esplicitamente `arr[i] != -1`.",
+        "Errato. L'array è riempito di zeri, non di numeri -1.",
+        "Errato. L'inizializzazione `{0}` è del tutto corretta."
+      ]
+    },
+    {
+      "id": "it_clang_1840",
+      "widget_id": "widget_clang_1840",
+      "topic": "Stampa di un array",
+      "q": "Quale valore restituirà la funzione print_and_count(empty) per l'array {-1} e cosa stamperà main?",
+      "hint": "Il valore iniziale del contatore count cambierà per l'array {-1}?",
+      "options": [
+        "Restituirà 0 e stamperà \"Printed: 0\"",
+        "Restituirà 1 e stamperà \"Printed: 1\"",
+        "Restituirà -1 e stamperà \"Printed: -1\"",
+        "Il programma terminerà con un errore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per l'array vuoto `empty` il ciclo `while (arr[count] != -1)` non farà alcun passo. La variabile `count` rimarrà pari a 0, la funzione restituirà 0 e `main` stamperà `Printed: 0`.",
+        "Errato. L'incremento `count++` non avverrà.",
+        "Errato. La variabile `count` è stata inizializzata a zero.",
+        "Errato. Il codice viene eseguito correttamente e senza errori."
+      ]
+    }
+  ]
+}

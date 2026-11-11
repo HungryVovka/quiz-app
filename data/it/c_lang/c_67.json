@@ -1,0 +1,605 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2051",
+      "widget_id": "widget_clang_2051",
+      "topic": "Relazione con le stringhe C",
+      "q": "Cosa stamperà il programma durante il conteggio della lunghezza della stringa \"Hello\" mediante un ciclo che verifica il terminatore '\\0'?",
+      "hint": "Il carattere di servizio '\\0' rientra nella lunghezza calcolata della stringa?",
+      "options": [
+        "5",
+        "6",
+        "4",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le lettere 'H', 'e', 'l', 'l', 'o' verranno conteggiate dal ciclo. Al 6° elemento `str[5]`, pari a `'\\0'`, il ciclo si interromperà e `len` rimarrà pari a 5.",
+        "Errato. 6 è la dimensione completa dell'array `char[]` compreso `'\\0'`, ma il terminatore stesso non rientra nella lunghezza della stringa.",
+        "Errato. Tutte e 5 le lettere della parola \"Hello\" sono state conteggiate.",
+        "Errato. La stringa non è vuota, il ciclo eseguirà 5 iterazioni."
+      ]
+    },
+    {
+      "id": "it_clang_2052",
+      "widget_id": "widget_clang_2052",
+      "topic": "Relazione con le stringhe C",
+      "q": "Cosa stamperà lo specificatore %s in printf se il terminatore nullo '\\0' viene inserito esplicitamente a metà di un array di caratteri?",
+      "hint": "Rifletti su quale carattere le funzioni di gestione delle stringhe interrompono la lettura.",
+      "options": [
+        "Code",
+        "Code123",
+        "Code 123",
+        "Code\\0123"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Tutte le funzioni per le stringhe in C (incluso `%s` in `printf`) considerano il primo zero di terminazione come la fine della stringa. La stampa si fermerà subito dopo la parola \"Code\".",
+        "Errato. Gli elementi '1', '2', '3' si trovano dopo il primo `'\\0'` e non vengono stampati.",
+        "Errato. Il carattere spazio non è presente nell'array.",
+        "Errato. Il carattere nullo interrompe la lettura della stringa e non verrà stampato."
+      ]
+    },
+    {
+      "id": "it_clang_2053",
+      "widget_id": null,
+      "topic": "Relazione con le stringhe C",
+      "q": "In cosa consiste la somiglianza concettuale tra il carattere nullo '\\0' nelle stringhe C e il delimitatore (tappo / sentinel) negli array numerici?",
+      "hint": "Quale ruolo svolgono i valori di marcatore speciali durante l'attraversamento di un array senza passarne la dimensione?",
+      "options": [
+        "Entrambi indicano la fine della parte utilizzata dell'array, consentendo di scorrere i dati senza trasmetterne la lunghezza esplicita",
+        "Entrambi sono comandi di servizio del compilatore per l'allocazione dinamica della memoria",
+        "Entrambi azzerano forzatamente tutti gli elementi successivi dell'array",
+        "Entrambi possono essere utilizzati solo all'interno dell'istruzione switch"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Una stringa C è un caso particolare di array con delimitatore (tappo), dove il ruolo di marcatore di fine è svolto dal byte `'\\0'`. Grazie a questo, funzioni come `strlen` o `strcpy` accettano solo il puntatore all'inizio.",
+        "Errato. Il carattere `'\\0'` e i delimitatori non gestiscono la memoria dinamica.",
+        "Errato. La presenza del marcatore non modifica i valori dei byte successivi nel buffer.",
+        "Errato. I delimitatori possono essere verificati in qualsiasi ciclo (`for`, `while`)."
+      ]
+    },
+    {
+      "id": "it_clang_2054",
+      "widget_id": "widget_clang_2054",
+      "topic": "Relazione con le stringhe C",
+      "q": "Cosa restituirà la funzione my_strlen, analoga alla funzione di libreria strlen, nel calcolare la lunghezza della stringa \"C-String\"?",
+      "hint": "Conta il numero di caratteri visibili nel valore letterale, incluso il trattino.",
+      "options": [
+        "8",
+        "9",
+        "7",
+        "1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La stringa \"C-String\" è composta da 8 caratteri: 'C', '-', 'S', 't', 'r', 'i', 'n', 'g'. La funzione sposta il puntatore fino a incontrare `'\\0'` e restituisce 8.",
+        "Errato. 9 è la memoria occupata considerando `'\\0'`. ",
+        "Errato. Il trattino '-' è un carattere a tutti gli effetti e viene conteggiato.",
+        "Errato. La funzione conterà l'intera stringa fino alla fine."
+      ]
+    },
+    {
+      "id": "it_clang_2055",
+      "widget_id": "widget_clang_2055",
+      "topic": "Relazione con le stringhe C",
+      "q": "Cosa stamperà il programma dopo la copia carattere per carattere della stringa da src a dst con la scrittura obbligatoria dello zero di terminazione?",
+      "hint": "Il carattere '\\0' viene mostrato esplicitamente quando si stampa una stringa tramite lo specificatore %s?",
+      "options": [
+        "Array",
+        "Array\\0",
+        "Comportamento indefinito (Garbage values)",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La copia degli elementi 'A','r','r','a','y' termina con la scrittura manuale di `dst[i] = '\\0'`. Questo forma una stringa C valida \"Array\".",
+        "Errato. Il carattere `'\\0'` è di servizio e non viene mostrato nella stampa con `%s`.",
+        "Errato. Poiché lo zero di terminazione è stato scritto esplicitamente (`dst[i] = '\\0'`), non si verifica alcun comportamento indefinito.",
+        "Errato. La stringa è stata copiata correttamente."
+      ]
+    },
+    {
+      "id": "it_clang_2056",
+      "widget_id": null,
+      "topic": "Relazione con le stringhe C",
+      "q": "Cosa succederà se un array di caratteri NON termina con il terminatore nullo '\\0' e viene passato alla funzione printf(\"%s\", ...)?",
+      "hint": "Rifletti su dove si fermerà la lettura della memoria se nell'array non è presente un marcatore di fine.",
+      "options": [
+        "La funzione uscirà dai limiti dell'array e continuerà a leggere la memoria estranea fino al primo byte nullo (Undefined Behavior)",
+        "Il compilatore restituirà un errore in fase di compilazione",
+        "Il programma stamperà solo il primo carattere e terminerà",
+        "L'array verrà automaticamente riempito di zeri"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'assenza del delimitatore `'\\0'` rompe la logica delle stringhe C. La funzione non sa dove fermarsi e legge la memoria oltre i limiti dell'array, causando un output errato o un crash (Segmentation Fault).",
+        "Errato. In C un array di caratteri senza `'\\0'` è sintatticamente legale, il compilatore non può tracciarlo in tutti i casi.",
+        "Errato. La funzione leggerà i byte successivi uno dopo l'altro.",
+        "Errato. La memoria non viene integrata automaticamente."
+      ]
+    },
+    {
+      "id": "it_clang_2057",
+      "widget_id": "widget_clang_2057",
+      "topic": "Relazione con le stringhe C",
+      "q": "Cosa stamperà il programma che confronta la lunghezza della parte utilizzata della stringa (count) e la dimensione totale dell'array allocato (sizeof)?",
+      "hint": "Ricorda la differenza tra il numero di caratteri prima di '\\0' e la dimensione fisica del buffer.",
+      "options": [
+        "2 10",
+        "2 3",
+        "3 10",
+        "10 10"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La lunghezza della stringa \"Hi\" fino al delimitatore `'\\0'` è 2 (`count` = 2). La dimensione totale dell'array dichiarato `char str[10]` è invece di 10 byte (`sizeof` = 10).",
+        "Errato. `sizeof(str)` restituisce la dimensione del buffer dichiarato (10), non la dimensione del valore letterale.",
+        "Errato. Il carattere `'\\0'` ferma il ciclo, quindi `count` è pari a 2.",
+        "Errato. La variabile `count` conta solo i caratteri prima di `'\\0'`."
+      ]
+    },
+    {
+      "id": "it_clang_2058",
+      "widget_id": "widget_clang_2058",
+      "topic": "Relazione con le stringhe C",
+      "q": "Cosa stamperà il programma se nella stringa \"Hello World\" si sostituisce lo spazio con il terminatore nullo '\\0'?",
+      "hint": "Quale diventerà il nuovo marcatore di fine stringa per le funzioni di output?",
+      "options": [
+        "Hello",
+        "Hello World",
+        "HelloWorld",
+        "World"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sostituzione dello spazio `str[5]` con `'\\0'` crea un nuovo delimitatore. Per qualsiasi funzione di output, la stringa ora termina subito dopo la parola \"Hello\".",
+        "Errato. Incontrando il nuovo `'\\0'`, l'output si interromperà senza raggiungere \"World\".",
+        "Errato. Lo spazio non è stato rimosso, è stato sostituito da un byte di terminazione.",
+        "Errato. La stampa inizia dall'inizio dell'array (`str[0]`)."
+      ]
+    },
+    {
+      "id": "it_clang_2059",
+      "widget_id": null,
+      "topic": "Relazione con le stringhe C",
+      "q": "Quale valore numerico intero (codice ASCII) possiede il terminatore nullo '\\0'?",
+      "hint": "Fai attenzione all'interpretazione numerica del carattere NUL nella tabella ASCII.",
+      "options": [
+        "0",
+        "48",
+        "-1",
+        "32"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il carattere `'\\0'` (NUL) ha codice numerico `0` nella tabella ASCII. Proprio per questo l'espressione `str[i] != '\\0'` è assolutamente equivalente a `str[i] != 0` o semplicemente `str[i]`.",
+        "Errato. 48 è il codice ASCII del carattere cifra `'0'`. ",
+        "Errato. -1 è `EOF` o un tipico delimitatore numerico, non il codice ASCII NUL.",
+        "Errato. 32 è il codice ASCII del carattere spazio `' '`."
+      ]
+    },
+    {
+      "id": "it_clang_2060",
+      "widget_id": "widget_clang_2060",
+      "topic": "Relazione con le stringhe C",
+      "q": "Cosa stamperà il programma sommandone i codici ASCII dei caratteri della stringa \"Cat\" fino a incontrare il terminatore nullo '\\0'?",
+      "hint": "Somma i codici dei caratteri 'C' (67), 'a' (97) e 't' (116).",
+      "options": [
+        "280",
+        "279",
+        "347",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Codici ASCII: 'C' = 67, 'a' = 97, 't' = 116. Somma: $67 + 97 + 116 = 280$. Sul carattere `'\\0'` (valore 0) il ciclo si arresta.",
+        "Errato. Tutti e 3 i caratteri sono stati conteggiati correttamente: $67 + 97 + 116 = 280$.",
+        "Errato. La somma dei codici delle lettere della parola \"Cat\" è pari a 280.",
+        "Errato. Il puntatore scorre tutti e tre i caratteri prima dello zero."
+      ]
+    },
+    {
+      "id": "it_clang_2061",
+      "widget_id": "widget_clang_2061",
+      "topic": "Copia di stringhe C",
+      "q": "Cosa stamperà il programma durante la copia di una stringa da src a dst tramite puntatori e l'inserimento esplicito di '\\0'?",
+      "hint": "Verifica se viene creata una stringa C valida dopo l'esecuzione di *dst = '\\0'.",
+      "options": [
+        "Copy",
+        "Copy\\0",
+        "C",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione copia tutti i caratteri 'C','o','p','y', e al termine del ciclo aggiunge esplicitamente `*dst = '\\0'`. La stampa produrrà la stringa corretta \"Copy\".",
+        "Errato. Il carattere nullo funge da marcatore di fine e non viene stampato letteralmente come i caratteri '\\' e '0'.",
+        "Errato. Sono stati copiati tutti e 4 i caratteri della stringa originale.",
+        "Errato. Poiché lo zero di terminazione è stato scritto esplicitamente, la stringa è formata correttamente."
+      ]
+    },
+    {
+      "id": "it_clang_2062",
+      "widget_id": "widget_clang_2062",
+      "topic": "Confronto di stringhe C",
+      "q": "Cosa stamperà il programma che esegue un confronto lessicografico tra le stringhe \"abc\" e \"abd\" tramite la differenza dei codici ASCII del primo carattere differente?",
+      "hint": "Sottrai il codice ASCII di 'd' dal codice ASCII di 'c'.",
+      "options": [
+        "-1",
+        "0",
+        "1",
+        "-97"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I primi due caratteri coincidono ('a', 'b'). In terza posizione 'c' (ASCII 99) viene confrontato con 'd' (ASCII 100). Differenza: $99 - 100 = -1$.",
+        "Errato. 0 viene restituito solo in caso di perfetta coincidenza di tutti i caratteri di entrambe le stringhe.",
+        "Errato. Un valore positivo verrebbe restituito se la prima stringa fosse lessicograficamente maggiore.",
+        "Errato. Vengono confrontati i codici ASCII dei caratteri 'c' e 'd', non di 'a'."
+      ]
+    },
+    {
+      "id": "it_clang_2063",
+      "widget_id": "widget_clang_2063",
+      "topic": "Rimozione di un carattere da una stringa C",
+      "q": "Cosa stamperà il programma rimuovendo il carattere 'b' all'indice 1 dalla stringa \"abcde\" mediante scorrimento degli elementi a sinistra?",
+      "hint": "Osserva quali caratteri si spostano nella posizione liberata dall'elemento 'b'.",
+      "options": [
+        "acde",
+        "ade",
+        "abcde",
+        "a"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli elementi a partire dalla posizione 1 si spostano a sinistra: `str[1] = str[2]` ('c'), `str[2] = str[3]` ('d'), `str[3] = str[4]` ('e'), `str[4] = str[5]` ('\\0'). Risultato: \"acde\".",
+        "Errato. Il carattere 'c' non è stato rimosso, si è spostato al posto di 'b'.",
+        "Errato. L'array è stato modificato dallo scorrimento ciclico.",
+        "Errato. Il terminatore '\\0' si è spostato in posizione 4, non in 1."
+      ]
+    },
+    {
+      "id": "it_clang_2064",
+      "widget_id": "widget_clang_2064",
+      "topic": "Inserimento di un carattere in una stringa C",
+      "q": "Cosa stamperà il programma inserendo un trattino '-' in posizione 2 della stringa \"abcd\" mediante scorrimento degli elementi a destra?",
+      "hint": "Rifletti su come cambieranno gli indici dei caratteri 'c' e 'd' dopo aver liberato la posizione 2.",
+      "options": [
+        "ab-cd",
+        "abcd",
+        "ab-c",
+        "ab"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo si muove da destra a sinistra, spostando a destra compreso il terminatore nullo: `str[5] = str[4]` ('\\0'), `str[4] = str[3]` ('d'), `str[3] = str[2]` ('c'). Successivamente all'indice 2 viene scritto '-'. Risultato: \"ab-cd\".",
+        "Errato. Gli elementi sono stati spostati e il trattino è stato inserito con successo.",
+        "Errato. Il carattere 'd' e lo zero di terminazione non sono andati persi, sono stati spostati di un passo a destra.",
+        "Errato. La stringa non è stata troncata, la sua lunghezza è aumentata di 1."
+      ]
+    },
+    {
+      "id": "it_clang_2065",
+      "widget_id": "widget_clang_2065",
+      "topic": "Conteggio degli elementi in una stringa C",
+      "q": "Cosa stamperà il programma calcolando il numero di occorrenze del carattere 'a' nella stringa \"banana\" fino allo zero di terminazione?",
+      "hint": "Conta il numero di lettere 'a' nella parola \"banana\".",
+      "options": [
+        "3",
+        "2",
+        "6",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella parola \"banana\" la lettera 'a' corrisponde agli elementi con indici 1, 3, 5. In totale 3 occorrenze.",
+        "Errato. Non sono state conteggiate tutte le lettere 'a'.",
+        "Errato. 6 è la lunghezza totale della stringa escluso il terminatore.",
+        "Errato. La lettera 'a' è presente nella stringa."
+      ]
+    },
+    {
+      "id": "it_clang_2066",
+      "widget_id": null,
+      "topic": "Inserimento e rimozione nelle stringhe C",
+      "q": "Perché negli algoritmi di inserimento e rimozione dei caratteri in una stringa C è CRUCIALE spostare o aggiungere correttamente il terminatore nullo '\\0'?",
+      "hint": "Come fanno le funzioni di output a sapere dove finisce l'array di caratteri?",
+      "options": [
+        "Senza '\\0' le funzioni di gestione delle stringhe usciranno dai limiti del buffer alla ricerca della fine della stringa",
+        "Questo aumenta automaticamente la dimensione fisica del buffer di memoria allocato",
+        "Il compilatore restituirà un errore di compilazione se nel ciclo non viene menzionato '\\0'",
+        "Il terminatore nullo annulla la necessità di inizializzare l'array"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il limite di una stringa C è determinato esclusivamente dalla presenza di `'\\0'`. Se durante l'inserimento/rimozione si sovrascrive o non si sposta il terminatore, le funzioni per le stringhe andranno a leggere memoria estranea (Undefined Behavior).",
+        "Errato. Le dimensioni dei buffer in C sono statiche e non cambiano dinamicamente scrivendo `'\\0'`. ",
+        "Errato. L'assenza di `'\\0'` è un errore logico a tempo di esecuzione (Runtime), non un errore sintattico di compilazione.",
+        "Errato. Il delimitatore fissa la fine dei dati, ma non esegue l'inizializzazione della memoria."
+      ]
+    },
+    {
+      "id": "it_clang_2067",
+      "widget_id": "widget_clang_2067",
+      "topic": "Concatenazione di stringhe C",
+      "q": "Cosa stamperà il programma unendo le stringhe \"Hello \" e \"World\" senza usare la funzione di libreria strcat?",
+      "hint": "Dove inizia esattamente la copia della seconda stringa rispetto alla fine della prima?",
+      "options": [
+        "Hello World",
+        "Hello ",
+        "World",
+        "Hello World\\0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il primo ciclo trova l'indice dello zero di terminazione della stringa `str1` (indice 6). Il secondo ciclo copia i caratteri della stringa `str2` a partire da quella posizione e poi aggiunge esplicitamente `str1[i] = '\\0'`. Risultato: \"Hello World\".",
+        "Errato. La seconda stringa è stata aggiunta con successo in coda alla prima.",
+        "Errato. La copia è avvenuta nel buffer `str1`, contenente \"Hello \".",
+        "Errato. `\\0` è un terminatore di servizio e non viene stampato come testo."
+      ]
+    },
+    {
+      "id": "it_clang_2068",
+      "widget_id": "widget_clang_2068",
+      "topic": "Inversione di una stringa C",
+      "q": "Cosa stamperà il programma invertendo la stringa \"Code\" sul posto (in-place) utilizzando la ricerca della lunghezza tramite '\\0'?",
+      "hint": "Scrivi i caratteri della parola \"Code\" in ordine inverso.",
+      "options": [
+        "edoC",
+        "Code",
+        "ed",
+        "edoC\\0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Dapprima il ciclo trova la lunghezza della stringa (4). Successivamente scambia gli elementi simmetrici: `str[0]` ('C') con `str[3]` ('e'), `str[1]` ('o') con `str[2]` ('d'). Risultato: \"edoC\".",
+        "Errato. I caratteri sono stati scambiati con successo.",
+        "Errato. Viene invertita l'intera stringa di 4 caratteri.",
+        "Errato. Il carattere nullo è rimasto in posizione `str[4]` e non verrà stampato."
+      ]
+    },
+    {
+      "id": "it_clang_2069",
+      "widget_id": "widget_clang_2069",
+      "topic": "Troncamento di una stringa C",
+      "q": "Cosa stamperà il programma in seguito all'inserimento artificiale del terminatore nullo str[4] = '\\0' nella stringa \"Programming\"?",
+      "hint": "Conta i primi 4 caratteri della stringa prima del '\\0' inserito.",
+      "options": [
+        "Prog",
+        "Programming",
+        "ramming",
+        "Prog\\0ramming"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I primi 4 caratteri: 'P','r','o','g'. In posizione con indice 4 viene scritto `'\\0'`. Lo specificatore `%s` fermerà la stampa esattamente lì, mostrando \"Prog\".",
+        "Errato. Il `'\\0'` inserito mezza/tronca la parte visibile della stringa.",
+        "Errato. La stampa inizia sempre dal primo elemento `str[0]`.",
+        "Errato. Il carattere di terminazione di servizio non viene visualizzato."
+      ]
+    },
+    {
+      "id": "it_clang_2070",
+      "widget_id": "widget_clang_2070",
+      "topic": "Confronto di stringhe C di diversa lunghezza",
+      "q": "Cosa stamperà il programma confrontando le stringhe \"cat\" e \"cats\", quando la stringa più corta termina prima?",
+      "hint": "Confronta il valore di '\\0' (ASCII 0) con il valore del carattere 's' (ASCII 115).",
+      "options": [
+        "-115",
+        "0",
+        "115",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le stringhe coincidono nei primi 3 caratteri ('c','a','t'). All'indice 3: `s1[3]` è pari a `'\\0'` (ASCII 0), mentre `s2[3]` è pari a 's' (ASCII 115). Risultato: $0 - 115 = -115$. Il numero negativo indica che la prima stringa è minore.",
+        "Errato. Le stringhe hanno lunghezza diversa e non sono uguali.",
+        "Errato. Il risultato viene calcolato come `s1[3] - s2[3]`, cioè $0 - 115$, che dà un numero negativo.",
+        "Errato. L'accesso a `s1[3]` è assolutamente legale, poiché l'array `s1` ha dimensione 4 compreso `'\\0'`."
+      ]
+    },
+    {
+      "id": "it_clang_2071",
+      "widget_id": "widget_clang_2071",
+      "topic": "Inizializzazione e valori spazzatura",
+      "q": "Cosa stamperà il programma tentando di leggere un elemento di un array locale non inizializzato int arr[5]?",
+      "hint": "La memoria locale automatica viene riempita con valori predefiniti?",
+      "options": [
+        "Un valore indefinito (\"spazzatura\"), poiché l'array locale non viene inizializzato automaticamente",
+        "Sempre 0",
+        "Errore di compilazione",
+        "-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili e gli array automatici (locali) sullo stack non vengono inizializzati di default e contengono dati residui (\"spazzatura\") presi dalla memoria.",
+        "Errato. Solo gli array globali e statici vengono riempiti automaticamente di zeri.",
+        "Errato. Il codice è sintatticamente corretto, ma logicamente porta a un comportamento indefinito.",
+        "Errato. La memoria non viene azzerata né riempita con marcatori di servizio -1."
+      ]
+    },
+    {
+      "id": "it_clang_2072",
+      "widget_id": "widget_clang_2072",
+      "topic": "Inizializzazione e valori spazzatura",
+      "q": "Cosa stamperà il programma con l'inizializzazione parziale dell'array int arr[5] = {1, 2}?",
+      "hint": "Con cosa vengono sostituiti gli elementi non specificati esplicitamente in presenza di un elenco di inizializzazione?",
+      "options": [
+        "0 0",
+        "Valori casuali (\"spazzatura\")",
+        "1 2",
+        "-1 -1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, se l'elenco di inizializzazione contiene almeno un elemento, tutti gli elementi rimanenti dell'array non specificati vengono automaticamente inizializzati a zero (`0`).",
+        "Errato. In presenza di un elenco di inizializzazione gli elementi rimanenti non restano \"spazzatura\".",
+        "Errato. I primi due elementi sono pari a 1 e 2, ma gli elementi richiesti `arr[2]` e `arr[4]` vengono azzerati.",
+        "Errato. Il riempimento automatico avviene con gli zeri, non con -1."
+      ]
+    },
+    {
+      "id": "it_clang_2073",
+      "widget_id": "widget_clang_2073",
+      "topic": "Inizializzazione e valori spazzatura",
+      "q": "Cosa stamperà il programma azzerando esplicitamente tutti gli elementi dell'array mediante il costrutto {0}?",
+      "hint": "A cosa è pari la somma degli elementi di un array composto esclusivamente da zeri?",
+      "options": [
+        "0",
+        "4",
+        "Valore spazzatura",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `{0}` inizializza il primo elemento a zero, e tutti gli altri elementi dell'array vengono anch'essi azzerati automaticamente. La somma di quattro zeri è pari a 0.",
+        "Errato. Tutti e 4 gli elementi sono pari a 0, quindi la somma è pari a 0, non a 4.",
+        "Errato. L'inizializzazione esplicita elimina completamente i valori spazzatura.",
+        "Errato. La sintassi `{0}` è completamente valida in C."
+      ]
+    },
+    {
+      "id": "it_clang_2074",
+      "widget_id": "widget_clang_2074",
+      "topic": "Inizializzazione e valori spazzatura",
+      "q": "Cosa stamperà il programma accedendo a un array globale non inizializzato global_arr?",
+      "hint": "Ricorda le regole di azzeramento automatico della memoria globale (sezione BSS).",
+      "options": [
+        "0 0 0",
+        "Valori casuali \"spazzatura\"",
+        "-1 -1 -1",
+        "Errore di segmentazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli array globali (collocati dal compilatore nella sezione BSS) vengono inizializzati automaticamente a zero all'avvio del programma.",
+        "Errato. I valori spazzatura sono tipici delle variabili locali (automatiche) sullo stack.",
+        "Errato. La memoria globale viene azzerata automaticamente, non riempita con valori -1.",
+        "Errato. L'accesso a un array globale è assolutamente sicuro."
+      ]
+    },
+    {
+      "id": "it_clang_2075",
+      "widget_id": "widget_clang_2075",
+      "topic": "Inizializzazione e valori spazzatura",
+      "q": "Come vengono inizializzati gli elementi di un array statico locale non inizializzato static int arr[3]?",
+      "hint": "Quale comportamento garantisce lo specificatore static per i valori iniziali della memoria?",
+      "options": [
+        "Vengono azzerati automaticamente (0)",
+        "Contengono valori indefiniti \"spazzatura\" presi dallo stack",
+        "Vengono riempiti con i valori -1",
+        "Provocano un errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili e gli array con specificatore `static` hanno durata di memorizzazione statica e vengono sempre azzerati automaticamente dal compilatore al momento dell'inizializzazione.",
+        "Errato. A differenza delle normali variabili locali, le variabili statiche non memorizzano spazzatura dello stack.",
+        "Errato. Il valore di default per la memoria statica è 0.",
+        "Errato. La dichiarazione `static int arr[3];` è completamente corretta dal punto di vista sintattico."
+      ]
+    },
+    {
+      "id": "it_clang_2076",
+      "widget_id": null,
+      "topic": "Inizializzazione e valori spazzatura",
+      "q": "Cosa succederà se in un array locale non inizializzato si avvia un ciclo di ricerca del delimitatore arr[i] != -1 senza aver scritto esplicitamente il marcatore?",
+      "hint": "È garantita la presenza del numero -1 tra i dati residui della memoria?",
+      "options": [
+        "Il ciclo leggerà valori \"spazzatura\" in memoria e potrebbe uscire dai limiti dell'array (Undefined Behavior)",
+        "Il ciclo si fermerà automaticamente al primo elemento dell'array",
+        "Il compilatore aggiungerà da solo -1 alla fine dell'array",
+        "L'array verrà automaticamente riempito di zeri"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un array non inizializzato contiene spazzatura. Il ciclo scorrerà la memoria fino a quando non incontrerà casualmente il valore -1, il che porta a un'uscita dai limiti del buffer (UB).",
+        "Errato. Il delimitatore non compare da solo senza una scrittura esplicita.",
+        "Errato. Il compilatore non inserisce valori di delimitatore nel codice sorgente.",
+        "Errato. Gli array locali automatici non vengono azzerati automaticamente."
+      ]
+    },
+    {
+      "id": "it_clang_2077",
+      "widget_id": "widget_clang_2077",
+      "topic": "Inizializzazione e valori spazzatura",
+      "q": "Cosa accadrà durante l'esecuzione di un programma in cui la variabile accumulatore sum non è stata inizializzata prima del ciclo?",
+      "hint": "A quale valore iniziale verranno sommati gli elementi dell'array?",
+      "options": [
+        "Comportamento indefinito (Undefined Behavior), poiché gli elementi vengono sommati al valore spazzatura di sum",
+        "Il risultato sarà sempre pari a 60",
+        "Il risultato sarà sempre pari a 0",
+        "Errore di compilazione sulla riga con sum += arr[i]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La lettura e le operazioni aritmetiche con una variabile locale `sum` non inizializzata portano a un comportamento indefinito, poiché il valore iniziale di `sum` è imprevedibile.",
+        "Errato. 60 si otterrebbe solo nel caso in cui `sum` fosse inizialmente pari a 0.",
+        "Errato. Il valore spazzatura casuale in `sum` distorcerà il risultato finale.",
+        "Errato. La maggior parte dei compilatori potrebbe generare un avviso (warning), ma compilerà comunque il codice."
+      ]
+    },
+    {
+      "id": "it_clang_2078",
+      "widget_id": "widget_clang_2078",
+      "topic": "Inizializzazione e valori spazzatura",
+      "q": "Cosa stamperà il programma controllando l'elemento str[2] dell'array char str[5] = {'A', 'B'}?",
+      "hint": "A cosa è pari un elemento non riempito di un array di caratteri in caso di inizializzazione parziale?",
+      "options": [
+        "1 (vero, poiché la parte non inizializzata viene riempita di zeri '\\0')",
+        "0 (falso, poiché contiene un valore spazzatura)",
+        "Errore di compilazione",
+        "-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'inizializzazione parziale di un array di caratteri azzera tutti gli altri elementi, ovvero `str[2]` diventa pari a `0` (o `'\\0'`). L'espressione `str[2] == '\\0'` è vera (1).",
+        "Errato. Poiché l'array è stato parzialmente inizializzato (`{'A', 'B'}`), non contiene spazzatura.",
+        "Errato. La sintassi di inizializzazione dei caratteri è corretta.",
+        "Errato. L'espressione di confronto restituisce un risultato logico (1 o 0)."
+      ]
+    },
+    {
+      "id": "it_clang_2079",
+      "widget_id": "widget_clang_2079",
+      "topic": "Inizializzazione e valori spazzatura",
+      "q": "Cosa stamperà il programma leggendo l'elemento arr[2] dell'array arr[5] se l'assegnazione elemento per elemento è stata effettuata solo per gli indici 0 e 1?",
+      "hint": "Una semplice assegnazione nel corpo del programma costituisce un'inizializzazione sintattica?",
+      "options": [
+        "Un valore indefinito (\"spazzatura\")",
+        "0",
+        "200",
+        "-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'assegnazione elemento per elemento (`arr[0] = 100`) NON è un elenco di inizializzazione. Tutti gli altri elementi dell'array (`arr[2]`, `arr[3]`, `arr[4]`) rimangono non inizializzati e contengono \"spazzatura\".",
+        "Errato. L'azzeramento automatico avviene solo in caso di dichiarazione con un elenco di inizializzazione `{...}`.",
+        "Errato. Il valore 200 è stato scritto all'indice 1.",
+        "Errato. Il valore -1 non viene inserito automaticamente."
+      ]
+    },
+    {
+      "id": "it_clang_2080",
+      "widget_id": "widget_clang_2080",
+      "topic": "Inizializzazione e valori spazzatura",
+      "q": "Cosa stamperà il programma utilizzando gli inizializzatori designati (designated initializers) int arr[5] = {[2] = 50, [4] = 100}?",
+      "hint": "Come vengono inizializzati gli elementi omessi (ad esempio, arr[0]) quando si popolano singoli indici?",
+      "options": [
+        "0 50",
+        "Spazzatura 50",
+        "50 100",
+        "0 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando si usa un inizializzatore designato (C99), gli elementi non menzionati esplicitamente (`arr[0]`, `arr[1]`, `arr[3]`) vengono inizializzati a zero. `arr[0]` è pari a 0, `arr[2]` è pari a 50.",
+        "Errato. La presenza di un qualsiasi elenco di inizializzazione (anche designato) azzera tutti gli elementi rimanenti.",
+        "Errato. Nelle posizioni 2 e 4 sono memorizzati 50 e 100, non nelle posizioni 0 e 2.",
+        "Errato. L'elemento `arr[2]` è stato inizializzato esplicitamente con il valore 50."
+      ]
+    }
+  ]
+}

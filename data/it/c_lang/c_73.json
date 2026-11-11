@@ -1,0 +1,607 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2231",
+      "widget_id": "widget_clang_2231",
+      "topic": "Rappresentazione dei caratteri char come numeri interi",
+      "q": "Cosa stamperà lo specificatore %d se la variabile 'c' di tipo char contiene il letterale di carattere 'A'?",
+      "hint": "In C i caratteri sono memorizzati come codici ASCII interi.",
+      "options": [
+        "65",
+        "A",
+        "97",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La lettera maiuscola 'A' ha codice ASCII 65. Lo specificatore `%d` stampa il codice numerico del carattere.",
+        "Errato. La lettera 'A' verrebbe stampata usando lo specificatore `%c`.",
+        "Errato. 97 è il codice ASCII della lettera minuscola 'a'.",
+        "Errato. Il carattere 'A' ha un valore diverso da zero."
+      ]
+    },
+    {
+      "id": "it_clang_2232",
+      "widget_id": "widget_clang_2232",
+      "topic": "Carattere di controllo di nuova riga '\\n'",
+      "q": "Qual è il valore numerico (codice ASCII) del carattere di controllo di nuova riga '\\n' (Line Feed)?",
+      "hint": "Nella tabella ASCII il carattere Line Feed segue immediatamente il carattere di tabulazione (9).",
+      "options": [
+        "10",
+        "13",
+        "0",
+        "32"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il carattere di controllo `\\n` (Line Feed / LF) corrisponde al codice 10 nella tabella ASCII.",
+        "Errato. 13 è il codice del carattere `\\r` (Carriage Return).",
+        "Errato. 0 è il codice del terminatore nullo `\\0`.",
+        "Errato. 32 è il codice ASCII dello spazio."
+      ]
+    },
+    {
+      "id": "it_clang_2233",
+      "widget_id": null,
+      "topic": "Differenza tra '0' e '\\0'",
+      "q": "Qual è la differenza tra il letterale di carattere '0' e il carattere di controllo '\\0'?",
+      "hint": "'0' è il carattere visibile della cifra zero, mentre '\\0' è il byte nullo.",
+      "options": [
+        "'0' ha il codice ASCII 48, mentre '\\0' ha il codice ASCII 0",
+        "'0' e '\\0' sono assolutamente identici e intercambiabili",
+        "'0' occupa 2 byte, mentre '\\0' occupa 1 byte",
+        "'\\0' viene utilizzato per la nuova riga, mentre '0' per terminare le stringhe"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! '0' è un carattere stampabile con codice 48 ($0x30$), mentre `\\0` è il byte nullo di servizio (Null-terminator) con codice 0, che indica la fine di una stringa.",
+        "Errato. Hanno codici diversi e scopi fondamentalmente differenti.",
+        "Errato. Entrambi i letterali di tipo `char` (o costanti intere) occupano la stessa dimensione in memoria.",
+        "Errato. Per terminare le stringhe si usa `\\0`, mentre la nuova riga è `\\n`."
+      ]
+    },
+    {
+      "id": "it_clang_2234",
+      "widget_id": "widget_clang_2234",
+      "topic": "Carattere di controllo di tabulazione '\\t'",
+      "q": "Cosa restituirà la verifica c == 9 se la variabile c contiene il carattere '\\t' (Horizontal Tab)?",
+      "hint": "La tabulazione orizzontale ha un numero fisso nella prima decina della tabella ASCII.",
+      "options": [
+        "1",
+        "0",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il carattere di tabulazione orizzontale `\\t` ha codice ASCII 9. La condizione `c == 9` è vera (1).",
+        "Errato. `\\t` è uguale a 9, quindi la condizione restituisce 1.",
+        "Errato. Il confronto di un tipo `char` con un intero è completamente valido.",
+        "Errato. Il risultato è rigorosamente definito dallo standard."
+      ]
+    },
+    {
+      "id": "it_clang_2235",
+      "widget_id": "widget_clang_2235",
+      "topic": "Carattere di ritorno a capo '\\r'",
+      "q": "Quale codice ASCII corrisponde al carattere di controllo di ritorno a capo '\\r' (Carriage Return)?",
+      "hint": "Nel formato di testo Windows la nuova riga è data dalla combinazione CRLF (\"\\r\\n\"), dove i codici sono 13 e 10.",
+      "options": [
+        "13",
+        "10",
+        "32",
+        "27"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il carattere di controllo `\\r` (Carriage Return / CR) ha codice ASCII 13.",
+        "Errato. 10 è `\\n` (Line Feed).",
+        "Errato. 32 è lo spazio.",
+        "Errato. 27 è il carattere ESC (Escape)."
+      ]
+    },
+    {
+      "id": "it_clang_2236",
+      "widget_id": null,
+      "topic": "Classificazione dei caratteri tramite iscntrl()",
+      "q": "Quale funzione dell'header <ctype.h> occorre usare per verificare se un carattere è di controllo (ASCII 0–31 e 127)?",
+      "hint": "Il nome della funzione sta per 'is control character'.",
+      "options": [
+        "iscntrl()",
+        "isprint()",
+        "isalpha()",
+        "ispunct()",
+        "isspace()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `iscntrl()` restituisce un valore diverso da zero se il carattere passato è un carattere di controllo (ASCII 0x00–0x1F o 0x7F).",
+        "Errato. `isprint()` verifica se il carattere è stampabile.",
+        "Errato. `isalpha()` verifica se il carattere è una lettera.",
+        "Errato. `ispunct()` verifica i caratteri di punteggiatura.",
+        "Errato. `isspace()` verifica i caratteri di spaziatura."
+      ]
+    },
+    {
+      "id": "it_clang_2237",
+      "widget_id": "widget_clang_2237",
+      "topic": "Spazio bianco e funzione isprint()",
+      "q": "Un normale spazio (' ') è considerato un carattere stampabile (printable character) secondo la funzione isprint()?",
+      "hint": "L'intervallo dei caratteri ASCII stampabili inizia con il codice 32.",
+      "options": [
+        "Sì, lo spazio fa parte dell'elenco dei caratteri stampabili",
+        "No, lo spazio appartiene ai caratteri di controllo",
+        "Il risultato dipende dal compilatore",
+        "Causa un errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `isprint()` considera stampabili tutti i caratteri con codici ASCII da 32 (' ') a 126 ('~'). Lo spazio con codice 32 rientra tra questi.",
+        "Errato. Lo spazio non è un carattere di controllo (control character).",
+        "Errato. Il comportamento di `isprint()` è fissato dallo standard C.",
+        "Errato. Il codice viene compilato senza errori."
+      ]
+    },
+    {
+      "id": "it_clang_2238",
+      "widget_id": "widget_clang_2238",
+      "topic": "Carattere di controllo di avviso acustico '\\a'",
+      "q": "Quale codice ASCII ha la sequenza di escape '\\a' (Alert / Bell)?",
+      "hint": "Il segnale acustico Bell si trova all'inizio della tabella ASCII (prima di 10).",
+      "options": [
+        "7",
+        "8",
+        "12",
+        "27"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sequenza di escape `\\a` (Bell/Alert) corrisponde al codice ASCII 7.",
+        "Errato. 8 è `\\b` (Backspace).",
+        "Errato. 12 è `\\f` (Form Feed).",
+        "Errato. 27 è il carattere ESC."
+      ]
+    },
+    {
+      "id": "it_clang_2239",
+      "widget_id": "widget_clang_2239",
+      "topic": "Differenza di codici ASCII tra maiuscole e minuscole",
+      "q": "A quanto equivale la differenza di codici ASCII tra una lettera inglese minuscola e maiuscola ('a' - 'A')?",
+      "hint": "La distanza tra lettere minuscole e maiuscole in ASCII è pari a $2^5$.",
+      "options": [
+        "32",
+        "26",
+        "10",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! 'a' ha codice 97 e 'A' 65. La differenza è $97 - 65 = 32$ ($0x20$). Modificare questo 5º bit permette di cambiare facilmente il registro dei caratteri in ASCII.",
+        "Errato. 26 è il numero di lettere nell'alfabeto inglese.",
+        "Errato. La differenza tra i registri è esattamente 32.",
+        "Errato. Le lettere minuscole e maiuscole hanno codici diversi."
+      ]
+    },
+    {
+      "id": "it_clang_2240",
+      "widget_id": null,
+      "topic": "Intervallo dei caratteri ASCII stampabili",
+      "q": "In quale intervallo di codici ASCII si trovano i caratteri visibili (stampabili) inclusi gli spazi?",
+      "hint": "Il primo carattere stampabile è lo spazio, mentre l'ultimo è la tilde '~'.",
+      "options": [
+        "Da 32 a 126 inclusi",
+        "Da 0 a 127 inclusi",
+        "Da 1 a 31 inclusi",
+        "Da 65 a 90 inclusi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'intervallo dei caratteri stampabili della tabella ASCII va dai codici 32 (spazio) a 126 (carattere `~`). Il codice 127 (DEL) e i codici 0–31 sono di controllo.",
+        "Errato. L'intervallo 0–127 include anche caratteri di controllo.",
+        "Errato. L'intervallo 1–31 fa parte dei caratteri di controllo.",
+        "Errato. 65–90 sono solo le lettere maiuscole dell'alfabeto latino."
+      ]
+    },
+    {
+      "id": "it_clang_2241",
+      "widget_id": "widget_clang_2241",
+      "topic": "Tipo restituito dalla funzione getchar()",
+      "q": "Quale tipo di dato restituisce la funzione standard getchar()?",
+      "hint": "La funzione deve essere in grado di restituire qualsiasi valore valido per char, oltre a un indicatore speciale di errore o di fine file.",
+      "options": [
+        "int",
+        "char",
+        "unsigned char",
+        "void"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `getchar()` restituisce un valore di tipo `int`. Ciò è necessario affinché, oltre a tutti i possibili caratteri a 8 bit (da 0 a 255), possa restituire uno speciale valore negativo `EOF` (di solito -1).",
+        "Errato. Se si usasse `char`, non sarebbe possibile distinguere in modo affidabile un carattere con codice `0xFF` da `EOF`.",
+        "Errato. `unsigned char` non può memorizzare il valore negativo `EOF`.",
+        "Errato. La funzione restituisce il carattere letto o lo stato di errore."
+      ]
+    },
+    {
+      "id": "it_clang_2242",
+      "widget_id": "widget_clang_2242",
+      "topic": "Valore restituito dalla funzione putchar()",
+      "q": "Cosa restituisce la funzione putchar(int c) in caso di output corretto nello stream standard?",
+      "hint": "La firma della funzione è int putchar(int c). In caso di successo restituisce il carattere stesso scritto.",
+      "options": [
+        "Il carattere scritto, convertito al tipo int",
+        "Il numero 0",
+        "Il numero di byte stampati (sempre 1)",
+        "Non restituisce nulla (tipo void)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In caso di successo, `putchar(c)` restituisce il carattere stesso scritto convertito in `int` (`unsigned char`). In caso di errore viene restituito `EOF`.",
+        "Errato. Non viene restituito 0, ma il codice dello stesso carattere stampato.",
+        "Errato. Il numero di byte viene restituito dalle funzioni della famiglia `printf` o `fwrite`.",
+        "Errato. In `putchar` il tipo di ritorno è `int`."
+      ]
+    },
+    {
+      "id": "it_clang_2243",
+      "widget_id": null,
+      "topic": "Scopo della macro EOF",
+      "q": "Cosa indica la costante EOF che può essere restituita da getchar()?",
+      "hint": "L'acronimo sta per End-Of-File.",
+      "options": [
+        "Fine del file (End-Of-File) o errore di lettura dallo stream",
+        "Byte nullo '\\0' di fine stringa",
+        "Carattere di nuova riga '\\n'",
+        "Segnale di terminazione dell'intero programma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La macro `EOF` (un intero negativo, di solito -1) segnala il raggiungimento della fine dello stream di input o il verificarsi di un errore di lettura.",
+        "Errato. Il terminatore nullo `\\0` ha codice 0 e non è uguale a `EOF`.",
+        "Errato. La nuova riga è il carattere `\\n` con codice ASCII 10.",
+        "Errato. `EOF` è un segnale di fine input da file/stream, non un comando di esecuzione."
+      ]
+    },
+    {
+      "id": "it_clang_2244",
+      "widget_id": "widget_clang_2244",
+      "topic": "Output sequenziale tramite putchar()",
+      "q": "Cosa stamperà il programma all'esecuzione delle funzioni putchar(c) e putchar(c + 1), dove c = 'A'?",
+      "hint": "I caratteri in C sono memorizzati come numeri, quindi ad essi si applica l'aritmetica intera.",
+      "options": [
+        "AB",
+        "6566",
+        "A1",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il carattere 'A' ha codice ASCII 65. `putchar('A')` stampa `A`. L'espressione `'A' + 1` dà codice 66, che corrisponde al carattere 'B'. Output finale: `AB`.",
+        "Errato. I codici 65 e 66 verrebbero stampati usando `printf(\"%d%d\", ...)`.",
+        "Errato. Sommare uno a un codice di carattere produce uno spostamento nella tabella dei caratteri.",
+        "Errato. Il codice è completamente valido."
+      ]
+    },
+    {
+      "id": "it_clang_2245",
+      "widget_id": "widget_clang_2245",
+      "topic": "Problema nel salvare il risultato di getchar() in un char",
+      "q": "Perché salvare il risultato di getchar() in una variabile di tipo char è un errore?",
+      "hint": "Ricorda il segno del tipo char e l'intervallo di valori coperto dalla costante EOF.",
+      "options": [
+        "Se char è unsigned per impostazione predefinita, la lettura non sarà mai uguale al valore negativo EOF (il ciclo diventerà infinito)",
+        "La funzione getchar() si rifiuterà di compilare con una variabile char",
+        "Causerà un errore di segmentazione (Segmentation Fault) alla prima chiamata",
+        "I caratteri dell'alfabeto latino perderanno i loro valori"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Sulle piattaforme in cui `char` è senza segno per impostazione predefinita (`unsigned char`), il valore negativo `EOF` (-1) si trasformerà in `255` al momento del salvataggio. Il confronto `255 == -1` sarà sempre falso, rendendo infinito il ciclo di controllo `EOF`.",
+        "Errato. Il compilatore mostrerà solo un avviso, ma compilerà il codice.",
+        "Errato. Non si verifica alcun errore di segmentazione.",
+        "Errato. I caratteri non perdono i loro valori; il problema riguarda esclusivamente la gestione di `EOF`."
+      ]
+    },
+    {
+      "id": "it_clang_2246",
+      "widget_id": "widget_clang_2246",
+      "topic": "Conversione di maiuscole/minuscole con putchar()",
+      "q": "Cosa stamperà putchar(c - 32) se c = 'a'?",
+      "hint": "La differenza tra i codici ASCII delle lettere latine minuscole e maiuscole è 32.",
+      "options": [
+        "A",
+        "a",
+        "65",
+        "32"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il codice ASCII di 'a' è 97. $97 - 32 = 65$, che corrisponde al codice della lettera maiuscola 'A'. La funzione `putchar()` stamperà il carattere `A`.",
+        "Errato. Il carattere originale è stato modificato sottraendo 32.",
+        "Errato. `putchar()` stampa il carattere, non la sua rappresentazione numerica.",
+        "Errato. Viene stampato il carattere corrispondente al codice 65, non il numero sottratto."
+      ]
+    },
+    {
+      "id": "it_clang_2247",
+      "widget_id": null,
+      "topic": "Buffering dello standard input stdin",
+      "q": "In che modo viene effettuato il buffering dello standard input (stdin) per impostazione predefinita alla chiamata di getchar() in un'applicazione console interattiva?",
+      "hint": "L'utente può modificare l'input con il tasto Backspace fino a quando non preme un tasto specifico.",
+      "options": [
+        "Buffering di riga (Line buffering: i caratteri vengono trasmessi al programma solo dopo aver premuto Invio)",
+        "Assenza totale di buffering (Unbuffered: getchar() legge immediatamente il carattere alla pressione di qualsiasi tasto)",
+        "Buffering a blocchi (Block buffering: 4096 byte alla volta)",
+        "Il buffering dipende unicamente dalla quantità di RAM"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In modalità terminale standard viene utilizzato il buffering di riga. `getchar()` blocca l'esecuzione e attende che l'utente inserisca una riga e prema il tasto `Invio` (`\\n`).",
+        "Errato. La modalità senza buffering (raw mode) richiede chiamate specifiche del sistema operativo o librerie come `ncurses`/`conio.h`.",
+        "Errato. Il buffering a blocchi viene solitamente applicato ai file, non al terminale console.",
+        "Errato. Il buffering è gestito dalle impostazioni dello stream e del driver del terminale."
+      ]
+    },
+    {
+      "id": "it_clang_2248",
+      "widget_id": "widget_clang_2248",
+      "topic": "Assegnazione all'interno della condizione di un ciclo",
+      "q": "Cosa stamperà questo programma con il ciclo while ((c = 'X') != 'X')?",
+      "hint": "L'espressione di assegnazione restituisce il valore che è stato assegnato.",
+      "options": [
+        "1",
+        "X1",
+        "Ciclo infinito",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `(c = 'X')` assegna alla variabile `c` il carattere `'X'` e restituisce `'X'`. Successivamente viene effettuato il confronto `'X' != 'X'`, che risulta subito falso (0). Il ciclo `while` non viene eseguito nemmeno una volta e il programma stampa `1`.",
+        "Errato. `putchar(c)` all'interno del ciclo non fa in tempo a essere eseguito.",
+        "Errato. La condizione di terminazione del ciclo è falsa fin dalla prima iterazione.",
+        "Errato. `printf(\"1\\n\")` stamperà 1."
+      ]
+    },
+    {
+      "id": "it_clang_2249",
+      "widget_id": "widget_clang_2249",
+      "topic": "Conversione di una cifra carattere nel suo equivalente numerico",
+      "q": "A quanto equivale la variabile ch2 in seguito all'esecuzione di ch1 - '0', se ch1 = '7'?",
+      "hint": "I caratteri numerici '0'–'9' si trovano in sequenza nella tabella ASCII uno dopo l'altro.",
+      "options": [
+        "7",
+        "55",
+        "48",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In ASCII il codice del carattere '7' è 55 e il codice del carattere '0' è 48. La sottrazione `'7' - '0'` ($55 - 48$) dà il valore numerico `7`.",
+        "Errato. 55 è il codice ASCII del carattere '7'.",
+        "Errato. 48 è il codice ASCII del carattere '0'.",
+        "Errato. La sottrazione dei codici converte correttamente la cifra carattere in numero."
+      ]
+    },
+    {
+      "id": "it_clang_2250",
+      "widget_id": null,
+      "topic": "Firma e utilizzo della funzione getchar()",
+      "q": "Quale delle seguenti espressioni è una chiamata sintatticamente corretta alla funzione getchar()?",
+      "hint": "La funzione getchar() non accetta argomenti.",
+      "options": [
+        "int c = getchar();",
+        "char c = getchar(stdin);",
+        "int c = getchar('a');",
+        "void c = getchar();"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `getchar()` è dichiarata come `int getchar(void);`, non accetta operandi e restituisce un `int`.",
+        "Errato. Lo stream `stdin` è accettato da `fgetc(stdin)` o `getc(stdin)`, ma non da `getchar()`.",
+        "Errato. `getchar()` non accetta caratteri come argomento.",
+        "Errato. Una variabile non può essere di tipo `void`."
+      ]
+    },
+    {
+      "id": "it_clang_2251",
+      "widget_id": "widget_clang_2251",
+      "topic": "Verifica delle lettere con isalpha()",
+      "q": "Cosa restituirà l'espressione isalpha('Z') != 0?",
+      "hint": "La funzione isalpha() verifica se il carattere passato è una lettera dell'alfabeto (maiuscola o minuscola).",
+      "options": [
+        "1",
+        "0",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! 'Z' è una lettera dell'alfabeto latino. La funzione `isalpha('Z')` restituisce un valore diverso da zero (vero), quindi l'espressione `isalpha('Z') != 0` dà `1`.",
+        "Errato. 'Z' fa parte della classificazione delle lettere dell'alfabeto.",
+        "Errato. L'header `<ctype.h>` è incluso e la sintassi è corretta.",
+        "Errato. Il comportamento è rigorosamente definito dallo standard C."
+      ]
+    },
+    {
+      "id": "it_clang_2252",
+      "widget_id": "widget_clang_2252",
+      "topic": "Verifica delle cifre decimali con isdigit()",
+      "q": "Cosa restituirà il codice durante la verifica del letterale di carattere '5' tramite la funzione isdigit()?",
+      "hint": "isdigit() restituisce vero per i caratteri cifra da '0' a '9'.",
+      "options": [
+        "1",
+        "0",
+        "5",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il carattere '5' è una cifra decimale (ASCII 53). `isdigit('5')` restituisce un valore diverso da zero, che nel confronto `!= 0` diventa `1`.",
+        "Errato. '5' è una cifra carattere valida.",
+        "Errato. La funzione restituisce un predicato (un valore diverso da zero o 0), non il valore della cifra stessa.",
+        "Errato. La chiamata è completamente corretta."
+      ]
+    },
+    {
+      "id": "it_clang_2253",
+      "widget_id": "widget_clang_2253",
+      "topic": "Verifica dei caratteri di spaziatura con isspace()",
+      "q": "isspace() restituirà un valore diverso da zero per il carattere di controllo di nuova riga '\\n'?",
+      "hint": "La categoria dei caratteri di spaziatura include non solo lo spazio normale, ma anche i caratteri di tabulazione, nuova riga e ritorno a capo.",
+      "options": [
+        "Sì (restituirà 1)",
+        "No (restituirà 0)",
+        "Dipende dal sistema operativo",
+        "Causerà un errore a tempo di esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard definisce i seguenti caratteri di spaziatura per `isspace()`: spazio `' '`, avanzamento pagina `'\\f'`, nuova riga `'\\n'`, ritorno a capo `'\\r'`, tabulazione orizzontale `'\\t'` e tabulazione verticale `'\\v'`. Per `'\\n'` restituirà `1`.",
+        "Errato. Il carattere `\\n` fa parte del gruppo standard `isspace`.",
+        "Errato. Questo è un requisito generale dello standard C indipendentemente dal sistema operativo.",
+        "Errato. Non si verifica alcun errore a tempo di esecuzione."
+      ]
+    },
+    {
+      "id": "it_clang_2254",
+      "widget_id": null,
+      "topic": "Classificazione dei caratteri alfanumerici con isalnum()",
+      "q": "Per quali caratteri la funzione isalnum(c) restituisce un valore diverso da zero (vero)?",
+      "hint": "Il nome della funzione deriva dall'inglese 'alphanumeric'.",
+      "options": [
+        "Solo per lettere (A-Z, a-z) e cifre (0-9)",
+        "Per qualsiasi carattere stampabile, inclusa la punteggiatura",
+        "Solo per i caratteri delle cifre esadecimali",
+        "Solo per lettere minuscole e cifre"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `isalnum(c)` è equivalente alla verifica `isalpha(c) || isdigit(c)`. È vera per le lettere dell'alfabeto latino in entrambi i registri e per le cifre da 0 a 9.",
+        "Errato. I segni di punteggiatura non rientrano in `isalnum()`; per essi si usa `ispunct()`.",
+        "Errato. Per le cifre esadecimali si usa `isxdigit()`.",
+        "Errato. Anche le lettere maiuscole sono classificate come vere."
+      ]
+    },
+    {
+      "id": "it_clang_2255",
+      "widget_id": "widget_clang_2255",
+      "topic": "Verifica delle lettere maiuscole con isupper()",
+      "q": "Cosa stamperà il programma alla chiamata di isupper('a')?",
+      "hint": "isupper() verifica se una lettera è maiuscola (maiuscolo).",
+      "options": [
+        "0",
+        "1",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il carattere 'a' è una lettera minuscola. Per esso `isupper()` restituisce `0` (falso).",
+        "Errato. 'a' non è una lettera maiuscola, la funzione `islower('a')` restituirebbe vero.",
+        "Errato. Il codice viene compilato senza errori.",
+        "Errato. Il comportamento è rigorosamente fissato dallo standard."
+      ]
+    },
+    {
+      "id": "it_clang_2256",
+      "widget_id": "widget_clang_2256",
+      "topic": "Verifica delle cifre esadecimali con isxdigit()",
+      "q": "Quali tra i seguenti caratteri sono considerati cifre esadecimali secondo isxdigit()?",
+      "hint": "Il sistema esadecimale include 10 cifre e le prime 6 lettere dell'alfabeto latino.",
+      "options": [
+        "Le cifre '0'-'9', le lettere 'a'-'f' e 'A'-'F'",
+        "Solo le cifre '0'-'9'",
+        "Le cifre '0'-'9' e le lettere 'a'-'z'",
+        "Qualsiasi lettera dell'alfabeto latino"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `isxdigit()` restituisce vero per le cifre decimali `'0'`–`'9'`, nonché per i caratteri `'a'`–`'f'` e `'A'`–`'F'`.",
+        "Errato. Anche i caratteri da 'a'/'A' a 'f'/'F' fanno parte delle cifre esadecimali.",
+        "Errato. Le lettere successive a 'f' (ad esempio 'g', 'h') non sono cifre esadecimali.",
+        "Errato. La limitazione si applica solo alle prime 6 lettere dell'alfabeto."
+      ]
+    },
+    {
+      "id": "it_clang_2257",
+      "widget_id": "widget_clang_2257",
+      "topic": "Verifica dei segni di punteggiatura con ispunct()",
+      "q": "Cosa restituirà la funzione ispunct('!') per un punto esclamativo?",
+      "hint": "ispunct() verifica i caratteri grafici che NON sono spazi né caratteri alfanumerici.",
+      "options": [
+        "Un valore diverso da zero (vero)",
+        "0 (falso)",
+        "Il codice ASCII del carattere '!'",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `ispunct()` è vera per tutti i caratteri grafici stampabili (`isgraph`), ad eccezione di lettere e cifre (`isalnum`). Il punto esclamativo '!' appartiene ai segni di punteggiatura.",
+        "Errato. '!' rientra nella categoria dei segni di punteggiatura.",
+        "Errato. La funzione restituisce un flag logico (0 o un numero diverso da zero).",
+        "Errato. La chiamata è completamente corretta."
+      ]
+    },
+    {
+      "id": "it_clang_2258",
+      "widget_id": null,
+      "topic": "Requisito di tipo per gli argomenti delle funzioni <ctype.h>",
+      "q": "Perché quando si passa una variabile di tipo char alle funzioni di <ctype.h> si raccomanda di effettuare un cast esplicito (unsigned char)c?",
+      "hint": "Su alcune piattaforme char è signed e con valori negativi esce dai limiti della tabella dei caratteri.",
+      "options": [
+        "Un char negativo viene convertito in un valore int al di fuori dell'intervallo [0, 255] ed EOF, causando Undefined Behavior (uscita dai limiti dell'array della tabella di ricerca)",
+        "Le funzioni di <ctype.h> accettano solo puntatori",
+        "Protegge dalla stampa di caratteri superflui sullo schermo",
+        "Senza di questo le funzioni restituiscono sempre 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'argomento delle funzioni di `<ctype.h>` deve essere rappresentato come `unsigned char` (0–255) oppure essere uguale a `EOF` (-1). Se i `char` sono con segno (valori da -128 a -1), il passaggio di tale numero causerà Undefined Behavior dovuto all'uscita dai limiti dell'array di ricerca della categoria.",
+        "Errato. Viene accettato un tipo numerico `int`, non un puntatore.",
+        "Errato. Le funzioni di `<ctype.h>` non eseguono alcuna stampa sullo schermo.",
+        "Errato. Il valore restituito sarà imprevedibile a causa dell'uscita dai limiti dell'array."
+      ]
+    },
+    {
+      "id": "it_clang_2259",
+      "widget_id": "widget_clang_2259",
+      "topic": "Differenza tra isblank() e isspace()",
+      "q": "In cosa differisce la funzione isblank() da isspace()?",
+      "hint": "isblank() serve solo per separare le parole all'interno della stessa riga.",
+      "options": [
+        "isblank() verifica solo lo spazio (' ') e la tabulazione orizzontale ('\\t'), mentre isspace() include anche i caratteri di nuova riga e ritorno a capo",
+        "isblank() verifica solo i caratteri di controllo, mentre isspace() solo quelli visibili",
+        "Sono completamente identiche e sono sinonimi",
+        "isblank() fa parte dello standard C89, mentre isspace() è stata aggiunta in C11"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `isblank()` (introdotta in C99) verifica solo i caratteri di spaziatura vuota all'interno di una riga: lo spazio normale `' '` e la tabulazione `'\\t'`. A differenza di essa, `isspace()` include inoltre i caratteri di nuova riga `'\\n'`, `'\\r'`, `'\\f'`, `'\\v'`.",
+        "Errato. Entrambe le funzioni verificano i caratteri separatori.",
+        "Errato. `'\\n'` restituisce vero in `isspace()`, ma falso in `isblank()`.",
+        "Errato. Al contrario, `isspace()` esisteva fin da C89, mentre `isblank()` è stata aggiunta in C99."
+      ]
+    },
+    {
+      "id": "it_clang_2260",
+      "widget_id": null,
+      "topic": "Valore restituito dai predicati di <ctype.h>",
+      "q": "Cosa garantisce lo standard del linguaggio C riguardo al valore restituito dalle funzioni predicato di <ctype.h> in caso di verità?",
+      "hint": "Lo standard non obbliga le funzioni a restituire rigorosamente il numero 1.",
+      "options": [
+        "Viene garantito solo il ritorno di un qualsiasi valore int diverso da zero",
+        "Viene garantito il ritorno rigoroso del numero 1",
+        "Viene restituito il codice ASCII del carattere passato",
+        "Viene restituito un valore di tipo bool (true)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Tutte le funzioni di verifica in `<ctype.h>`, in caso di soddisfacimento della condizione, restituiscono **un qualsiasi valore intero diverso da zero** (non-zero `int`), mentre in caso di falsità restituiscono rigorosamente `0`.",
+        "Errato. Lo standard non obbliga l'implementazione a restituire esattamente `1` (ad esempio, viene spesso restituita una maschera di bit).",
+        "Errato. Il codice del carattere non è il valore restituito da queste funzioni.",
+        "Errato. Storicamente in C prima di C99 non esisteva il tipo `bool`, le funzioni restituiscono `int`."
+      ]
+    }
+  ]
+}

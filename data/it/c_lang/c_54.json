@@ -1,0 +1,605 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_1661",
+      "widget_id": "widget_clang_1661",
+      "topic": "Differenza tra i tipi data, data[0] e &data[0][0]",
+      "q": "Sebbene le espressioni data, data[0] e &data[0][0] stampino lo stesso valore esadecimale dell'indirizzo con printf, qual è la differenza fondamentale tra i loro tipi?",
+      "hint": "Pensa al tipo di elemento a cui punta ciascuno di questi puntatori.",
+      "options": [
+        "data ha tipo int(*)[4] (puntatore a un array di 4 int), mentre data[0] e &data[0][0] hanno tipo int* (puntatore a un singolo int)",
+        "Tutte e tre le espressioni hanno esattamente lo stesso tipo int*",
+        "data ha tipo int**, data[0] ha tipo int* e &data[0][0] ha tipo int",
+        "data è un indirizzo nell'heap, mentre data[0] è un indirizzo nello stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando degrada, `data` diventa un puntatore all'intera prima riga `int(*)[4]`. L'espressione `data[0]` degrada in un puntatore al suo primo elemento `int*`. L'espressione `&data[0][0]` prende esplicitamente l'indirizzo dell'elemento `data[0][0]`, restituendo anch'essa `int*`. Numericamente puntano alla stessa cella di byte, ma i loro tipi differiscono.",
+        "Errato. I tipi differiscono, il che influisce direttamente sull'aritmetica dei puntatori e sulla chiamata a `sizeof`.",
+        "Errato. `data` non è un doppio puntatore `int**`, poiché la matrice non memorizza un array di puntatori.",
+        "Errato. Tutte e tre le espressioni puntano alla stessa cella fisica di memoria."
+      ]
+    },
+    {
+      "id": "it_clang_1662",
+      "widget_id": "widget_clang_1662",
+      "topic": "Differenza tra i tipi data, data[0] e &data[0][0]",
+      "q": "Di quanti byte si sposteranno gli indirizzi eseguendo le espressioni (data + 1) e (data[0] + 1) per un array int data[2][4]?",
+      "hint": "Il passo del puntatore è determinato dalla dimensione del tipo a cui punta.",
+      "options": [
+        "data + 1 si sposterà di 16 byte (4 elementi * 4 byte), mentre data[0] + 1 si sposterà di 4 byte (1 elemento)",
+        "Entrambe le espressioni si sposteranno di 16 byte",
+        "Entrambe le espressioni si sposteranno di 4 byte",
+        "data + 1 si sposterà di 32 byte, mentre data[0] + 1 di 16 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `data` ha tipo `int(*)[4]`, quindi l'incremento `+1` sposta il puntatore della dimensione dell'intero array di 4 `int` ($4 \\cdot 4 = 16$ byte — passaggio alla riga successiva). `data[0]` ha tipo `int*`, quindi `+1` sposta il puntatore di 1 `int` ($4$ byte — passaggio alla colonna successiva).",
+        "Errato. `data[0] + 1` aumenta l'indirizzo solo della dimensione di un singolo elemento `int` (4 byte).",
+        "Errato. `data + 1` salta un'intera riga di 4 elementi.",
+        "Errato. I calcoli degli spostamenti sono errati."
+      ]
+    },
+    {
+      "id": "it_clang_1663",
+      "widget_id": "widget_clang_1663",
+      "topic": "Differenza tra i tipi data, data[0] e &data[0][0]",
+      "q": "A quanto equivarranno i valori s1, s2 e s3 su un'architettura a 64 bit per l'array int data[3][5]?",
+      "hint": "sizeof non fa degradare l'array, ma calcola la dimensione del tipo dell'espressione passata.",
+      "options": [
+        "s1 = 60, s2 = 20, s3 = 8",
+        "s1 = 60, s2 = 20, s3 = 4",
+        "s1 = 8, s2 = 8, s3 = 8",
+        "s1 = 15, s2 = 5, s3 = 1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `sizeof(data)` restituisce la dimensione dell'intero array bidimensionale: $3 \\cdot 5 \\cdot 4 = 60$ byte. `sizeof(data[0])` restituisce la dimensione della prima riga (array di 5 `int`): $5 \\cdot 4 = 20$ byte. `&data[0][0]` è un puntatore esplicito di tipo `int*`, e il suo `sizeof` su un sistema a 64 bit è pari a 8 byte.",
+        "Errato. `&data[0][0]` è un puntatore, quindi la sua dimensione è di 8 byte, non 4.",
+        "Errato. `sizeof` applicato al nome dell'array `data` non effettua il decadimento a puntatore e calcola la memoria totale.",
+        "Errato. `sizeof` viene calcolato in byte, non in numero di elementi."
+      ]
+    },
+    {
+      "id": "it_clang_1664",
+      "widget_id": "widget_clang_1664",
+      "topic": "Differenza tra i tipi data, data[0] e &data[0][0]",
+      "q": "Perché la chiamata diretta print_flat(data, 12) genera un avviso del compilatore di incompatibilità di tipi, mentre print_flat(data[0], 12) si compila perfettamente?",
+      "hint": "Confronta la firma del parametro print_flat(int *arr) con i tipi degli argomenti passati.",
+      "options": [
+        "data degrada al tipo int(*)[4], incompatibile con int* senza un cast esplicito, mentre data[0] degrada direttamente a int*",
+        "data viene passato per valore con tutto il contenuto della matrice, cosa vietata in C",
+        "data[0] alloca un array piatto temporaneo nella RAM",
+        "Il parametro di print_flat richiede il passaggio di un indirizzo nell'heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione si aspetta un puntatore piatto `int*`. L'argomento `data` ha tipo `int(*)[4]` (puntatore a un array di 4 elementi). Il compilatore blocca il passaggio a causa della differenza di tipi. L'espressione `data[0]` (la prima riga) degrada implicitamente proprio in `int*`, il che corrisponde perfettamente alla firma.",
+        "Errato. Gli array in C non vengono mai passati per valore con tutto il loro contenuto.",
+        "Errato. Non viene effettuata alcuna allocazione di memoria con `data[0]`.",
+        "Errato. La posizione della memoria (stack o heap) non ha rilevanza per il tipo `int*`."
+      ]
+    },
+    {
+      "id": "it_clang_1665",
+      "widget_id": "widget_clang_1665",
+      "topic": "Differenza tra i tipi data, data[0] e &data[0][0]",
+      "q": "Quali sono i tipi e i valori delle espressioni *data e **data per l'array int data[2][3] = {{10, 20, 30}, {40, 50, 60}}?",
+      "hint": "Sviluppa le dereferenziazioni passo dopo passo: *data restituisce la prima riga, **data dereferenzia il primo elemento.",
+      "options": [
+        "*data ha tipo int* (puntatore a data[0][0]) e **data ha tipo int (valore 10)",
+        "*data ha tipo int (valore 10) e **data provoca un errore di compilazione",
+        "*data ha tipo int(*)[3] e **data ha tipo int*",
+        "*data restituisce 10 e **data restituisce 40"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La prima dereferenziazione `*data` equivale a `data[0]`, ottenendo il tipo \"array di 3 int\", che degrada in `int*` (indirizzo di `&data[0][0]`). La seconda dereferenziazione `**data` equivale a `*data[0]` o `data[0][0]`, restituendo il valore stesso di tipo `int` (10).",
+        "Errato. Una sola dereferenziazione `*data` non legge ancora il valore finale `int`.",
+        "Errato. `*data` rimuove un livello di dimensione dell'array.",
+        "Errato. Il valore 40 si trova nella seconda riga (`data[1][0]`)."
+      ]
+    },
+    {
+      "id": "it_clang_1666",
+      "widget_id": "widget_clang_1666",
+      "topic": "Differenza tra i tipi data, data[0] e &data[0][0]",
+      "q": "Quale espressione di indirizzamento piatto tramite data[0] è completamente equivalente all'accesso all'elemento data[i][j] per una matrice con COL = 4?",
+      "hint": "Calcola lo spostamento dell'elemento j nella riga i per il puntatore 1D data[0].",
+      "options": [
+        "*(data[0] + i * 4 + j)",
+        "*(data[0] + i + j)",
+        "*(*data[0] + i * 4 + j)",
+        "data[0] + i * 4 + j"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `data[0]` ha tipo `int*` e punta all'inizio di un blocco continuo di memoria, lo offset della riga $i$-esima dall'inizio della matrice è pari a $i \\cdot 4$ elementi, più lo offset di $j$ colonne. La dereferenziazione `*(data[0] + i * 4 + j)` legge l'elemento `data[i][j]`.",
+        "Errato. La semplice somma `i + j` non salta le righe intere di 4 elementi.",
+        "Errato. `*data[0]` restituisce un valore `int`, a cui non è possibile applicare un'ulteriore dereferenziazione `*`.",
+        "Errato. Senza l'operatore `*`, l'espressione restituisce l'indirizzo dell'elemento, non il suo valore."
+      ]
+    },
+    {
+      "id": "it_clang_1667",
+      "widget_id": "widget_clang_1667",
+      "topic": "Differenza tra i tipi data, data[0] e &data[0][0]",
+      "q": "A quanto equivarrà la variabile val dopo l'esecuzione dell'indirizzamento lineare tramite il puntatore p?",
+      "hint": "Calcola l'indice dell'elemento nella matrice 3x3: offset 4 dall'inizio.",
+      "options": [
+        "5 (elemento data[1][1])",
+        "4 (elemento data[1][0])",
+        "6 (elemento data[1][2])",
+        "Comportamento indefinito (UB)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La matrice è disposta in memoria come: 1, 2, 3, 4, 5, 6, 7, 8, 9 (indici 0..8). `p + 4` punta al quinto elemento con indice 4, ovvero a `data[1][1]`, il cui valore è 5.",
+        "Errato. 4 è l'elemento `data[1][0]` con indice 3.",
+        "Errato. 6 è l'elemento `data[1][2]` con indice 5.",
+        "Errato. L'accesso è legale in quanto l'indice 4 rientra nei limiti 3x3 (9 elementi in totale)."
+      ]
+    },
+    {
+      "id": "it_clang_1668",
+      "widget_id": "widget_clang_1668",
+      "topic": "Differenza tra i tipi data, data[0] e &data[0][0]",
+      "q": "Qual è la differenza tra la creazione dei puntatori p1 e p2 per la matrice data?",
+      "hint": "Fai attenzione alla necessità di un cast esplicito del tipo.",
+      "options": [
+        "Entrambi i puntatori memorizzano un indirizzo identico e consentono di accedere agli elementi; p1 richiede un cast esplicito a causa dell'incompatibilità tra int(*)[2] e int*, mentre p2 degrada implicitamente in int*",
+        "p1 punta a memoria nell'heap, mentre p2 allo stack",
+        "p1 può essere incrementato, mentre p2 è un puntatore costante e non può essere modificato",
+        "p2 provoca un errore di Segmentation Fault durante la dereferenziazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `data` ha tipo `int(*)[2]`, quindi per assegnarlo a `int* p1` è necessario un cast esplicito `(int*)data`. L'espressione `data[0]` è già `int[2]`, che degrada automaticamente in `int*` senza alcun cast. Entrambi i puntatori contengono lo stesso indirizzo numerico.",
+        "Errato. L'allocazione di memoria è identica (sullo stack).",
+        "Errato. Sia `p1` che `p2` sono normali variabili puntatore locali `int*`, ed entrambi possono essere incrementati.",
+        "Errato. `p2` è completamente valido."
+      ]
+    },
+    {
+      "id": "it_clang_1669",
+      "widget_id": "widget_clang_1669",
+      "topic": "Differenza tra i tipi data, data[0] e &data[0][0]",
+      "q": "Quale delle seguenti istruzioni passa CORRETTAMENTE la seconda riga (indice 1) della matrice data alla funzione process_row(int *row, int cols)?",
+      "hint": "La funzione richiede il tipo int*. Serve la riga degradata data[1] oppure l'indirizzo del suo primo elemento &data[1][0].",
+      "options": [
+        "process_row(data[1], 4); oppure process_row(&data[1][0], 4);",
+        "process_row(data + 1, 4);",
+        "process_row(&data[1], 4);",
+        "process_row(*(data + 1)[0], 4);"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `data[1]` degrada in `int*` (puntatore a `data[1][0]`). La sintassi `&data[1][0]` prende direttamente l'indirizzo del primo elemento della seconda riga, fornendo lo stesso tipo `int*`. Entrambe le opzioni sono perfette.",
+        "Errato. `data + 1` ha tipo `int(*)[4]`, il che provocherà un errore di incompatibilità di tipi.",
+        "Errato. `&data[1]` ha tipo `int(*)[4]` (puntatore all'intera seconda riga).",
+        "Errato. La sintassi è sintatticamente errata e causerà un errore di compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_1670",
+      "widget_id": "widget_clang_1670",
+      "topic": "Differenza tra i tipi data, data[0] e &data[0][0]",
+      "q": "Come si rapportano le espressioni data + 1 e &data[1] in termini di valore e di tipo?",
+      "hint": "Ricorda la regola di equivalenza: &a[i] <-> (a + i).",
+      "options": [
+        "Entrambe le espressioni hanno un tipo assolutamente identico int(*)[4] e puntano allo stesso indirizzo di inizio della seconda riga",
+        "data + 1 ha tipo int*, mentre &data[1] ha tipo int(*)[4]",
+        "data + 1 si sposta di 4 byte, mentre &data[1] si sposta di 16 byte",
+        "&data[1] restituisce il valore del primo elemento della riga, mentre data + 1 restituisce l'indirizzo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `&a[i]` è sintatticamente equivalente a `&(*(a + i))`, gli operatori `&` e `*` si annullano a vicenda fornendo `(a + i)`. Di conseguenza, `&data[1]` e `data + 1` sono strettamente identici sia nel valore dell'indirizzo che nel tipo `int(*)[4]`.",
+        "Errato. I loro tipi coincidono perfettamente.",
+        "Errato. Entrambe le espressioni spostano l'indirizzo allo stesso modo: di 16 byte (un'intera riga di 4 elementi).",
+        "Errato. `&data[1]` è l'indirizzo dell'intera riga, non un valore."
+      ]
+    },
+    {
+      "id": "it_clang_1671",
+      "widget_id": "widget_clang_1671",
+      "topic": "Dereferenziazione degli elementi di una matrice tramite puntatori",
+      "q": "Qual è l'ordine sequenziale di traduzione della sintassi data[r][c] nell'aritmetica dei puntatori eseguito dal compilatore C?",
+      "hint": "L'operatore [] espande sempre l'espressione a[b] in *(a + b), a partire dal livello esterno sinistro.",
+      "options": [
+        "data[r][c] -> (*(data + r))[c] -> *(*(data + r) + c)",
+        "data[r][c] -> *(data + r + c)",
+        "data[r][c] -> **(data + r + c)",
+        "data[r][c] -> *(*(data) + r + c)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Prima le parentesi a sinistra `data[r]` vengono espanse in `*(data + r)` (ottenendo il puntatore alla riga r). Poi le parentesi a destra `[c]` vengono applicate all'espressione risultante, trasformandola in `*(*(data + r) + c)`.",
+        "Errato. La semplice somma `r + c` ignora la dimensione della riga in byte.",
+        "Errato. Il doppio operatore `**` in questa forma è errato, poiché `+ c` deve essere aggiunto all'interno prima della dereferenziazione esterna.",
+        "Errato. L'espressione `*(*(data) + r + c)` sposterà l'indice solo di `r + c` elementi, non di `r` righe."
+      ]
+    },
+    {
+      "id": "it_clang_1672",
+      "widget_id": "widget_clang_1672",
+      "topic": "Dereferenziazione degli elementi di una matrice tramite puntatori",
+      "q": "Che tipo ha l'espressione intermedia *(data + r) nella formula *(*(data + r) + c) per un array bidimensionale int data[ROW][COL]?",
+      "hint": "La dereferenziazione di un puntatore a un array int(*)[COL] \"rimuove\" un livello di dimensione.",
+      "options": [
+        "int* (puntatore al primo elemento della riga r)",
+        "int(*)[COL] (puntatore alla riga r)",
+        "int (valore del primo elemento della riga r)",
+        "int** (doppio puntatore)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `(data + r)` ha tipo `int(*)[COL]`. Quando la dereferenziamo tramite `*(data + r)`, otteniamo l'array stesso di `COL` elementi `int`, che per usi successivi degrada in `int*` (puntatore a `data[r][0]`).",
+        "Errato. `int(*)[COL]` è il tipo di `(data + r)` stesso prima dell'applicazione del primo operatore `*`.",
+        "Errato. Per ottenere il valore `int`, occorre applicare un secondo operatore esterno `*`.",
+        "Errato. Le matrici in C non memorizzano elenchi di puntatori, quindi `int**` non compare."
+      ]
+    },
+    {
+      "id": "it_clang_1673",
+      "widget_id": "widget_clang_1673",
+      "topic": "Dereferenziazione degli elementi di una matrice tramite puntatori",
+      "q": "A quanto equivarrà la variabile val dopo l'esecuzione dell'espressione *(*(grid + 1) + 2)?",
+      "hint": "L'espressione corrisponde a grid[1][2]. Trova l'elemento alla riga 1 e colonna 2 (partendo da 0).",
+      "options": [
+        "60",
+        "30",
+        "50",
+        "40"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `grid + 1` punta alla seconda riga (`grid[1]`). `*(grid + 1)` degrada in `int*` con indirizzo `&grid[1][0]`. L'aggiunta di `+ 2` fornisce `&grid[1][2]`. La dereferenziazione esterna `*` restituisce il valore di `grid[1][2]`, pari a 60.",
+        "Errato. 30 è `grid[0][2]` (prima riga).",
+        "Errato. 50 è `grid[1][1]` (seconda riga, colonna centrale).",
+        "Errato. 40 è `grid[1][0]` (inizio della seconda riga)."
+      ]
+    },
+    {
+      "id": "it_clang_1674",
+      "widget_id": "widget_clang_1674",
+      "topic": "Dereferenziazione degli elementi di una matrice tramite puntatori",
+      "q": "Quale delle seguenti espressioni NON è un equivalente esatto per ottenere il VALORE dell'elemento matrix[2][3]?",
+      "hint": "Verifica quale delle espressioni restituisce l'indirizzo dell'elemento (puntatore) anziché leggerne il valore.",
+      "options": [
+        "*(matrix + 2) + 3",
+        "*(matrix[2] + 3)",
+        "(*(matrix + 2))[3]",
+        "*(*(matrix + 2) + 3)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `*(matrix + 2) + 3` restituisce un `int*` — l'INDIRIZZO dell'elemento `matrix[2][3]`, in quanto manca la dereferenziazione esterna `*`. Tutte le altre tre opzioni restituiscono correttamente il valore stesso (numero `int`).",
+        "Errato. `*(matrix[2] + 3)` è una dereferenziazione sintatticamente corretta con offset di colonna.",
+        "Errato. `(*(matrix + 2))[3]` combina la dereferenziazione della riga e le parentesi quadre della colonna.",
+        "Errato. `*(*(matrix + 2) + 3)` è la forma canonica dell'aritmetica dei puntatori."
+      ]
+    },
+    {
+      "id": "it_clang_1675",
+      "widget_id": "widget_clang_1675",
+      "topic": "Dereferenziazione degli elementi di una matrice tramite puntatori",
+      "q": "Quale elemento dell'array arr aggiornerà la riga di codice *(*(arr + 1) + 1) = 99;?",
+      "hint": "*(*(arr + r) + c) è un lvalue ed è completamente equivalente ad arr[r][c].",
+      "options": [
+        "arr[1][1]",
+        "arr[0][1]",
+        "arr[1][0]",
+        "arr[2][2]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La formula `*(*(arr + 1) + 1)` si espande in `arr[1][1]`. Poiché la dereferenziazione esterna fornisce una cella di memoria (lvalue), l'assegnazione scrive con successo il numero 99 nell'elemento `arr[1][1]`.",
+        "Errato. `arr[0][1]` verrebbe scritto come `*(*arr + 1) = 99`.",
+        "Errato. `arr[1][0]` verrebbe scritto come `**(arr + 1) = 99`.",
+        "Errato. `arr[2][2]` verrebbe scritto come `*(*(arr + 2) + 2) = 99`."
+      ]
+    },
+    {
+      "id": "it_clang_1676",
+      "widget_id": "widget_clang_1676",
+      "topic": "Dereferenziazione degli elementi di una matrice tramite puntatori",
+      "q": "Perché il cast di un array bidimensionale int a[2][2] al tipo int **pp con successiva dereferenziazione **pp porterà inevitabilmente a un errore di runtime (Segmentation Fault / Access Violation)?",
+      "hint": "Pensa a cosa leggerà il compilatore alla prima dereferenziazione *pp se si aspetta un puntatore.",
+      "options": [
+        "pp tenta di leggere il primo valore a[0][0] (numero 1) e di interpretarlo come INDIRIZZO di memoria, dopo di che dereferenzia l'indirizzo 0x1",
+        "I doppi puntatori int** sono in linea di principio vietati dallo standard C",
+        "Il compilatore azzera la matrice al momento del cast a puntatore",
+        "L'operazione provocherà uno stack overflow"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'array bidimensionale `a[2][2]` risiede in memoria come un blocco continuo di numeri `1, 2, 3, 4`. Un normale `int** pp` si aspetta che in memoria vi sia l'indirizzo di un altro puntatore. Alla prima dereferenziazione `*pp`, il processore prende il numero `1` e lo considera come indirizzo `0x1`. La seconda dereferenziazione `*(*pp)` tenta di leggere la memoria all'indirizzo `0x1`, causando un crash (Segmentation Fault).",
+        "Errato. I doppi puntatori `int**` sono legali per gli array dinamici di puntatori, ma non sono applicabili ad array 2D continui.",
+        "Errato. La memoria della matrice non viene modificata.",
+        "Errato. Questo non porta a uno stack overflow."
+      ]
+    },
+    {
+      "id": "it_clang_1677",
+      "widget_id": "widget_clang_1677",
+      "topic": "Dereferenziazione degli elementi di una matrice tramite puntatori",
+      "q": "A quanto equivarrà la variabile val nell'espressione **(arr + 1) + 2?",
+      "hint": "Fai attenzione: non ci sono parentesi nella seconda somma. Viene prima dereferenziato completamente **(arr + 1).",
+      "options": [
+        "6 (valore di arr[1][0] + 2)",
+        "8 (valore di arr[1][2])",
+        "5 (valore di arr[0][2])",
+        "3 (valore di arr[0][0] + 2)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `*(arr + 1)` fornisce un puntatore all'inizio della seconda riga `&arr[1][0]`. La seconda dereferenziazione `**(arr + 1)` legge il valore del primo elemento della seconda riga — `arr[1][0]`, cioè 4. Quindi al numero 4 viene aggiunto 2: `4 + 2 = 6`.",
+        "Errato. Si otterrebbe 8 se il valore di `arr[1][2]` fosse 6.",
+        "Errato. Per leggere `arr[1][2]` (numero 6), la formula andrebbe scritta come `*(*(arr + 1) + 2)`.",
+        "Errato. Lo offset `arr + 1` punta alla seconda riga (numeri 4, 5, 6), non alla prima."
+      ]
+    },
+    {
+      "id": "it_clang_1678",
+      "widget_id": "widget_clang_1678",
+      "topic": "Dereferenziazione degli elementi di una matrice tramite puntatori",
+      "q": "In quale espressione con dereferenziazione di puntatori il compilatore espanderà l'accesso all'array tridimensionale cube[i][j][k]?",
+      "hint": "Applica la regola a[b] -> *(a + b) in sequenza tre volte dall'esterno verso l'interno.",
+      "options": [
+        "*(*(*(cube + i) + j) + k)",
+        "***(cube + i + j + k)",
+        "*(*(cube + i + j) + k)",
+        "*(*(cube + i) + j + k)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `cube[i]` si espande in `*(cube + i)`. Poi `cube[i][j]` diventa `*(*(cube + i) + j)`. Infine, il terzo indice `[k]` dà la forma canonica `*(*(*(cube + i) + j) + k)`.",
+        "Errato. La semplice somma `i + j + k` non tiene conto del passo delle dimensioni.",
+        "Errato. Manca una dereferenziazione dei livelli dell'array 3D.",
+        "Errato. Mancano le parentesi di raggruppamento dell'addizione prima della dereferenziazione del terzo indice."
+      ]
+    },
+    {
+      "id": "it_clang_1679",
+      "widget_id": "widget_clang_1679",
+      "topic": "Dereferenziazione degli elementi di una matrice tramite puntatori",
+      "q": "Quale valore restituirà l'espressione *(2 + *(1 + data)) per la matrice data[3][3], sfruttando la commutatività dell'addizione?",
+      "hint": "Riscrivi nella forma standard: *(1 + data) è *(data + 1) = data[1]. *(2 + data[1]) è *(data[1] + 2) = data[1][2].",
+      "options": [
+        "6 (elemento data[1][2])",
+        "4 (elemento data[1][0])",
+        "8 (elemento data[2][1])",
+        "2 (elemento data[0][1])"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Grazie alla commutatività, `*(1 + data)` equivale a `data[1]`. L'espressione `*(2 + data[1])` si trasforma in `*(data[1] + 2)`, ovvero `data[1][2]`. Nella matrice, alla riga 1 e colonna 2 c'è il valore 6.",
+        "Errato. 4 è `data[1][0]`.",
+        "Errato. 8 è `data[2][1]`.",
+        "Errato. 2 è `data[0][1]`."
+      ]
+    },
+    {
+      "id": "it_clang_1680",
+      "widget_id": "widget_clang_1680",
+      "topic": "Dereferenziazione degli elementi di una matrice tramite puntatori",
+      "q": "A quanto equivale la variabile val e quale elemento viene letto dall'espressione *(*grid + 1 * 4 + 3)?",
+      "hint": "*grid dereferenzia il primo livello e dà int* all'elemento grid[0][0]. Segue uno spostamento lineare di 1*4 + 3 = 7 elementi.",
+      "options": [
+        "80 (elemento grid[1][3])",
+        "70 (elemento grid[1][2])",
+        "40 (elemento grid[0][3])",
+        "50 (elemento grid[1][0])"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `*grid` ha tipo `int*` e punta al primo elemento `grid[0][0]`. L'indice lineare è `1 * 4 + 3 = 7`. L'ottavo elemento in memoria continua (a partire da 0) è `grid[1][3]`, pari a 80.",
+        "Errato. 70 è `grid[1][2]` con indice lineare 6.",
+        "Errato. 40 è `grid[0][3]` con indice lineare 3.",
+        "Errato. 50 è `grid[1][0]` con indice lineare 4."
+      ]
+    },
+    {
+      "id": "it_clang_1681",
+      "widget_id": "widget_clang_1681",
+      "topic": "Array bidimensionali dinamici",
+      "q": "È garantita la continuità fisica delle righe in memoria con l'allocazione dinamica di una matrice tramite un array di puntatori int **arr?",
+      "hint": "Ogni chiamata a malloc restituirà un blocco indipendente nell'heap.",
+      "options": [
+        "No, le righe vengono allocate con chiamate malloc indipendenti e possono trovarsi in posizioni arbitrarie dell'heap",
+        "Sì, l'allocatore dell'heap posiziona sempre le chiamate malloc successive in modo strettamente consecutivo",
+        "Sì, lo standard C garantisce la continuità per qualsiasi array bidimensionale",
+        "Dipende dall'uso del cast (int**)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con l'allocazione tramite un ciclo `malloc(cols * sizeof(int))`, ogni chiamata restituisce un buffer di memoria isolato. Le righe non si trovano una dopo l'altra, perdendo così la continuità fisica (il Row-major order non è garantito tra righe diverse).",
+        "Errato. Le chiamate a `malloc` non sono tenute a restituire blocchi di memoria contigui.",
+        "Errato. Lo standard C garantisce la continuità solo per array statici/automatici `T[R][C]`, ma non per quelli dinamici `int**`.",
+        "Errato. Il cast esplicito non influisce affatto sul funzionamento dell'allocatore di memoria dell'heap."
+      ]
+    },
+    {
+      "id": "it_clang_1682",
+      "widget_id": "widget_clang_1682",
+      "topic": "Array bidimensionali dinamici",
+      "q": "In quale ordine è necessario liberare la memoria per una matrice allocata come array di puntatori int **arr?",
+      "hint": "Se prima elimini l'array principale di puntatori free(arr), perderai gli indirizzi delle righe allocate.",
+      "options": [
+        "Prima si liberano tutte le righe free(arr[i]) in un ciclo, e solo successivamente si libera l'array di puntatori stesso free(arr)",
+        "Prima free(arr), e poi free(arr[i]) in un ciclo",
+        "È sufficiente chiamare free(arr) una sola volta, il sistema operativo chiuderà automaticamente le righe annidate",
+        "L'ordine non ha importanza"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se si esegue prima `free(arr)`, i puntatori alle righe `arr[i]` diventano non validi (Dangling Pointers), e il successivo accesso ad essi per liberarli porta a un comportamento indefinito (UB). Prima vengono eliminate le righe interne, poi l'array esterno.",
+        "Errato. Chiamare prima `free(arr)` rende l'accesso ad `arr[i]` un accesso a un indirizzo già liberato.",
+        "Errato. `free()` libera solo il blocco di memoria specifico passato come argomento.",
+        "Errato. L'ordine è rigorosamente definito: dai blocchi interni a quelli esterni."
+      ]
+    },
+    {
+      "id": "it_clang_1683",
+      "widget_id": "widget_clang_1683",
+      "topic": "Array bidimensionali dinamici",
+      "q": "Qual è il vantaggio principale dell'allocazione di una matrice in un unico blocco continuo di memoria int *matrix = malloc(rows * cols * sizeof(int))?",
+      "hint": "Pensa al numero di chiamate a malloc, al lavoro con la cache e alla liberazione della memoria.",
+      "options": [
+        "La memoria viene allocata con 1 sola chiamata a malloc, è garantita la continuità assoluta dei dati nell'heap e tutta la memoria viene liberata con 1 sola chiamata a free",
+        "È l'unico modo per passare una matrice alle funzioni in C",
+        "Tale array consente di usare la sintassi matrix[r][c] senza la sintassi VLA",
+        "Un blocco di memoria continuo protegge automaticamente dal superamento dei limiti dell'array"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'allocazione in un unico blocco minimizza l'overhead del gestore di memoria, velocizza l'esecuzione grazie alla località della cache (layout Row-major) e semplifica la pulizia — è sufficiente una sola chiamata a `free(matrix)`.",
+        "Errato. Gli array bidimensionali possono essere passati in molti modi.",
+        "Errato. Per accedere nella forma `matrix[r][c]` a un puntatore `int*` serve un cast VLA o un puntatore ad array `int (*)[cols]`.",
+        "Errato. Il controllo dei limiti dell'array in C è assente di default."
+      ]
+    },
+    {
+      "id": "it_clang_1684",
+      "widget_id": "widget_clang_1684",
+      "topic": "Array bidimensionali dinamici",
+      "q": "Perché la dichiarazione int (*matrix)[cols] = malloc(rows * sizeof(*matrix)) è un compromesso estremamente comodo nello standard C99?",
+      "hint": "Combina una memoria continua e la sintassi standard a doppie parentesi quadre.",
+      "options": [
+        "Alloca un unico blocco continuo di memoria, mantenendo la sintassi di accesso standard matrix[r][c] senza calcolare offset manuali",
+        "Alloca la memoria sullo stack invece che nell'heap",
+        "Libera automaticamente la memoria all'uscita dalla funzione",
+        "Converte la matrice in un array di puntatori"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il tipo `int (*)[cols]` punta a un array di `cols` elementi. Ciò consente al compilatore di calcolare autonomamente lo offset della riga, permettendo di scrivere comodamente `matrix[r][c]`, pur mantenendo la memoria fisica continua e una sola chiamata a `free(matrix)`.",
+        "Errato. La funzione `malloc` alloca sempre memoria nell'heap.",
+        "Errato. La memoria allocata con `malloc` non viene liberata automaticamente.",
+        "Errato. Si tratta di un singolo puntatore a un array, non di un array di puntatori."
+      ]
+    },
+    {
+      "id": "it_clang_1685",
+      "widget_id": "widget_clang_1685",
+      "topic": "Array bidimensionali dinamici",
+      "q": "Nel codice fornito sono state effettuate 2 chiamate a malloc per la matrice. Come liberare correttamente tale struttura (approccio ibrido / schema con buffer)?",
+      "hint": "Conta il numero di blocchi allocati tramite malloc — sono esattamente due.",
+      "options": [
+        "free(data); free(arr); (liberare entrambi i blocchi allocati)",
+        "In un ciclo free(arr[i]); e poi free(arr);",
+        "free(arr); data si pulirà automaticamente",
+        "free(data); arr si pulirà automaticamente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In questo pattern vengono effettuate solo due chiamate a `malloc`: la prima per l'array di puntatori `arr`, la seconda per il buffer unico di dati `data`. I puntatori `arr[i]` fanno semplicemente riferimento a sezioni di `data`. Pertanto è sufficiente chiamare `free(data)` e `free(arr)`.",
+        "Errato. Chiamare `free(arr[i])` in un ciclo causerà un errore di `double free`, poiché tutti gli `arr[i]` puntano all'interno dello stesso blocco `data`.",
+        "Errato. Il sistema operativo non libera `data` quando viene liberato `arr`.",
+        "Errato. `arr` è un blocco di memoria indipendente."
+      ]
+    },
+    {
+      "id": "it_clang_1686",
+      "widget_id": "widget_clang_1686",
+      "topic": "Array bidimensionali dinamici",
+      "q": "Qual è il problema nella creazione di una matrice di 10000 righe da 4 elementi tramite 10001 chiamate a malloc?",
+      "hint": "Ogni allocazione nell'heap contiene intestazioni di servizio (metainformazioni / Heap Overhead).",
+      "options": [
+        "Un enorme overhead di memoria per le intestazioni dell'allocatore (Heap Overhead) e un'elevata frammentazione della memoria",
+        "Il codice causerà un errore di compilazione a causa del limite sul numero di malloc",
+        "Tale array non potrà essere pulito",
+        "Il processore si rifiuterà di eseguire più di 1000 cicli"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Ogni allocazione nell'heap aggiunge informazioni di servizio (di solito 8-16 byte per blocco). Per piccole righe di 4 `int` (16 byte), i dati di servizio occuperanno la stessa quantità di memoria o anche di più rispetto ai dati utili. Inoltre, ciò creerà 10000 frammenti dispersi nell'heap.",
+        "Errato. Il compilatore non limita il numero di chiamate di funzione.",
+        "Errato. È possibile pulirlo, ma richiederà 10001 chiamate a `free()`.",
+        "Errato. Il processore non ha limiti sul numero di iterazioni di un ciclo."
+      ]
+    },
+    {
+      "id": "it_clang_1687",
+      "widget_id": "widget_clang_1687",
+      "topic": "Array bidimensionali dinamici",
+      "q": "A quale conseguenza porterà la chiamata free(arr) SENZA aver prima liberato le righe in un ciclo?",
+      "hint": "La memoria allocata per le righe rimarrà inaccessibile.",
+      "options": [
+        "Si verificherà una perdita di memoria (Memory Leak): i blocchi delle righe rimarranno allocati nell'heap, ma perderanno i propri indirizzi",
+        "Il programma andrà subito in crash con Segmentation Fault",
+        "Il sistema operativo pulirà automaticamente tutte le righe arr[i]",
+        "Le righe arr[i] verranno spostate nello stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il blocco dell'array di puntatori `arr` verrà liberato, ma la memoria allocata per ciascuna riga `arr[i]` rimarrà sospesa nell'heap senza alcuna possibilità di accedervi. Si tratta di una classica perdita di memoria (Memory Leak).",
+        "Errato. Di per sé `free(arr)` non causa un crash se `arr` è stato ottenuto da `malloc`.",
+        "Errato. Il C non dispone di un garbage collector automatico per l'heap.",
+        "Errato. L'heap e lo stack sono rigidamente separati."
+      ]
+    },
+    {
+      "id": "it_clang_1688",
+      "widget_id": "widget_clang_1688",
+      "topic": "Array bidimensionali dinamici",
+      "q": "Perché il tentativo di convertire una matrice statica int static_matrix[2][3] al tipo int **p con successivo p[0][0] causerà l'interruzione anomala del programma?",
+      "hint": "p[0] leggerà i primi 4/8 byte della matrice (il valore dell'elemento static_matrix[0][0]) e tenterà di dereferenziare quel numero come puntatore.",
+      "options": [
+        "In static_matrix non sono memorizzati puntatori, quindi p[0] leggerà il valore numerico dell'elemento come indirizzo e andrà in crash quando tenterà di accedervi",
+        "Gli array statici sono memorizzati in forma crittografata nella memoria",
+        "Il tipo int ** è riservato solo all'I/O su file",
+        "p[0][0] richiede che la matrice si trovi nell'heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'array bidimensionale `static_matrix` è un unico buffer di valori `int`. L'espressione `p[0]` per `int**` tenta di LEGGERE un indirizzo dalla memoria. Legge il primo numero della matrice (ad esempio `0` o `1`) e pensa che sia l'indirizzo `0x00000001`. Tentando di leggere `p[0][0]`, si verifica un crash per accesso non valido alla memoria.",
+        "Errato. Non c'è alcuna crittografia.",
+        "Errato. `int**` è un normale tipo di puntatore a puntatore.",
+        "Errato. La posizione (stack/heap) non ha alcuna relazione con questo errore."
+      ]
+    },
+    {
+      "id": "it_clang_1689",
+      "widget_id": "widget_clang_1689",
+      "topic": "Array bidimensionali dinamici",
+      "q": "In cosa differisce l'allocazione di un puntatore VLA tramite calloc rispetto a malloc: int (*arr)[cols] = calloc(rows, sizeof(*arr))?",
+      "hint": "Ricorda la differenza tra malloc e calloc.",
+      "options": [
+        "calloc garantisce che tutti gli elementi della matrice vengano preventivamente azzerati",
+        "calloc alloca la memoria sullo stack, mentre malloc nell'heap",
+        "calloc vieta l'uso della sintassi arr[i][j]",
+        "In nulla, sono sinonimi assoluti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `calloc` non solo alloca il volume di memoria richiesto, ma azzera anche l'intero array di byte allocato, pertanto tutti gli elementi `arr[r][c]` saranno garantiti essere pari a `0`.",
+        "Errato. Entrambe le funzioni lavorano con l'heap.",
+        "Errato. L'indicizzazione `arr[i][j]` funziona allo stesso modo.",
+        "Errato. `malloc` lascia dati spazzatura in memoria, mentre `calloc` la azzera."
+      ]
+    },
+    {
+      "id": "it_clang_1690",
+      "widget_id": "widget_clang_1690",
+      "topic": "Array bidimensionali dinamici",
+      "q": "Perché durante l'attraversamento ripetuto degli elementi la Variante 2 (buffer monodimensionale continuo) di solito funziona più velocemente della Variante 1 (array di puntatori int **arr)?",
+      "hint": "Pensa al numero di indirizzamenti indiretti (dereferenziazioni) e ai cache miss del processore.",
+      "options": [
+        "La Variante 2 richiede solo 1 indirizzamento indiretto invece di 2 e garantisce il 100% di hit nelle linee di cache del processore durante la lettura sequenziale",
+        "La Variante 1 viene eseguita dal processore in modalità single-thread, mentre la Variante 2 in multi-thread",
+        "Nella Variante 2 il compilatore disattiva il controllo dei tipi",
+        "Non c'è alcuna differenza nelle prestazioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In `int **arr`, per ciascun elemento occorre effettuare due passaggi in memoria: prima leggere il puntatore `arr[i]`, e poi i dati `arr[i][j]`. Se le righe sono sparse nell'heap, ciò provoca continui cache miss. In un buffer continuo, l'indirizzo viene calcolato direttamente tramite una formula matematica e i dati vengono letti da linee di cache precaricate.",
+        "Errato. Il multi-threading non si attiva automaticamente.",
+        "Errato. Il controllo dei tipi avviene in fase di compilazione e non influisce sulla velocità a runtime.",
+        "Errato. In compiti computazionali reali, la differenza di velocità può essere di diverse volte."
+      ]
+    }
+  ]
+}

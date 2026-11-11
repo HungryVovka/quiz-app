@@ -1,0 +1,609 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2111",
+      "widget_id": "widget_clang_2111",
+      "topic": "Overflow dei tipi con segno",
+      "q": "Qual è lo stato di esecuzione del programma sommando INT_MAX + 1 per il tipo con segno int secondo lo standard C?",
+      "hint": "Lo standard C gestisce diversamente l'overflow dei tipi con segno (signed) e senza segno (unsigned).",
+      "options": [
+        "Comportamento indefinito (Undefined Behavior)",
+        "Overflow con wrap-around",
+        "Errore di compilazione",
+        "Generazione di un'eccezione OverflowError"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, l'overflow dei tipi con segno (signed integer overflow) è un comportamento indefinito (Undefined Behavior). Il compilatore può ottimizzare il codice presupponendo che l'overflow non si verifichi.",
+        "Errato. Il wrap-around è garantito dallo standard solo per i tipi senza segno (unsigned).",
+        "Errato. Il compilatore non è tenuto a segnalare un errore di compilazione per un possibile overflow a runtime.",
+        "Errato. Il linguaggio C non genera eccezioni integrate in caso di overflow intero."
+      ]
+    },
+    {
+      "id": "it_clang_2112",
+      "widget_id": "widget_clang_2112",
+      "topic": "Overflow dei tipi senza segno",
+      "q": "Cosa stamperà il programma incrementando una variabile di tipo unsigned int con valore UINT_MAX?",
+      "hint": "I tipi senza segno in C funzionano secondo le regole dell'aritmetica modulare ($2^N$).",
+      "options": [
+        "0",
+        "UINT_MAX",
+        "4294967296",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per i tipi senza segno l'aritmetica viene eseguita modulo $2^N$. Incrementando UINT_MAX il valore torna a 0.",
+        "Errato. L'operazione x++ modifica il valore della variabile.",
+        "Errato. Il valore effettua il wrap-around modulo e si azzera.",
+        "Errato. L'overflow dei tipi senza segno è rigorosamente definito dallo standard e non è un UB."
+      ]
+    },
+    {
+      "id": "it_clang_2113",
+      "widget_id": null,
+      "topic": "Regole dello standard C",
+      "q": "In cosa differisce l'overflow dei tipi interi senza segno (unsigned) da quello dei tipi con segno (signed) secondo lo standard C?",
+      "hint": "Ricorda per quale tipo è garantito il wrap-around rigoroso e per quale invece il risultato non è affatto garantito.",
+      "options": [
+        "L'overflow senza segno è rigorosamente definito modulo 2^N, mentre quello con segno è un comportamento indefinito",
+        "Entrambi i tipi di overflow sono comportamenti indefiniti",
+        "L'overflow con segno è rigorosamente definito, mentre quello senza segno è un comportamento indefinito",
+        "Entrambi i tipi di overflow generano un'eccezione a runtime"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I tipi senza segno seguono le leggi dell'aritmetica modulare (wrap-around), mentre l'overflow dei tipi con segno comporta un UB.",
+        "Errato. L'overflow senza segno è completamente definito dallo standard C.",
+        "Errato. È esattamente il contrario: l'overflow senza segno è definito, quello con segno è UB.",
+        "Errato. Il linguaggio C non ha eccezioni integrate per l'overflow."
+      ]
+    },
+    {
+      "id": "it_clang_2114",
+      "widget_id": "widget_clang_2114",
+      "topic": "Verifica dell'overflow",
+      "q": "Cosa restituirà la funzione check_add_overflow durante il tentativo di sommare INT_MAX e 1?",
+      "hint": "Rifletti se l'operazione di sottrazione (INT_MAX - a) causa essa stessa un overflow prima del controllo.",
+      "options": [
+        "1",
+        "0",
+        "Comportamento indefinito",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il controllo b > INT_MAX - a è sicuro poiché la sottrazione non causa overflow, rilevando un potenziale overflow prima della somma e restituendo 1.",
+        "Errato. L'overflow si verifica effettivamente, quindi la funzione restituirà 1.",
+        "Errato. Il codice è scritto appositamente per evitare il comportamento indefinito.",
+        "Errato. Il codice rispetta pienamente la sintassi del linguaggio C."
+      ]
+    },
+    {
+      "id": "it_clang_2115",
+      "widget_id": "widget_clang_2115",
+      "topic": "Overflow nella sottrazione",
+      "q": "Cosa stamperà il programma sottraendo 1 da 0 per il tipo senza segno unsigned int?",
+      "hint": "I tipi senza segno non hanno valori negativi, quindi il risultato effettua il wrap-around al massimo numero possibile.",
+      "options": [
+        "1",
+        "0",
+        "-1",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Sottrarre 1 da 0 per un unsigned int porta il valore al massimo numero senza segno possibile (UINT_MAX), equivalente a (unsigned int)-1, quindi il confronto darà 1.",
+        "Errato. Il confronto restituirà vero (1).",
+        "Errato. Il tipo senza segno non contiene il segno meno.",
+        "Errato. Il comportamento dell'aritmetica dei tipi senza segno è rigorosamente definito dallo standard."
+      ]
+    },
+    {
+      "id": "it_clang_2116",
+      "widget_id": null,
+      "topic": "Ottimizzazioni del compilatore",
+      "q": "Perché il compilatore C può rimuovere il controllo if (x + 1 < x) per una variabile x di tipo int?",
+      "hint": "Il compilatore si basa sul presupposto che il programmatore non permetta un Undefined Behavior nell'aritmetica con segno.",
+      "options": [
+        "Poiché l'overflow del tipo int con segno è un UB, il compilatore considera x + 1 > x sempre vero",
+        "Perché x + 1 non può mai essere calcolato in C",
+        "Perché i tipi int vengono sempre convertiti in double",
+        "Perché il controllo x + 1 < x è sintatticamente non valido"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché l'overflow con segno è un UB, il compilatore in fase di ottimizzazione presuppone che x + 1 sia sempre strettamente maggiore di x e può eliminare completamente il ramo con x + 1 < x.",
+        "Errato. L'espressione x + 1 è perfettamente valida in C.",
+        "Errato. Gli interi non vengono convertiti automaticamente in double in queste espressioni.",
+        "Errato. L'espressione è sintatticamente corretta."
+      ]
+    },
+    {
+      "id": "it_clang_2117",
+      "widget_id": "widget_clang_2117",
+      "topic": "Overflow del signed char",
+      "q": "Cosa accadrà sulla maggior parte delle architetture comuni (in complemento a due) quando si incrementa un signed char con valore 127?",
+      "hint": "In una cella di memoria a 8 bit in complemento a due, l'overflow oltre il limite superiore (127) passa al valore negativo minimo.",
+      "options": [
+        "Il valore diventerà -128 e la condizione c < 0 restituirà 1 (sebbene formalmente sia UB secondo lo standard)",
+        "Il valore diventerà 128 senza estrazione del segno",
+        "Il programma terminerà in modo anomalo con Segmentation Fault",
+        "La variabile c verrà azzerata a 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Sui sistemi in complemento a due, 127 + 1 passa a -128 (anche se formalmente lo standard C lo tratta come UB per i tipi con segno). Nel calcolo, -128 < 0 restituirà 1.",
+        "Errato. Il tipo signed char a 8 bit ha un massimo di 127 e non può memorizzare 128.",
+        "Errato. L'errore di segmentazione non si verifica con le operazioni aritmetiche.",
+        "Errato. Viene azzerato l'unsigned char a 8 bit con 255 + 1."
+      ]
+    },
+    {
+      "id": "it_clang_2118",
+      "widget_id": "widget_clang_2118",
+      "topic": "Overflow nella moltiplicazione",
+      "q": "Perché l'espressione long long x = 100000 * 100000 può causare un overflow su sistemi con int a 32 bit?",
+      "hint": "Fai attenzione ai tipi degli operandi stessi nel lato destro dell'espressione prima dell'assegnazione.",
+      "options": [
+        "Entrambi gli operandi sono di tipo int, quindi la moltiplicazione viene eseguita nel tipo int prima dell'assegnazione a long long",
+        "Il tipo long long non può contenere numeri superiori a 1 milione",
+        "La moltiplicazione di due numeri positivi dà sempre un valore negativo",
+        "L'operatore di assegnazione converte automaticamente l'operando destro in char"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C il tipo del risultato intermedio è determinato dagli operandi. Poiché entrambi i letterali sono di tipo int, la moltiplicazione viene eseguita in un int a 32 bit e va in overflow prima ancora di essere scritta in long long.",
+        "Errato. long long garantisce una dimensione di almeno 64 bit e contiene facilmente questo numero.",
+        "Errato. La moltiplicazione di due numeri positivi è matematicamente positiva, ma a causa dell'overflow il bit di segno può cambiare.",
+        "Errato. L'assegnazione avviene a una variabile di tipo long long."
+      ]
+    },
+    {
+      "id": "it_clang_2119",
+      "widget_id": null,
+      "topic": "Programmazione sicura",
+      "q": "Quale flag del compilatore GCC/Clang permette di rilevare l'overflow degli interi con segno durante l'esecuzione?",
+      "hint": "Cerca uno strumento della famiglia degli analizzatori dinamici (Sanitizers) specializzato nel comportamento indefinito.",
+      "options": [
+        "-fsanitize=undefined",
+        "-O3",
+        "-Wall",
+        "-std=c99",
+        "-Wextra"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag -fsanitize=undefined (UndefinedBehaviorSanitizer, UBSan) inserisce controlli per l'overflow degli interi con segno e altri UB durante l'esecuzione.",
+        "Errato. Il flag -O3 abilita la massima ottimizzazione, che può rimuovere il codice affetto da UB.",
+        "Errato. -Wall abilita gli avvisi del compilatore durante la build.",
+        "Errato. -std=c99 specifica solo lo standard del linguaggio.",
+        "Errato. -Wextra abilita ulteriori avvisi del compilatore."
+      ]
+    },
+    {
+      "id": "it_clang_2120",
+      "widget_id": "widget_clang_2120",
+      "topic": "Shift bit a bit ed overflow",
+      "q": "L'espressione 1u << 31 è un comportamento definito per un unsigned int a 32 bit?",
+      "hint": "Il suffisso `u` indica che la costante appartiene a un tipo senza segno.",
+      "options": [
+        "Sì, poiché lo shift viene eseguito su un tipo senza segno unsigned int",
+        "No, questo causa un comportamento indefinito",
+        "No, questo causa un errore di compilazione",
+        "Sì, ma il risultato è sempre uguale a 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operazione di shift bit a bit sui tipi senza segno unsigned int è rigorosamente definita dallo standard C.",
+        "Errato. Per i tipi senza segno gli shift non causano UB se l'entità dello shift è inferiore al numero di bit del tipo.",
+        "Errato. L'espressione è corretta e viene compilata con successo.",
+        "Errato. Il valore 1u << 31 imposta il bit più significativo ed è pari a 2147483648, che è maggiore di 0."
+      ]
+    },
+    {
+      "id": "it_clang_2121",
+      "widget_id": "widget_clang_2121",
+      "topic": "Letterali ottali",
+      "q": "Cosa stamperà il programma dichiarando una variabile con valore 012?",
+      "hint": "Fai attenzione allo zero iniziale prima del numero 12.",
+      "options": [
+        "10",
+        "12",
+        "0",
+        "8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La scrittura di un letterale numerico che inizia con `0` indica il sistema di numerazione ottale. $12_8 = 1 \\times 8^1 + 2 \\times 8^0 = 10_{10}$.",
+        "Errato. Si otterrebbe 12 in assenza dello zero iniziale.",
+        "Errato. Lo zero iniziale è di servizio e specifica la base del sistema di numerazione.",
+        "Errato. L'ottale 012 si converte nel sistema decimale come 10."
+      ]
+    },
+    {
+      "id": "it_clang_2122",
+      "widget_id": "widget_clang_2122",
+      "topic": "Letterali esadecimali",
+      "q": "A quanto equivale il valore decimale della costante esadecimale 0x1A?",
+      "hint": "Il sistema esadecimale utilizza le cifre da 0 a 9 e le lettere A–F (dove A = 10).",
+      "options": [
+        "26",
+        "16",
+        "10",
+        "27"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il prefisso `0x` indica il sistema esadecimale. La lettera A equivale a 10. $1A_{16} = 1 \\times 16^1 + 10 \\times 16^0 = 26_{10}$.",
+        "Errato. 16 corrisponde alla costante 0x10.",
+        "Errato. La lettera A equivale a 10, ma prima di essa c'è una cifra con valore 1.",
+        "Errato. La lettera B corrisponderebbe a 11, dando 27."
+      ]
+    },
+    {
+      "id": "it_clang_2123",
+      "widget_id": "widget_clang_2123",
+      "topic": "Specificatori di output esadecimale",
+      "q": "Quale output genererà printf utilizzando gli specificatori %x e %X per il numero 255?",
+      "hint": "I caratteri minuscoli e maiuscoli negli specificatori determinano il formato delle lettere.",
+      "options": [
+        "ff FF",
+        "255 255",
+        "0xff 0xFF",
+        "ff ff"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli specificatori `%x` e `%X` stampano il numero in sistema esadecimale. `%x` usa lettere minuscole (`ff`) e `%X` maiuscole (`FF`).",
+        "Errato. Il normale output decimale viene eseguito con lo specificatore `%d`.",
+        "Errato. I prefissi `0x` vengono aggiunti solo utilizzando il flag `#` (`%#x`).",
+        "Errato. Il formato delle lettere dell'output dipende direttamente dal registro dello specificatore (`x` o `X`)."
+      ]
+    },
+    {
+      "id": "it_clang_2124",
+      "widget_id": "widget_clang_2124",
+      "topic": "Specificatore di output ottale",
+      "q": "Cosa stamperà il programma utilizzando lo specificatore %o per il numero 64?",
+      "hint": "Lo specificatore %o formatta il numero nel sistema ottale ($64 = 1 \\times 8^2$).",
+      "options": [
+        "100",
+        "64",
+        "064",
+        "80"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `%o` formatta un numero intero in forma ottale. $64_{10} = 100_8$ ($1 \\times 64 + 0 \\times 8 + 0 \\times 1$).",
+        "Errato. 64 è la rappresentazione decimale.",
+        "Errato. Lo zero iniziale non viene aggiunto automaticamente senza il flag `#`.",
+        "Errato. La cifra 8 non può esistere nel sistema ottale."
+      ]
+    },
+    {
+      "id": "it_clang_2125",
+      "widget_id": "widget_clang_2125",
+      "topic": "Letterali binari C23",
+      "q": "Qual è il valore del letterale binario 0b1010 (standard C23 ed estensioni dei compilatori)?",
+      "hint": "Il prefisso binario 0b imposta il valore in base alle potenze di due ($1010_2$).",
+      "options": [
+        "10",
+        "1010",
+        "8",
+        "12"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il prefisso `0b` imposta un letterale binario. $1010_2 = 1 \\times 2^3 + 0 \\times 2^2 + 1 \\times 2^1 + 0 \\times 2^0 = 8 + 2 = 10_{10}$.",
+        "Errato. Il compilatore interpreta quanto scritto come numero binario e non come decimale 1010.",
+        "Errato. 8 nel sistema binario si scrive come `0b1000`.",
+        "Errato. 12 nel sistema binario è indicato come `0b1100`."
+      ]
+    },
+    {
+      "id": "it_clang_2126",
+      "widget_id": null,
+      "topic": "Errori nei letterali ottali",
+      "q": "Cosa accadrà tentando di compilare codice C con il letterale 078?",
+      "hint": "Nel sistema di numerazione ottale sono consentite solo le cifre da 0 a 7.",
+      "options": [
+        "Errore di compilazione (cifra '8' non valida in un letterale ottale)",
+        "Il numero viene automaticamente convertito nel decimale 78",
+        "Overflow ottale con azzeramento",
+        "Comportamento indefinito durante l'esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo zero iniziale imposta il compilatore in modalità di lettura di una costante ottale. Le cifre 8 e 9 sono sintatticamente non valide nel sistema ottale e causeranno un errore del compilatore.",
+        "Errato. La presenza dello zero iniziale impone di utilizzare le regole del sistema ottale.",
+        "Errato. Si tratta di un errore di sintassi in fase di compilazione.",
+        "Errato. L'errore viene rilevato dal compilatore prima di avviare il programma."
+      ]
+    },
+    {
+      "id": "it_clang_2127",
+      "widget_id": "widget_clang_2127",
+      "topic": "Flag di forma alternativa %#",
+      "q": "Cosa stamperà il programma utilizzando il flag '#' negli specificatori %#x e %#o per il numero 16?",
+      "hint": "Il flag '#' aggiunge il prefisso standard del sistema di numerazione al valore stampato.",
+      "options": [
+        "0x10 020",
+        "16 16",
+        "#10 #20",
+        "0x16 016"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `#` forza `printf` a stampare prefissi espliciti delle basi numeriche: `0x` per l'esadecimale (`0x10`) e `0` per l'ottale (`020`).",
+        "Errato. Il flag `#` inserisce forzatamente i prefissi delle basi dei sistemi di numerazione.",
+        "Errato. Il carattere `#` è un flag di formattazione e non viene stampato.",
+        "Errato. Il valore 16 in hex è 10 ($1 \\times 16$), mentre in ottale è 20 ($2 \\times 8$)."
+      ]
+    },
+    {
+      "id": "it_clang_2128",
+      "widget_id": "widget_clang_2128",
+      "topic": "Sequenze di escape esadecimali",
+      "q": "Cosa stamperà il programma utilizzando le sequenze di escape esadecimali \\x41\\x42 in un letterale stringa?",
+      "hint": "I valori 0x41 e 0x42 corrispondono ai codici ASCII delle lettere latine maiuscole.",
+      "options": [
+        "AB",
+        "\\x41\\x42",
+        "4142",
+        "6566"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sequenza di escape `\\x` imposta un byte in formato esadecimale. `0x41` nella tabella ASCII è il carattere 'A' (65) e `0x42` è 'B' (66).",
+        "Errato. I caratteri `\\x` vengono interpretati dal compilatore durante la creazione dell'array di byte.",
+        "Errato. I byte esadecimali vengono interpretati come caratteri ASCII.",
+        "Errato. I codici decimali 65 e 66 vengono convertiti nei rispettivi caratteri 'A' e 'B'."
+      ]
+    },
+    {
+      "id": "it_clang_2129",
+      "widget_id": "widget_clang_2129",
+      "topic": "Sequenze di escape ottali",
+      "q": "Quale carattere stamperà il programma se una costante di tipo char è definita con il codice ottale '\\060'?",
+      "hint": "Il numero ottale 60 equivale a 48 nel sistema decimale (codice del carattere '0').",
+      "options": [
+        "0",
+        "6",
+        "a",
+        "NULL"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sequenza `\\060` è un codice ottale di un carattere: $6 \\times 8 + 0 = 48$. Secondo la tabella ASCII, il carattere con codice 48 è la cifra `'0'`.",
+        "Errato. '6' ha codice ASCII 54 (o `\\066`).",
+        "Errato. La lettera 'a' ha codice ASCII 97.",
+        "Errato. Il carattere NULL è indicato dal codice `\\0` o `\\000`."
+      ]
+    },
+    {
+      "id": "it_clang_2130",
+      "widget_id": "widget_clang_2130",
+      "topic": "Aritmetica in diversi sistemi di numerazione",
+      "q": "A quanto equivale la somma 0x10 + 010 + 10 calcolata in C?",
+      "hint": "Converti ciascun letterale nel sistema decimale: 0x10 (hex), 010 (ottale), 10 (dec).",
+      "options": [
+        "34",
+        "30",
+        "101010",
+        "36"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Convertiamo i letterali nel sistema decimale: `0x10` = 16, `010` = 8, `10` = 10. Somma: $16 + 8 + 10 = 34$.",
+        "Errato. Tutti e tre gli addendi si trovano in sistemi di numerazione diversi e hanno peso differente.",
+        "Errato. Il C effettua la somma aritmetica dei valori, non la concatenazione di stringhe.",
+        "Errato. Un ricalcolo esatto dà 34."
+      ]
+    },
+    {
+      "id": "it_clang_2131",
+      "widget_id": "widget_clang_2131",
+      "topic": "Specificatore %u per numeri con segno",
+      "q": "Cosa stamperà il programma tentando di stampare un numero negativo -1 tramite lo specificatore %u su un sistema a 32 bit?",
+      "hint": "Lo specificatore %u interpreta la rappresentazione binaria del numero come intero senza segno (unsigned int).",
+      "options": [
+        "4294967295",
+        "-1",
+        "0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il numero -1 in complemento a due su un sistema a 32 bit è rappresentato da tutti bit a 1 (0xFFFFFFFF). Lo specificatore %u interpreta questi bit come un valore intero senza segno $2^{32} - 1 = 4294967295$.",
+        "Errato. Lo specificatore %u ignora il segno e considera il bit più significativo come cifra numerica.",
+        "Errato. Il valore binario di -1 è composto esclusivamente da 1.",
+        "Errato. La mancata corrispondenza dello specificatore al tipo genererà un avviso del compilatore, ma il codice verrà compilato con successo."
+      ]
+    },
+    {
+      "id": "it_clang_2132",
+      "widget_id": "widget_clang_2132",
+      "topic": "Specificatore %ld per long",
+      "q": "Quale specificatore di formato è destinato alla corretta visualizzazione del tipo con segno long int?",
+      "hint": "Il modificatore di dimensione 'l' (long) viene aggiunto prima dello specificatore base per gli interi decimali 'd'.",
+      "options": [
+        "%ld",
+        "%d",
+        "%lld",
+        "%zu"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per il tipo `long int` si usa lo specificatore `%ld`. L'uso del normale `%d` su sistemi a 64 bit con il tipo long porta a un comportamento indefinito.",
+        "Errato. `%d` viene utilizzato per il normale `int`.",
+        "Errato. `%lld` è destinato al tipo `long long int`.",
+        "Errato. `%zu` è destinato alla stampa del tipo `size_t`."
+      ]
+    },
+    {
+      "id": "it_clang_2133",
+      "widget_id": "widget_clang_2133",
+      "topic": "Specificatore %zu per size_t",
+      "q": "Quale specificatore garantisce un output corretto e portabile del valore dell'operatore sizeof?",
+      "hint": "Il risultato di sizeof ha tipo size_t. Fai attenzione al modificatore speciale di dimensione 'z'.",
+      "options": [
+        "%zu",
+        "%d",
+        "%u",
+        "%ld",
+        "%p"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `sizeof` restituisce un valore di tipo `size_t`. A partire dallo standard C99, per un output sicuro e portabile di `size_t` si utilizza lo specificatore `%zu` ('z' sta per size_t, 'u' per unsigned).",
+        "Errato. `%d` attende un `int` con segno e può causare errori su sistemi a 64 bit.",
+        "Errato. `%u` attende un `unsigned int`, la cui dimensione potrebbe non coincidere con `size_t`.",
+        "Errato. `%ld` attende un `long int`.",
+        "Errato. `%p` viene utilizzato esclusivamente per la formattazione dei puntatori."
+      ]
+    },
+    {
+      "id": "it_clang_2134",
+      "widget_id": null,
+      "topic": "Formati di output dei sistemi di numerazione",
+      "q": "Quale specificatore si dovrebbe usare per stampare un numero intero senza segno nel sistema ottale?",
+      "hint": "Il nome del sistema di numerazione ottale in inglese è Octal.",
+      "options": [
+        "%o",
+        "%x",
+        "%d",
+        "%u"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `%o` formatta un numero intero senza segno in forma ottale (Octal).",
+        "Errato. `%x` stampa il numero nel sistema esadecimale.",
+        "Errato. `%d` stampa il numero nel sistema decimale con segno.",
+        "Errato. `%u` stampa il numero nel sistema decimale senza segno."
+      ]
+    },
+    {
+      "id": "it_clang_2135",
+      "widget_id": "widget_clang_2135",
+      "topic": "Mancata corrispondenza tra tipi e specificatori",
+      "q": "Cosa accadrà chiamando printf(\"%d\\n\", d) per una variabile d di tipo double?",
+      "hint": "printf attende l'invio di argomenti del tipo e della dimensione indicati nella stringa di formato.",
+      "options": [
+        "Comportamento indefinito (Undefined Behavior) o output di valori spazzatura",
+        "Il valore verrà automaticamente arrotondato all'intero 5",
+        "Errore di compilazione",
+        "Conversione automatica del tipo double a int senza avvisi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nelle funzioni C a numero variabile di argomenti (`printf`), il passaggio di un tipo non corrispondente allo specificatore di formato (ad esempio `double` invece di `int`) causa un comportamento indefinito dovuto all'impacchettamento diverso dei dati nello stack/registri.",
+        "Errato. `printf` non esegue conversioni esplicite o implicite di tipo durante l'esecuzione.",
+        "Errato. Il codice verrà compilato (sebbene un compilatore moderno emetta un avviso).",
+        "Errato. La conversione di tipo per le funzioni variadiche non avviene automaticamente."
+      ]
+    },
+    {
+      "id": "it_clang_2136",
+      "widget_id": "widget_clang_2136",
+      "topic": "Output esadecimale %x",
+      "q": "Cosa stamperà il programma passando il numero 0xFE a printf con la maschera %x?",
+      "hint": "Lo specificatore %x stampa un numero senza segno in formato esadecimale con lettere minuscole.",
+      "options": [
+        "fe",
+        "FE",
+        "254",
+        "0xfe"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `%x` formatta il numero in forma esadecimale usando il registro minuscolo (`fe`). Per il maiuscolo si usa `%X`.",
+        "Errato. Il maiuscolo `FE` viene stampato dallo specificatore `%X`.",
+        "Errato. 254 è la rappresentazione decimale del numero 0xFE.",
+        "Errato. Il prefisso `0x` viene aggiunto solo usando il flag `#` (`%#x`)."
+      ]
+    },
+    {
+      "id": "it_clang_2137",
+      "widget_id": null,
+      "topic": "Specificatori di interi con segno",
+      "q": "Quali due specificatori nelle funzioni della famiglia printf sono assolutamente identici per l'output di un int con segno?",
+      "hint": "Uno dei due significa 'decimal' e l'altro 'integer'.",
+      "options": [
+        "%d e %i",
+        "%d e %u",
+        "%i e %l",
+        "%d e %s"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In `printf` gli specificatori `%d` (decimal) e `%i` (integer) eseguono esattamente lo stesso lavoro. (Nota: in `scanf` funzionano in modo diverso!).",
+        "Errato. `%u` stampa un numero senza segno (unsigned int).",
+        "Errato. `%l` è un modificatore di dimensione, non uno specificatore autonomo.",
+        "Errato. `%s` viene utilizzato per stampare le stringhe."
+      ]
+    },
+    {
+      "id": "it_clang_2138",
+      "widget_id": "widget_clang_2138",
+      "topic": "Specificatori per i tipi interi lunghi",
+      "q": "Per quale tipo di dati è destinato lo specificatore %ld nello standard del linguaggio C?",
+      "hint": "Il modificatore 'l' indica il tipo long e 'd' indica la rappresentazione decimale con segno.",
+      "options": [
+        "signed long int",
+        "unsigned long int",
+        "long long int",
+        "size_t"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `%ld` è destinato all'output di numeri interi lunghi con segno (`signed long int`).",
+        "Errato. Per `unsigned long int` si usa lo specificatore `%lu`.",
+        "Errato. Per `long long int` si usa lo specificatore `%lld`.",
+        "Errato. Per `size_t` si usa lo specificatore `%zu`."
+      ]
+    },
+    {
+      "id": "it_clang_2139",
+      "widget_id": null,
+      "topic": "Portabilità dello specificatore %zu",
+      "q": "Perché il tentativo di stampare il risultato di sizeof con gli specificatori %u o %lu può causare problemi di portabilità?",
+      "hint": "La dimensione del tipo size_t dipende dall'architettura di destinazione (32 o 64 bit).",
+      "options": [
+        "La dimensione di size_t dipende dalla piattaforma, mentre lo specificatore %zu si adatta automaticamente alla larghezza di size_t",
+        "L'operatore sizeof restituisce sempre un numero negativo",
+        "Gli specificatori %u e %lu sono vietati nello standard C99",
+        "Lo specificatore %zu converte il risultato di sizeof in una stringa di caratteri"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il tipo `size_t` ha una dimensione di 32 bit su sistemi a 32 bit e di 64 bit su sistemi a 64 bit. L'uso di `%u` causerà errori su sistemi a 64 bit, mentre `%lu` darà avvisi su quelli a 32 bit. Lo specificatore `%zu` corrisponde sempre a `size_t`.",
+        "Errato. L'operatore `sizeof` restituisce una dimensione di memoria senza segno, non è mai negativo.",
+        "Errato. Gli specificatori `%u` e `%lu` sono assolutamente legittimi e fanno parte dello standard.",
+        "Errato. `%zu` formatta il numero come l'equivalente decimale senza segno, non lo trasforma in una stringa."
+      ]
+    },
+    {
+      "id": "it_clang_2140",
+      "widget_id": "widget_clang_2140",
+      "topic": "Uso combinato degli specificatori",
+      "q": "Cosa stamperà il programma presentato chiamando printf(\"%zu %o\\n\", len, u)?",
+      "hint": "%zu stampa il valore di tipo size_t in formato decimale, mentre %o mostra unsigned int in ottale.",
+      "options": [
+        "12 17",
+        "12 15",
+        "12 015",
+        "12 0xF"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `len` (12) viene stampato tramite `%zu` come numero decimale `12`. La variabile `u` (15) viene stampata tramite `%o` nel sistema ottale: $15_{10} = 17_8$ ($1 \\times 8 + 7$). Risultato: `12 17`.",
+        "Errato. Il valore 15 viene stampato nel sistema ottale ($17_8$).",
+        "Errato. Lo zero iniziale viene stampato solo usando il flag alternativo `%#o`.",
+        "Errato. L'output esadecimale `0xF` corrisponde allo specificatore `%#X`."
+      ]
+    }
+  ]
+}

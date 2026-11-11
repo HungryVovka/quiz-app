@@ -1,0 +1,605 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2321",
+      "widget_id": "widget_clang_2321",
+      "topic": "Pericolo dell'uso della funzione gets()",
+      "q": "Perché la funzione gets() è considerata estremamente non sicura e inadatta all'uso?",
+      "hint": "Fai attenzione all'elenco dei parametri della funzione gets(char *str): manca completamente l'informazione sulla capacità del buffer.",
+      "options": [
+        "gets() non accetta la dimensione del buffer e legge i dati fino a '\\n', provocando un buffer overflow",
+        "gets() funziona troppo lentamente rispetto a fgets()",
+        "gets() non è in grado di leggere gli spazi",
+        "gets() non aggiunge il terminatore nullo alla fine della stringa"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La firma `gets(char *str)` non include la dimensione del buffer allocato. Se l'utente inserisce più caratteri di quanti ne possa contenere il buffer, si verifica una scrittura oltre i limiti dell'array (Buffer Overflow) e la corruzione dello stack.",
+        "Errato. Il problema non riguarda le prestazioni, ma una vulnerabilità di sicurezza.",
+        "Errato. `gets()` legge proprio l'intera riga, compresi gli spazi.",
+        "Errato. `gets()` scrive il terminatore nullo alla fine della stringa letta."
+      ]
+    },
+    {
+      "id": "it_clang_2322",
+      "widget_id": null,
+      "topic": "Standard C e rimozione della funzione gets()",
+      "q": "In quale standard del linguaggio C la funzione gets() è stata ufficialmente rimossa dalla libreria standard?",
+      "hint": "La funzione è stata dichiarata deprecata in C99 e completamente esclusa dalla specifica nello standard successivo.",
+      "options": [
+        "C11",
+        "C99",
+        "C89",
+        "C17",
+        "C23"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nello standard C99 la funzione `gets()` ha ottenuto lo stato di deprecata, mentre nello standard C11 (ISO/IEC 9899:2011) è stata completamente rimossa dalla specifica del linguaggio.",
+        "Errato. In C99 è stata solo contrassegnata come non raccomandata.",
+        "Errato. In C89/C90 `gets()` era una funzione standard a tutti gli effetti.",
+        "Errato. Al momento dell'adozione di C17 la funzione era già assente.",
+        "Errato. La rimozione dallo standard è avvenuta molto prima."
+      ]
+    },
+    {
+      "id": "it_clang_2323",
+      "widget_id": "widget_clang_2323",
+      "topic": "Lettura sicura tramite fgets() con limitazione del buffer",
+      "q": "Cosa stamperà il programma alla chiamata fgets(buf, sizeof(buf), f) per un buffer di 10 byte sulla stringa \"Hello World\\n\"?",
+      "hint": "fgets() legge al massimo (size - 1) caratteri, riservando un byte per il '\\0' finale.",
+      "options": [
+        "Hello Wor",
+        "Hello World",
+        "Hello W"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La dimensione del buffer è di 10 byte. `fgets()` leggerà `10 - 1 = 9` caratteri (`\"Hello Wor\"`) e scriverà automaticamente `\\0` come 10° byte. Verrà stampato `Hello Wor`.",
+        "Errato. L'intera stringa \"Hello World\" di 11 caratteri non entrerà in un buffer di 10 byte.",
+        "Errato. Verranno letti il massimo possibile di 9 caratteri, non 7."
+      ]
+    },
+    {
+      "id": "it_clang_2324",
+      "widget_id": "widget_clang_2324",
+      "topic": "Rimozione del carattere di новая riga dopo fgets()",
+      "q": "Quale valore restituirà strlen(buf) dopo aver applicato l'istruzione buf[strcspn(buf, \"\\n\")] = '\\0' alla stringa \"Hello\\n\"?",
+      "hint": "La funzione strcspn(buf, \"\\n\") trova l'indice della prima occorrenza del carattere '\\n' nella stringa.",
+      "options": [
+        "5",
+        "6",
+        "4",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strcspn(\"Hello\\n\", \"\\n\")` restituirà l'indice 5 (la posizione del carattere `'\\n'`). L'assegnazione `buf[5] = '\\0'` sostituisce la nuova riga con il terminatore nullo, troncando la stringa a `\"Hello\"` con lunghezza 5.",
+        "Errato. La lunghezza 6 era della stringa originale includendo il carattere `'\\n'`.",
+        "Errato. Le lettere della parola \"Hello\" non vengono modificate.",
+        "Errato. La stringa viene troncata esattamente al carattere di nuova riga."
+      ]
+    },
+    {
+      "id": "it_clang_2325",
+      "widget_id": "widget_clang_2325",
+      "topic": "Dati rimanenti nello stream di input in caso di lettura parziale con fgets()",
+      "q": "Cosa succederà ai caratteri che non entrano nel buffer durante la lettura della stringa \"LongString\\n\" in un buffer di dimensione 5?",
+      "hint": "fgets() preleva dallo stream solo ciò che entra nel buffer, senza pulire lo stream di input stesso.",
+      "options": [
+        "Il buffer si riempirà con la stringa \"Long\", mentre i caratteri \"String\\n\" rimarranno nello stream di input per le operazioni successive",
+        "I caratteri che non entrano verranno rimossi automaticamente dallo stream",
+        "Il programma terminerà immediatamente con un errore fatale",
+        "L'intera stringa verrà cancellata"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `fgets()` leggerà 4 caratteri (`\"Long\"`) e aggiungerà `\\0`. Il resto della stringa (`\"String\\n\"`) rimarrà intatto nel buffer di input (stream `stdin` o file) e verrà letto dalla chiamata di input successiva.",
+        "Errato. I caratteri non vengono eliminati automaticamente dallo stream.",
+        "Errato. Non si verifica alcun buffer overflow, non ci sarà alcun crash.",
+        "Errato. I dati vengono salvati correttamente a parti."
+      ]
+    },
+    {
+      "id": "it_clang_2326",
+      "widget_id": null,
+      "topic": "Alternativa sicura gets_s() negli standard C11 Annex K",
+      "q": "In cosa differisce la funzione gets_s() dalla deprecata gets()?",
+      "hint": "gets_s() è stata aggiunta in C11 (Annex K) come sostituto sicuro.",
+      "options": [
+        "gets_s() accetta un parametro aggiuntivo con la dimensione massima del buffer",
+        "gets_s() funziona esclusivamente con array dinamici nell'heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La firma `gets_s(char *str, rsize_t n)` richiede di passare la dimensione massima del buffer `n`, prevenendo sforamenti dei limiti dell'array.",
+        "Errato. `gets_s()` funziona con qualsiasi buffer disponibile in memoria."
+      ]
+    },
+    {
+      "id": "it_clang_2327",
+      "widget_id": null,
+      "topic": "Classificazione della vulnerabilità di gets()",
+      "q": "A quale classe di vulnerabilità di sicurezza porta l'uso della funzione gets() nel codice di produzione?",
+      "hint": "Lo sforamento dei limiti dell'array sullo stack consente a un attaccante di sovrascrivere l'indirizzo di ritorno della funzione.",
+      "options": [
+        "Buffer Overflow / Stack Smashing (overflow del buffer sullo stack)",
+        "Memory Leak (fuga di memoria)",
+        "Use-After-Free (uso di memoria liberata)",
+        "Null Pointer Dereference (dereferenziazione di un puntatore nullo)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La mancanza di controllo della lunghezza in `gets()` consente di sovrascrivere variabili locali e l'indirizzo di ritorno dello stack frame, rappresentando una classica vulnerabilità di Stack Buffer Overflow.",
+        "Errato. Non viene allocata memoria dinamica, non ci sono fughe di memoria.",
+        "Errato. La vulnerabilità non è legata alla liberazione dei puntatori.",
+        "Errato. Il problema risiede nel superamento dei limiti dell'array, non nei puntatori nulli."
+      ]
+    },
+    {
+      "id": "it_clang_2328",
+      "widget_id": "widget_clang_2328",
+      "topic": "Differenza nella conservazione di '\\n' tra gets() e fgets()",
+      "q": "Cosa stamperà il comando printf(\"[%s]\", buf) dopo aver letto i caratteri \"Hi\\n\" tramite fgets()?",
+      "hint": "A differenza di gets(), la funzione fgets() conserva il carattere '\\n' nel buffer.",
+      "options": [
+        "[Hi\n]",
+        "[Hi]",
+        "[Hi\\n]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `fgets()` conserva il carattere di nuova riga `'\\n'` direttamente all'interno dell'array prima di `\\0`. Pertanto, stampando `[%s]`, la parentesi `]` andrà a capo: `[Hi` e `]` sulla riga successiva.",
+        "Errato. `[Hi]` sarebbe stato stampato dalla funzione `gets()`, poiché scartava `'\\n'`. `fgets()` lo conserva.",
+        "Errato. Il carattere `\\n` viene eseguito come nuova riga e non stampato come due caratteri di testo."
+      ]
+    },
+    {
+      "id": "it_clang_2329",
+      "widget_id": null,
+      "topic": "Analisi comparativa tra gets() e fgets()",
+      "q": "Indica l'affermazione corretta riguardo alle differenze chiave tra gets() e fgets().",
+      "hint": "Confronta i parametri di entrambe le funzioni e la loro gestione del carattere di nuova riga.",
+      "options": [
+        "fgets() accetta la dimensione del buffer e lo stream di input, e conserva '\\n' nell'array",
+        "gets() era più sicura perché richiedeva una chiamata esplicita a free()",
+        "fgets() funziona solo con l'input standard stdin e non funziona con i file",
+        "gets() conservava il carattere '\\n', mentre fgets() lo rimuove sempre",
+        "fgets() non scriverà il terminatore nullo se nella stringa è presente uno spazio",
+        "Entrambe le funzioni sono completamente identiche per comportamento e parametri"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `fgets(buf, size, stream)` controlla la dimensione del buffer `size`, può lavorare con qualsiasi stream di file `stream` e conserva `'\\n'` nell'array se c'è spazio.",
+        "Errato. `gets()` non allocava memoria dinamicamente ed era estremamente non sicura.",
+        "Errato. `fgets()` può proprio leggere da qualsiasi stream di file (`FILE *`).",
+        "Errato. È l'opposto: `gets()` rimuoveva `'\\n'`, mentre `fgets()` lo conserva.",
+        "Errato. `fgets()` gestisce correttamente gli spazi e garantisce la scrittura del terminatore nullo.",
+        "Errato. Le firme e il comportamento delle funzioni differiscono radicalmente."
+      ]
+    },
+    {
+      "id": "it_clang_2330",
+      "widget_id": "widget_clang_2330",
+      "topic": "Pulizia dei caratteri rimanenti nello stream dopo fgets() troncato",
+      "q": "Quale carattere verrà letto dalla chiamata fgetc(f) dopo che fgets(buf, 4, f) avrà letto l'inizio della stringa \"12345\\n\"?",
+      "hint": "fgets() legge al massimo 3 caratteri da \"12345\\n\", inserendoli in un buffer di dimensione 4.",
+      "options": [
+        "4",
+        "5",
+        "\\n",
+        "EOF"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `fgets(buf, 4, f)` preleverà i primi 3 caratteri (`'1'`, `'2'`, `'3'`). Il successivo carattere non letto nello stream di input rimarrà il carattere `'4'`, che verrà letto dalla chiamata `fgetc(f)`.",
+        "Errato. Il carattere '4' segue immediatamente il '3' nello stream di input.",
+        "Errato. Prima del carattere di nuova riga `'\\n'` nello stream ci sono ancora i caratteri '4' e '5'.",
+        "Errato. La fine del file non è stata ancora raggiunta."
+      ]
+    },
+    {
+      "id": "it_clang_2331",
+      "widget_id": "widget_clang_2331",
+      "topic": "Stream di input standard stdin in fgets()",
+      "q": "Quale stream di file deve essere passato come terzo argomento a fgets() per leggere stringhe da tastiera?",
+      "hint": "In C lo stream globale di input standard è definito da una macro speciale in <stdio.h>.",
+      "options": [
+        "stdin",
+        "stdout",
+        "stderr",
+        "NULL"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il puntatore `stdin` si riferisce allo stream di input standard (per impostazione predefinita la tastiera del terminale). La chiamata `fgets(buf, sizeof(buf), stdin)` è una sostituzione sicura standard per `gets()`.",
+        "Errato. `stdout` è lo stream di output standard.",
+        "Errato. `stderr` è lo stream di output degli errori.",
+        "Errato. Il passaggio di `NULL` causerà un errore durante l'esecuzione."
+      ]
+    },
+    {
+      "id": "it_clang_2332",
+      "widget_id": "widget_clang_2332",
+      "topic": "Errore nell'uso di sizeof(buf) su un parametro formale puntatore",
+      "q": "Perché l'espressione fgets(buf, sizeof(buf), stdin) all'interno di una funzione con parametro void func(char *buf) è un errore pericoloso?",
+      "hint": "Quando si passa un array a una funzione, esso decade (decay) implicitamente a un semplice puntatore.",
+      "options": [
+        "sizeof(buf) restituirà la dimensione del puntatore (4 o 8 byte), non la reale capacità dell'array",
+        "fgets() si rifiuterà di lavorare con il tipo di puntatore char*",
+        "L'operazione causerà un errore di compilazione a causa di un'incompatibilità di tipi",
+        "sizeof(buf) restituisce sempre 0 per i parametri di funzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! All'interno della funzione il parametro `buf` ha tipo `char*`. La chiamata `sizeof(buf)` restituirà la dimensione dell'indirizzo di memoria (8 byte su un sistema a 64 bit), non la dimensione dell'array originale. Se la dimensione del buffer è inferiore a 8 byte, si verificherà un overflow.",
+        "Errato. `fgets()` funziona con `char*`, ma l'argomento della dimensione risulterà errato.",
+        "Errato. Il compilatore non genererà un errore poiché il tipo di `sizeof` è corretto (`size_t`).",
+        "Errato. `sizeof` restituisce la dimensione del tipo del puntatore."
+      ]
+    },
+    {
+      "id": "it_clang_2333",
+      "widget_id": "widget_clang_2333",
+      "topic": "Rimozione di '\\n' mediante strcspn()",
+      "q": "Cosa stamperà il programma dopo aver applicato la costruzione str[strcspn(str, \"\\n\")] = '\\0' alla stringa \"Line\\n\"?",
+      "hint": "La funzione strcspn restituisce la lunghezza del segmento iniziale della stringa che non contiene caratteri della seconda stringa.",
+      "options": [
+        "Line!",
+        "Line\\n!",
+        "Line",
+        "!"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strcspn(\"Line\\n\", \"\\n\")` trova l'indice del carattere `'\\n'` (indice 4) e restituisce 4. L'operazione `str[4] = '\\0'` sostituisce la nuova riga con il terminatore nullo. Verrà stampato `Line!` senza andare a capo.",
+        "Errato. Il carattere di новая riga viene sostituito, quindi l'andata a capo prima di `!` scomparirà.",
+        "Errato. Il punto esclamativo in `printf` non andrà perso.",
+        "Errato. I caratteri principali della stringa rimarranno."
+      ]
+    },
+    {
+      "id": "it_clang_2334",
+      "widget_id": "widget_clang_2334",
+      "topic": "Verifica del risultato dell'esecuzione di fgets()",
+      "q": "Cosa restituirà fgets() se la lettura fallisce a causa del raggiungimento della fine del file (EOF) prima di leggere qualsiasi carattere?",
+      "hint": "La funzione ha un tipo di ritorno char* e segnala il fallimento mediante un puntatore nullo speciale.",
+      "options": [
+        "NULL",
+        "EOF",
+        "0",
+        "Una stringa vuota \"\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se non è stato letto alcun carattere a causa del raggiungimento della fine del file o di un errore di input, `fgets()` restituisce `NULL`. Il programma stamperà `EOF`.",
+        "Errato. `EOF` è una costante intera per `fgetc()`, mentre `fgets()` restituisce un puntatore.",
+        "Errato. Viene restituito proprio il puntatore nullo concettuale `NULL`.",
+        "Errato. Il buffer in questo caso potrebbe rimanere non riempito."
+      ]
+    },
+    {
+      "id": "it_clang_2335",
+      "widget_id": "widget_clang_2335",
+      "topic": "Pulizia dello stream di input dai caratteri residui dopo il troncamento",
+      "q": "Cosa stamperà la seconda chiamata a fgets() dopo l'esecuzione della funzione di pulizia del resto della riga clear_buffer()?",
+      "hint": "La funzione clear_buffer legge i caratteri dal file uno alla volta finché non incontra la nuova riga '\\n'.",
+      "options": [
+        "Next",
+        "456",
+        "123",
+        "Nex"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il primo `fgets()` legge `\"123\"` (3 caratteri + `\\0`). I caratteri `\"456\\n\"` rimangono nello stream. La funzione `clear_buffer()` li legge e li scarta completamente fino a `'\\n'`. Di conseguenza, il secondo `fgets()` legge la nuova riga `\"Next\"` (i primi 3 caratteri `\"Nex\"` + `\\0`). Verrà stampato `Nex`.",
+        "Errato. I caratteri \"456\" sono stati scartati con successo dalla funzione `clear_buffer`.",
+        "Errato. \"123\" è stato letto dalla prima chiamata.",
+        "Errato. \"Next\" non entrerà interamente in un buffer di dimensione 4, entreranno solo 3 caratteri."
+      ]
+    },
+    {
+      "id": "it_clang_2336",
+      "widget_id": "widget_clang_2336",
+      "topic": "Rimozione di '\\n' tramite strchr()",
+      "q": "A quanto equivarrà strlen(str) dopo la ricerca e la sostituzione del carattere '\\n' tramite l'aritmetica dei puntatori con strchr()?",
+      "hint": "strchr() restituisce un puntatore alla prima occorrenza del carattere. L'istruzione *p = '\\0' tronca la stringa a quell'indirizzo.",
+      "options": [
+        "2",
+        "3",
+        "4",
+        "1",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il puntatore `p` trova il carattere `'\\n'` all'indice 2. L'istruzione `*p = '\\0'` trasforma la stringa `\"OK\\n\"` in `\"OK\"`. La lunghezza della stringa `strlen()` diventa pari a 2.",
+        "Errato. 3 è la lunghezza originale della stringa includendo `'\\n'`.",
+        "Errato. La dimensione dell'array è di 10 byte, ma `strlen` conta solo i caratteri fino a `\\0`.",
+        "Errato. I caratteri 'O' e 'K' vengono conservati.",
+        "Errato. Il puntatore `p` punta a `\\n`, non all'inizio della stringa."
+      ]
+    },
+    {
+      "id": "it_clang_2337",
+      "widget_id": null,
+      "topic": "Analisi comparativa tra fgets() e gets()",
+      "q": "In cosa consiste il vantaggio fondamentale di fgets() rispetto a gets() e %s in scanf()?",
+      "hint": "Pensa a come il parametro della dimensione prevenga la scrittura oltre i limiti della memoria allocata.",
+      "options": [
+        "fgets() obbliga a specificare la dimensione massima del buffer da leggere, proteggendo dal buffer overflow",
+        "fgets() viene eseguita più velocemente poiché lavora direttamente con la memoria video"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il passaggio dell'argomento della dimensione massima `size` garantisce che `fgets()` non scriverà mai nel buffer più di `size - 1` caratteri, prevenendo completamente il Buffer Overflow.",
+        "Errato. La velocità delle funzioni è comparabile e lavorano con gli stream di file nella RAM."
+      ]
+    },
+    {
+      "id": "it_clang_2338",
+      "widget_id": "widget_clang_2338",
+      "topic": "Uso di fgets() nella condizione di un ciclo di lettura da file",
+      "q": "Quante volte verrà eseguito il corpo del ciclo while (fgets(...) != NULL) durante la lettura riga per riga di un file di 2 righe?",
+      "hint": "fgets() restituisce un puntatore non-NULL per ogni riga letta con successo e NULL solo al raggiungimento della fine del file.",
+      "options": [
+        "2",
+        "3",
+        "1",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Alla prima iterazione verrà letto `\"A\\n\"`, alla seconda `\"B\\n\"`. Al terzo tentativo la chiamata restituirà `NULL` a causa dell'EOF e il ciclo terminerà. In totale 2 iterazioni.",
+        "Errato. Al terzo tentativo la condizione `!= NULL` risulterà falsa e il corpo del ciclo non verrà eseguito.",
+        "Errato. Entrambe le righe vengono lette con successo in sequenza.",
+        "Errato. Nel file sono presenti dati da leggere."
+      ]
+    },
+    {
+      "id": "it_clang_2339",
+      "widget_id": "widget_clang_2339",
+      "topic": "Caso limite: dimensione del buffer n = 1 in fgets()",
+      "q": "Cosa inserirà fgets(buf, 1, f) nel buffer se la dimensione passata è pari a 1?",
+      "hint": "fgets() legge al massimo (n - 1) caratteri e scrive obbligatoriamente il terminatore nullo.",
+      "options": [
+        "Scriverà solo il terminatore nullo '\\0' (la stringa vuota \"\")",
+        "Scriverà il primo carattere 'D'",
+        "Scriverà l'intera stringa \"Data\"",
+        "Lascerà i dati precedenti \"Initial\" senza modifiche",
+        "Scriverà il carattere di nuova riga '\\n'",
+        "Si verificherà un errore di segmentazione (Segmentation fault)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard, `fgets()` legge `n - 1` caratteri. Se `n = 1`, legge `1 - 1 = 0` caratteri e come primo byte `buf[0]` scrive `'\\0'`. Il buffer diventa una stringa vuota `\"\"`.",
+        "Errato. Per scrivere 'D' e il terminatore nullo è necessaria una dimensione del buffer di almeno 2.",
+        "Errato. La stringa non entrerà nel buffer.",
+        "Errato. Il vecchio contenuto di `buf[0]` verrà sovrascritto dal byte nullo.",
+        "Errato. I caratteri non vengono prelevati dallo stream.",
+        "Errato. L'operazione è sintatticamente e logicamente sicura."
+      ]
+    },
+    {
+      "id": "it_clang_2340",
+      "widget_id": "widget_clang_2340",
+      "topic": "Rilevamento del buffer overflow dalla presenza di '\\n'",
+      "q": "Cosa stamperà il programma se la dimensione della stringa \"LongString\\n\" ha superato la capacità del buffer (5 byte)?",
+      "hint": "Se la stringa entra interamente, alla fine del buffer rimarrà il carattere di новая riga '\\n'. Se non entra, '\\n' sarà assente.",
+      "options": [
+        "Truncated",
+        "Full",
+        "Error",
+        "NULL"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In un buffer di 5 byte verranno letti i caratteri `\"Long\"` + `\\0`. Il carattere `'\\n'` rimarrà nel file e non finirà in `buf`. La funzione `strchr(buf, '\\n')` restituirà `NULL` e il programma stamperà `Truncated`.",
+        "Errato. `Full` sarebbe stato stampato se nel buffer fosse stato presente il carattere `'\\n'`.",
+        "Errato. Non si verificano errori di esecuzione.",
+        "Errato. Il programma esegue la logica del ramo `if`."
+      ]
+    },
+    {
+      "id": "it_clang_2341",
+      "widget_id": "widget_clang_2341",
+      "topic": "Copia di stringhe mediante strcpy()",
+      "q": "Cosa stamperà il programma all'esecuzione della funzione strcpy(dest, \"Hello\")?",
+      "hint": "strcpy() copia sequenzialmente ogni carattere dalla sorgente alla destinazione, incluso il terminatore nullo '\\0' finale.",
+      "options": [
+        "Hello",
+        "Hello\\0",
+        "Caratteri spazzatura",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strcpy` copierà i caratteri `'H'`, `'e'`, `'l'`, `'l'`, `'o'` e `'\\0'` nel buffer `dest`. La funzione `printf(\"%s\")` stamperà `Hello`.",
+        "Errato. Il terminatore nullo è di servizio e non viene stampato a schermo come testo.",
+        "Errato. `strcpy` inserisce garantito `\\0` alla fine della stringa copiata.",
+        "Errato. Il codice è corretto e viene compilato senza errori."
+      ]
+    },
+    {
+      "id": "it_clang_2342",
+      "widget_id": "widget_clang_2342",
+      "topic": "Concatenazione di stringhe tramite strcat()",
+      "q": "Quale risultato stamperà il programma dopo l'esecuzione di strcat(dest, \" World\")?",
+      "hint": "strcat() trova il terminatore nullo nell'array di destinazione e inizia ad aggiungere la nuova stringa esattamente da quella posizione.",
+      "options": [
+        "Hello World",
+        " World",
+        "Hello",
+        " WorldHello"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strcat` troverà `\\0` alla fine di `\"Hello\"` e inizierà ad aggiungere i caratteri `\" World\"` insieme al nuovo terminatore nullo. Si otterrà la stringa `Hello World`.",
+        "Errato. La stringa originale `\"Hello\"` non viene sovrascritta, ma completata.",
+        "Errato. La stringa `\" World\"` verrà aggiunta alla fine.",
+        "Errato. L'ordine di unione delle stringhe è sempre destinazione, poi sorgente."
+      ]
+    },
+    {
+      "id": "it_clang_2343",
+      "widget_id": null,
+      "topic": "Valore restituito dalla funzione strcmp()",
+      "q": "Cosa restituisce la funzione strcmp(str1, str2) se la stringa str1 è lessicograficamente minore di str2?",
+      "hint": "strcmp() sottrae elemento per elemento i codici ASCII dei caratteri: (str1[i] - str2[i]).",
+      "options": [
+        "Un numero intero negativo (< 0)",
+        "Un numero intero positivo (> 0)",
+        "Zero (0)",
+        "Valore booleano false (0)",
+        "Puntatore NULL"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se il primo carattere differente in `str1` ha un codice ASCII inferiore rispetto a quello in `str2`, il risultato della sottrazione e il valore restituito da `strcmp()` sarà minore di zero (`< 0`).",
+        "Errato. Viene restituito un numero positivo quando `str1` è maggiore di `str2`.",
+        "Errato. 0 viene restituito solo in caso di totale uguaglianza delle stringhe.",
+        "Errato. La funzione restituisce il segno della differenza come `int`, non come `bool`.",
+        "Errato. La funzione restituisce il tipo intero `int`."
+      ]
+    },
+    {
+      "id": "it_clang_2344",
+      "widget_id": "widget_clang_2344",
+      "topic": "Sensibilità al maiuscolo/minuscolo in strcmp()",
+      "q": "Cosa stamperà il programma confrontando le stringhe \"Apple\" e \"apple\" tramite strcmp()?",
+      "hint": "Nella tabella ASCII le lettere latine maiuscole (A-Z, codici 65-90) precedono quelle minuscole (a-z, codici 97-122).",
+      "options": [
+        "Less",
+        "Greater",
+        "Equal"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il codice di `'A'` (65) è minore del codice di `'a'` (97). `strcmp` restituirà un numero negativo (`res < 0`), pertanto il programma stamperà `Less`.",
+        "Errato. 'A' non è maggiore di 'a' secondo la tabella ASCII.",
+        "Errato. La funzione `strcmp` è sensibile al maiuscolo/minuscolo, le stringhe non sono uguali."
+      ]
+    },
+    {
+      "id": "it_clang_2345",
+      "widget_id": "widget_clang_2345",
+      "topic": "Valore restituito da strcpy() e strcat()",
+      "q": "Cosa restituiscono le funzioni strcpy() e strcat() dopo l'esecuzione dell'operazione?",
+      "hint": "Il valore restituito da queste funzioni consente di concatenare le loro chiamate o di passarle direttamente a printf().",
+      "options": [
+        "Un puntatore all'array di destinazione (primo argomento)",
+        "Un puntatore alla stringa sorgente (secondo argomento)",
+        "Il numero di caratteri copiati/aggiunti",
+        "Un codice di errore int (0 in caso di successo)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Entrambe le funzioni restituiscono un puntatore all'array di destinazione (dest). La chiamata `printf(\"%s\", strcat(buf, \"Data\"))` stamperà il risultato `BaseData`.",
+        "Errato. Viene restituito un puntatore alla destinazione, non alla sorgente.",
+        "Errato. La lunghezza viene restituita da funzioni di un'altra famiglia o da `strlen()`.",
+        "Errato. Queste funzioni non restituiscono uno stato di errore `int`."
+      ]
+    },
+    {
+      "id": "it_clang_2346",
+      "widget_id": null,
+      "topic": "Impossibilità di copiare le stringhe tramite l'operatore di assegnazione",
+      "q": "Perché il tentativo di copiare le stringhe con l'operatore di assegnazione str1 = str2 non copierà il testo per gli array char str1[20], str2[20]?",
+      "hint": "Ricorda come vengono interpretati i nomi degli array nelle espressioni di assegnazione.",
+      "options": [
+        "I nomi degli array vengono convertiti in puntatori costanti e l'assegnazione diretta tra array è vietata dal linguaggio C",
+        "L'operatore = copia solo il primo carattere della stringa",
+        "L'assegnazione funziona, ma non aggiunge il terminatore nullo",
+        "L'operatore = è riservato esclusivamente ai tipi numerici"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il nome dell'array è un lvalue non modificabile (corrisponde a un puntatore costante). Gli array in C non possono essere assegnati l'uno all'altro tramite `=` — per questo occorre usare `strcpy()` o `memcpy()`.",
+        "Errato. L'operatore `=` non verrà affatto compilato per gli array.",
+        "Errato. L'espressione causerà un errore di compilazione (assignment to expression with array type).",
+        "Errato. È possibile assegnare anche le strutture, ma gli array non possono essere assegnati direttamente."
+      ]
+    },
+    {
+      "id": "it_clang_2347",
+      "widget_id": "widget_clang_2347",
+      "topic": "Requisito della presenza di '\\0' nel buffer di destinazione per strcat()",
+      "q": "A quale problema porterà la chiamata strcat(dest, \"B\") per un array dest non inizializzato?",
+      "hint": "strcat() cerca prima il terminatore nullo in dest, scansionando la memoria byte per byte.",
+      "options": [
+        "Comportamento indefinito (UB) a causa della ricerca di '\\0' oltre i limiti della memoria allocata",
+        "Pulizia automatica dell'array dest prima della scrittura",
+        "Scrittura della stringa \"B\" rigorosamente nella cella dest[0]",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strcat` cercherà `\\0` leggendo byte spazzatura in `dest`. Se il terminatore nullo non viene incontrato all'interno dei 10 byte, la ricerca uscirà dai limiti dell'array, causando un comportamento indefinito (UB).",
+        "Errato. `strcat` non effettua la pulizia automatica della memoria.",
+        "Errato. `dest[0]` contiene `'A'`, ma senza `'\\0'` la funzione continuerà la scansione oltre.",
+        "Errato. Il codice verrà compilato con successo, ma andrà in crash a runtime."
+      ]
+    },
+    {
+      "id": "it_clang_2348",
+      "widget_id": null,
+      "topic": "Rischio di buffer overflow in strcpy() e strcat()",
+      "q": "Qual è il principale svantaggio delle funzioni strcpy() e strcat() dal punto di vista della sicurezza?",
+      "hint": "Fai attenzione all'elenco dei parametri di queste funzioni: viene passata la capacità del buffer?",
+      "options": [
+        "Non controllano la dimensione del buffer di destinazione e causano un buffer overflow (Buffer Overflow)",
+        "Funzionano solo con stringhe statiche",
+        "Non possono elaborare stringhe più lunghe di 255 caratteri",
+        "Causano fughe di memoria nell'heap",
+        "Sono più lente rispetto ai loro analoghi POSIX",
+        "Danneggiano i puntatori nella tabella delle funzioni virtuali"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Né `strcpy` né `strcat` conoscono la dimensione della destinazione `dest`. Se la sorgente è più grande della memoria allocata, si verifica una scrittura oltre i limiti del buffer (Buffer Overflow).",
+        "Errato. Le funzioni funzionano con qualsiasi puntatore `char*` valido.",
+        "Errato. Non esiste un limite di 255 caratteri.",
+        "Errato. Le funzioni non allocano memoria dinamicamente.",
+        "Errato. La velocità di esecuzione non rappresenta il loro problema di sicurezza.",
+        "Errato. Il problema non è legato al meccanismo OOP delle funzioni virtuali."
+      ]
+    },
+    {
+      "id": "it_clang_2349",
+      "widget_id": "widget_clang_2349",
+      "topic": "Verifica dell'uguaglianza tra stringhe mediante strcmp()",
+      "q": "Cosa stamperà il programma alla verifica della condizione strcmp(\"abc\", \"abc\") == 0?",
+      "hint": "Quando due stringhe sono assolutamente identiche carattere per carattere, la loro differenza è pari a 0.",
+      "options": [
+        "Match",
+        "Mismatch"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Tutti i caratteri delle stringhe e i terminatori nulli finali coincidono. `strcmp` restituisce `0`, la condizione `== 0` è vera, viene stampato `Match`.",
+        "Errato. Le stringhe sono completamente identiche, quindi il ramo `else` non verrà eseguito."
+      ]
+    },
+    {
+      "id": "it_clang_2350",
+      "widget_id": "widget_clang_2350",
+      "topic": "Uso complesso delle funzioni di manipolazione delle stringhe",
+      "q": "Quale risultato stamperà il programma all'esecuzione sequenziale delle funzioni strcpy, strcat e strcmp?",
+      "hint": "Segui i passaggi: prima il buffer viene inizializzato con una stringa, a questa viene aggiunta la seconda, dopo di che il risultato viene confrontato con il riferimento.",
+      "options": [
+        "OK: C-Lang",
+        "C-Lang",
+        "OK: C-",
+        "Non stamperà nulla"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strcpy(buf, \"C-\")` scrive `\"C-\"`. `strcat(buf, \"Lang\")` produce `\"C-Lang\"`. La funzione `strcmp(\"C-Lang\", \"C-Lang\")` restituisce `0`. La condizione è soddisfatta, viene stampato `OK: C-Lang`.",
+        "Errato. Il formato di output di `printf` include il prefisso `OK: `.",
+        "Errato. La stringa `\"Lang\"` è stata aggiunta con successo.",
+        "Errato. La condizione `if` è vera, il testo verrà stampato."
+      ]
+    }
+  ]
+}

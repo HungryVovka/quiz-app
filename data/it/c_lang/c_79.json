@@ -1,0 +1,609 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2411",
+      "widget_id": "widget_clang_2361",
+      "topic": "Gestione delle virgolette nel calcolo di argc sulla riga di comando",
+      "q": "Qual è il valore di argc all'esecuzione del programma con il comando: ./prog \"hello world\" foo bar?",
+      "hint": "Fai attenzione al raggruppamento delle parole tramite le virgolette durante l'elaborazione della riga di comando (shell).",
+      "options": [
+        "4",
+        "5",
+        "3",
+        "2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'interprete di comandi raggruppa `\"hello world\"` in un unico argomento. Gli elementi di `argv` diventano: `argv[0]=\"./prog\"`, `argv[1]=\"hello world\"`, `argv[2]=\"foo\"`, `argv[3]=\"bar\"`. Il valore di `argc` è 4.",
+        "Errato. Lo spazio all'interno delle virgolette non divide `\"hello world\"` in due argomenti separati.",
+        "Errato. L'esecuzione include il nome del programma e 3 argomenti utente, per un totale di 4.",
+        "Errato. Tutti gli argomenti dopo il nome del programma vengono inseriti in `argv`."
+      ]
+    },
+    {
+      "id": "it_clang_2412",
+      "widget_id": "widget_clang_2412",
+      "topic": "Iterazione su argv utilizzando i puntatori e il marcatore NULL",
+      "q": "Cosa stamperà il programma alla chiamata ./cmd a b utilizzando un ciclo su *++argv?",
+      "hint": "L'operazione *++argv sposta prima il puntatore dalla stringa argv[0] ad argv[1] e termina quando incontra il marcatore NULL.",
+      "options": [
+        "a b ",
+        "./cmd a b ",
+        "a ",
+        "b "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La prima iterazione di `*++argv` sposta `argv` da `argv[0]` ad `argv[1]` e stampa `\"a \"`. La seconda stamperà `\"b \"`. Al terzo passaggio `*++argv` incontrerà `argv[argc] == NULL` e il ciclo terminerà. Risultato: `a b `.",
+        "Errato. Il nome del programma `argv[0]` viene saltato a causa dell'incremento prefisso `++argv` prima del primo controllo.",
+        "Errato. Il ciclo continuerà anche per il secondo argomento `\"b\"`.",
+        "Errato. Anche il primo argomento `\"a\"` viene elaborato nel ciclo."
+      ]
+    },
+    {
+      "id": "it_clang_2413",
+      "widget_id": "widget_clang_2413",
+      "topic": "Somma degli argomenti numerici da argv",
+      "q": "Quale valore stamperà il programma quando eseguito con il comando: ./calc 10 20 30?",
+      "hint": "Il ciclo inizia dal secondo elemento (indice i = 1) e converte ciascuna stringa in un numero usando atoi().",
+      "options": [
+        "60",
+        "0",
+        "102030",
+        "50"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo scorre gli argomenti dal 2° al 4°: `atoi(\"10\")` + `atoi(\"20\")` + `atoi(\"30\")` = `10 + 20 + 30 = 60`.",
+        "Errato. La funzione `atoi()` riconosce correttamente le stringhe numeriche e restituisce le loro somme.",
+        "Errato. Viene eseguita una somma matematica di numeri, non una concatenazione di stringhe.",
+        "Errato. Sono stati calcolati tutti e 3 gli argomenti numerici passati."
+      ]
+    },
+    {
+      "id": "it_clang_2414",
+      "widget_id": "widget_clang_2414",
+      "topic": "Modifica del contenuto degli elementi di argv",
+      "q": "È consentito dallo standard C modificare i caratteri all'interno delle stringhe dell'array argv, e cosa stamperà la chiamata ./app test?",
+      "hint": "Verifica i requisiti dello standard C sulla modificabilità della memoria allocata per le stringhe dell'array argv.",
+      "options": [
+        "Sì, le stringhe in argv sono modificabili, stamperà Xest",
+        "No, si verificherà un errore di accesso Segmentation Fault poiché memorizzate in memoria read-only",
+        "Comportamento non definito dallo standard (Undefined Behavior)",
+        "La scrittura viene ignorata e stamperà test senza modifiche"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard del linguaggio C (ISO/IEC C), le stringhe passate ad `argv` sono allocate in memoria modificabile. La modifica `argv[1][0] = 'X'` trasforma `\"test\"` in `\"Xest\"`.",
+        "Errato. A differenza dei letterali stringa, le stringhe di `argv` devono essere accessibili in scrittura.",
+        "Errato. Questo è un comportamento esplicito e rigorosamente regolamentato dallo standard C.",
+        "Errato. L'assegnazione del carattere modifica il valore dell'elemento in memoria."
+      ]
+    },
+    {
+      "id": "it_clang_2415",
+      "widget_id": null,
+      "topic": "Garanzie dello standard sulla modificabilità della memoria di argv",
+      "q": "Lo standard C garantisce la possibilità di modificare il contenuto delle stringhe dell'array argv?",
+      "hint": "Ricorda le regole dello standard del linguaggio C riguardanti la memoria riservata per argv[0] ... argv[argc - 1].",
+      "options": [
+        "Sì, lo standard C garantisce che gli elementi di argv puntino a array di char modificabili",
+        "No, gli argomenti vengono sempre inseriti in memoria non scrivibile (read-only)",
+        "È consentito modificare solo il puntatore argv[0]",
+        "La modifica è consentita solo con la dichiarazione char **argv, ma non char *argv[]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard C stabilisce esplicitamente che gli array di caratteri puntati da `argv[0]` ... `argv[argc - 1]` devono essere modificabili dall'applicazione.",
+        "Errato. La memoria per gli argomenti della riga di comando non è costante.",
+        "Errato. Tutti gli elementi da 0 a `argc - 1` sono soggetti a modifiche.",
+        "Errato. Entrambe le forme di dichiarazione dei parametri della funzione `main` sono sintatticamente identiche."
+      ]
+    },
+    {
+      "id": "it_clang_2416",
+      "widget_id": "widget_clang_2416",
+      "topic": "Calcolo della lunghezza totale di tutti gli argomenti della riga di comando",
+      "q": "Quale sarà il valore di total alla chiamata ./run hi io, se la lunghezza della stringa ./run è 5?",
+      "hint": "La funzione strlen() conta il numero di caratteri fino al terminatore nullo in ogni elemento di argv, incluso argv[0].",
+      "options": [
+        "9",
+        "4",
+        "5",
+        "10",
+        "7"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strlen(argv[0])` (per `\"./run\"`) = 5, `strlen(argv[1])` (per `\"hi\"`) = 2, `strlen(argv[2])` (per `\"io\"`) = 2. Somma `5 + 2 + 2 = 9`.",
+        "Errato. 4 è la lunghezza dei soli argomenti utente `\"hi\"` (2) + `\"io\"` (2) senza considerare `argv[0]`.",
+        "Errato. 5 è la lunghezza del solo nome dell'eseguibile `argv[0]`.",
+        "Errato. La lunghezza dei terminatori nulli `'\\0'` non viene conteggiata dalla funzione `strlen()`.",
+        "Errato. Verifica la somma delle lunghezze di tutte e tre le stringhe."
+      ]
+    },
+    {
+      "id": "it_clang_2417",
+      "widget_id": "widget_clang_2417",
+      "topic": "Gestione degli argomenti stringa vuoti \"\"",
+      "q": "Cosa stamperà il programma se eseguito da terminale passando virgolette vuote: ./app \"\"?",
+      "hint": "La stringa vuota \"\" viene passata come un argomento a tutti gli effetti, contenente solo il terminatore nullo '\\0'.",
+      "options": [
+        "0",
+        "1",
+        "Segmentation Fault",
+        "Non stamperà nulla (argc sarà pari a 1)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando si passa `\"\"`, l'argomento `argv[1]` è un puntatore valido a una stringa vuota (`\"\\0\"`). `argc` è pari a 2 e `strlen(\"\")` restituisce 0.",
+        "Errato. Una stringa vuota ha una lunghezza di 0 byte (escluso il terminatore nullo stesso).",
+        "Errato. Il puntatore `argv[1]` è valido e punta al carattere `'\\0'`, non si verifica alcun errore di memoria.",
+        "Errato. Le virgolette vuote creano un elemento separato in `argv`, quindi `argc` è pari a 2."
+      ]
+    },
+    {
+      "id": "it_clang_2418",
+      "widget_id": null,
+      "topic": "Tempo di vita (Lifetime) dei parametri argc e argv",
+      "q": "Qual è la durata di memorizzazione (storage duration) dei dati nell'array argv durante l'esecuzione del programma?",
+      "hint": "Rifletti se gli argomenti della riga di comando rimangono accessibili da qualsiasi punto del programma fino al termine della sua esecuzione.",
+      "options": [
+        "I dati sono garantiti per tutta la durata dell'esecuzione del programma (fino all'uscita da main)",
+        "La memoria viene liberata automaticamente alla prima chiamata della funzione malloc()",
+        "La durata è limitata alla prima funzione chiamata da main()",
+        "I dati vengono eliminati subito dopo la lettura di tutti i parametri"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La memoria per `argc` e per gli elementi dell'array `argv` viene allocata dall'ambiente di esecuzione C all'avvio e rimane valida per l'intero periodo di esecuzione del programma.",
+        "Errato. La chiamata a `malloc()` non influisce sull'array di sistema `argv`.",
+        "Errato. I dati di `argv` non vengono distrutti durante il passaggio tra le funzioni.",
+        "Errato. I parametri sono accessibili fino a quando il programma non termina l'esecuzione."
+      ]
+    },
+    {
+      "id": "it_clang_2419",
+      "widget_id": "widget_clang_2419",
+      "topic": "Ricerca e riconoscimento dei flag tra gli argomenti",
+      "q": "Cosa stamperà il programma verificando la presenza del flag -v nella chiamata ./tool -a -v --debug?",
+      "hint": "strcmp() confronta ogni parametro passato con il flag target -v per la perfetta uguaglianza.",
+      "options": [
+        "1",
+        "0",
+        "3",
+        "-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo controlla gli argomenti `\"-a\"`, `\"-v\"`, `\"--debug\"`. Confrontando `argv[2]` (`\"-v\"`) con `\"-v\"`, la funzione `strcmp` restituirà 0 e la variabile `verbose` diventerà pari a 1.",
+        "Errato. Il flag `\"-v\"` è presente tra gli argomenti, quindi il valore verrà aggiornato.",
+        "Errato. La variabile `verbose` assume un valore logico (0 o 1), non un numero d'ordine.",
+        "Errato. La funzione `strcmp` restituisce 0 in caso di corrispondenza, impostando il flag a 1."
+      ]
+    },
+    {
+      "id": "it_clang_2420",
+      "widget_id": "widget_clang_2420",
+      "topic": "Scorrimento inverso degli argomenti della riga di comando",
+      "q": "In quale ordine il programma stamperà gli argomenti passati alla chiamata: ./app A B C?",
+      "hint": "Fai attenzione al valore iniziale i = argc - 1 e alla condizione di prosieguo del ciclo i > 0.",
+      "options": [
+        "CBA",
+        "ABC",
+        "./appABC",
+        "CB A"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `argc` è pari a 4. Il ciclo itera da `i = 3` a `i = 1` compreso: `argv[3]` (\"C\"), `argv[2]` (\"B\"), `argv[1]` (\"A\"). Viene stampato `CBA`.",
+        "Errato. Il ciclo esegue lo scorrimento in direzione inversa.",
+        "Errato. La condizione `i > 0` ferma il ciclo prima di accedere ad `argv[0]` (`\"./app\"`).",
+        "Errato. Nel formato `%s` non sono presenti caratteri di spazio."
+      ]
+    },
+    {
+      "id": "it_clang_2421",
+      "widget_id": "widget_clang_2421",
+      "topic": "Iterazione su argv fino al marcatore NULL",
+      "q": "A cosa sarà pari count all'esecuzione del programma con il comando: ./app one two?",
+      "hint": "Poiché l'ultimo elemento dell'array argv[argc] è pari a NULL, il ciclo termina al primo incontro con un puntatore nullo.",
+      "options": [
+        "3",
+        "2",
+        "4",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nell'array `argv` sono presenti 3 puntatori validi (`\"./app\"`, `\"one\"`, `\"two\"`), seguiti da `NULL` (`argv[3]`). Il ciclo eseguirà 3 iterazioni e `count` diventerà pari a 3.",
+        "Errato. 2 è solo il numero di parametri passati dall'utente, senza considerare il nome del file.",
+        "Errato. L'elemento `argv[3]` è pari a `NULL`, quindi il ciclo `while` si interromperà su di esso.",
+        "Errato. La condizione è vera per i primi tre elementi dell'array."
+      ]
+    },
+    {
+      "id": "it_clang_2422",
+      "widget_id": "widget_clang_2422",
+      "topic": "Doppia dereferenziazione del puntatore char **argv",
+      "q": "Cosa stamperà il programma dereferenziando **argv e **(argv + 1) per l'esecuzione: ./main hello?",
+      "hint": "L'espressione **argv estrae il 1° carattere della 1ª stringa (argv[0][0]), mentre **(argv + 1) estrae il 1° carattere della 2ª stringa (argv[1][0]).",
+      "options": [
+        ". h",
+        "./main hello",
+        "m h",
+        ". e"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `*argv` è la stringa `\"./main\"`, e `**argv` è il suo primo carattere `'.'`. `*(argv + 1)` è la stringa `\"hello\"`, e `**(argv + 1)` è il carattere `'h'`. Output: `. h`.",
+        "Errato. Diversi livelli di dereferenziazione restituiscono un singolo carattere `char`, non l'intera stringa `char*`.",
+        "Errato. La prima stringa inizia con il carattere `'.'`. ",
+        "Errato. `'e'` è il secondo carattere della parola `\"hello\"` (`argv[1][1]`)."
+      ]
+    },
+    {
+      "id": "it_clang_2423",
+      "widget_id": null,
+      "topic": "Differenza tra lo zero di carattere '\\0' e il marcatore NULL",
+      "q": "Qual è la differenza fondamentale tra il terminatore nullo '\\0' e il marcatore NULL nel contesto della struttura di argv?",
+      "hint": "Rifletti su cosa termina una singola stringa C (array di char) e cosa termina l'array di puntatori (argv).",
+      "options": [
+        "'\\0' termina ogni singola stringa (char*), mentre NULL termina l'array stesso dei puntatori (argv[argc] == NULL)",
+        "Non c'è alcuna differenza tra di loro, sono macro intercambiabili",
+        "NULL termina ogni stringa, mentre '\\0' indica la fine dell'array argv",
+        "NULL viene utilizzato solo nell'allocazione dinamica della memoria tramite malloc"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Ogni stringa di testo `char*` all'interno di `argv` termina con il carattere nullo `'\\0'`. L'array di puntatori `argv` stesso termina con un puntatore nullo `NULL` (`argv[argc]`).",
+        "Errato. `'\\0'` è un byte con valore 0 di tipo `char`, mentre `NULL` è un puntatore di tipo `void*`.",
+        "Errato. Lo scopo di questi marcatori è opposto.",
+        "Errato. `NULL` in `argv` fa parte dello standard C per indicare il limite dell'array di puntatori."
+      ]
+    },
+    {
+      "id": "it_clang_2424",
+      "widget_id": "widget_clang_2424",
+      "topic": "Aritmetica dei puntatori su char **argv",
+      "q": "Cosa stamperà il programma creando il puntatore char **ptr = argv + 1 per l'esecuzione: ./run alpha beta?",
+      "hint": "Il puntatore ptr punta al secondo elemento dell'array argv (indice 1).",
+      "options": [
+        "alpha",
+        "./run",
+        "beta",
+        "run"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `argv + 1` sposta il puntatore ad `argv[1]`. La dereferenziazione `*ptr` estrae `argv[1]`, cioè la stringa `\"alpha\"`.",
+        "Errato. `\"./run\"` è `argv[0]`.",
+        "Errato. `\"beta\"` si trova all'indirizzo `argv + 2` (`argv[2]`).",
+        "Errato. Il puntatore si sposta tra gli elementi dell'array `argv`, non all'interno dei caratteri della stringa."
+      ]
+    },
+    {
+      "id": "it_clang_2425",
+      "widget_id": null,
+      "topic": "Tipi di dati a diversi livelli di indirizzamento in argv",
+      "q": "Quali sono i tipi delle espressioni argv, argv[0] e argv[0][0] rispettivamente?",
+      "hint": "Metti in corrispondenza il numero di livelli di indirezione (puntatori) e indici con il tipo C.",
+      "options": [
+        "char**, char*, char",
+        "char*, char, char",
+        "char**, char**, char*",
+        "void*, char*, int",
+        "char***, char**, char*"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `argv` è un puntatore a un array di puntatori (`char**`), `argv[0]` è un singolo puntatore a stringa (`char*`), e `argv[0][0]` è un singolo carattere (`char`).",
+        "Errato. `argv` è un puntatore di secondo livello `char**`.",
+        "Errato. `argv[0]` è una singola stringa (`char*`), non un puntatore bidimensionale.",
+        "Errato. `argv[0][0]` è un carattere di tipo `char`.",
+        "Errato. Il livello di annidamento dei puntatori è pari a due, non tre."
+      ]
+    },
+    {
+      "id": "it_clang_2426",
+      "widget_id": "widget_clang_2426",
+      "topic": "Avanzamento del puntatore argv++ nel ciclo while (*argv)",
+      "q": "Cosa stamperà il programma tramite **argv spostando sequenzialmente argv++ per l'esecuzione: ./cmd cat dog?",
+      "hint": "In ogni iterazione viene stampato il primo carattere dell'elemento stringa corrente (a partire da argv[0]).",
+      "options": [
+        ".cd",
+        "cd",
+        "./cmdcatdog",
+        ".catdog"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `argv[0]` (\"./cmd\") dà `'.'`. Dopo `argv++`, `argv[0]` (\"cat\") dà `'c'`. Dopo `argv++`, `argv[0]` (\"dog\") dà `'d'`. Poi `*argv` è pari a `NULL` e il ciclo si ferma. Stamperà `.cd`.",
+        "Errato. Anche il nome del programma `\"./cmd\"` partecipa al ciclo (inizia con `'.'`).",
+        "Errato. `**argv` estrae solo un singolo carattere dereferenziato `char`, non l'intera stringa.",
+        "Errato. Vengono stampati solo i primi caratteri di ciascuna stringa, non le parole intere."
+      ]
+    },
+    {
+      "id": "it_clang_2427",
+      "widget_id": "widget_clang_2427",
+      "topic": "Verifica dell'equivalenza del conteggio degli argomenti tramite argc e NULL",
+      "q": "Quale risultato stamperà il programma confrontando l'indice del primo NULL con il valore di argc?",
+      "hint": "Secondo lo standard C, l'indice dell'elemento con valore NULL è esattamente pari al valore della variabile argc.",
+      "options": [
+        "1",
+        "0",
+        "Segmentation Fault"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard del linguaggio C, `argv[argc] == NULL`. Il ciclo si fermerà a `i == argc`. L'espressione `i == argc` restituirà vero (1).",
+        "Errato. La posizione di `NULL` coincide sempre con il numero di elementi `argc`.",
+        "Errato. La lettura dell'elemento `argv[argc]` è sicura e rigorosamente definita dallo standard C."
+      ]
+    },
+    {
+      "id": "it_clang_2428",
+      "widget_id": "widget_clang_2428",
+      "topic": "Riorientamento del puntatore all'interno dell'array argv",
+      "q": "Cosa accadrà sovrascrivendo il puntatore argv[1] con l'indirizzo del nuovo letterale stringa \"replaced\"?",
+      "hint": "argv è un array di puntatori e i puntatori stessi al suo interno possono essere modificati.",
+      "options": [
+        "Il puntatore argv[1] verrà sostituito con successo dal nuovo indirizzo, stamperà replaced",
+        "Errore di compilazione: gli elementi di argv sono dichiarati come const",
+        "Segmentation Fault al momento della riassegnazione del puntatore",
+        "Stamperà il valore originale di argv[1] senza modifiche"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza dei caratteri situati a indirizzi costanti, le celle dell'array di puntatori `argv[i]` sono normali variabili di tipo `char*` e possono essere facilmente sovrascritte.",
+        "Errato. L'array `argv` non è `const`, i suoi puntatori possono essere riorientati.",
+        "Errato. La memoria dell'array `argv` è accessibile sia in lettura che in scrittura.",
+        "Errato. La chiamata a `printf` stamperà la stringa al nuovo indirizzo assegnato."
+      ]
+    },
+    {
+      "id": "it_clang_2429",
+      "widget_id": "widget_clang_2429",
+      "topic": "Offset del puntatore al carattere *(*argv + 1)",
+      "q": "Quale carattere stamperà l'espressione *(*argv + 1) in un'esecuzione standard: ./app?",
+      "hint": "*argv estrae la stringa \"./app\", e + 1 sposta l'indirizzo al secondo carattere di questa stringa.",
+      "options": [
+        "/",
+        ".",
+        "a",
+        "p",
+        "\\0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `*argv` è un puntatore alla stringa `\"./app\"`. L'operazione `*argv + 1` sposta l'indirizzo sul carattere `'/'`. La dereferenziazione `*(*argv + 1)` restituirà questo carattere.",
+        "Errato. `'.'` è il primo carattere (`*(*argv + 0)`).",
+        "Errato. `'a'` si trova all'indice `*(*argv + 2)`.",
+        "Errato. `'p'` si trova agli indici 3 e 4.",
+        "Errato. Viene dereferenziato il secondo carattere della stringa, non il suo terminatore nullo."
+      ]
+    },
+    {
+      "id": "it_clang_2430",
+      "widget_id": null,
+      "topic": "Disposizione fisica degli elementi dell'array argv in memoria",
+      "q": "Come sono disposti in memoria RAM gli elementi dell'array argv (puntatori) e le stringhe stesse?",
+      "hint": "Distingui la disposizione dell'array continuo di puntatori (argv[0]..argv[argc]) dalle aree di memoria a cui essi puntano.",
+      "options": [
+        "L'array di puntatori argv è garantito per essere continuo in memoria, e le stringhe stesse sono memorizzate in memoria sequenzialmente l'una dopo l'altra",
+        "Sia i puntatori che le stringhe sono mescolati in ordine arbitrario nella memoria dinamica (heap)",
+        "Le stringhe sono memorizzate in modo continuo, mentre i puntatori sono dispersi nello stack",
+        "L'array argv è memorizzato nella memoria dei registri del processore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `argv` stesso è un array continuo di celle-puntatori (`argv[0]`, `argv[1]`, ... `argv[argc]`). Il sistema operativo passa le stringhe degli argomenti impacchettandole anch'esse in modo sequenziale in memoria.",
+        "Errato. Gli argomenti della riga di comando non sono allocati in ordine casuale nell'heap.",
+        "Errato. L'array di puntatori è obbligatoriamente memorizzato come blocco continuo.",
+        "Errato. L'array `argv` si trova nella normale memoria ad accesso casuale (RAM) del processo."
+      ]
+    },
+    {
+      "id": "it_clang_2431",
+      "widget_id": "widget_clang_2431",
+      "topic": "Conversione di argomenti stringa in numeri interi",
+      "q": "Cosa stamperà il programma se eseguito da riga di comando: ./app 5 10?",
+      "hint": "Gli argomenti vengono passati come stringhe di testo \"5\" e \"10\", e la funzione atoi() li converte nel tipo numerico int.",
+      "options": [
+        "15",
+        "510",
+        "5 10",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `atoi(\"5\")` restituisce il numero 5, e `atoi(\"10\")` il numero 10. L'operazione `5 + 10` dà come risultato `15`.",
+        "Errato. In C l'operatore `+` sui tipi numerici esegue una somma matematica, non una concatenazione di stringhe.",
+        "Errato. I valori vengono convertiti nel tipo `int` e sommati.",
+        "Errato. Il codice è completamente corretto e utilizza le funzioni di `<stdlib.h>`."
+      ]
+    },
+    {
+      "id": "it_clang_2432",
+      "widget_id": "widget_clang_2432",
+      "topic": "Confronto di argomenti stringa tramite puntatori e strcmp()",
+      "q": "Cosa stamperà il programma alla chiamata ./app 10 verificando la condizione (argv[1] == \"10\")?",
+      "hint": "L'operatore == confronta gli indirizzi dei puntatori in memoria, non il contenuto effettivo dei caratteri delle stringhe.",
+      "options": [
+        "Not equal",
+        "Equal",
+        "Segmentation Fault",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `==` confronta gli indirizzi di memoria. Il puntatore `argv[1]` punta a un'area dello stack/degli argomenti, mentre `\"10\"` punta a un letterale stringa. I loro indirizzi differiscono, quindi verrà stampato `Not equal` (per confrontare il contenuto serve `strcmp`).",
+        "Errato. Gli indirizzi dell'array `argv[1]` e del letterale `\"10\"` non coincidono.",
+        "Errato. Il confronto tra due puntatori è un'operazione sicura.",
+        "Errato. Il confronto dei puntatori in C è valido dal punto di vista sintattico."
+      ]
+    },
+    {
+      "id": "it_clang_2433",
+      "widget_id": "widget_clang_2433",
+      "topic": "Conversione degli argomenti in numeri decimali con atof()",
+      "q": "Quale sarà il risultato del programma all'esecuzione con il comando: ./app 2.5?",
+      "hint": "La funzione atof() estrarrà il valore double dall'argomento di testo \"2.5\".",
+      "options": [
+        "5.0",
+        "2.52.0",
+        "4.0",
+        "0.0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `atof(\"2.5\")`, convertita la stringa nel `double` 2.5, la moltiplicherà per 2.0. Il risultato `5.0` viene stampato dallo specificatore `%.1f`.",
+        "Errato. La funzione `atof()` converte una stringa in un numero, non esegue una concatenazione.",
+        "Errato. La parte decimale non viene ignorata nella conversione in `double`.",
+        "Errato. `atof` analizzerà con successo un numero decimale corretto."
+      ]
+    },
+    {
+      "id": "it_clang_2434",
+      "widget_id": "widget_clang_2434",
+      "topic": "Parsing degli argomenti da una stringa tramite sscanf()",
+      "q": "Cosa stamperà il programma leggendo il valore della variabile age tramite sscanf(argv[1], \"%d\", &age) per la chiamata: ./app 20?",
+      "hint": "La funzione sscanf legge dati formattati direttamente da una variabile-buffer stringa.",
+      "options": [
+        "21",
+        "20",
+        "1",
+        "201"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `sscanf()` leggerà il numero `20` dalla stringa `argv[1]` e lo scriverà in `age`. Il codice stamperà `20 + 1 = 21`.",
+        "Errato. Nella chiamata a `printf` viene aggiunto 1 ad `age`.",
+        "Errato. 1 è il numero di argomenti letti con successo restituito dalla funzione `sscanf`.",
+        "Errato. Viene eseguita la somma matematica `20 + 1`."
+      ]
+    },
+    {
+      "id": "it_clang_2435",
+      "widget_id": "widget_clang_2435",
+      "topic": "Estrazione di un carattere da un argomento numerico",
+      "q": "Cosa stamperà lo specificatore %c accedendo ad argv[1][0] per l'esecuzione: ./app 123?",
+      "hint": "Poiché tutti gli argomenti sono stringhe, argv[1][0] restituirà il primo carattere della stringa \"123\".",
+      "options": [
+        "1",
+        "123",
+        "49",
+        "3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'argomento `\"123\"` è una stringa di caratteri `{'1', '2', '3', '\\0'}`. L'elemento `argv[1][0]` restituirà il carattere `'1'`.",
+        "Errato. `%c` stampa un singolo carattere, non l'intera stringa.",
+        "Errato. 49 è il codice ASCII del carattere '1', ma lo specificatore `%c` stamperà proprio il carattere.",
+        "Errato. Il carattere `'3'` si trova all'indice `argv[1][2]`."
+      ]
+    },
+    {
+      "id": "it_clang_2436",
+      "widget_id": null,
+      "topic": "Formato di passaggio di tutti i parametri della riga di comando",
+      "q": "In quale formato vengono passati gli argomenti della riga di comando alla funzione main se l'utente passa flag booleani o numeri (ad esempio: ./app true 123)?",
+      "hint": "Rifletti se il sistema operativo esegue o meno un casting automatico dei tipi per gli argomenti.",
+      "options": [
+        "Assolutamente tutti gli argomenti vengono sempre passati esclusivamente come stringhe di testo (char*)",
+        "I numeri vengono passati come int e il testo come char*",
+        "I flag true/false vengono convertiti automaticamente in bool",
+        "Il formato è determinato dalla presenza di parole chiave nei parametri"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il sistema operativo e l'ambiente di esecuzione C non conoscono i tipi di dati all'interno del programma. Tutti i parametri vengono passati come stringhe (`char*`) e il programma deve convertirli autonomamente nei tipi desiderati.",
+        "Errato. In C non esiste la rilevazione automatica dei tipi numerici al passaggio degli argomenti.",
+        "Errato. Tutte le parole vengono passate come normali stringhe di testo (`\"true\"`, `\"123\"`).",
+        "Errato. Il passaggio avviene rigorosamente nel formato di un array di puntatori a stringhe `char**`."
+      ]
+    },
+    {
+      "id": "it_clang_2437",
+      "widget_id": "widget_clang_2437",
+      "topic": "Parsing sicuro dei numeri tramite strtol()",
+      "q": "Cosa stamperà il programma elaborando l'argomento \"100abc\" con la funzione strtol(argv[1], &endptr, 10)?",
+      "hint": "La funzione strtol() legge un numero valido e imposta il puntatore endptr al primo carattere non letto.",
+      "options": [
+        "100 abc",
+        "0 100abc",
+        "100000 ",
+        "100"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strtol` legge la parte numerica `100` e la scrive in `num`. I caratteri a partire da `'a'` non sono cifre, quindi `endptr` punterà al resto della stringa `\"abc\"`. Stamperà `100 abc`.",
+        "Errato. La funzione analizzerà con successo le cifre iniziali `100`.",
+        "Errato. `strtol` si fermerà al primo carattere non numerico.",
+        "Errato. Nel formato di stampa è specificata anche la stringa `endptr`."
+      ]
+    },
+    {
+      "id": "it_clang_2438",
+      "widget_id": "widget_clang_2438",
+      "topic": "Gestione dei numeri negativi negli argomenti",
+      "q": "Cosa stamperà il programma se gli viene passato un numero negativo come argomento: ./app -15?",
+      "hint": "Il segno 'meno' viene letto ed elaborato dalla funzione atoi() come parte di un singolo numero.",
+      "options": [
+        "1",
+        "0",
+        "-15",
+        "-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `atoi(\"-15\")` riconosce correttamente il trattino e restituisce un numero negativo `-15`. La condizione `-15 < 0` restituisce vero (1).",
+        "Errato. Il segno meno viene preso in considerazione durante la conversione della stringa in `int`.",
+        "Errato. Viene stampato il risultato del controllo logico `val < 0`, non il numero stesso.",
+        "Errato. In C la verità logica è rappresentata dal valore 1."
+      ]
+    },
+    {
+      "id": "it_clang_2439",
+      "widget_id": "widget_clang_2439",
+      "topic": "Comportamento di atoi() in assenza di cifre valide nella stringa",
+      "q": "Cosa restituirà atoi(argv[1]) se si passa una stringa non numerica all'esecuzione: ./app hello?",
+      "hint": "Ricorda il comportamento standard di atoi() se la stringa non inizia con caratteri numerici.",
+      "options": [
+        "0",
+        "hello",
+        "Segmentation Fault",
+        "-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se la stringa non contiene cifre valide all'inizio, la funzione `atoi()` restituisce `0` secondo lo standard C.",
+        "Errato. La funzione restituisce il tipo `int`, non una stringa.",
+        "Errato. Una stringa non valida non causa il crash del programma, ma porta al ritorno di 0.",
+        "Errato. Il valore predefinito in caso di errore di conversione in `atoi` è 0."
+      ]
+    },
+    {
+      "id": "it_clang_2440",
+      "widget_id": "widget_clang_2440",
+      "topic": "Modifica carattere per carattere di un argomento di testo",
+      "q": "Cosa stamperà il programma dopo l'esecuzione di argv[1][0] = '9' all'avvio: ./app 123?",
+      "hint": "L'argomento \"123\" è un array di caratteri modificabile in memoria, dove il primissimo elemento viene cambiato in '9'.",
+      "options": [
+        "923",
+        "123",
+        "9",
+        "9123"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sostituzione `argv[1][0] = '9'` cambia il carattere `'1'` in `'9'`, trasformando la stringa `\"123\"` in `923`.",
+        "Errato. Il primo carattere della stringa è stato modificato dall'assegnazione.",
+        "Errato. La stampa `%s` stampa l'intera stringa fino al terminatore nullo, non solo il carattere modificato.",
+        "Errato. Il carattere '1' viene sostituito, non spostato."
+      ]
+    }
+  ]
+}

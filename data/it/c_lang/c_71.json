@@ -1,0 +1,607 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2171",
+      "widget_id": "widget_clang_2171",
+      "topic": "Promozione degli interi (Integer Promotion)",
+      "q": "Qual è il risultato dell'espressione sizeof(a + b) se le variabili a e b sono di tipo char?",
+      "hint": "Ricorda le regole di Integer Promotion quando si valutano espressioni aritmetiche su tipi più piccoli di int.",
+      "options": [
+        "Alla dimensione del tipo int (di solito 4 byte)",
+        "Alla dimensione del tipo char (1 byte)",
+        "Alla dimensione del tipo short (2 byte)",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo la regola della Integer Promotion, gli operandi dei tipi interi minori (`char`, `short`) prima di partecipare alle operazioni aritmetiche vengono automaticamente promossi a `int` (o `unsigned int`). Pertanto, l'espressione `a + b` è di tipo `int`.",
+        "Errato. Nonostante le variabili originali siano di tipo `char`, la stessa operazione di addizione viene eseguita nel tipo `int`.",
+        "Errato. Il risultato intermedio viene promosso rigorosamente a `int`.",
+        "Errato. Il codice è perfettamente valido."
+      ]
+    },
+    {
+      "id": "it_clang_2172",
+      "widget_id": "widget_clang_2172",
+      "topic": "Confronto tra tipi signed e unsigned",
+      "q": "Cosa stamperà il programma confrontando la variabile con segno a = -5 e quella senza segno b = 10?",
+      "hint": "Nelle operazioni binarie tra signed int e unsigned int, il tipo con segno viene automaticamente convertito in unsigned int.",
+      "options": [
+        "0",
+        "1",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo le regole delle Usual Arithmetic Conversions, in un'operazione tra `int` e `unsigned int`, il valore `int` viene convertito implicitamente in `unsigned int`. Il numero -5 nella rappresentazione senza segno diventa un valore enorme (ad esempio 4294967291), che non è minore di 10, quindi la condizione `a < b` è falsa (0).",
+        "Errato. A causa della conversione di `-5` a `unsigned int`, il numero negativo viene interpretato come un valore positivo molto grande.",
+        "Errato. La compilazione viene completata con successo.",
+        "Errato. Il comportamento della conversione è interamente definito dallo standard C."
+      ]
+    },
+    {
+      "id": "it_clang_2173",
+      "widget_id": "widget_clang_2173",
+      "topic": "Conversione restrittiva (Demotion) da double a int",
+      "q": "Quale valore stamperà il programma assegnando una variabile a virgola mobile con valore 3.99 a una variabile di tipo int?",
+      "hint": "Rifletti se nella conversione restrittiva implicita venga eseguito un arrotondamento o un semplice troncamento della parte frazionaria.",
+      "options": [
+        "3",
+        "4",
+        "3.99",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella conversione da numeri a virgola mobile a un tipo intero (demotion), la parte frazionaria viene eliminata (troncamento verso lo zero). Il numero 3.99 viene troncato a 3.",
+        "Errato. L'arrotondamento all'intero più vicino (fino a 4) non avviene automaticamente.",
+        "Errato. Una variabile di tipo `int` non può memorizzare la parte frazionaria.",
+        "Errato. Viene eliminata solo la parte frazionaria, quella intera si conserva."
+      ]
+    },
+    {
+      "id": "it_clang_2174",
+      "widget_id": null,
+      "topic": "Promozioni predefinite degli argomenti (Default Argument Promotions)",
+      "q": "A quale tipo viene automaticamente promosso un argomento di tipo float quando viene passato a una funzione variadica (ad esempio printf)?",
+      "hint": "Questa regola è nota come Default Argument Promotion.",
+      "options": [
+        "double",
+        "float (rimane invariato)",
+        "long double",
+        "int"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo la regola delle Default Argument Promotions, per le funzioni con un numero variabile di parametri (con tipi non specificati nel prototipo), gli argomenti di tipo `float` vengono sempre promossi automaticamente a `double`.",
+        "Errato. Il tipo `float` non si conserva e viene promosso implicitamente.",
+        "Errato. La promozione avviene a `double`, non a `long double`.",
+        "Errato. I tipi a virgola mobile non vengono convertiti in interi durante il passaggio degli argomenti."
+      ]
+    },
+    {
+      "id": "it_clang_2175",
+      "widget_id": "widget_clang_2175",
+      "topic": "Riduzione di tipo intero (Integer Demotion)",
+      "q": "Cosa conterrà la variabile c di tipo unsigned char quando le viene assegnato il valore 257 di tipo int?",
+      "hint": "Quando si scrive un numero in un tipo senza segno di dimensione minore, i bit più significativi vengono scartati (calcolo modulo $2^N$).",
+      "options": [
+        "1",
+        "257",
+        "0",
+        "255"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella riduzione di un tipo intero a `unsigned char` (8 bit), i bit più significativi vengono scartati. Si conserva solo il resto della divisione per $256$: $257 \\pmod{256} = 1$.",
+        "Errato. Il tipo `unsigned char` contiene solo valori compresi tra 0 e 255.",
+        "Errato. $257_{10} = 0x0101_{16}$, scartando il byte più significativo rimane $0x01_{16} = 1$.",
+        "Errato. In C non viene usata l'aritmetica di saturazione."
+      ]
+    },
+    {
+      "id": "it_clang_2176",
+      "widget_id": null,
+      "topic": "Gerarchia delle conversioni implicite",
+      "q": "Quale tra le seguenti regole delle conversioni aritmetiche consuete (Usual Arithmetic Conversions) viene eseguita per prima nelle operazioni binarie?",
+      "hint": "La promozione di tipo avviene sempre verso il tipo a virgola mobile con la massima precisione.",
+      "options": [
+        "Se uno degli operandi è long double, l'altro viene convertito in long double",
+        "Se uno degli operandi è int, l'altro viene sempre convertito in int",
+        "I tipi signed hanno sempre la priorità sui tipi unsigned",
+        "I tipi piccoli non vengono mai promossi a int"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella gerarchia delle conversioni, la priorità massima spetta ai tipi a virgola mobile: se almeno un operando è `long double`, l'altro viene convertito in `long double`. Seguono poi `double` e `float`.",
+        "Errato. `int` si trova più in basso nella gerarchia rispetto ai tipi a virgola mobile e ai tipi interi più ampi.",
+        "Errato. A parità di rango, i tipi `unsigned` hanno la priorità su quelli `signed`.",
+        "Errato. Al contrario, i tipi più piccoli di `int` sono sempre soggetti a Integer Promotion."
+      ]
+    },
+    {
+      "id": "it_clang_2177",
+      "widget_id": "widget_clang_2177",
+      "topic": "Scorrimento bit a bit e Integer Promotion",
+      "q": "Cosa stamperà il programma con uno scorrimento a sinistra di 1 bit della variabile c di tipo unsigned char con valore 0x80 (128)?",
+      "hint": "Prima di eseguire lo scorrimento bit a bit, l'operando subisce la Integer Promotion.",
+      "options": [
+        "256",
+        "0",
+        "128",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `c` di tipo `unsigned char` viene promossa a `int`. Il valore 128 diventa un `int` a 32 bit (0x00000080). Lo scorrimento a sinistra di 1 bit produce 256 (0x00000100). Poiché l'output avviene senza conversione esplicita di ritorno a `unsigned char`, viene stampato 256.",
+        "Errato. Non si verifica l'overflow del byte poiché l'operazione di scorrimento viene eseguita su un `int` a 32 bit.",
+        "Errato. Lo scorrimento di 1 bit moltiplica il valore per 2.",
+        "Errato. L'operazione di scorrimento bit a bit è sintatticamente corretta."
+      ]
+    },
+    {
+      "id": "it_clang_2178",
+      "widget_id": "widget_clang_2178",
+      "topic": "NOT bit a bit e Integer Promotion",
+      "q": "Cosa stamperà il programma valutando la condizione (~c == 255) per unsigned char c = 0?",
+      "hint": "L'operatore NOT bit a bit ~ inverte i bit del tipo promosso int, non del char originale.",
+      "options": [
+        "0",
+        "1",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `c` viene promossa a `int` (0x00000000). Il NOT bit a bit `~` inverte tutti i 32 bit, ottenendo -1 (0xFFFFFFFF). Il valore -1 non è uguale a 255, quindi la condizione è falsa (0).",
+        "Errato. L'inversione non avviene nell'ambito di 8 bit (dove si otterrebbe 255), bensì nell'ambito del tipo `int`.",
+        "Errato. Il codice è perfettamente conforme allo standard C.",
+        "Errato. Il risultato dell'esecuzione è stabilito in modo rigoroso dalle regole di promozione dei tipi."
+      ]
+    },
+    {
+      "id": "it_clang_2179",
+      "widget_id": "widget_clang_2179",
+      "topic": "Conversione di tipo nell'operatore ternario",
+      "q": "Quale risultato stamperà printf durante la valutazione dell'espressione 1 ? a : b, dove a è int (1) e b è double (2.5)?",
+      "hint": "I rami dell'operatore ternario vengono convertiti a un tipo comune secondo le Usual Arithmetic Conversions prima di valutare la condizione.",
+      "options": [
+        "1.000000",
+        "1",
+        "2.500000",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il secondo e il terzo operando dell'operatore ternario vengono convertiti a un tipo comune. Data la presenza di `double`, il valore `int` (1) viene implicitamente convertito in `double` (1.0). Lo specificatore `%f` stampa `1.000000`.",
+        "Errato. Il tipo dell'intera espressione diventa `double`, pertanto il risultato viene stampato come numero a virgola mobile.",
+        "Errato. La condizione (1) è vera, quindi viene scelto il primo ramo (`a`), ma convertito al tipo `double`.",
+        "Errato. La combinazione di tipi diversi nell'operatore ternario è perfettamente consentita."
+      ]
+    },
+    {
+      "id": "it_clang_2180",
+      "widget_id": null,
+      "topic": "Superamento dei limiti di tipo nella Demotion",
+      "q": "Cosa accade secondo lo standard C tentato di memorizzare un numero di tipo double troppo grande (ad esempio 1e20) in una variabile di tipo int?",
+      "hint": "A differenza dell'overflow senza segno, il superamento dei limiti nella conversione a intero con segno non segue una regola modulare ben definita.",
+      "options": [
+        "Comportamento indefinito (Undefined Behavior)",
+        "Il valore viene forzato a INT_MAX",
+        "Si verifica un azzeramento per modulo",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se un valore reale non può essere rappresentato nel tipo intero di destinazione (ad esempio $10^{20}$ è troppo grande per un `int`), tale conversione causa un Undefined Behavior.",
+        "Errato. La saturazione a `INT_MAX` non è garantita dallo standard.",
+        "Errato. Il wrap-around per modulo è garantito solo per i tipi senza segno nelle operazioni aritmetiche, non nelle conversioni da virgola mobile.",
+        "Errato. L'errore di conversione del valore si verifica durante l'esecuzione, il compilatore non lo blocca."
+      ]
+    },
+    {
+      "id": "it_clang_2181",
+      "widget_id": "widget_clang_2181",
+      "topic": "Divisione di int per float",
+      "q": "Cosa stamperà il programma eseguendo la divisione di una variabile int per una float?",
+      "hint": "Secondo le Usual Arithmetic Conversions, se un operando è float, l'altro viene convertito in float.",
+      "options": [
+        "2.5",
+        "2.0",
+        "2",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `a` (5) di tipo `int` viene convertita implicitamente nel tipo `float` (5.0f). La divisione `5.0f / 2.0f` produce il valore reale `2.5f`.",
+        "Errato. La divisione intera con troncamento del resto si verifica solo quando ENTRAMBI gli operandi sono interi.",
+        "Errato. Il risultato dell'operazione è di tipo `float`, non `int`.",
+        "Errato. Combinare `int` e `float` nelle operazioni binarie è del tutto legittimo."
+      ]
+    },
+    {
+      "id": "it_clang_2182",
+      "widget_id": "widget_clang_2182",
+      "topic": "Tipo del risultato dell'operazione int * double",
+      "q": "A quanto equivale sizeof(a * b), dove 'a' è di tipo int e 'b' è di tipo double?",
+      "hint": "Nella gerarchia delle conversioni aritmetiche, double ha una priorità maggiore rispetto a int.",
+      "options": [
+        "8 (dimensione del tipo double)",
+        "4 (dimensione del tipo int)",
+        "12 (somma delle dimensioni)",
+        "16"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se uno degli operandi ha tipo `double`, anche l'altro operando viene automaticamente convertito in `double` e il risultato dell'espressione assume il tipo `double` (dimensione 8 byte).",
+        "Errato. `int` non viene ridotto; il risultato dell'espressione è del tipo di rango superiore, ovvero `double`.",
+        "Errato. Le dimensioni dei tipi degli operandi non si sommano.",
+        "Errato. 16 byte è solitamente la dimensione di `long double` su alcuni sistemi."
+      ]
+    },
+    {
+      "id": "it_clang_2183",
+      "widget_id": null,
+      "topic": "Perdita di precisione nella conversione da interi a float",
+      "q": "Perché durante la conversione di un numero intero molto grande (ad esempio un int con valore 16777217) nel tipo float può verificarsi una perdita di precisione?",
+      "hint": "Fai attenzione al numero di bit allocati per la mantissa nel formato IEEE 754 float.",
+      "options": [
+        "La mantissa di float ha una dimensione di 23 bit (~7 cifre decimali), quindi non può rappresentare esattamente tutti i numeri interi maggiori di 2^24",
+        "Il tipo float non supporta i numeri interi positivi",
+        "Durante la conversione da int a float vengono sempre scartati i bit più significativi",
+        "Lo standard C vieta la conversione implicita da int a float"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il formato `float` (IEEE 754) riserva 23 bit alla mantissa (più 1 bit implicito). Ciò consente di memorizzare con precisione gli interi solo fino a $2^{24}$ (16 777 216). Per i numeri superiori a questo limite i bit di precisione non sono sufficienti e si verifica un arrotondamento.",
+        "Errato. `float` supporta perfettamente i numeri interi nei limiti della propria mantissa.",
+        "Errato. Vengono scartati/arrotondati i bit meno significativi della precisione, non quelli più significativi.",
+        "Errato. La conversione è consentita dallo standard senza restrizioni."
+      ]
+    },
+    {
+      "id": "it_clang_2184",
+      "widget_id": "widget_clang_2184",
+      "topic": "Ordine di valutazione e conversione implicita",
+      "q": "Cosa stamperà il programma assegnando il risultato dell'operazione a / b (dove a e b sono int) a una variabile double c?",
+      "hint": "Prima viene valutata la parte destra dell'espressione (l'operatore `/`), poi avviene l'assegnazione alla variabile double.",
+      "options": [
+        "2.0",
+        "2.5",
+        "2",
+        "0.0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli operandi `a` e `b` sono di tipo `int`, quindi `a / b` esegue una divisione intera: $5 / 2 = 2$. Solo successivamente il valore intero ottenuto `2` viene implicitamente convertito in `double` (`2.0`).",
+        "Errato. Non si ottiene la divisione esatta 2.5 perché la divisione avviene prima della conversione a double.",
+        "Errato. Lo specificatore `%.1f` stampa un numero reale con una cifra decimale.",
+        "Errato. Il risultato non viene azzerato."
+      ]
+    },
+    {
+      "id": "it_clang_2185",
+      "widget_id": "widget_clang_2185",
+      "topic": "Conversione esplicita di tipo nella divisione",
+      "q": "Cosa stamperà il programma se uno degli operandi interi viene convertito esplicitamente a (double) prima della divisione?",
+      "hint": "La conversione esplicita modifica il tipo del primo operando in double prima che venga eseguita la divisione.",
+      "options": [
+        "2.5",
+        "2.0",
+        "2",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `(double)a` trasforma l'operando `a` in `5.0`. Successivamente, secondo le regole di conversione, il secondo operando `b` (2) viene implicitamente promosso a `2.0` e viene eseguita la divisione a virgola mobile: $5.0 / 2.0 = 2.5$.",
+        "Errato. Non si verifica alcun troncamento intero, in quanto uno degli operandi è diventato `double`.",
+        "Errato. La conversione di tipo trasforma il risultato in un valore a virgola mobile.",
+        "Errato. La sintassi del cast esplicito `(double)a` è del tutto corretta."
+      ]
+    },
+    {
+      "id": "it_clang_2186",
+      "widget_id": null,
+      "topic": "Gerarchia del tipo long double",
+      "q": "A quale tipo verrà convertito l'operando x di tipo int nell'espressione (x + ld), dove ld è di tipo long double?",
+      "hint": "Uno degli operandi ha la massima priorità nella precisione a virgola mobile.",
+      "options": [
+        "long double",
+        "double",
+        "float",
+        "int"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo le regole delle Usual Arithmetic Conversions, se uno degli operandi è di tipo `long double`, anche l'altro viene inevitabilmente convertito in `long double`.",
+        "Errato. `double` ha un rango inferiore rispetto a `long double`.",
+        "Errato. `float` ha un rango inferiore rispetto a `long double`.",
+        "Errato. `int` verrà promosso a `long double`."
+      ]
+    },
+    {
+      "id": "it_clang_2187",
+      "widget_id": "widget_clang_2187",
+      "topic": "Confronto tra valori int e float",
+      "q": "Cosa stamperà il programma nel confronto logico a == b, se int a = 0 e float b = 0.0f?",
+      "hint": "Prima di eseguire l'operatore di confronto `==`, entrambi gli operandi vengono convertiti a un tipo comune.",
+      "options": [
+        "1",
+        "0",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `a` (0) di tipo `int` viene convertita implicitamente in `0.0f` di tipo `float`. Il confronto `0.0f == 0.0f` restituisce vero (1).",
+        "Errato. Lo zero intero corrisponde esattamente allo zero a virgola mobile.",
+        "Errato. L'operazione di confronto tra `int` e `float` è valida.",
+        "Errato. Il comportamento del confronto è del tutto deterministico."
+      ]
+    },
+    {
+      "id": "it_clang_2188",
+      "widget_id": "widget_clang_2188",
+      "topic": "Operatore % e tipi a virgola mobile",
+      "q": "Cosa accadrà tentando di applicare l'operatore di modulo '%' a una variabile di tipo double?",
+      "hint": "Ricorda per quali tipi di dati l'operatore % è sintatticamente definito nel linguaggio C.",
+      "options": [
+        "Errore di compilazione (l'operatore % è applicabile solo a tipi interi)",
+        "Il risultato sarà pari a 1.5",
+        "Il risultato sarà pari a 1.0",
+        "Conversione automatica a int e calcolo del resto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel linguaggio C l'operatore `%` è riservato esclusivamente agli operandi interi. Per calcolare il resto della divisione tra numeri a virgola mobile è necessario utilizzare la funzione `fmod()` della libreria `<math.h>`.",
+        "Errato. Il codice non verrà compilato a causa dei rigorosi controlli dei tipi per `%`.",
+        "Errato. Il compilatore genererà un errore sintattico durante la fase di build.",
+        "Errato. Per l'operatore `%` non avviene alcuna conversione implicita automatica a `int`."
+      ]
+    },
+    {
+      "id": "it_clang_2189",
+      "widget_id": "widget_clang_2189",
+      "topic": "Divisione di double per int",
+      "q": "Cosa stamperà il programma valutando l'espressione sum / count, dove sum è double (10.0) e count è int (4)?",
+      "hint": "Una variabile di tipo int viene automaticamente promossa a double durante un'operazione con double.",
+      "options": [
+        "2.50",
+        "2.00",
+        "2",
+        "2.5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `count` (4) viene convertita in `4.0`. Viene eseguita una divisione a virgola mobile: $10.0 / 4.0 = 2.5$. Lo specificatore `%.2f` formatta l'output con 2 cifre decimali: `2.50`.",
+        "Errato. Non si verifica alcun troncamento intero poiché il dividendo è di tipo `double`.",
+        "Errato. Il risultato viene formattato secondo la maschera `%.2f` a precisione fissa.",
+        "Errato. Lo specificatore `%.2f` richiede la stampa di due cifre decimali (`2.50`)."
+      ]
+    },
+    {
+      "id": "it_clang_2190",
+      "widget_id": null,
+      "topic": "Conversione da unsigned int a double",
+      "q": "Come avviene la conversione dal tipo unsigned int al tipo double durante la valutazione di espressioni miste?",
+      "hint": "Un numero intero senza segno viene convertito in un esatto equivalente a virgola mobile senza bit di segno.",
+      "options": [
+        "Il valore intero senza segno viene convertito correttamente in un valore reale positivo double equivalente",
+        "Il bit più significativo viene interpretato come segno, il che potrebbe rendere il valore negativo",
+        "Si verifica un errore di compilazione",
+        "Il valore viene sempre azzerato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella conversione da `unsigned int` a `double`, il valore viene trattato esclusivamente come intero positivo senza segno e rappresentato esattamente come numero a virgola mobile (poiché la capacità di `double` è ampiamente sufficiente per un `unsigned int` a 32 bit).",
+        "Errato. Per i tipi `unsigned` non esiste il concetto di bit di segno; il bit più significativo è un bit numerico.",
+        "Errato. La conversione da `unsigned int` a `double` è standard e del tutto valida.",
+        "Errato. Il valore viene conservato integralmente."
+      ]
+    },
+    {
+      "id": "it_clang_2191",
+      "widget_id": "widget_clang_2191",
+      "topic": "Priorità dei tipi a virgola mobile sui tipi interi",
+      "q": "A quanto equivale sizeof(a + b), se la variabile 'a' è di tipo long long (8 byte) e 'b' è di tipo float (4 byte)?",
+      "hint": "Nella gerarchia dei tipi, qualsiasi tipo a virgola mobile ha priorità maggiore rispetto a qualsiasi tipo intero.",
+      "options": [
+        "4 (dimensione di float)",
+        "8 (dimensione di long long)",
+        "12 (somma delle dimensioni)",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In un'operazione binaria tra un tipo intero e uno a virgola mobile, l'operando intero viene sempre convertito al tipo a virgola mobile. L'espressione `a + b` ha tipo `float` e il suo `sizeof` è 4.",
+        "Errato. Nonostante `long long` occupi 8 byte, la priorità del tipo a virgola mobile è superiore.",
+        "Errato. Le dimensioni dei tipi non si sommano.",
+        "Errato. Sommare un `long long` e un `float` è del tutto consentito."
+      ]
+    },
+    {
+      "id": "it_clang_2192",
+      "widget_id": "widget_clang_2192",
+      "topic": "Gerarchia dei tipi a virgola mobile",
+      "q": "Quale tipo avrà il risultato della moltiplicazione a * b se l'operando 'a' è di tipo float e 'b' è di tipo double?",
+      "hint": "Ricorda l'ordine di priorità: float < double < long double.",
+      "options": [
+        "8 (dimensione di double)",
+        "4 (dimensione di float)",
+        "16 (dimensione di long double)",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo le Usual Arithmetic Conversions, se uno degli operandi è di tipo `double`, anche l'altro operando viene convertito in `double` e l'intero risultato assume il tipo `double` (dimensione 8 byte).",
+        "Errato. Il tipo inferiore `float` viene promosso al tipo più preciso `double`.",
+        "Errato. La promozione automatica a `long double` avviene solo se almeno un operando è `long double`.",
+        "Errato. Moltiplicare tipi reali diversi è standard."
+      ]
+    },
+    {
+      "id": "it_clang_2193",
+      "widget_id": null,
+      "topic": "Priorità massima nella gerarchia delle conversioni",
+      "q": "Quale tipo di dati ha la massima priorità nelle conversioni aritmetiche implicite in C?",
+      "hint": "Pensa al tipo reale con la massima precisione.",
+      "options": [
+        "long double",
+        "double",
+        "unsigned long long",
+        "float",
+        "int"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella gerarchia delle conversioni, il rango più elevato spetta a `long double`. Se un'operazione aritmetica coinvolge un `long double`, tutti gli altri operandi vengono convertiti a questo tipo.",
+        "Errato. `double` è inferiore in priorità rispetto a `long double`.",
+        "Errato. I tipi interi senza segno si trovano al di sotto di qualsiasi tipo a virgola mobile.",
+        "Errato. `float` è il più piccolo dei tipi a virgola mobile.",
+        "Errato. `int` si trova nella parte inferiore della gerarchia."
+      ]
+    },
+    {
+      "id": "it_clang_2194",
+      "widget_id": "widget_clang_2194",
+      "topic": "Operazione tra signed e unsigned di pari rango",
+      "q": "A quanto equivale sizeof(a + b), se la variabile 'a' è di tipo signed int e 'b' è unsigned int?",
+      "hint": "Se entrambi gli operandi hanno lo stesso rango intero, prevale la variante senza segno.",
+      "options": [
+        "4 (dimensione di unsigned int)",
+        "8",
+        "2",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A parità di rango intero (`int` e `unsigned int`), l'operando con segno viene convertito al tipo senza segno. Il risultato dell'operazione è `unsigned int`, che occupa 4 byte.",
+        "Errato. I tipi non vengono promossi a 64 bit se entrambi gli operandi sono a 32 bit.",
+        "Errato. La dimensione di un int standard sulla maggior parte delle architetture è 4 byte.",
+        "Errato. L'addizione tra `signed` e `unsigned` della stessa dimensione è corretta."
+      ]
+    },
+    {
+      "id": "it_clang_2195",
+      "widget_id": "widget_clang_2195",
+      "topic": "Conversione tra unsigned int e long long",
+      "q": "Quale tipo e dimensione avrà l'espressione a + b se 'a' è unsigned int (32 bit) e 'b' è long long (64 bit)?",
+      "hint": "Se il tipo con segno ha un rango superiore e può contenere tutti i valori del tipo senza segno di rango inferiore, gli operandi vengono convertiti al tipo con segno.",
+      "options": [
+        "8 (tipo long long)",
+        "4 (tipo unsigned int)",
+        "8 (tipo unsigned long long)",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché il rango di `long long` è strettamente superiore a quello di `unsigned int` e l'intervallo di un `long long` a 64 bit copre integralmente tutti i valori di un `unsigned int` a 32 bit, l'operando `unsigned int` viene convertito in modo sicuro a `long long` (8 byte).",
+        "Errato. `unsigned int` viene promosso a un tipo a 64 bit.",
+        "Errato. La conversione a `unsigned long long` avviene solo se il tipo con segno ha una dimensione inferiore o uguale a quella del tipo senza segno.",
+        "Errato. L'operazione è del tutto valida."
+      ]
+    },
+    {
+      "id": "it_clang_2196",
+      "widget_id": null,
+      "topic": "Rango di conversione intera (Integer Conversion Rank)",
+      "q": "Quale delle seguenti affermazioni sul rango dei tipi interi (Integer Conversion Rank) è CORRETTA secondo lo standard C?",
+      "hint": "Confronta i ranghi delle corrispondenti coppie di tipi con e senza segno.",
+      "options": [
+        "Il rango di qualsiasi tipo con segno è uguale al rango del corrispondente tipo senza segno",
+        "Il rango del tipo char è superiore a quello del tipo short",
+        "Il rango del tipo unsigned int è sempre superiore a quello del tipo long",
+        "Tutti i tipi interi hanno lo stesso rango"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard C definisce che `signed T` e `unsigned T` hanno esattamente lo stesso rango intero (ad esempio, il rango di `int` è uguale a quello di `unsigned int`).",
+        "Errato. Il rango di `char` è strettamente inferiore a quello di `short`.",
+        "Errato. Il rango di `long` non è mai inferiore (ed è uguale o superiore) a quello di `int`/`unsigned int`.",
+        "Errato. I ranghi formano una gerarchia precisa: `char` < `short` < `int` < `long` < `long long`."
+      ]
+    },
+    {
+      "id": "it_clang_2197",
+      "widget_id": "widget_clang_2197",
+      "topic": "Integer Promotion prima delle Usual Arithmetic Conversions",
+      "q": "A quanto equivale sizeof(a + b) se le variabili 'a' e 'b' sono di tipo short e unsigned short (tipi minori di int)?",
+      "hint": "Prima di confrontare i ranghi per le Usual Arithmetic Conversions, entrambi gli operandi subiscono la Integer Promotion.",
+      "options": [
+        "4 (dimensione di int)",
+        "2 (dimensione di short)",
+        "2 (dimensione di unsigned short)",
+        "8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Prima dell'applicazione delle regole principali di conversione, gli operandi di tipo inferiore a `int` (`short`, `unsigned short`, `char`) vengono promossi a `int` tramite Integer Promotion. L'espressione viene eseguita nel tipo `int` (dimensione 4 byte).",
+        "Errato. I tipi `short` vengono automaticamente promossi a `int` prima di eseguire le operazioni binarie.",
+        "Errato. Anche il tipo `unsigned short` viene promosso a `int` con segno, purché `int` possa contenere tutti i suoi valori.",
+        "Errato. Il risultato non viene esteso a 8 byte."
+      ]
+    },
+    {
+      "id": "it_clang_2198",
+      "widget_id": "widget_clang_2198",
+      "topic": "Priorità delle operazioni e conversione di tipo",
+      "q": "Cosa stamperà il programma valutando l'espressione a / b + c, dove a = 7 (int), b = 2 (int), c = 2.0 (double)?",
+      "hint": "L'operatore di divisione `/` ha una priorità maggiore rispetto all'addizione `+` e viene eseguito per primo tra i due int.",
+      "options": [
+        "5.00",
+        "5.50",
+        "3.50",
+        "5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per via delle priorità, viene prima eseguita `a / b` tra due `int`: $7 / 2 = 3$ (divisione intera). Successivamente si esegue l'addizione `3 + 2.0`: l'intero `3` viene convertito in `double` (`3.0`) e il risultato è `5.0`. Lo specificatore `%.2f` stampa `5.00`.",
+        "Errato. Si otterrebbe 5.50 se uno degli operandi della divisione fosse stato originariamente `double`.",
+        "Errato. La divisione 7/2 dà 3, non 1.5.",
+        "Errato. Il formato di output `%.2f` richiede la presenza di due zeri decimali."
+      ]
+    },
+    {
+      "id": "it_clang_2199",
+      "widget_id": null,
+      "topic": "Conversione di operandi dello stesso tipo",
+      "q": "Cosa accade agli operandi in un'operazione aritmetica binaria se entrambi sono già dello stesso tipo (ad esempio entrambi unsigned long)?",
+      "hint": "È necessario eseguire conversioni implicite se i tipi e la presenza del segno coincidono perfettamente?",
+      "options": [
+        "Non viene eseguita alcuna ulteriore conversione di tipo, l'operazione avviene in questo tipo",
+        "Entrambi gli operandi vengono convertiti forzatamente a double",
+        "Entrambi gli operandi vengono convertiti a signed long",
+        "Il risultato viene sempre convertito in size_t"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo le regole delle Usual Arithmetic Conversions, se entrambi gli operandi hanno lo stesso tipo, non è necessaria alcuna conversione e l'operazione viene eseguita direttamente in quel tipo.",
+        "Errato. La conversione in `double` avviene solo in presenza di operandi a virgola mobile.",
+        "Errato. I tipi `unsigned` non si trasformano in `signed` se gli operandi coincidono.",
+        "Errato. Il tipo `size_t` è il risultato dell'operatore `sizeof`, non delle operazioni aritmetiche di base."
+      ]
+    },
+    {
+      "id": "it_clang_2200",
+      "widget_id": "widget_clang_2200",
+      "topic": "Confronto tra long e unsigned long di pari rango",
+      "q": "Cosa stamperà il programma confrontando 'long a = -5L' e 'unsigned long b = 10UL'?",
+      "hint": "A parità di rango intero, il valore negativo del tipo con segno viene convertito al tipo senza segno, diventando un numero positivo enorme.",
+      "options": [
+        "0",
+        "1",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `long` e `unsigned long` hanno lo stesso rango, il valore di `a` (-5L) viene implicitamente convertito in `unsigned long` e diventa uguale a `ULONG_MAX - 4`. Per questo motivo la condizione `a < b` risulta falsa e viene stampato 0.",
+        "Errato. A causa del cast a tipo senza segno, il numero negativo diventa maggiore di 10.",
+        "Errato. Il confronto tra `long` e `unsigned long` è corretto.",
+        "Errato. Il risultato della conversione di un numero negativo a tipo senza segno è rigorosamente disciplinato dallo standard."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,607 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_1871",
+      "widget_id": "widget_clang_1871",
+      "topic": "Inserimento di elementi",
+      "q": "Cosa stamperà il programma dopo l'esecuzione dell'algoritmo di inserimento dell'elemento 40 alla fine dell'array {10, 20, 30, -1}?",
+      "hint": "Pensate a quale posizione si arresta il ciclo di output in presenza dell'elemento terminatore -1.",
+      "options": [
+        "10 20 30 40 ",
+        "10 20 30 40 -1 ",
+        "40 10 20 30 ",
+        "10 20 30 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Inizialmente `count = 3`. L'espressione `arr[3] = 40` sostituisce il vecchio -1 con 40, mentre `arr[4] = -1` imposta il nuovo marcatore. Il ciclo di stampa termina prima di -1 e stampa `10 20 30 40 `.",
+        "Errato. Il ciclo di output in `main` si arresta al marcatore -1 e non lo stampa a schermo.",
+        "Errato. L'inserimento viene effettuato alla fine (tail), non all'inizio.",
+        "Errato. L'inserimento aggiunge con successo l'elemento 40."
+      ]
+    },
+    {
+      "id": "it_clang_1872",
+      "widget_id": "widget_clang_1872",
+      "topic": "Inserimento di elementi",
+      "q": "Cosa restituirà la funzione append_tail quando si tenta di aggiungere un nuovo elemento a un array già completamente pieno?",
+      "hint": "Ricordate le convenzioni standard sui flag di successo di esecuzione delle funzioni (0 o 1).",
+      "options": [
+        "0 (valore del flag di errore/overflow)",
+        "1 (successo)",
+        "-1",
+        "Si verificherà un crash del programma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La condizione `if (i >= capacity - 1)` verifica la mancanza di spazio libero. In caso di overflow, la funzione esegue `return 0`, bloccando la scrittura.",
+        "Errato. Il ritorno di 1 avviene solo in caso di inserimento riuscito.",
+        "Errato. La funzione restituisce 0 quando è impossibile aggiungere l'elemento.",
+        "Errato. Il controllo iniziale protegge proprio il programma dal crash."
+      ]
+    },
+    {
+      "id": "it_clang_1873",
+      "widget_id": "widget_clang_1873",
+      "topic": "Inserimento di elementi",
+      "q": "Quale conseguenza avrà la riga commentata arr[i + 1] = -1 durante l'inserimento alla fine?",
+      "hint": "Pensate a come gli algoritmi di attraversamento capiranno dove finisce l'array se il marcatore viene sovrascritto.",
+      "options": [
+        "L'array perderà il marcatore di arresto -1 e i successivi algoritmi di attraversamento causeranno un comportamento indefinito (Undefined Behavior)",
+        "L'array ripristinerà automaticamente -1 nella memoria libera",
+        "Il compilatore rileverà un errore e interromperà la compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Sovrascrivendo il vecchio `-1` con il valore 3 e non impostando un nuovo `-1` di seguito, lasciamo l'array senza delimitatore. Qualsiasi funzione di attraversamento accederà a memoria non riservata.",
+        "Errato. La memoria in C non è gestita automaticamente.",
+        "Errato. Il compilatore non traccia la logica di gestione dei valori marcatore a runtime."
+      ]
+    },
+    {
+      "id": "it_clang_1874",
+      "widget_id": "widget_clang_1874",
+      "topic": "Inserimento di elementi",
+      "q": "Cosa stamperà printf(\"%d %d %d\\n\", data[0], data[1], data[2]); dopo la chiamata alla funzione append_ptr?",
+      "hint": "Osservate in quale posizione verrà scritto il nuovo valore e dove si sposterà il marcatore -1.",
+      "options": [
+        "100 200 -1",
+        "200 100 -1",
+        "100 -1 200",
+        "-1 100 200",
+        "0 100 200",
+        "100 200 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Inizialmente `data[0] = 100`, `data[1] = -1`. La funzione sposta il puntatore a `data[1]`, vi scrive 200 e in `data[2]` inserisce `-1`. Output: `100 200 -1`.",
+        "Errato. Il primo valore rimane 100.",
+        "Errato. Il marcatore -1 viene sovrascritto e spostato a destra.",
+        "Errato. L'ordine degli elementi non viene invertito.",
+        "Errato. Non vengono inseriti nuovi zeri nell'array.",
+        "Errato. Come marcatore viene scritto -1, non 0."
+      ]
+    },
+    {
+      "id": "it_clang_1875",
+      "widget_id": "widget_clang_1875",
+      "topic": "Inserimento di elementi",
+      "q": "È corretto scrivere prima il nuovo marcatore arr[count + 1] = -1 e poi il nuovo valore arr[count] = 15?",
+      "hint": "L'ordine di due operazioni di assegnazione indipendenti su indici diversi influisce sul risultato finale?",
+      "options": [
+        "Sì, entrambi gli ordini di comandi producono garantito lo stesso risultato corretto",
+        "No, è obbligatorio scrivere prima il nuovo valore",
+        "No, questo causa un errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Finché le celle `arr[count]` e `arr[count + 1]` appartengono al buffer allocato, l'ordine di scrittura dei valori tra di esse è del tutto irrilevante per lo stato finale dell'array.",
+        "Errato. L'ordine della sequenza di due assegnazioni indipendenti non influisce sul risultato.",
+        "Errato. Non ci sono errori sintattici."
+      ]
+    },
+    {
+      "id": "it_clang_1876",
+      "widget_id": "widget_clang_1876",
+      "topic": "Inserimento di elementi",
+      "q": "Come funzionerà il codice di inserimento alla fine per un array \"vuoto\" empty[4] = {-1}?",
+      "hint": "Determine a quale indice l'algoritmo troverà il marcatore -1 all'inizio.",
+      "options": [
+        "Il ciclo troverà il marcatore all'indice 0, scriverà empty[0] = 99, empty[1] = -1 e stamperà First: 99, Second: -1",
+        "Scriverà il valore all'indice 1, senza toccare empty[0]",
+        "Causerà un guasto dovuto all'accesso a un array vuoto",
+        "Salterà l'inserimento"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In un array vuoto `i = 0` (poiché `empty[0] == -1`). Il numero 99 viene scritto in `empty[0]`, il marcatore viene posto in `empty[1]`. Verranno stampati i valori 99 e -1.",
+        "Errato. La scrittura inizierà rigorosamente dall'indice 0.",
+        "Errato. La dimensione allocata 4 è sufficiente per l'aggiunta.",
+        "Errato. Il codice eseguirà l'inserimento senza alcuna condizione di salto."
+      ]
+    },
+    {
+      "id": "it_clang_1877",
+      "widget_id": "widget_clang_1877",
+      "topic": "Inserimento di elementi",
+      "q": "Qual è la complessità temporale asintotica (Time Complexity) dell'inserimento alla fine di un array con marcatore -1 se la dimensione corrente dell'array non è memorizzata esplicitamente in una variabile separata?",
+      "hint": "Quanti elementi occorrerà esaminare per trovare prima la posizione del marcatore -1?",
+      "options": [
+        "O(N) — a causa della necessità di una ricerca lineare della posizione del marcatore -1",
+        "O(1) — tempo costante",
+        "O(N log N)",
+        "O(N²)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché la dimensione `N` non è passata, il programma è costretto a eseguire prima una scansione dall'inizio dell'array fino al marcatore `-1` in `O(N)` passaggi, e solo dopo scrivere l'elemento.",
+        "Errato. `O(1)` si avrebbe in presenza di una variabile memorizzata della dimensione o di un puntatore alla fine.",
+        "Errato. La complessità di ricerca è lineare, non logaritmica.",
+        "Errato. Non ci sono cicli annidati qui."
+      ]
+    },
+    {
+      "id": "it_clang_1878",
+      "widget_id": "widget_clang_1878",
+      "topic": "Inserimento di elementi",
+      "q": "Qual è lo stato finale dell'array arr dopo l'aggiunta sequenziale degli elementi {7, 8, 9} in un ciclo?",
+      "hint": "Pensate se l'ordine degli elementi cambia aggiungendo ogni numero successivo alla fine.",
+      "options": [
+        "{7, 8, 9, -1}",
+        "{9, 8, 7, -1}",
+        "{-1, 7, 8, 9}",
+        "{7, -1, 8, 9}"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli elementi vengono aggiunti uno dopo l'altro alla fine: prima 7, poi 8, poi 9. Il marcatore `-1` si sposta sequenzialmente a destra, formando l'array `{7, 8, 9, -1}`.",
+        "Errato. Gli elementi vengono inseriti alla fine in ordine diretto, non invertiti.",
+        "Errato. Il marcatore avanza sempre verso la fine dell'array.",
+        "Errato. Il marcatore si trova solo alla primissima fine di tutti i dati."
+      ]
+    },
+    {
+      "id": "it_clang_1879",
+      "widget_id": "widget_clang_1879",
+      "topic": "Inserimento di elementi",
+      "q": "Quale errore critico si verificherà nel programma per l'array arr[3] = {10, 20, -1} durante l'esecuzione di arr[i + 1] = -1?",
+      "hint": "Confrontate l'indice risultante i + 1 con l'indice massimo consentito per un array di 3 elementi.",
+      "options": [
+        "Accesso fuori dai limiti dell'array (Buffer Overflow), poiché i = 2 e i + 1 = 3 porta a scrivere all'indice arr[3] in un array di 3 elementi",
+        "Errore di divisione per zero",
+        "Errore di sintassi in compilazione",
+        "L'array richiederà automaticamente memoria aggiuntiva all'OS"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per `arr[3]` sono validi gli indici 0, 1, 2. Il valore `i = 2` è l'indice del vecchio -1. La scrittura `arr[3] = -1` accede oltre i limiti dell'array allocato, causando un buffer overflow.",
+        "Errato. Non ci sono divisioni matematiche nel codice.",
+        "Errato. Il codice è sintatticamente corretto, l'errore si verifica a runtime.",
+        "Errato. In C gli array statici non possono espandersi automaticamente."
+      ]
+    },
+    {
+      "id": "it_clang_1880",
+      "widget_id": "widget_clang_1880",
+      "topic": "Inserimento di elementi",
+      "q": "Cosa restituirà la funzione push_back in caso di successo dell'aggiunta del primo elemento in un array vuoto (cap = 5)?",
+      "hint": "Calcolate quanti elementi utili ci saranno nell'array dopo questa operazione.",
+      "options": [
+        "1 (nuovo numero di elementi utili nell'array)",
+        "0",
+        "5",
+        "-1",
+        "2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In un array vuoto `i = 0`. Viene aggiunto l'elemento, spostato il marcatore e la funzione restituisce `i + 1`, ovvero `0 + 1 = 1` (numero effettivo di elementi).",
+        "Errato. 0 è il valore dell'indice `i` prima dell'inserimento.",
+        "Errato. 5 è la capacità totale dell'array (`cap`).",
+        "Errato. -1 viene restituito solo in caso di errore di overflow.",
+        "Errato. È stato aggiunto solo 1 elemento."
+      ]
+    },
+    {
+      "id": "it_clang_1881",
+      "widget_id": "widget_clang_1881",
+      "topic": "Inserimento di elementi",
+      "q": "Cosa stamperà il programma dopo l'inserimento dell'elemento 5 all'inizio dell'array {10, 20, -1}?",
+      "hint": "Osservate in quale direzione si spostano gli elementi esistenti durante l'inserimento in testa (head).",
+      "options": [
+        "5 10 20 ",
+        "10 20 5 ",
+        "5 20 10 ",
+        "5 10 -1 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli elementi 20, 10 e il marcatore -1 si spostano a destra di 1 posizione (`arr[3] = -1`, `arr[2] = 20`, `arr[1] = 10`), mentre in `arr[0]` viene scritto 5. La stampa fino al marcatore produrrà `5 10 20 `.",
+        "Errato. 5 viene inserito all'inizio, non alla fine.",
+        "Errato. Gli elementi si spostano mantenendo il loro ordine.",
+        "Errato. L'elemento 20 non viene perso con uno spostamento corretto."
+      ]
+    },
+    {
+      "id": "it_clang_1882",
+      "widget_id": "widget_clang_1882",
+      "topic": "Inserimento di elementi",
+      "q": "Qual è la complessità temporale asintotica (Time Complexity) dell'inserimento di un elemento all'inizio (head) di un array?",
+      "hint": "Pensate a quanti elementi occorre spostare per liberare la cella zero.",
+      "options": [
+        "O(N) — tempo lineare, poiché è necessario spostare N elementi a destra",
+        "O(1) — tempo constante",
+        "O(N Log N)",
+        "O(1) in presenza di un puntatore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per liberare la primissima cella `arr[0]`, è necessario spostare tutti gli `N` elementi esistenti di una posizione a destra, il che richiede $O(N)$ operazioni.",
+        "Errato. In un array con memoria contigua non è possibile inserire un elemento all'inizio in $O(1)$ senza spostare gli altri elementi.",
+        "Errato. La complessità dello spostamento è lineare.",
+        "Errato. Per gli array ordinari in C, lo spostamento degli elementi è inevitabile anche con i puntatori."
+      ]
+    },
+    {
+      "id": "it_clang_1883",
+      "widget_id": "widget_clang_1883",
+      "topic": "Inserimento di elementi",
+      "q": "Perché durante l'inserimento all'inizio lo spostamento degli elementi viene effettuato da destra a sinistra (da count a 0)?",
+      "hint": "Pensate a cosa accadrà ai successivi elementi se sovrascrivete arr[1] con il valore di arr[0] all'inizio.",
+      "options": [
+        "Per non sovrascrivere gli elementi dell'array non ancora spostati",
+        "Così richiedeva lo standard C per l'ottimizzazione del processore",
+        "Per non sovrascrivere le variabili all'esterno dell'array",
+        "Perché il ciclo con passo j-- funziona più velocemente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Spostando da destra a sinistra, prima spostiamo l'elemento più a destra nello spazio libero, liberando la sua cella per l'elemento precedente. Lo spostamento da sinistra a destra sovrascriverebbe tutti gli elementi con il valore di `arr[0]`.",
+        "Errato. È la logica del lavoro con la memoria, non un requisito dello standard.",
+        "Errato. Lo spostamento protegge proprio i dati interni dell'array.",
+        "Errato. La direzione del ciclo non influisce sulla velocità di una singola iterazione."
+      ]
+    },
+    {
+      "id": "it_clang_1884",
+      "widget_id": "widget_clang_1884",
+      "topic": "Inserimento di elementi",
+      "q": "Da quale cella inizia lo spostamento nella condizione j = count nel ciclo di inserimento all'inizio?",
+      "hint": "Fate attenzione a dove è memorizzato il marcatore di arresto rispetto ai dati utili.",
+      "options": [
+        "Dal marcatore -1 (arr[count]), in modo che si sposti anch'esso a destra e fissi la nuova fine",
+        "Dall'ultimo elemento utile arr[count - 1]",
+        "Dalla cella arr[0]",
+        "Dalla cella oltre il limite arr[count + 1]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché la condizione inizia con `j = count`, la prima assegnazione `arr[count + 1] = arr[count]` sposta il marcatore `-1` nella nuova posizione di fine array.",
+        "Errato. Se si inizia da `count - 1`, il marcatore `-1` andrà perso/sovrascritto.",
+        "Errato. Da `arr[0]` inizia lo spostamento muovendosi da sinistra a destra, il che sovrascrive l'array.",
+        "Errato. Superare `count` accederebbe a memoria non utilizzata."
+      ]
+    },
+    {
+      "id": "it_clang_1885",
+      "widget_id": "widget_clang_1885",
+      "topic": "Inserimento di elementi",
+      "q": "Cosa stamperà printf(\"%d %d %d\\n\", arr[0], arr[1], arr[2]); dopo l'inserimento con successo di 10 all'inizio dell'array {20, 30, -1}?",
+      "hint": "Determinate quale valore occuperà l'indice 0 e dove si sposteranno i numeri 20 e 30.",
+      "options": [
+        "10 20 30",
+        "20 30 10",
+        "10 30 20",
+        "10 20 -1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il nuovo elemento 10 si posiziona in `arr[0]`. Il vecchio `arr[0]` (20) si sposta in `arr[1]` e `arr[1]` (30) in `arr[2]`. Risultato: `10 20 30`.",
+        "Errato. 10 viene scritto all'inizio `arr[0]`, non alla fine.",
+        "Errato. Gli elementi mantengono l'ordine di spostamento originale.",
+        "Errato. L'elemento 30 si sposta in `arr[2]`, il marcatore `-1` va in `arr[3]`."
+      ]
+    },
+    {
+      "id": "it_clang_1886",
+      "widget_id": "widget_clang_1886",
+      "topic": "Inserimento di elementi",
+      "q": "Cosa restituirà la funzione insert_head quando si tenta l'inserimento in un array completamente pieno full[3] = {1, 2, -1}?",
+      "hint": "Verificate la condizione di presenza di spazio per un altro elemento e il terminatore -1.",
+      "options": [
+        "0 (inserimento annullato per mancanza di spazio)",
+        "1",
+        "-1",
+        "Si verificherà un guasto del programma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La capacità `capacity = 3`, i dati degli elementi `count = 2`. La condizione `count >= capacity - 1` (`2 >= 2`) si attiverà e la funzione restituirà in sicurezza `0`.",
+        "Errato. 1 viene restituito in caso di inserimento riuscito.",
+        "Errato. La funzione restituisce gli stati 1 o 0.",
+        "Errato. Il controllo previene l'accesso fuori dai limiti."
+      ]
+    },
+    {
+      "id": "it_clang_1887",
+      "widget_id": "widget_clang_1887",
+      "topic": "Inserimento di elementi",
+      "q": "Come funzionerà l'algoritmo di inserimento all'inizio per un array assolutamente vuoto arr[3] = {-1}?",
+      "hint": "Osservate la prima e unica iterazione di spostamento con count = 0.",
+      "options": [
+        "Il ciclo sposterà -1 da arr[0] a arr[1], e poi il 42 scritto diventerà arr[0]. Output: arr[0]=42, arr[1]=-1",
+        "Si verificherà un errore di accesso fuori dai limiti",
+        "Il valore 42 sovrascriverà -1 senza spostarlo",
+        "Il ciclo non verrà eseguito nemmeno una volta"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `count = 0`. Per `j = 0` eseguiamo `arr[1] = arr[0]` (spostando `-1` in `arr[1]`). Quindi `arr[0] = 42`. L'array assume il formato corretto `{42, -1}`.",
+        "Errato. In un array di 3 celle `arr[1]` rientra nella memoria consentita.",
+        "Errato. Il marcatore `-1` viene preservato grazie all'iterazione con `j = 0`.",
+        "Errato. La condizione `j >= 0` è vera per `j = 0`, il ciclo eseguirà 1 iterazione."
+      ]
+    },
+    {
+      "id": "it_clang_1888",
+      "widget_id": "widget_clang_1888",
+      "topic": "Inserimento di elementi",
+      "q": "A quale bug porterà il tentativo di spostamento da sinistra a destra (da j = 0 a count) durante l'inserimento all'inizio?",
+      "hint": "Pensate a quale valore verrà copiato in arr[2] se al passaggio j=0 avete già modificato arr[1].",
+      "options": [
+        "Tutti gli elementi dell'array verranno sovrascritti con il valore del primo elemento arr[0] (l'array diventerà {5, 10, 10, 10})",
+        "L'array si invertirà nell'ordine opposto",
+        "Non cambierà nulla",
+        "Il programma terminerà immediatamente con un errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `j = 0` viene eseguito `arr[1] = arr[0]` (il valore 10 viene copiato in `arr[1]`). Nella successiva iterazione `j = 1` viene copiato GIÀ il valore sovrascritto 10 da `arr[1]` a `arr[2]`, sovrascrivendo 20. Di conseguenza, 10 riempirà l'intero array.",
+        "Errato. Gli elementi non si invertono, ma vengono sovrascritti da duplicati.",
+        "Errato. I dati dell'array saranno irrimediabilmente danneggiati.",
+        "Errato. L'errore logico si rileva solo durante l'esecuzione."
+      ]
+    },
+    {
+      "id": "it_clang_1889",
+      "widget_id": "widget_clang_1889",
+      "topic": "Inserimento di elementi",
+      "q": "Quante operazioni di copia dei valori degli elementi eseguirà il ciclo for durante l'inserimento all'inizio di un array di N elementi utili?",
+      "hint": "Non dimenticate di prendere in considerazione lo spostamento del marcatore finale -1.",
+      "options": [
+        "N + 1 copie (N elementi di dati + 1 marcatore -1)",
+        "N copie",
+        "1 copia",
+        "N - 1 copie"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo esegue le iterazioni da `j = N` a `j = 0` incluso. In totale ci sono `N + 1` iterazioni: si spostano `N` elementi utili e `1` marcatore di arresto `-1`.",
+        "Errato. Lo spostamento del marcatore `-1` aggiunge un'ulteriore copia.",
+        "Errato. 1 copia avviene durante l'inserimento alla fine, non nello spostamento.",
+        "Errato. Questo è un numero sottostimato di operazioni."
+      ]
+    },
+    {
+      "id": "it_clang_1890",
+      "widget_id": "widget_clang_1890",
+      "topic": "Inserimento di elementi",
+      "q": "In quale ordine si troveranno gli elementi nell'array dopo le chiamate sequenziali push_front(10), push_front(20), push_front(30)?",
+      "hint": "Ricordate i principi di funzionamento della struttura LIFO (ogni nuovo elemento viene posizionato all'inizio).",
+      "options": [
+        "30 20 10",
+        "10 20 30",
+        "20 10 30",
+        "30 10 20"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Ogni nuovo inserimento posiziona l'elemento nella primissima posizione `arr[0]`: dopo 10 -> `{10}`, dopo 20 -> `{20, 10}`, dopo 30 -> `{30, 20, 10}`. Output: `30 20 10`.",
+        "Errato. Questo è l'ordine per l'inserimento alla fine (push_back).",
+        "Errato. Ogni elemento viene spinto fino all'inizio.",
+        "Errato. L'ordine è strettamente opposto all'ordine di chiamata delle funzioni."
+      ]
+    },
+    {
+      "id": "it_clang_1891",
+      "widget_id": "widget_clang_1891",
+      "topic": "Inserimento di elementi",
+      "q": "Cosa stamperà il programma dopo l'inserimento dell'elemento 99 all'indice k = 1 nell'array {10, 20, 30, -1}?",
+      "hint": "Determinate quali elementi devono spostarsi a destra, lasciando spazio all'indice 1.",
+      "options": [
+        "10 99 20 30 ",
+        "99 10 20 30 ",
+        "10 20 99 30 ",
+        "10 99 30 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli elementi dagli indici 1..3 (`20, 30, -1`) si spostano di una posizione a destra. Al posto di `arr[1]` viene scritto 99. Array finale: `10, 99, 20, 30, -1`.",
+        "Errato. 99 viene inserito all'indice 1, non 0.",
+        "Errato. L'indice 2 corrisponde al valore spostato 20.",
+        "Errato. Il valore 20 non va perso, ma si sposta in `arr[2]`."
+      ]
+    },
+    {
+      "id": "it_clang_1892",
+      "widget_id": "widget_clang_1892",
+      "topic": "Inserimento di elementi",
+      "q": "Quale intervallo di valori dell'indice k è valido per un corretto inserimento in un array di count elementi?",
+      "hint": "Pensate se è possibile inserire un elemento nella primissima posizione (0) o alla primissima fine (count).",
+      "options": [
+        "0 <= k <= count",
+        "0 <= k < count",
+        "1 <= k <= count",
+        "0 < k < capacity"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Possiamo inserire l'elemento sia all'inizio ($k = 0$), sia in una posizione intermedia qualsiasi, sia subito dopo l'ultimo elemento ($k = \\text{count}$, che equivale all'aggiunta alla fine).",
+        "Errato. Il valore $k = \\text{count}$ è assolutamente valido per l'aggiunta di un elemento alla fine.",
+        "Errato. Gli indici in C iniziano da 0, quindi $k = 0$ è ammissibile.",
+        "Errato. L'indice di inserimento non può superare il numero di elementi correnti `count`."
+      ]
+    },
+    {
+      "id": "it_clang_1893",
+      "widget_id": "widget_clang_1893",
+      "topic": "Inserimento di elementi",
+      "q": "Perché il ciclo di spostamento degli elementi durante l'inserimento all'indice k si interrompe proprio al passaggio j = k?",
+      "hint": "Pensate a quale cella si libera durante l'esecuzione dell'assegnazione arr[k + 1] = arr[k].",
+      "options": [
+        "Per liberare la cella arr[k], spostando il suo vecchio elemento in arr[k + 1]",
+        "Per sovrascrivere l'elemento nella posizione k",
+        "Perché gli elementi a destra di k non devono essere spostati",
+        "Per fermarsi prima del marcatore -1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'iterazione per `j = k` esegue l'assegnazione `arr[k + 1] = arr[k]`. Questo libera l'indice `k` per la scrittura del nuovo valore, conservando il precedente elemento in `k + 1`.",
+        "Errato. Lo scopo del ciclo è conservare il valore spostandolo, non sovrascriverlo.",
+        "Errato. Gli elementi a destra di `k` si spostano in primo luogo.",
+        "Errato. Lo spostamento inizia invece dalla posizione del marcatore -1 (`j = count`)."
+      ]
+    },
+    {
+      "id": "it_clang_1894",
+      "widget_id": "widget_clang_1894",
+      "topic": "Inserimento di elementi",
+      "q": "Perché il tentativo di inserimento all'indice k > count è considerato inammissibile per la struttura di un array contiguo?",
+      "hint": "Fate attenzione se tra gli elementi attuali e il nuovo valore rimarranno celle non inizializzate.",
+      "options": [
+        "Questo porterà alla presenza di celle non inizializzate (\"buchi\") tra la fine corrente e il nuovo elemento",
+        "Questo causa immediatamente un errore hardware del processore",
+        "Il compilatore C non consente di specificare variabili negli indici",
+        "Gli elementi dell'array si sposteranno automaticamente a sinistra"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se nell'array `{10, 20, -1}` ($count = 2$) si scrive un elemento all'indice $k = 4$, le celle 2 e 3 rimarranno spazzatura non inizializzata, e il marcatore $-1$ perderà la propria integrità.",
+        "Errato. Non ci sarà un guasto hardware, ma si verificherà una violazione logica della struttura dati.",
+        "Errato. Il C supporta pienamente le variabili come indici.",
+        "Errato. Lo spostamento automatico è assente negli array di base."
+      ]
+    },
+    {
+      "id": "it_clang_1895",
+      "widget_id": "widget_clang_1895",
+      "topic": "Inserimento di elementi",
+      "q": "A cosa equivale la chiamata dell'algoritmo di inserimento per l'indice k == count?",
+      "hint": "Pensate in quale posizione si inserisce l'elemento se l'indice coincide con il numero attuale di elementi.",
+      "options": [
+        "All'inserimento di un elemento alla fine dell'array (tail / append)",
+        "All'inserimento di un elemento all'inizio dell'array (head)",
+        "Alla pulizia dell'array",
+        "A un errore di buffer overflow"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per $k = \\text{count}$ il ciclo sposta solo il marcatore $-1$ da `arr[count]` a `arr[count + 1]`, dopo di che in `arr[count]` viene scritto il nuovo valore. Questa è una copia esatta dell'algoritmo di inserimento alla fine.",
+        "Errato. L'inserimento all'inizio avviene con $k = 0$.",
+        "Errato. I dati non vengono cancellati.",
+        "Errato. Se $count < capacity - 1$, l'operazione è assolutamente sicura."
+      ]
+    },
+    {
+      "id": "it_clang_1896",
+      "widget_id": "widget_clang_1896",
+      "topic": "Inserimento di elementi",
+      "q": "Quale sarà il contenuto finale degli elementi dell'array a partire dall'indice k dopo uno spostamento errato da sinistra a destra?",
+      "hint": "Ricordate cosa succede sovrascrivendo sequenzialmente la cella successiva con il valore della precedente.",
+      "options": [
+        "Tutti gli elementi a partire dall'indice k verranno sovrascritti dal valore ripetuto arr[k]",
+        "Gli elementi si sposteranno correttamente a destra",
+        "L'array si invertirà al contrario",
+        "Il marcatore -1 si sposterà all'inizio dell'array"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Muovendosi da sinistra a destra `arr[k + 1] = arr[k]` sovrascrive l'elemento `arr[k + 1]`. Al passaggio successivo, questo stesso valore copiato viene trasferito in `arr[k + 2]`, duplicando `arr[k]` fino alla fine dell'array.",
+        "Errato. Nella direzione da sinistra a destra si verifica il danneggiamento dei dati.",
+        "Errato. L'inversione dell'array richiede lo scambio degli elementi.",
+        "Errato. Il marcatore `-1` verrà sovrascritto alla primissima iterazione."
+      ]
+    },
+    {
+      "id": "it_clang_1897",
+      "widget_id": "widget_clang_1897",
+      "topic": "Inserimento di elementi",
+      "q": "Cosa stamperà printf dopo l'inserimento del numero 50 all'indice k = 2 nell'array {10, 20, 30, 40, -1}?",
+      "hint": "Determinate quale valore si troverà in arr[2] e dove si sposterà il vecchio elemento arr[2] = 30.",
+      "options": [
+        "arr[2] = 50, arr[3] = 30",
+        "arr[2] = 30, arr[3] = 50",
+        "arr[2] = 50, arr[3] = 40",
+        "arr[2] = 20, arr[3] = 50"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Inizialmente `arr[2] = 30`, `arr[3] = 40`. Dopo lo spostamento a destra, il vecchio `arr[2]` (30) passa in `arr[3]`. In `arr[2]` viene scritto il numero 50. Risultato: `arr[2] = 50, arr[3] = 30`.",
+        "Errato. Il numero 50 viene scritto rigorosamente all'indice 2.",
+        "Errato. L'elemento 40 si sposta all'indice 4.",
+        "Errato. L'elemento `arr[1] = 20` non cambia la sua posizione."
+      ]
+    },
+    {
+      "id": "it_clang_1898",
+      "widget_id": "widget_clang_1898",
+      "topic": "Inserimento di elementi",
+      "q": "Quanti elementi dell'array (incluso il marcatore -1) è necessario spostare a destra durante l'inserimento a un indice arbitrario k?",
+      "hint": "Calcolate il numero di elementi dall'indice k fino alla fine dell'array count più il delimitatore stesso.",
+      "options": [
+        "count - k + 1 elementi",
+        "count elementi",
+        "k elementi",
+        "1 elemento"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Si spostano tutti gli elementi utili dall'indice $k$ a $\\text{count}-1$ (in totale $\\text{count} - k$ elementi) più il marcatore stesso $-1$ nella posizione $\\text{count}$. In totale: $\\text{count} - k + 1$.",
+        "Errato. `count` elementi si spostano solo durante l'inserimento all'inizio ($k = 0$).",
+        "Errato. Gli elementi a sinistra di $k$ (in quantità pari a $k$) non si muovono affatto.",
+        "Errato. Solo 1 elemento si sposta durante l'inserimento alla fine ($k = \\text{count}$)."
+      ]
+    },
+    {
+      "id": "it_clang_1899",
+      "widget_id": "widget_clang_1899",
+      "topic": "Inserimento di elementi",
+      "q": "A cosa equivale il caso in cui l'indice di inserimento passato k è uguale a 0?",
+      "hint": "Pensate in quale posizione viene inserito il nuovo elemento per k = 0.",
+      "options": [
+        "All'inserimento di un elemento all'inizio dell'array (head / push_front)",
+        "All'inserimento di un elemento alla fine dell'array (tail)",
+        "Alla sostituzione di un elemento senza modificare la dimensione",
+        "A un errore di accesso fuori dai limiti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per $k = 0$ il ciclo sposta tutti i $count$ elementi e il marcatore $-1$ di una posizione a destra, liberando `arr[0]` per il nuovo valore. Questo è l'inserimento all'inizio.",
+        "Errato. L'inserimento alla fine si effettua per $k = \\text{count}$.",
+        "Errato. Tutti gli elementi esistenti vengono conservati e spostati.",
+        "Errato. 0 è un indice completamente valido."
+      ]
+    },
+    {
+      "id": "it_clang_1900",
+      "widget_id": "widget_clang_1900",
+      "topic": "Inserimento di elementi",
+      "q": "Per quali due motivi chiave la funzione insert_at restituirà lo stato 0 (rifiuto dell'inserimento)?",
+      "hint": "Considerate le due clausole di guardia (Guard Clauses) principali: il controllo dei limiti dell'array e il controllo della correttezza dell'indice.",
+      "options": [
+        "Overflow della capacità dell'array (count >= capacity - 1) o indice non valido k (k < 0 o k > count)",
+        "Se l'elemento da inserire è uguale a -1 o 0",
+        "Se l'array contiene un numero dispari di elementi",
+        "In assenza di un puntatore a funzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione deve rifiutare l'operazione se nel buffer non c'è spazio libero per l'elemento e il nuovo marcatore (`count >= capacity - 1`), oppure se la posizione $k$ esce dall'intervallo da 0 a `count`.",
+        "Errato. Il valore dell'elemento da inserire non limita l'esecuzione, a meno che non sia in conflitto con la logica del programma.",
+        "Errato. La parità del numero di elementi non influisce sull'inserimento.",
+        "Errato. Il passaggio di puntatori a funzione non è richiesto qui."
+      ]
+    }
+  ]
+}

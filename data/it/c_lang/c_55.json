@@ -1,0 +1,605 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_1691",
+      "widget_id": "widget_clang_1691",
+      "topic": "Passaggio di matrici alle funzioni",
+      "q": "Perché quando si passa un array bidimensionale a una funzione, il parametro DEVE contenere il numero di colonne (ad esempio, int data[][COL])?",
+      "hint": "Pensa a quale formula viene utilizzata dal compilatore per calcolare l'indirizzo dell'elemento data[r][c].",
+      "options": [
+        "Il compilatore deve conoscere il numero di colonne (COL) per calcolare l'indirizzo dell'elemento utilizzando la formula dell'offset (r * COL + c) * sizeof(T)",
+        "Il numero di colonne è necessario al sistema operativo per allocare la memoria sullo stack",
+        "Senza COL, il compilatore non può determinare il tipo di base degli elementi (int)",
+        "Questa limitazione è legata solo al funzionamento delle funzioni di input-output printf/scanf"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché un array bidimensionale è memorizzato in memoria come un buffer continuo e omogeneo (Row-major order), per passare alla riga $r$ il compilatore deve saltare esattamente $r \\cdot \\text{COL}$ elementi. Senza conoscere `COL`, il calcolo dell'indirizzo di `data[r][c]` diventa impossibile.",
+        "Errato. La memoria per l'array è già stata allocata nel codice chiamante, la funzione riceve solo l'indirizzo.",
+        "Errato. Il tipo di base è determinato dalla dichiarazione `int`.",
+        "Errato. Questa è una regola fondamentale dell'aritmetica dei puntatori in C, indipendente dall'input/output."
+      ]
+    },
+    {
+      "id": "it_clang_1692",
+      "widget_id": "widget_clang_1692",
+      "topic": "Passaggio di matrici alle funzioni",
+      "q": "Come interpreta il compilatore le dichiarazioni dei parametri void f1(int arr[][5]) e void f2(int (*arr)[5])?",
+      "hint": "Ricorda la regola del decadimento (array decay) degli array quando vengono passati come parametri di funzione.",
+      "options": [
+        "Entrambe le dichiarazioni sono assolutamente equivalenti: la forma int arr[][5] decade implicitamente in un puntatore a un array int (*arr)[5]",
+        "f1 accetta l'array per valore, mentre f2 lo accetta per puntatore",
+        "f1 accetta un array dinamico, mentre f2 accetta un array statico",
+        "f1 provoca un errore di compilazione, mentre f2 viene compilata con successo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Qualsiasi parametro di funzione della forma «array di array» `T arr[][COL]` viene automaticamente convertito dal compilatore in un «puntatore a un array» `T (*arr)[COL]`. Entrambe le varianti sintattiche generano codice identico.",
+        "Errato. In C gli array non vengono mai passati per valore.",
+        "Errato. La modalità di allocazione della memoria (dinamica o statica) è determinata nel punto di creazione, non nel parametro della funzione.",
+        "Errato. La forma `int arr[][5]` è completamente valida."
+      ]
+    },
+    {
+      "id": "it_clang_1693",
+      "widget_id": "widget_clang_1693",
+      "topic": "Passaggio di matrici alle funzioni",
+      "q": "Cosa succede quando si tenta di compilare una funzione con la dichiarazione void process(int arr[][])?",
+      "hint": "Il compilatore può determinare la dimensione degli elementi a cui puntano le righe?",
+      "options": [
+        "Errore di compilazione: tipo di elemento incompleto (il compilatore non conosce la dimensione della riga in byte)",
+        "La funzione compila con successo e accetta matrici di qualsiasi dimensione",
+        "Il compilatore sostituisce automaticamente la dimensione 1 per la seconda dimensione",
+        "Il codice viene compilato, ma va in crash all'esecuzione con Segmentation Fault"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La scrittura `int arr[][]` tenta di creare un puntatore a elementi di un tipo incompleto `int[]`. Poiché il compilatore non sa quanti elementi `int` contiene una singola riga, non può generare il codice per l'aritmetica dei puntatori e restituisce un errore.",
+        "Errato. Gli array bidimensionali con dimensioni completamente omesse non sono consentiti.",
+        "Errato. Il compilatore C non applica dimensioni predefinite in modo automatico.",
+        "Errato. L'errore si verifica in fase di compilazione, non durante l'esecuzione."
+      ]
+    },
+    {
+      "id": "it_clang_1694",
+      "widget_id": "widget_clang_1694",
+      "topic": "Passaggio di matrici alle функции",
+      "q": "Qual è la differenza fondamentale tra i parametri int (*arr)[4] e int *arr[4] nelle intestazioni delle funzioni?",
+      "hint": "Fai attenzione alle parentesi: modificano la precedenza degli operatori.",
+      "options": [
+        "int (*arr)[4] è un puntatore a un array di 4 int (per matrici), mentre int *arr[4] è un array di 4 puntatori int* (decade in int**)",
+        "int (*arr)[4] alloca memoria nello heap, mentre int *arr[4] la alloca sullo stack",
+        "int (*arr)[4] è un puntatore costante, mentre int *arr[4] è modificabile",
+        "Queste sintassi sono completamente identiche"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le parentesi tonde in `int (*arr)[4]` legano `*` ad `arr`, rendendo l'espressione un unico puntatore a un array di 4 elementi `int`. Senza parentesi, `int *arr[4]` è un array di 4 puntatori, che quando viene passato a una funzione decade in un doppio puntatore `int**`.",
+        "Errato. La posizione in memoria non dipende dalla dichiarazione del tipo del parametro.",
+        "Errato. La costanza viene specificata tramite la parola chiave `const`.",
+        "Errato. Si tratta di tipi di dati completamente diversi con un'aritmetica dei puntatori diversa."
+      ]
+    },
+    {
+      "id": "it_clang_1695",
+      "widget_id": "widget_clang_1695",
+      "topic": "Passaggio di matrici alle функции",
+      "q": "Quale importante regola sull'ordine dei parametri deve essere rispettata in C (C99+) quando si passa un array VLA bidimensionale di dimensione arbitraria: void print_vla(int rows, int cols, int arr[rows][cols])?",
+      "hint": "Le variabili di dimensione devono essere già note al compilatore al momento del loro utilizzo nel tipo di array.",
+      "options": [
+        "Le variabili rows e cols devono essere dichiarate STRETTAMENTE PRIMA del parametro dell'array arr[rows][cols]",
+        "Il parametro dell'array arr deve essere il primo, mentre rows e cols devono seguire",
+        "L'ordine dei parametri non ha importanza",
+        "Gli array VLA non possono essere passati alle funzioni nello standard C99"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il compilatore legge l'elenco dei parametri da sinistra a destra. Per analizzare l'espressione `int arr[rows][cols]`, gli identificatori `rows` e `cols` devono essere già stati dichiarati in precedenza nell'elenco degli argomenti.",
+        "Errato. Se inserisci `arr[rows][cols]` per primo, il compilatore genererà un errore di utilizzo di variabili non dichiarate `rows` e `cols`.",
+        "Errato. L'ordine è strettamente critico per i VLA.",
+        "Errato. Il passaggio di VLA alle funzioni è una delle funzionalità principali dello standard C99."
+      ]
+    },
+    {
+      "id": "it_clang_1696",
+      "widget_id": "widget_clang_1696",
+      "topic": "Passaggio di matrici alle функции",
+      "q": "Come definire correttamente il prototipo di una funzione con un array VLA in un file header (.h) se i nomi dei parametri di dimensione vengono omessi?",
+      "hint": "Per i VLA nei prototipi di funzione è prevista una sintassi speciale con l'asterisco '*'.",
+      "options": [
+        "void process(int, int, int[*][*]);",
+        "void process(int, int, int[][]);",
+        "void process(int, int, int[?][?]);",
+        "void process(int, int, int[auto][auto]);"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nei prototipi di funzione senza nomi espliciti delle variabili, i caratteri asterisco `[*]` vengono utilizzati per indicare una dimensione variabile del VLA.",
+        "Errato. La sintassi `int[][]` genererà un errore di compilazione a causa di un tipo incompleto.",
+        "Errato. Il simbolo `?` non viene utilizzato nelle dichiarazioni di tipo in C.",
+        "Errato. La parola chiave `auto` non è applicabile all'interno delle dimensioni degli array."
+      ]
+    },
+    {
+      "id": "it_clang_1697",
+      "widget_id": "widget_clang_1697",
+      "topic": "Passaggio di matrici alle функции",
+      "q": "Cosa succede quando si passa un array int data[3][5] a una funzione void process(int arr[][4])?",
+      "hint": "Confronta i tipi int(*)[5] e int(*)[4].",
+      "options": [
+        "Il compilatore genererà un avviso o un errore di incompatibilità di tipo (int(*)[5] è incompatibile con int(*)[4]), poiché la dimensione della riga differisce",
+        "La funzione taglierà automaticamente la quinta colonna della matrice data",
+        "Il codice compila senza avvisi, le dimensioni delle righe non vengono verificate",
+        "L'array verrà riallocato automaticamente in memoria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'array `data` decade nel tipo `int(*)[5]`. La funzione si aspetta un argomento di tipo `int(*)[4]`. Poiché il tipo dell'oggetto puntato differisce (array di 5 int vs array di 4 int), il sistema di tipi di C rileva l'incompatibilità.",
+        "Errato. In C non si verifica alcun taglio automatico dei dati.",
+        "Errato. Il compilatore controlla rigorosamente i tipi dei puntatori agli array.",
+        "Errato. La riallocazione della memoria durante la chiamata a una funzione è impossibile."
+      ]
+    },
+    {
+      "id": "it_clang_1698",
+      "widget_id": "widget_clang_1698",
+      "topic": "Passaggio di matrici alle функции",
+      "q": "Di quanti byte si sposterà l'indirizzo all'esecuzione dell'espressione arr + 1 all'interno della funzione void step(int (*arr)[4]), se sizeof(int) è pari a 4 byte?",
+      "hint": "arr è un puntatore a un array di 4 elementi int.",
+      "options": [
+        "Di 16 byte (4 elementi * 4 byte)",
+        "Di 4 byte (1 elemento int)",
+        "Di 8 byte (la dimensione del puntatore stesso)",
+        "Di 32 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `arr` ha tipo «puntatore a un array di 4 `int`», l'incremento `+1` salta un intero array di 4 `int`, il che equivale a $4 \\cdot 4 = 16$ byte.",
+        "Errato. Di 4 byte si sposterebbe un normale `int*`.",
+        "Errato. Il passo dell'aritmetica dei puntatori dipende dalla dimensione del *tipo di destinazione*, non del puntatore stesso.",
+        "Errato. Il calcolo è errato."
+      ]
+    },
+    {
+      "id": "it_clang_1699",
+      "widget_id": "widget_clang_1699",
+      "topic": "Passaggio di matrici alle функции",
+      "q": "Qual è il vantaggio principale e il svantaggio principale del passaggio di una matrice tramite un puntatore piatto void print_flat(const int *arr, int rows, int cols)?",
+      "hint": "Pensa all'universalità per qualsiasi matrice e alla perdita della comodità sintattica di arr[r][c].",
+      "options": [
+        "Vantaggio: la funzione accetta matrici di qualsiasi dimensione; Svantaggio: si perde il controllo dei tipi e la comoda sintassi arr[r][c] (è necessario scrivere arr[r * cols + c])",
+        "Vantaggio: velocizzazione dell'esecuzione di 10 volte; Svantaggio: non è possibile passare numeri negativi",
+        "Vantaggio: la memoria viene allocata automaticamente; Svantaggio: funziona solo in C11",
+        "Vantaggio: protezione dal superamento dei limiti; Svantaggio: elevato consumo dello stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La conversione della matrice in `const int*` consente di scrivere una funzione universale per qualsiasi dimensione `rows` e `cols` prima di C99. Tuttavia, si perde il controllo del compilatore sul tipo e occorre calcolare manualmente l'indice piatto `r * cols + c`.",
+        "Errato. Le prestazioni sono assolutamente identiche, il tipo di dati non influisce sul segno dei numeri.",
+        "Errato. Si tratta di un meccanismo base esistente fin dalla creazione del C89.",
+        "Errato. Non c'è protezione dall'uscita dai limiti in `int*` e il consumo dello stack è minimo."
+      ]
+    },
+    {
+      "id": "it_clang_1700",
+      "widget_id": "widget_clang_1700",
+      "topic": "Passaggio di matrici alle функции",
+      "q": "Se la funzione è dichiarata come void process(int data[10][5]), come gestirà il compilatore il numero 10 nella prima dimensione?",
+      "hint": "Ricorda in cosa si trasforma la prima dimensione dell'array quando viene passata a una funzione.",
+      "options": [
+        "Il numero 10 viene completamente ignorato dal compilatore, l'argomento viene implicitamente convertito in int (*data)[5]",
+        "Il compilatore richiederà rigorosamente il passaggio di una matrice di esattamente 10 righe",
+        "Il numero 10 provocherà un errore di sintassi",
+        "Il compilatore allocherà sullo stack un array di 10 elementi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Qualsiasi costante nella prima dimensione del parametro array (`[10]`) viene completamente ignorata dal compilatore, poiché la dimensione più a sinistra decade in un normale puntatore. La scrittura è equivalente a `int (*data)[5]`, e vi si può passare una matrice con qualsiasi numero di righe.",
+        "Errato. Il compilatore C non verifica la corrispondenza della prima dimensione al momento della chiamata.",
+        "Errato. La sintassi con la dimensione specificata è valida, anche se non ha potere di controllo.",
+        "Errato. L'allocazione della memoria sullo stack all'interno della funzione non si verifica in questo caso."
+      ]
+    },
+    {
+      "id": "it_clang_1701",
+      "widget_id": "widget_clang_1701",
+      "topic": "Accesso lineare alle matrici tramite int *m",
+      "q": "Qual è la formula corretta di indicizzazione lineare per leggere l'elemento (i, j) di una matrice di larghezza C colonne quando si usa un puntatore monodimensionale int *m?",
+      "hint": "Per raggiungere la riga i, occorre saltare i righe complete da C elementi ciascuna.",
+      "options": [
+        "m[i * C + j] o *(m + i * C + j)",
+        "m[i + j * C] o *(m + i + j * C)",
+        "m[i * R + j] (dove R è il numero di righe)",
+        "m[i + j]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella disposizione per righe (Row-major), prima della riga $i$-esima si trovano $i$ righe complete di $C$ elementi. L'offset dell'elemento all'interno della riga è $j$. L'indice finale è $(i \\cdot C + j)$.",
+        "Errato. La formula $(i + j \\cdot C)$ è tipica della disposizione per colonne (Column-major), adottata ad esempio in Fortran.",
+        "Errato. Il numero di righe $R$ non determina la lunghezza di una singola riga; bisogna moltiplicare per il numero di colonne $C$.",
+        "Errato. La semplice somma $i + j$ non salta intere righe."
+      ]
+    },
+    {
+      "id": "it_clang_1702",
+      "widget_id": "widget_clang_1702",
+      "topic": "Accesso lineare alle matrici tramite int *m",
+      "q": "Qual è il vantaggio principale della funzione void process_flat(int *m, int rows, int cols) rispetto a void process(int m[][4]) nello standard C89/C90?",
+      "hint": "Pensa all'hardcoding delle dimensioni in fase di compilazione.",
+      "options": [
+        "Un puntatore piatto consente di elaborare matrici con qualsiasi numero dinamico di colonne cols, senza fissare la dimensione nel tipo del parametro in fase di compilazione",
+        "Un puntatore piatto velocizza il passaggio degli argomenti alla funzione tramite i registri",
+        "In C89 è vietato passare array bidimensionali tramite parametri",
+        "Un puntatore piatto rende i parametri della funzione immutabili (const)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Prima dell'introduzione dei VLA in C99, la dichiarazione `int m[][4]` costringeva a fissare il numero 4 in fase di compilazione. L'uso di `int *m` con il passaggio esplicito di `cols` permettiva di creare funzioni universali per matrici di dimensioni arbitrarie.",
+        "Errato. Il passaggio di qualsiasi puntatore trasmette esattamente un indirizzo (8 byte a 64 bit), la velocità di chiamata della funzione è identica.",
+        "Errato. Il passaggio di array bidimensionali con colonne fisse in C89 è consentito.",
+        "Errato. L'immutabilità è determinata dalla parola chiave `const`."
+      ]
+    },
+    {
+      "id": "it_clang_1703",
+      "widget_id": "widget_clang_1703",
+      "topic": "Accesso линейный alle matrici tramite int *m",
+      "q": "Entrambi i metodi di inizializzazione dei puntatori monodimensionali m1 e m2 sono corretti per la matrice statica static_grid[3][4]?",
+      "hint": "Entrambi i metodi devono restituire l'indirizzo del primissimo elemento di tipo int*.",
+      "options": [
+        "Sì, entrambi i metodi portano a un puntatore di tipo int* al primo elemento static_grid[0][0]",
+        "No, m1 provoca un errore di compilazione, mentre m2 è corretto",
+        "No, m2 provoca Segmentation Fault durante l'assegnazione",
+        "Entrambi i metodi sono errati, è necessario il tipo int**"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `(int*)static_grid` converte esplicitamente il tipo `int(*)[4]` in `int*`. L'espressione `&static_grid[0][0]` prende esplicitamente l'indirizzo del primo elemento `int`. Entrambi i metodi sono corretti e puntano al byte iniziale.",
+        "Errato. Il cast esplicito `(int*)` è consentito dallo standard.",
+        "Errato. Prendere l'indirizzo `&static_grid[0][0]` è una tecnica standard e sicura.",
+        "Errato. Il doppio puntatore `int**` non è compatibile con una matrice continua."
+      ]
+    },
+    {
+      "id": "it_clang_1704",
+      "widget_id": "widget_clang_1704",
+      "topic": "Accesso lineare alle matrici tramite int *m",
+      "q": "A cosa equivale la variabile val dopo l'esecuzione dell'espressione *(m + 1 * 3 + 2)?",
+      "hint": "Calcola l'indice lineare: 1 * 3 + 2 = 5. Trova il 5° elemento nell'array arr (indicizzazione da 0).",
+      "options": [
+        "6",
+        "5",
+        "3",
+        "4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'indice lineare è $1 \\cdot 3 + 2 = 5$. Gli elementi di `arr` in memoria sono consecutivi: `1` (0), `2` (1), `3` (2), `4` (3), `5` (4), `6` (5). All'indice 5 si trova il numero 6 (corrispondente a `arr[1][2]`).",
+        "Errato. 5 è `arr[1][1]` con indice 4.",
+        "Errato. 3 è `arr[0][2]` con indice 2.",
+        "Errato. 4 è `arr[1][0]` con indice 3."
+      ]
+    },
+    {
+      "id": "it_clang_1705",
+      "widget_id": "widget_clang_1705",
+      "topic": "Accesso линейный alle matrici tramite int *m",
+      "q": "Perché quando si crea una macro di mascheramento dell'indicizzazione AT(m, i, j, cols) OGNI parametro all'interno viene racchiuso in parentesi individuali ((i), (cols), (j))?",
+      "hint": "Ricorda le regole di espansione delle macro da parte del preprocessore e le precedenze degli operatori.",
+      "options": [
+        "Per evitare violazioni della precedenza degli operatori se come parametri vengono passate espressioni (ad esempio, row + 1)",
+        "È un requisito sintattico per lavorare con la memoria in C",
+        "Affinché la macro funzioni più velocemente durante la compilazione",
+        "Le parentesi proteggono dall'uscita dai limiti dell'array durante l'esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se si scrive `i * cols + j` senza parentesi e si passa `row + 1`, il preprocessore sostituirà `row + 1 * cols + j`. A causa della precedenza della moltiplicazione verrà calcolato `row + (1 * cols) + j`, il che distorcerà completamente i calcoli.",
+        "Errato. Il C non richiede sintatticamente le parentesi, ma la loro assenza creerebbe bug nascosti.",
+        "Errato. Non influisce sulla velocità di compilazione o di esecuzione.",
+        "Errato. Le macro del preprocessore non possono controllare i limiti degli array."
+      ]
+    },
+    {
+      "id": "it_clang_1706",
+      "widget_id": "widget_clang_1706",
+      "topic": "Accesso линейный alle matrici tramite int *m",
+      "q": "A quanto ammonta lo spostamento in byte (Stride) quando si passa dall'inizio della riga i all'inizio della riga (i + 1) in un buffer monodimensionale int *m di larghezza C elementi?",
+      "hint": "In una riga sono contenuti C elementi di tipo int.",
+      "options": [
+        "C * sizeof(int) byte",
+        "sizeof(int) byte",
+        "C byte",
+        "R * C * sizeof(int) byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Ogni riga contiene $C$ elementi di tipo `int`. La dimensione fisica di una riga nella RAM è pari a $C \\cdot \\text{sizeof}(int)$ byte (per un `int` da 4 byte e $C=5$, si tratta di 20 byte).",
+        "Errato. Di `sizeof(int)` byte si sposta il passaggio alla *colonna* successiva.",
+        "Errato. È stata dimenticata la dimensione del tipo di dati stesso `sizeof(int)`.",
+        "Errato. $R \\cdot C \\cdot \\text{sizeof}(int)$ è la dimensione totale dell'intera matrice."
+      ]
+    },
+    {
+      "id": "it_clang_1707",
+      "widget_id": "widget_clang_1707",
+      "topic": "Accesso lineare alle matrici tramite int *m",
+      "q": "A quale errore porterà la sostituzione del numero di righe R (3) al posto del numero di colonne C (5) nella formula di indicizzazione m[i * R + j] per una matrice 3x5?",
+      "hint": "L'offset delle righe diventerà inferiore alla dimensione reale della riga.",
+      "options": [
+        "A un errore logico di calcolo dell'indice: le righe si sovrapporranno durante la lettura e ci sarà un'uscita oltre i limiti della prima parte dell'array",
+        "Il programma andrà in crash con un errore in fase di compilazione",
+        "Il compilatore sostituirà automaticamente 3 con 5",
+        "I dati verranno trasposti automaticamente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per una matrice 3x5 la lunghezza della riga è 5. Se si moltiplica $i$ per 3, con $i=1$ si arriverà all'indice 3 invece di 5 (a metà della riga 0). Si verificherà una distorsione dei dati e la lettura di celle errate.",
+        "Errato. Il compilatore non conosce il significato delle variabili `R` e `C` e compilerà il codice senza errori.",
+        "Errato. Non avvengono sostituzioni automatiche nella logica di indicizzazione.",
+        "Errato. Per una trasposizione corretta occorre modificare l'intero schema di scansione."
+      ]
+    },
+    {
+      "id": "it_clang_1708",
+      "widget_id": "widget_clang_1708",
+      "topic": "Accesso lineare alle matrici tramite int *m",
+      "q": "Perché l'accesso piatto m[i * C + j] viene solitamente eseguito dal processore più velocemente rispetto a pp[i][j] tramite un array di puntatori int **pp?",
+      "hint": "Pensa al numero di accessi alla memoria per leggere un valore.",
+      "options": [
+        "L'accesso piatto richiede solo 1 lettura dalla memoria (all'indirizzo calcolato) anziché 2 letture sequenziali dalla memoria nel caso di int **pp",
+        "L'accesso piatto viene eseguito sul processore grafico (GPU)",
+        "Negli array monodimensionali il compilatore disattiva le istruzioni vettoriali",
+        "L'operazione di moltiplicazione viene eseguita dal processore più velocemente rispetto alla lettura di un puntatore dalla cache L1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per `pp[i][j]` il processore deve prima leggere il puntatore da `pp[i]`, attendere la risposta della memoria e solo dopo leggere `[j]`. Per `m[i * C + j]` l'indirizzo viene calcolato direttamente sull'ALU del processore, con una sola lettura da RAM/Cache.",
+        "Errato. Entrambi i metodi vengono eseguiti sulla CPU.",
+        "Errato. I buffer monodimensionali continui sono invece i più adatti per SIMD/vettorializzazione.",
+        "Errato. Il punto non è la moltiplicazione, ma l'eliminazione della latenza intermedia di lettura dalla memoria."
+      ]
+    },
+    {
+      "id": "it_clang_1709",
+      "widget_id": "widget_clang_1709",
+      "topic": "Accesso линейный alle matrici tramite int *m",
+      "q": "Quale espressione restituirà un puntatore int* all'INIZIO della riga numero r in un array piatto m di larghezza cols?",
+      "hint": "Per raggiungere l'inizio della riga r, occorre avanzare di r * cols elementi da m.",
+      "options": [
+        "m + r * cols o &m[r * cols]",
+        "m + r",
+        "&(m[r][0])",
+        "m + r + cols"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'inizio della riga $r$-esima è l'elemento con indice lineare $r \\cdot \\text{cols}$. L'espressione `m + r * cols` restituisce un `int*` puntato esattamente al primo elemento di quella riga.",
+        "Errato. `m + r` sposta il puntatore di soli $r$ elementi `int`, non di $r$ righe.",
+        "Errato. La sintassi `m[r][0]` non è applicabile a un puntatore singolo `int *m` senza cast di tipo.",
+        "Errato. La semplice somma `r + cols` non effettua la moltiplicazione delle dimensioni."
+      ]
+    },
+    {
+      "id": "it_clang_1710",
+      "widget_id": "widget_clang_1710",
+      "topic": "Accesso линейный alle matrici tramite int *m",
+      "q": "Quante chiamate a free() è necessario eseguire per liberare completamente una matrice dinamica allocata come unico buffer int *m = malloc(rows * cols * sizeof(int))?",
+      "hint": "Il numero di free() deve sempre corrispondere al numero di malloc() eseguite con successo.",
+      "options": [
+        "Esattamente 1 chiamata: free(m)",
+        "rows chiamate in un ciclo",
+        "rows * cols chiamate",
+        "2 chiamate: free(m) e free(&m)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché l'allocazione della memoria è avvenuta in un'unica chiamata a `malloc`, l'intera matrice costituisce un unico blocco nello heap. La deallocazione si effettua con esattamente una chiamata a `free(m)`.",
+        "Errato. I cicli di deallocazione servono solo per la struttura `int **` (array di puntatori).",
+        "Errato. Ogni elemento `int` non è stato allocato separatamente.",
+        "Errato. La chiamata `free(&m)` tenterebbe di liberare la memoria della variabile puntatore locale, causando un crash."
+      ]
+    },
+    {
+      "id": "it_clang_1711",
+      "widget_id": "widget_clang_1711",
+      "topic": "Array bidimensionali dinamici (int **m)",
+      "q": "Quante chiamate a malloc() è necessario eseguire nell'allocazione classica di memoria per una matrice R x C tramite un doppio puntatore int **m?",
+      "hint": "Conta la chiamata per l'array di puntatori alle righe e le chiamate per ciascuna singola riga.",
+      "options": [
+        "R + 1 chiamate (1 per l'array di puntatori alle righe + R per ciascuna riga)",
+        "Esattamente 1 chiamata per l'intera struttura",
+        "R * C chiamate (per ciascun elemento)",
+        "2 chiamate (una per le righe, una per le colonne)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Prima viene eseguita 1 chiamata a `malloc` per allocare memoria per un array di R puntatori (`int*`), e poi in un ciclo vengono eseguite R chiamate a `malloc` per ciascuna riga di C elementi. In totale: 1 + R chiamate.",
+        "Errato. L'allocazione in una sola chiamata a `malloc` è possibile per un array monodimensionale piatto `int *m`, ma non per un `int **m` separato.",
+        "Errato. Non è necessario allocare memoria per ciascun elemento `int` separatamente.",
+        "Errato. Si può fare a meno di due sole chiamate a `malloc` solo con un approccio ibrido a buffer continuo."
+      ]
+    },
+    {
+      "id": "it_clang_1712",
+      "widget_id": "widget_clang_1712",
+      "topic": "Array bidimensionali динамические (int **m)",
+      "q": "In quale ordine è necessario liberare la memoria tramite free() per una matrice creata con un doppio puntatore int **m?",
+      "hint": "Se liberi subito l'array principale di puntatori m, sarai in grado di leggere gli indirizzi delle righe m[i]?",
+      "options": [
+        "Prima liberare ciascuna riga free(m[i]) in un ciclo, e solo dopo l'array principale di puntatori free(m)",
+        "Prima liberare l'array principale free(m), e poi in un ciclo liberare ciascuna riga free(m[i])",
+        "È sufficiente fare una sola chiamata free(m), il sistema operativo libererà le righe automaticamente",
+        "L'ordine non ha importanza, l'essenziale è chiamare free() R + 1 volte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se si esegue prima `free(m)`, i puntatori `m[i]` diventeranno inaccessibili (si verificherà un Use-After-Free), provocando una perdita di memoria o il crash del programma. Occorre prima liberare tutte le righe `m[i]`, e infine l'array principale `m`.",
+        "Errato. Con `free(m)` l'array di puntatori viene distrutto e gli indirizzi delle righe `m[i]` vanno persi.",
+        "Errato. La chiamata `free(m)` libererà solo l'array di puntatori; tutte le righe allocate rimarranno come perdita di memoria.",
+        "Errato. L'ordine è strettamente critico."
+      ]
+    },
+    {
+      "id": "it_clang_1713",
+      "widget_id": "widget_clang_1713",
+      "topic": "Array bidimensionali динамические (int **m)",
+      "q": "Quale differenza fondamentale nella disposizione in memoria presenta la matrice int **m rispetto alla matrice statica int static_arr[R][C]?",
+      "hint": "Ogni chiamata indipendente a malloc garantisce la continuità dei blocchi nello heap?",
+      "options": [
+        "Le righe di int **m могут trovarsi in zone distinte e non adiacenti dello heap, mentre int static_arr[R][C] risiede in memoria come un unico blocco continuo",
+        "int **m occupa sempre meno memoria RAM",
+        "int static_arr[R][C] memorizza i dati per colonne, mentre int **m per righe",
+        "La disposizione degli elementi nella memoria RAM è assolutamente identica"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Ogni chiamata a `malloc` per la riga `m[i]` alloca un proprio blocco indipendente nello heap. Di conseguenza, le righe della matrice `int **m` possono essere frammentate nello spazio di indirizzamento, riducendo la località dei dati.",
+        "Errato. Al contrario, `int **m` consuma più memoria a causa della gestione dell'array di puntatori e del sovraccarico (overhead) dello heap.",
+        "Errato. Entrambe le strutture, con una corretta indicizzazione, organizzano i dati per righe.",
+        "Errato. `static_arr[R][C]` è un array continuo, mentre `int **m` è un insieme frammentato di puntatori."
+      ]
+    },
+    {
+      "id": "it_clang_1714",
+      "widget_id": "widget_clang_1714",
+      "topic": "Array bidimensionali dinamici (int **m)",
+      "q": "Quale vantaggio offre la struttura int **m nella creazione dei cosiddetti «array frastagliati» (Jagged / Ragged Arrays)?",
+      "hint": "Tutte le righe m[i] devono avere obbligatoriamente lo stesso numero di elementi C?",
+      "options": [
+        "Ogni riga della matrice può avere una propria lunghezza individuale, consentendo di non sprecare memoria extra per strutture dati irregolari o triangolari",
+        "Ciò consente di cambiare il tipo di dati degli elementi in righe diverse",
+        "Gli array frastagliati vengono elaborati automaticamente dalla scheda video",
+        "Un tale array non ha bisogno di essere liberato tramite free()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché ciascuna riga `m[i]` viene allocata con una chiamata a `malloc` separata, le lunghezze delle righe possono differire. Questo è ideale per memorizzare matrici triangolari, liste di adiacenza di grafi o stringhe di testo di lunghezza diversa.",
+        "Errato. Tutti gli elementi mantengono lo stesso tipo specificato nella dichiarazione del puntatore (ad esempio, `int`).",
+        "Errato. La normale gestione della memoria in C viene eseguita sulla CPU.",
+        "Errato. Ogni riga allocata dinamicamente richiede obbligatoriamente `free()`."
+      ]
+    },
+    {
+      "id": "it_clang_1715",
+      "widget_id": "widget_clang_1715",
+      "topic": "Array bidimensionali динамические (int **m)",
+      "q": "Cosa succede se si passa una matrice statica int data[3][5] a una funzione che si aspetta il parametro void process(int **m)?",
+      "hint": "Confronta i tipi: array continuo di numeri int vs array di indirizzi int*.",
+      "options": [
+        "Il compilatore restituirà un avviso/errore di incompatibilità di tipo e durante l'esecuzione si verificherà un Segmentation Fault quando si tenterà di dereferenziare i numeri int come puntatori",
+        "Il codice funzionerà correttamente, poiché un array bidimensionale e un doppio puntatore sono la stessa cosa",
+        "Il compilatore convertirà automaticamente la matrice statica in un array di puntatori",
+        "La funzione riceverà solo la prima riga della matrice senza errori"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `data` decade in `int(*)[5]` — un puntatore a un array continuo di numeri. La funzione `process` presuppone che le sia stato passato un `int**` (un puntatore a un array di indirizzi). Tentando di fare `m[0][0]`, leggerà il primo numero della matrice come indirizzo di memoria e cercherà di accedervi, provocando un crash (Segmentation Fault).",
+        "Errato. Un array continuo bidimensionale e un doppio puntatore non sono intercambiabili.",
+        "Errato. Non è possibile convertire automaticamente strutture dati con rappresentazioni diverse in memoria 'al volo'.",
+        "Errato. L'incompatibilità dei tipi bloccherà l'esecuzione sicura."
+      ]
+    },
+    {
+      "id": "it_clang_1716",
+      "widget_id": "widget_clang_1716",
+      "topic": "Array bidimensionali динамические (int **m)",
+      "q": "Qual è il vantaggio dell'operazione di scambio di righe (Row Swapping) nella matrice int **m rispetto a una matrice continua int m[R][C]?",
+      "hint": "È necessario riscrivere milioni di elementi della riga o è sufficiente scambiare gli indirizzi?",
+      "options": [
+        "Lo scambio viene eseguito in O(1) tramite il rapido posizionamento di due puntatori m[i] e m[j], senza copiare gli elementi delle righe stesse",
+        "Gli elementi delle righe vengono automaticamente ordinati in modo crescente",
+        "In questo caso gli indici delle righe non cambiano",
+        "L'operazione non richiede l'uso di una variabile temporanea"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In `int **m` le righe sono rappresentate da puntatori `m[i]`. Per scambiare due righe di qualsiasi dimensione (anche di 100.000 elementi), è sufficiente scambiare due puntatori nell'array `m`, operazione eseguita in tempo costante $O(1)$.",
+        "Errato. L'ordinamento degli elementi all'interno delle righe non avviene.",
+        "Errato. Gli indici delle righe nell'array di puntatori vengono proprio scambiati.",
+        "Errato. Una variabile temporanea `int *tmp` è solitamente necessaria per lo scambio dei puntatori."
+      ]
+    },
+    {
+      "id": "it_clang_1717",
+      "widget_id": "widget_clang_1717",
+      "topic": "Array bidimensionali dinamici (int **m)",
+      "q": "Qual è il consumo di memoria aggiuntivo (overhead) di una matrice int **m su un sistema a 64 bit rispetto a un array continuo R * C * sizeof(int)?",
+      "hint": "Considera la dimensione dell'array di puntatori stesso e gli header dell'allocatore di memoria dello heap.",
+      "options": [
+        "R * 8 byte per l'array di puntatori int* più gli header di servizio dello heap (heap overhead) per ciascuna delle R+1 chiamate a malloc",
+        "La memoria consumata è esattamente la stessa, senza un singolo byte in più",
+        "L'overhead è di 64 byte fissi indipendentemente da R",
+        "L'overhead è pari a R * C * 8 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Su un sistema a 64 bit, un singolo puntatore `int*` occupa 8 byte ($R \\cdot 8$ byte per la tabella principale). Inoltre, il gestore di memoria (`malloc`) aggiunge un header di servizio nascosto (solitamente 8–16 byte) a ciascuno dei $R+1$ blocchi allocati.",
+        "Errato. Il doppio puntatore richiede sempre memoria aggiuntiva per la tabella degli indirizzi.",
+        "Errato. La dimensione dell'overhead cresce linearmente con l'aumento del numero di righe $R$.",
+        "Errato. La formula $R \\cdot C \\cdot 8$ è errata."
+      ]
+    },
+    {
+      "id": "it_clang_1718",
+      "widget_id": "widget_clang_1718",
+      "topic": "Array bidimensionali динамические (int **m)",
+      "q": "Quale tecnica ibrida consente di utilizzare la sintassi m[i][j] garantendo al contempo una disposizione continua dei dati in memoria in sole 2 chiamate a malloc?",
+      "hint": "Alloca un unico grande buffer per tutti i dati e imposta i puntatori delle righe m[i] agli offset in questo buffer.",
+      "options": [
+        "Allocazione di un unico buffer di dati continuo buf e inizializzazione degli elementi dell'array di puntatori m[i] con gli indirizzi dell'inizio di ciascuna riga (buf + i * C)",
+        "Uso della parola chiave register durante la chiamata a malloc",
+        "Chiamata a realloc dopo l'aggiunta di ciascun elemento",
+        "Cast di tipo tramite un triplo puntatore (int***)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In questo schema tutti i dati risiedono in modo continuo nel buffer `buf` (ottimo per la cache e il passaggio a librerie vettoriali), ma grazie all'array di puntatori `m` si mantiene la comoda sintassi di accesso `m[i][j]`. L'allocazione e la deallocazione si effettuano in sole 2 chiamate a `malloc`/`free`.",
+        "Errato. `register` non si applica alle funzioni di allocazione della memoria.",
+        "Errato. Chiamate frequenti a `realloc` causano forte frammentazione e rallentamento.",
+        "Errato. I tripli puntatori non risolvono il problema dell'unione dei buffer."
+      ]
+    },
+    {
+      "id": "it_clang_1719",
+      "widget_id": "widget_clang_1719",
+      "topic": "Array bidimensionali dinamici (int **m)",
+      "q": "Come gestire correttamente il fallimento di malloc() (ritorno di NULL) durante l'allocazione di memoria per la i-esima riga in un ciclo, al fine di evitare perdite di memoria (memory leak)?",
+      "hint": "Cosa fare con la memoria già allocata per le righe da 0 a i-1?",
+      "options": [
+        "Liberare in un ciclo tutte le righe precedentemente allocate con successo da 0 a i - 1, quindi liberare l'array di puntatori stesso free(m)",
+        "Chiamare semplicemente free(m)",
+        "Chiamare free(m[i]) e continuare il ciclo",
+        "Non fare nulla, il sistema operativo pulirà tutto automaticamente in caso di errore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le righe da `0` a `i - 1` hanno già ricevuto blocchi di memoria allocati. Se si fa semplicemente `free(m)` o si esce in modo anomalo, le righe precedentemente allocate rimarranno sospese nello heap, causando una perdita di memoria (Memory Leak).",
+        "Errato. Chiamare solo `free(m)` causerà una perdita di memoria di tutte le righe allocate in precedenza.",
+        "Errato. `m[i]` è pari a `NULL`, la chiamata a `free(NULL)` non pulirà le righe precedenti.",
+        "Errato. Il programma ha la responsabilità di garantire una pulizia corretta delle risorse."
+      ]
+    },
+    {
+      "id": "it_clang_1720",
+      "widget_id": "widget_clang_1720",
+      "topic": "Array bidimensionali динамические (int **m)",
+      "q": "Perché l'accesso agli elementi m[i][j] in una matrice classica int **m può avvenire più lentamente rispetto a una matrice continua, a causa di un Cache Miss (mancato accesso in cache)?",
+      "hint": "Ricorda in quali blocchi (linee di cache) il processore carica i dati dalla memoria RAM.",
+      "options": [
+        "Poiché le righe sono sparse nello heap, il passaggio da m[i] alla riga successiva comporta spesso il caricamento di una nuova linea di cache della CPU anziché l'uso di dati già memorizzati in cache",
+        "Il doppio puntatore disattiva automaticamente la cache L1 del processore",
+        "L'operatore [][] quando lavora con un doppio puntatore genera un'interruzione di sistema del SO",
+        "La memoria dello heap funziona fisicamente più lentamente rispetto allo stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il processore carica la memoria a blocchi (linee di cache da 64 byte). In una matrice continua, l'inizio della nuova riga risiede già nella cache. In `int **m` le righe sono allocate tramite `malloc` separati e sparse nella memoria, motivo per cui il passaggio a `m[i+1]` costringe il processore a richiedere nuovamente i dati dalla lenta RAM.",
+        "Errato. Il doppio puntatore non disattiva la memoria cache del processore.",
+        "Errato. Non si verifica alcuna interruzione di sistema del sistema operativo durante la dereferenziazione di un puntatore.",
+        "Errato. Il chip fisico di RAM è lo stesso sia per lo stack che per lo heap."
+      ]
+    }
+  ]
+}

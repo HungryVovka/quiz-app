@@ -1,0 +1,607 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2081",
+      "widget_id": "widget_clang_2081",
+      "topic": "Tipi interi",
+      "q": "Cosa garantisce lo standard C riguardo al rapporto tra le dimensioni dei tipi short e int?",
+      "hint": "Ricorda la gerarchia delle dimensioni dei tipi interi in C: `short` rispetto a `int` e `long`.",
+      "options": [
+        "1",
+        "0",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard C garantisce che sizeof(short) <= sizeof(int) <= sizeof(long). Di conseguenza l'espressione restituisce 1 (vero).",
+        "Sbagliato. La dimensione di short non può superare la dimensione di int.",
+        "Sbagliato. Il confronto tra specificatori di dimensione tramite sizeof è sintatticamente corretto.",
+        "Sbagliato. La relazione tra le dimensioni dei tipi fondamentali è chiaramente definita dallo standard."
+      ]
+    },
+    {
+      "id": "it_clang_2082",
+      "widget_id": "widget_clang_2082",
+      "topic": "Tipi non segnati",
+      "q": "Cosa stampa il programma durante il decremento di una variabile unsigned con valore 0?",
+      "hint": "Rifletti su come si comportano i tipi non segnati (unsigned) quando scendono al di sotto dello zero.",
+      "options": [
+        "1",
+        "0",
+        "Errore di esecuzione",
+        "-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I tipi unsigned eseguono l'aritmetica modulo $2^N$. Con 0--, il valore di x va in overflow (wrap-around) fino al valore massimo possibile (UINT_MAX), che è maggiore di 0. Viene stampato 1.",
+        "Sbagliato. La variabile va in overflow fino al valore positivo massimo UINT_MAX, quindi x > 0 dà 1.",
+        "Sbagliato. L'overflow dei tipi non segnati è definito in modo rigoroso dallo standard e non causa errori.",
+        "Sbagliato. Una variabile unsigned non può assumere valori negativi."
+      ]
+    },
+    {
+      "id": "it_clang_2083",
+      "widget_id": null,
+      "topic": "Tipi interi",
+      "q": "Qual è il comportamento di un programma C in caso di overflow di un tipo intero con segno (signed integer overflow)?",
+      "hint": "Il comportamento dei tipi con segno in caso di overflow differisce da quello dei tipi non segnati?",
+      "options": [
+        "Comportamento indefinito (Undefined Behavior)",
+        "Wrap-around automatico al valore minimo",
+        "Generazione di un'eccezione a runtime",
+        "Conversione automatica al tipo long"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, l'overflow dei tipi interi con segno (ad esempio int) è un comportamento indefinito (UB).",
+        "Sbagliato. Il wrap-around ciclico è garantito solo per i tipi non segnati (unsigned).",
+        "Sbagliato. Il linguaggio C non fornisce eccezioni integrate per l'overflow degli interi.",
+        "Sbagliato. Il tipo della variabile non cambia automaticamente in caso di overflow."
+      ]
+    },
+    {
+      "id": "it_clang_2084",
+      "widget_id": "widget_clang_2084",
+      "topic": "Specificatori di formato",
+      "q": "Quale specificatore di formato in printf viene utilizzato per stampare correttamente un valore di tipo short?",
+      "hint": "Quale prefisso viene aggiunto agli specificatori interi per il tipo short?",
+      "options": [
+        "-5",
+        "5",
+        "%d",
+        "%s"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore %hd è destinato specificamente al tipo short. Una variabile con valore -5 verrà stampata come -5.",
+        "Sbagliato. Il valore della variabile è -5.",
+        "Sbagliato. Sebbene il tipo short venga promosso automaticamente a int durante il passaggio degli argomenti a printf, l'indicatore specifico per short è %hd.",
+        "Sbagliato. %s si usa per stampare stringhe C."
+      ]
+    },
+    {
+      "id": "it_clang_2085",
+      "widget_id": "widget_clang_2085",
+      "topic": "Conversione di tipo e confronto",
+      "q": "Cosa stampa il programma quando confronta una variabile con segno a = -5 e una non segnata b = 10?",
+      "hint": "A quale tipo il compilatore converte entrambi gli operandi durante il confronto tra `signed` e `unsigned`?",
+      "options": [
+        "GREATER",
+        "LESS",
+        "Errore di compilazione",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Confrontando signed e unsigned con lo stesso rango, il valore con segno viene convertito in unsigned. Il valore -5 diventa un numero positivo enorme UINT_MAX - 4, quindi la condizione a < b risulta falsa e viene stampato \"GREATER\".",
+        "Sbagliato. A causa della conversione implicita di a in unsigned int, il valore diventa maggiore di 10.",
+        "Sbagliato. Il confronto tra tipi con segno e non segnati è sintatticamente valido.",
+        "Sbagliato. Viene eseguito il ramo else, che stampa \"GREATER\"."
+      ]
+    },
+    {
+      "id": "it_clang_2086",
+      "widget_id": "widget_clang_2086",
+      "topic": "Letterali interi",
+      "q": "A cosa serve il suffisso L (o l) nei letterali interi, come 100000L?",
+      "hint": "In che modo questo suffisso influisce sul tipo interno della costante durante la compilazione?",
+      "options": [
+        "100000",
+        "100000L",
+        "100",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il suffisso L indica al compilatore che il letterale è di tipo long. In printf con lo specificatore %ld viene stampato il numero 100000.",
+        "Sbagliato. Il suffisso L imposta il tipo del letterale per il compilatore e non viene visualizzato nella stampa.",
+        "Sbagliato. Il valore numerico del letterale non viene troncato.",
+        "Sbagliato. Viene stampato il valore numerico registrato."
+      ]
+    },
+    {
+      "id": "it_clang_2087",
+      "widget_id": null,
+      "topic": "Intervalli dei tipi interi",
+      "q": "Qual è la dimensione minima in byte garantita dallo standard C per il tipo long?",
+      "hint": "Ricorda il numero minimo di bit (32 bit) riservati dallo standard per il tipo `long`.",
+      "options": [
+        "4 byte (32 bit)",
+        "2 byte (16 bit)",
+        "8 byte (64 bit)",
+        "1 byte (8 bit)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, il tipo long deve occupare almeno 32 bit (4 byte).",
+        "Sbagliato. 2 byte è la dimensione minima garantita per short e int.",
+        "Sbagliato. 8 byte (64 bit) sono garantiti per il tipo long long.",
+        "Sbagliato. 1 byte è la dimensione minima per il tipo char."
+      ]
+    },
+    {
+      "id": "it_clang_2088",
+      "widget_id": "widget_clang_2088",
+      "topic": "Tipi non segnati e overflow",
+      "q": "Cosa stampa il programma aggiungendo uno al valore massimo di un unsigned short a 16 bit (65535)?",
+      "hint": "Quale valore si ottiene aggiungendo uno al valore limite dei tipi non segnati?",
+      "options": [
+        "0",
+        "65536",
+        "65535",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il valore massimo di un unsigned short a 16 bit è 65535 ($2^{16}-1$). Con `s += 1` si verifica un azzeramento modulo $65536$, risultando in 0.",
+        "Sbagliato. Una variabile unsigned short a 16 bit non può contenere il valore 65536.",
+        "Sbagliato. Aggiungere uno modifica il valore e provoca overflow.",
+        "Sbagliato. L'overflow dei tipi non segnati è regolamentato in modo rigoroso dallo standard C."
+      ]
+    },
+    {
+      "id": "it_clang_2089",
+      "widget_id": null,
+      "topic": "Intervalli dei tipi interi",
+      "q": "In cosa differisce il tipo unsigned int da signed int a parità di dimensione in memoria?",
+      "hint": "A cosa serve esattamente il bit più significativo (bit di segno) nel tipo `signed`?",
+      "options": [
+        "unsigned int non memorizza il segno e utilizza il bit più significativo per ampliare l'intervallo positivo",
+        "unsigned int occupa il doppio della memoria",
+        "unsigned int funziona solo con numeri decimali/frazionari",
+        "signed int viene eseguito più velocemente su tutti i processori"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `unsigned int` non utilizza un bit per il segno, quindi il suo intervallo va da 0 a $2^N - 1$, mentre per `signed int` va da $-2^{N-1}$ a $2^{N-1}-1$.",
+        "Sbagliato. Entrambi i tipi occupano la stessa quantità di memoria.",
+        "Sbagliato. Entrambi i tipi sono interi.",
+        "Sbagliato. La velocità di esecuzione dell'aritmetica con e senza segno è equivalente a livello hardware."
+      ]
+    },
+    {
+      "id": "it_clang_2090",
+      "widget_id": "widget_clang_2090",
+      "topic": "Promozione dei tipi",
+      "q": "Cosa stampa il programma sommando i tipi int e long nell'espressione a + b?",
+      "hint": "A quale tipo viene promosso il tipo di rango inferiore (`int` vs `long`) in un'espressione aritmetica?",
+      "options": [
+        "1",
+        "0",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In base alle regole di conversione (Usual Arithmetic Conversions), l'operando con rango inferiore `int` viene convertito in `long`. L'espressione `a + b` è di tipo `long`, quindi `sizeof(a + b) == sizeof(long)` restituisce 1.",
+        "Sbagliato. Il valore `int` viene promosso automaticamente a `long`.",
+        "Sbagliato. La somma di variabili di tipi interi diversi viene gestita correttamente dal compilatore.",
+        "Sbagliato. L'espressione viene valutata rigorosamente secondo lo standard del linguaggio."
+      ]
+    },
+    {
+      "id": "it_clang_2091",
+      "widget_id": "widget_clang_2091",
+      "topic": "Tipi non segnati e overflow",
+      "q": "Cosa stampa il programma all'incremento di una variabile di tipo unsigned char con valore 255?",
+      "hint": "A quanto equivale il risultato di $255 + 1$ modulo $2^8$ per una variabile a 8 bit?",
+      "options": [
+        "0",
+        "256",
+        "255",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'overflow dei tipi non segnati in C è regolamentato in modo rigoroso e avviene modulo $2^N$. Per un `unsigned char` a 8 bit con intervallo 0–255, il valore $255 + 1$ torna a 0.",
+        "Sbagliato. Il tipo `unsigned char` ha una larghezza di 8 bit e non può memorizzare il numero 256.",
+        "Sbagliato. L'operazione `uc++` modifica il valore della variabile.",
+        "Sbagliato. L'overflow dei tipi non segnati non è un comportamento indefinito."
+      ]
+    },
+    {
+      "id": "it_clang_2092",
+      "widget_id": "widget_clang_2092",
+      "topic": "Conversione a unsigned",
+      "q": "Cosa stampa il programma all'assegnazione del valore negativo -1 a una variabile di tipo unsigned char?",
+      "hint": "In quale valore positivo massimo si trasforma `-1` se convertito in un tipo non segnato a 8 bit?",
+      "options": [
+        "255",
+        "-1",
+        "0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard, quando un numero negativo viene convertito in un tipo non segnato, si trasforma secondo la formula $-1 \\pmod{2^8} = 255$.",
+        "Sbagliato. I tipi non segnati non memorizzano il segno e non possono essere stampati come numeri negativi con lo specificatore `%u`.",
+        "Sbagliato. Il valore -1 corrisponde al massimo valore possibile per il tipo non segnato della larghezza corrispondente.",
+        "Sbagliato. L'assegnazione di costanti negative a variabili non segnate è valida in C."
+      ]
+    },
+    {
+      "id": "it_clang_2093",
+      "widget_id": null,
+      "topic": "File di intestazione",
+      "q": "Quale file di intestazione della libreria standard C contiene le costanti degli intervalli dei tipi interi (ad esempio INT_MAX, CHAR_MIN)?",
+      "hint": "Ricorda l'header che definisce i limiti (limits) dei tipi interi.",
+      "options": [
+        "<limits.h>",
+        "<stdlib.h>",
+        "<float.h>",
+        "<stdio.h>"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! È proprio in `<limits.h>` che vengono dichiarati i valori limite per i tipi interi (`INT_MAX`, `INT_MIN`, `UINT_MAX`, `CHAR_BIT`, ecc.).",
+        "Sbagliato. `<stdlib.h>` contiene funzioni di uso generale (allocazione di memoria, generazione di numeri casuali, ecc.).",
+        "Sbagliato. `<float.h>` contiene costanti per i tipi a virgola mobile (`float`, `double`).",
+        "Sbagliato. `<stdio.h>` è destinato alle funzioni di input/output."
+      ]
+    },
+    {
+      "id": "it_clang_2094",
+      "widget_id": "widget_clang_2094",
+      "topic": "Tipi non segnati nei cicli",
+      "q": "Cosa succede verificando la condizione i >= 0 in un ciclo for in cui i è di tipo unsigned char?",
+      "hint": "L'espressione `i >= 0` può restituire `false` se la variabile `i` non ha segno?",
+      "options": [
+        "301",
+        "11",
+        "10",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I numeri non segnati sono sempre $\\ge 0$. Quando `i` è uguale a 0, l'operatore `i--` lo trasforma in 255 (overflow), quindi la condizione `i >= 0` è sempre vera. Il ciclo si interrompe su `count > 300` quando `count` diventa pari a 301.",
+        "Sbagliato. La condizione `i >= 0` non diventerà mai falsa per `unsigned char`.",
+        "Sbagliato. La variabile `i` non si ferma allo zero.",
+        "Sbagliato. Il ciclo eseguirà più di 300 iterazioni."
+      ]
+    },
+    {
+      "id": "it_clang_2095",
+      "widget_id": null,
+      "topic": "Intervalli dei tipi con segno",
+      "q": "Qual è l'intervallo di valori per un intero con segno a N bit in rappresentazione in complemento a due (two's complement)?",
+      "hint": "Considera l'asimmetria del complemento a due dovuta alla presenza dello zero.",
+      "options": [
+        "Da $-2^{N-1}$ a $2^{N-1} - 1$",
+        "Da $-2^N$ a $2^N - 1$",
+        "Da $0$ a $2^N - 1$",
+        "Da $-2^{N-1} + 1$ a $2^{N-1}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Su $N$ bit, 1 bit è riservato al segno e i restanti $N-1$ bit al valore. L'intervallo va da $-2^{N-1}$ a $2^{N-1} - 1$ (ad esempio per 8 bit: $-128 \\dots 127$).",
+        "Sbagliato. Questo intervallo supera la larghezza consentita di $N$ bit.",
+        "Sbagliato. Questo è l'intervallo per un tipo intero non segnato (`unsigned`).",
+        "Sbagliato. Il complemento a due è asimmetrico: c'è un numero negativo in più rispetto ai positivi."
+      ]
+    },
+    {
+      "id": "it_clang_2096",
+      "widget_id": "widget_clang_2096",
+      "topic": "Costanti esadecimali",
+      "q": "A quanto equivale il valore decimale della costante esadecimale unsigned 0xFF?",
+      "hint": "Converti il numero esadecimale $FF_{16}$ nel sistema decimale ($15 \\times 16 + 15$).",
+      "options": [
+        "255",
+        "256",
+        "127",
+        "65535"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `0xFF` rappresenta $15 \\times 16^1 + 15 \\times 16^0 = 240 + 15 = 255$. È il valore massimo di un byte a 8 bit.",
+        "Sbagliato. 256 richiede 9 bit ($0\\text{x}100$).",
+        "Sbagliato. 127 corrisponde a `0x7F`.",
+        "Sbagliato. 65535 corrisponde al valore a 16 bit `0xFFFF`."
+      ]
+    },
+    {
+      "id": "it_clang_2097",
+      "widget_id": "widget_clang_2097",
+      "topic": "Promozione dei tipi e segni",
+      "q": "Cosa stampa il programma valutando l'espressione a + b, dove a è un unsigned int con valore 1 e b è un int con valore -2?",
+      "hint": "In quale numero positivo si trasforma `-2` con la conversione implicita a `unsigned int`?",
+      "options": [
+        "YES",
+        "NO",
+        "0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Sommando `int` e `unsigned int`, l'operando `int` (-2) viene convertito in `unsigned int` e diventa un'enorme costante positiva $\\text{UINT\\_MAX} - 1$. La somma con 1 darà $\\text{UINT\\_MAX}$, che è maggiore di 0, quindi verrà eseguito il ramo \"YES\".",
+        "Sbagliato. A causa della conversione implicita a unsigned, il numero negativo diventa positivo.",
+        "Sbagliato. La somma non dà 0.",
+        "Sbagliato. L'operazione tra `int` e `unsigned int` è corretta."
+      ]
+    },
+    {
+      "id": "it_clang_2098",
+      "widget_id": null,
+      "topic": "Intervalli dei tipi non segnati",
+      "q": "Qual è l'intervallo di valori per un numero intero non segnato a N bit (unsigned)?",
+      "hint": "Ricorda il valore minimo e massimo codificato da $N$ bit senza utilizzare un bit di segno.",
+      "options": [
+        "Da $0$ a $2^N - 1$",
+        "Da $-2^{N-1}$ a $2^{N-1} - 1$",
+        "Da $0$ a $2^N$",
+        "Da $1$ a $2^N$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Tutti gli $N$ bit vengono utilizzati per memorizzare il valore. Ci sono $2^N$ combinazioni in totale, da $0$ a $2^N - 1$ (ad esempio per 8 bit: da $0$ a $255$).",
+        "Sbagliato. Questo è l'intervallo di un numero con segno.",
+        "Sbagliato. Con $N$ bit, il numero $2^N$ richiede $N+1$ bit.",
+        "Sbagliato. Gli intervalli non segnati iniziano da $0$."
+      ]
+    },
+    {
+      "id": "it_clang_2099",
+      "widget_id": "widget_clang_2099",
+      "topic": "Conversione di tipo",
+      "q": "Cosa stampa il programma con il cast esplicito da signed char (-1) al tipo unsigned char?",
+      "hint": "In quale valore viene convertito un byte con valore `-1` se interpretato come `unsigned char`?",
+      "options": [
+        "255",
+        "4294967295",
+        "-1",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il cast `(unsigned char)(-1)` converte il byte in 255. Successivamente, durante l'assegnazione a `unsigned int`, il valore rimarrà 255 e `%u` stamperà 255.",
+        "Sbagliato. Il valore 4294967295 si otterrebbe convertendo direttamente -1 in un `unsigned int` a 32 bit senza il passaggio intermedio via `unsigned char`.",
+        "Sbagliato. `%u` stampa un numero non segnato.",
+        "Sbagliato. Il valore viene convertito in 255."
+      ]
+    },
+    {
+      "id": "it_clang_2100",
+      "widget_id": "widget_clang_2100",
+      "topic": "Confronto dei tipi",
+      "q": "Cosa stampa il programma confrontando s == u, dove s è di tipo int con valore 0 e u è unsigned int con valore 0?",
+      "hint": "I valori degli operandi coincidono dopo essere stati convertiti a un tipo comune?",
+      "options": [
+        "1",
+        "0",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `s` viene convertita implicitamente in `unsigned int` con valore 0. Il confronto `0 == 0` è vero (1).",
+        "Sbagliato. I valori di entrambe le variabili sono pari a 0.",
+        "Sbagliato. Il confronto tra un intero con segno e uno non segnato con valore 0 è sintatticamente valido.",
+        "Sbagliato. Il comportamento della funzione e del confronto è definito in modo rigoroso."
+      ]
+    },
+    {
+      "id": "it_clang_2101",
+      "widget_id": "widget_clang_2101",
+      "topic": "Valori limite dei tipi",
+      "q": "Cosa garantisce la macro CHAR_BIT dalla libreria <limits.h>?",
+      "hint": "Quale caratteristica dell'unità di indirizzamento della memoria (byte) viene fissata da questa macro?",
+      "options": [
+        "Numero minimo di bit in un byte (almeno 8)",
+        "Dimensione esatta del tipo int in byte",
+        "Numero massimo di caratteri in una stringa",
+        "Numero di byte nel tipo char"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La macro CHAR_BIT definisce il numero di bit nel tipo char (byte), che secondo lo standard C deve essere di almeno 8.",
+        "Sbagliato. CHAR_BIT si riferisce al tipo char, non a int.",
+        "Sbagliato. Questo valore non limita la lunghezza della stringa.",
+        "Sbagliato. CHAR_BIT specifica il numero di bit, non di byte."
+      ]
+    },
+    {
+      "id": "it_clang_2102",
+      "widget_id": "widget_clang_2102",
+      "topic": "Valori limite dei tipi",
+      "q": "Cosa stampa il programma verificando il valore x > 0 se x è inizializzato con la macro INT_MAX?",
+      "hint": "Il valore massimo consentito di un `int` con segno è un numero positivo?",
+      "options": [
+        "1",
+        "0",
+        "-1",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La costante INT_MAX definisce il massimo valore positivo possibile per il tipo int, che è sempre strettamente maggiore di 0.",
+        "Sbagliato. INT_MAX è un numero positivo, quindi x > 0 è vero (1).",
+        "Sbagliato. Il confronto restituisce 1 o 0, non -1.",
+        "Sbagliato. La macro INT_MAX è dichiarata in <limits.h> e il codice è sintatticamente corretto."
+      ]
+    },
+    {
+      "id": "it_clang_2103",
+      "widget_id": null,
+      "topic": "Valori limite dei tipi",
+      "q": "Quale macro di <limits.h> contiene il valore negativo minimo che può essere contenuto nel tipo signed char?",
+      "hint": "Ricorda il prefisso standard delle macro in `<limits.h>` per il tipo `signed char`.",
+      "options": [
+        "SCHAR_MIN",
+        "CHAR_MIN",
+        "INT_MIN",
+        "UCHAR_MIN",
+        "MIN_CHAR"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! SCHAR_MIN definisce il valore minimo per il tipo esplicito signed char (di norma -128).",
+        "Sbagliato. CHAR_MIN dipende dal fatto che char sia con segno o meno per impostazione predefinita sulla piattaforma specifica.",
+        "Sbagliato. INT_MIN si riferisce al tipo int.",
+        "Sbagliato. I tipi non segnati non hanno la macro UCHAR_MIN, il loro minimo è sempre 0.",
+        "Sbagliato. Non esiste alcuna macro chiamata MIN_CHAR in <limits.h>."
+      ]
+    },
+    {
+      "id": "it_clang_2104",
+      "widget_id": "widget_clang_2104",
+      "topic": "Valori limite dei tipi",
+      "q": "A quanto equivale il limite minimo per i tipi interi non segnati in C?",
+      "hint": "I tipi non segnati possono contenere valori inferiori a zero?",
+      "options": [
+        "Sempre 0 (assenza di valori negativi)",
+        "Dipende dal compilatore e dall'architettura del sistema",
+        "-1",
+        "Corrisponde a INT_MIN"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per tutti i tipi non segnati (unsigned), il valore minimo è rigorosamente fissato dallo standard ed è pari a 0.",
+        "Sbagliato. Il limite minimo dei tipi non segnati non dipende dalla piattaforma ed è sempre 0.",
+        "Sbagliato. I tipi non segnati non possono memorizzare numeri negativi.",
+        "Sbagliato. INT_MIN è il valore minimo del tipo con segno int."
+      ]
+    },
+    {
+      "id": "it_clang_2105",
+      "widget_id": "widget_clang_2105",
+      "topic": "Valori limite dei tipi",
+      "q": "Quale dimensione minima in byte garantisce lo standard C per il tipo long long, rappresentato dalla macro LLONG_MAX?",
+      "hint": "Quanti byte costituiscono i 64 bit garantiti del tipo `long long`?",
+      "options": [
+        "1",
+        "0",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard C99 garantisce che il tipo long long occupi almeno 64 bit (8 byte), quindi sizeof(x) >= 8 restituisce 1.",
+        "Sbagliato. La dimensione di long long non può essere inferiore a 8 byte.",
+        "Sbagliato. La variabile x e sizeof sono definite correttamente.",
+        "Sbagliato. L'espressione viene valutata a tempo di compilazione secondo lo standard."
+      ]
+    },
+    {
+      "id": "it_clang_2106",
+      "widget_id": null,
+      "topic": "Valori limite dei tipi",
+      "q": "Quale macro della libreria <limits.h> si deve usare per determinare il valore massimo del tipo short?",
+      "hint": "Fai attenzione al nome abbreviato `SHRT` nelle macro standard.",
+      "options": [
+        "SHRT_MAX",
+        "SHORT_MAX",
+        "INT_SHORT_MAX",
+        "S_MAX"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La macro SHRT_MAX imposta il valore massimo che può memorizzare il tipo con segno short.",
+        "Sbagliato. Il nome SHORT_MAX non è utilizzato nello standard C.",
+        "Sbagliato. Tale macro non esiste nel file di intestazione <limits.h>.",
+        "Sbagliato. S_MAX non è una macro C standard."
+      ]
+    },
+    {
+      "id": "it_clang_2107",
+      "widget_id": "widget_clang_2107",
+      "topic": "Valori limite dei tipi",
+      "q": "Cosa stampa il programma aggiungendo uno al valore della macro UINT_MAX?",
+      "hint": "Quale valore si ottiene considerando il wrap-around aritmetico in `UINT_MAX + 1`?",
+      "options": [
+        "0",
+        "UINT_MAX",
+        "INT_MAX",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'overflow dei tipi non segnati è definito in modo rigoroso dallo standard come un azzeramento (wrap-around) a 0 modulo $2^N$.",
+        "Sbagliato. Aggiungere 1 causa l'overflow del tipo non segnato e il ritorno a 0.",
+        "Sbagliato. UINT_MAX supera INT_MAX e all'azzeramento dà 0.",
+        "Sbagliato. Il comportamento indefinito si verifica nell'overflow di tipi con segno, non in quelli non segnati."
+      ]
+    },
+    {
+      "id": "it_clang_2108",
+      "widget_id": "widget_clang_2108",
+      "topic": "Valori limite dei tipi",
+      "q": "Cosa stampa il programma confrontando le macro INT_MAX e INT_MIN?",
+      "hint": "Il valore massimo positivo di `int` è maggiore del suo minimo negativo?",
+      "options": [
+        "1",
+        "0",
+        "-1",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! INT_MAX è il massimo valore positivo di int e INT_MIN è il minimo valore negativo. L'espressione INT_MAX > INT_MIN è vera (1).",
+        "Sbagliato. Il massimo positivo è sempre strettamente maggiore del minimo negativo.",
+        "Sbagliato. Il risultato del confronto logico è 1 o 0.",
+        "Sbagliato. Le macro INT_MAX e INT_MIN sono espressioni costanti."
+      ]
+    },
+    {
+      "id": "it_clang_2109",
+      "widget_id": null,
+      "topic": "Valori limite dei tipi",
+      "q": "In cosa differiscono le costanti a virgola mobile (ad esempio i limiti di float o double) dalle costanti in <limits.h>?",
+      "hint": "In quale file di intestazione sono dichiarate le costanti limite per i tipi reali/a virgola mobile?",
+      "options": [
+        "Le costanti per i tipi a virgola mobile si trovano in <float.h> e non in <limits.h>",
+        "In <limits.h> sono memorizzate solo le costanti per il tipo double",
+        "In <limits.h> non ci sono limitazioni per i tipi interi",
+        "In niente, tutte le costanti di tipo si trovano in <limits.h>"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il file di intestazione <limits.h> contiene i limiti per i tipi interi, mentre i limiti dei numeri a virgola mobile (FLT_MAX, DBL_MAX) sono contenuti in <float.h>.",
+        "Sbagliato. <limits.h> non contiene informazioni su double.",
+        "Sbagliato. <limits.h> è destinato specificamente ai tipi interi.",
+        "Sbagliato. I valori limite dei tipi a virgola mobile sono inseriti nell'intestazione <float.h>."
+      ]
+    },
+    {
+      "id": "it_clang_2110",
+      "widget_id": "widget_clang_2110",
+      "topic": "Valori limite dei tipi",
+      "q": "Cosa stampa il programma confrontando ULONG_MAX e UINT_MAX?",
+      "hint": "Ricorda la relazione tra i ranghi e i valori limite dei tipi `unsigned long` e `unsigned int`.",
+      "options": [
+        "1",
+        "0",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, il tipo unsigned long ha un rango non inferiore a unsigned int, pertanto ULONG_MAX >= UINT_MAX è sempre vero (1).",
+        "Sbagliato. ULONG_MAX non può essere inferiore a UINT_MAX.",
+        "Sbagliato. Il confronto di macro da <limits.h> è assolutamente valido.",
+        "Sbagliato. Il comportamento della funzione e del confronto è definito in modo rigoroso dallo standard."
+      ]
+    }
+  ]
+}

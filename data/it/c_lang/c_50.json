@@ -1,0 +1,589 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_1541",
+      "widget_id": null,
+      "topic": "Passaggio dei parametri per riferimento (By Reference) e funzione swap",
+      "q": "Come viene emulato in C il passaggio dei parametri per riferimento (Pass by Reference), dato che il linguaggio supporta rigorosamente solo il passaggio per valore?",
+      "hint": "Pensa a quale valore debba essere passato alla funzione per accedere alla memoria originale.",
+      "options": [
+        "Passando l'indirizzo della variabile (puntatore) per valore",
+        "Utilizzando la parola chiave reference",
+        "Dichiarando gli argomenti tramite la sintassi del riferimento int &x",
+        "Utilizzando automaticamente la memoria globale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C il passaggio \"per riferimento\" è un'emulazione concettuale: viene passato l'indirizzo stesso (puntatore) per valore. La funzione riceve una copia dell'indirizzo e lo dereferenzia per accedere all'originale.",
+        "Errato. La parola chiave `reference` non esiste in C.",
+        "Errato. La sintassi `int &x` è supportata solo in C++; in C causerà un errore di compilazione.",
+        "Errato. La memoria globale non ha alcuna relazione con il meccanismo di passaggio degli argomenti."
+      ]
+    },
+    {
+      "id": "it_clang_1542",
+      "widget_id": "widget_clang_1542",
+      "topic": "Passaggio dei parametri per riferimento (By Reference) e funzione swap",
+      "q": "A cosa saranno uguali le variabili x e y dopo l'esecuzione del codice fornito con la chiamata a swap(&x, &y)?",
+      "hint": "Fai attenzione all'uso dell'operatore di dereferenziazione * durante lo scambio dei valori.",
+      "options": [
+        "x = 20, y = 10 (i valori si sono scambiati con successo)",
+        "x = 10, y = 20 (i valori non sono cambiati)",
+        "x = 0, y = 0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile temporanea `temp` salva il valore `*a` (10). Successivamente il valore `*b` (20) viene scritto in `*a` e `temp` viene salvato in `*b`. Di conseguenza le variabili `x` e `y` si scambiano i valori.",
+        "Errato. Il codice dereferenzia correttamente i puntatori e aggiorna le variabili originali.",
+        "Errato. Le variabili vengono sovrascritte con i valori salvati, non con zeri.",
+        "Errato. La funzione è scritta in modo canonico e compilerà senza errori."
+      ]
+    },
+    {
+      "id": "it_clang_1543",
+      "widget_id": "widget_clang_1543",
+      "topic": "Passaggio dei parametri per riferimento (By Reference) e funzione swap",
+      "q": "A cosa saranno uguali le variabili x e y in main dopo la chiamata alla funzione errata swap_bug(&x, &y)?",
+      "hint": "Guarda attentamente: i puntatori a e b vengono dereferenziati all'interno di swap_bug?",
+      "options": [
+        "x = 10, y = 20 (i valori non cambieranno)",
+        "x = 20, y = 10 (i valori si scambieranno di posto)",
+        "x e y riceveranno indirizzi casuali dalla memoria",
+        "Si verificherà un arresto anomalo del programma (Segmentation Fault)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `swap_bug` scambia le copie locali dei puntatori `a` e `b` stessi, e non i valori a cui essi puntano. Le variabili `x` e `y` rimangono invariate.",
+        "Errato. Per modificare i valori è necessario utilizzare l'operatore di dereferenziazione `*a` e `*b`.",
+        "Errato. I valori delle variabili `x` e `y` non sono stati affatto toccati.",
+        "Errato. La funzione lavora solo con i puntatori locali sullo stack e non accede a memoria non valida."
+      ]
+    },
+    {
+      "id": "it_clang_1544",
+      "widget_id": "widget_clang_1544",
+      "topic": "Passaggio dei parametri per riferimento (By Reference) e funzione swap",
+      "q": "Qual è lo scopo dei parametri di tipo void* e del parametro size nella funzione generica swap_generic fornita?",
+      "hint": "Il puntatore void* non contiene informazioni sul tipo o sulla dimensione dell'elemento.",
+      "options": [
+        "Per scambiare dati di qualsiasi tipo, copiandoli byte per byte tramite memcpy",
+        "Per azzerare i puntatori dopo l'uso",
+        "È una sintassi specifica per lavorare con le stringhe string",
+        "La dimensione size è necessaria per prevenire perdite di memoria nell'heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il tipo `void*` consente di passare l'indirizzo di un elemento di qualsiasi tipo, mentre il parametro `size` indica quanti byte devono essere copiati tramite `memcpy` per eseguire uno scambio completo dei valori.",
+        "Errato. La funzione non azzera i puntatori, ma scambia il contenuto delle aree di memoria.",
+        "Errato. `swap_generic` funziona con qualsiasi tipo di dato (strutture, numeri, array).",
+        "Errato. La memoria viene allocata sullo stack (`temp`), l'heap non è coinvolto."
+      ]
+    },
+    {
+      "id": "it_clang_1545",
+      "widget_id": "widget_clang_1545",
+      "topic": "Passaggio dei parametri per riferimento (By Reference) e функция swap",
+      "q": "A cosa sarà uguale la variabile x dopo la chiamata alla funzione XOR-swap con argomenti identici swap_xor(&x, &x)?",
+      "hint": "Pensa a cosa equivale il risultato dell'espressione (val ^ val).",
+      "options": [
+        "x diventerà uguale a 0",
+        "x rimarrà uguale a 15",
+        "x diventerà uguale a -15",
+        "Il codice compilerà ed eseguirà correttamente senza modifiche"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un noto trabocchetto di XOR-swap: se `a` e `b` puntano alla stessa cella di memoria, la prima operazione `*a ^= *b` è equivalente a `x = x ^ x`, che azzera `x`. Le operazioni successive lavoreranno già con 0.",
+        "Errato. A causa della coincidenza degli indirizzi, il numero viene azzerato.",
+        "Errato. L'operazione XOR con se stesso dà sempre 0, non un numero negativo.",
+        "Errato. Il valore di `x` verrà corretto e diventerà pari a 0."
+      ]
+    },
+    {
+      "id": "it_clang_1546",
+      "widget_id": "widget_clang_1546",
+      "topic": "Passaggio dei parametri per riferimento (By Reference) e funzione swap",
+      "q": "A cosa sarà uguale ptr in main dopo l'esecuzione di questo codice con il passaggio di &ptr?",
+      "hint": "L'uso di un doppio puntatore int **pp consente alla funzione di modificare l'indirizzo stesso memorizzato in ptr.",
+      "options": [
+        "ptr punta alla variabile data (con valore 100)",
+        "ptr rimane uguale a NULL",
+        "0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per modificare il valore del puntatore `ptr` stesso nella funzione chiamante, si passa il suo indirizzo (`&ptr`), che ha tipo `int**`. La dereferenziazione `*pp = &data` sovrascrive il `ptr` originale.",
+        "Errato. Tramite il doppio puntatore modifichiamo `ptr` stesso, quindi non è più `NULL`.",
+        "Errato. `ptr` ora contiene un indirizzo valido della variabile statica `data`.",
+        "Errato. L'uso di `int**` per modificare un puntatore è del tutto lecito."
+      ]
+    },
+    {
+      "id": "it_clang_1547",
+      "widget_id": null,
+      "topic": "Passaggio dei parametri per riferimento (By Reference) e функция swap",
+      "q": "Per quale scopo viene specificato const in un parametro di funzione, ad esempio void process(const int *p)?",
+      "hint": "La parola chiave const definisce il contratto di accesso ai dati tramite puntatore.",
+      "options": [
+        "Per garantire che la funzione non modifichi il valore della variabile all'indirizzo p",
+        "Per vietare il passaggio di numeri negativi alla funzione",
+        "Per rendere il puntatore p stesso non reindirizzabile (indirizzo costante)",
+        "Per ottimizzazione, in modo che la variabile sia collocata in un registro CPU"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La struttura `const int *p` (puntatore a costante) protegge i dati all'indirizzo `p` da modifiche accidentali all'interno della funzione: un tentativo di eseguire `*p = ...` causerà un errore di compilazione.",
+        "Errato. I valori numerici possono essere qualsiasi (inclusi i negativi).",
+        "Errato. Il puntatore `p` stesso può essere modificato (ad esempio `p++`), non è possibile modificare solo `*p`.",
+        "Errato. Per suggerire l'uso dei registri si utilizzava storicamente lo specificatore `register`."
+      ]
+    },
+    {
+      "id": "it_clang_1548",
+      "widget_id": "widget_clang_1548",
+      "topic": "Passaggio dei parametri per riferimento (By Reference) e функция swap",
+      "q": "Perché nelle funzioni che accettano puntatori di output (parametri out) viene eseguito un controllo come if (out_min != NULL)?",
+      "hint": "Pensa a cosa succede se il codice chiamante passa NULL invece di un indirizzo valido.",
+      "options": [
+        "Per prevenire l'arresto anomalo del programma (Segmentation Fault) quando viene passato un puntatore nullo NULL",
+        "Per velocizzare l'esecuzione dell'algoritmo di raccolta delle statistiche",
+        "È un requisito dello standard ANSI C per tutte le funzioni",
+        "Per azzerare l'array in caso di errore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se il codice chiamante passa `NULL` come `out_min` (ad esempio, non ha bisogno di questo risultato), un tentativo di scrittura `*out_min = ...` senza controllo causerà un crash. Il controllo rende il parametro opzionale.",
+        "Errato. Questo non influisce praticamente sulla velocità di esecuzione della dereferenziazione.",
+        "Errato. È una buona norma di programmazione difensiva, non un requisito sintattico del linguaggio.",
+        "Errato. L'array non viene azzerato in presenza di un puntatore nullo."
+      ]
+    },
+    {
+      "id": "it_clang_1549",
+      "widget_id": null,
+      "topic": "Passaggio dei parametri per riferimento (By Reference) e функция swap",
+      "q": "Come viene chiamata in C la concezione in cui una функция accetta puntatori a variabili esclusivamente per scrivervi i risultati dell'elaborazione (ad esempio void get_dimensions(int *width, int *height))?",
+      "hint": "I parametri non servono per inserire dati nella функция, ma per il loro \"output\".",
+      "options": [
+        "Parametri di output (Out-parameters / Output parameters)",
+        "Parametri globali (Global parameters)",
+        "Parametri di callback (Callback parameters)",
+        "Parametri puri (Pure parameters)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché una funzione in C può restituire un solo valore tramite `return`, i puntatori vengono utilizzati come \"parametri di output\" (out-parameters) per restituire più risultati.",
+        "Errato. Esistono le variabili globali, non i parametri globali delle funzioni.",
+        "Errato. Callback indica il passaggio di un puntatore a funzione.",
+        "Errato. Funzione pura (Pure function) è un termine della programmazione funzionale."
+      ]
+    },
+    {
+      "id": "it_clang_1550",
+      "widget_id": null,
+      "topic": "Passaggio dei parametri per riferimento (By Reference) e функция swap",
+      "q": "Qual è il principale vantaggio del passaggio di un puntatore a struttura (const StructType *ptr) rispetto al passaggio di una struttura per valore (StructType s)?",
+      "hint": "Confronta la dimensione dei dati copiati durante il passaggio dell'indirizzo rispetto all'intera struttura.",
+      "options": [
+        "Viene copiato solo un indirizzo fisso (4 o 8 byte), evitando il costoso inserimento in copia dell'intera struttura",
+        "È del tutto vietato passare le strutture per valore",
+        "Il puntatore aumenta automaticamente la dimensione della memoria allocata",
+        "Durante il passaggio per valore tutti i campi di testo della struttura vengono azzerati"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il passaggio per puntatore copia solo l'indirizzo (solitamente 8 byte su un sistema a 64 bit), indipendentemente dalla grandezza della struttura. Questo risparmia memoria sullo stack e tempo CPU.",
+        "Errato. In C è consentito passare le strutture per valore.",
+        "Errato. I puntatori non aumentano la memoria per l'oggetto.",
+        "Errato. Con il passaggio per valore le strutture vengono copiate completamente e senza perdite."
+      ]
+    },
+    {
+      "id": "it_clang_1551",
+      "widget_id": "widget_clang_1551",
+      "topic": "Dimensione e dichiarazione dei puntatori",
+      "q": "Quale dimensione (in byte) restituirà l'operatore sizeof(p1) per un puntatore al tipo int su un sistema di destinazione a 64 bit?",
+      "hint": "La dimensione di un puntatore dipende dall'architettura del sistema e dall'indirizzamento di memoria, non dal tipo di dato a cui punta.",
+      "options": [
+        "8 byte",
+        "4 byte",
+        "2 byte",
+        "Dipende se p1 è inizializzato o meno"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Sui sistemi a 64 bit i puntatori occupano 8 byte (64 bit), poiché gli indirizzi di memoria sono espressi a 64 bit. Sui sistemi a 32 bit la dimensione è di 4 byte.",
+        "Errato. 4 byte è la dimensione di un puntatore su un sistema a 32 bit o di un normale tipo int.",
+        "Errato. 2 byte venivano usati dalle vecchie architetture a 16 bit.",
+        "Errato. L'operatore sizeof determina la dimensione del tipo in fase di compilazione, indipendentemente dai valori."
+      ]
+    },
+    {
+      "id": "it_clang_1552",
+      "widget_id": null,
+      "topic": "Dimensione e dichiarazione dei puntatori",
+      "q": "Cosa contiene il puntatore int *p; subito dopo la sua dichiarazione all'interno di una funzione senza inizializzazione esplicita?",
+      "hint": "Le variabili locali in C non vengono azzerate automaticamente.",
+      "options": [
+        "NULL (o 0)",
+        "Un valore \"spazzatura\" (Garbage) arbitrario — un indirizzo casuale di memoria",
+        "L'indirizzo dell'inizio dello stack"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Le variabili locali automatiche non vengono inizializzate a zero per impostazione predefinita.",
+        "Corretto! Subito dopo la dichiarazione, un puntatore locale non inizializzato contiene \"spazzatura\" (Garbage) — bit casuali attualmente presenti nella memoria dello stack.",
+        "Errato. Il puntatore non viene inizializzato automaticamente con l'indirizzo dello stack."
+      ]
+    },
+    {
+      "id": "it_clang_1553",
+      "widget_id": null,
+      "topic": "Inizializzazione dei puntatori e puntatore nullo (NULL)",
+      "q": "A quale conseguenza porterà un tentativo di dereferenziare un puntatore contenente il valore NULL (ad esempio int *p = NULL; *p = 10;)?",
+      "hint": "NULL indica l'indirizzo protetto/non valido 0x0.",
+      "options": [
+        "Errore a tempo di esecuzione: arresto anomalo del programma (Segmentation Fault / Access Violation)",
+        "La variabile p allocherà automaticamente memoria sullo stack",
+        "Il valore 10 verrà scritto nella sezione dati globale",
+        "Errore di compilazione: il compilatore vieta di assegnare NULL"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La dereferenziazione di un puntatore nullo (NULL) è un accesso a un indirizzo di memoria non valido (0x0), il che causa un errore di protezione della memoria ed effettua l'arresto anomalo del programma (Segmentation Fault).",
+        "Errato. La memoria non viene allocata automaticamente durante la dereferenziazione.",
+        "Errato. L'indirizzo 0x0 non è accessibile in scrittura.",
+        "Errato. Dal punto di vista sintattico il codice è corretto, l'errore si verifica durante l'esecuzione (Runtime)."
+      ]
+    },
+    {
+      "id": "it_clang_1554",
+      "widget_id": "widget_clang_1554",
+      "topic": "Aritmetica dei puntatori e array monodimensionali",
+      "q": "A cosa saranno uguali le variabili a e b dopo l'esecuzione del codice fornito?",
+      "hint": "Fai attenzione alle parentesi: *p1 + 3 legge prima il valore di *p1, mentre *(p1 + 3) sposta prima il puntatore.",
+      "options": [
+        "a = 13, b = 40",
+        "a = 13, b = 13",
+        "a = 40, b = 40",
+        "a = 10, b = 30"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! *p1 legge data[0] (10), quindi a = 10 + 3 = 13. L'espressione *(p1 + 3) sposta il puntatore in avanti di 3 elementi (su data[3]) e lo dereferenzia, ottenendo 40.",
+        "Errato. Le parentesi in *(p1 + 3) cambiano l'ordine: viene spostato l'indirizzo e non sommato un numero al valore.",
+        "Errato. La prima espressione non sposta il puntatore.",
+        "Errato. Gli operatori e i relativi offset qui sono gestiti diversamente."
+      ]
+    },
+    {
+      "id": "it_clang_1555",
+      "widget_id": null,
+      "topic": "Aritmetica dei puntatori e array monodimensionali",
+      "q": "Se il puntatore p1 di tipo int* memorizza l'indirizzo 0x1000, di quanti byte si sposterà l'indirizzo in p1 dopo l'esecuzione di p1 = p1 + 2 (assumendo che sizeof(int) == 4)?",
+      "hint": "L'aritmetica dei puntatori opera in unità del tipo corrispondente.",
+      "options": [
+        "Di 8 byte (nuovo indirizzo 0x1008)",
+        "Di 2 byte (nuovo indirizzo 0x1002)",
+        "Di 4 byte (nuovo indirizzo 0x1004)",
+        "Di 16 byte (nuovo indirizzo 0x1010)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'aggiunta di un numero N a un puntatore lo sposta di N * sizeof(T) byte. Poiché T = int (4 byte), lo spostamento di 2 elementi è di 2 * 4 = 8 byte.",
+        "Errato. L'incremento non viene eseguito in byte, ma in elementi del tipo specificato.",
+        "Errato. L'operazione p1 + 1 sposta l'indirizzo di 4 byte.",
+        "Errato. I calcoli non raddoppiano la dimensione del tipo."
+      ]
+    },
+    {
+      "id": "it_clang_1556",
+      "widget_id": null,
+      "topic": "Array come parametri di funzioni",
+      "q": "In cosa converte implicitamente il compilatore C il parametro di funzione int data[] quando un array viene passato a una funzione?",
+      "hint": "Nei parametri delle funzioni gli array decadono (decay) sempre.",
+      "options": [
+        "In un puntatore al primo elemento: int *data",
+        "In un array costante di dimensione fissa",
+        "In una struttura con un campo per la lunghezza dell'array"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nelle intestazioni delle funzioni la sintassi int data[] e int *data è assolutamente equivalente. L'array decade a puntatore al suo primo elemento (&data[0]).",
+        "Errato. La dimensione dell'array si perde quando viene passato a una funzione.",
+        "Errato. Il C non passa automaticamente la dimensione o i metadati dell'array."
+      ]
+    },
+    {
+      "id": "it_clang_1557",
+      "widget_id": null,
+      "topic": "Puntatori e array bidimensionali (matrici)",
+      "q": "Dato un array bidimensionale int data[2][3]. Qual è rispettivamente il tipo dell'espressione data e dell'espressione data[0]?",
+      "hint": "data punta all'intera prima riga (array di 3 int), mentre data[0] punta al primo elemento della prima riga (int).",
+      "options": [
+        "data ha tipo int(*)[3] (puntatore a un array di 3 int), mentre data[0] ha tipo int* (puntatore a int)",
+        "Entrambe le espressioni hanno tipo int*",
+        "data ha tipo int**, mentre data[0] ha tipo int*",
+        "Entrambe le espressioni hanno tipo int**"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un array bidimensionale è un array di array. Il nome data punta all'intera riga e ha tipo int(*)[3]. L'espressione data[0] dereferenzia la prima riga e fornisce un puntatore al suo primo elemento di tipo int*.",
+        "Errato. Aggiungendo 1 a data l'indirizzo si sposta di un'intera riga (12 byte), mentre per data[0] di un solo int (4 byte), quindi i tipi differiscono.",
+        "Errato. Un array bidimensionale in memoria contigua non è un array di puntatori (int**).",
+        "Errato. Il tipo int** non corrisponde a un array bidimensionale contiguo."
+      ]
+    },
+    {
+      "id": "it_clang_1558",
+      "widget_id": "widget_clang_1558",
+      "topic": "Puntatori e array bidimensionali (matrici)",
+      "q": "A cosa sarà uguale la variabile val dopo l'esecuzione della dereferenziazione *(*(data + 1) + 2)?",
+      "hint": "L'espressione *(*(data + r) + c) è equivalente alla sintassi data[r][c].",
+      "options": [
+        "6 (elemento data[1][2])",
+        "5 (elemento data[1][1])",
+        "3 (elemento data[0][2])",
+        "4 (elemento data[1][0])"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! data + 1 si sposta sulla riga 1. *(data + 1) fornisce un puntatore all'inizio della riga 1. L'aggiunta di + 2 fornisce l'indirizzo dell'elemento alla colonna 2. La dereferenziazione esterna dà il valore di data[1][2], cioè 6.",
+        "Errato. La colonna con indice 2 corrisponde al terzo elemento della riga (6), non al secondo (5).",
+        "Errato. È stato considerato lo spostamento per riga: data + 1 punta alla seconda riga.",
+        "Errato. Questo è il valore dell'elemento data[1][0]."
+      ]
+    },
+    {
+      "id": "it_clang_1559",
+      "widget_id": null,
+      "topic": "Passaggio di matrici alle funzioni",
+      "q": "Perché quando si passa un array bidimensionale a una funzione nella forma void func(int data[][COL], int rows) è OBBLIGATORIO specificare il numero di colonne COL?",
+      "hint": "Pensa a come il compilatore calcola l'indirizzo della riga successiva durante l'esecuzione di data + 1.",
+      "options": [
+        "Il compilatore deve conoscere la dimensione della riga in byte (offset) per calcolare correttamente il passaggio alla riga successiva (data + 1)",
+        "Senza COL il compilatore non sarà in grado di allocare memoria sullo stack",
+        "Questa limitazione si applica solo ai sistemi a 64 bit"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La matrice è memorizzata in modo sequenziale (Row-major order). Per calcolare l'indirizzo di inizio della riga i-esima, il compilatore deve conoscere il numero esatto di elementi nella riga (COL), altrimenti non può calcolare lo scostamento.",
+        "Errato. La memoria per l'array viene allocata nella funzione chiamante, non all'interno del file di intestazione.",
+        "Errato. Questa è una regola base del linguaggio C per tutte le architetture."
+      ]
+    },
+    {
+      "id": "it_clang_1560",
+      "widget_id": "widget_clang_1560",
+      "topic": "Passaggio di matrici alle funzioni",
+      "q": "A cosa sarà uguale il valore della variabile val durante l'accesso alla matrice tramite un puntatore lineare m usando la formula *(m + i * C + j)?",
+      "hint": "La formula converte le coordinate bidimensionali (i=1, j=2) con dimensione di colonna C=3 in un indice piatto.",
+      "options": [
+        "6 (valore di data[1][2])",
+        "5 (valore di data[1][1])",
+        "3 (valore di data[0][2])",
+        "Errore di calcolo dell'indirizzo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'indice piatto viene calcolato come 1 * 3 + 2 = 5. L'elemento con indice 5 nell'array contiguo {1, 2, 3, 4, 5, 6} è l'ultima cella con valore 6 (data[1][2]).",
+        "Errato. L'indice 5 indica il sesto elemento dell'array.",
+        "Errato. Questo è l'elemento della prima riga data[0][2].",
+        "Errato. Questa formula riflette con precisione matematica la disposizione della matrice in memoria."
+      ]
+    },
+    {
+      "id": "it_clang_1561",
+      "widget_id": "widget_clang_1561",
+      "topic": "Dimensione e dichiarazione dei puntatori: architettura e valori spazzatura",
+      "q": "Su un sistema di destinazione a 64 bit vengono eseguite le espressioni sizeof(p1), sizeof(p2) e sizeof(p3). Quale sarà la relazione tra le loro dimensioni?",
+      "hint": "Pensa se la dimensione dell'indirizzo di memoria dipenda dal tipo di dato a cui tale indirizzo punta.",
+      "options": [
+        "Tutti e tre i puntatori hanno la stessa dimensione — 8 byte",
+        "p1 è pari a 1 byte, p2 è pari a 4 byte, p3 è pari a 8 byte",
+        "Le dimensioni vengono determinate dinamicamente durante l'esecuzione del programma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La dimensione di qualsiasi puntatore è determinata esclusivamente dall'architettura del sistema di destinazione (bus degli indirizzi). Su un sistema a 64 bit qualsiasi puntatore memorizza un indirizzo a 64 bit e occupa 8 byte, indipendentemente dal tipo di dato sottostante.",
+        "Errato. Hai descritto le dimensioni dei dati stessi (char, int, double), e non dei puntatori ad essi.",
+        "Errato. La dimensione dei puntatori è fissa e viene determinata in fase di compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_1562",
+      "widget_id": null,
+      "topic": "Dimensione e dichiarazione dei puntatori: architettura e valori spazzatura",
+      "q": "È corretta l'affermazione: \"I puntatori globali vengono automaticamente inizializzati a NULL per impostazione predefinita, mentre i puntatori automatici locali contengono spazzatura (Garbage) casuale\"?",
+      "hint": "Ricorda la differenza tra il segmento di memoria statico (.bss / .data) e lo stack di chiamata.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili con tempo di vita statico (globali e static) vengono azzerate con garanzia dallo standard C all'avvio del programma (i puntatori ricevono NULL). Le variabili locali sullo stack conservano i bit di memoria precedenti (\"spazzatura\").",
+        "Errato. Questa è una differenza fondamentale tra il comportamento della memoria statica e della memoria automatica dello stack."
+      ]
+    },
+    {
+      "id": "it_clang_1563",
+      "widget_id": "widget_clang_1563",
+      "topic": "Dimensione e dichiarazione dei puntatori: architettura e valori spazzatura",
+      "q": "Cosa stamperà questo codice su un sistema a 64 bit dove sizeof(double) == 8?",
+      "hint": "Confronta la dimensione del puntatore stesso sizeof(p) e la dimensione del tipo di oggetto a cui punta sizeof(*p).",
+      "options": [
+        "8 8",
+        "8 4",
+        "4 8",
+        "0 8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! sizeof(p) restituisce la dimensione del puntatore p su un sistema a 64 bit (8 byte). L'espressione sizeof(*p) restituisce la dimensione del tipo a cui punta p (tipo double, pari a 8 byte). Importante: l'operatore sizeof non dereferenzia NULL in Runtime, calcola il tipo dell'espressione in compile-time.",
+        "Errato. Il puntatore su un'architettura a 64 bit occupa 8 byte, non 4.",
+        "Errato. Il primo valore è la dimensione del puntatore (8 byte).",
+        "Errato. L'operatore sizeof non esegue accessi alla memoria all'indirizzo 0, quindi non si verifica un errore né viene restituito zero."
+      ]
+    },
+    {
+      "id": "it_clang_1564",
+      "widget_id": null,
+      "topic": "Dimensione e dichiarazione dei puntatori: architettura e valori spazzatura",
+      "q": "Cosa viene chiamato \"puntatore selvaggio\" (Wild Pointer) nella programmazione in C?",
+      "hint": "Questo termine si riferisce allo stato di un puntatore subito dopo la dichiarazione.",
+      "options": [
+        "Un puntatore locale che è stato dichiarato ma non inizializzato e contiene un indirizzo spazzatura",
+        "Un puntatore che punta a un blocco di memoria precedentemente liberato nell'heap (free)",
+        "Un puntatore convertito al tipo void*",
+        "Un puntatore il cui valore è impostato esplicitamente su NULL",
+        "Un puntatore a una funzione che non accetta parametri"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un Wild Pointer (puntatore selvaggio) è un puntatore locale non inizializzato. Punta a un indirizzo di memoria casuale (\"selvaggio\").",
+        "Errato. Un puntatore a memoria liberata viene chiamato \"puntatore pendente\" (Dangling Pointer).",
+        "Errato. Il puntatore `void*` è un puntatore generico non tipizzato, del tutto lecito.",
+        "Errato. Un puntatore con `NULL` è detto puntatore nullo (Null Pointer).",
+        "Errato. Questo è un normale puntatore a funzione."
+      ]
+    },
+    {
+      "id": "it_clang_1565",
+      "widget_id": null,
+      "topic": "Dimensione e dichiarazione dei puntatori: architettura e valori spazzatura",
+      "q": "Se tutti i puntatori in un sistema a 64 bit hanno la stessa dimensione (8 byte), perché nella loro dichiarazione viene specificato un tipo concreto (ad esempio int* o char*)?",
+      "hint": "Pensa a come il compilatore possa sapere quanti byte leggere durante la dereferenziazione e di quanti byte spostarsi con l'aritmetica p++.",
+      "options": [
+        "Il tipo determina il passo nell'aritmetica dei puntatori e il numero di byte letti/scritti durante la dereferenziazione (*p)",
+        "Il tipo serve esclusivamente alla leggibilità del codice per l'uomo e viene ignorato dal compilatore",
+        "I diversi tipi di puntatori sono memorizzati fisicamente in registri diversi del processore",
+        "Il tipo viene specificato solo per allocare memoria nell'heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il tipo di puntatore comunica al compilatore due cose: quanti byte estrarre/modificare in memoria con le operazioni `*p` e di quale valore `sizeof(T)` spostare l'indirizzo durante le operazioni aritmetiche (ad esempio `p + 1`).",
+        "Errato. Il compilatore utilizza attivamente il tipo per generare le istruzioni macchina di accesso alla memoria.",
+        "Errato. Fisicamente nei registri ad uso generale tutti gli indirizzi sono normali numeri a 64 bit.",
+        "Errato. La dichiarazione di un puntatore non alloca di per sé memoria nell'heap."
+      ]
+    },
+    {
+      "id": "it_clang_1566",
+      "widget_id": "widget_clang_1566",
+      "topic": "Dimensione e dichiarazione dei puntatori: architettura e valori spazzatura",
+      "q": "A quale comportamento porterà l'esecuzione del codice int *p; *p = 50; all'interno della funzione main?",
+      "hint": "La variabile p non è inizializzata e contiene un indirizzo casuale.",
+      "options": [
+        "Comportamento indefinito (Undefined Behavior): molto probabilmente crash del programma (Segmentation Fault) o corruzione di altri dati",
+        "Sullo stack verrà allocata automaticamente memoria per 1 numero int e vi verrà scritto 50",
+        "Alla variabile p verrà assegnato l'indirizzo 50"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La dereferenziazione di un puntatore non inizializzato (\"selvaggio\") causerà un tentativo di scrittura del numero 50 a un indirizzo casuale di memoria, provocando un Comportamento Indefinito (UB) o l'arresto anomalo del programma da parte del SO.",
+        "Errato. Il compilatore non alloca automaticamente memoria per i dati durante la dereferenziazione del puntatore.",
+        "Errato. La scrittura `*p = 50` tenta di modificare il valore IN MEMORIA all'indirizzo `p`, non l'indirizzo `p` stesso."
+      ]
+    },
+    {
+      "id": "it_clang_1567",
+      "widget_id": null,
+      "topic": "Dimensione e dichiarazione dei puntatori: architettura e valori spazzatura",
+      "q": "Quale specificatore di formato della funzione printf è lo standard per la stampa dell'indirizzo di memoria memorizzato in un puntatore?",
+      "hint": "Lo specificatore di solito stampa l'indirizzo in formato esadecimale con il prefisso 0x.",
+      "options": [
+        "%p",
+        "%d",
+        "%x",
+        "%zu"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `%p` è progettato appositamente in C per la stampa formattata dei puntatori (solitamente in formato esadecimale). L'argomento deve essere convertito in `(void*)`.",
+        "Errato. `%d` è destinato a numeri interi con segno di tipo `int`.",
+        "Errato. `%x` stampa normali interi in formato hex, ma per i puntatori lo standard definisce `%p`.",
+        "Errato. `%zu` si usa per la stampa di valori di tipo `size_t` (ad esempio il risultato di `sizeof`)."
+      ]
+    },
+    {
+      "id": "it_clang_1568",
+      "widget_id": "widget_clang_1568",
+      "topic": "Dimensione e dichiarazione dei puntatori: architettura e valori spazzatura",
+      "q": "A cosa sarà uguale il puntatore p all'avvio del programma se è dichiarato all'interno di una funzione come static int *p;?",
+      "hint": "La parola chiave static modifica la durata e la locazione di memorizzazione della variabile.",
+      "options": [
+        "NULL (viene automaticamente inizializzato a zero)",
+        "A un indirizzo casuale spazzatura (Garbage)",
+        "All'indirizzo della funzione stessa"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili locali statiche (`static`) si trovano nella sezione BSS/Data e sono inizializzate a zero con garanzia (per i puntatori, `NULL`) prima dell'inizio dell'esecuzione del programma.",
+        "Errato. Solo le variabili `auto` (normali variabili locali) ricevono un valore spazzatura.",
+        "Errato. Un puntatore statico non è associato all'indirizzo della funzione."
+      ]
+    },
+    {
+      "id": "it_clang_1569",
+      "widget_id": "widget_clang_1569",
+      "topic": "Dimensione e dichiarazione dei puntatori: architettura e valori spazzatura",
+      "q": "Su un sistema a 64 bit (dove sizeof(int) == 4), a cosa saranno uguali le variabili s_arr e s_ptr?",
+      "hint": "L'operatore sizeof(arr) restituisce la dimensione totale dell'intero array, mentre sizeof(p) restituisce solo la dimensione del puntatore.",
+      "options": [
+        "s_arr = 20, s_ptr = 8",
+        "s_arr = 8, s_ptr = 8",
+        "s_arr = 20, s_ptr = 20",
+        "s_arr = 5, s_ptr = 8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `arr` è il nome di un array di 5 elementi `int` (5 * 4 = 20 byte). `p` è una variabile puntatore separata che memorizza un indirizzo. Su un sistema a 64 bit la sua dimensione è sempre pari a 8 byte.",
+        "Errato. Il nome dell'array `arr` conserva la dimensione dell'intero array (20 byte), non la dimensione del puntatore.",
+        "Errato. Il puntatore `p` non copia la dimensione dell'array, la sua dimensione è rigorosamente 8 byte.",
+        "Errato. `sizeof` restituisce la dimensione in byte, non il numero di elementi."
+      ]
+    },
+    {
+      "id": "it_clang_1570",
+      "widget_id": null,
+      "topic": "Dimensione e dichiarazione dei puntatori: architettura e valori spazzatura",
+      "q": "Quale pratica è considerata la più sicura quando si dichiara un puntatore se un indirizzo preciso non è ancora disponibile?",
+      "hint": "Questo consente di verificare facilmente la validità del puntatore prima di utilizzarlo tramite un controllo if (p != NULL).",
+      "options": [
+        "Inizializzare il puntatore con il valore NULL (int *p = NULL;)",
+        "Lasciare il puntatore non inizializzato (int *p;)",
+        "Assegnare al puntatore un indirizzo numerico arbitrario (int *p = (int*)0x1234;)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'inizializzazione esplicita a `NULL` previene la comparsa di puntatori \"selvaggi\". Successivamente il codice può verificare in modo sicuro `if (p != NULL)` prima della dereferenziazione.",
+        "Errato. Un puntatore non inizializzato contiene spazzatura e non può essere controllato in modo sicuro per la validità.",
+        "Errato. L'assegnazione di un indirizzo arbitrario hardcodato porterà quasi certamente a un errore di accesso."
+      ]
+    }
+  ]
+}

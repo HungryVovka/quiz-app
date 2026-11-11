@@ -1,0 +1,605 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2021",
+      "widget_id": "widget_clang_2021",
+      "topic": "Valore del delimitatore",
+      "q": "Perché il valore -1 è un'ottima scelta come delimitatore per array che memorizzano punteggi di test o quantità di oggetti?",
+      "hint": "Rifletti sull'intervallo di valori ammissibili per punteggi e quantità.",
+      "options": [
+        "I punteggi dei test e le quantità sono sempre non negativi (>= 0), quindi -1 non si troverà mai tra i dati reali",
+        "Il valore -1 occupa meno spazio nella memoria RAM rispetto ai numeri positivi",
+        "Il processore elabora il valore -1 più velocemente rispetto allo 0",
+        "Nel linguaggio C è riservata una regola per usare solo -1 come terminatore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il principio fondamentale nella scelta del delimitatore è utilizzare un valore al di fuori dell'intervallo ammissibile dei dati utili. I punteggi non possono essere negativi, quindi -1 è perfetto.",
+        "Errato. La dimensione di `int` è la stessa per tutti i numeri interi.",
+        "Errato. La velocità di confronto di qualsiasi `int` nel processore è identica.",
+        "Errato. Il linguaggio C non obbliga a usare proprio -1 per gli array numerici."
+      ]
+    },
+    {
+      "id": "it_clang_2022",
+      "widget_id": "widget_clang_2022",
+      "topic": "Valore del delimitatore",
+      "q": "Cosa stamperà il programma durante il conteggio degli elementi in un array di temperature se -1 è un valore di temperatura valido (-1 °C)?",
+      "hint": "Segui l'esecuzione del ciclo e determina su quale elemento si interromperà.",
+      "options": [
+        "3",
+        "6",
+        "7",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I dati utili 5, 2, 0 verranno conteggiati (count = 3). Sul valore -1 (che è in realtà una temperatura valida) il ciclo si interromperà erroneamente. In questo consiste la trappola di un'errata scelta del delimitatore.",
+        "Errato. La lunghezza completa fino a -999 è pari a 6, ma il ciclo si fermerà prima su -1.",
+        "Errato. L'intero array contiene 7 elementi, ma l'arresto avverrà alla quarta cella.",
+        "Errato. Tre elementi faranno in tempo a essere elaborati."
+      ]
+    },
+    {
+      "id": "it_clang_2023",
+      "widget_id": null,
+      "topic": "Valore del delimitatore",
+      "q": "Perché il valore 0 viene usato meno di frequente come delimitatore per gli array numerici rispetto alle stringhe (C-strings)?",
+      "hint": "Confronta la frequenza d'uso dello zero come valore reale nei numeri e nei testi.",
+      "options": [
+        "Il numero 0 è spesso un elemento di dati valido (ad esempio prezzo, contatore, saldo), a differenza delle stringhe dove '\\0' indica la fine del testo",
+        "Le variabili con valore 0 causano un errore di divisione per zero durante la verifica nel ciclo",
+        "Il compilatore C sostituisce automaticamente lo 0 con NULL",
+        "Il numero 0 non può essere confrontato con variabili di tipo int"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza delle stringhe (dove 0/`'\\0'` è una convenzione di fine stringa), negli array numerici lo 0 si incontra molto spesso come valore normale, pertanto il suo utilizzo porta a un'interruzione prematura dell'elaborazione.",
+        "Errato. L'operazione di confronto `arr[i] != 0` non esegue alcuna divisione.",
+        "Errato. La costante 0 in un contesto numerico non viene sostituita con NULL.",
+        "Errato. Lo 0 si confronta perfettamente con il tipo `int`."
+      ]
+    },
+    {
+      "id": "it_clang_2024",
+      "widget_id": "widget_clang_2024",
+      "topic": "Valore del delimitatore",
+      "q": "Cosa stamperà il programma durante l'elaborazione di un array di tipo unsigned int con un valore di terminazione -1?",
+      "hint": "Ricorda come i numeri negativi vengono convertiti in tipi senza segno in C.",
+      "options": [
+        "3",
+        "0",
+        "Errore di compilazione",
+        "Ciclo infinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel tipo unsigned, il valore `-1` viene convertito automaticamente nel numero massimo possibile `UINT_MAX`. Inizializzando un elemento a `-1`, anch'esso diventerà `UINT_MAX`. La condizione `arr[i] != (unsigned int)-1` funzionerà correttamente e fermerà il ciclo dopo 3 elementi.",
+        "Errato. Il programma conterà con successo 3 elementi.",
+        "Errato. Il cast di un valore letterale negativo a unsigned int è consentito dallo standard C.",
+        "Errato. L'arresto avverrà esattamente sull'elemento di terminazione."
+      ]
+    },
+    {
+      "id": "it_clang_2025",
+      "widget_id": "widget_clang_2025",
+      "topic": "Valore del delimitatore",
+      "q": "Cosa stamperà il programma durante l'elaborazione dell'array {-5, -10, -2, -1, 10}, in cui -1 è stato erroneamente scelto come delimitatore?",
+      "hint": "Somma gli elementi situati strettamente prima del valore -1.",
+      "options": [
+        "-17",
+        "-7",
+        "-18",
+        "10"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il programma sommerà gli elementi prima del marcatore: (-5) + (-10) + (-2) = -17. All'elemento -1 il ciclo si interromperà e il numero 10 rimarrà non elaborato.",
+        "Errato. Verranno sommati tutti e tre i primi numeri negativi.",
+        "Errato. Il delimitatore -1 non viene aggiunto alla somma.",
+        "Errato. Il numero 10 si trova dopo il delimitatore e non verrà letto."
+      ]
+    },
+    {
+      "id": "it_clang_2026",
+      "widget_id": null,
+      "topic": "Valore del delimitatore",
+      "q": "Qual è la regola chiave nella scelta del valore delimitatore (sentinella) per un array?",
+      "hint": "Rifletti se il delimitatore può coincidere con i dati di input reali.",
+      "options": [
+        "Il delimitatore deve essere un valore che garantitamente NON può essere un elemento di dati valido nel problema",
+        "Il delimitatore deve sempre essere il numero -1 o 0",
+        "Il delimitatore deve essere uguale alla dimensione massima della memoria allocata",
+        "Il delimitatore deve essere obbligatoriamente di tipo float o double"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Qualsiasi valore può fungere da delimitatore (ad esempio -1, `INT_MIN`, -999, `'\\0'`), l'importante è che non si presenti in nessuna circostanza tra i dati di input utili.",
+        "Errato. Il valore dipende dal dominio applicativo (ad esempio, per le temperature -1 non va bene, ma -9999 sì).",
+        "Errato. Il delimitatore codifica la fine dei dati, non la dimensione della memoria allocata.",
+        "Errato. Il tipo del delimitatore coincide con il tipo degli elementi dell'array."
+      ]
+    },
+    {
+      "id": "it_clang_2027",
+      "widget_id": "widget_clang_2027",
+      "topic": "Valore del delimitatore",
+      "q": "Cosa stamperà il programma durante il conteggio del numero di elementi nell'array {0, 0, 0, -1}?",
+      "hint": "Conta solo gli zeri situati prima del delimitatore -1.",
+      "options": [
+        "3",
+        "0",
+        "4",
+        "1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli zeri sono dati validi, quindi il ciclo elabora tutti e 3 gli zeri e si arresta quando incontra il delimitatore -1.",
+        "Errato. Gli zeri non interrompono il ciclo, l'interruzione avviene solo su -1.",
+        "Errato. Il terminatore -1 non fa parte del numero di elementi utili.",
+        "Errato. Sono stati conteggiati tutti e tre gli zeri."
+      ]
+    },
+    {
+      "id": "it_clang_2028",
+      "widget_id": "widget_clang_2028",
+      "topic": "Valore del delimitatore",
+      "q": "Cosa stamperà il programma che dimostra la somiglianza concettuale tra il carattere '\\0' nelle stringhe e il numero -1 negli array di interi?",
+      "hint": "Conta gli elementi utili prima dei marcatori di terminazione in entrambi i casi.",
+      "options": [
+        "3 3",
+        "3 4",
+        "4 3",
+        "4 4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Sia `'\\0'` nella stringa C che `-1` nell'array di interi svolgono lo stesso ruolo: marcatore di terminazione della fine dei dati utili. Entrambi i cicli conteranno 3 elementi.",
+        "Errato. Entrambi i cicli non includono il terminatore nel risultato finale.",
+        "Errato. La stringa è composta da 3 caratteri prima di `'\\0'`.",
+        "Errato. Il terminatore indica la fine dei dati e non incrementa i contatori."
+      ]
+    },
+    {
+      "id": "it_clang_2029",
+      "widget_id": null,
+      "topic": "Valore del delimitatore",
+      "q": "Come occorre tracciare la fine dell'array se i dati utili possono assumere qualsiasi valore nell'intervallo signed int (da INT_MIN a INT_MAX)?",
+      "hint": "Rifletti su come aggirare l'impossibilità di riservare un valore separato come delimitatore.",
+      "options": [
+        "Passare la dimensione dell'array (count) come variabile/parametro separato, rinunciando al delimitatore",
+        "Usare 0 come delimitatore",
+        "Usare NULL come elemento di terminazione dell'array int",
+        "Applicare cicli while senza condizioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se l'intero intervallo del tipo `int` è composto da dati validi, è impossibile riservare un numero per il delimitatore. In questo caso la dimensione dell'array va obbligatoriamente passata come parametro separato `count`.",
+        "Errato. 0 rientra nell'intervallo da `INT_MIN` a `INT_MAX` e può essere un numero valido.",
+        "Errato. `NULL` in C è un puntatore nullo, per gli array di interi non risolve il problema dell'intero intervallo.",
+        "Errato. Senza condizioni di terminazione si verificherà un accesso fuori dai limiti della memoria."
+      ]
+    },
+    {
+      "id": "it_clang_2030",
+      "widget_id": "widget_clang_2030",
+      "topic": "Valore del delimitatore",
+      "q": "Cosa stamperà il programma sommandone gli elementi dell'array {10, 20, -1, 30, 40, -1}?",
+      "hint": "Fai attenzione a quale marcatore -1 interromperà completamente il lavoro del ciclo.",
+      "options": [
+        "30",
+        "100",
+        "99",
+        "70"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo controlla `arr[i] != -1` e si ferma al PRIMO marcatore -1 incontrato. La somma sarà $10 + 20 = 30$. Gli elementi 30 e 40 verranno ignorati.",
+        "Errato. L'algoritmo non \"salta\" il delimitatore, ma interrompe completamente l'elaborazione.",
+        "Errato. Il secondo delimitatore e i dati oltre il primo marcatore non vengono elaborati.",
+        "Errato. Gli elementi 30 e 40 si trovano dopo il primo terminatore."
+      ]
+    },
+    {
+      "id": "it_clang_2031",
+      "widget_id": "widget_clang_2031",
+      "topic": "Delimitatori alternativi",
+      "q": "Cosa stamperà il programma sommandone i numeri strettamente positivi, dove lo 0 è stato scelto come terminatore?",
+      "hint": "Somma i numeri 12, 45, 7 e 89 fino ad incontrare lo zero.",
+      "options": [
+        "153",
+        "253",
+        "141",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se la sequenza contiene solo ID o lunghezze positive (> 0), il numero 0 è un delimitatore sicuro. La somma sarà: $12 + 45 + 7 + 89 = 153$. Sullo zero il ciclo si interromperà.",
+        "Errato. 100 si trova dopo lo zero e non viene sommato.",
+        "Errato. Tutti e 4 i numeri prima dello zero sono stati considerati correttamente.",
+        "Errato. La variabile `sum` accumulerà i valori fino all'arresto."
+      ]
+    },
+    {
+      "id": "it_clang_2032",
+      "widget_id": "widget_clang_2032",
+      "topic": "Delimitatori alternativi",
+      "q": "Cosa stamperà il programma durante il conteggio delle temperature se come delimitatore è stato preso il numero volutamente irrealistico 999?",
+      "hint": "Conta gli elementi dell'array che precedono il valore 999.",
+      "options": [
+        "5",
+        "6",
+        "7",
+        "4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché le temperature reali includono valori negativi e lo zero (-10, -5, 0, 12, 18), -1 o 0 non sono adatti. Il numero 999 è fuori dal dominio e funge da ottimo terminatore. Sono stati conteggiati 5 elementi.",
+        "Errato. Il delimitatore 999 non viene conteggiated come elemento di dati.",
+        "Errato. In totale ci sono 7 celle nell'array, ma l'elaborazione si è fermata a 999.",
+        "Errato. Anche i valori negativi e lo 0 sono stati conteggiati correttamente."
+      ]
+    },
+    {
+      "id": "it_clang_2033",
+      "widget_id": "widget_clang_2033",
+      "topic": "Delimitatori alternativi",
+      "q": "Cosa stamperà il programma durante la ricerca del massimo utilizzando il valore di segnale del sensore -999 come delimitatore?",
+      "hint": "Trova il numero più grande tra gli elementi prima del marcatore -999.",
+      "options": [
+        "200",
+        "300",
+        "150",
+        "-999"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il valore di segnale `-999` spesso indica un'interruzione del sensore o la fine del flusso. Il massimo tra i dati utili {100, 200, 150} è pari a 200. Il valore 300 si trova dopo il marcatore e viene ignorato.",
+        "Errato. Il numero 300 è stato ignorato a causa del precedente `-999`.",
+        "Errato. 200 è maggiore di 150.",
+        "Errato. Il delimitatore non partecipa al confronto."
+      ]
+    },
+    {
+      "id": "it_clang_2034",
+      "widget_id": null,
+      "topic": "Delimitatori alternativi",
+      "q": "Quale costante della libreria <limits.h> viene spesso scelta come delimitatore se l'array memorizza numeri interi arbitrari tranne il minimo assoluto?",
+      "hint": "Ricorda la costante standard per indicare il valore minimo di int.",
+      "options": [
+        "INT_MIN",
+        "INT_MAX",
+        "NULL",
+        "EOF"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La costante `INT_MIN` indica il minimo valore possibile per un `int`. Se la logica di business ammette numeri ordinari sia negativi che positivi, è praticamente impossibile incontrare `INT_MIN` nei dati reali.",
+        "Errato. Anche `INT_MAX` potrebbe essere usata, ma `INT_MIN` è una convenzione più comune per i limiti inferiori.",
+        "Errato. `NULL` è destinato ai puntatori.",
+        "Errato. `EOF` è una macro per i file (solitamente pari a -1)."
+      ]
+    },
+    {
+      "id": "it_clang_2035",
+      "widget_id": "widget_clang_2035",
+      "topic": "Delimitatori alternativi",
+      "q": "Cosa succederà tentando di usare 0 come delimitatore per un array contenente i numeri {10, 0, 20, 30, 0}?",
+      "hint": "Rifletti su quale elemento il ciclo si fermerà a causa della coincidenza con lo zero.",
+      "options": [
+        "Il ciclo terminerà prematuramente al primo zero e conterà solo 1 elemento",
+        "Il ciclo salterà lo zero e conterà 3 elementi",
+        "Il ciclo conterà tutti e 5 gli elementi",
+        "Si verificherà un errore a tempo di esecuzione (Runtime Error)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Questa è l'illustrazione dell'errore logico \"collisione dei valori\": se il delimitatore (0) si trova casualmente tra i dati validi, il ciclo si interrompe prima del tempo (conterà esattamente 1 elemento).",
+        "Errato. La condizione `arr[i] != 0` non sa distinguere tra \"dati\" e \"delimitatore\".",
+        "Errato. Il ciclo interrompe l'esecuzione non appena incontra lo 0.",
+        "Errato. Il programma verrà eseguito correttamente, ma fornirà un risultato di business errato."
+      ]
+    },
+    {
+      "id": "it_clang_2036",
+      "widget_id": "widget_clang_2036",
+      "topic": "Delimitatori alternativi",
+      "q": "Cosa stamperà il programma che dimostra l'equivalenza del carattere nullo '\\0' e dell'intero 0?",
+      "hint": "Ricorda il codice ASCII numerico del carattere nullo '\\0'.",
+      "options": [
+        "Hi 72105",
+        "Hi 00",
+        "H 72",
+        "Errore di tipo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel linguaggio C il carattere letterale `'\\0'` ha il codice ASCII numerico `0`. I caratteri `'H'` e `'i'` verranno stampati dallo specificatore `%c` come `Hi`, mentre i numeri 72 e 105 dallo specificatore `%d` come `72105`.",
+        "Errato. Gli specificatori `%c` stampano le lettere `'H'` e `'i'`.",
+        "Errato. Vengono stampati entrambi i primi elementi di ciascun array.",
+        "Errato. In C i tipi `char` e `int` sono intercambiabili nel contesto dei numeri interi."
+      ]
+    },
+    {
+      "id": "it_clang_2037",
+      "widget_id": null,
+      "topic": "Delimitatori alternativi",
+      "q": "Un array contiene valori di percentuale da 0% a 100%. Quali tra i seguenti valori POSSONO essere utilizzati come delimitatore?",
+      "hint": "Scegli i valori che non rientrano nell'intervallo [0; 100].",
+      "options": [
+        "Qualsiasi valore tra: -1, 101, -999",
+        "Solo 0",
+        "Solo 100",
+        "Nessuno di quelli elencati"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'intervallo di percentuali valido è $[0; 100]$. I valori -1, 101 e -999 si trovano strettamente al di fuori di questo intervallo, quindi ciascuno di essi può fungere da affidabile delimitatore.",
+        "Errato. 0% è un valore di percentuale valido.",
+        "Errato. 100% è un valore di percentuale valido.",
+        "Errato. Tutti e tre i valori (-1, 101, -999) sono adatti poiché non rientrano in $[0; 100]$."
+      ]
+    },
+    {
+      "id": "it_clang_2038",
+      "widget_id": "widget_clang_2038",
+      "topic": "Delimitatori alternativi",
+      "q": "Cosa stamperà il programma durante il conteggio delle stringhe in un array di puntatori in cui il delimitatore è NULL?",
+      "hint": "Conta il numero di puntatori a stringa validi prima del marcatore NULL.",
+      "options": [
+        "3",
+        "4",
+        "0",
+        "Errore di segmentazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Negli array di puntatori (ad esempio `char *arr[]` o `argv`), il puntatore nullo di terminazione `NULL` è lo standard de facto. Il ciclo conterà 3 stringhe valide: \"C\", \"Language\", \"Rules\".",
+        "Errato. `NULL` termina l'attraversamento e non rientra nel contatore.",
+        "Errato. Nell'array sono presenti 3 puntatori validi a stringhe.",
+        "Errato. La verifica `!= NULL` garantisce la sicurezza dell'accesso alla memoria."
+      ]
+    },
+    {
+      "id": "it_clang_2039",
+      "widget_id": "widget_clang_2039",
+      "topic": "Delimitatori alternativi",
+      "q": "Cosa stamperà il programma verificando contemporaneamente due possibili delimitatori alternativi (999 e -999)?",
+      "hint": "Somma gli elementi fino alla prima corrispondenza con uno qualsiasi dei valori di arresto.",
+      "options": [
+        "30",
+        "50",
+        "15",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La condizione composta `arr[i] != 999 && arr[i] != -999` arresta il ciclo all'incontro di UNO QUALSIASI dei due valori di arresto. Sull'elemento `-999` il ciclo si interromperà. Somma: $5 + 10 + 15 = 30$.",
+        "Errato. L'elemento 20 è separato dal marcatore `-999`.",
+        "Errato. 15 è solo il terzo elemento, mentre vengono sommati tutti e tre: 5, 10 e 15.",
+        "Errato. Gli elementi prima del terminatore faranno in tempo a essere sommati."
+      ]
+    },
+    {
+      "id": "it_clang_2040",
+      "widget_id": "widget_clang_2040",
+      "topic": "Delimitatori alternativi",
+      "q": "Qual è il vantaggio principale dell'uso della macro #define SENTINEL 999 anziché usare direttamente il \"numero magico\" 999 nel codice?",
+      "hint": "Rifletti sulla manutenibilità del codice quando occorre cambiare il valore di arresto.",
+      "options": [
+        "Miglioramento della leggibilità e possibilità di modificare il valore del delimitatore nell'intero programma in un solo punto",
+        "Raddoppio delle prestazioni del programma",
+        "Prevenzione di perdite di memoria RAM",
+        "Conversione automatica dei tipi di elementi dell'array"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Assegnare un nome ai terminatori tramite `#define` o `const` elimina i \"numeri magici\". Se domani il dominio applicativo cambia, il delimitatore potrà essere modificato in una sola riga di `#define`.",
+        "Errato. Le macro vengono sostituite nella fase di preelaborazione e non influiscono sulla velocità del processore.",
+        "Errato. Le macro non influiscono sulla gestione della memoria.",
+        "Errato. La conversione dei tipi è regolata dalle regole del linguaggio C, non dal preprocessore."
+      ]
+    },
+    {
+      "id": "it_clang_2041",
+      "widget_id": "widget_clang_2041",
+      "topic": "Uso di una costante per il valore tappo",
+      "q": "Cosa stamperà il programma sommandone gli elementi dell'array con l'uso della macrocostante #define TAPPO -1?",
+      "hint": "Trova la somma degli elementi prima del marcatore TAPPO (-1).",
+      "options": [
+        "60",
+        "59",
+        "0",
+        "-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La macro `#define TAPPO -1` sostituisce `-1` nella condizione di controllo `arr[i] != TAPPO`. Il programma somma gli elementi $10 + 20 + 30 = 60$ e si arresta su `TAPPO`.",
+        "Errato. `TAPPO` viene escluso dal controllo e non viene sottratto dalla somma.",
+        "Errato. Gli elementi prima di `TAPPO` faranno in tempo a essere sommati.",
+        "Errato. La variabile `sum` memorizza la somma degli elementi, non il valore del segnale di arresto."
+      ]
+    },
+    {
+      "id": "it_clang_2042",
+      "widget_id": "widget_clang_2042",
+      "topic": "Uso di una costante per il valore tappo",
+      "q": "Cosa stamperà il programma durante il conteggio degli elementi dell'array utilizzando la costante const int TAPPO = -999?",
+      "hint": "Conta il numero di elementi prima di incontrare la costante TAPPO.",
+      "options": [
+        "3",
+        "4",
+        "5",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli elementi 5, 15, 25 precedono il valore `-999`. Poiché `TAPPO` è pari a `-999`, il ciclo eseguirà esattamente 3 iterazioni.",
+        "Errato. L'elemento `-999` non è incluso nel conteggio dei dati utili.",
+        "Errato. L'elemento 50 si trova dopo il delimitatore e viene ignorato.",
+        "Errato. Nella parte attiva dell'array sono presenti 3 elementi."
+      ]
+    },
+    {
+      "id": "it_clang_2043",
+      "widget_id": null,
+      "topic": "Uso di una costante per il valore tappo",
+      "q": "Qual è il principale vantaggio architetturale nel definire il delimitatore (tappo) tramite una costante (#define o const int) anziché usare valori letterali nel codice?",
+      "hint": "Rifletti su quante righe di codice occorrerà modificare cambiando il delimitatore.",
+      "options": [
+        "La modifica del valore del delimitatore nell'intero programma richiede una modifica centralizzata in una sola riga",
+        "Le costanti aumentano automaticamente la dimensione fisica dell'array",
+        "L'uso di una costante annulla la necessità di verificare la condizione nel ciclo for",
+        "Il preprocessore sostituisce tutti gli array con liste dinamiche"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La dichiarazione centralizzata (ad esempio `#define TAPPO -1`) consente di modificare la logica di arresto per tutte le funzioni e i cicli modificando una sola riga di codice.",
+        "Errato. La dichiarazione di una costante non modifica lo spazio di memoria allocato per l'array.",
+        "Errato. La condizione di verifica della fine dell'array nel ciclo è comunque richiesta.",
+        "Errato. Le costanti non influiscono in alcun modo sul tipo di memoria allocata."
+      ]
+    },
+    {
+      "id": "it_clang_2044",
+      "widget_id": "widget_clang_2044",
+      "topic": "Uso di una costante per il valore tappo",
+      "q": "Cosa stamperà il programma se si usa un elemento di enum Config come delimitatore dell'array?",
+      "hint": "Moltiplica tra loro gli elementi dell'array fino ad incontrare TAPPO.",
+      "options": [
+        "24",
+        "0",
+        "10",
+        "-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'elemento dell'enumerazione `TAPPO = -1` svolge correttamente il ruolo di delimitatore intero. Prodotto degli elementi: $1 \\cdot 2 \\cdot 3 \\cdot 4 = 24$.",
+        "Errato. La variabile `prod` è inizializzata a 1 e moltiplica correttamente i 4 numeri.",
+        "Errato. Vengono moltiplicati tutti e 4 gli elementi utili.",
+        "Errato. Il valore `TAPPO` interrompe il ciclo e non viene moltiplicato."
+      ]
+    },
+    {
+      "id": "it_clang_2045",
+      "widget_id": "widget_clang_2045",
+      "topic": "Uso di una costante per il valore tappo",
+      "q": "Cosa stamperà il programma calcolando la somma se la macro TAPPO viene ridefinita al valore 0?",
+      "hint": "Somma gli elementi fino allo zero incontrato.",
+      "options": [
+        "300",
+        "600",
+        "0",
+        "100"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `TAPPO` è pari a `0`, il ciclo sommerà 100 e 200 ($100 + 200 = 300$). Al terzo elemento (che è 0) il ciclo si fermerà.",
+        "Errato. L'elemento 300 si trova dopo lo zero e non rientra nella somma.",
+        "Errato. I primi due elementi faranno in tempo a essere sommati.",
+        "Errato. Anche l'elemento 200 rientra nella somma prima del `TAPPO` incontrato."
+      ]
+    },
+    {
+      "id": "it_clang_2046",
+      "widget_id": "widget_clang_2046",
+      "topic": "Uso di una costante per il valore tappo",
+      "q": "Cosa restituirà la funzione count_elements che legge la lunghezza dell'array con l'ausilio della macro globale TAPPO?",
+      "hint": "Conta solo gli elementi che si trovano prima del marcatore TAPPO.",
+      "options": [
+        "5",
+        "6",
+        "4",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli elementi utili degli array sono: 7, 8, 9, 10, 11. In totale 5 elementi prima del valore marcatore `TAPPO`.",
+        "Errato. `TAPPO` è un delimitatore e non rientra nel conteggio della lunghezza.",
+        "Errato. Anche l'elemento 11 è stato conteggiato.",
+        "Errato. L'array non è vuoto, il ciclo restituirà un numero positivo."
+      ]
+    },
+    {
+      "id": "it_clang_2047",
+      "widget_id": null,
+      "topic": "Uso di una costante per il valore tappo",
+      "q": "Quale convenzione comune (style guide) si applica alla denominazione delle macrocostanti delimitatore in linguaggio C?",
+      "hint": "Ricorda il registro standard per le macro #define nel linguaggio C.",
+      "options": [
+        "L'uso di lettere MAIUSCOLE (ad esempio TAPPO o SENTINEL) per distinguerle visivamente dalle normali variabili",
+        "L'uso del simbolo $ prima del nome della costante",
+        "L'uso obbligatorio del prefisso __tappo_",
+        "La scrittura del nome in lettere minuscole con il suffisso obbligatorio _const"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In linguaggio C, le costanti del preprocessore (`#define`) e le costanti globali per convenzione generale sono scritte in maiuscolo (`UPPERCASE`).",
+        "Errato. Il simbolo `$` non è uno standard per gli identificatori in C.",
+        "Errato. Il doppio carattere di sottolineatura è riservato dal compilatore.",
+        "Errato. Le lettere minuscole vengono usate per le normali variabili locali."
+      ]
+    },
+    {
+      "id": "it_clang_2048",
+      "widget_id": "widget_clang_2048",
+      "topic": "Uso di una costante per il valore tappo",
+      "q": "Cosa restituirà la funzione di ricerca find_val durante la ricerca del valore 56 nell'array con delimitatore TAPPO?",
+      "hint": "Determina l'indice d'ordine (a partire da 0) in cui si trova il numero cercato.",
+      "options": [
+        "2",
+        "3",
+        "56",
+        "-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I numeri si trovano agli indici: `12` -> 0, `34` -> 1, `56` -> 2. L'elemento 56 è stato trovato all'indice `2`.",
+        "Errato. L'indice 3 memorizza il valore di arresto `TAPPO`.",
+        "Errato. La funzione restituisce l'indice della cella, non il valore cercato.",
+        "Errato. L'elemento era presente nell'array, quindi viene restituito il suo indice."
+      ]
+    },
+    {
+      "id": "it_clang_2049",
+      "widget_id": "widget_clang_2049",
+      "topic": "Uso di una costante per il valore tappo",
+      "q": "Cosa stamperà il programma passando la costante delimitatore MY_TAPPO (999) come argomento di una funzione?",
+      "hint": "Fai attenzione se verranno stampati gli elementi dopo l'incontro del numero 999.",
+      "options": [
+        "1 2 ",
+        "1 2 4 ",
+        "1 2 999 ",
+        "0 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La costante `MY_TAPPO` passata è pari a 999. Il ciclo stampa gli elementi 1 e 2, incontra 999 e termina subito il lavoro.",
+        "Errato. Il valore 4 si trova dopo il delimitatore e non verrà stampato.",
+        "Errato. Il valore del delimitatore non viene stampato.",
+        "Errato. Gli elementi prima di 999 faranno in tempo a essere stampati."
+      ]
+    },
+    {
+      "id": "it_clang_2050",
+      "widget_id": "widget_clang_2050",
+      "topic": "Uso di una costante per il valore tappo",
+      "q": "Cosa stamperà il programma se la macro TAPPO è il primissimo elemento dell'array?",
+      "hint": "Verifica la condizione di continuazione del ciclo alla primissima iterazione (indice 0).",
+      "options": [
+        "0",
+        "3",
+        "1",
+        "-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `arr[0]` è subito pari a `TAPPO`, la condizione `arr[0] != TAPPO` risulta falsa. Il ciclo non eseguirà alcuna iterazione e `count` rimarrà pari a `0`.",
+        "Errato. Gli elementi 10, 20, 30 non vengono elaborati in quanto si trovano dopo il delimitatore.",
+        "Errato. Nessuna iterazione del ciclo è stata eseguita.",
+        "Errato. La variabile `count` memorizza il numero 0."
+      ]
+    }
+  ]
+}

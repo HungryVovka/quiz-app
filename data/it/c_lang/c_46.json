@@ -1,0 +1,605 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_1421",
+      "widget_id": "widget_clang_1421",
+      "topic": "Priorità degli operatori — (*p)++ vs *p++",
+      "q": "Qual è la differenza fondamentale tra le espressioni (*p)++ e *p++ se p è un puntatore a int?",
+      "hint": "Ricorda la precedenza e la direzionalità dell'associatività degli operatori * e ++.",
+      "options": [
+        "(*p)++ incrementa il valore all'indirizzo p, mentre *p++ restituisce il valore *p e poi sposta il puntatore p stesso in avanti nella memoria",
+        "Entrambe le espressioni sono assolutamente identiche e incrementano semplicemente il numero all'indirizzo p",
+        "L'espressione (*p)++ è vietata dalla sintassi del linguaggio C",
+        "L'espressione *p++ prima sposta il puntatore e poi incrementa il valore al nuovo indirizzo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli operatori `*` e `++` hanno la stessa precedenza e associatività da destra a sinistra. In `(*p)++` le parentesi forzano l'incremento del valore `*p`. In `*p++` l'incremento postfisso incrementa l'indirizzo `p` stesso, ma l'espressione restituisce il valore dereferenziato prima dello spostamento.",
+        "Errato. Le parentesi cambiano radicalmente l'oggetto dell'incremento: il valore contro il puntatore stesso.",
+        "Errato. Le parentesi esplicite sono assolutamente legali e spesso usate per eliminare l'ambiguità.",
+        "Errato. L'incremento postfisso incrementa il puntatore *dopo* la valutazione dell'espressione."
+      ]
+    },
+    {
+      "id": "it_clang_1422",
+      "widget_id": "widget_clang_1422",
+      "topic": "Passaggio dei parametri — Meccanismo Call-by-Value",
+      "q": "Perché la chiamata alla funzione void inc(int num) { num++; } non modifica in alcun modo il valore della variabile x nel codice chiamante?",
+      "hint": "Come passa il C gli argomenti semplici alle funzioni?",
+      "options": [
+        "In C tutti gli argomenti vengono sempre passati per valore (by value), quindi la funzione lavora solo con una copia locale",
+        "La variabile num cambia, ma il compilatore la sovrascrive al ritorno dalla funzione",
+        "Per modificare una variabile le funzioni devono obbligatoriamente usare la parola chiave return",
+        "Il passaggio di argomenti senza puntatori è vietato dagli standard C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel linguaggio C gli argomenti delle funzioni vengono passati esclusivamente per valore (by value). La funzione chiamata riceve una copia privata della variabile nello stack, e qualsiasi modifica a questa copia non influisce sull'originale.",
+        "Errato. La copia locale viene distrutta dallo stack, ma l'originale nel codice chiamante non è stato affatto toccato.",
+        "Errato. L'istruzione `return` permette di restituire un valore, ma per modificare direttamente l'argomento originale è necessario usare i puntatori.",
+        "Errato. Il passaggio per valore è assolutamente legale ed è il comportamento di default."
+      ]
+    },
+    {
+      "id": "it_clang_1423",
+      "widget_id": "widget_clang_1423",
+      "topic": "Puntatori e funzioni — Passaggio per riferimento (By Reference)",
+      "q": "Come si dichiara e si chiama correttamente la funzione swap per scambiare i valori di due variabili x e y?",
+      "hint": "Affinché la funzione modifichi gli originali, è necessario passare i loro indirizzi e riceverli in puntatori.",
+      "options": [
+        "Dichiarare void swap(int *a, int *b) e chiamare swap(&x, &y)",
+        "Dichiarare void swap(int a, int b) e chiamare swap(x, y)",
+        "Dichiarare void swap(int &a, int &b) e chiamare swap(x, y)",
+        "Dichiarare void swap(int *a, int *b) e chiamare swap(*x, *y)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il passaggio «per riferimento» in C viene simulato passando gli indirizzi tramite l'operatore `&` alla chiamata e ricevendoli in puntatori `int *` all'interno della funzione.",
+        "Errato. Passando `swap(x,y)` la funzione riceverà copie e non potrà scambiare i valori delle variabili originali.",
+        "Errato. La sintassi `int &a` appartiene al C++ ed è assente nel C puro.",
+        "Errato. La dereferenziazione `*x` passerà il valore della variabile, non il suo indirizzo."
+      ]
+    },
+    {
+      "id": "it_clang_1424",
+      "widget_id": "widget_clang_1424",
+      "topic": "Tipizzazione dei puntatori — Compatibilità e void*",
+      "q": "Cosa succede quando si tenta di compilare la riga int *p; double d = 5.0; p = &d;?",
+      "hint": "I puntatori in C sono fortemente tipizzati?",
+      "options": [
+        "Il compilatore genererà un errore o un avviso di incompatibilità tra i tipi di puntatori",
+        "La variabile d verrà convertita automaticamente al tipo int con valore 5",
+        "Il puntatore p funzionerà correttamente con la memoria del double",
+        "Il C convertirà automaticamente il puntatore p in void*"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C i puntatori sono strettamente legati ai tipi di dati (`typed pointers`). Assegnare l'indirizzo di un `double` a un puntatore a `int` è illegale senza un cast esplicito.",
+        "Errato. La conversione dei dati all'indirizzo non avviene durante l'assegnazione degli indirizzi.",
+        "Errato. Leggere un `double` (8 byte) tramite un puntatore a `int` (4 byte) viola la rappresentazione dei dati.",
+        "Errato. La conversione automatica a `void*` avviene solo durante l'assegnazione a `void*`, non viceversa."
+      ]
+    },
+    {
+      "id": "it_clang_1425",
+      "widget_id": "widget_clang_1425",
+      "topic": "Output su console — Specificatore %p",
+      "q": "Cosa stamperà il comando printf(\"%p %p\", (void*)pi, (void*)&*pi); se pi punta a una variabile valida?",
+      "hint": "Come influiscono gli operatori & e * usati insieme su un puntatore?",
+      "options": [
+        "Due indirizzi di memoria esadecimali assolutamente identici",
+        "Due indirizzi diversi, poiché &*pi crea un nuovo indirizzo",
+        "Un errore di compilazione a causa della combinazione non valida &*pi",
+        "Il valore della variabile e il suo indirizzo in formato decimale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli operatori `*` (dereferenziazione) e `&` (indirizzo) si annullano a vicenda. L'espressione `&*pi` è equivalente al puntatore `pi` stesso, quindi `%p` stamperà lo stesso indirizzo in formato esadecimale.",
+        "Errato. La combinazione `&*pi` non crea nuovi oggetti in memoria.",
+        "Errato. Gli operatori `&` e `*` si combinano in modo assolutamente legale.",
+        "Errato. Lo specificatore `%p` stampa gli indirizzi in formato esadecimale."
+      ]
+    },
+    {
+      "id": "it_clang_1426",
+      "widget_id": "widget_clang_1426",
+      "topic": "Sintassi — Particolarità della dichiarazione int* p1, p2;",
+      "q": "Quali sono i tipi delle variabili p1 e p2 nella dichiarazione int* p1, p2;?",
+      "hint": "A cosa si riferisce sintatticamente l'asterisco: al tipo di base o al singolo identificatore?",
+      "options": [
+        "p1 è un puntatore a int (int*), mentre p2 è una normale variabile intera (int)",
+        "Entrambe le variabili p1 e p2 sono puntatori a int",
+        "Entrambe le variabili sono normali numeri interi di tipo int",
+        "Il codice causerà un errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel linguaggio C il simbolo `*` si associa al nome della variabile e non al tipo `int`. Pertanto, nella dichiarazione `int* p1, p2;` solo `p1` sarà un puntatore. Per renderli entrambi puntatori bisognerebbe scrivere `int *p1, *p2;`.",
+        "Errato. L'asterisco non si estende alla variabile `p2`.",
+        "Errato. La variabile `p1` è dichiarata come puntatore.",
+        "Errato. La sintassi è corretta dal punto di vista del compilatore, ma porta spesso a errori logici."
+      ]
+    },
+    {
+      "id": "it_clang_1427",
+      "widget_id": "widget_clang_1427",
+      "topic": "Aritmetica — Operazioni su un valore dereferenziato",
+      "q": "Sia int x = 1; int *p = &x;. Quale valore conterrà la variabile x dopo l'esecuzione della sequenza: *p = *p + 5; (*p)++;?",
+      "hint": "Segui come cambia il valore all'indirizzo puntato da p.",
+      "options": [
+        "7",
+        "6",
+        "1",
+        "12"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Prima `*p = *p + 5` cambia il valore di `x` da `1` a `6`. Poi `(*p)++` incrementa il valore di `x` di un altro `1`, ottenendo `7`.",
+        "Errato. L'incremento `(*p)++` viene eseguito dopo l'addizione e aggiunge un'ulteriore unità.",
+        "Errato. Le operazioni tramite il puntatore dereferenziato modificano direttamente `x`.",
+        "Errato. La variabile aumenta complessivamente di 6 (5 + 1)."
+      ]
+    },
+    {
+      "id": "it_clang_1428",
+      "widget_id": "widget_clang_1428",
+      "topic": "Memoria — Stack Frame (Record di attivazione sullo stack)",
+      "q": "Cosa succede nella memoria del computer quando viene chiamata una funzione in C?",
+      "hint": "Ricorda dove viene allocata la memoria per gli argomenti e le variabili locali.",
+      "options": [
+        "Sullo stack viene allocato un nuovo record di attivazione (Activation Record) che contiene i parametri e le variabili locali della funzione",
+        "La memoria viene allocata nello Heap tramite una chiamata implicita a malloc",
+        "La memoria per gli argomenti viene riservata nella sezione dati statica",
+        "La funzione chiamata sovrascrive il record di attivazione della funzione main"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiamata a una funzione crea un record di attivazione (Stack Frame / Activation Record) sullo stack delle chiamate. In esso vengono copiati gli argomenti e viene riservato spazio per le variabili locali.",
+        "Errato. Lo Heap viene usato solo in caso di allocazione dinamica esplicita (`malloc`).",
+        "Errato. La sezione statica viene usata per le variabili globali e `static`.",
+        "Errato. Ogni funzione riceve il proprio record di attivazione indipendente in cima allo stack."
+      ]
+    },
+    {
+      "id": "it_clang_1429",
+      "widget_id": "widget_clang_1429",
+      "topic": "Operatori — Annullamento reciproco *&v",
+      "q": "A cosa equivale l'espressione *&v per la variabile int v = 25;?",
+      "hint": "Prima viene preso l'indirizzo della variabile, poi viene dereferenziato tale indirizzo.",
+      "options": [
+        "Al valore della variabile v (cioè 25)",
+        "All'indirizzo della variabile v in memoria",
+        "Alla dimensione della variabile in byte (sizeof(int))",
+        "Al puntatore nullo NULL"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operazione `&v` restituisce l'indirizzo della variabile `v`. L'operatore `*` dereferenzia l'indirizzo ottenuto ed estrae il valore lì memorizzato. Di conseguenza `*&v` si risolve nella variabile `v` stessa (25).",
+        "Errato. L'indirizzo è l'espressione `&v` senza asterisco.",
+        "Errato. La dimensione viene restituita dall'operatore `sizeof`.",
+        "Errato. L'operazione è completamente valida e non restituisce NULL."
+      ]
+    },
+    {
+      "id": "it_clang_1430",
+      "widget_id": "widget_clang_1430",
+      "topic": "Array — Decadimento (Decay) ed espressioni equivalenti",
+      "q": "Dati l'array int z[10]; e il puntatore int *p;, quale assegnazione imposterà p al primo elemento dell'array?",
+      "hint": "Ricorda in cosa si converte implicitamente il nome dell'array z nelle espressioni.",
+      "options": [
+        "Entrambe le opzioni: p = &z[0]; e p = z;",
+        "Solo p = &z[0];",
+        "Solo p = z;",
+        "Nessuna delle due, bisogna scrivere p = *z;"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella maggior parte delle espressioni il nome dell'array `z` «decade» (decays) implicitamente a un puntatore al suo primo elemento (`&z[0]`). Pertanto `p = &z[0];` e `p = z;` sono assolutamente equivalenti.",
+        "Errato. Anche l'istruzione `p = z;` è completamente corretta.",
+        "Errato. L'istruzione `p = &z[0];` è esplicita e anch'essa corretta.",
+        "Errato. `*z` restituirà il valore del primo elemento `z[0]`, non il suo indirizzo."
+      ]
+    },
+    {
+      "id": "it_clang_1431",
+      "widget_id": "widget_clang_1431",
+      "topic": "Memoria — malloc contro calloc",
+      "q": "Qual è la differenza principale tra la funzione calloc(num, size) e malloc(num * size)?",
+      "hint": "Pensa allo stato dei byte della memoria allocata subito dopo la chiamata.",
+      "options": [
+        "calloc azzera tutti i byte della memoria allocata, mentre malloc lascia spazzatura in memoria",
+        "calloc alloca memoria sullo stack, mentre malloc nello heap",
+        "calloc si usa solo per gli array, mentre malloc solo per variabili singole",
+        "malloc garantisce un blocco contiguo di memoria, mentre calloc no"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `calloc` azzera l'area di memoria allocata (riempiendola con byte `0x00`), mentre `malloc` restituisce la memoria con i dati casuali rimasti al suo interno («spazzatura»).",
+        "Errato. Entrambe le funzioni allocano memoria esclusivamente nell'area dinamica (heap).",
+        "Errato. Entrambe le funzioni restituiscono un puntatore `void*` a un blocco di memoria contiguo e possono essere utilizzate per qualsiasi dato.",
+        "Errato. Entrambe le funzioni garantiscono l'allocazione di un blocco di memoria contiguo."
+      ]
+    },
+    {
+      "id": "it_clang_1432",
+      "widget_id": "widget_clang_1432",
+      "topic": "Insidie — Memory leak con realloc",
+      "q": "Perché l'istruzione ptr = realloc(ptr, new_size); è considerata una cattiva pratica di programmazione?",
+      "hint": "Cosa succede all'indirizzo originale in ptr se realloc non riesce ad allocare memoria e restituisce NULL?",
+      "options": [
+        "Se realloc restituisce NULL in caso di errore, il vecchio indirizzo in ptr viene sovrascritto e il blocco di memoria originale viene perso per sempre (memory leak)",
+        "La funzione realloc libera automaticamente ptr prima di tentare di allocare nuova memoria",
+        "L'istruzione realloc(ptr, new_size) porta sempre a un errore di compilazione",
+        "In caso di fallimento di realloc il programma termina immediatamente con un Segmentation Fault"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se la memoria è insufficiente, `realloc` restituisce `NULL` senza liberare il vecchio blocco. Assegnando il risultato direttamente a `ptr`, il puntatore alla vecchia memoria viene sovrascritto da `NULL`, rendendo impossibile eseguire `free()` e causando un memory leak.",
+        "Errato. `realloc` libera il vecchio blocco solo dopo aver copiato con successo i dati nella nuova posizione.",
+        "Errato. Sintatticamente l'istruzione è corretta, ma contiene un bug nascosto a livello logico.",
+        "Errato. In caso di errore viene restituito `NULL`; la terminazione anomala avviene solo se si tenta di dereferenziare tale `NULL`."
+      ]
+    },
+    {
+      "id": "it_clang_1433",
+      "widget_id": "widget_clang_1433",
+      "topic": "Doppi puntatori — Allocazione di memoria all'interno di una funzione",
+      "q": "Perché la funzione void allocate(int **p) accetta un doppio puntatore se si vuole allocare memoria per un array all'interno della funzione?",
+      "hint": "Ricorda come vengono passati i parametri in C e come modificare il puntatore stesso nel codice chiamante.",
+      "options": [
+        "Per modificare l'indirizzo stesso del puntatore nella funzione chiamante, è necessario passare un puntatore a quel puntatore (per riferimento)",
+        "Il doppio puntatore è richiesto dal linguaggio C per lavorare con la funzione malloc",
+        "Perché la funzione alloca memoria per un array bidimensionale",
+        "In questo modo è possibile allocare memoria solo sullo stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Passando un normale `int *p`, la funzione ne riceverà una copia. L'assegnazione `p = malloc(...)` modificherà solo il puntatore locale. Per modificare l'indirizzo nella variabile puntatore originale è necessario passare l'indirizzo del puntatore stesso — `int **p`.",
+        "Errato. `malloc` restituisce `void*` e non richiede doppi puntatori di per sé.",
+        "Errato. Questo pattern viene utilizzato per allocare memoria di qualsiasi tipo e dimensione.",
+        "Errato. `malloc` lavora esclusivamente con lo heap."
+      ]
+    },
+    {
+      "id": "it_clang_1434",
+      "widget_id": "widget_clang_1434",
+      "topic": "Standard C — Chiamata a free(NULL)",
+      "q": "Cosa succede quando viene eseguito il codice free(NULL);?",
+      "hint": "Lo standard C prevede questo scenario.",
+      "options": [
+        "Non succede nulla, l'operazione è completamente sicura e verrà ignorata",
+        "Il programma va in crash con un errore di Segmentation Fault",
+        "Il compilatore genera un avviso di Undefined Behavior",
+        "La memoria all'indirizzo 0 verrà liberata"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard ISO C, passare `NULL` alla funzione `free()` è un'operazione garantita come sicura («no-op»): la funzione semplicemente non fa nulla e restituisce immediatamente il controllo.",
+        "Errato. `free()` contiene un controllo interno per `NULL`.",
+        "Errato. Si tratta di un comportamento standardizzato senza Undefined Behavior.",
+        "Errato. L'indirizzo 0 non è un indirizzo valido da liberare."
+      ]
+    },
+    {
+      "id": "it_clang_1435",
+      "widget_id": "widget_clang_1435",
+      "topic": "Errori di memoria — Dangling Pointer (Puntatore pendente)",
+      "q": "Cos'è un «dangling pointer» (puntatore pendente)?",
+      "hint": "Cosa succede a un puntatore dopo che la memoria al suo indirizzo è stata liberata?",
+      "options": [
+        "Un puntatore che conserva l'indirizzo di un'area di memoria che è già stata liberata tramite free()",
+        "Un puntatore inizializzato con il valore NULL",
+        "Un puntatore che è uscito dai limiti di un array in un ciclo for",
+        "Un puntatore locale non inizializzato sullo stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un dangling pointer è un puntatore che continua a conservare l'indirizzo di memoria dopo la sua liberazione tramite `free()`. Qualsiasi tentativo di lettura o scrittura tramite tale puntatore porta a Comportamento Indefinito (UB).",
+        "Errato. Il puntatore `NULL` è chiamato puntatore nullo (Null pointer).",
+        "Errato. L'uscita dai confini di un array è un errore di Out-of-bounds access.",
+        "Errato. Un puntatore non inizializzato è chiamato Wild pointer."
+      ]
+    },
+    {
+      "id": "it_clang_1436",
+      "widget_id": "widget_clang_1436",
+      "topic": "Sicurezza — Errore di Double Free",
+      "q": "Quale conseguenza avrà una seconda chiamata a free(p) per lo stesso puntatore senza una riallocazione intermedia della memoria?",
+      "hint": "La ri-liberazione di memoria già liberata corrompe le strutture dati di servizio dello heap.",
+      "options": [
+        "Alla corruzione delle strutture dati dello heap e al possibile crash del programma (Double Free Error)",
+        "La seconda chiamata verrà ignorata automaticamente dal sistema operativo",
+        "La memoria verrà riallocata sullo stack",
+        "La variabile p verrà azzerata automaticamente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La doppia liberazione della stessa memoria (`Double Free`) confonde la gestione interna dei blocchi nel gestore dello heap. Ciò porta al crash del programma, al malfunzionamento di `malloc` o a vulnerabilità di sicurezza.",
+        "Errato. Il C non traccia automaticamente le `free()` ripetute se il puntatore non è stato azzerato a `NULL`.",
+        "Errato. `free` non alloca mai memoria.",
+        "Errato. La funzione `free` accetta una copia dell'indirizzo e non azzera il puntatore `p` stesso."
+      ]
+    },
+    {
+      "id": "it_clang_1437",
+      "widget_id": "widget_clang_1437",
+      "topic": "Strutture — Copia superficiale e profonda",
+      "q": "Qual è il pericolo di una «copia superficiale» (Shallow Copy) di una struttura contenente un puntatore dinamico (ad esempio, struct Node { char *name; };)?",
+      "hint": "Pensa se verranno create due copie indipendenti della stringa in memoria.",
+      "options": [
+        "Entrambe le strutture punteranno allo stesso blocco di memoria, e il free() per la prima struttura renderà pendente il puntatore nella seconda",
+        "La copia superficiale tronca la stringa al primo carattere",
+        "Porta a un errore di compilazione a causa dell'incompatibilità dei tipi",
+        "La memoria verrà raddoppiata automaticamente nello heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con una copia superficiale (assegnazione semplice `node2 = node1`) viene copiato solo l'indirizzo del puntatore. Entrambi gli oggetti iniziano a fare riferimento alla stessa stringa. La liberazione della memoria in `node1` renderà non valido il puntatore `node2.name`.",
+        "Errato. La copia superficiale copia l'indirizzo per intero, non i singoli caratteri.",
+        "Errato. L'assegnazione di strutture dello stesso tipo è perfettamente legale in C.",
+        "Errato. Non avviene alcuna allocazione automatica di memoria per una copia profonda (Deep Copy)."
+      ]
+    },
+    {
+      "id": "it_clang_1438",
+      "widget_id": "widget_clang_1438",
+      "topic": "Dimensione — sizeof e array dinamici",
+      "q": "A cosa sarà uguale l'espressione sizeof(arr) per int *arr = malloc(10 * sizeof(int)); su un'architettura a 64 bit?",
+      "hint": "sizeof distingue un array dinamico da un normale puntatore?",
+      "options": [
+        "8 byte (la dimensione del puntatore stesso)",
+        "40 byte (10 elementi * 4 byte)",
+        "10 byte",
+        "0 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `sizeof` viene valutato in fase di compilazione. Per il compilatore `arr` è una normale variabile puntatore `int*`, che ha una dimensione di 8 byte su sistemi a 64 bit. L'operatore `sizeof` non sa nulla sulla quantità di memoria allocata dinamicamente.",
+        "Errato. `sizeof` non è in grado di interrogare il gestore dello heap sulla dimensione del blocco allocato.",
+        "Errato. Il numero di elementi non determina la dimensione del puntatore.",
+        "Errato. Un puntatore ha sempre una dimensione fissa in memoria."
+      ]
+    },
+    {
+      "id": "it_clang_1439",
+      "widget_id": "widget_clang_1439",
+      "topic": "Memoria — Liberazione di un array 2D",
+      "q": "In quale ordine occorre liberare la memoria di un array 2D allocato come int **arr = malloc(rows * sizeof(int*)); con un ciclo malloc per ogni riga?",
+      "hint": "Cosa succede se si esegue prima free(arr)?",
+      "options": [
+        "Prima liberare ogni riga arr[i] in un ciclo, e poi liberare il puntatore principale free(arr)",
+        "Prima eseguire free(arr), e poi nel ciclo free(arr[i])",
+        "È sufficiente chiamare un solo free(arr), il C pulirà da solo le righe annidate",
+        "L'ordine non ha importanza"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se si fa prima `free(arr)`, l'array di puntatori alle righe verrà distrutto e gli indirizzi delle righe `arr[i]` diventeranno inaccessibili (memory leak). Pertanto si puliscono prima le righe `free(arr[i])` e poi la struttura esterna `free(arr)`.",
+        "Errato. Dopo `free(arr)`, la lettura di `arr[i]` porterà a Comportamento Indefinito.",
+        "Errato. `free` non libera automaticamente la memoria annidata puntata dai puntatori.",
+        "Errato. L'ordine è criticamente importante per prevenire memory leak."
+      ]
+    },
+    {
+      "id": "it_clang_1440",
+      "widget_id": "widget_clang_1440",
+      "topic": "Puntatori — Divieto di dereferenziazione di void*",
+      "q": "Perché l'espressione *ptr causerà un errore di compilazione se ptr è dichiarato come void *ptr = malloc(sizeof(int));?",
+      "hint": "Il compilatore sa quanti byte leggere dalla memoria in base al tipo void?",
+      "options": [
+        "Il tipo void è incompleto (incomplete type) e non ha dimensione, quindi il compilatore non sa quanti byte dereferenziare",
+        "I puntatori void* sono solo in lettura e non supportano la dereferenziazione",
+        "La funzione malloc vieta la dereferenziazione degli indirizzi restituiti",
+        "Perché la memoria nello heap richiede una funzione speciale read_heap()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il puntatore `void*` è privo di tipo (universale). Poiché il tipo `void` non ha una dimensione (`sizeof(void)` non è definito dallo standard), il compilatore non sa quanti byte leggere dalla memoria (1, 4 o 8). Per dereferenziare serve un cast esplicito: `*(int*)ptr`.",
+        "Errato. `void*` permette sia la lettura sia la scrittura, ma solo dopo il cast a un tipo concreto.",
+        "Errato. `malloc` restituisce memoria pronta per qualsiasi utilizzo.",
+        "Errato. La lettura dallo heap avviene tramite le normali operazioni di dereferenziazione."
+      ]
+    },
+    {
+      "id": "it_clang_1441",
+      "widget_id": "widget_clang_1441",
+      "topic": "Strutture — Padding e allineamento",
+      "q": "Perché sizeof(struct Data) è uguale a 16 byte su un sistema a 64 bit se la struttura contiene solo char c (1 byte) e int *p (8 byte)?",
+      "hint": "Pensa alle regole di allineamento degli indirizzi per un accesso efficiente della CPU alla memoria.",
+      "options": [
+        "Il compilatore inserisce 7 byte di riempimento (padding) dopo char c in modo che il puntatore p sia allineato a un limite multiplo di 8 byte",
+        "Il tipo char si espande automaticamente a 8 byte all'interno delle strutture",
+        "L'operatore sizeof arrotonda sempre la dimensione di qualsiasi struttura al multiplo di 16 più vicino",
+        "È un errore del compilatore, la dimensione dovrebbe essere esattamente 9 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il processore richiede che i puntatori a 8 byte si trovino ad indirizzi multipli di 8. Il compilatore aggiunge 7 byte di riempimento inutilizzato (*padding*) dopo `char c`, motivo per cui la dimensione totale della struttura è `1 + 7 + 8 = 16` byte.",
+        "Errato. `sizeof(char)` è sempre uguale a 1 byte.",
+        "Errato. La dimensione della struttura viene allineata in base alla dimensione del suo membro più grande, non incondizionatamente a 16 byte.",
+        "Errato. L'allineamento è un comportamento standardizzato per garantire le prestazioni."
+      ]
+    },
+    {
+      "id": "it_clang_1442",
+      "widget_id": "widget_clang_1442",
+      "topic": "Tipi — Incompatibilità di int[R][C] e int**",
+      "q": "Perché un tentativo di assegnare int **p = arr; per un array statico 2D int arr[3][4]; causerà un avviso o un errore del compilatore?",
+      "hint": "A quale tipo decade il nome di un array statico bidimensionale?",
+      "options": [
+        "Il nome dell'array arr decade a un puntatore a riga int (*)[4], che è incompatibile con il tipo int **",
+        "Perché agli array statici non si possono assegnare puntatori",
+        "Perché i doppi puntatori funzionano solo con le stringhe char**",
+        "Gli array bidimensionali non possono essere passati tramite puntatori in C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'array bidimensionale `arr[3][4]` è disposto in memoria in un blocco contiguo. Nel decadimento, il nome `arr` dà un puntatore al primo elemento-array, ovvero `int (*)[4]` (puntatore ad array di 4 `int`). Questo tipo è fondamentalmente diverso da `int**`, che si aspetta un array di indirizzi.",
+        "Errato. Si possono creare puntatori ad array statici, ma il loro tipo deve essere `int (*p)[4]`.",
+        "Errato. I doppi puntatori funzionano con qualsiasi tipo di dato.",
+        "Errato. Gli array bidimensionali si possono facilmente passare alle funzioni tramite un puntatore del tipo `int (*arr)[4]`."
+      ]
+    },
+    {
+      "id": "it_clang_1443",
+      "widget_id": "widget_clang_1443",
+      "topic": "Strutture — Indirizzo di un campo di bit",
+      "q": "Cosa succede quando si tenta di eseguire il codice int *p = &s.flag; per la struttura struct { unsigned int flag : 1; } s;?",
+      "hint": "Qual è la minima unità di memoria indirizzabile nell'architettura di un computer?",
+      "options": [
+        "Il compilatore genererà un errore, poiché prendere l'indirizzo di un campo di bit è vietato dallo standard C",
+        "Il codice compilerà e p punterà al singolo bit",
+        "Il puntatore p otterrà l'indirizzo dell'intera struttura s, spostato di 1 bit",
+        "La variabile flag verrà convertita automaticamente in un int completo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La minima entità indirizzabile in C è il byte (`char`). Poiché un singolo bit non ha un proprio indirizzo univoco in memoria, prendere l'indirizzo `&` di un campo di bit è direttamente vietato dallo standard del linguaggio.",
+        "Errato. I puntatori in C indirizzano byte, non singoli bit.",
+        "Errato. In C non esistono indirizzi con lo spostamento specificato in bit.",
+        "Errato. Non avviene alcuna conversione automatica di tipo quando si tenta di prendere l'indirizzo."
+      ]
+    },
+    {
+      "id": "it_clang_1444",
+      "widget_id": "widget_clang_1444",
+      "topic": "Funzioni — Comparatore per qsort",
+      "q": "Quale firma deve avere una funzione comparatore da passare alla funzione standard qsort()?",
+      "hint": "La funzione deve essere universale e accettare puntatori astratti senza il diritto di modificarli.",
+      "options": [
+        "int cmp(const void *a, const void *b)",
+        "int cmp(int a, int b)",
+        "void cmp(void *a, void *b)",
+        "bool cmp(const int *a, const int *b)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `qsort` è universale. Accetta un puntatore a una funzione di confronto con firma `int (*compar)(const void *, const void *)`. All'interno del comparatore i dati vengono castati al tipo desiderato e viene restituito un numero negativo, 0 o un numero positivo.",
+        "Errato. La firma con `int` rende la funzione inapplicabile ad altri tipi di dati e non corrisponde allo standard di `qsort`.",
+        "Errato. La funzione di confronto deve restituire il risultato del confronto di tipo `int`.",
+        "Errato. Il tipo `bool` non è usato nella dichiarazione originale di `qsort` in C89/C99."
+      ]
+    },
+    {
+      "id": "it_clang_1445",
+      "widget_id": "widget_clang_1445",
+      "topic": "Sintassi — Dichiarazioni complesse di puntatori",
+      "q": "Cosa significa la dichiarazione int (*func)(double);?",
+      "hint": "Fai attenzione alle parentesi attorno a *func.",
+      "options": [
+        "func è un puntatore a una funzione che accetta double e restituisce int",
+        "func è una funzione che restituisce un puntatore a int e accetta double",
+        "func è un array di elementi double di tipo int*",
+        "Si tratta di un errore sintattico"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A causa delle parentesi tonde `(*func)` si associa prima all'asterisco, rendendo `func` un puntatore. Successivamente `(double)` indica che si tratta di un puntatore a funzione con argomento `double`, mentre `int` è il tipo restituito.",
+        "Errato. Una funzione che restituisce `int*` si dichiara senza parentesi attorno al nome: `int *func(double);`.",
+        "Errato. Per un array si userebbero le parentesi quadre `[]`.",
+        "Errato. Questa è una dichiarazione standard di un puntatore a funzione in C."
+      ]
+    },
+    {
+      "id": "it_clang_1446",
+      "widget_id": "widget_clang_1446",
+      "topic": "Qualificatori — volatile int * contro int * volatile",
+      "q": "Qual è la differenza tra le dichiarazioni volatile int *p1 e int * volatile p2?",
+      "hint": "Il qualificatore volatile si riferisce all'oggetto a sinistra (o a destra) di cui si trova.",
+      "options": [
+        "p1 è un puntatore a dati volatile (il valore può cambiare dall'esterno), mentre p2 è il puntatore stesso ad essere volatile (il suo indirizzo non può essere memorizzato nei registri)",
+        "Non c'è differenza tra di loro, sono due sinonimi",
+        "p1 viene collocato in ROM, mentre p2 in RAM",
+        "p1 vieta la lettura, mentre p2 vieta la scrittura"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In `volatile int *p1` il qualificatore `volatile` si riferisce a `int`: il valore all'indirizzo può essere modificato dall'hardware/da un altro thread. In `int * volatile p2` viene costruito il puntatore `volatile` stesso: il valore dell'indirizzo in `p2` può cambiare in modo asincrono.",
+        "Errato. La posizione del qualificatore rispetto all'asterisco cambia radicalmente il suo significato.",
+        "Errato. `volatile` comunica al compilatore di non ottimizzare lettura/scrittura, non definisce la sezione di memoria.",
+        "Errato. I permessi di accesso in lettura/scrittura sono definiti da `const`."
+      ]
+    },
+    {
+      "id": "it_clang_1447",
+      "widget_id": "widget_clang_1447",
+      "topic": "Standard C — Strict Aliasing Rule",
+      "q": "Perché il codice int i = 10; float *f = (float*)&i; *f = 2.5f; viola la regola di Strict Aliasing?",
+      "hint": "Pensa se il compilatore può contare sul fatto che puntatori di tipo diverso facciano riferimento a oggetti diversi.",
+      "options": [
+        "Lo standard C vieta di accedere alla stessa memoria tramite puntatori di tipi incompatibili (ad eccezione di char*), poiché ciò rompe le ottimizzazioni del compilatore",
+        "Perché il casting (float*)&i è sintatticamente vietato in C",
+        "Perché float e int hanno dimensioni diverse in byte",
+        "Questo codice è completamente sicuro e non viola alcuna regola"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La regola dello Strict Aliasing (*Strict Aliasing Rule*) stabilisce che due puntatori di tipi diversi (eccetto `char*` / `unsigned char*`) non possono puntare alla stessa cella di memoria. La violazione della regola porta a Comportamento Indefinito (UB), poiché il compilatore potrebbe riordinare in modo errato le istruzioni.",
+        "Errato. Il cast esplicito del tipo compila, ma crea un bug nascosto con l'ottimizzazione.",
+        "Errato. Su molti sistemi `int` e `float` occupano 4 byte ciascuno, tuttavia la questione riguarda i tipi, non le dimensioni.",
+        "Errato. Il codice è un classico esempio di violazione dello Strict Aliasing."
+      ]
+    },
+    {
+      "id": "it_clang_1448",
+      "widget_id": "widget_clang_1448",
+      "topic": "Tempo di vita — Restituzione di un puntatore a una variabile static",
+      "q": "È sicuro restituire un puntatore a una variabile locale di una funzione se essa è dichiarata con la parola chiave static (static int val = 0; return &val;)?",
+      "hint": "Dove viene conservata una variabile static e quando termina la sua durata di vita?",
+      "options": [
+        "Sì, è assolutamente sicuro, poiché le variabili static sono memorizzate nella memoria statica e vivono per tutta la durata dell'esecuzione del programma",
+        "No, questo porterà alla creazione di un dangling pointer all'uscita dalla funzione",
+        "È sicuro solo se la funzione viene chiamata da main()",
+        "Il codice causerà un errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili con modificatore `static` non vengono collocate nello stack del frame corrente della funzione, ma nella sezione dati statica (.data / .bss). Vengono inizializzate una sola volta e mantengono il loro valore e indirizzo fino al termine del programma.",
+        "Errato. I dati sullo stack vengono distrutti, ma le variabili `static` si trovano fuori dallo stack.",
+        "Errato. Il punto di chiamata della funzione non influisce sul tempo di vita delle variabili `static`.",
+        "Errato. Sintassi e semantica sono completamente valide."
+      ]
+    },
+    {
+      "id": "it_clang_1449",
+      "widget_id": "widget_clang_1449",
+      "topic": "Unioni — Analisi byte per byte (Type Punning)",
+      "q": "Per cosa si usa spesso un'unione del tipo union Converter { uint32_t number; uint8_t bytes[4]; };?",
+      "hint": "Tutti i membri dell'unione condividono la stessa area di memoria.",
+      "options": [
+        "Per la lettura e l'analisi byte per byte della rappresentazione interna di un numero a 32 bit in memoria (ad esempio per verificare l'Endianness)",
+        "Per una compressione efficiente dei dati di 4 volte",
+        "Per contenere 4 diversi numeri a 32 bit in 4 byte",
+        "Per proteggere il numero number da modifiche accidentali"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I campi `number` e `bytes[4]` occupano gli stessi 4 byte di memoria. Scrivendo un numero in `number`, è possibile leggere tramite `bytes[0]...bytes[3]` i suoi singoli byte e scoprirne l'ordine nell'architettura del processore (Little-Endian / Big-Endian).",
+        "Errato. `union` non comprime i dati, ma li sovrappone nella stessa memoria.",
+        "Errato. `union` memorizza solo un valore alla volta.",
+        "Errato. `union` non fornisce meccanismi di protezione dalla scrittura."
+      ]
+    },
+    {
+      "id": "it_clang_1450",
+      "widget_id": "widget_clang_1450",
+      "topic": "Puntatori — Chiamata tramite un array di puntatori a funzione",
+      "q": "Come chiamare correttamente la seconda funzione dall'array void (*actions[3])(int) = {f1, f2, f3}; e passarle l'argomento 5?",
+      "hint": "Gli array di puntatori a funzione vengono indicizzati come i normali array.",
+      "options": [
+        "actions[1](5);",
+        "actions(1)[5];",
+        "*actions[1](5);",
+        "call(actions[1], 5);"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'elemento `actions[1]` restituisce un puntatore alla funzione `f2`. In C la chiamata tramite puntatore a funzione si effettua scrivendo `actions[1](5);` (zucchero sintattico per `(*actions[1])(5);`).",
+        "Errato. L'istruzione `actions(1)` è sintatticamente errata per un array.",
+        "Errato. La dereferenziazione `*actions[1](5)` tenta di dereferenziare il risultato della chiamata di funzione, non la funzione stessa.",
+        "Errato. La funzione `call` non è una funzione integrata del linguaggio C."
+      ]
+    }
+  ]
+}

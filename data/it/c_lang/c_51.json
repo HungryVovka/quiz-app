@@ -1,0 +1,595 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_1571",
+      "widget_id": "widget_clang_1571",
+      "topic": "Inizializzazione dei puntatori e puntatore nullo (NULL)",
+      "q": "Cosa significa concettualmente assegnare la macro NULL a un puntatore?",
+      "hint": "NULL indica che al momento il puntatore non fa riferimento in modo esplicito a nulla.",
+      "options": [
+        "Il puntatore viene inizializzato esplicitamente con l'indirizzo zero (0x0), che garantisce di non puntare a nessun oggetto valido",
+        "Il puntatore fa riferimento a un'area di memoria riservata nascosta nell'heap",
+        "Il puntatore fa riferimento all'ultima cella della memoria RAM"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il valore NULL indica che il puntatore è esplicitamente \"vuoto\" e non contiene l'indirizzo valido di un oggetto o di una funzione accessibile.",
+        "Errato. NULL non alloca alcuna memoria nell'heap.",
+        "Errato. NULL rappresenta l'indirizzo 0x0 e non il limite superiore dello spazio di indirizzamento."
+      ]
+    },
+    {
+      "id": "it_clang_1572",
+      "widget_id": "widget_clang_1572",
+      "topic": "Inizializzazione dei puntatori e puntatore nullo (NULL)",
+      "q": "Cosa accadrà tentando di eseguire il frammento di codice presentato?",
+      "hint": "L'accesso all'indirizzo 0x0 è severamente vietato dal sistema operativo.",
+      "options": [
+        "Interruzione anomala del programma (Segmentation Fault / Access Violation) durante l'esecuzione",
+        "Stampa del numero 0 sulla console",
+        "Errore di compilazione: è vietato dereferenziare NULL",
+        "Stampa di un valore \"spazzatura\" casuale dalla memoria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il tentativo di leggere la memoria all'indirizzo zero (*p) genera un'eccezione hardware del processore e la terminazione forzata del programma da parte del sistema operativo (Segmentation Fault).",
+        "Errato. Il programma non potrà leggere il numero 0 poiché la lettura all'indirizzo NULL è bloccata.",
+        "Errato. Il codice è corretto dal punto di vista della sintassi C, quindi l'errore si verifica proprio a tempo di esecuzione (Runtime).",
+        "Errato. L'accesso all'indirizzo 0x0 non restituisce dati, ma provoca il crash del processo."
+      ]
+    },
+    {
+      "id": "it_clang_1573",
+      "widget_id": null,
+      "topic": "Inizializzazione dei puntatori e puntatore nullo (NULL)",
+      "q": "Qual è la differenza fondamentale tra un puntatore nullo (NULL) e un puntatore non inizializzato (\"wild pointer\")?",
+      "hint": "Pensa alla possibilità di eseguire un controllo deterministico del puntatore prima dell'uso.",
+      "options": [
+        "NULL è un valore controllato e deterministico (0x0) che può essere verificato nel codice, mentre un puntatore non inizializzato contiene un indirizzo casuale e imprevedibile",
+        "Non c'è alcuna differenza: entrambi i puntatori puntano sempre all'indirizzo 0x0",
+        "Un puntatore non inizializzato è più sicuro poiché il compilatore lo corregge automaticamente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! NULL consente al programmatore di verificare `if (p != NULL)` prima della dereferenziazione. In un puntatore non inizializzato il valore è casuale, quindi il controllo `if (p != NULL)` può restituire `true`, ma la dereferenziazione causerà comunque un crash.",
+        "Errato. Un puntatore non inizializzato contiene bit arbitrari rimasti nello stack, non 0x0.",
+        "Errato. Un puntatore non inizializzato è estremamente pericoloso poiché può puntare casualmente a dati validi e corromperli."
+      ]
+    },
+    {
+      "id": "it_clang_1574",
+      "widget_id": "widget_clang_1574",
+      "topic": "Inizializzazione dei puntatori e puntatore nullo (NULL)",
+      "q": "Qual è lo scopo del controllo if (p != NULL) prima di dereferenziare un puntatore?",
+      "hint": "È un pattern di protezione standard della programmazione difensiva.",
+      "options": [
+        "Per prevenire il tentativo di accedere a un indirizzo non valido e proteggere il programma da un Segmentation Fault",
+        "Per allocare automaticamente memoria se il puntatore è uguale a NULL",
+        "Per velocizzare l'esecuzione del programma tramite il caching dell'indirizzo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se alla funzione viene passato un puntatore nullo, il controllo consente di saltare il blocco di dereferenziazione e prevenire il crash del programma.",
+        "Errato. La condizione `if` non alloca memoria; a tale scopo è necessario utilizzare funzioni come `malloc`.",
+        "Errato. Il controllo aggiunge una ramificazione e non è progettato per l'accelerazione hardware."
+      ]
+    },
+    {
+      "id": "it_clang_1575",
+      "widget_id": null,
+      "topic": "Inizializzazione dei puntatori e puntatore nullo (NULL)",
+      "q": "Come viene solitamente definita la macro NULL nei file di intestazione standard del C (<stddef.h>, <stdlib.h>)?",
+      "hint": "NULL è un puntatore nullo constante.",
+      "options": [
+        "((void *)0) o l'intero 0",
+        "-1",
+        "0xFFFFFFFF",
+        "\"\" (stringa vuota)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, NULL è definito come l'intero `0` oppure come un cast esplicito `((void *)0)`.",
+        "Errato. Il valore -1 viene spesso utilizzato per indicare errori di I/O (ad esempio EOF), ma non come puntatore nullo.",
+        "Errato. 0xFFFFFFFF è la rappresentazione a 32 bit di una maschera di tutti uno (-1 in complemento a due).",
+        "Errato. Una stringa vuota è un array di caratteri terminato da un carattere nullo."
+      ]
+    },
+    {
+      "id": "it_clang_1576",
+      "widget_id": "widget_clang_1576",
+      "topic": "Inizializzazione dei puntatori e puntatore nullo (NULL)",
+      "q": "Quale ramo di codice verrà eseguito durante la verifica della condizione logica if (p), se p == NULL?",
+      "hint": "Nel contesto logico del C, il valore zero equivale a false.",
+      "options": [
+        "Verrà eseguito il ramo Code B, poiché NULL viene convertito in false (0)",
+        "Verrà eseguito il ramo Code A, poiché il puntatore esiste come variabile",
+        "Si verificherà un errore di compilazione: i puntatori non possono essere usati direttamente nelle condizioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C qualsiasi valore nullo (inclusi `NULL` / `0x0`) viene interpretato nelle espressioni logiche come `false`. Pertanto, la struttura `if (p != NULL)` viene spesso abbreviata in `if (p)`.",
+        "Errato. La semplice presenza della variabile `p` non rende la condizione vera: viene verificato l'indirizzo memorizzato in essa.",
+        "Errato. L'uso dei puntatori negli operatori condizionali è una pratica standard e ampiamente diffusa in C."
+      ]
+    },
+    {
+      "id": "it_clang_1577",
+      "widget_id": null,
+      "topic": "Inizializzazione dei puntatori e puntatore nullo (NULL)",
+      "q": "Quale nuova parola chiave per un puntatore nullo fortemente tipizzato è stata ufficialmente aggiunta allo standard C23?",
+      "hint": "Questa parola chiave proviene dal C++11 per eliminare l'ambiguità con l'intero 0.",
+      "options": [
+        "nullptr",
+        "nil",
+        "null",
+        "None",
+        "NULL_PTR"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nello standard C23 è stata introdotta la parola chiave `nullptr` (di tipo `nullptr_t`), che sostituisce le varianti ambigue con l'intero `0` o `((void*)0)`.",
+        "Errato. `nil` è utilizzato in linguaggi come Objective-C, Swift o Pascal.",
+        "Errato. `null` viene applicato in Java e C#.",
+        "Errato. `None` è una costante in Python.",
+        "Errato. `NULL_PTR` non fa parte dello standard del linguaggio C."
+      ]
+    },
+    {
+      "id": "it_clang_1578",
+      "widget_id": "widget_clang_1578",
+      "topic": "Inizializzazione dei puntatori e puntatore nullo (NULL)",
+      "q": "Cosa accadrà tentando di SCRIVERE un valore tramite un puntatore nullo (*ptr = 100)?",
+      "hint": "La pagina di memoria zero è protetta sia dalla lettura sia dalla scrittura.",
+      "options": [
+        "Interruzione anomala del programma (Segmentation Fault) a causa del tentativo di scrittura nell'indirizzo di memoria protetto 0x0",
+        "La scrittura avrà successo, il valore 100 verrà salvato nel byte zero della memoria RAM",
+        "La variabile ptr cambierà il proprio indirizzo interno da NULL a 100"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La scrittura all'indirizzo zero è severamente vietata dal sistema operativo. Il tentativo di modificare la memoria all'indirizzo NULL porta immediatamente a un Segmentation Fault.",
+        "Errato. La pagina con indirizzo 0x0 non dispone dei permessi di scrittura per i processi utente.",
+        "Errato. L'operazione `*ptr = 100` tenta di scrivere 100 nella cella di memoria indicata da `ptr`, non modifica l'indirizzo di `ptr` stesso."
+      ]
+    },
+    {
+      "id": "it_clang_1579",
+      "widget_id": "widget_clang_1579",
+      "topic": "Inizializzazione dei puntatori e puntatore nullo (NULL)",
+      "q": "Quale sarà il risultato della chiamata alla funzione standard free(p) se la variabile p è uguale a NULL?",
+      "hint": "Il comportamento di free con un puntatore nullo è rigorosamente specificato dallo standard C.",
+      "options": [
+        "La funzione non eseguirà alcuna azione e terminerà in modo sicuro (NO-OP)",
+        "Si verificherà il crash del programma (Segmentation Fault)",
+        "Errore di compilazione: free non accetta NULL"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, il passaggio di `NULL` alla funzione `free()` è garantito essere sicuro e non produce alcuna azione.",
+        "Errato. `free(NULL)` non causa un Segmentation Fault.",
+        "Errato. `free` accetta argomenti di tipo `void*`, quindi `NULL` è completamente valido."
+      ]
+    },
+    {
+      "id": "it_clang_1580",
+      "widget_id": null,
+      "topic": "Inizializzazione dei puntatori e puntatore nullo (NULL)",
+      "q": "Perché a livello hardware e di sistema operativo è vietato l'accesso all'indirizzo 0x0?",
+      "hint": "Considera l'organizzazione della memoria virtuale e la protezione del sistema contro gli errori accidentali con i puntatori non inizializzati.",
+      "options": [
+        "La prima pagina della memoria virtuale (incluso l'indirizzo 0x0) viene intenzionalmente lasciata non mappata (unmapped) per intercettare gli errori derivanti dall'uso di puntatori nulli",
+        "L'indirizzo fisico 0x0 non esiste nei banchi di memoria RAM",
+        "L'indirizzo 0x0 è utilizzato dal processore per la memorizzazione permanente delle istruzioni del BIOS",
+        "Il sistema operativo consente l'accesso a 0x0 solo ai programmi eseguiti come amministratore (root)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I sistemi operativi rendono intenzionalmente inaccessibile la pagina zero dello spazio di indirizzamento virtuale (senza permessi di lettura, scrittura o esecuzione), in modo che qualsiasi errore di accesso a un puntatore nullo venga immediatamente rilevato tramite un guasto hardware (Page Fault / Segmentation Fault).",
+        "Errato. La limitazione opera a livello di indirizzamento virtuale della MMU, non per la mancanza di memoria fisica.",
+        "Errato. I programmi leggono il BIOS da aree di memoria specializzate, non dall'indirizzo virtuale 0x0 del processo utente.",
+        "Errato. Neppure i permessi di root consentono ai normali processi utente di leggere o scrivere direttamente all'indirizzo 0x0."
+      ]
+    },
+    {
+      "id": "it_clang_1581",
+      "widget_id": null,
+      "topic": "Operatori per la gestione della memoria: & e *",
+      "q": "Cosa restituisce l'operatore unario di indirizzo (&) applicato a una variabile esistente?",
+      "hint": "Questo operatore permette di scoprire \"dove\" si trova fisicamente la variabile in memoria.",
+      "options": [
+        "Un puntatore (indirizzo di memoria) in cui sono memorizzati i dati della variabile",
+        "Il valore memorizzato all'interno della variabile",
+        "La dimensione della variabile in byte",
+        "Una copia della variabile nello stack di chiamata"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `&` restituisce l'indirizzo della cella di memoria da cui inizia la memorizzazione della variabile. Il risultato dell'operazione è un tipo puntatore al tipo della variabile.",
+        "Errato. Il valore della variabile viene restituito con l'accesso normale tramite il nome, senza l'operatore `&`.",
+        "Errato. La dimensione in byte viene calcolata utilizzando l'operatore `sizeof`.",
+        "Errato. L'operatore `&` non copia le variabili, ma legge soltanto l'indirizzo della loro posizione."
+      ]
+    },
+    {
+      "id": "it_clang_1582",
+      "widget_id": null,
+      "topic": "Operatori per la gestione della memoria: & e *",
+      "q": "Cosa succede quando si esegue l'operatore di dereferenziazione (indirizzamento indiretto) * applicato a un puntatore valido?",
+      "hint": "Il puntatore \"punta\" a un indirizzo, mentre l'operatore * \"accede\" a quell'indirizzo.",
+      "options": [
+        "Viene fornito l'accesso all'oggetto (lettura o scrittura) all'indirizzo memorizzato nel puntatore",
+        "Il valore a cui punta ptr viene moltiplicato per 2",
+        "Il puntatore viene automaticamente azzerato e reimpostato a NULL",
+        "Viene allocato un nuovo blocco di memoria per l'oggetto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `*` dereferenzia il puntatore: consente di leggere o modificare i dati situati all'indirizzo memorizzato nel puntatore.",
+        "Errato. Il simbolo `*` in un contesto unario indica la dereferenziazione, non la moltiplicazione matematica.",
+        "Errato. L'operatore `*` non modifica l'indirizzo nel puntatore né lo azzera.",
+        "Errato. L'operatore di dereferenziazione lavora con un indirizzo di memoria già esistente e non alloca nuove aree."
+      ]
+    },
+    {
+      "id": "it_clang_1583",
+      "widget_id": "widget_clang_1583",
+      "topic": "Operatori per la gestione della memoria: & e *",
+      "q": "A cosa sarà uguale la variabile y dopo l'esecuzione del codice int y = *&x;?",
+      "hint": "Gli operatori * e & sono inversi l'uno dell'altro se applicati consecutivamente.",
+      "options": [
+        "42",
+        "All'indirizzo della variabile x",
+        "0",
+        "Errore di compilazione: non è possibile combinare * e &"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `&x` ottiene l'indirizzo della variabile `x`, mentre l'operatore `*` dereferenzia immediatamente l'indirizzo ottenuto riportandolo all'oggetto `x`. Si annullano a vicenda, quindi `y` otterrà il valore 42.",
+        "Errato. L'operatore esterno `*` dereferenzia l'indirizzo, restituendo il valore originale 42 e non l'indirizzo.",
+        "Errato. L'espressione non azzera il valore.",
+        "Errato. La sintassi `*&x` è completamente valida in C."
+      ]
+    },
+    {
+      "id": "it_clang_1584",
+      "widget_id": "widget_clang_1584",
+      "topic": "Operatori per la gestione della memoria: & e *",
+      "q": "Quale sarà il risultato del tentativo di compilare l'espressione int *p = &(x + 5);?",
+      "hint": "L'operatore di indirizzo & richiede un lvalue (un oggetto avente un indirizzo fisso in memoria).",
+      "options": [
+        "Errore di compilazione: l'estrazione dell'indirizzo (&) non è possibile da un valore temporaneo (rvalue)",
+        "Il codice verrà compilato e scriverà il numero 15 in memoria",
+        "Il puntatore p otterrà il valore NULL",
+        "Nello stack verrà creata una variabile anonima temporanea con valore 15"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `(x + 5)` è un valore calcolato temporaneo (rvalue). Non ha una propria posizione permanente in memoria (lvalue), quindi è impossibile ottenerne l'indirizzo con l'operatore `&`: il compilatore restituirà un errore.",
+        "Errato. Il C non consente di estrarre l'indirizzo da espressioni aritmetiche temporanee.",
+        "Errato. L'errore si verifica già in fase di compilazione, la variabile `p` non verrà creata.",
+        "Errato. Il compilatore C non crea automaticamente variabili lvalue anonime per l'operatore `&`."
+      ]
+    },
+    {
+      "id": "it_clang_1585",
+      "widget_id": "widget_clang_1585",
+      "topic": "Operatori per la gestione della memoria: & e *",
+      "q": "A cosa sarà uguale la variabile num dopo l'esecuzione dell'istruzione *p = 20;?",
+      "hint": "Il puntatore p fa riferimento alla memoria della variabile num.",
+      "options": [
+        "20",
+        "10",
+        "A un valore spazzatura casuale",
+        "All'indirizzo della variabile p"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `p` memorizza l'indirizzo `&num`, l'espressione `*p = 20` sovrascrive il contenuto della cella di memoria `num`. Il valore della variabile `num` cambia da 10 a 20.",
+        "Errato. La scrittura tramite un puntatore dereferenziato `*p = 20` modifica il valore della variabile a cui punta.",
+        "Errato. La modifica è deterministica e scrive esattamente 20.",
+        "Errato. Viene modificato il valore di `num`, non l'indirizzo del puntatore `p`."
+      ]
+    },
+    {
+      "id": "it_clang_1586",
+      "widget_id": "widget_clang_1586",
+      "topic": "Operatori per la gestione della memoria: & e *",
+      "q": "A cosa saranno uguali la variabile val e il risultato res dopo l'esecuzione dell'espressione ++*p;?",
+      "hint": "Gli operatori unari di incremento prefisso ++ e dereferenziazione * hanno la stessa precedenza e associatività da destra a sinistra.",
+      "options": [
+        "val = 6, res = 6",
+        "val = 5, res = 6",
+        "val = 6, res = 5",
+        "val = 5, res = 5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli operatori unari `++` e `*` vengono valutati da destra a sinistra. Prima viene eseguito `*p` (ottenendo l'oggetto `val`), quindi `++` incrementa il valore di `val` da 5 a 6. Il risultato dell'incremento prefisso diventa il valore aggiornato 6, quindi `res = 6` e `val = 6`.",
+        "Errato. Poiché `p` punta a `val`, l'incremento di `*p` modifica direttamente il valore di `val`.",
+        "Errato. L'incremento prefisso restituisce il valore già incrementato.",
+        "Errato. L'operazione di incremento modifica i dati in memoria."
+      ]
+    },
+    {
+      "id": "it_clang_1587",
+      "widget_id": null,
+      "topic": "Operatori per la gestione della memoria: & e *",
+      "q": "Quale struttura sintattica è strettamente equivalente all'espressione (*p).field quando si lavora con un puntatore a una struttura?",
+      "hint": "Per semplificare l'accesso ai campi di una struttura tramite puntatore, in C è stato introdotto l'operatore freccia.",
+      "options": [
+        "p->field",
+        "p.field",
+        "&p->field",
+        "*p->field"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `p->field` è zucchero sintattico completamente identico alla dereferenziazione di un puntatore a struttura e al successivo accesso al campo: `(*p).field`.",
+        "Errato. `p.field` causerebbe un errore di compilazione poiché `p` è un puntatore, non la struttura stessa.",
+        "Errato. `&p->field` otterrà l'indirizzo del campo della struttura.",
+        "Errato. `*p->field` otterrà prima il campo `field` tramite la freccia e tenterà di dereferenziarlo."
+      ]
+    },
+    {
+      "id": "it_clang_1588",
+      "widget_id": "widget_clang_1588",
+      "topic": "Operatori per la gestione della memoria: & e *",
+      "q": "A cosa sarà uguale la variabile a dopo l'esecuzione della scrittura tramite il doppio puntatore **pp = 30;?",
+      "hint": "Il puntatore pp punta al puntatore p, che punta alla variabile a.",
+      "options": [
+        "30",
+        "10",
+        "All'indirizzo della variabile p",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La prima dereferenziazione `*pp` restituisce il puntatore `p`. La seconda dereferenziazione `**pp` restituisce la variabile `a` stessa. La scrittura `**pp = 30` assegna alla variabile `a` il valore 30.",
+        "Errato. Il valore 10 viene sovrascritto dal nuovo valore 30.",
+        "Errato. `**pp` accede all'oggetto finale `a`, non ai puntatori.",
+        "Errato. L'assegnazione viene eseguita con successo e non azzera la variabile."
+      ]
+    },
+    {
+      "id": "it_clang_1589",
+      "widget_id": "widget_clang_1589",
+      "topic": "Operatori per la gestione della memoria: & e *",
+      "q": "A cosa saranno uguali la variabile x e il valore *p dopo l'esecuzione della riga int x = *p++;?",
+      "hint": "L'incremento postfisso ++ ha una precedenza maggiore rispetto alla dereferenziazione *, ma restituisce il VECCHIO valore del puntatore.",
+      "options": [
+        "x = 100, *p = 200",
+        "x = 200, *p = 200",
+        "x = 101, *p = 200",
+        "x = 100, *p = 100"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'incremento postfisso `++` ha la precedenza massima, quindi viene incrementato il puntatore `p` stesso. Tuttavia, l'operazione postfissa restituisce l'indirizzo precedente (`&arr[0]`). L'operatore `*` dereferenzia questo vecchio indirizzo, assegnando a `x` il valore 100. Successivamente, il puntatore `p` risulta già spostato su `arr[1]`, per cui `*p` equivale a 200.",
+        "Errato. L'incremento postfisso restituisce l'indirizzo precedente prima dello spostamento, quindi `x` riceve 100.",
+        "Errato. L'incremento sposta il puntatore `p` all'elemento successivo, non incrementa il numero 100.",
+        "Errato. Il puntatore `p` si sposta in avanti di un elemento e ora punta a 200."
+      ]
+    },
+    {
+      "id": "it_clang_1590",
+      "widget_id": null,
+      "topic": "Operatori per la gestione della memoria: & e *",
+      "q": "Quale regola di precedenza e associatività è corretta per gli operatori unari * (dereferenziazione) e & (estrazione di indirizzo)?",
+      "hint": "Ricorda in quale ordine vengono valutate le espressioni con più operatori unari (ad esempio *&x).",
+      "options": [
+        "Hanno un'elevata precedenza (superiore a quella degli aritmetici binari) e si associano da destra a sinistra (Right-to-Left)",
+        "Hanno la precedenza più bassa e si associano da sinistra a destra (Left-to-Right)",
+        "La loro precedenza è uguale a quella degli operatori binari di moltiplicazione (*) e AND logico (&)",
+        "Non hanno un'associatività fissa"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli operatori unari `*` e `&` si trovano al secondo livello di precedenza (subito dopo gli operatori postfissi `[]`, `()`, `.`, `->`) e hanno associatività da destra a sinistra.",
+        "Errato. Gli operatori unari hanno una precedenza molto alta e si associano da destra a sinistra.",
+        "Errato. Gli operatori binari `*` e `&` hanno una precedenza completamente diversa (più bassa) e associatività da sinistra a destra.",
+        "Errato. L'associatività degli operatori unari è rigorosamente stabilita dallo standard C."
+      ]
+    },
+    {
+      "id": "it_clang_1591",
+      "widget_id": "widget_clang_1591",
+      "topic": "Aritmetica dei puntatori e array monodimensionali",
+      "q": "Se l'indirizzo base dell'array arr è 0x2000 e sizeof(double) è di 8 byte, quale diventerà l'indirizzo nel puntatore p dopo l'operazione p = p + 2?",
+      "hint": "L'incremento del puntatore di N sposta l'indirizzo di N * sizeof(tipo) byte.",
+      "options": [
+        "0x2010 (spostamento di 16 byte)",
+        "0x2002 (spostamento di 2 byte)",
+        "0x2008 (spostamento di 8 byte)",
+        "0x2016 (spostamento di 22 byte)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'aritmetica dei puntatori funziona in unità di memoria (Storage units). Sommare 2 a un puntatore a `double` sposta l'indirizzo di 2 * 8 = 16 byte (in esadecimale 16 byte = 0x10). 0x2000 + 0x10 = 0x2010.",
+        "Errato. Il puntatore non si sposta di 2 byte, ma di 2 elementi di tipo `double`.",
+        "Errato. L'operazione `p + 1` sposta l'indirizzo di 8 byte.",
+        "Errato. Il calcolo dello spostamento viene eseguito come `2 * sizeof(double)`."
+      ]
+    },
+    {
+      "id": "it_clang_1592",
+      "widget_id": "widget_clang_1592",
+      "topic": "Aritmetica dei puntatori e array monodimensionali",
+      "q": "Quale delle seguenti espressioni è completamente equivalente alla notazione nums[2] secondo lo standard C?",
+      "hint": "L'operatore parentesi quadre in C è zucchero sintattico basato sull'aritmetica dei puntatori.",
+      "options": [
+        "*(nums + 2)",
+        "*nums + 2",
+        "&nums + 2",
+        "nums + 2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La notazione `a[i]` per definizione dello standard C si espande in `*(a + i)`. All'indirizzo base `nums` viene sommato uno offset di 2, dopodiché l'indirizzo ottenuto viene dereferenziato.",
+        "Errato. L'espressione `*nums + 2` legge il primo elemento `nums[0]` e somma al suo valore il numero 2.",
+        "Errato. `&nums + 2` esegue l'aritmetica con un puntatore all'intero array `int(*)[4]`.",
+        "Errato. `nums + 2` restituisce l'indirizzo del terzo elemento, non il suo valore."
+      ]
+    },
+    {
+      "id": "it_clang_1593",
+      "widget_id": "widget_clang_1593",
+      "topic": "Aritmetica dei puntatori e array monodimensionali",
+      "q": "A cosa sarà uguale la variabile x dopo l'esecuzione dell'espressione 2[arr]?",
+      "hint": "Ricorda la proprietà commutativa della somma: *(a + i) == *(i + a).",
+      "options": [
+        "15",
+        "Errore di compilazione: l'indice deve essere all'interno delle parentesi",
+        "10",
+        "5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `arr[2]` è equivalente a `*(arr + 2)`, e l'operazione di addizione è commutativa, `*(2 + arr)` è equivalente a `2[arr]`. Questa è una sintassi completamente valida in C, che restituirà l'elemento con indice 2 (il numero 15).",
+        "Errato. Il C consente questa notazione a causa dell'uguaglianza matematica `*(arr + i) == *(i + arr)`.",
+        "Errato. L'elemento con indice 2 è il terzo elemento dell'array (15), poiché l'indicizzazione parte da 0.",
+        "Errato. 5 è `arr[0]`."
+      ]
+    },
+    {
+      "id": "it_clang_1594",
+      "widget_id": "widget_clang_1594",
+      "topic": "Aritmetica dei puntatori e array monodimensionali",
+      "q": "Perché l'espressione p++ viene compilata con successo, mentre arr++ causa un errore di compilazione?",
+      "hint": "Distingui il concetto di puntatore-variabile modificabile dal nome dell'array inteso come indirizzo costante.",
+      "options": [
+        "Il nome dell'array arr è un lvalue non modificabile (un indirizzo costante del blocco di memoria), mentre p è una variabile modificabile",
+        "L'incremento degli array è vietato solo per il tipo int",
+        "Per incrementare un array occorre utilizzare uno speciale flag del compilatore",
+        "L'array arr memorizza i dati nello stack frame, che non può essere modificato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il nome dell'array `arr` è strettamente legato al blocco di memoria allocato e non è un lvalue modificabile (modifiable lvalue). Non è possibile modificare l'indirizzo a cui punta il nome dell'array. Il puntatore `p` è una variabile autonoma che memorizza un indirizzo, quindi può essere modificata (`p++`).",
+        "Errato. Questa è una regola del linguaggio C valida per qualsiasi tipo di array.",
+        "Errato. Nessun flag del compilatore rende il nome dell'array una variabile modificabile.",
+        "Errato. La questione non riguarda la memoria dello stack, ma il tipo dell'espressione `arr`."
+      ]
+    },
+    {
+      "id": "it_clang_1595",
+      "widget_id": "widget_clang_1595",
+      "topic": "Aritmetica dei puntatori e array monodimensionali",
+      "q": "A cosa sarà uguale la variabile diff dopo la sottrazione di due puntatori (p2 - p1)?",
+      "hint": "La sottrazione di due puntatori dello stesso tipo restituisce il numero di ELEMENTI tra di essi, non la differenza in byte.",
+      "options": [
+        "3",
+        "12",
+        "4",
+        "16"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sottrazione tra puntatori `p2 - p1` determina la distanza tra gli indirizzi in unità di elementi del tipo corrispondente (`ptrdiff_t`). Gli elementi si trovano agli indici 4 e 1, quindi la differenza è 4 - 1 = 3.",
+        "Errato. 12 è la differenza in byte (3 * 4 byte), ma la sottrazione tra puntatori divide automaticamente la differenza in byte per `sizeof(int)`.",
+        "Errato. Gli indici degli elementi sono: 4 e 1.",
+        "Errato. I valori degli elementi non influiscono sulla differenza dei loro indirizzi."
+      ]
+    },
+    {
+      "id": "it_clang_1596",
+      "widget_id": "widget_clang_1596",
+      "topic": "Aritmetica dei puntatori e array monodimensionali",
+      "q": "A cosa saranno uguali le variabili a e b dopo l'esecuzione di questo codice?",
+      "hint": "Considera la precedenza degli operatori: la dereferenziazione * ha una precedenza maggiore rispetto all'addizione binaria +.",
+      "options": [
+        "a = 102, b = 300",
+        "a = 300, b = 300",
+        "a = 102, b = 102",
+        "a = 200, b = 300"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In `*p + 2` avviene prima la dereferenziazione `*p` (100), poi viene sommato 2, ottenendo `a = 102`. In `*(p + 2)` viene prima calcolato l'indirizzo con offset 2 (`&data[2]`), poi avviene la dereferenziazione, ottenendo `b = 300`.",
+        "Errato. La prima espressione non sposta l'indirizzo, poiché non ci sono parentesi attorno a `p + 2`.",
+        "Errato. Le parentesi in `*(p + 2)` impongono lo spostamento del puntatore prima della dereferenziazione.",
+        "Errato. `*p` restituisce 100 (l'elemento `data[0]`), non 200."
+      ]
+    },
+    {
+      "id": "it_clang_1597",
+      "widget_id": null,
+      "topic": "Aritmetica dei puntatori e array monodimensionali",
+      "q": "Cosa determina il numero effettivo di byte di cui si sposta l'indirizzo durante l'operazione p + n?",
+      "hint": "Ogni \"unità di memoria\" nell'aritmetica dei puntatori è pari alla dimensione del tipo di destinazione.",
+      "options": [
+        "Il prodotto n * sizeof(*p)",
+        "Solo il numero n, poiché l'indirizzo si sposta sempre di n byte",
+        "L'architettura a bit del sistema operativo (4 o 8 byte)",
+        "La dimensione dell'intera memoria allocata dalla funzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il passo di spostamento dipende dal tipo di dati a cui fa riferimento il puntatore. Sommare `n` aumenta l'indirizzo di `n * sizeof(*p)` byte.",
+        "Errato. Uno spostamento diretto in byte si verifica solo per i puntatori di tipo `char*` o `uint8_t*`, dove `sizeof` è pari a 1.",
+        "Errato. L'architettura del sistema operativo determina la dimensione del puntatore stesso, non il passo di spostamento nell'addizione.",
+        "Errato. La dimensione della memoria allocata non influisce sulla formula di spostamento del puntatore."
+      ]
+    },
+    {
+      "id": "it_clang_1598",
+      "widget_id": null,
+      "topic": "Aritmetica dei puntatori e array monodimensionali",
+      "q": "Quale delle seguenti operazioni con due puntatori p1 e p2 di tipo int* è VIETATA nel linguaggio C e causerà un errore di compilazione?",
+      "hint": "Rifletti se ha senso fisico la somma di due indirizzi di memoria (ad esempio 0x1000 + 0x2000).",
+      "options": [
+        "Somma di due puntatori: p1 + p2",
+        "Sottrazione di due puntatori: p1 - p2",
+        "Confronto di uguaglianza tra puntatori: p1 == p2",
+        "Confronto maggiore/minore tra puntatori: p1 > p2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La somma di due indirizzi di memoria non ha alcun senso fisico o matematico nella programmazione, pertanto l'operazione `p1 + p2` è vietata dallo standard C. Tuttavia, la sottrazione (`p1 - p2`) e qualsiasi operazione di confronto sono assolutamente legali.",
+        "Errato. La sottrazione tra puntatori è legale e restituisce la differenza in elementi (`ptrdiff_t`).",
+        "Errato. Il confronto di uguaglianza viene spesso utilizzato (ad esempio per verificare rispetto a `NULL` o alla fine di un array).",
+        "Errato. Il confronto degli indirizzi tramite `>` o `<` è consentito se i puntatori fanno riferimento a elementi dello stesso array."
+      ]
+    },
+    {
+      "id": "it_clang_1599",
+      "widget_id": "widget_clang_1599",
+      "topic": "Aritmetica dei puntatori e array monodimensionali",
+      "q": "A cosa sarà uguale la variabile val quando si utilizza un indice negativo nell'espressione p[-1]?",
+      "hint": "L'espressione p[-1] si espande in *(p - 1).",
+      "options": [
+        "20",
+        "10",
+        "30",
+        "Errore a tempo di esecuzione (Segmentation Fault)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `p[-1]` è equivalente a `*(p - 1)`. Poiché `p` punta ad `arr[2]` (con valore 30), l'offset `-1` passa all'elemento `arr[1]`, il cui valore è 20.",
+        "Errato. 10 è `arr[0]`, che corrisponde a `p[-2]`.",
+        "Errato. 30 è l'elemento corrente `p[0]`.",
+        "Errato. L'indicizzazione negativa è completamente legale se l'indirizzo ottenuto rientra nei limiti dell'array allocato."
+      ]
+    },
+    {
+      "id": "it_clang_1600",
+      "widget_id": null,
+      "topic": "Aritmetica dei puntatori e array monodimensionali",
+      "q": "Qual è la differenza fondamentale tra i risultati di sizeof(arr) e sizeof(p) per il codice presentato?",
+      "hint": "Un array conserva l'informazione sulla sua dimensione totale all'interno del suo scope, a differenza di un puntatore.",
+      "options": [
+        "sizeof(arr) restituirà la dimensione totale dell'intero array in byte (10 * sizeof(int)), mentre sizeof(p) restituirà la dimensione della variabile puntatore (4 o 8 byte)",
+        "Entrambe le operazioni restituiranno lo stesso risultato, poiché p punta ad arr",
+        "sizeof(arr) causerà un errore di compilazione",
+        "sizeof(p) restituirà 10 (il numero di elementi)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `sizeof(arr)` rileva la dichiarazione dell'array e calcola la dimensione totale di tutti i suoi elementi in byte. La variabile `p` è un puntatore, quindi `sizeof(p)` restituisce solo la dimensione dell'indirizzo stesso (4 byte su sistemi a 32 bit o 8 byte su sistemi a 64 bit).",
+        "Errato. Il nome dell'array e il puntatore sono oggetti di natura diversa dal punto di vista di `sizeof`.",
+        "Errato. `sizeof(arr)` è completamente valido per un array di dimensione nota.",
+        "Errato. `sizeof` restituisce la dimensione in byte, non il numero di elementi, e per `p` non dipende dalla dimensione dell'array."
+      ]
+    }
+  ]
+}

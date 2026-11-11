@@ -1,0 +1,603 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_1721",
+      "widget_id": "widget_clang_1721",
+      "topic": "Array con tappo / sentinel",
+      "q": "Cos'è un «tappo» (tappo / sentinel value) nel contesto dell'elaborazione degli array in C?",
+      "hint": "Pensa a come determinare la fine dei dati in un array se la dimensione esplicita non è stata passata alla funzione.",
+      "options": [
+        "Un valore speciale riservato, posizionato dopo l'ultimo elemento valido, che permette di determinare la fine dei dati senza passare esplicitamente la dimensione dell'array",
+        "Un meccanismo di protezione hardware del processore che impedisce la sovrascrittura della memoria",
+        "Una variabile che memorizza il numero totale di byte allocati nel primo elemento dell'array",
+        "Un puntatore NULL che viene obbligatoriamente impostato prima della prima cella dell'array"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un tappo (sentinel/tappo) è un valore unico concordato (ad esempio `-1`, `NULL` o `'\\0'`) che segnala ai cicli la fine della sequenza di dati utili.",
+        "Errato. Un tappo è un concetto logico a livello di codice, non una protezione hardware della CPU.",
+        "Errato. La dimensione dell'array non viene scritta automaticamente nel primo elemento in C.",
+        "Errato. Il marcatore di fine viene inserito alla *fine* dei dati utili, non all'inizio."
+      ]
+    },
+    {
+      "id": "it_clang_1722",
+      "widget_id": "widget_clang_1722",
+      "topic": "Array con tappo / sentinel",
+      "q": "Quale tipo di dati fondamentale nel linguaggio C è un classico esempio di utilizzo di un array con tappo?",
+      "hint": "Quale struttura dati in C termina sempre con un byte di valore 0?",
+      "options": [
+        "Le stringhe C (array di char), che terminano con il carattere nullo '\\0' (ASCII 0)",
+        "Le matrici dinamiche bidimensionali",
+        "Gli array di numeri a virgola mobile float",
+        "Le enumerazioni enum"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le stringhe C sono il principale esempio di array con tappo. Tutte le funzioni per la gestione delle stringhe (`strlen`, `strcpy`, `printf(\"%s\")`) cercano il carattere terminale `'\\0'` per determinare la fine della stringa.",
+        "Errato. Le matrici bidimensionali richiedono il passaggio delle dimensioni o l'uso dei VLA.",
+        "Errato. Per gli array numerici non esistono tappi predefiniti di default.",
+        "Errato. Le enumerazioni non sono array in memoria."
+      ]
+    },
+    {
+      "id": "it_clang_1723",
+      "widget_id": "widget_clang_1723",
+      "topic": "Array parzialmente riempiti",
+      "q": "Qual è la differenza tra i concetti di «capacità» (Capacity) e «dimensione attuale» (Size / Count) per un array parzialmente riempito?",
+      "hint": "Confronta la quantità massima di memoria allocata per il buffer e il numero di elementi effettivamente scritti.",
+      "options": [
+        "La capacità (Capacity) è il numero massimo di elementi che possono essere contenuti nel buffer allocato, mentre la dimensione (Size) è il numero di dati effettivamente scritti fino a quel momento",
+        "La capacità si misura in byte, mentre la dimensione nel numero di colonne",
+        "La capacità si usa per lavorare con lo stack, mentre la dimensione solo con lo heap",
+        "Questi termini sono completi sinonimi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando si lavora con array parzialmente riempiti, viene allocato un buffer fisso per `Capacity` elementi, ma vengono elaborati solo i primi `Size` elementi ($Size \\le Capacity$).",
+        "Errato. Sia la capacità che la dimensione si misurano nel numero di elementi dello stesso tipo.",
+        "Errato. Il concetto si applica a qualsiasi tipo di memoria (sia stack che heap).",
+        "Errato. La capacità indica il limite del buffer, mentre la dimensione indica il riempimento attuale."
+      ]
+    },
+    {
+      "id": "it_clang_1724",
+      "widget_id": "widget_clang_1724",
+      "topic": "Array con tappo / sentinel",
+      "q": "A quale pericolosa conseguenza porta l'assenza o il danneggiamento del marcatore di fine (tappo) in un array durante l'esecuzione di un ciclo di lettura?",
+      "hint": "Il ciclo si fermerà in tempo se il marcatore -1 è assente?",
+      "options": [
+        "Si verificherà uno sconfinamento oltre i limiti dell'array (Buffer Overread / Undefined Behavior), poiché il ciclo continuerà a leggere altre celle di memoria alla ricerca del marcatore",
+        "Il compilatore solleverà un'eccezione durante l'esecuzione",
+        "L'array verrà automaticamente riempito di zeri",
+        "Il ciclo entrerà in un loop infinito sul primo elemento"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se il marcatore è assente, la condizione di arresto del ciclo non si verificherà. La funzione andrà oltre i limiti dell'array allocato, leggendo dati spazzatura dalla memoria, il che causerà un Segmentation Fault o una falla di sicurezza (Out-of-bounds Read).",
+        "Errato. In C non esistono eccezioni a runtime integrate.",
+        "Errato. Non si verifica alcun riempimento automatico della memoria in caso di errore.",
+        "Errato. Il puntatore continuerà a spostarsi in avanti nella memoria."
+      ]
+    },
+    {
+      "id": "it_clang_1725",
+      "widget_id": "widget_clang_1725",
+      "topic": "Array con tappo / sentinel",
+      "q": "Qual è il vantaggio principale dell'ottimizzazione «Ricerca con barriera» (Sentinel Search) nella ricerca lineare di un elemento in un array?",
+      "hint": "Quale condizione nel ciclo `while (i < n && arr[i] != target)` si riesce ad eliminare?",
+      "options": [
+        "Viene eliminato il controllo costante dell'uscita dai limiti dell'array (i < n) a ogni iterazione del ciclo, poiché la barriera garantisce la corrispondenza",
+        "La complessità della ricerca si riduce a quella logaritmica O(log N)",
+        "L'algoritmo esegue automaticamente calcoli paralleli",
+        "Non è richiesta l'allocazione di memoria per l'array"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Scrivendo l'elemento cercato `target` in `arr[n]`, garantiamo che il ciclo `while (arr[i] != target)` si fermi sicuramente. Ciò risparmia un salto condizionale `i < n` ad ogni passo del ciclo, velocizzando notevolmente la scansione.",
+        "Errato. L'algoritmo rimane lineare $O(N)$, ma con una costante di tempo inferiore.",
+        "Errato. La Sentinel search è un algoritmo sequenziale single-thread.",
+        "Errato. L'array deve avere uno spazio aggiuntivo di 1 cella per ospitare la barriera."
+      ]
+    },
+    {
+      "id": "it_clang_1726",
+      "widget_id": "widget_clang_1726",
+      "topic": "Array con tappo / sentinel",
+      "q": "Quale regola fondamentale deve essere rispettata quando si sceglie un valore per il ruolo di tappo (sentinel)?",
+      "hint": "Cosa succede se il valore del marcatore coincide con i dati utili (ad esempio, il marcatore 0 in un array con zeri validi)?",
+      "options": [
+        "Il valore scelto per il marcatore NON deve assolutamente essere un elemento valido compreso nell'intervallo dei dati di input ammissibili",
+        "Il marcatore deve essere obbligatoriamente un numero negativo",
+        "Il marcatore deve essere il valore massimo del tipo INT_MAX",
+        "Il marcatore deve essere un numero pari"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se si sceglie come marcatore un numero che può comparire tra i dati reali (ad esempio `0` in un array di temperature), l'elaborazione dell'array terminerà erroneamente in anticipo.",
+        "Errato. Ad esempio, per le stringhe C il marcatore è il byte nullo `'\\0'`, che non è negativo.",
+        "Errato. Il valore specifico dipende dal contesto del problema.",
+        "Errato. La parità non ha alcuna importanza."
+      ]
+    },
+    {
+      "id": "it_clang_1727",
+      "widget_id": "widget_clang_1727",
+      "topic": "Array con tappo / sentinel",
+      "q": "Quante celle di memoria occorre allocare per un array se si pianifica di memorizzare N elementi utili e utilizzare un marcatore di fine (sentinel)?",
+      "hint": "Ricorda lo spazio aggiuntivo per il tappo stesso.",
+      "options": [
+        "N + 1 celle, poiché il marcatore stesso occupa una posizione aggiuntiva alla fine",
+        "Esattamente N celle, il marcatore sovrascrive l'ultimo elemento",
+        "2 * N celle",
+        "N - 1 celle"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il marcatore di fine viene memorizzato subito dopo l'ultimo elemento utile. Pertanto, il buffer deve contenere $N + 1$ elementi (come ad esempio una stringa di 5 lettere che richiede `char[6]` per `'\\0'`).",
+        "Errato. Se si scrive il marcatore sopra l'ultimo elemento, i dati utili andranno persi.",
+        "Errato. Non è necessario un margine di memoria doppio.",
+        "Errato. $N - 1$ celle taglierebbero i dati."
+      ]
+    },
+    {
+      "id": "it_clang_1728",
+      "widget_id": "widget_clang_1728",
+      "topic": "Array con tappo / sentinel",
+      "q": "Quale valore funge da tappo comunemente accettato negli array di puntatori (ad esempio, nell'array char *words[] o nel parametro envp della funzione main)?",
+      "hint": "Quale valore speciale indica un puntatore non valido in C?",
+      "options": [
+        "Il puntatore NULL",
+        "La stringa vuota \"\"",
+        "L'indirizzo del primo elemento dell'array",
+        "Un puntatore con valore (void*)-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C, gli array di puntatori (inclusi gli elenchi di argomenti della riga di comando, i vettori delle chiamate di sistema `exec`, ecc.) terminano sempre con un puntatore nullo `NULL`.",
+        "Errato. La stringa vuota `\"\"` è un puntatore valido a un byte `'\\0'`, non un puntatore nullo.",
+        "Errato. L'indirizzo del primo elemento creerebbe una dipendenza circolare.",
+        "Errato. Il marcatore standard per i puntatori è `NULL`."
+      ]
+    },
+    {
+      "id": "it_clang_1729",
+      "widget_id": "widget_clang_1729",
+      "topic": "Array parzialmente riempiti",
+      "q": "Quale controllo obbligatorio occorre eseguire prima di aggiungere un elemento a un array parzialmente riempito di capacità fissa CAP?",
+      "hint": "Cosa succede tentando di fare arr[count++] = val se count è già uguale a CAP?",
+      "options": [
+        "Verificare che la dimensione attuale sia strettamente inferiore alla capacità (count < CAP), per evitare l'overflow del buffer",
+        "Verificare che il valore da aggiungere sia maggiore di 0",
+        "Verificare che count sia uguale a 0",
+        "Verificare che l'array sia allineato al limite di 16 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un tentativo di aggiungere un elemento quando `count >= CAP` porterà all'uscita dai limiti dell'array allocato (Buffer Overflow). Il controllo `count < CAP` garantisce la sicurezza della scrittura.",
+        "Errato. Il valore dell'elemento da aggiungere può essere qualsiasi.",
+        "Errato. Gli elementi vengono aggiunti anche quando `count > 0`.",
+        "Errato. L'allineamento non protegge dallo sconfinamento oltre la capacità del buffer."
+      ]
+    },
+    {
+      "id": "it_clang_1730",
+      "widget_id": "widget_clang_1730",
+      "topic": "Array con tappo / sentinel",
+      "q": "Qual è il principale svantaggio dell'uso di un marcatore di fine (tappo) rispetto al passaggio esplicito della dimensione dell'array int size alla funzione?",
+      "hint": "Pensa alla complessità del calcolo della lunghezza O(N) e all'impossibilità di usare il valore scelto del marcatore nei dati.",
+      "options": [
+        "La necessità di impiegare un tempo O(N) per scorrere l'array al fine di calcolarne la lunghezza e l'impossibilità di memorizzare il valore marcatore scelto come dato valido",
+        "Il marcatore di fine occupa 10 volte più memoria rispetto a una variabile size",
+        "Una funzione con marcatore di fine viene compilata solo in C11",
+        "Il passaggio della dimensione size proibisce la modifica degli elementi dell'array"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per conoscere la lunghezza di un array con marcatore occorre leggere tutti gli elementi fino al marcatore ($O(N)$ passaggi), mentre con `size` nota la lunghezza si ottiene in $O(1)$. Inoltre, il marcatore «consuma» un valore dall'alfabeto dei dati ammissibili.",
+        "Errato. Il marcatore occupa esattamente 1 cella del tipo di elementi (ad esempio, 1 byte per char o 4 byte per int).",
+        "Errato. I marcatori di fine funzionano in tutti gli standard del C fin da K&R C.",
+        "Errato. Il passaggio della dimensione non limita in alcun modo il diritto di modificare gli elementi."
+      ]
+    },
+    {
+      "id": "it_clang_1731",
+      "widget_id": "widget_clang_1731",
+      "topic": "Array con tappo -1",
+      "q": "Quale risultato stamperà il programma durante la scansione dell'array con marcatore di fine -1?",
+      "hint": "Calcola la somma degli elementi finché non si incontra il valore -1.",
+      "options": [
+        "100",
+        "99",
+        "10",
+        "Si verificherà un errore di Segmentation Fault"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo somma gli elementi 10 + 20 + 30 + 40 = 100 e termina immediatamente a `arr[4] == -1`, senza includere il marcatore stesso nella somma.",
+        "Errato. Il marcatore `-1` non partecipa all'addizione.",
+        "Errato. Il ciclo esegue 4 iterazioni.",
+        "Errato. L'array è terminato correttamente con il tappo `-1`."
+      ]
+    },
+    {
+      "id": "it_clang_1732",
+      "widget_id": "widget_clang_1732",
+      "topic": "Array con tappo -1",
+      "q": "Cosa succede alla chiamata della funzione process(data) se in un array parzialmente riempito non è stato impostato il marcatore -1?",
+      "hint": "L'inizializzazione parziale riempie i restanti elementi con zeri. {1, 2, 3, 0, 0} contiene il marcatore -1?",
+      "options": [
+        "La funzione uscirà dai limiti dell'array e continuerà a leggere la memoria alla ricerca di -1 (Undefined Behavior)",
+        "Il ciclo si fermerà al valore 0",
+        "Il compilatore inserirà -1 alla fine automaticamente",
+        "Il programma stamperà 1 2 3 e terminerà con successo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con l'inizializzazione `{1, 2, 3}` gli elementi `data[3]` e `data[4]` diventano pari a `0`. Poiché il marcatore `-1` non c'è, la condizione `arr[i] != -1` rimarrà vera e la funzione andrà a leggere altre celle di memoria.",
+        "Errato. La condizione di uscita è `!= -1`, quindi su `0` il ciclo non si interromperà.",
+        "Errato. Il C non inserisce automaticamente marcatori arbitrari.",
+        "Errato. L'output non si fermerà dopo 3 elementi."
+      ]
+    },
+    {
+      "id": "it_clang_1733",
+      "widget_id": "widget_clang_1733",
+      "topic": "Array con tappo -1",
+      "q": "Quale indice occorre specificare al posto di ??? per impostare correttamente il marcatore -1 subito dopo count elementi inseriti?",
+      "hint": "Gli elementi dell'array sono numerati da 0 a count - 1.",
+      "options": [
+        "count",
+        "count - 1",
+        "count + 1",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Avendo scritto `count` elementi, questi occuperanno gli indici da `0` a `count - 1`. Di conseguenza, la prima cella libera per il tappo si trova all'indice `count`.",
+        "Errato. `count - 1` sovrascriverebbe l'ultimo elemento valido dei dati.",
+        "Errato. `count + 1` salterebbe una cella, lasciandovi spazzatura non inizializzata.",
+        "Errato. `0` sovrascriverebbe il primo elemento."
+      ]
+    },
+    {
+      "id": "it_clang_1734",
+      "widget_id": "widget_clang_1734",
+      "topic": "Array con tappo -1",
+      "q": "Perché il valore -1 si è rivelato una cattiva scelta per il ruolo di tappo (sentinel) in questo codice?",
+      "hint": "Fai attenzione al valore -1 al centro dell'array delle temperature.",
+      "options": [
+        "Il valore -1 è presente tra i dati validi (-1°C), motivo per cui l'elaborazione dell'array terminerà prematuramente",
+        "Il tipo int non può memorizzare numeri negativi",
+        "La dimensione dell'array temps supera il limite consentito",
+        "L'uso di marcatori negativi è vietato dallo standard C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il tappo deve essere un valore unico, non ammissibile nello spazio dei dati. Poiché `-1` è una temperatura valida, il ciclo si fermerà al 4° elemento senza elaborare i restanti.",
+        "Errato. `int` è un tipo con segno e memorizza perfettamente i numeri negativi.",
+        "Errato. La dimensione dell'array qui non c'entra.",
+        "Errato. Lo standard C non impone tali limitazioni."
+      ]
+    },
+    {
+      "id": "it_clang_1735",
+      "widget_id": "widget_clang_1735",
+      "topic": "Array con tappo -1",
+      "q": "Qual è la complessità temporale (Time Complexity) della funzione di calcolo della lunghezza dell'array get_length con tappo -1?",
+      "hint": "Quante iterazioni occorre fare per conoscere la lunghezza di un array di N elementi?",
+      "options": [
+        "O(N) — tempo lineare, poiché è necessaria una scansione sequenziale di tutti gli elementi fino al marcatore",
+        "O(1) — tempo costante",
+        "O(log N) — tempo logaritmico",
+        "O(N^2) — tempo quadratico"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché la dimensione dell'array non è nota a priori, la funzione deve verificare sequenzialmente ogni elemento fino a incontrare `-1`. Ciò richiede $N$ passaggi ($O(N)$).",
+        "Errato. $O(1)$ è possibile solo se la dimensione è memorizzata in una variabile separata.",
+        "Errato. Per $O(\\log N)$ occorre una ricerca binaria su una struttura ordinata.",
+        "Errato. Non ci sono cicli annidati."
+      ]
+    },
+    {
+      "id": "it_clang_1736",
+      "widget_id": "widget_clang_1736",
+      "topic": "Array con tappo -1",
+      "q": "Quale valore stamperà il programma a causa dell'uso dell'incremento postfisso arr[i++] nella condizione del ciclo?",
+      "hint": "Segui quante volte verrà eseguito i++ nel momento in cui arr[i] risulterà uguale a -1.",
+      "options": [
+        "3",
+        "2",
+        "1",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Iterazione 1: viene controllato `arr[0]` (10), `i` diventa 1. Iterazione 2: viene controllato `arr[1]` (20), `i` diventa 2. Iterazione 3: viene controllato `arr[2]` (-1), la condizione è falsa, ma l'incremento postfisso aumenta comunque `i` a 3.",
+        "Errato. L'incremento si attiva anche durante il controllo dell'elemento terminatore.",
+        "Errato. Il ciclo eseguirà più iterazioni.",
+        "Errato. La variabile `i` aumenta a ogni passo."
+      ]
+    },
+    {
+      "id": "it_clang_1737",
+      "widget_id": "widget_clang_1737",
+      "topic": "Array con tappo -1",
+      "q": "Quale operazione critica viene eseguita nella riga *dest = -1 dopo il completamento del ciclo principale di copia?",
+      "hint": "L'array di destinazione sarà considerato un array valido con tappo se non si scrive -1 alla fine?",
+      "options": [
+        "La scrittura del marcatore terminatore -1 nell'array di destinazione, affinché anch'esso sia terminato correttamente",
+        "La pulizia dell'array sorgente src",
+        "Il ripristino del puntatore dest a NULL",
+        "Il controllo dell'overflow dello stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo principale copia solo i dati utili. Se alla fine di `dest` non si aggiunge `-1`, l'array di destinazione rimarrà «incompleto» e la sua successiva elaborazione porterà allo sconfinamento dai limiti.",
+        "Errato. L'array sorgente `src` non viene modificato.",
+        "Errato. Al puntatore viene assegnato il valore dereferenziato all'indirizzo, non l'indirizzo stesso.",
+        "Errato. Questa riga non esegue un controllo dello stack."
+      ]
+    },
+    {
+      "id": "it_clang_1738",
+      "widget_id": "widget_clang_1738",
+      "topic": "Array con tappo -1",
+      "q": "Quanti byte di memoria allocherà la chiamata malloc((n + 1) * sizeof(int)) per 10 elementi con marcatore -1 (con sizeof(int) = 4)?",
+      "hint": "Moltiplica il numero di elementi (incluso il marcatore) per la dimensione di un singolo int.",
+      "options": [
+        "44 byte",
+        "40 byte",
+        "11 byte",
+        "10 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Occorre allocare spazio per 10 numeri e 1 marcatore (in totale 11 elementi). Con `sizeof(int) = 4` otteniamo $11 \\times 4 = 44$ byte.",
+        "Errato. 40 byte basterebbero solo per 10 elementi, senza spazio per il marcatore `-1`.",
+        "Errato. 11 è il numero di elementi, non di byte.",
+        "Errato. È solo il numero degli elementi utili."
+      ]
+    },
+    {
+      "id": "it_clang_1739",
+      "widget_id": "widget_clang_1739",
+      "topic": "Array con tappo -1",
+      "q": "Quale azione esegue la funzione filter_even durante l'elaborazione dell'array src?",
+      "hint": "Guarda la condizione *src % 2 == 0 e il completamento della scrittura con il marcatore -1.",
+      "options": [
+        "Filtra e copia solo i numeri pari da src a dest, mantenendo la struttura dell'array con marcatore -1",
+        "Copia gli elementi con indici pari",
+        "Moltiplica tutti gli elementi dell'array per 2",
+        "Rimuove tutti gli elementi -1 dall'array dest"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La condizione `*src % 2 == 0` seleziona i valori pari, li trasferisce in `dest` e, dopo la scansione di tutto `src` (fino al primo `-1`), inserisce il marcatore `-1` alla fine del `dest` creato.",
+        "Errato. Viene controllato il valore dell'elemento `*src`, non il suo indice.",
+        "Errato. Non ci sono operazioni di moltiplicazione nel codice.",
+        "Errato. La funzione al contrario garantisce la presenza di `-1` alla fine di `dest`."
+      ]
+    },
+    {
+      "id": "it_clang_1740",
+      "widget_id": "widget_clang_1740",
+      "topic": "Array con tappo -1",
+      "q": "Cosa stamperà il programma accedendo all'elemento data[5] dell'array int data[10] = {5, 10, 15, -1}?",
+      "hint": "Ricorda il comportamento standard del C durante l'inizializzazione parziale di un array.",
+      "options": [
+        "0",
+        "-1",
+        "Dati casuali spazzatura dalla memoria",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, se un array è inizializzato parzialmente, tutti gli elementi non specificati esplicitamente (dall'indice 4 all'indice 9) vengono automaticamente azzerati.",
+        "Errato. Il valore `-1` si trova all'indice `data[3]`. All'indice `5` si trova `0`.",
+        "Errato. La spazzatura rimane solo negli array locali *completamente* non inizializzati.",
+        "Errato. La sintassi è assolutamente corretta."
+      ]
+    },
+    {
+      "id": "it_clang_1741",
+      "widget_id": "widget_clang_1741",
+      "topic": "Array vuoto con tappo",
+      "q": "Come viene inizializzato un array vuoto di interi che utilizza -1 come tappo (sentinel)?",
+      "hint": "Non ci sono elementi utili, quindi il marcatore di fine deve trovarsi nella primissima cella (all'indice 0).",
+      "options": [
+        "int empty_arr[] = {-1};",
+        "int empty_arr[] = {};",
+        "int empty_arr[] = {0};",
+        "int empty_arr[0] = {-1};"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In un array vuoto con tappo, il marcatore `-1` si inserisce all'indice `0`. Non ci sono elementi utili, ma l'array è valido e sicuro da scorrere.",
+        "Errato. Le graffe vuote `{}` non sono consentite dallo standard C (a differenza del C++).",
+        "Errato. La scrittura `{0}` inserirà il numero `0` all'indice `0`, che non è il marcatore `-1`.",
+        "Errato. La dichiarazione di un array di dimensione zero `arr[0]` è vietata dallo standard ISO C."
+      ]
+    },
+    {
+      "id": "it_clang_1742",
+      "widget_id": "widget_clang_1742",
+      "topic": "Array vuoto con tappo",
+      "q": "Qual è la dimensione in byte (sizeof) di una stringa C vuota char empty_str[] = \"\"?",
+      "hint": "Ricorda che una stringa vuota contiene esattamente un carattere nascosto: il terminatore nullo '\\0'.",
+      "options": [
+        "1 byte",
+        "0 byte",
+        "4 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La stringa vuota `\"\"` contiene 0 caratteri utili e 1 carattere di delimitazione `'\\0'`. La dimensione di `char` è 1 byte, quindi `sizeof(empty_str)` restituirà `1`.",
+        "Errato. Un array non può occupare 0 byte, in quanto contiene il byte terminatore `'\\0'`.",
+        "Errato. `char` occupa 1 byte, non 4."
+      ]
+    },
+    {
+      "id": "it_clang_1743",
+      "widget_id": "widget_clang_1743",
+      "topic": "Array vuoto con tappo",
+      "q": "A quanto ammonterà il valore di count dopo l'esecuzione del ciclo di scansione dell'array vuoto int arr[] = {-1};?",
+      "hint": "Quante iterazioni farà il ciclo se già il primo elemento arr[0] è uguale a -1?",
+      "options": [
+        "0",
+        "1",
+        "-1",
+        "Undefined Behavior",
+        "Ciclo infinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Già al primo controllo `arr[0] != -1` la condizione risulta falsa (`-1 != -1` -> false). Il ciclo esegue 0 iterazioni e `count` rimane pari a 0.",
+        "Errato. Il ciclo non eseguirà alcuna iterazione.",
+        "Errato. La variabile `count` è stata inizializzata a zero e non è stata modificata.",
+        "Errato. La lettura della cella esistente `arr[0]` è completamente corretta.",
+        "Errato. La condizione di arresto scatta immediatamente."
+      ]
+    },
+    {
+      "id": "it_clang_1744",
+      "widget_id": "widget_clang_1744",
+      "topic": "Array vuoto con tappo",
+      "q": "Quanti elementi di tipo int occorre allocare tramite malloc per creare un array dinamico vuoto con tappo -1?",
+      "hint": "Calcola il numero minimo di celle necessarie per posizionare il marcatore stesso.",
+      "options": [
+        "1 elemento",
+        "0 elementi",
+        "2 elementi",
+        "Dipende dall'architettura del sistema"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Anche per un array vuoto occorre 1 cella di memoria per potervi scrivere il marcatore `-1` (`arr[0] = -1`).",
+        "Errato. L'allocazione di 0 elementi non consentirà di scrivere il marcatore di fine.",
+        "Errato. La seconda cella è ridondante, in quanto non vi sono elementi utili.",
+        "Errato. Il numero di celle è logicamente pari a 1 indipendentemente dall'architettura."
+      ]
+    },
+    {
+      "id": "it_clang_1745",
+      "widget_id": "widget_clang_1745",
+      "topic": "Array vuoto con tappo",
+      "q": "È vero che la dereferenziazione di un puntatore a un array vuoto con tappo (*empty_arr) causerà il crash del programma (Segmentation Fault), analogamente alla dereferenziazione di NULL?",
+      "hint": "empty_arr punta a una zona di memoria allocata?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. La dereferenziazione di `NULL` causerà un crash, tuttavia `empty_arr` punta a un indirizzo valido in memoria in cui è memorizzato il valore `-1`. L'espressione `*empty_arr` restituirà in sicurezza `-1`.",
+        "Corretto! `empty_arr` è un array valido in memoria composto da 1 elemento. La sua dereferenziazione è assolutamente sicura e restituisce il marcatore `-1`."
+      ]
+    },
+    {
+      "id": "it_clang_1746",
+      "widget_id": "widget_clang_1746",
+      "topic": "Array vuoto con tappo",
+      "q": "Come si inizializza correttamente un array vuoto di puntatori a stringhe (char *empty_list[]) che utilizza NULL come marcatore di fine?",
+      "hint": "Il puntatore nullo deve trovarsi nella prima cella dell'array.",
+      "options": [
+        "char *empty_list[] = {NULL};",
+        "char *empty_list[] = {\"\"};",
+        "char *empty_list[] = {};",
+        "char *empty_list = NULL;"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `empty_list` è un array di 1 elemento di tipo `char*` contenente `NULL` alla posizione 0. Si tratta di un array vuoto di puntatori con tappo valido.",
+        "Errato. `\"\"` non è `NULL`, ma un puntatore a una stringa vuota presente in memoria.",
+        "Errato. La sintassi `{}` non è valida in C.",
+        "Errato. Si tratta della dichiarazione di un singolo puntatore, non di un array di puntatori."
+      ]
+    },
+    {
+      "id": "it_clang_1747",
+      "widget_id": "widget_clang_1747",
+      "topic": "Array vuoto con tappo",
+      "q": "Quale espressione in O(1) verifica se un array con tappo -1 contiene almeno un elemento utile?",
+      "hint": "Se il primo elemento è uguale al marcatore, significa che non ci sono dati utili.",
+      "options": [
+        "arr[0] != -1",
+        "sizeof(arr) > 0",
+        "arr == NULL",
+        "strlen(arr) > 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se `arr[0] != -1`, significa che nella prima posizione si trova un valore utile e l'array non è vuoto. La verifica viene eseguita in tempo costante $O(1)$.",
+        "Errato. `sizeof` per un array decaduto a puntatore restituirà la dimensione del puntatore (4/8 byte), non il numero di elementi.",
+        "Errato. Il puntatore a un array vuoto non è uguale a `NULL`.",
+        "Errato. La funzione `strlen` è destinata esclusivamente alle stringhe C (`char*`), non agli array numerici."
+      ]
+    },
+    {
+      "id": "it_clang_1748",
+      "widget_id": "widget_clang_1748",
+      "topic": "Array vuoto con tappo",
+      "q": "Quale sequenza di azioni aggiunge correttamente il primo elemento 42 a un array vuoto int arr[10] = {-1};?",
+      "hint": "Il nuovo valore deve prendere il posto del vecchio marcatore, e il marcatore deve spostarsi nella cella successiva.",
+      "options": [
+        "arr[0] = 42; arr[1] = -1;",
+        "arr[1] = 42;",
+        "arr[0] = -1; arr[1] = 42;"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il marcatore iniziale all'indice `0` viene sovrascritto con il valore `42`, e il nuovo marcatore `-1` viene posto subito dopo all'indice `1`.",
+        "Errato. La scrittura in `arr[1]` lascerebbe il marcatore `-1` all'indice `0`, quindi gli algoritmi di scansione considererebbero ancora l'array vuoto.",
+        "Errato. Questo lascerebbe l'array vuoto e sovrascriverebbe il valore in `arr[1]` con il marcatore `42`."
+      ]
+    },
+    {
+      "id": "it_clang_1749",
+      "widget_id": "widget_clang_1749",
+      "topic": "Array vuoto con tappo",
+      "q": "Cosa stamperà il programma tentando di leggere l'elemento arr[0] di un array vuoto int arr[] = {-1};?",
+      "hint": "Quale valore è realmente memorizzato nella prima cella di questo array?",
+      "options": [
+        "-1",
+        "0",
+        "Dati spazzatura dalla memoria",
+        "Errore di Segmentation Fault"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella cella `arr[0]` è stato scritto esplicitamente il valore `-1`, pertanto il programma stamperà in sicurezza `-1`.",
+        "Errato. Il valore esplicito all'inizializzazione è `-1`, non `0`.",
+        "Errato. La memoria dell'array è stata inizializzata esplicitamente.",
+        "Errato. L'accesso avviene a una cella allocata e inizializzata."
+      ]
+    },
+    {
+      "id": "it_clang_1750",
+      "widget_id": "widget_clang_1750",
+      "topic": "Array vuoto con tappo",
+      "q": "In cosa consiste il pericolo di utilizzare un array non inizializzato int uninit[5]; come se fosse un «array vuoto con tappo»?",
+      "hint": "Una variabile automatica senza inizializzatore garantisce la presenza del valore -1 in memoria?",
+      "options": [
+        "Un array locale non inizializzato contiene dati spazzatura arbitrari, motivo per cui il marcatore -1 potrebbe mancare, portando all'uscita dai limiti del buffer",
+        "Il compilatore vieta di passare array non inizializzati alle funzioni",
+        "In un array non inizializzato viene impostato automaticamente NULL in tutti gli indici",
+        "L'array bloccherà l'esecuzione del programma a livello di sistema operativo",
+        "Tutte le celle dell'array diventeranno automaticamente pari a -1",
+        "La dimensione dell'array diventerà pari a 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli array locali senza inizializzatore sono riempiti di dati spazzatura casuali dallo stack. Il ciclo di elaborazione non troverà il marcatore `-1` alla posizione `0` e andrà a leggere altra memoria (Buffer Overread).",
+        "Errato. Il compilatore consente di passare un puntatore a tale array (eventualmente emettendo un avviso).",
+        "Errato. Non si verifica alcun azzeramento automatico o riempimento con `NULL` per gli array locali non inizializzati.",
+        "Errato. L'esecuzione non viene bloccata dal sistema operativo, ma si verifica un comportamento indefinito (Undefined Behavior).",
+        "Errato. Gli elementi non assumono automaticamente il valore `-1`.",
+        "Errato. La dimensione dell'array `uninit` è strettamente fissa e pari a 5 elementi."
+      ]
+    }
+  ]
+}

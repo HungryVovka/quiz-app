@@ -1,0 +1,605 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_1301",
+      "widget_id": "widget_clang_1301",
+      "topic": "Tipi — Puntatore generico void*",
+      "q": "La dereferenziazione (*p) e l'aritmetica (p + 1) su un puntatore di tipo void* sono consentite dallo standard C (C99/C11)?",
+      "hint": "Rifletti se la dimensione del tipo void sia nota al compilatore.",
+      "options": [
+        "No, dereferenziazione e aritmetica sono vietate dallo standard, poiché la dimensione del tipo void non è definita",
+        "Sì, void* viene automaticamente trattato dal compilatore come char*",
+        "La dereferenziazione è vietata, ma l'aritmetica è consentita con un passo di 1 byte",
+        "Sì, se void* punta a memoria dinamica allocata con malloc"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `void` è un tipo incompleto senza dimensione (`sizeof(void)` non esiste in ISO C), il compilatore non sa quanti byte leggere con `*p` né di quanti byte spostare l'indirizzo con `p + 1`. Prima dell'uso, `void*` deve essere convertito in un tipo concreto (ad esempio `char*` o `int*`). *Nota: l'estensione GCC consente l'aritmetica su `void*` trattandolo come `char*`, ma questo non fa parte dello standard C.*",
+        "Errato. Lo standard C non equipara automaticamente `void*` a `char*` durante la dereferenziazione.",
+        "Errato. Lo standard vieta entrambe le operazioni.",
+        "Errato. L'origine dell'indirizzo non modifica le regole di tipizzazione del linguaggio."
+      ]
+    },
+    {
+      "id": "it_clang_1302",
+      "widget_id": "widget_clang_1302",
+      "topic": "Tipi — Accesso a livello di byte e char*",
+      "q": "Qual è l'eccezione speciale per i tipi char* e unsigned char* nella regola dello Strict Aliasing?",
+      "hint": "Ricorda quale tipo viene utilizzato per esaminare la rappresentazione binaria grezza di qualsiasi oggetto in memoria.",
+      "options": [
+        "I puntatori char* e unsigned char* possono ufficialmente leggere e modificare i byte di oggetti di qualsiasi altro tipo",
+        "Il tipo char* è l'unico puntatore che memorizza un indirizzo a 32 bit",
+        "Per char* l'aritmetica dei puntatori è vietata",
+        "Le variabili char* vengono automaticamente crittografate dal compilatore durante la scrittura"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo la regola dello Strict Aliasing, il compilatore presuppone che puntatori di tipi diversi non puntino alla stessa memoria. Tuttavia, i tipi `char*`, `signed char*` e `unsigned char*` costituiscono un'eccezione: lo standard consente l'aliasing di qualsiasi memoria tramite puntatori a caratteri per l'ispezione o la copiatura a livello di byte (ad esempio in `memcpy`).",
+        "Errato. La dimensione dell'indirizzo di `char*` è identica a quella di qualsiasi altro puntatore sulla piattaforma.",
+        "Errato. L'aritmetica su `char*` sposta l'indirizzo esattamente di 1 byte.",
+        "Errato. Non esiste alcuna crittografia a livello di linguaggio."
+      ]
+    },
+    {
+      "id": "it_clang_1303",
+      "widget_id": "widget_clang_1303",
+      "topic": "Puntatori — Indirizzamento multilivello (int**)",
+      "q": "Che cos'è una variabile int **pp?",
+      "hint": "Conta il numero di asterischi.",
+      "options": [
+        "Un puntatore a un altro puntatore che fa riferimento a un intero di tipo int",
+        "Un array di due numeri interi",
+        "Un puntatore a una funzione che restituisce int",
+        "Un intero costante"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `int **pp` è un puntatore di secondo livello (puntatore a puntatore). Il valore di `pp` è l'indirizzo di una variabile `p` (di tipo `int*`), `*pp` restituisce `p`, mentre `**pp` restituisce il valore `int` stesso.",
+        "Errato. I due asterischi indicano un doppio livello di indirezione, non un array.",
+        "Errato. Un puntatore a funzione utilizza una sintassi con parentesi tonde.",
+        "Errato. Si tratta di un tipo puntatore, non di un semplice numero."
+      ]
+    },
+    {
+      "id": "it_clang_1304",
+      "widget_id": "widget_clang_1304",
+      "topic": "Strutture — L'operatore ->",
+      "q": "Quale espressione è completamente equivalente alla sintassi ptr->field, dove ptr è un puntatore a una struttura?",
+      "hint": "Ricorda la precedenza dell'operatore unario di dereferenziazione * rispetto all'operatore punto .",
+      "options": [
+        "(*ptr).field",
+        "*ptr.field",
+        "*(ptr.field)",
+        "&ptr.field"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `ptr->field` è zucchero sintattico per `(*ptr).field`. Le parentesi `(*ptr)` sono obbligatorie poiché il punto `.` ha una precedenza maggiore rispetto alla dereferenziazione `*`.",
+        "Errato. La scrittura `*ptr.field` viene interpretata dal compilatore come `*(ptr.field)`, cioè un tentativo di accedere al campo `field` direttamente dal puntatore, generando un errore.",
+        "Errato. Errore di precedenza degli operatori.",
+        "Errato. L'operatore `&` ottiene l'indirizzo, non il campo."
+      ]
+    },
+    {
+      "id": "it_clang_1305",
+      "widget_id": "widget_clang_1305",
+      "topic": "Tipi di sistema — uintptr_t e intptr_t",
+      "q": "Per quale scopo lo standard C99 ha introdotto il tipo uintptr_t (dall'header <stdint.h>)?",
+      "hint": "Pensa alla conversione di un indirizzo in un numero intero senza perdita di precisione.",
+      "options": [
+        "Per memorizzare in modo sicuro il valore di qualsiasi puntatore in una variabile intera con la garanzia di preservare tutti i bit dell'indirizzo",
+        "Per memorizzare la dimensione della memoria di un array",
+        "Per contare il numero di puntatori nel programma",
+        "Per convertire stringhe in puntatori"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `uintptr_t` è un tipo intero senza segno la cui dimensione garantisce la corrispondenza con la dimensione di un puntatore sulla piattaforma data (ad esempio, 64 bit su x86-64). Viene utilizzato quando è necessario eseguire operazioni bit a bit su un indirizzo.",
+        "Errato. Per le dimensioni di elementi ed elementi di array è destinato il tipo `size_t`.",
+        "Errato. Il tipo non si occupa del conteggio dei riferimenti.",
+        "Errato. La conversione delle stringhe è gestita da funzioni come `strtol` / `sscanf`."
+      ]
+    },
+    {
+      "id": "it_clang_1306",
+      "widget_id": "widget_clang_1306",
+      "topic": "Tipi di sistema — ptrdiff_t",
+      "q": "Qual è il tipo del risultato dell'operazione di sottrazione tra due puntatori (p2 - p1) che puntano a elementi dello stesso array?",
+      "hint": "Il risultato può essere sia positivo che negativo.",
+      "options": [
+        "ptrdiff_t (intero con segno da <stddef.h>)",
+        "size_t",
+        "int",
+        "void*"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operazione `p2 - p1` restituisce il numero di elementi (non di byte!) compresi tra i puntatori. Il risultato ha il tipo con segno speciale `ptrdiff_t`.",
+        "Errato. `size_t` è un tipo senza segno, mentre la differenza tra puntatori può essere negativa.",
+        "Errato. Un normale `int` potrebbe andare in overflow su sistemi a 64 bit in presenza di array molto grandi.",
+        "Errato. La differenza tra due indirizzi è un numero, non un puntatore."
+      ]
+    },
+    {
+      "id": "it_clang_1307",
+      "widget_id": "widget_clang_1307",
+      "topic": "Astrazione — Puntatori opachi (Opaque Pointers)",
+      "q": "È possibile dichiarare il puntatore struct Engine *ptr; in un file in cui il corpo della struttura struct Engine { ... } non è ancora definito (Incomplete Type)?",
+      "hint": "La dimensione del puntatore stesso dipende dal contenuto della struttura?",
+      "options": [
+        "Sì, poiché la dimensione di qualsiasi puntatore è nota al compilatore in anticipo, ma non è possibile dereferenziare ptr senza la definizione della struttura",
+        "No, il compilatore restituirà un errore di Tipo di dati sconosciuto",
+        "Sì, ed è anche possibile accedere liberamente ai campi della struttura",
+        "No, le strutture devono necessariamente essere dichiarate prima della loro prima menzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Questo è il concetto di **Opaque Pointer** (puntatore opaco / Handle). Il compilatore non ha bisogno di conoscere la struttura interna di `struct Engine` per allocare lo spazio per il puntatore `ptr` stesso. Tuttavia, la dereferenziazione o l'accesso ai campi (`ptr->hp`) richiederà la definizione completa della struttura.",
+        "Errato. C supporta i tipi incompleti (Incomplete Types) per i puntatori.",
+        "Errato. Senza la definizione dei campi, il compilatore non conosce i loro offset in byte.",
+        "Errato. La dichiarazione preventiva `struct Engine;` è perfettamente valida."
+      ]
+    },
+    {
+      "id": "it_clang_1308",
+      "widget_id": "widget_clang_1308",
+      "topic": "Conversione di tipo — Allineamento (Alignment)",
+      "q": "Quali conseguenze può avere il cast esplicito di un puntatore da char* a int* e la sua successiva dereferenziazione (*(int*)char_ptr) se l'indirizzo non è allineato a un limite di 4 byte?",
+      "hint": "Ricorda i requisiti hardware di alcuni processori (ARM, SPARC) relativi agli indirizzi di memoria.",
+      "options": [
+        "A un Comportamento Indefinito (UB) o a un guasto hardware del processore (Alignment Fault / Bus Error)",
+        "L'indirizzo verrà automaticamente allineato dal compilatore a runtime",
+        "I dati verranno semplicemente letti più lentamente, ma sempre senza errori",
+        "Il valore verrà automaticamente arrotondato all'int più vicino"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Molte architetture richiedono che gli interi a 32 bit risiedano a indirizzi multipli di 4 byte. La lettura di un `int` da un indirizzo non allineato causa un'eccezione hardware (Bus Error) o un comportamento indefinito (UB).",
+        "Errato. Il compilatore non inserisce codice nascosto di allineamento durante la dereferenziazione di puntatori convertiti arbitrariamente.",
+        "Errato. Su x86 questo rallenterà solo la lettura, ma su architetture RISC rigide causerà il crash del programma.",
+        "Errato. Non si verifica alcun arrotondamento dei dati o dell'indirizzo."
+      ]
+    },
+    {
+      "id": "it_clang_1309",
+      "widget_id": "widget_clang_1309",
+      "topic": "Sintassi — typedef per puntatori a funzione",
+      "q": "Quale costrutto crea un alias di tipo Handler per un puntatore a una funzione che accetta un int e restituisce void?",
+      "hint": "La parola chiave typedef sostituisce il nome dell'alias al posto del nome della variabile.",
+      "options": [
+        "typedef void (*Handler)(int);",
+        "typedef Handler void(*int);",
+        "typedef void* Handler(int);",
+        "typedef (void*)(int) Handler;"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La scrittura `typedef void (*Handler)(int);` rende `Handler` un nuovo nome di tipo. Ora è possibile dichiarare le variabili con una sintassi semplice: `Handler my_func_ptr;`.",
+        "Errato. L'ordine delle parole viola la sintassi del C.",
+        "Errato. `typedef void* Handler(int);` dichiara `Handler` come tipo di funzione che restituisce `void*`, non come puntatore a funzione.",
+        "Errato. Costrutto sintatticamente errato."
+      ]
+    },
+    {
+      "id": "it_clang_1310",
+      "widget_id": "widget_clang_1310",
+      "topic": "Costanza — Rimozione del qualificatore const",
+      "q": "Cosa succede se si rimuove const tramite il cast di tipo (int*) e si modifica il valore tramite il puntatore: const int x = 10; int *p = (int*)&x; *p = 20;?",
+      "hint": "Pensa a dove il compilatore potrebbe collocare una variabile realmente costante.",
+      "options": [
+        "Comportamento Indefinito (Undefined Behavior): il programma potrebbe piantarsi o ignorare la scrittura, poiché x potrebbe risiedere in memoria di sola lettura (Read-Only)",
+        "La variabile x cambierà garantitamente il suo valore in 20",
+        "Il compilatore restituirà un errore e impedirà la compilazione del programma",
+        "Verrà creata una copia della variabile x nello heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La modifica di un oggetto originariamente dichiarato con il qualificatore `const` è un **Comportamento Indefinito (Undefined Behavior)** secondo lo standard C. Il compilatore può collocare `x` in una sezione di memoria in sola lettura (`.rodata`), e la scrittura causerà un Segmentation Fault.",
+        "Errato. La modifica di una costante non è garantita e spesso rompe l'esecuzione del programma.",
+        "Errato. Il cast esplicito di tipo `(int*)` sopprime l'errore del compilatore.",
+        "Errato. Non vengono create copie nello heap."
+      ]
+    },
+    {
+      "id": "it_clang_1311",
+      "widget_id": "widget_clang_1311",
+      "topic": "Ottimizzazione — Il qualificatore restrict",
+      "q": "Cosa significa il qualificatore restrict nella dichiarazione del puntatore int * restrict p nello standard C99?",
+      "hint": "Pensa al suggerimento fornito al compilatore sul fatto che altri puntatori possano fare riferimento alla stessa memoria.",
+      "options": [
+        "Il puntatore è l'unico modo per accedere all'oggetto indirizzato nel suo ambito di visibilità (suggerimento per l'ottimizzatore del compilatore)",
+        "Il puntatore è bloccato per la modifica dei dati (equivalente completo del qualificatore const)",
+        "È vietato liberare la memoria di questo puntatore chiamando free()",
+        "Il puntatore può essere utilizzato solo in codice single-thread"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il qualificatore `restrict` informa il compilatore che, per tutta la durata di vita di questo puntatore, nessun altro puntatore accederà alla stessa regione di memoria. Ciò consente al compilatore di applicare ottimizzazioni aggressive (come la vettorializzazione e il caching dei valori nei registri).",
+        "Errato. `restrict` non ha nulla a che fare con la limitazione dei diritti di scrittura, di cui si occupa `const`.",
+        "Errato. `restrict` non influisce sulle regole di funzionamento della funzione `free()`.",
+        "Errato. Si tratta di una parola chiave per l'ottimizzazione dell'aliasing degli indirizzi, non di un primitivo di sincronizzazione."
+      ]
+    },
+    {
+      "id": "it_clang_1312",
+      "widget_id": "widget_clang_1312",
+      "topic": "Limitazioni — Campi di bit (Bit-fields)",
+      "q": "È possibile ottenere l'indirizzo di un campo di bit di una struttura usando l'operatore & (ad esempio, &s.flag)?",
+      "hint": "Ricorda l'unità di memoria minima indirizzabile nell'architettura dei processori.",
+      "options": [
+        "No, ottenere l'indirizzo di un campo di bit è vietato dallo standard C, poiché l'indirizzamento in C avviene con la precisione del singolo byte",
+        "Sì, e verrà restituito un puntatore del tipo speciale bit*",
+        "Sì, se prima si esegue il cast del campo al tipo void*",
+        "Sì, ma solo su processori a 64 bit"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C l'elemento di memoria minimo indirizzabile è il byte (`char`). I campi di bit possono occupare solo pochi bit all'interno di un byte, quindi non hanno un indirizzo unico proprio e l'applicazione dell'operatore `&` causerà un errore di compilazione.",
+        "Errato. Il tipo `bit*` non esiste nello standard C.",
+        "Errato. Il cast dei tipi non aiuta, poiché l'operazione `&` non è valida nella fase di analisi sintattica.",
+        "Errato. La limitazione dell'indirizzamento a byte è fondamentale per tutte le architetture in C."
+      ]
+    },
+    {
+      "id": "it_clang_1313",
+      "widget_id": "widget_clang_1313",
+      "topic": "Sintassi — Array di puntatori a funzione",
+      "q": "Qual è la sintassi corretta per dichiarare un array arr di 3 puntatori a funzioni che non accettano argomenti e non restituiscono nulla (void)?",
+      "hint": "Prima si dichiara il nome con la dimensione dell'array arr[3] sotto l'asterisco tra parentesi tonde, quindi le parentesi degli argomenti.",
+      "options": [
+        "void (*arr[3])(void);",
+        "void *arr[3](void);",
+        "void (*arr)(void)[3];",
+        "void (arr[3]*)(void);"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `void (*arr[3])(void);` si legge così: `arr` è un array di 3 elementi, ognuno dei quali è un puntatore `*` a una funzione che accetta `(void)` e restituisce `void`.",
+        "Errato. `void *arr[3](void);` dichiara un array di funzioni (che è illegale) che restituiscono `void*`.",
+        "Errato. La sintassi con le parentesi quadre alla fine non è valida.",
+        "Errato. L'ordine delle coppie di parentesi sintattiche è errato."
+      ]
+    },
+    {
+      "id": "it_clang_1314",
+      "widget_id": "widget_clang_1314",
+      "topic": "Qualificatori — volatile e i puntatori",
+      "q": "Qual è la differenza tra le dichiarazioni volatile int *p e int * volatile p?",
+      "hint": "Nota da quale lato dell'asterisco si trova il qualificatore volatile.",
+      "options": [
+        "In volatile int *p ad essere volatile è il valore all'indirizzo, mentre in int * volatile p è volatile l'indirizzo stesso memorizzato",
+        "Non c'è alcuna differenza tra queste due dichiarazioni",
+        "volatile int *p vieta l'aritmetica dei puntatori, mentre int * volatile p vieta la dereferenziazione",
+        "int * volatile p viene utilizzato solo quando si lavora con i file"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se `volatile` si trova a sinistra di `*` (`volatile int *`), il compilatore non memorizzerà nella cache il **valore** letto dalla memoria (ad esempio, un registro hardware). Se `volatile` è a destra (`* volatile`), il compilatore non memorizzerà nella cache **l'indirizzo stesso** contenuto nella variabile puntatore.",
+        "Errato. La posizione di `volatile` rispetto a `*` modifica l'oggetto a cui si applica il qualificatore.",
+        "Errato. `volatile` non vieta le operazioni C standard.",
+        "Errato. Il qualificatore regola le ottimizzazioni di lettura/scrittura del compilatore, non l'ambito di applicazione."
+      ]
+    },
+    {
+      "id": "it_clang_1315",
+      "widget_id": "widget_clang_1315",
+      "topic": "Interfacce — const void* nelle funzioni generiche",
+      "q": "Perché gli argomenti della funzione di confronto per qsort (int (*cmp)(const void *, const void *)) sono di tipo const void*?",
+      "hint": "Pensa ai requisiti di genericità del tipo e alla protezione dei dati trasmessi da modifiche accidentali.",
+      "options": [
+        "Il tipo void* consente di passare elementi di qualsiasi tipo, mentre const garantisce che la funzione di confronto non modificherà gli elementi confrontati",
+        "Si tratta di un requisito specifico per lavorare con la memoria delle schede video",
+        "Il tipo const void* accelera automaticamente il processo di ordinamento rapido",
+        "Senza const la funzione qsort non sarebbe in grado di determinare la dimensione degli elementi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `void*` rende la funzione comparatore generica (adatta per `int`, `struct`, `double`), mentre `const` garantisce un contratto di sicurezza: `cmp` legge solo i dati da confrontare e non ha il diritto di modificarli.",
+        "Errato. La funzione standard `qsort` viene eseguita sulla CPU.",
+        "Errato. `const void*` definisce un contratto di interfaccia e tipi, non la velocità dell'algoritmo.",
+        "Errato. La dimensione degli elementi viene passata come argomento separato `size_t size` a `qsort`."
+      ]
+    },
+    {
+      "id": "it_clang_1316",
+      "widget_id": "widget_clang_1316",
+      "topic": "Standard C — Compatibilità tra puntatori a funzione e void*",
+      "q": "Lo standard ISO C garantisce che un puntatore a funzione (void (*fn)(void)) possa essere convertito in modo sicuro in void* e viceversa senza perdita di dati?",
+      "hint": "Pensa se nell'architettura Harvard (ad esempio AVR) i puntatori al codice e ai dati possano avere dimensioni diverse.",
+      "options": [
+        "No, lo standard C non garantisce la compatibilità tra puntatori a funzione e puntatori a dati (void*), poiché i bus del codice e dei dati possono differire",
+        "Sì, lo standard garantisce rigorosamente che void* possa contenere assolutamente qualsiasi puntatore",
+        "Sì, ma solo con il flag di compilazione -std=c11 abilitato",
+        "No, i puntatori a funzione in C non possono essere passati come argomenti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nello standard ISO C il tipo `void*` è garantito contenere solo puntatori a **oggetti (dati)**. Su architetture con indirizzi separati per codice e dati (Architettura Harvard, ad es. alcuni microcontrollori), un puntatore a funzione può avere una dimensione di 16 bit, mentre un puntatore a dati di 32 bit (o viceversa). *Nota: lo standard POSIX impone alle piattaforme di supportare il cast tra void* e puntatore a funzione, ma in ISO C puro si tratta di comportamento indefinito/non specificato.*",
+        "Errato. `void*` è destinato solo a puntatori a oggetti/dati.",
+        "Errato. La versione C11 mantiene questa distinzione.",
+        "Errato. I puntatori a funzione possono essere tranquillamente passati come argomenti."
+      ]
+    },
+    {
+      "id": "it_clang_1317",
+      "widget_id": "widget_clang_1317",
+      "topic": "Tipi — Puntatore a VLA (Variable Length Array)",
+      "q": "Qual è la sintassi corretta per dichiarare un puntatore p a un array di n elementi di tipo double (array a lunghezza variabile VLA)?",
+      "hint": "Sintatticamente, un puntatore a un VLA si dichiara allo stesso modo di un puntatore a un normale array statico.",
+      "options": [
+        "double (*p)[n];",
+        "double *p[n];",
+        "double n (*p);",
+        "double *p(n);"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le parentesi `(*p)` legano `p` come puntatore, mentre la dimensione `[n]` (variabile) indica che si tratta di un puntatore a un VLA di `n` elementi `double`. L'incremento `p++` sposterà il puntatore di `n * sizeof(double)` byte.",
+        "Errato. `double *p[n];` dichiara un array VLA di `n` puntatori.",
+        "Errato. La sintassi non è valida.",
+        "Errato. Assomiglia alla dichiarazione di una funzione."
+      ]
+    },
+    {
+      "id": "it_clang_1318",
+      "widget_id": "widget_clang_1318",
+      "topic": "Idiomi — La macro offsetof",
+      "q": "Cosa calcola e restituisce la macro standard offsetof(struct Target, member) dall'header <stddef.h>?",
+      "hint": "Pensa alla distanza in byte dall'inizio della struttura a un campo specifico.",
+      "options": [
+        "L'offset del campo member in byte dall'inizio della struttura struct Target (tipo size_t)",
+        "Un puntatore al campo member in memoria",
+        "La dimensione del campo member in byte",
+        "Il numero d'ordine del campo nella dichiarazione della struttura"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `offsetof` restituisce l'offset in byte di un campo specifico rispetto all'indirizzo base della struttura. Questo valore è di tipo `size_t` e tiene conto dell'allineamento (padding) dei campi effettuato dal compilatore.",
+        "Errato. `offsetof` restituisce un valore numerico di offset (byte), non un puntatore.",
+        "Errato. Per determinare la dimensione del campo si usa `sizeof(((struct Target*)0)->member)`.",
+        "Errato. Si tratta dell'offset fisico in byte, non dell'indice."
+      ]
+    },
+    {
+      "id": "it_clang_1319",
+      "widget_id": "widget_clang_1319",
+      "topic": "Idiomi — La macro container_of",
+      "q": "Per quale scopo nel kernel Linux e nel codice C di basso livello viene utilizzata l'idioma container_of(ptr, type, member)?",
+      "hint": "Se hai un puntatore a un campo interno a una struttura, come si ripristina l'indirizzo della struttura contenitore?",
+      "options": [
+        "Per calcolare l'indirizzo della struttura stessa (type) a partire da un puntatore noto (ptr) a uno dei suoi campi interni (member)",
+        "Per allocare memoria per un contenitore di dati nello heap",
+        "Per copiare tutti i campi della struttura in un array esterno",
+        "Per verificare dinamicamente il tipo del puntatore a runtime"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `container_of` sottrae l'offset del campo `offsetof(type, member)` dall'indirizzo di tale campo `ptr`, ottenendo l'indirizzo iniziale dell'intera struttura `type*`. È un pattern fondamentale per lavorare con le liste doppiamente collegate in C.",
+        "Errato. L'allocazione della memoria viene eseguita dalle funzioni `malloc`/`calloc`.",
+        "Errato. La macro calcola l'indirizzo, non copia i dati.",
+        "Errato. In C non esiste RTTI integrata (ispezione dei tipi a runtime)."
+      ]
+    },
+    {
+      "id": "it_clang_1320",
+      "widget_id": "widget_clang_1320",
+      "topic": "Sintassi — La regola cdecl (Clockwise/Right-Left Rule)",
+      "q": "Come viene interpretato il tipo della variabile p nella dichiarazione int *(*p)(int)?",
+      "hint": "Muoversi dal nome p verso l'esterno: prima le parentesi (*p), poi gli argomenti (int), infine il tipo restituito int*.",
+      "options": [
+        "p è un puntatore a una funzione che accetta int e restituisce int* (puntatore a int)",
+        "p è una funzione che accetta int* e restituisce int",
+        "p è un array di funzioni con argomento int",
+        "p è un doppio puntatore a un intero"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo la regola Right-Left: `(*p)` significa 'p è un puntatore'; `(int)` significa 'a una funzione che accetta int'; `int *` significa 'e restituisce un puntatore a int'.",
+        "Errato. Le parentesi `(*p)` indicano che la variabile `p` stessa è un puntatore.",
+        "Errato. Le parentesi quadre `[]` sono assenti nella dichiarazione.",
+        "Errato. La presenza delle parentesi tonde di chiamata `(int)` indica un tipo funzionale."
+      ]
+    },
+    {
+      "id": "it_clang_1321",
+      "widget_id": "widget_clang_1321",
+      "topic": "Costanza — const int * const",
+      "q": "Cosa significa la dichiarazione const int * const p;",
+      "hint": "Leggi la dichiarazione da destra a sinistra rispetto a ciascun asterisco e alla parola chiave const.",
+      "options": [
+        "È costante sia il puntatore stesso (non è possibile modificare l'indirizzo memorizzato) sia il valore a cui punta (non è possibile modificare i dati tramite p)",
+        "È vietata solo la modifica dell'indirizzo memorizzato in p",
+        "È vietata solo la modifica dei dati all'indirizzo *p",
+        "È un errore sintattico, non è consentito scrivere due const"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il primo `const` si riferisce a `int` (i dati all'indirizzo `*p` non possono essere modificati), mentre il secondo `const` si trova dopo `*` e si riferisce alla variabile `p` stessa (l'indirizzo in `p` non può essere reindirizzato a un altro oggetto).",
+        "Errato. Il divieto di modificare solo l'indirizzo è specificato dal costrutto `int * const p`.",
+        "Errato. Il divieto di modificare solo i dati è specificato dal costrutto `const int *p`.",
+        "Errato. Si tratta di una sintassi perfettamente valida e comunemente usata in C."
+      ]
+    },
+    {
+      "id": "it_clang_1322",
+      "widget_id": "widget_clang_1322",
+      "topic": "Array — int (*p)[5] vs int *p[5]",
+      "q": "Qual è la differenza fondamentale tra le dichiarazioni int (*p)[5] e int *p[5]?",
+      "hint": "Nota come le parentesi modificano la precedenza di associazione tra l'asterisco * del puntatore e le parentesi quadre [].",
+      "options": [
+        "int (*p)[5] è un singolo puntatore a un intero array di 5 elementi int, mentre int *p[5] è un array di 5 puntatori a int",
+        "int (*p)[5] è un array di 5 puntatori, mentre int *p[5] è un puntatore a un array",
+        "Non c'è alcuna differenza tra i due",
+        "La prima sintassi alloca memoria nello heap, la seconda sullo stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le parentesi `(*p)` costringono il compilatore a fare prima di `p` un puntatore che fa riferimento al tipo 'array di 5 int'. In `int *p[5]`, le parentesi quadre hanno la precedenza: `p` è un array di 5 elementi di tipo `int*`.",
+        "Errato. Hai invertito i significati delle dichiarazioni.",
+        "Errato. Si tratta di tipi completamente diversi con dimensioni in memoria diverse e aritmetica dei puntatori diversa.",
+        "Errato. Il modo di dichiarare il tipo non determina la posizione di allocazione della memoria."
+      ]
+    },
+    {
+      "id": "it_clang_1323",
+      "widget_id": "widget_clang_1323",
+      "topic": "Standard C11 — Puntatori atomici",
+      "q": "Qual è la differenza tra _Atomic(int*) p e _Atomic(int) *p nello standard C11?",
+      "hint": "Pensa a quale parte dell'operazione (scrittura/lettura dell'indirizzo stesso o dei dati all'indirizzo) diventa atomica.",
+      "options": [
+        "In _Atomic(int*) p sono atomiche le operazioni sul puntatore stesso (indirizzo), mentre in _Atomic(int) *p sul numero intero all'indirizzo",
+        "Sono sintassi assolutamente identiche",
+        "_Atomic(int) *p vieta l'aritmetica dei puntatori",
+        "_Atomic(int*) p può essere utilizzato solo in ambito globale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `_Atomic(int*) p` rende atomica la scrittura e la lettura dell'indirizzo `p` stesso (utile per lo scambio thread-safe di puntatori). `_Atomic(int) *p` è un normale puntatore che fa riferimento a una variabile intera atomica.",
+        "Errato. L'atomicità si applica a entità diverse (al puntatore o al valore indirizzato).",
+        "Errato. Il qualificatore di atomicità del tipo di dati non modifica la sintassi dell'aritmetica dei puntatori.",
+        "Errato. L'ambito di visibilità non è limitato."
+      ]
+    },
+    {
+      "id": "it_clang_1324",
+      "widget_id": "widget_clang_1324",
+      "topic": "Strict Aliasing — Type Punning sicuro",
+      "q": "Quale tecnica è corretta secondo lo standard C per esaminare la rappresentazione bit a bit di un numero float tramite uint32_t senza violare lo Strict Aliasing?",
+      "hint": "Il cast diretto *(uint32_t*)&f viola lo Strict Aliasing. Quale funzione/metodo consiglia lo standard?",
+      "options": [
+        "L'uso della chiamata memcpy() o delle unioni (union)",
+        "Il cast diretto *(uint32_t*)&f",
+        "Il cast tramite un puntatore intermedio (uint32_t*)(void*)&f",
+        "Il cast tramite volatile uint32_t*"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard ISO C, la copiatura di byte tramite `memcpy()` o l'uso di `union` per la lettura di campi raggruppati (Type Punning) non violano lo Strict Aliasing e vengono compilati dall'ottimizzatore senza comportamento indefinito (UB). Il cast diretto `*(uint32_t*)&f` è una classica violazione dell'aliasing.",
+        "Errato. Il cast diretto di puntatori di tipo diverso porta a un Comportamento Indefinito con le ottimizzazioni `-O2`/`-O3`.",
+        "Errato. Il passaggio attraverso `void*` non annulla la violazione della regola dello Strict Aliasing.",
+        "Errato. `volatile` non risolve il problema dell'aliasing dei tipi."
+      ]
+    },
+    {
+      "id": "it_clang_1325",
+      "widget_id": "widget_clang_1325",
+      "topic": "Allineamento — max_align_t",
+      "q": "Quale garanzia offre il tipo fondamentale max_align_t da <stddef.h> (introdotto in C11)?",
+      "hint": "Pensa ai requisiti della funzione malloc relativi all'allineamento della memoria.",
+      "options": [
+        "Il suo allineamento è il più grande tra tutti i tipi scalari, garantendo la correttezza del cast dei puntatori restituiti dall'allocatore standard",
+        "Garantisce che la dimensione di qualsiasi puntatore sia pari a 64 bit",
+        "Corregge automaticamente gli errori di accesso non allineato a runtime",
+        "Viene utilizzato solo per puntatori a funzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'allocatore standard `malloc` restituisce un puntatore allineato in modo da poter essere convertito in sicurezza in un puntatore a qualsiasi tipo scalare. Il requisito di allineamento di `max_align_t` descrive questo livello massimo di allineamento fondamentale sull'architettura.",
+        "Errato. La dimensione dei puntatori dipende dalla piattaforma target (16/32/64 bit), non da `max_align_t`.",
+        "Errato. È un tipo di dati per verificare/impostare l'allineamento, non una procedura di correzione degli errori del processore.",
+        "Errato. Il tipo è destinato all'allineamento dei dati degli oggetti."
+      ]
+    },
+    {
+      "id": "it_clang_1326",
+      "widget_id": "widget_clang_1326",
+      "topic": "Avvertimenti — Scarto dei qualificatori (Discarding Qualifiers)",
+      "q": "Perché il compilatore genera un avviso (warning) nell'assegnazione: const int x = 5; int *p = &x; senza un cast esplicito?",
+      "hint": "Pensa a cosa si potrebbe fare ora con la variabile x tramite il puntatore p.",
+      "options": [
+        "Si verifica una rimozione implicita del qualificatore const, che consente di modificare inavvertitamente la costante tramite *p = 10",
+        "Il puntatore p occupa meno memoria rispetto alla variabile x",
+        "La variabile x si trova nello stack, a cui i normali puntatori non possono puntare",
+        "In C è severamente vietato prendere l'indirizzo delle costanti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'assegnazione di `const int*` a `int*` rimuove il qualificatore `const`. Ciò rende possibile scrivere `*p = 10;`, che porta a un Comportamento Indefinito quando si tenta di scrivere in memoria costante. Il compilatore avverte di questa violazione del sistema di tipi.",
+        "Errato. Le dimensioni del puntatore e della variabile non influiscono sul qualificatore di accesso.",
+        "Errato. I puntatori possono puntare a qualsiasi oggetto valido sullo stack.",
+        "Errato. L'ottenimento dell'indirizzo `&x` è perfettamente legale, l'incompatibilità risiede nel tipo del puntatore di destinazione."
+      ]
+    },
+    {
+      "id": "it_clang_1327",
+      "widget_id": "widget_clang_1327",
+      "topic": "Memoria dinamica — Array 2D tramite puntatore ad array",
+      "q": "Come allocare correttamente la memoria per un array 2D di dimensione N x M (dove M è una costante) con un'unica chiamata a malloc?",
+      "hint": "Usa un puntatore a un array di M elementi.",
+      "options": [
+        "int (*arr)[M] = malloc(N * sizeof(*arr));",
+        "int *arr[M] = malloc(N * sizeof(int));",
+        "int **arr = malloc(N * M * sizeof(int));",
+        "int (*arr)[N] = malloc(M * sizeof(int));"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `int (*arr)[M]` crea un puntatore a un array di `M` elementi `int`. Il costrutto `malloc(N * sizeof(*arr))` alloca un blocco continuo di memoria per `N` tali righe, consentendo l'accesso agli elementi con la comoda sintassi standard `arr[i][j]`.",
+        "Errato. `int *arr[M]` è un array di `M` puntatori, non un singolo blocco di memoria.",
+        "Errato. Il doppio puntatore `int **arr` richiede l'allocazione di un array di puntatori alle righe, non un blocco continuo.",
+        "Errato. Le dimensioni di righe e colonne sono invertite."
+      ]
+    },
+    {
+      "id": "it_clang_1328",
+      "widget_id": "widget_clang_1328",
+      "topic": "Pattern — Callback con contesto Void",
+      "q": "Qual è lo scopo di dichiarare il parametro del contesto utente come void *user_data nelle funzioni di callback?",
+      "hint": "Pensa a come passare lo stato di una struttura utente arbitraria a una funzione di libreria astratta.",
+      "options": [
+        "In modo che il chiamante possa passare un puntatore a dati di qualsiasi tipo senza perdite, garantendo la genericità dell'API",
+        "In modo che la libreria possa liberare automaticamente questa memoria chiamando free()",
+        "È un requisito per l'esecuzione del codice C in modalità multi-thread",
+        "Per vietare il trasferimento di dati dalla funzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `void*` è un puntatore generico, il codice client può passare l'indirizzo della propria struttura dati con stato. All'interno della callback, `user_data` viene riconvertito al tipo originale dell'utente.",
+        "Errato. La libreria non deve chiamare automaticamente `free()` su `user_data`, poiché i dati potrebbero trovarsi sullo stack o essere gestiti dall'utente.",
+        "Errato. Il contesto viene utilizzato sia nelle API single-thread che multi-thread.",
+        "Errato. Al contrario, è il modo principale per passare dati utente alla callback."
+      ]
+    },
+    {
+      "id": "it_clang_1329",
+      "widget_id": "widget_clang_1329",
+      "topic": "Architettura — Rappresentazione di NULL",
+      "q": "Lo standard C garantisce che un puntatore nullo (NULL) sia fisicamente codificato nell'hardware del processore con tutti i bit a zero (0x00000000)?",
+      "hint": "Distingui tra l'astrazione del puntatore nullo nel codice sorgente C e la sua implementazione fisica da parte del compilatore per la piattaforma target.",
+      "options": [
+        "No, lo standard garantisce il significato astratto di NULL nel codice, ma la rappresentazione binaria nell'hardware può differire su architetture rare",
+        "Sì, assolutamente su tutti i processori NULL è equivalente a uno zero binario",
+        "Sì, è un requisito dello standard IEEE 754",
+        "No, NULL è sempre uguale a 0xFFFFFFFF"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel codice sorgente, `0` o `NULL` nel contesto di un puntatore indica sempre un puntatore nullo. Tuttavia, il compilatore per una specifica architettura target rara (ad esempio alcune architetture Honeywell o DSP esoterici) può tradurre l'espressione `p = NULL` in un indirizzo hardware speciale (ad esempio `0xC0000000`).",
+        "Errato. Sebbene nel 99% dei sistemi moderni (x86, ARM) NULL sia effettivamente composto da tutti bit zero, ISO C consente rappresentazioni binarie diverse.",
+        "Errato. IEEE 754 descrive i numeri in virgola mobile, non i puntatori.",
+        "Errato. `0xFFFFFFFF` è la rappresentazione di `-1` in formato con segno a 32 bit."
+      ]
+    },
+    {
+      "id": "it_clang_1330",
+      "widget_id": "widget_clang_1330",
+      "topic": "Strutture impacchettate — Accesso a puntatori non allineati (Unaligned Pointer Access)",
+      "q": "A quale errore può portare il tentativo di dereferenziare int *p che punta a un campo non allineato all'interno di una struttura impacchettata (packed struct)?",
+      "hint": "Ricorda i requisiti di indirizzamento rigoroso della memoria sui processori ARM o SPARC.",
+      "options": [
+        "A un errore hardware di bus (Bus Error / Alignment Fault) o a un forte calo di prestazioni su architetture rigide",
+        "All'azzeramento automatico della variabile",
+        "Le strutture impacchettate non consentono di creare puntatori ad esse",
+        "Il puntatore p viene automaticamente arrotondato dal compilatore a un multiplo di 4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando si utilizzano strutture impacchettate (ad esempio `#pragma pack(1)`), un campo `int` di 4 byte può trovarsi a un indirizzo dispari (ad esempio `0x1001`). Se si crea `int *p = &packed.val;` e lo si dereferenzia, le architetture con allineamento rigoroso generano un'eccezione del processore (Bus Error).",
+        "Errato. L'azzeramento dei dati non si verifica.",
+        "Errato. È possibile prendere l'indirizzo di un campo di una struttura impacchettata, ma la sua dereferenziazione tramite un tipo standard è pericolosa.",
+        "Errato. Il compilatore non esegue l'arrotondamento degli indirizzi a runtime."
+      ]
+    }
+  ]
+}

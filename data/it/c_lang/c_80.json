@@ -1,0 +1,617 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2441",
+      "widget_id": "widget_clang_2441",
+      "topic": "Uso base di atoi() con un argomento da riga di comando",
+      "q": "Cosa stamperà il programma se eseguito da riga di comando con: ./app 21?",
+      "hint": "atoi() converte l'argomento \"21\" nel numero 21, dopodiché viene eseguita un'operazione aritmetica.",
+      "options": [
+        "42",
+        "2121",
+        "212",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `atoi(\"21\")` restituisce il valore intero `21`. L'operazione `x * 2` calcola `21 * 2 = 42`.",
+        "Errato. L'operatore `*` esegue una moltiplicazione numerica, non la duplicazione di una stringa di testo.",
+        "Errato. Si verifica una moltiplicazione aritmetica, non una concatenazione.",
+        "Errato. L'argomento viene riconosciuto con successo come numero."
+      ]
+    },
+    {
+      "id": "it_clang_2442",
+      "widget_id": "widget_clang_2442",
+      "topic": "Gestione di spazi e caratteri dopo le cifre in atoi()",
+      "q": "Come verrà elaborata la stringa \"   42abc\" dalla funzione atoi()?",
+      "hint": "atoi() ignora gli spazi iniziali e si interrompe quando incontra il primo carattere non numerico.",
+      "options": [
+        "42",
+        "0",
+        "42000",
+        "42abc",
+        "Si verificherà un errore (Segmentation Fault)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `atoi()` ignora tutti i caratteri spaziali iniziali, legge le cifre disponibili `42` e interrompe l'analisi al primo carattere alfabetico `'a'`. Il risultato è `42`.",
+        "Errato. Gli spazi iniziali vengono ignorati dalla funzione `atoi()`.",
+        "Errato. Il suffisso alfabetico viene semplicemente ignorato e non viene convertito in zeri.",
+        "Errato. La funzione restituisce il tipo `int`, non la stringa originale.",
+        "Errato. Il comportamento della funzione durante la lettura di caratteri non numerici finali è perfettamente definito."
+      ]
+    },
+    {
+      "id": "it_clang_2443",
+      "widget_id": "widget_clang_2443",
+      "topic": "Valore restituito da atoi() in assenza di cifre iniziali",
+      "q": "Quale risultato restituirà atoi(\"hello123\") se la stringa inizia con caratteri alfabetici?",
+      "hint": "In assenza di cifre iniziali o di un segno valido, atoi() restituisce immediatamente 0.",
+      "options": [
+        "0",
+        "123",
+        "Terminazione anomala del programma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché la stringa non inizia con cifre o con i segni `+`/`-`, `atoi()` si interrompe immediatamente alla lettera `'h'` e restituisce `0`.",
+        "Errato. `atoi()` non cerca cifre all'interno o alla fine della stringa se questa inizia con delle lettere.",
+        "Errato. Un formato di stringa non valido non causa il crash del programma."
+      ]
+    },
+    {
+      "id": "it_clang_2444",
+      "widget_id": "widget_clang_2444",
+      "topic": "Conversione di valori stringa negativi tramite atoi()",
+      "q": "Cosa stamperà il programma lavorando con un letterale stringa numerico negativo \"-100\"?",
+      "hint": "Il segno meno prima della cifra viene riconosciuto da atoi() rendendo il risultato un numero int negativo.",
+      "options": [
+        "-50",
+        "-150",
+        "50",
+        "150",
+        "0",
+        "Errore di esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `atoi(\"-100\")` restituisce il valore `-100`. Successivamente viene calcolata l'espressione `-100 + 50 = -50`.",
+        "Errato. L'operatore `+` aggiunge 50 al numero negativo `-100`, aumentandolo.",
+        "Errato. Il segno meno viene preso in considerazione durante la conversione.",
+        "Errato. `-100` non diventa un numero positivo `100`.",
+        "Errato. `atoi()` legge correttamente il numero negativo.",
+        "Errato. La sintassi è perfettamente valida."
+      ]
+    },
+    {
+      "id": "it_clang_2445",
+      "widget_id": null,
+      "topic": "File di intestazione per la funzione atoi()",
+      "q": "Quale file di intestazione è necessario includere in C per utilizzare la funzione atoi()?",
+      "hint": "Questa funzione appartiene alla libreria standard delle utilità generali per la gestione della memoria e la conversione.",
+      "options": [
+        "<stdlib.h>",
+        "<stdio.h>"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La dichiarazione della funzione `atoi()` (così come `atof()`, `atol()`) si trova nel file di intestazione `<stdlib.h>`.",
+        "Errato. In `<stdio.h>` si trovano le funzioni di input/output (`printf`, `scanf`), ma non `atoi`."
+      ]
+    },
+    {
+      "id": "it_clang_2446",
+      "widget_id": "widget_clang_2446",
+      "topic": "Operazioni tra interi sui risultati di atoi()",
+      "q": "Cosa stamperà il programma dividendo i risultati delle funzioni atoi(\"15\") e atoi(\"5\")?",
+      "hint": "Viene eseguita una divisione intera tra due risultati della funzione atoi().",
+      "options": [
+        "3",
+        "155",
+        "75",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `atoi(\"15\")` restituisce `15`, `atoi(\"5\")` restituisce `5`. L'operazione `15 / 5` stamperà `3`.",
+        "Errato. In C l'operatore `/` esegue una divisione, non una concatenazione.",
+        "Errato. 75 è il risultato della moltiplicazione, non della divisione.",
+        "Errato. Il risultato della divisione tra i numeri non nulli 15 e 5 è 3."
+      ]
+    },
+    {
+      "id": "it_clang_2447",
+      "widget_id": "widget_clang_2447",
+      "topic": "Gestione del segno più '+' in atoi()",
+      "q": "Come reagisce la funzione atoi() a un segno più esplicito all'inizio della stringa \"+77\"?",
+      "hint": "Il segno + viene riconosciuto correttamente da atoi() come indicatore esplicito di un numero positivo.",
+      "options": [
+        "77",
+        "0",
+        "+77",
+        "-77",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il carattere `'+'` all'inizio di una stringa numerica è supportato dallo standard `atoi()`. La stringa `\"+77\"` viene convertita nel numero positivo `77`.",
+        "Errato. Il segno `+` non è considerato un carattere non valido.",
+        "Errato. La funzione restituisce un valore di tipo `int`, non una stringa formattata.",
+        "Errato. Il segno `+` indica un numero positivo.",
+        "Errato. Il codice è corretto dal punto di vista sintattico."
+      ]
+    },
+    {
+      "id": "it_clang_2448",
+      "widget_id": "widget_clang_2448",
+      "topic": "Ricerca del numero massimo dalla riga di comando con atoi()",
+      "q": "Cosa stamperà il programma di ricerca del massimo se eseguito con: ./app 5 12 8?",
+      "hint": "La funzione atoi() converte in sequenza ciascun argomento di argv, confrontando il risultato con il massimo.",
+      "options": [
+        "12",
+        "5",
+        "8",
+        "0",
+        "25",
+        "128"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel ciclo vengono verificati gli argomenti: `atoi(\"5\")` (5), `atoi(\"12\")` (12), `atoi(\"8\")` (8). Il valore massimo `12` verrà stampato a schermo.",
+        "Errato. 5 è il primo argomento passato, ma è minore di 12.",
+        "Errato. 8 è l'ultimo argomento, non il massimo.",
+        "Errato. La variabile `max` verrà aggiornata durante l'esecuzione del ciclo.",
+        "Errato. 25 è la somma degli elementi, non il massimo.",
+        "Errato. Gli elementi non vengono uniti in un'unica stringa."
+      ]
+    },
+    {
+      "id": "it_clang_2449",
+      "widget_id": null,
+      "topic": "Svantaggi e limitazioni della funzione atoi()",
+      "q": "Qual è il limite principale della funzione atoi() rispetto alla famiglia di funzioni strtol()?",
+      "hint": "Rifletti su come rilevare un errore in caso di testo non valido e come monitorare l'overflow del tipo int.",
+      "options": [
+        "atoi() non è in grado di segnalare errori di analisi (restituisce 0 sia in caso di errore sia per \"0\") e non rileva l'overflow del tipo int",
+        "atoi() è notevolmente più lenta di strtol()",
+        "È vietato usare atoi() in programmi multithread"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `atoi()` non dispone di un meccanismo per distinguere un errore (ad esempio, per la stringa `\"abc\"`) da uno zero valido (`\"0\"`), e in caso di overflow del tipo `int` causa un comportamento non definito dallo standard (Undefined Behavior).",
+        "Errato. In termini di prestazioni, `atoi()` non è inferiore a `strtol()`.",
+        "Errato. `atoi()` non utilizza uno stato statico interno ed è thread-safe."
+      ]
+    },
+    {
+      "id": "it_clang_2450",
+      "widget_id": "widget_clang_2450",
+      "topic": "Gestione degli zeri iniziali in atoi()",
+      "q": "Cosa restituirà atoi(\"007\") durante la gestione degli zeri iniziali nella stringa?",
+      "hint": "Gli zeri iniziali non impostano atoi() sul sistema ottale e vengono semplicemente ignorati.",
+      "options": [
+        "7",
+        "0",
+        "007",
+        "700"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza della sintassi delle costanti nel codice, `atoi()` lavora sempre in sistema decimale e ignora gli zeri iniciali. Il risultato è `7`.",
+        "Errato. Gli zeri iniziali vengono ignorati e la cifra `7` viene letta.",
+        "Errato. L'output viene effettuato tramite `%d` come numero intero senza formattazione della larghezza.",
+        "Errato. L'ordine delle cifre del numero non cambia."
+      ]
+    },
+    {
+      "id": "it_clang_2451",
+      "widget_id": "widget_clang_2451",
+      "topic": "Uso base di atof() per l'addizione di numeri reali",
+      "q": "Cosa stamperà il programma se eseguito da riga di comando con: ./app 2.5?",
+      "hint": "atof() legge un valore reale dalla stringa, dopodiché vengono eseguiti i calcoli matematici con il tipo double.",
+      "options": [
+        "4.00",
+        "2.50",
+        "2.51.5",
+        "1.50"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `atof(\"2.5\")` restituisce `2.5`. L'addizione `2.5 + 1.5` dà `4.0`. Il formato `%.2f` stampa il risultato con due cifre decimali: `4.00`.",
+        "Errato. Al valore 2.5 viene aggiunto 1.5.",
+        "Errato. La variabile è convertita nel tipo `double`, quindi si verifica una somma reale e non la fusione delle stringhe.",
+        "Errato. L'argomento passato viene preso in considerazione nel calcolo."
+      ]
+    },
+    {
+      "id": "it_clang_2452",
+      "widget_id": null,
+      "topic": "Tipo di dato restituito dalla funzione atof()",
+      "q": "Quale tipo di dato restituisce esattamente la funzione standard atof() secondo le specifiche del linguaggio C?",
+      "hint": "Rifletti su quale tipo a virgola mobile della libreria standard venga utilizzato per impostazione predefinita per ottenere la massima precisione.",
+      "options": [
+        "double",
+        "float",
+        "long double"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `atof()` (ASCII to float) storicamente restituisce un valore di tipo `double` a doppia precisione.",
+        "Errato. Nonostante la lettera 'f' nel nome, la funzione restituisce `double`, non `float`.",
+        "Errato. Per il tipo `long double` si usa la funzione specializzata `strtold()`."
+      ]
+    },
+    {
+      "id": "it_clang_2453",
+      "widget_id": "widget_clang_2453",
+      "topic": "Supporto per la notazione scientifica in atof()",
+      "q": "Come elaborerà la funzione atof() una stringa in notazione scientifica \"1.5e2\"?",
+      "hint": "La notazione e2 indica la moltiplicazione del numero per 10 elevato alla potenza di 2 (100).",
+      "options": [
+        "150",
+        "1.5",
+        "1",
+        "15",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `atof()` supporta pienamente la notazione scientifica dei numeri a virgola mobile. La stringa `\"1.5e2\"` viene convertita in `1.5 * 10^2 = 150.0`. Lo specificatore `%.0f` stamperà `150`.",
+        "Errato. La parte esponenziale `e2` non viene ignorata.",
+        "Errato. L'analisi non si interrompe al carattere 'e'.",
+        "Errato. Lo spostamento del punto sposta il valore di 2 posizioni a destra.",
+        "Errato. La stringa è valida per l'analisi di un numero a virgola mobile."
+      ]
+    },
+    {
+      "id": "it_clang_2454",
+      "widget_id": "widget_clang_2454",
+      "topic": "Interruzione dell'analisi di atof() in presenza di caratteri non numerici",
+      "q": "Cosa stamperà il programma leggendo la stringa \"3.14159text\"?",
+      "hint": "atof() legge l'intera parte reale valida e si ferma al primo carattere non idoneo.",
+      "options": [
+        "3.14",
+        "0.00",
+        "3.00",
+        "3.14159text",
+        "3.15",
+        "Runtime Error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `atof()` riconosce il numero corretto `3.14159` e termina l'analisi alla lettera `'t'`. Lo specificatore `%.2f` arrotonda `3.14159` a due cifre decimali: `3.14`.",
+        "Errato. Non si verifica alcun errore poiché la parte iniziale della stringa contiene un numero valido.",
+        "Errato. Anche la parte decimale dopo il punto viene analizzata con successo.",
+        "Errato. La funzione restituisce un numero reale, non una stringa di testo.",
+        "Errato. Arrotondando `3.141` ai centesimi si ottiene `3.14`.",
+        "Errato. Il codice viene eseguito senza errori di runtime."
+      ]
+    },
+    {
+      "id": "it_clang_2455",
+      "widget_id": null,
+      "topic": "File di intestazione per lavorare con atof()",
+      "q": "In quale file di intestazione è dichiarata la funzione atof()?",
+      "hint": "Come la maggior parte delle funzioni standard di conversione da stringa a numero, fa parte dell'header delle utilità standard.",
+      "options": [
+        "<stdlib.h>",
+        "<math.h>"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il prototipo della funzione `atof()` si trova nel file di intestazione `<stdlib.h>`.",
+        "Errato. In `<math.h>` sono contenute le funzioni matematiche (`sin`, `sqrt`), mentre la conversione di stringhe appartiene a `<stdlib.h>`."
+      ]
+    },
+    {
+      "id": "it_clang_2456",
+      "widget_id": "widget_clang_2456",
+      "topic": "Comportamento di atof() con caratteri iniziali non validi",
+      "q": "Cosa stamperà lo specificatore %.1f per la chiamata atof(\"abc12.3\")?",
+      "hint": "Se la stringa non inizia con cifre, segni '+' / '-' o un punto, la conversione viene interrotta subito.",
+      "options": [
+        "0.0",
+        "12.3",
+        "Undefined Behavior",
+        "Segmentation Fault"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché la stringa inizia con caratteri alfabetici `\"abc\"`, la funzione `atof()` si interrompe immediatamente e restituisce `0.0`.",
+        "Errato. `atof()` non cerca sottostringhe contenenti numeri all'interno del testo.",
+        "Errato. Il comportamento della funzione è rigorosamente regolato dallo standard C.",
+        "Errato. Una stringa non corretta non causa il crash del programma."
+      ]
+    },
+    {
+      "id": "it_clang_2457",
+      "widget_id": "widget_clang_2457",
+      "topic": "Conversione di numeri reali negativi",
+      "q": "Qual è il risultato dell'esecuzione del programma moltiplicando per 2.0 il valore di atof(\"-4.5\")?",
+      "hint": "Il segno meno viene elaborato correttamente da atof() e mantenuto durante i calcoli.",
+      "options": [
+        "-9.0",
+        "-8.0",
+        "9.0",
+        "0.0",
+        "-4.52.0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `atof(\"-4.5\")` restituisce `-4.5`. Il prodotto `-4.5 * 2.0` dà `-9.0`.",
+        "Errato. La parte decimale `-0.5` moltiplicata per 2 dà un intero unitario.",
+        "Errato. Il segno meno viene mantenuto durante la conversione della stringa.",
+        "Errato. I numeri reali negativi vengono analizzati con successo.",
+        "Errato. Il valore viene convertito in `double`, quindi si verifica una moltiplicazione aritmetica."
+      ]
+    },
+    {
+      "id": "it_clang_2458",
+      "widget_id": null,
+      "topic": "Vantaggi di strtod() rispetto ad atof()",
+      "q": "Qual è il vantaggio principale nell'usare la funzione strtod() al posto di atof()?",
+      "hint": "Rifletti sulla gestione degli errori e sull'ottenere informazioni su dove si è interrotta l'analisi della stringa.",
+      "options": [
+        "strtod() consente di rilevare errori di conversione e restituisce un puntatore al primo carattere non letto",
+        "strtod() lavora con un consumo inferiore di memoria RAM",
+        "strtod() esegue la conversione in modo significativamente più veloce"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `strtod()` accetta un parametro aggiuntivo `char **endptr`, che indica il punto in cui si è fermata l'analisi, e imposta `errno` in caso di overflow.",
+        "Errato. Entrambe le funzioni utilizzano la stessa quantità di memoria.",
+        "Errato. La velocità di esecuzione delle funzioni è praticamente identica."
+      ]
+    },
+    {
+      "id": "it_clang_2459",
+      "widget_id": "widget_clang_2459",
+      "topic": "Ignorare gli spazi iniziali con atof()",
+      "q": "Quale valore stamperà il programma in presenza di spazi prima del numero nella stringa \"   0.25\"?",
+      "hint": "atof() ignora tutti i caratteri spaziali iniziali prima di leggere il numero.",
+      "options": [
+        "0.25",
+        "0.00",
+        "0.2",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `atof()` ignora automaticamente tutti gli spazi iniziali (spazi, tabulazioni) e legge `0.25`.",
+        "Errato. Gli spazi iniziali non causano il ripristino a 0.",
+        "Errato. La parte decimale viene letta interamente.",
+        "Errato. Il codice è corretto e si compila senza problemi."
+      ]
+    },
+    {
+      "id": "it_clang_2460",
+      "widget_id": "widget_clang_2460",
+      "topic": "Accumulo della somma di argomenti a virgola mobile da riga di comando",
+      "q": "Cosa stamperà il programma di somma degli argomenti se eseguito con: ./app 1.1 2.2 3.3?",
+      "hint": "Il ciclo scorre tutti gli argomenti passati, converte ciascuno tramite atof() e lo aggiunge alla variabile sum.",
+      "options": [
+        "6.6",
+        "0.0",
+        "1.12.23.3",
+        "6.0",
+        "1.1",
+        "Errore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo prende gli elementi `argv[1]` (\"1.1\"), `argv[2]` (\"2.2\"), `argv[3]` (\"3.3\"). La somma `1.1 + 2.2 + 3.3` è pari a `6.6`. L'output `%.1f` stamperà `6.6`.",
+        "Errato. La variabile `sum` accumula i risultati di tutte le iterazioni.",
+        "Errato. Gli argomenti vengono convertiti nel tipo numerico `double` e sommati.",
+        "Errato. Le parti decimali di tutti i parametri vengono considerarate nell'addizione.",
+        "Errato. Il ciclo scorre tutti gli argomenti passati dall'utente.",
+        "Errato. Gli argomenti passati sono stringhe numeriche valide."
+      ]
+    },
+    {
+      "id": "it_clang_2461",
+      "widget_id": "widget_clang_2461",
+      "topic": "Verifica del numero minimo di argomenti di una calcolatrice",
+      "q": "Cosa stamperà il programma se si passa un numero insufficiente di argomenti: ./calc 10 +?",
+      "hint": "Conta il numero di parametri passati (nome del programma + 2 argomenti) e confrontalo con la condizione argc < 4.",
+      "options": [
+        "Usage: ./calc <num1> <op> <num2>",
+        "OK",
+        "Usage: calc <num1> <op> <num2>",
+        "10"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Alla chiamata `./calc 10 +` il valore di `argc` è 3. Poiché `3 < 4`, si attiva il ramo con l'output delle istruzioni d'uso con la sostituzione di `argv[0]` (`\"./calc\"`).",
+        "Errato. La condizione `argc < 4` è verificata, quindi la stringa `\"OK\"` non viene raggiunta.",
+        "Errato. Come primo elemento `argv[0]` viene passato l'esatto nome/percorso di esecuzione (`\"./calc\"`), non semplicemente `\"calc\"`.",
+        "Errato. Non si arriverà ai calcoli a causa del controllo sul numero di parametri."
+      ]
+    },
+    {
+      "id": "it_clang_2462",
+      "widget_id": "widget_clang_2462",
+      "topic": "Implementazione dell'operazione di addizione in una calcolatrice",
+      "q": "Quale risultato stamperà la calcolatrice se eseguita da riga di comando con: ./calc 12 + 8?",
+      "hint": "Entrambi gli operandi si trovano agli indici 1 e 3 e vengono convertiti con atoi(), mentre l'operatore si trova in argv[2].",
+      "options": [
+        "20",
+        "128",
+        "12 + 8",
+        "0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `argv[1]` (\"12\") diventa il numero 12, `argv[3]` (\"8\") diventa 8. `argv[2][0]` è uguale al carattere `'+'`. Il programma calcola `12 + 8 = 20`.",
+        "Errato. Le variabili vengono convertite in numeri interi, quindi si verifica una somma e non la fusione delle stringhe.",
+        "Errato. Viene stampato il valore numerico della somma.",
+        "Errato. La condizione della presenza di 4 argomenti e della corrispondenza del carattere dell'operatore è soddisfatta.",
+        "Errato. Il codice è scritto correttamente."
+      ]
+    },
+    {
+      "id": "it_clang_2463",
+      "widget_id": "widget_clang_2463",
+      "topic": "Analisi del carattere operatore tramite l'istruzione switch",
+      "q": "Cosa stamperà la calcolatrice eseguendo una sottrazione con il comando: ./calc 15 - 5?",
+      "hint": "Il carattere '-' estratto da argv[2][0] reindirizzerà il flusso di esecuzione al case corrispondente nella struttura switch.",
+      "options": [
+        "10",
+        "20",
+        "75",
+        "Error",
+        "15-5",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `argv[2][0]` è uguale al carattere `'-'`. Viene eseguito il ramo `case '-'`, che stamperà il risultato `15 - 5 = 10`.",
+        "Errato. Viene eseguita una sottrazione, non un'addizione.",
+        "Errato. 75 è il risultato della moltiplicazione.",
+        "Errato. Il carattere `'-'` è presente tra le opzioni gestite nel `case`.",
+        "Errato. L'operazione viene eseguita sui numeri.",
+        "Errato. La lettura degli operandi avviene con successo."
+      ]
+    },
+    {
+      "id": "it_clang_2464",
+      "widget_id": "widget_clang_2464",
+      "topic": "Gestione della divisione per zero nel passaggio dei parametri",
+      "q": "Cosa stamperà la calcolatrice in caso di tentativo di divisione per zero con il comando: ./calc 10 / 0?",
+      "hint": "Verifica la condizione di controllo del secondo operando b == 0.0 prima di eseguire l'operatore di divisione.",
+      "options": [
+        "DivByZero",
+        "0.0",
+        "inf"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La seconda variabile numerica `b` viene convertita dalla stringa `\"0\"` a `0.0`. La condizione `b == 0.0` diventa vera e viene stampato il messaggio `DivByZero`.",
+        "Errato. La divisione non viene eseguita a causa del controllo di protezione.",
+        "Errato. Il programma intercetta lo zero nel divisore prima di eseguire l'operazione di divisione."
+      ]
+    },
+    {
+      "id": "it_clang_2465",
+      "widget_id": null,
+      "topic": "Specificità del passaggio del carattere asterisco '*' nelle calcolatrici CLI",
+      "q": "Perché nella creazione di una calcolatrice CLI per l'operazione di moltiplicazione si usa spesso il carattere 'x' o si richiede l'escape dell'asterisco (\\* / \"*\")?",
+      "hint": "Rifletti su come l'interprete dei comandi (bash/zsh) gestisce il carattere '*' prima di chiamare il programma.",
+      "options": [
+        "La shell espande '*' nell'elenco di tutti i file della directory corrente (wildcard expansion) prima dell'avvio del programma",
+        "Il carattere '*' è riservato dallo standard C e non può essere passato tramite argv",
+        "La funzione atoi() percepisce '*' come fine stringa",
+        "L'array argv non può memorizzare caratteri speciali ASCII"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'interprete di comandi (shell) esegue l'espansione dei modelli (globbing). Il carattere `*` viene sostituito con l'elenco dei file nella directory corrente, alterando l'array `argv` e il valore di `argc`.",
+        "Errato. Lo standard C non limita in alcun modo il passaggio del carattere `*` tramite le stringhe di `argv`.",
+        "Errato. `atoi()` si interrompe a `*`, ma il problema si verifica prima del passaggio degli argomenti al programma C.",
+        "Errato. `argv` può memorizzare qualsiasi carattere ASCII."
+      ]
+    },
+    {
+      "id": "it_clang_2466",
+      "widget_id": "widget_clang_2466",
+      "topic": "Restituzione dei codici di errore dalla funzione main()",
+      "q": "Il programma stamperà il messaggio \"Valid\" se avviato con 2 parametri: ./calc 5 +?",
+      "hint": "Tieni presente che il nome dello stesso file eseguibile rientra nel conteggio totale dei parametri argc.",
+      "options": [
+        "No, poiché argc è pari a 3 e il controllo richiede esattamente 4 argomenti",
+        "Sì, poiché l'utente ha passato 2 argomenti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'avvio `./calc 5 +` passa 3 elementi (`argv[0]`, `argv[1]`, `argv[2]`). Poiché `argc` è pari a 3, il controllo `argc != 4` restituirà true e il programma terminerà con il codice 1 senza stampare `\"Valid\"`.",
+        "Errato. Il contatore `argc` considera anche il nome del file avviato, quindi è pari a 3."
+      ]
+    },
+    {
+      "id": "it_clang_2467",
+      "widget_id": "widget_clang_2467",
+      "topic": "Supporto per i numeri decimali negli argomenti della calcolatrice",
+      "q": "Quale valore stamperà una calcolatrice con supporto per i numeri reali alla chiamata: ./calc 3.5 + 2.25?",
+      "hint": "Entrambi gli argomenti vengono analizzati tramite atof(), sommati come numeri double e stampati con lo specificatore %.2f.",
+      "options": [
+        "5.75",
+        "5.00",
+        "5.7",
+        "3.52.25",
+        "0.00"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `atof(\"3.5\")` dà `3.5`, `atof(\"2.25\")` dà `2.25`. La somma è pari a `5.75`. Lo specificatore `%.2f` stamperà `5.75`.",
+        "Errato. Le parti decimali non vengono trascurate quando si usa `atof()`.",
+        "Errato. Vengono stampate 2 cifre decimali in base a `%.2f`.",
+        "Errato. Viene eseguita l'addizione matematica di numeri di tipo `double`.",
+        "Errato. I valori degli argomenti vengono riconosciuti correttamente."
+      ]
+    },
+    {
+      "id": "it_clang_2468",
+      "widget_id": "widget_clang_2468",
+      "topic": "Somma di un numero arbitrario di argomenti",
+      "q": "Quale sarà il risultato dell'esecuzione dell'utilità di somma all'avvio: ./sum 10 20 30 40?",
+      "hint": "Il ciclo scorre tutti gli argomenti passati dall'utente a partire dal primo indice i = 1 e li somma.",
+      "options": [
+        "100",
+        "30",
+        "0",
+        "4",
+        "10203040",
+        "10"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo somma tutti gli argomenti dal secondo al quinto: `10 + 20 + 30 + 40 = 100`.",
+        "Errato. Il ciclo esegue le iterazioni su tutti gli elementi fino alla fine di `argc`.",
+        "Errato. Il valore di `sum` aumenta ad ogni iterazione.",
+        "Errato. 4 è il numero di elementi sommati, ma viene stampata la loro somma.",
+        "Errato. Viene eseguita l'addizione di numeri interi, non una concatenazione.",
+        "Errato. Tutti i parametri passati vengono elaborati."
+      ]
+    },
+    {
+      "id": "it_clang_2469",
+      "widget_id": "widget_clang_2469",
+      "topic": "Gestione del flag di aiuto (-h) nelle utilità",
+      "q": "Cosa stamperà il programma all'intercettazione del flag di aiuto ./calc -h?",
+      "hint": "Fai attenzione alla chiamata return 0 all'interno del blocco di gestione del flag di aiuto.",
+      "options": [
+        "Help",
+        "Calc",
+        "Help\\nCalc"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In caso di corrispondenza di `argv[1]` con `\"-h\"`, viene stampato `\"Help\"` e si attiva `return 0;`, che forza la conclusione del programma prima di stampare `\"Calc\"`.",
+        "Errato. Il ramo `if` si attiverà e stamperà `\"Help\"`.",
+        "Errato. All'interno del blocco `if` viene chiamato `return 0`, quindi la seconda istruzione `printf` non viene eseguita."
+      ]
+    },
+    {
+      "id": "it_clang_2470",
+      "widget_id": null,
+      "topic": "Uscita di emergenza dal programma con exit()",
+      "q": "Quale funzione della libreria <stdlib.h> consente di interrompere immediatamente l'esecuzione del programma da qualsiasi punto in caso di errore negli argomenti?",
+      "hint": "Ricorda la funzione che accetta un codice di uscita (ad esempio, EXIT_FAILURE) e interrompe l'esecuzione del processo.",
+      "options": [
+        "exit(EXIT_FAILURE)",
+        "return_error()",
+        "abort_calc()",
+        "stop(1)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `exit()` da `<stdlib.h>` interrompe immediatamente il processo e restituisce il codice di stato specificato al sistema operativo.",
+        "Errato. La funzione `return_error` non esiste nella libreria standard C.",
+        "Errato. Questa funzione non è presente nello standard C.",
+        "Errato. La funzione `stop` non fa parte dello standard C."
+      ]
+    }
+  ]
+}

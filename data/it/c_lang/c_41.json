@@ -1,0 +1,605 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_1271",
+      "widget_id": "widget_clang_1271",
+      "topic": "Sintassi — Dichiarazione di più variabili",
+      "q": "Quale tipo avranno le variabili p1 e p2 nella seguente dichiarazione: int* p1, p2;?",
+      "hint": "Rifletti su cosa si associa il simbolo asterisco * durante l'analisi sintattica del compilatore: al tipo o al nome specifico della variabile.",
+      "options": [
+        "p1 ha il tipo int* (puntatore), mentre p2 ha il tipo int (un normale intero)",
+        "Sia p1 che p2 hanno il tipo int* (puntatori a int)",
+        "Si verificherà un errore di compilazione",
+        "Sia p1 che p2 sono puntatori ad un array di interi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C il simbolo `*` si associa al nome della singola variabile e non al tipo. Pertanto `int* p1, p2;` viene interpretato come `int *p1; int p2;`. Per dichiarare due puntatori sulla stessa riga, l'asterisco è necessario prima di ogni nome: `int *p1, *p2;`.",
+        "Errato. `p2` non ottiene il tipo puntatore poiché non c'è l'asterisco prima del suo nome.",
+        "Errato. La sintassi è assolutamente corretta dal punto di vista del compilatore.",
+        "Errato. Questa dichiarazione non ha alcuna relazione con gli array."
+      ]
+    },
+    {
+      "id": "it_clang_1272",
+      "widget_id": "widget_clang_1272",
+      "topic": "Costanza — Puntatore a costante (const T*)",
+      "q": "Cosa significa la dichiarazione const int *ptr;?",
+      "hint": "Osserva da quale lato dell'asterisco si trova la parola chiave const.",
+      "options": [
+        "Puntatore a un valore costante: è vietato modificare i dati tramite *ptr, ma l'indirizzo memorizzato in ptr può essere modificato",
+        "Puntatore costante: è vietato modificare l'indirizzo in ptr, ma il valore all'indirizzo può essere modificato",
+        "Puntatore che può essere inizializzato una sola volta nella funzione",
+        "Puntatore accessibile in sola lettura per il compilatore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se `const` si trova a sinistra dell'asterisco (`const int *` o `int const *`), è costante il **valore** a cui punta `ptr`. L'istruzione `*ptr = 10;` provocherà un errore, mentre `ptr = &other;` funzionerà normalmente.",
+        "Errato. Per un puntatore costante `const` si scrive a destra dell'asterisco: `int * const ptr`.",
+        "Errato. La limitazione riguarda i permessi di scrittura all'indirizzo, non la durata di vita.",
+        "Errato. Il puntatore funziona in runtime nel modo standard."
+      ]
+    },
+    {
+      "id": "it_clang_1273",
+      "widget_id": "widget_clang_1273",
+      "topic": "Costanza — Puntatore costante (T* const)",
+      "q": "In cosa differisce la dichiarazione int * const ptr = &x; da const int *ptr = &x;?",
+      "hint": "Fai attenzione alla posizione di const rispetto all'asterisco *.",
+      "options": [
+        "In int * const ptr il puntatore stesso (l'indirizzo memorizzato) è una costante, ma il valore all'indirizzo può essere modificato",
+        "In int * const ptr non è possibile modificare il valore all'indirizzo, ma è possibile reindirizzare il puntatore a un'altra variabile",
+        "Non c'è alcuna differenza tra queste due dichiarazioni",
+        "int * const ptr salva automaticamente il valore della variabile su disco"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La scrittura `int * const ptr` crea un **puntatore costante**. L'indirizzo scritto in `ptr` all'inizializzazione non può essere modificato (`ptr = &y;` — errore), ma i dati a quell'indirizzo possono essere cambiati (`*ptr = 20;` — corretto).",
+        "Errato. Il divieto di modifica dei dati viene stabilito da `const int *`.",
+        "Errato. La posizione di `const` rispetto a `*` cambia radicalmente le regole di modifica.",
+        "Errato. La costanza viene gestita a livello di permessi di accesso in RAM."
+      ]
+    },
+    {
+      "id": "it_clang_1274",
+      "widget_id": "widget_clang_1274",
+      "topic": "Tipi — Puntatore a un array",
+      "q": "Come si dichiara correttamente una variabile puntatore p riferita all'intero array di 5 elementi di tipo int?",
+      "hint": "Ricorda come le parentesi cambiano la precedenza tra l'asterisco * e le parentesi quadre [ ].",
+      "options": [
+        "int (*p)[5];",
+        "int *p[5];",
+        "int p*[5];",
+        "int *(p[5]);"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le parentesi `(*p)` legano forzatamente `p` all'asterisco, rendendolo un **puntatore a un array di 5 int**. L'incremento `p++` sposterà tale puntatore direttamente di `5 * sizeof(int)` byte.",
+        "Errato. `int *p[5];` è un array di 5 puntatori.",
+        "Errato. La sintassi `int p*[5];` non è valida.",
+        "Errato. `int *(p[5]);` è equivalente a `int *p[5];`."
+      ]
+    },
+    {
+      "id": "it_clang_1275",
+      "widget_id": "widget_clang_1275",
+      "topic": "Tipi — Array di puntatori",
+      "q": "Che cos'è la variabile arr nella dichiarazione int *arr[5];?",
+      "hint": "L'operatore [ ] ha una precedenza maggiore rispetto all'asterisco unario *.",
+      "options": [
+        "Un array di 5 elementi, in cui ogni elemento è di tipo int* (puntatore a int)",
+        "Un puntatore a un array di 5 numeri interi",
+        "Una funzione che accetta un array e restituisce int*",
+        "Un array dinamico di dimensione indefinita"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le parentesi quadre `[]` hanno la precedenza su `*`. Viene prima dichiarato l'array `arr[5]`, e poi viene specificato il tipo dei suoi elementi — `int *` (puntatore a intero).",
+        "Errato. Un puntatore a un array si dichiara con le parentesi: `int (*arr)[5];`.",
+        "Errato. La sintassi delle funzioni utilizza le parentesi tonde `()`, non quadre.",
+        "Errato. Questo è un array statico di dimensione fissa (5 elementi)."
+      ]
+    },
+    {
+      "id": "it_clang_1276",
+      "widget_id": "widget_clang_1276",
+      "topic": "Funzioni — Puntatore a funzione",
+      "q": "Qual è la sintassi corretta per dichiarare un puntatore p a una funzione che accetta un int e restituisce un double?",
+      "hint": "L'asterisco insieme al nome del puntatore deve essere racchiuso tra parentesi tonde.",
+      "options": [
+        "double (*p)(int);",
+        "double *p(int);",
+        "double p(*int);",
+        "double (int) *p;"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La dichiarazione `double (*p)(int);` indica che `p` è un puntatore a una funzione che prende un `int` e restituisce un `double`. Le parentesi tonde attorno a `*p` sono obbligatorie.",
+        "Errato. `double *p(int);` dichiara una **funzione** `p` che restituisce un puntatore `double*`.",
+        "Errato. La scrittura `double p(*int);` è un errore sintattico.",
+        "Errato. L'ordine dei tipi e delle parentesi non è corretto."
+      ]
+    },
+    {
+      "id": "it_clang_1277",
+      "widget_id": "widget_clang_1277",
+      "topic": "Inizializzazione — Inizializzazione a indirizzo nullo",
+      "q": "Perché all'atto della dichiarazione di un puntatore si raccomanda di assegnargli subito il valore NULL (int *p = NULL;)?",
+      "hint": "Rifletti su come distinguere un puntatore valido da un puntatore non inizializzato contenente un indirizzo \"spazzatura\".",
+      "options": [
+        "Per contrassegnare esplicitamente il puntatore come non ancora riferito a nessun oggetto e prevenire la dereferenziazione accidentale di un indirizzo \"spazzatura\"",
+        "Affinché il compilatore allochi memoria per esso nella sezione delle variabili globali",
+        "È un requisito obbligatorio dello standard C, senza il quale il codice non compila",
+        "Per velocizzare l'operatore di dereferenziazione *"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un puntatore locale non inizializzato contiene un valore casuale (Wild Pointer). L'inizializzazione a `NULL` consente successivamente di verificare in modo semplice prima dell'uso se `p` punta a un oggetto reale (`if (p != NULL)`).",
+        "Errato. `NULL` non influisce sulla classe di memoria o sulla posizione della variabile.",
+        "Errato. Il compilatore consente la creazione di puntatori non inizializzati.",
+        "Errato. `NULL` non incide in alcun modo sulla velocità delle istruzioni del processore."
+      ]
+    },
+    {
+      "id": "it_clang_1278",
+      "widget_id": "widget_clang_1278",
+      "topic": "Tipi — Puntatore generico void*",
+      "q": "Quale parola chiave viene utilizzata per dichiarare un puntatore \"senza tipo\" (Generic Pointer), in grado di memorizzare l'indirizzo di qualsiasi oggetto?",
+      "hint": "Ricorda il tipo che indica l'assenza di un tipo di dati specifico.",
+      "options": [
+        "void *",
+        "auto *",
+        "any *",
+        "generic *"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il puntatore `void*` è un puntatore universale (generico). In esso è possibile salvare l'indirizzo di un oggetto di qualsiasi tipo senza cast esplicito.",
+        "Errato. La parola chiave `auto` in C definisce la classe di memoria automatica (variabili locali).",
+        "Errato. I tipi `any` e `generic` non esistono nello standard C.",
+        "Errato."
+      ]
+    },
+    {
+      "id": "it_clang_1279",
+      "widget_id": "widget_clang_1279",
+      "topic": "Sicurezza — Puntatore selvaggio (Wild Pointer)",
+      "q": "Cosa si intende con il termine puntatore \"selvaggio\" (Wild Pointer) nella programmazione in C?",
+      "hint": "Pensa allo stato di una variabile puntatore locale subito dopo la sua dichiarazione senza un valore iniziale.",
+      "options": [
+        "Un puntatore che è stato dichiarato ma non inizializzato, e che contiene un indirizzo casuale (\"spazzatura\")",
+        "Un puntatore che punta a memoria liberata dopo la chiamata a free()",
+        "Un puntatore riferito a memoria protetta del kernel del SO",
+        "Un puntatore di tipo void* convertito a un tipo non idoneo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un puntatore selvaggio (Wild Pointer) è un puntatore non inizializzato. Un tentativo di lettura o scrittura al suo indirizzo causa Comportamento Indefinito (UB).",
+        "Errato. Un puntatore a memoria liberata viene chiamato puntatore penzolante (Dangling Pointer).",
+        "Errato. Gli indirizzi del kernel sono protetti via hardware, non è questa la definizione di Wild Pointer.",
+        "Errato. Un errore di cast del tipo è un semplice errore di incompatibilità dei tipi."
+      ]
+    },
+    {
+      "id": "it_clang_1280",
+      "widget_id": "widget_clang_1280",
+      "topic": "Costanza — Puntatore completamente costante",
+      "q": "Quale sintassi crea un puntatore costante a un valore costante (è vietato modificare sia l'indirizzo sia i dati a cui punta)?",
+      "hint": "Il qualificatore const deve essere presente sia prima sia dopo il simbolo asterisco *.",
+      "options": [
+        "const int * const ptr = &x;",
+        "const const int * ptr = &x;",
+        "int * const const ptr = &x;",
+        "const int ptr * const = &x;"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La scrittura `const int * const ptr` combina entrambe le limitazioni: la prima `const int *` vieta la modifica dei dati (`*ptr = 5;`), mentre la seconda `* const` vieta il cambio dell'indirizzo stesso (`ptr = &y;`).",
+        "Errato. La ripetizione `const const` non è valida sintatticamente.",
+        "Errato. Il doppio `const const` dopo l'asterisco non è consentito.",
+        "Errato. La sintassi per il posizionamento del nome della variabile e dell'asterisco è errata."
+      ]
+    },
+    {
+      "id": "it_clang_1281",
+      "widget_id": "widget_clang_1281",
+      "topic": "Concetti base — Definizione di puntatore",
+      "q": "Che cos'è una variabile puntatore (pointer) nel linguaggio C?",
+      "hint": "Rifletti se in questa variabile è memorizzato il valore numerico/carattere stesso oppure l'informazione su dove esso si trova.",
+      "options": [
+        "Una variabile il cui valore è l'indirizzo di memoria di un altro oggetto",
+        "Un tipo di dati speciale che aumenta automaticamente la velocità di lavoro del processore",
+        "Un riferimento a una funzione esterna del compilatore",
+        "Un array di lunghezza fissa per la memorizzazione di numeri interi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un puntatore è una variabile che contiene come proprio valore l'indirizzo numerico di un determinato oggetto (variabile, array, funzione) nella memoria RAM.",
+        "Errato. Il puntatore è un concetto architetturale di indirizzamento, non un acceleratore hardware.",
+        "Errato. Il puntatore risiede nella memoria del programma e fa riferimento a dati o codice.",
+        "Errato. Il puntatore contiene un indirizzo, non un insieme di elementi come un array."
+      ]
+    },
+    {
+      "id": "it_clang_1282",
+      "widget_id": "widget_clang_1282",
+      "topic": "Architettura — Dimensione dei puntatori",
+      "q": "A quanto ammonta la dimensione dei puntatori char*, int* e double* su un'architettura target a 64 bit?",
+      "hint": "La dimensione dell'indirizzo di memoria dipende dal tipo di dato a cui punta?",
+      "options": [
+        "Tutti i puntatori hanno la stessa dimensione (8 byte su un sistema a 64 bit), in quanto l'indirizzo di memoria ha una larghezza fissa",
+        "La dimensione del puntatore è pari alla dimensione del tipo: char* — 1 byte, int* — 4 byte, double* — 8 byte",
+        "La dimensione del puntatore è sempre pari a 2 byte indipendentemente dall'architettura",
+        "La dimensione del puntatore viene definita dall'utente durante la compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Qualsiasi puntatore memorizza un indirizzo nella memoria RAM. La larghezza dell'indirizzo è determinata dall'architettura del processore e dal sistema operativo (sui sistemi a 64 bit l'indirizzo occupa 8 byte / 64 bit), indipendentemente dalla dimensione del tipo di dati a cui punta.",
+        "Errato. La dimensione `sizeof(T*)` non dipende da `sizeof(T)`.",
+        "Errato. 2 byte (16 bit) si trovavano sui vecchi sistemi a 16 bit (ad es. DOS).",
+        "Errato. La dimensione dell'indirizzo è determinata dalla combinazione della piattaforma target."
+      ]
+    },
+    {
+      "id": "it_clang_1283",
+      "widget_id": "widget_clang_1283",
+      "topic": "Concetti base — Variabile e valore all'indirizzo",
+      "q": "Qual è la differenza tra le espressioni p e *p nel codice, se p è un puntatore a int?",
+      "hint": "Una di esse rappresenta l'indirizzo stesso, mentre l'altra è il valore nella cella di memoria.",
+      "options": [
+        "p è l'indirizzo di memoria memorizzato nel puntatore, mentre *p è il valore di tipo int contenuto a quell'indirizzo",
+        "p è il valore di tipo int, mentre *p è l'indirizzo della cella di memoria",
+        "Non c'è alcuna differenza tra p e *p",
+        "p restituisce il nome della variabile, mentre *p restituisce il suo tipo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `p` contiene l'indirizzo della cella di memoria (ad es. `0x7ffe...`), mentre l'operatore di dereferenziazione `*p` accede al valore del numero intero memorizzato a quell'indirizzo.",
+        "Errato. È il contrario: `p` è l'indirizzo, `*p` è il valore.",
+        "Errato. La differenza è fondamentale.",
+        "Errato. Nomi e tipi in C esistono in fase di compilazione, non nei valori di `p` e `*p`."
+      ]
+    },
+    {
+      "id": "it_clang_1284",
+      "widget_id": "widget_clang_1284",
+      "topic": "Input/Output — Stampa di indirizzi tramite printf",
+      "q": "Quale specificatore di formato della funzione printf è destinato alla corretta stampa di un indirizzo di memoria (puntatore)?",
+      "hint": "Ricorda la lettera che indica Pointer.",
+      "options": [
+        "%p (con cast esplicito dell'argomento al tipo void*)",
+        "%d",
+        "%s",
+        "%f"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `%p` è progettato appositamente per formattare e stampare gli indirizzi (puntatori) in forma esadecimale. Secondo lo standard C si raccomanda di convertire l'argomento a `(void*)`.",
+        "Errato. `%d` stampa interi in forma decimale (`int`).",
+        "Errato. `%s` si aspetta un puntatore a una stringa terminata da zero e stampa il testo.",
+        "Errato. `%f` stampa numeri in virgola mobile (`double`/`float`)."
+      ]
+    },
+    {
+      "id": "it_clang_1285",
+      "widget_id": null,
+      "topic": "Tipizzazione — Perché il puntatore ha bisogno di un tipo di dati",
+      "q": "Perché un puntatore necessita di un tipo specifico (ad es. int* invece di un semplice 'puntatore'), se l'indirizzo di memoria è sempre semplicemente un numero?",
+      "hint": "Rifletti su come il compilatore possa sapere quanti byte leggere dalla memoria durante la dereferenziazione.",
+      "options": [
+        "Affinché il compilatore sappia quanti byte di memoria leggere/scrivere durante la dereferenziazione e di quale ampiezza spostare l'indirizzo nell'aritmetica",
+        "Il tipo di puntatore serve unicamente affinché il programma occupi meno spazio su disco",
+        "Il tipo di puntatore blocca l'accesso alla memoria da parte di altre funzioni",
+        "È un requisito del sistema operativo, il C in sé non richiede tipi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il tipo di puntatore comunica al compilatore la dimensione dell'oggetto in memoria (ad es. `sizeof(int) == 4` byte) e le regole per lavorarci (come interpretare i bit e di quanti byte avanzare con `p + 1`).",
+        "Errato. Il tipo di puntatore non influisce sulla dimensione dell'eseguibile.",
+        "Errato. La tipizzazione non gestisce i permessi di accesso dei processi nel SO.",
+        "Errato. La tipizzazione statica dei puntatori è parte integrante dello standard del linguaggio C."
+      ]
+    },
+    {
+      "id": "it_clang_1286",
+      "widget_id": "widget_clang_1286",
+      "topic": "Sintassi — Copia di puntatori",
+      "q": "Cosa accade durante l'esecuzione dell'operazione p1 = p2;, dove p1 e p2 sono puntatori di tipo int*?",
+      "hint": "Vengono copiati i dati da una cella di memoria all'altra o solo gli indirizzi stessi?",
+      "options": [
+        "Il puntatore p1 inizia a puntare alla stessa cella di memoria di p2 (viene copiato l'indirizzo)",
+        "Il valore della variabile all'indirizzo p2 viene copiato nella memoria all'indirizzo p1",
+        "La memoria all'indirizzo p1 viene liberata e p2 viene azzerato",
+        "Entrambi i puntatori vengono azzerati a NULL"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nell'assegnazione `p1 = p2` viene copiato il valore del puntatore (l'indirizzo). Di conseguenza sia `p1` sia `p2` contengono lo stesso indirizzo e si riferiscono allo stesso oggetto in memoria.",
+        "Errato. Per copiare i valori sarebbe occorsa la dereferenziazione: `*p1 = *p2`.",
+        "Errato. L'assegnazione tra puntatori non invoca `free()`.",
+        "Errato. Il valore di `p2` viene copiato in `p1`, non avviene alcun azzeramento."
+      ]
+    },
+    {
+      "id": "it_clang_1287",
+      "widget_id": "widget_clang_1287",
+      "topic": "Concetti base — Puntatore nullo NULL",
+      "q": "Cosa significa concettualmente l'assegnazione ptr = NULL; (o ptr = 0;)?",
+      "hint": "Ricorda se NULL punta a qualche oggetto reale in memoria.",
+      "options": [
+        "Il puntatore indica esplicitamente \"da nessuna parte\" (a un indirizzo di memoria certamente non valido)",
+        "La variabile all'indirizzo ptr viene azzerata e diventa pari a 0",
+        "Il puntatore inizia a puntare alla prima variabile sullo stack",
+        "La memoria all'indirizzo ptr viene automaticamente liberata dal sistema operativo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `NULL` è una macro speciale (di solito `((void*)0)`), che garantisce che il puntatore non si riferisca a nessun oggetto o funzione validi.",
+        "Errato. L'azzeramento della cella di memoria richiede la dereferenziazione `*ptr = 0`.",
+        "Errato. `NULL` punta all'indirizzo `0x0`, non sullo stack.",
+        "Errato. L'assegnazione a `NULL` non libera la memoria dinamica."
+      ]
+    },
+    {
+      "id": "it_clang_1288",
+      "widget_id": null,
+      "topic": "Teoria — Concetto di indirizzamento indiretto",
+      "q": "Cosa si intende con il termine \"indirizzamento indiretto\" (Indirection) quando si lavora con i puntatori?",
+      "hint": "Rifletti sull'accesso a un valore non direttamente tramite il nome della variabile, ma tramite un indirizzo intermedio.",
+      "options": [
+        "L'accesso al valore di una variabile non direttamente tramite il suo nome, ma attraverso un'altra variabile che ne contiene l'indirizzo",
+        "La scelta casuale di una cella di memoria all'avvio del programma",
+        "La crittografia degli indirizzi nella memoria RAM",
+        "Il passaggio dei parametri a una funzione tramite variabili globali"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'indirizzamento indiretto è un meccanismo di lavoro con la memoria in cui l'istruzione del processore utilizza l'indirizzo memorizzato in un registro o in una variabile puntatore per raggiungere i dati finali.",
+        "Errato. La scelta dell'indirizzo non è casuale.",
+        "Errato. Il termine non ha alcuna relazione con la crittografia.",
+        "Errato. L'indirizzamento indiretto riguarda l'accesso via indirizzo in generale."
+      ]
+    },
+    {
+      "id": "it_clang_1289",
+      "widget_id": "widget_clang_1289",
+      "topic": "Sintassi — Doppio ruolo dei simboli * e &",
+      "q": "Qual è il ruolo del simbolo * nella dichiarazione int *p; e nell'espressione val = *p;?",
+      "hint": "Nella dichiarazione l'asterisco definisce il tipo, mentre nell'espressione è un'azione sull'indirizzo.",
+      "options": [
+        "Nella dichiarazione * definisce il tipo 'puntatore', mentre nell'espressione è l'operatore di dereferenziazione (accesso al valore)",
+        "Nella dichiarazione * moltiplica la memoria, mentre nell'espressione legge l'indirizzo",
+        "In entrambi i casi * fa la stessa cosa: esegue la dereferenziazione",
+        "Nella dichiarazione * punta a una costante, mentre nell'espressione a una variabile"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il simbolo `*` è sovraccaricato sintatticamente. Nella dichiarazione (`int *p;`) funge da specificatore di tipo (crea un puntatore). Nelle espressioni (`*p`) è l'operatore unario di dereferenziazione.",
+        "Errato. L'asterisco nella dichiarazione del tipo non esegue alcuna moltiplicazione matematica.",
+        "Errato. Nella dichiarazione non avviene alcuna dereferenziazione.",
+        "Errato. La costanza viene impostata tramite la parola chiave `const`."
+      ]
+    },
+    {
+      "id": "it_clang_1290",
+      "widget_id": "widget_clang_1290",
+      "topic": "Puntatori — Effetto aliasing (Aliasing)",
+      "q": "Cosa accadrà al valore di *p1 se si esegue *p2 = 20;, a condizione che p1 e p2 puntino alla stessa variabile x (int x = 10; int *p1 = &x; int *p2 = &x;)?",
+      "hint": "Se due puntatori guardano alla stessa 'casa' in memoria, la casa cambierà per il primo se viene ridipinta tramite il secondo?",
+      "options": [
+        "*p1 diventerà anch'esso pari a 20, poiché entrambi i puntatori sono riferiti alla stessa cella di memoria x",
+        "*p1 rimarrà pari a 10, in quanto i puntatori sono isolati l'uno dall'altro",
+        "Si verificherà un errore di compilazione",
+        "Il puntatore p1 verrà automaticamente reindirizzato a NULL"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `p1` e `p2` contengono lo stesso indirizzo (`&x`), la modifica dei dati tramite `*p2` cambia il valore della variabile `x`. Di conseguenza, la successiva lettura di `*p1` restituirà il valore aggiornato `20` (fenomeno noto come Pointer Aliasing).",
+        "Errato. I puntatori si riferiscono alla stessa memoria condivisa e non memorizzano copie indipendenti dei valori.",
+        "Errato. Assegnare più puntatori allo stesso oggetto è assolutamente legale.",
+        "Errato. Il valore dell'indirizzo in `p1` non cambia."
+      ]
+    },
+    {
+      "id": "it_clang_1291",
+      "widget_id": null,
+      "topic": "Puntatore penzolante — Definizione",
+      "q": "Che cos'è un puntatore \"penzolante\" (Dangling Pointer) nel linguaggio C?",
+      "hint": "Rifletti se l'oggetto esisteva in memoria in precedenza e cosa è successo alla sua memoria.",
+      "options": [
+        "Un puntatore che memorizza l'indirizzo di memoria che era stata allocata in precedenza, ma che è stata poi liberata o è uscita dall'ambito di visibilità",
+        "Un puntatore che è stato dichiarato senza inizializzazione e contiene un indirizzo casuale (\"spazzatura\")",
+        "Un puntatore a cui è stato assegnato esplicitamente il valore NULL",
+        "Un puntatore riferito a un'area di memoria protetta in sola lettura (Read-Only)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un puntatore penzolante (Dangling Pointer) è un puntatore che punta alla memoria precedentemente occupata da un oggetto dopo che la durata di vita di tale oggetto è terminata (memoria liberata tramite `free` o stack distrutto).",
+        "Errato. Un puntatore non inizializzato con un indirizzo casuale viene chiamato selvaggio (Wild Pointer).",
+        "Errato. Un puntatore con valore `NULL` viene chiamato puntatore nullo (Null Pointer).",
+        "Errato. Le limitazioni di accesso sono gestite dal qualificatore `const` o dalla protezione delle pagine di memoria."
+      ]
+    },
+    {
+      "id": "it_clang_1292",
+      "widget_id": "widget_clang_1292",
+      "topic": "Rilascio della memoria — Comportamento di free()",
+      "q": "Il puntatore p diventa automaticamente pari a NULL dopo l'esecuzione della chiamata free(p);?",
+      "hint": "Rifletti se la funzione free() modifica l'indirizzo memorizzato nella variabile p stessa.",
+      "options": [
+        "No, free() restituisce solo la memoria al sistema operativo, mentre la variabile p continua a memorizzare il vecchio indirizzo (diventando un puntatore penzolante)",
+        "Sì, lo standard C garantisce che la funzione free() scriva automaticamente NULL nel puntatore passato",
+        "Sì, ma solo se p è stato allocato tramite la funzione calloc",
+        "No, il puntatore p viene reindirizzato automaticamente al successivo blocco disponibile nell'heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `free(p)` accetta una **copia** dell'indirizzo per valore. Essa libera il blocco di memoria richiesto nell'heap, ma non può modificare il valore della variabile `p` stessa. Il puntatore `p` continua a contenere il vecchio indirizzo, diventando penzolante.",
+        "Errato. La funzione `free` non modifica la variabile puntatore del chiamante.",
+        "Errato. Il metodo di allocazione (`malloc`/`calloc`) non cambia il funzionamento di `free`.",
+        "Errato. Non avviene alcun reindirizzamento automatico ad altri blocchi."
+      ]
+    },
+    {
+      "id": "it_clang_1293",
+      "widget_id": "widget_clang_1293",
+      "topic": "Ambito di visibilità — Restituzione di un indirizzo dallo stack",
+      "q": "Perché una funzione che restituisce l'indirizzo di una variabile locale (int* get_ptr(void) { int x = 10; return &x; }) restituisce un puntatore penzolante?",
+      "hint": "Ricorda cosa succede al frame di stack della funzione al termine della sua esecuzione.",
+      "options": [
+        "Al termine della funzione il suo stack frame viene distrutto e l'area di memoria della variabile x diventa non valida",
+        "È vietato utilizzare l'istruzione return con l'operatore unario &",
+        "Le variabili locali vengono trasferite automaticamente nell'area dei dati globali",
+        "L'indirizzo della variabile locale viene azzerato automaticamente dal processore all'uscita"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `x` si trova sullo stack della funzione. Non appena la funzione termina la sua esecuzione, lo stack viene liberato e l'indirizzo restituito `&x` inizia a puntare a un'area dello stack liberata/sovrascrivibile (puntatore penzolante).",
+        "Errato. La sintassi `return &x;` viene compilata, ma porta a errori catastrofici in fase di esecuzione.",
+        "Errato. Le variabili locali `auto` non vengono trasferite nella memoria globale.",
+        "Errato. Il processore non azzera gli indirizzi delle variabili locali."
+      ]
+    },
+    {
+      "id": "it_clang_1294",
+      "widget_id": "widget_clang_1294",
+      "topic": "Sicurezza — Pattern p = NULL",
+      "q": "Perché si raccomanda di scrivere esplicitamente p = NULL; subito dopo la chiamata a free(p);?",
+      "hint": "Rifletti su come il programma reagirà a un'eventuale dereferenziazione accidentale di NULL rispetto alla dereferenziazione del vecchio indirizzo.",
+      "options": [
+        "Per neutralizzare il puntatore penzolante: un tentativo di accedere a NULL causerà un crash prevedibile, e una seconda free(NULL) è sicura",
+        "Senza la riga p = NULL; il sistema operativo non restituirà la memoria all'heap",
+        "Questo è necessario per il corretto funzionamento del compilatore in modalità di ottimizzazione -O3",
+        "La riga p = NULL riduce la quantità di memoria RAM occupata dal programma stesso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'azzeramento `p = NULL` trasforma un pericoloso puntatore penzolante in un puntatore nullo. La dereferenziazione di `NULL` produrrà immediatamente un chiaro Segmentation Fault in fase di debug, mentre la chiamata `free(NULL)` secondo lo standard C è del tutto sicura e non genera errori.",
+        "Errato. La memoria viene liberata dalla funzione `free(p)` stessa, indipendentemente dall'azzeramento.",
+        "Errato. L'ottimizzazione del compilatore non dipende dal pattern di azzeramento.",
+        "Errato. La quantità di memoria del programma non cambia per questo motivo."
+      ]
+    },
+    {
+      "id": "it_clang_1295",
+      "widget_id": "widget_clang_1295",
+      "topic": "Ambito di visibilità — Uscita dal blocco {}",
+      "q": "ptr diventerà un puntatore penzolante dopo l'esecuzione del seguente frammento: int *ptr; { int x = 5; ptr = &x; }?",
+      "hint": "Fai attenzione ai limiti delle parentesi graffe {} che delimitano la durata di vita della variabile x.",
+      "options": [
+        "Sì, la durata di vita della variabile x termina alla parentesi graffa di chiusura }, e ptr punta a una cella di stack non valida",
+        "No, la variabile x rimarrà in vita fino alla fine della funzione main",
+        "No, le parentesi {} non influiscono sulla durata di vita delle variabili locali",
+        "Il codice causerà un errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'ambito di visibilità e la durata di vita della variabile `x` sono limitati dal blocco interno `{}`. Dopo la parentesi graffa di chiusura `}` la memoria di `x` sullo stack è considerata libera e `ptr` si trasforma in un puntatore penzolante.",
+        "Errato. La variabile `x` cessa di esistere all'uscita dal suo blocco.",
+        "Errato. Le parentesi graffe definiscono l'ambito locale e la durata di vita.",
+        "Errato. Il codice è sintatticamente corretto."
+      ]
+    },
+    {
+      "id": "it_clang_1296",
+      "widget_id": "widget_clang_1296",
+      "topic": "Vulnerabilità — Use-After-Free",
+      "q": "Come si chiama la vulnerabilità/errore che si verifica quando si tenta di leggere o scrivere dati tramite un puntatore penzolante (ad es. *p = 10; dopo free(p);)?",
+      "hint": "Traduci il nome dell'azione in inglese: utilizzo della memoria dopo il suo rilascio.",
+      "options": [
+        "Use-After-Free (UAF)",
+        "Memory Leak (Perdita di memoria)",
+        "Buffer Overflow (Overflow del buffer)",
+        "Null Pointer Dereference (Dereferenziazione di puntatore nullo)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'uso di un puntatore penzolante viene chiamato **Use-After-Free (UAF)**. Si tratta di un grave errore di sicurezza che può portare a modifiche imprevedibili di dati altrui nell'heap o all'esecuzione di codice arbitrario da parte di un malintenzionato.",
+        "Errato. Memory Leak è la situazione in cui la memoria allocata non viene liberata.",
+        "Errato. Buffer Overflow è la scrittura oltre i limiti di un array.",
+        "Errato. Null Pointer Dereference è il tentativo di dereferenziare l'indirizzo `0x0`."
+      ]
+    },
+    {
+      "id": "it_clang_1297",
+      "widget_id": null,
+      "topic": "Classificazione — Wild Pointer contro Dangling Pointer",
+      "q": "Qual è la differenza chiave tra un puntatore \"selvaggio\" (Wild Pointer) e uno \"penzolante\" (Dangling Pointer)?",
+      "hint": "Rifletti se il puntatore sia mai stato inizializzato con un indirizzo corretto.",
+      "options": [
+        "Il Wild Pointer non è stato affatto inizializzato (contiene dati casuali spazzatura), mentre il Dangling Pointer in precedenza puntava a un oggetto valido che è stato distrutto",
+        "Il Wild Pointer punta sullo stack, mentre il Dangling Pointer sull'heap",
+        "Il Wild Pointer è pari a NULL, mentre il Dangling Pointer contiene l'indirizzo 0xFFFFFFFF",
+        "Non c'è alcuna differenza tra questi due concetti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! **Wild Pointer** è un puntatore appena creato e non inizializzato contenente un indirizzo \"spazzatura\". **Dangling Pointer** in origine puntava a un oggetto legale, ma tale oggetto ha cessato di esistere.",
+        "Errato. Entrambi i tipi di puntatori possono puntare a qualsiasi area della RAM.",
+        "Errato. Un puntatore con valore `NULL` non è né selvaggio né penzolante.",
+        "Errato. Sono due categorie ben distinte di errori nell'uso dei puntatori."
+      ]
+    },
+    {
+      "id": "it_clang_1298",
+      "widget_id": "widget_clang_1298",
+      "topic": "Errori — Doppio rilascio (Double Free)",
+      "q": "A quale guasto porta il tentativo di invocare free(p); due volte di seguito per lo stesso puntatore penzolante senza azzeramento (Double Free)?",
+      "hint": "Rifletti su come il gestore della memoria dell'heap reagirà al tentativo di restituire nuovamente un blocco già liberato.",
+      "options": [
+        "Corruzione delle strutture dati dell'heap (Heap Corruption) e arresto anomalo del programma",
+        "La seconda chiamata a free() verrà ignorata automaticamente dal sistema",
+        "La memoria viene allocata di nuovo in quantità doppia",
+        "Il puntatore p si azzera automaticamente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Una seconda chiamata a `free()` per lo stesso indirizzo non azzerato danneggia le tabelle interne dell'allocatore di memoria (Heap Corruption). Questo è un classico errore di **Double Free** che provoca l'arresto anomalo dell'applicazione.",
+        "Errato. Viene ignorata automaticamente solo `free(NULL)`, ma non un secondo `free(indirizzo_valido)`.",
+        "Errato. La memoria non viene allocata durante la chiamata a `free`.",
+        "Errato. La funzione `free` non azzera l'indirizzo a `NULL`."
+      ]
+    },
+    {
+      "id": "it_clang_1299",
+      "widget_id": "widget_clang_1299",
+      "topic": "Pattern — Macro sicura SAFE_FREE",
+      "q": "Quale implementazione della macro SAFE_FREE è corretta per proteggersi dai puntatori penzolanti?",
+      "hint": "Prima la memoria deve essere liberata, e poi si azzera il puntatore stesso.",
+      "options": [
+        "#define SAFE_FREE(p) do { free(p); (p) = NULL; } while(0)",
+        "#define SAFE_FREE(p) do { (p) = NULL; free(p); } while(0)",
+        "#define SAFE_FREE(p) free(&p)",
+        "#define SAFE_FREE(p) delete(p)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La scrittura `do { free(p); (p) = NULL; } while(0)` passa prima l'indirizzo a `free()`, liberando il blocco, e successivamente azzera `(p) = NULL`. Il wrapper `do ... while(0)` garantisce la sicurezza dell'uso della macro all'interno di strutture `if-else`.",
+        "Errato. Se prima si esegue `(p) = NULL`, allora `free(NULL)` non libererà nulla, causando un leak di memoria.",
+        "Errato. `free(&p)` passerà l'indirizzo della variabile puntatore stessa, non del blocco allocato.",
+        "Errato. `delete` è un operatore del C++, assente in C."
+      ]
+    },
+    {
+      "id": "it_clang_1300",
+      "widget_id": "widget_clang_1300",
+      "topic": "Gestione della memoria — Funzione realloc",
+      "q": "Perché il puntatore originale p può diventare penzolante dopo la chiamata int *new_p = realloc(p, new_size);?",
+      "hint": "Rifletti su cosa fa realloc se non ha abbastanza spazio per estendere la memoria \"sul posto\".",
+      "options": [
+        "Se realloc sposta il blocco di memoria in una nuova posizione, libera il vecchio blocco p, rendendolo un puntatore penzolante",
+        "La funzione realloc azzera sempre forzatamente il vecchio puntatore p",
+        "Il vecchio puntatore p viene bloccato dal sistema operativo",
+        "realloc trasforma il puntatore p in una variabile globale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se `realloc` non può estendere l'area allocata all'indirizzo corrente, alloca un nuovo blocco di memoria in un altro punto dell'heap, vi copia i dati, libera il vecchio blocco `p` e restituisce `new_p`. Dopodiché `p` inizia a puntare a memoria liberata.",
+        "Errato. `realloc` non modifica il valore della variabile `p`.",
+        "Errato. Il SO non impone alcun blocco specifico.",
+        "Errato. `realloc` non modifica l'ambito di visibilità delle variabili."
+      ]
+    }
+  ]
+}

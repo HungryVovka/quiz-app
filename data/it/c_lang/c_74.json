@@ -1,0 +1,605 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2261",
+      "widget_id": "widget_clang_2261",
+      "topic": "Conversione di una lettera maiuscola in minuscola tramite tolower()",
+      "q": "Cosa stamperà questo programma alla chiamata di tolower('G')?",
+      "hint": "La funzione tolower() converte le lettere maiuscole dell'alfabeto latino nel corrispondente registro minuscolo.",
+      "options": [
+        "g",
+        "G",
+        "103",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `tolower('G')` converte la lettera maiuscola 'G' nella minuscola 'g'. La chiamata a `putchar()` stampa il carattere `g`.",
+        "Errato. Il carattere 'G' cambierà registro, poiché è una lettera maiuscola.",
+        "Errato. 103 è il codice ASCII della lettera minuscola 'g', ma `putchar()` stamperà il carattere stesso, non il suo codice.",
+        "Errato. Il codice è scritto correttamente."
+      ]
+    },
+    {
+      "id": "it_clang_2262",
+      "widget_id": "widget_clang_2262",
+      "topic": "Conversione di una lettera minuscola in maiuscola tramite toupper()",
+      "q": "Cosa stamperà il programma alla chiamata di toupper('k')?",
+      "hint": "La funzione toupper() converte le lettere minuscole in maiuscole (registro superiore).",
+      "options": [
+        "K",
+        "k",
+        "75",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `toupper('k')` converte la minuscola 'k' nella maiuscola 'K'. La chiamata a `putchar()` stamperà il carattere `K`.",
+        "Errato. La lettera originale 'k' verrà convertita in maiuscola.",
+        "Errato. 75 è il codice ASCII della lettera maiuscola 'K', tuttavia `putchar()` stamperà il carattere stesso.",
+        "Errato. La funzione restituisce il codice del carattere convertito."
+      ]
+    },
+    {
+      "id": "it_clang_2263",
+      "widget_id": "widget_clang_2263",
+      "topic": "Gestione dei caratteri non alfabetici in tolower()",
+      "q": "Come si comporta la funzione tolower() se il carattere passato non è una lettera (ad esempio, '9')?",
+      "hint": "Le funzioni di modifica del registro non modificano i caratteri per i quali non esiste il concetto di registro.",
+      "options": [
+        "Restituisce il carattere '9' senza modifiche",
+        "Restituisce 0",
+        "Restituisce EOF",
+        "Causa un errore a tempo di esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard del linguaggio C, se un carattere non ha un equivalente nel registro opposto (ad esempio cifre o punteggiatura), `tolower()` e `toupper()` restituiscono il valore originale senza modifiche.",
+        "Errato. Il carattere non viene azzerato.",
+        "Errato. `EOF` viene restituito solo se `EOF` viene passato come argomento o in caso di errore dello stream.",
+        "Errato. Non si verifica alcuna interruzione anomala del programma."
+      ]
+    },
+    {
+      "id": "it_clang_2264",
+      "widget_id": null,
+      "topic": "Tipo restituito dalle funzioni tolower() e toupper()",
+      "q": "Quale tipo di dato restituiscono le funzioni tolower() e toupper()?",
+      "hint": "Firme delle funzioni: int tolower(int c) e int toupper(int c).",
+      "options": [
+        "int",
+        "char",
+        "unsigned char",
+        "void"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Entrambe le funzioni restituiscono il tipo `int`. Ciò è necessario per mantenere la compatibilità con il tipo dell'argomento (accettano `int`) e per gestire correttamente il valore `EOF`.",
+        "Errato. Sebbene il risultato venga di solito assegnato o convertito a `char`, il tipo restituito dalle funzioni è `int`.",
+        "Errato. `unsigned char` non può contenere il valore `EOF`.",
+        "Errato. Le funzioni restituiscono il carattere convertito."
+      ]
+    },
+    {
+      "id": "it_clang_2265",
+      "widget_id": "widget_clang_2265",
+      "topic": "Applicazione di toupper() a un carattere già in maiuscolo",
+      "q": "Cosa restituirà l'espressione toupper(c) == c se la variabile c contiene la lettera maiuscola 'W'?",
+      "hint": "Il carattere 'W' è già in maiuscolo.",
+      "options": [
+        "1",
+        "0",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se il carattere è già in maiuscolo, `toupper('W')` restituirà il valore 'W' senza modifiche. Il confronto `'W' == 'W'` è vero, quindi viene restituito `1`.",
+        "Errato. Il risultato della conversione è esattamente uguale al carattere originale.",
+        "Errato. Il codice è sintatticamente corretto.",
+        "Errato. Il comportamento della funzione è rigorosamente regolamentato dallo standard."
+      ]
+    },
+    {
+      "id": "it_clang_2266",
+      "widget_id": null,
+      "topic": "Passaggio sicuro di char alle funzioni di <ctype.h>",
+      "q": "Perché quando si passa una variabile c di tipo char alla funzione tolower(c) si raccomanda di effettuare un cast esplicito (unsigned char)c?",
+      "hint": "Se il tipo char su una determinata piattaforma è con segno (signed), i caratteri con codice > 127 diventeranno numeri negativi.",
+      "options": [
+        "Per prevenire Undefined Behavior quando si passano valori negativi di tipo signed char",
+        "Per velocizzare i calcoli a livello di processore",
+        "Per convertire automaticamente i caratteri cirillici",
+        "Senza il cast di tipo il programma non viene compilato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se `char` è con segno per impostazione predefinita (`signed char`), gli argomenti con codici ASCII/estesi > 127 avranno valori negativi. Secondo lo standard, l'argomento delle funzioni di `<ctype.h>` deve essere compreso nell'intervallo di `unsigned char` (0..255) oppure essere uguale a `EOF`. Il passaggio di valori negativi diversi da `EOF` causa Undefined Behavior.",
+        "Errato. Il cast non influisce sulla velocità di esecuzione della funzione.",
+        "Errato. Le funzioni di `<ctype.h>` lavorano nell'ambito della locale standard (locale C) e non garantiscono il funzionamento corretto con il cirillico.",
+        "Errato. Il codice si compila anche senza cast, ma conterrà un potenziale bug."
+      ]
+    },
+    {
+      "id": "it_clang_2267",
+      "widget_id": "widget_clang_2267",
+      "topic": "Conversione dei caratteri di una stringa in un ciclo",
+      "q": "Cosa stamperà il programma elaborando elemento per elemento la stringa \"c1\" con la funzione toupper()?",
+      "hint": "Le lettere vengono convertite in maiuscolo, mentre le cifre mantengono la loro forma.",
+      "options": [
+        "C1",
+        "c1",
+        "C",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il primo carattere 'c' viene convertito in maiuscolo 'C'. Il secondo carattere '1' rimane invariato '1'. Lo schermo mostrerà `C1`.",
+        "Errato. La lettera 'c' deve cambiare registro.",
+        "Errato. Il ciclo si fermerà solo al terminatore nullo `\\0`, quindi anche la cifra '1' verrà stampata.",
+        "Errato. Il codice non contiene errori di sintassi."
+      ]
+    },
+    {
+      "id": "it_clang_2268",
+      "widget_id": null,
+      "topic": "Vantaggio di toupper() rispetto all'aritmetica manuale (c - 32)",
+      "q": "Qual è il vantaggio principale dell'utilizzo di toupper(c) rispetto allo spostamento manuale dei codici (c - 32)?",
+      "hint": "L'aritmetica manuale 'c - 32' presuppone l'uso della codifica ASCII e richiede un controllo preventivo se il carattere sia una lettera minuscola.",
+      "options": [
+        "toupper() verifica l'appartenenza all'intervallo e garantisce la portabilità tra diverse codifiche",
+        "toupper() funziona più velocemente dell'aritmetica unaria",
+        "L'aritmetica manuale c - 32 è proibita dallo standard C",
+        "toupper() funziona solo con la memoria allocata dinamicamente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `c - 32` senza controlli non funziona correttamente sui caratteri non alfabetici (ad esempio, '1' - 32 dà un carattere speciale) ed è legata esclusivamente alla codifica ASCII. La funzione `toupper()` è sicura per qualsiasi carattere e portabile su sistemi con altre codifiche (ad esempio EBCDIC).",
+        "Errato. In alcuni casi le funzioni di libreria possono essere leggermente più lente a causa dei controlli, ma garantiscono la correttezza.",
+        "Errato. L'aritmetica sui caratteri è consentita in C.",
+        "Errato. Non viene allocata memoria per `toupper()`."
+      ]
+    },
+    {
+      "id": "it_clang_2269",
+      "widget_id": "widget_clang_2269",
+      "topic": "Gestione di EOF da parte delle funzioni tolower() / toupper()",
+      "q": "Cosa restituisce la chiamata a tolower(EOF)?",
+      "hint": "La costante EOF è un valore di input valido per le funzioni della libreria <ctype.h>.",
+      "options": [
+        "EOF (restituisce il valore senza modifiche)",
+        "0",
+        "'\\0'",
+        "Errore a tempo di esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `tolower(EOF)` controlla il valore passato e, se è `EOF`, restituisce lo stesso `EOF` senza modifiche. L'espressione `tolower(EOF) == EOF` è vera (1).",
+        "Errato. `EOF` non viene convertito in 0.",
+        "Errato. Il terminatore nullo `\\0` non viene restituito quando viene passato `EOF`.",
+        "Errato. Il passaggio di `EOF` è esplicitamente previsto dallo standard C."
+      ]
+    },
+    {
+      "id": "it_clang_2270",
+      "widget_id": "widget_clang_2270",
+      "topic": "Chiamate annidate alle funzioni di modifica del registro",
+      "q": "Cosa stamperà il programma eseguendo la chiamata annidata toupper(tolower(toupper('a')))?",
+      "hint": "I calcoli avvengono dall'interno verso l'esterno: 'a' -> upper -> lower -> upper.",
+      "options": [
+        "A",
+        "a",
+        "Errore di compilazione",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! 1) Il primo `toupper('a')` dà 'A'. 2) L'interno `tolower('A')` dà 'a'. 3) L'esterno `toupper('a')` dà 'A'. Viene stampato `A`.",
+        "Errato. La chiamata più esterna è `toupper()`, quindi il carattere finale sarà in maiuscolo.",
+        "Errato. L'annidamento delle chiamate di funzione è completamente legittimo.",
+        "Errato. Viene stampato un carattere, non il numero 0."
+      ]
+    },
+    {
+      "id": "it_clang_2271",
+      "widget_id": "widget_clang_2271",
+      "topic": "Dimensione di un array char all'inizializzazione con un letterale stringa",
+      "q": "A quanto equivale sizeof(str) per un array dichiarato come char str[] = \"C\"?",
+      "hint": "Ricorda che alla lunghezza dei caratteri visibili del letterale stringa il compilatore aggiunge automaticamente un carattere di servizio finale.",
+      "options": [
+        "2",
+        "1",
+        "4",
+        "8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il letterale stringa `\"C\"` è composto dal carattere visibile `'C'` e dal terminatore nullo finale obbligatorio e invisibile `'\\0'`. Pertanto l'array `str` ottiene automaticamente una dimensione di 2 byte.",
+        "Errato. 1 byte verrebbe allocato per un singolo carattere `'C'`, ma per il letterale stringa `\"C\"` viene sempre allocato un byte per `'\\0'`.",
+        "Errato. Vengono allocati esattamente i byte occupati dal letterale con il terminatore.",
+        "Errato. Non è un puntatore, ma un array locale di char."
+      ]
+    },
+    {
+      "id": "it_clang_2272",
+      "widget_id": "widget_clang_2272",
+      "topic": "Inizializzazione di un array char senza spazio per il terminatore nullo",
+      "q": "Quale proprietà ha l'array char str[5] = \"Hello\" negli standard C99/C11?",
+      "hint": "La lunghezza della parola \"Hello\" è di 5 caratteri, quindi il terminatore nullo '\\0' non entrerà nell'array allocato di dimensione 5.",
+      "options": [
+        "L'array si riempirà con i 5 caratteri 'H', 'e', 'l', 'l', 'o' e non conterrà il terminatore nullo",
+        "Il compilatore espanderà automaticamente la dimensione dell'array a 6 byte",
+        "Alla fine dell'array verrà scritto forzatamente '\\0', scartando la lettera 'o'",
+        "Causerà un errore di compilazione in tutti gli standard del linguaggio C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel linguaggio C è consentito inizializzare un array di caratteri con un letterale della stessa identica lunghezza. In questo caso tutti e 5 gli elementi vengono riempiti con le lettere, ma il `'\\0'` finale viene scartato. L'array ottenuto non è una stringa C valida.",
+        "Errato. La dimensione dell'array `[5]` è rigorosamente fissata al momento della dichiarazione.",
+        "Errato. Il carattere 'o' non viene scartato, vengono scritte tutte e 5 le lettere.",
+        "Errato. Negli standard C89/C99/C11 questa sintassi è valida (in C++ è un errore)."
+      ]
+    },
+    {
+      "id": "it_clang_2273",
+      "widget_id": null,
+      "topic": "Marcatore di fine stringa in C",
+      "q": "Quale carattere viene utilizzato per indicare la fine di una stringa (null-terminated string) nel linguaggio di programmazione C?",
+      "hint": "Questo carattere ha un valore intero ASCII pari a 0.",
+      "options": [
+        "Byte nullo '\\0'",
+        "Carattere di nuova riga '\\n'",
+        "Spazio ' '",
+        "Carattere EOF"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Tutte le funzioni standard per la gestione delle stringhe in C (famiglia `str...`) si basano sulla presenza del terminatore nullo `'\\0'` (byte con valore `0`) per determinare il limite di fine stringa.",
+        "Errato. `\\n` (codice 10) è un normale separatore di riga nel testo, non un marcatore di fine stringa C.",
+        "Errato. Lo spazio ha codice ASCII 32 ed è un normale carattere stampabile.",
+        "Errato. `EOF` è un indicatore negativo di fine dello stream di I/O."
+      ]
+    },
+    {
+      "id": "it_clang_2274",
+      "widget_id": "widget_clang_2274",
+      "topic": "Modifica dei caratteri in un array char",
+      "q": "Cosa succederà tentando di modificare il carattere str[0] = 'b' nell'array char str[] = \"Hi\"?",
+      "hint": "A differenza di un puntatore a un letterale stringa (char *s = \"Hi\"), l'inizializzazione di un array copia i dati sullo stack.",
+      "options": [
+        "Il carattere verrà modificato con successo, il programma stamperà \"bi\"",
+        "Si verificherà un errore di segmentazione (Segmentation Fault)",
+        "Il programma verrà compilato, ma la stringa rimarrà \"Hi\"",
+        "Errore di compilazione: l'array è costante"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La dichiarazione `char str[] = \"Hi\"` crea un array modificabile nello stack e vi copia i caratteri del letterale. La modifica `str[0] = 'b'` è del tutto legittima, di conseguenza viene stampato `bi`.",
+        "Errato. Un errore di segmentazione si verificherebbe con `char *str = \"Hi\"; str[0] = 'b';`, poiché il letterale risiede in una memoria di sola lettura.",
+        "Errato. Il carattere nell'array viene modificato in loco.",
+        "Errato. L'array non è costante (manca la parola chiave `const`)."
+      ]
+    },
+    {
+      "id": "it_clang_2275",
+      "widget_id": "widget_clang_2275",
+      "topic": "Differenza tra sizeof e strlen per un array di caratteri",
+      "q": "Cosa stamperà il codice sizeof(str) e strlen(str) per l'array char str[10] = \"Cat\"?",
+      "hint": "sizeof restituisce la dimensione totale della memoria allocata per l'array, mentre strlen conta il numero di caratteri fino al primo '\\0'.",
+      "options": [
+        "10 3",
+        "4 3",
+        "3 3",
+        "10 4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `sizeof(str)` restituisce l'intero buffer dell'array: 10 byte. La funzione `strlen(str)` conta il numero di caratteri fino al terminatore nullo: 3 ('C', 'a', 't'). Viene stampato `10 3`.",
+        "Errato. 4 sarebbe stata la dimensione del letterale \"Cat\" considerando `'\\0'`, ma il compilatore ha allocato un array da 10 elementi.",
+        "Errato. `sizeof` calcola la dimensione totale dell'array, non solo la lunghezza del testo inserito.",
+        "Errato. `strlen` non include il terminatore nullo nel conteggio finale della lunghezza della stringa."
+      ]
+    },
+    {
+      "id": "it_clang_2276",
+      "widget_id": "widget_clang_2276",
+      "topic": "Assegnazione di un letterale stringa al nome di un array",
+      "q": "Perché l'operazione di assegnazione str = \"World\" causerà un errore di compilazione?",
+      "hint": "Il nome di un array in C si converte in un puntatore al suo primo elemento e non è un modifiable lvalue.",
+      "options": [
+        "Il nome dell'array è un indirizzo costante (rvalue) e non può stare a sinistra dell'operatore =",
+        "La dimensione della parola \"World\" supera la dimensione della parola \"Hello\"",
+        "L'operatore = funziona solo con tipi char singoli",
+        "I letterali stringa possono essere assegnati solo tramite la funzione printf"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il nome dell'array `str` indica l'indirizzo permanente del buffer allocato. In C gli array non possono essere copiati o reindirizzati direttamente tramite `=`. Per copiare una stringa occorre usare `strcpy(str, \"World\")`.",
+        "Errato. Il problema non riguarda la lunghezza della parola, ma le regole sintattiche del lavoro con gli array.",
+        "Errato. Per copiare gli array in C si usano funzioni come `strcpy` o `memcpy`.",
+        "Errato. La funzione `printf` serve per l'output, non per l'assegnazione."
+      ]
+    },
+    {
+      "id": "it_clang_2277",
+      "widget_id": "widget_clang_2277",
+      "topic": "Inizializzazione parziale di un array char",
+      "q": "A quanto equivale l'elemento str[2] se l'array è dichiarato come char str[5] = {'A', 'B'}?",
+      "hint": "In caso di inizializzazione esplicita di almeno un elemento dell'array, tutti gli elementi non inizializzati vengono azzerati.",
+      "options": [
+        "0 (carattere '\\0')",
+        "'A'",
+        "'B'",
+        "Valore indefinito (spazzatura)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard C garantisce: se la lista di inizializzazione contiene meno elementi della dimensione dell'array, gli elementi rimanenti vengono automaticamente riempiti con zeri (per `char` è `0` / `'\\0'`).",
+        "Errato. `'A'` si trova all'indice `str[0]`.",
+        "Errato. `'B'` si trova all'indice `str[1]`.",
+        "Errato. Un valore indefinito si avrebbe in assenza totale della lista di inizializzazione (`char str[5];`)."
+      ]
+    },
+    {
+      "id": "it_clang_2278",
+      "widget_id": "widget_clang_2278",
+      "topic": "Aritmetica dei puntatori e accesso ai caratteri di una stringa",
+      "q": "Cosa stamperà il programma valutando l'espressione *(str + 2) per la stringa \"Code\"?",
+      "hint": "L'espressione *(str + i) è equivalente all'indicizzazione str[i]. Ricorda che l'indicizzazione parte da 0.",
+      "options": [
+        "d",
+        "o",
+        "C",
+        "e"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `*(str + 2)` è identico a `str[2]`. Indici: 0 -> 'C', 1 -> 'o', 2 -> 'd', 3 -> 'e'. Pertanto viene stampato il carattere `d`.",
+        "Errato. 'o' ha indice 1 (`*(str + 1)`).",
+        "Errato. 'C' ha indice 0 (`*str`).",
+        "Errato. 'e' ha indice 3 (`*(str + 3)`)."
+      ]
+    },
+    {
+      "id": "it_clang_2279",
+      "widget_id": null,
+      "topic": "Pericolo di danneggiamento del terminatore nullo della stringa",
+      "q": "A quale conseguenza porterà la sovrascrittura accidentale del carattere '\\0' con un normale carattere in un array char?",
+      "hint": "Le funzioni di gestione delle stringhe cercano il byte nullo come segnale per interrompere la lettura della memoria.",
+      "options": [
+        "Le funzioni per le stringhe (strlen, printf %s) usciranno dai limiti dell'array alla ricerca di '\\0' (Undefined Behavior)",
+        "Il compilatore ripristinerà automaticamente '\\0' nel byte successivo",
+        "La stringa diventerà costante e verrà bloccata per la scrittura",
+        "L'array verrà svuotato automaticamente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Senza il terminatore nullo le funzioni per le stringhe non saranno in grado di determinare dove termina la stringa e continueranno a leggere le celle di memoria adiacenti fino al primo zero casuale o fino al crash del programma (Segmentation Fault).",
+        "Errato. Il compilatore non genera codice nascosto per il ripristino automatico del terminatore nullo a tempo di esecuzione.",
+        "Errato. I permessi di accesso alla memoria dell'array non cambiano.",
+        "Errato. I dati in memoria rimangono, ma perdono il formato corretto di stringa C."
+      ]
+    },
+    {
+      "id": "it_clang_2280",
+      "widget_id": "widget_clang_2280",
+      "topic": "Array bidimensionali di char per memorizzare un elenco di stringhe",
+      "q": "Cosa restituirà l'espressione arr[1] accedendo all'array bidimensionale char arr[2][5] = {\"One\", \"Two\"}?",
+      "hint": "In un array bidimensionale char arr[N][M], l'indicazione del solo primo indice arr[i] dà accesso alla i-esima riga come array monodimensionale.",
+      "options": [
+        "Two",
+        "One",
+        "T",
+        "O"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `arr[1]` fa riferimento alla seconda riga dell'array (indicizzazione da 0). In essa è memorizzata la stringa `\"Two\"`. Lo specificatore `%s` la stampa completamente.",
+        "Errato. `\"One\"` si trova nella prima riga sotto l'indice `arr[0]`.",
+        "Errato. `T` è un singolo carattere `arr[1][0]`, mentre `%s` si aspetta un puntatore all'inizio della stringa.",
+        "Errato. `O` è il carattere `arr[0][0]`."
+      ]
+    },
+    {
+      "id": "it_clang_2281",
+      "widget_id": "widget_clang_2281",
+      "topic": "Valore numerico del terminatore nullo",
+      "q": "A quanto equivale il valore intero ASCII del carattere terminatore nullo '\\0'?",
+      "hint": "Ricorda la differenza tra il carattere grafico della cifra '0' e il byte nullo di controllo di servizio.",
+      "options": [
+        "0",
+        "48",
+        "32",
+        "-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il letterale di carattere `'\\0'` ha il valore numerico 0 nella tabella ASCII. L'output `%d` stamperà `0`.",
+        "Errato. 48 è il codice ASCII del carattere stampabile della cifra `'0'`.",
+        "Errato. 32 è il codice ASCII del carattere spazio `' '`.",
+        "Errato. -1 è di solito il valore della costante `EOF`."
+      ]
+    },
+    {
+      "id": "it_clang_2282",
+      "widget_id": "widget_clang_2282",
+      "topic": "Comportamento di printf in presenza di '\\0' al centro dell'array",
+      "q": "Cosa stamperà il comando printf(\"%s\", str) per l'array char str[] = \"Hello\\0World\"?",
+      "hint": "Le funzioni standard di output delle stringhe C terminano la lettura al primo marcatore di fine stringa incontrato.",
+      "options": [
+        "Hello",
+        "HelloWorld",
+        "Hello World",
+        "Errore di esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `%s` legge i byte dall'array uno alla volta e interrompe l'output non appena incontra un byte con valore `0` (`'\\0'`). Pertanto verrà stampato solo `Hello`.",
+        "Errato. I caratteri dopo il primo `'\\0'` vengono ignorati dalla funzione `printf`.",
+        "Errato. Non viene inserito alcuno spazio tra le parole.",
+        "Errato. La lettura termina correttamente sul terminatore nullo esplicito."
+      ]
+    },
+    {
+      "id": "it_clang_2283",
+      "widget_id": "widget_clang_2283",
+      "topic": "Confronto tra '0' e '\\0' con lo zero numerico",
+      "q": "Cosa restituirà l'espressione '0' == 0 e '\\0' == 0?",
+      "hint": "Il carattere '0' ha codice ASCII 48, mentre l'escape di carattere '\\0' è uguale a 0.",
+      "options": [
+        "0 1",
+        "1 1",
+        "0 0",
+        "1 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `'0'` è uguale a 48, quindi `48 == 0` dà `0` (falso). `'\\0'` è uguale a 0, quindi `0 == 0` dà `1` (vero). L'output è `0 1`.",
+        "Errato. `'0'` non è uguale al numero 0.",
+        "Errato. L'espressione `'\\0' == 0` è assolutamente vera.",
+        "Errato. I risultati sono opposti."
+      ]
+    },
+    {
+      "id": "it_clang_2284",
+      "widget_id": "widget_clang_2284",
+      "topic": "Conteggio manuale della lunghezza della stringa tramite il marcatore '\\0'",
+      "q": "A quanto equivarrà la variabile len al termine del ciclo di conteggio dei caratteri nella stringa \"Test\"?",
+      "hint": "La condizione del ciclo interrompe le iterazioni non appena l'elemento indicizzato risulta uguale a '\\0'.",
+      "options": [
+        "4",
+        "5",
+        "3",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Indici: `str[0]='T'`, `str[1]='e'`, `str[2]='s'`, `str[3]='t'`. Con `len = 4` l'elemento `str[4]` è uguale a `'\\0'`, e il ciclo si interrompe. Il valore di `len` è 4.",
+        "Errato. Il terminatore nullo nella posizione 4 non viene incluso nel numero di lettere conteggiate.",
+        "Errato. Il ciclo eseguirà 4 iterazioni (per tutte le lettere della parola \"Test\").",
+        "Errato. La variabile viene incrementata a ogni iterazione."
+      ]
+    },
+    {
+      "id": "it_clang_2285",
+      "widget_id": "widget_clang_2285",
+      "topic": "Interpretazione di '\\0' nelle condizioni logiche",
+      "q": "Come viene interpretato il carattere '\\0' nella valutazione delle condizioni nelle istruzioni condizionali (if, while)?",
+      "hint": "In C qualsiasi valore numerico 0 è equivalente a un valore logico falso.",
+      "options": [
+        "Come falso (false / 0)",
+        "Come vero (true / 1)",
+        "Causa un errore di compilazione",
+        "Il risultato dipende dalle impostazioni del compilatore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il carattere `'\\0'` è uguale a `0`. Nelle strutture condizionali del linguaggio C qualsiasi valore nullo è interpretato come `false`, quindi verrà eseguito il ramo `else` (che stamperà `False`).",
+        "Errato. Sono considerati veri tutti i valori diversi da zero.",
+        "Errato. La condizione `if ('\\0')` è sintatticamente corretta.",
+        "Errato. Il comportamento è rigorosamente regolamentato dallo standard."
+      ]
+    },
+    {
+      "id": "it_clang_2286",
+      "widget_id": "widget_clang_2286",
+      "topic": "Troncamento della stringa tramite scrittura esplicita di '\\0'",
+      "q": "Cosa stamperà printf(\"%s\", str) dopo la scrittura esplicita str[3] = '\\0' nell'array contenente la stringa \"Program\"?",
+      "hint": "L'indicizzazione degli elementi parte da 0: str[0]='P', str[1]='r', str[2]='o', str[3]='g'.",
+      "options": [
+        "Pro",
+        "Prog",
+        "Program",
+        "ram"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'istruzione `str[3] = '\\0'` sostituisce la quarta lettera `'g'` (indice 3) con il terminatore nullo. Durante la stampa verranno mostrati solo i primi 3 caratteri: `Pro`.",
+        "Errato. Il carattere con indice 3 ('g') viene sovrascritto dal terminatore e non viene stampato.",
+        "Errato. La stringa verrà troncata all'indice 3.",
+        "Errato. L'output inizierà dall'inizio dell'array (indice 0)."
+      ]
+    },
+    {
+      "id": "it_clang_2287",
+      "widget_id": "widget_clang_2287",
+      "topic": "Differenza tra sizeof e strlen in presenza di più '\\0'",
+      "q": "Cosa stamperanno sizeof(str) e strlen(str) per il letterale char str[] = \"A\\0B\\0\"?",
+      "hint": "sizeof calcola la dimensione fisica totale dell'array (tutti i byte), mentre strlen conta i caratteri fino al primo '\\0'.",
+      "options": [
+        "5 1",
+        "4 1",
+        "5 2",
+        "4 2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il letterale stringa `\"A\\0B\\0\"` è composto dai byte: `'A'`, `'\\0'`, `'B'`, `'\\0'`, più un ulteriore `'\\0'` finale implicito non visibile. In totale 5 byte (`sizeof` = 5). La funzione `strlen` si ferma al primissimo `'\\0'`, conteggiando solo 1 carattere `'A'`. Output: `5 1`.",
+        "Errato. Alla fine di ogni letterale stringa il compilatore aggiunge un altro `\\0` finale.",
+        "Errato. `strlen` non prosegue il conteggio dopo aver incontrato il primo terminatore nullo.",
+        "Errato. La dimensione totale dei byte nell'array è 5."
+      ]
+    },
+    {
+      "id": "it_clang_2288",
+      "widget_id": null,
+      "topic": "Differenza tra NULL e '\\0'",
+      "q": "Qual è la differenza fondamentale tra NULL e '\\0' in C?",
+      "hint": "Entrambi i concetti rappresentano concettualmente 0, ma si applicano a tipi di dati diversi.",
+      "options": [
+        "NULL è una costante di puntatore nullo (pointer), mentre '\\0' è il carattere nullo (letterale byte) di tipo char",
+        "Sono completamente intercambiabili in tutti i casi",
+        "NULL si usa solo per le stringhe e '\\0' per i numeri",
+        "NULL occupa 1 byte di memoria e '\\0' 8 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `NULL` si usa per l'inizializzazione e la verifica dei puntatori (`void *`), indicando che il puntatore non punta a nulla. `'\\0'` è un letterale carattere di tipo `char` con codice ASCII 0, che indica la fine di una stringa.",
+        "Errato. L'uso di `NULL` al posto di `'\\0'` nell'aritmetica o nelle stringhe è errato nel significato e nello stile.",
+        "Errato. `NULL` è legato ai puntatori, non direttamente alle stringhe.",
+        "Errato. `NULL` ha solitamente la dimensione di un puntatore (4 o 8 byte), mentre `'\\0'` ha dimensione 1 byte (in C il tipo di un letterale di carattere è `int`, ma all'assegnazione a `char` occupa 1 byte)."
+      ]
+    },
+    {
+      "id": "it_clang_2289",
+      "widget_id": null,
+      "topic": "Causa dell'Undefined Behavior in assenza di '\\0'",
+      "q": "Perché l'elaborazione di un array char privo di terminatore nullo da parte delle funzioni per stringhe (strlen, strcpy, printf %s) porta a Undefined Behavior?",
+      "hint": "Le funzioni standard C non conoscono la lunghezza del buffer allocato dell'array.",
+      "options": [
+        "Le funzioni leggono la memoria oltre i limiti dell'array fino al primo byte zero casuale",
+        "Il compilatore genera un errore di NullPointerException",
+        "Il programma scorre ciclicamente gli elementi dell'array in cerchio",
+        "L'array viene rimosso automaticamente dalla memoria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione non ha informazioni sui limiti dell'array e continua a leggere in sequenza le celle di memoria. Ciò comporta la lettura di dati estranei o il crash dovuto all'accesso a memoria protetta (Out-of-bounds read).",
+        "Errato. Nel linguaggio C non esistono eccezioni integrate come `NullPointerException`.",
+        "Errato. La lettura avviene in modo lineare più avanti nell'indirizzo di memoria, non in cerchio.",
+        "Errato. La memoria dell'array rimane al suo posto, semplicemente vengono violate le regole di accesso."
+      ]
+    },
+    {
+      "id": "it_clang_2290",
+      "widget_id": "widget_clang_2290",
+      "topic": "Scrittura dell'intero 0 invece del letterale '\\0'",
+      "q": "Cosa succederà eseguendo l'operazione str[1] = 0; per l'array char str[] = \"Cat\"?",
+      "hint": "In C il letterale carattere '\\0' e la costante intera 0 hanno lo stesso valore numerico.",
+      "options": [
+        "Il secondo carattere verrà sostituito dal terminatore nullo e il programma stamperà \"C\"",
+        "Il carattere 'a' verrà sostituito dalla cifra visibile '0', stampando \"C0t\"",
+        "Si verificherà un errore di compilazione a causa dell'incompatibilità dei tipi int e char",
+        "Si verificherà un errore a tempo di esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il numero `0` e il carattere `'\\0'` sono identici nel valore. L'assegnazione `str[1] = 0` inserisce in `str[1]` il terminatore nullo, con il risultato che la stringa viene troncata a `\"C\"`. Viene stampato `C`.",
+        "Errato. Per scrivere la cifra '0' occorre usare il letterale carattere `'0'` (codice 48).",
+        "Errato. In C i numeri si convertono in modo sicuro nel tipo `char`.",
+        "Errato. Il codice verrà eseguito senza errori."
+      ]
+    }
+  ]
+}

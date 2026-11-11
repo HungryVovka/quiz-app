@@ -1,0 +1,611 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2381",
+      "widget_id": "widget_clang_2381",
+      "topic": "Indicizzazione delle stringhe in un array bidimensionale di char",
+      "q": "Cosa stamperà il programma accedendo all'elemento words[1] di un array bidimensionale di char?",
+      "hint": "L'indicizzazione delle righe in un array bidimensionale inizia da 0, quindi words[1] corrisponde alla seconda riga.",
+      "options": [
+        "banana",
+        "apple",
+        "cherry",
+        "a"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In un array bidimensionale `words[0]` è `\"apple\"`, `words[1]` è `\"banana\"` e `words[2]` è `\"cherry\"`. Il programma stamperà `banana`.",
+        "Errato. `apple` si trova all'indice `words[0]`.",
+        "Errato. `cherry` si trova all'indice `words[2]`.",
+        "Errato. L'espressione `words[1]` restituisce un puntatore all'intera seconda riga, non un singolo carattere."
+      ]
+    },
+    {
+      "id": "it_clang_2382",
+      "widget_id": "widget_clang_2382",
+      "topic": "Dimensione in memoria di un array bidimensionale di char",
+      "q": "A quanto ammonta la dimensione totale in byte dell'array char list[2][8] restituita dall'operatore sizeof(list)?",
+      "hint": "Ciascuna delle 2 righe occupa esattamente 8 byte, indipendentemente dalla lunghezza del testo contenuto.",
+      "options": [
+        "16",
+        "11",
+        "12",
+        "8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La dimensione è fissa al momento della dichiarazione: 2 righe da 8 byte = 16 byte (`sizeof(char)` = 1). La lunghezza effettiva delle stringhe contenute non influisce sulla dimensione dell'array.",
+        "Errato. La lunghezza dei caratteri (\"cat\" + \"elephant\") non viene sommata direttamente nel determinare la dimensione del tipo array.",
+        "Errato. La dimensione in byte viene calcolata in base alle dimensioni dichiarate [2][8].",
+        "Errato. 8 byte è la dimensione di una sola riga."
+      ]
+    },
+    {
+      "id": "it_clang_2383",
+      "widget_id": "widget_clang_2383",
+      "topic": "Modifica dei caratteri in un array bidimensionale di char",
+      "q": "Cosa stamperà il programma dopo l'esecuzione dell'assegnazione grid[0][0] = 'b'?",
+      "hint": "A differenza dei letterali stringa, gli elementi di un array bidimensionale di char si trovano in memoria modificabile.",
+      "options": [
+        "bat",
+        "cat",
+        "bog",
+        "b"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'array è allocato nello stack ed è modificabile. La sostituzione del carattere all'indice `[0][0]` cambia il primo carattere `'c'` in `'b'`, trasformando `\"cat\"` in `\"bat\"`.",
+        "Errato. Il carattere all'indice [0][0] è stato sovrascritto con successo.",
+        "Errato. Le modifiche avvengono nella prima riga `grid[0]`, la riga `grid[1]` (\"dog\") non viene toccata.",
+        "Errato. Lo specificatore `%s` stampa l'intera stringa fino al terminatore nullo."
+      ]
+    },
+    {
+      "id": "it_clang_2384",
+      "widget_id": "widget_clang_2384",
+      "topic": "Iterazione sul primo carattere di ogni riga",
+      "q": "Cosa stamperà il programma stampando in sequenza i primi caratteri di ogni riga names[i][0]?",
+      "hint": "names[i][0] accede al primo carattere in assoluto (indice 0) di ciascuna i-esima riga.",
+      "options": [
+        "ABD",
+        "AnaBobDan",
+        "A B D",
+        "A"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Ad ogni iterazione del ciclo vengono stampati i caratteri `names[0][0]` ('A'), `names[1][0]` ('B') e `names[2][0]` ('D'). Il risultato stampato sarà `ABD`.",
+        "Errato. Per stampare il testo completo delle stringhe sarebbe necessario lo specificatore `%s` invece di `%c`.",
+        "Errato. Nel formato di `printf` non ci sono spazi.",
+        "Errato. Il ciclo esegue 3 iterazioni."
+      ]
+    },
+    {
+      "id": "it_clang_2385",
+      "widget_id": null,
+      "topic": "Omissione delle dimensioni nell'inizializzazione di un array bidimensionale",
+      "q": "Quale dimensione di un array bidimensionale di stringhe char arr[][10] è consentito omettere durante l'inizializzazione contestuale?",
+      "hint": "Pensa a quale dimensione il compilatore può calcolare da solo dall'elenco di inizializzazione e quale gli serve per allocare la memoria.",
+      "options": [
+        "Solo la prima dimensione (il numero di righe)",
+        "Solo la seconda dimensione (la lunghezza della riga)",
+        "Entrambe le dimensioni contemporaneamente",
+        "Nessuna dimensione può essere omessa"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il compilatore può determinare il numero di righe (prima dimensione) dal numero di elementi tra parentesi graffe. La seconda dimensione (lunghezza massima della riga) deve sempre essere specificata esplicitamente.",
+        "Errato. La seconda dimensione non può essere omessa, altrimenti il compilatore non conoscerebbe il passo per la disposizione delle righe in memoria.",
+        "Errato. Il compilatore C non permette di omettere entrambe le dimensioni.",
+        "Errato. È consentito omettere la prima dimensione."
+      ]
+    },
+    {
+      "id": "it_clang_2386",
+      "widget_id": "widget_clang_2386",
+      "topic": "Overflow degli elementi dell'array e assenza del terminatore nullo",
+      "q": "Perché l'inizializzazione char list[2][3] = {\"yes\", \"no\"} causerà problemi durante la stampa della stringa list[0] con %s?",
+      "hint": "Calcola il numero di caratteri nella parola \"yes\" tenendo conto del terminatore nullo finale obbligatorio '\\0'.",
+      "options": [
+        "La stringa \"yes\" richiede 4 byte (3 caratteri + '\\0'), quindi il terminatore nullo non entra nel buffer di 3 byte",
+        "La parola \"yes\" è una parola chiave riservata in C",
+        "L'array list deve essere di tipo const char*",
+        "La lunghezza della seconda stringa è inferiore alla prima"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La stringa `\"yes\"` è composta da 3 lettere. In un buffer di 3 byte entreranno solo `'y'`, `'e'`, `'s'`, senza spazio per `'\\0'`. La stampa con `%s` leggerà oltre la stringa (includendo i byte adiacenti).",
+        "Errato. \"yes\" non è una parola chiave del linguaggio C.",
+        "Errato. Gli array bidimensionali di tipo `char` sono assolutamente validi.",
+        "Errato. Le lunghezze delle stringhe sono indipendenti nei limiti della seconda dimensione dichiarata."
+      ]
+    },
+    {
+      "id": "it_clang_2387",
+      "widget_id": "widget_clang_2387",
+      "topic": "Modifica di una stringa in un array bidimensionale tramite strcpy()",
+      "q": "Cosa stamperà il programma dopo aver copiato una nuova stringa in arr[0] usando strcpy?",
+      "hint": "arr[0] passa a strcpy() l'indirizzo di inizio della prima riga dell'array.",
+      "options": [
+        "New Data",
+        "Old Data",
+        "New New",
+        "Data New"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strcpy(arr[0], \"New\")` sostituisce il contenuto della prima riga `\"Old\"` con `\"New\"`. La seconda riga `arr[1]` rimane `\"Data\"`. Viene stampato `New Data`.",
+        "Errato. La prima riga è stata sovrascrita con successo.",
+        "Errato. La seconda riga `arr[1]` non è cambiata.",
+        "Errato. Ordine di stampa: prima `arr[0]`, poi `arr[1]`."
+      ]
+    },
+    {
+      "id": "it_clang_2388",
+      "widget_id": "widget_clang_2388",
+      "topic": "Confronto degli elementi di un array bidimensionale di stringhe tramite strcmp()",
+      "q": "A quanto ammonterà il valore della variabile count dopo la verifica delle stringhe dell'array items in un ciclo?",
+      "hint": "La funzione strcmp(items[i], \"Green\") restituirà 0 solo in caso di perfetta corrispondenza delle stringhe.",
+      "options": [
+        "1",
+        "0",
+        "3",
+        "2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Dei tre elementi `\"Red\"`, `\"Green\"` e `\"Blue\"`, solo il secondo corrisponde esattamente alla stringa `\"Green\"`. La condizione sarà soddisfatta 1 volta e `count` diventerà uguale a 1.",
+        "Errato. La corrispondenza è presente all'indice `items[1]`.",
+        "Errato. La variabile viene incrementata solo in caso di corrispondenza con \"Green\".",
+        "Errato. Gli altri elementi dell'array non corrispondono."
+      ]
+    },
+    {
+      "id": "it_clang_2389",
+      "widget_id": "widget_clang_2389",
+      "topic": "Passaggio di un array bidimensionale di char a una funzione",
+      "q": "Perché nella dichiarazione del parametro di una funzione void print_first(char arr[][10]) è obbligatorio specificare la dimensione 10?",
+      "hint": "Pensa a come il compilatore calcola l'indirizzo dell'elemento arr[i] in un blocco di memoria continuo.",
+      "options": [
+        "Al compilatore serve la dimensione della riga per calcolare correttamente lo spostamento degli indirizzi nell'aritmetica dei puntatori",
+        "È una limitazione del preprocessore per prevenire fughe di memoria",
+        "Per limitare rigidamente il numero di righe passate",
+        "Per rendere l'array protetto dalla scrittura"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In memoria l'array bidimensionale è disposto in modo continuo. Per passare alla riga `arr[i]` il compilatore deve conoscere la formula `base_address + i * N`, dove `N` è la lunghezza della riga (seconda dimensione).",
+        "Errato. Il preprocessore non si occupa del controllo dei tipi o dei parametri delle funzioni.",
+        "Errato. Specificare la seconda dimensione non limita il numero di righe (prima dimensione).",
+        "Errato. Non ha alcuna relazione con la protezione dalla scrittura."
+      ]
+    },
+    {
+      "id": "it_clang_2390",
+      "widget_id": null,
+      "topic": "Confronto tra array bidimensionale di char e array di puntatori char*",
+      "q": "Qual è la differenza fondamentale tra un array bidimensionale char arr[3][20] e un array di puntatori char *ptr[3]?",
+      "hint": "Pensa al modo in cui i dati vengono allocati in memoria e al consumo della memoria RAM.",
+      "options": [
+        "arr alloca un unico blocco continuo di dimensione fissa (60 byte), mentre ptr contiene 3 puntatori a stringhe allocate separatamente",
+        "In arr gli elementi non possono essere modificati, mentre in ptr gli elementi sono sempre modificabili",
+        "L'array ptr non richiede la presenza del terminatore nullo nelle stringhe",
+        "L'array arr occupa meno memoria per la memorizzazione di stringhe di lunghezza diversa"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `char arr[3][20]` alloca una griglia continua di `3 * 20 = 60` byte. `char *ptr[3]` alloca memoria solo per 3 puntatori, che possono riferirsi a stringhe di lunghezza arbitraria in diverse aree di memoria.",
+        "Errato. La modificabilità degli elementi dipende dal fatto che il puntatore si riferisca a un letterale o a un buffer dinamico.",
+        "Errato. Il terminatore nullo è richiesto per tutte le stringhe in C, indipendentemente dalla modalità di memorizzazione.",
+        "Errato. Per stringhe di lunghezza molto diversa, l'array bidimensionale spreca memoria per l'allineamento alla dimensione massima."
+      ]
+    },
+    {
+      "id": "it_clang_2391",
+      "widget_id": "widget_clang_2391",
+      "topic": "Differenza tra accesso all'intera stringa e a un singolo carattere",
+      "q": "Cosa stamperà il programma accedendo all'intera stringa str[1] e al suo primo carattere str[1][0]?",
+      "hint": "str[1] punta all'intera seconda riga, mentre l'indice aggiuntivo [0] ne estrae il primo carattere.",
+      "options": [
+        "Two T",
+        "One O",
+        "Two Two",
+        "Two 84"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `str[1]` rappresenta la stringa `\"Two\"` (stampa tramite `%s`), mentre `str[1][0]` è il suo primo carattere `'T'` (stampa tramite `%c`). Il programma stamperà `Two T`.",
+        "Errato. L'indice 1 corrisponde all'elemento \"Two\", non \"One\" (che si trova all'indice 0).",
+        "Errato. Il secondo argomento viene stampato con lo specificatore `%c`, che stampa un singolo carattere e non l'intera stringa.",
+        "Errato. Lo specificatore `%c` stamperà il carattere `'T'`, non il suo codice numerico ASCII."
+      ]
+    },
+    {
+      "id": "it_clang_2392",
+      "widget_id": "widget_clang_2392",
+      "topic": "Dereferenziazione tramite puntatori per la sintassi di indicizzazione di array bidimensionali",
+      "q": "Quale carattere stamperà il programma dereferenziando il puntatore *(*(arr + 1) + 2)?",
+      "hint": "L'espressione *(*(arr + i) + j) è equivalente alla notazione standard con parentesi quadre arr[i][j].",
+      "options": [
+        "r",
+        "o",
+        "W",
+        "l",
+        "e"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `*(*(arr + 1) + 2)` è equivalente a `arr[1][2]`. La seconda riga `arr[1]` è uguale a `\"World\"`. L'indice 2 corrisponde al 3° carattere: la lettera `'r'` (W=0, o=1, r=2).",
+        "Errato. La lettera 'o' si trova all'indice `arr[1][1]`.",
+        "Errato. 'W' è il carattere iniziale `arr[1][0]`.",
+        "Errato. La lettera 'l' si trova all'indice `arr[1][3]`.",
+        "Errato. 'e' è un carattere della prima riga `arr[0][1]`."
+      ]
+    },
+    {
+      "id": "it_clang_2393",
+      "widget_id": "widget_clang_2393",
+      "topic": "Modifica di un carattere all'interno di una stringa in un array bidimensionale",
+      "q": "Come cambierà l'output della stringa list[0] dopo la modifica dell'elemento list[0][1] = 'o'?",
+      "hint": "L'elemento list[0][1] è responsabile del secondo carattere della prima riga \"cat\".",
+      "options": [
+        "cot",
+        "cat",
+        "dog",
+        "cog"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La prima riga `list[0]` è inizialmente uguale a `\"cat\"`. La modifica `list[0][1] = 'o'` sostituisce il carattere `'a'` con `'o'`, trasformando la stringa in `cot`.",
+        "Errato. La scrittura all'indice `[0][1]` modifica il contenuto interno della stringa.",
+        "Errato. La riga `list[1]` (\"dog\") non viene toccata.",
+        "Errato. Il primo carattere `'c'` non è cambiato."
+      ]
+    },
+    {
+      "id": "it_clang_2394",
+      "widget_id": null,
+      "topic": "Tipi di espressioni nell'indicizzazione a uno o due livelli",
+      "q": "Quali sono i tipi di dati delle espressioni arr[i] e arr[i][j] per un array char arr[5][20]?",
+      "hint": "Pensa a quale espressione passa l'indirizzo dell'inizio del sotto-array (riga) e quale il valore concreto di un singolo elemento.",
+      "options": [
+        "arr[i] ha tipo char* (decade a puntatore), arr[i][j] ha tipo char",
+        "Entrambe le espressioni hanno tipo char*",
+        "arr[i] ha tipo char, arr[i][j] ha tipo char*",
+        "Entrambe le espressioni hanno tipo char",
+        "arr[i] ha tipo int, arr[i][j] ha tipo char"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nelle espressioni `arr[i]` indica l'`i`-esima riga (array `char[20]`, che converte a `char*`), mentre `arr[i][j]` estrae un singolo valore di tipo `char`.",
+        "Errato. La doppia indicizzazione `arr[i][j]` estrae un valore `char`, non un indirizzo.",
+        "Errato. L'ordine dei tipi è invertito: una sola indicizzazione dà l'indirizzo della riga, due danno il carattere.",
+        "Errato. La singola indicizzazione `arr[i]` rappresenta l'intero sotto-array/riga.",
+        "Errato. `arr[i]` non è un numero intero di tipo `int`."
+      ]
+    },
+    {
+      "id": "it_clang_2395",
+      "widget_id": "widget_clang_2395",
+      "topic": "Troncamento di una stringa inserendo '\\0' in una posizione arbitraria",
+      "q": "Cosa stamperà lo specificatore %s se si scrive il terminatore nullo '\\0' all'indice words[0][4]?",
+      "hint": "Conta i caratteri della stringa \"testing\" partendo da zero e determina dove si interromperà la stampa.",
+      "options": [
+        "test",
+        "testing",
+        "testi",
+        "demo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli indici dei caratteri in `\"testing\"`: t=0, e=1, s=2, t=3, i=4. L'assegnazione `words[0][4] = '\\0'` sostituisce la lettera `'i'` con il terminatore nullo. La stampa con `%s` si fermerà subito dopo `test`.",
+        "Errato. La stampa si interromperà al 4° indice e non raggiungerà la fine della parola originale.",
+        "Errato. La lettera `'i'` all'indice 4 è stata sostituita con `'\\0'`, quindi non verrà stampata.",
+        "Errato. `demo` è la seconda riga dell'array (`words[1]`)."
+      ]
+    },
+    {
+      "id": "it_clang_2396",
+      "widget_id": "widget_clang_2396",
+      "topic": "Stampa carattere per carattere delle stringhe tramite cicli annidati",
+      "q": "Cosa stamperà a schermo il codice con la stampa carattere per carattere tramite printf(\"%c\", arr[i][j])?",
+      "hint": "Il ciclo esterno sccorre le righe, mentre quello interno stampa ogni carattere fino al raggiungimento di '\\0' senza aggiungere spazi.",
+      "options": [
+        "HiGo",
+        "H i G o",
+        "Hi Go",
+        "H"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo interno stamperà i caratteri `'H'`, `'i'` della prima riga, e poi `'G'`, `'o'` della seconda riga. Poiché non vengono aggiunti separatori, verrà stampato `HiGo`.",
+        "Errato. Nel formato `%c` non sono specificati spazi.",
+        "Errato. Tra le righe non vengono stampati spazi.",
+        "Errato. I cicli attraverseranno tutti i caratteri di entrambe le righe."
+      ]
+    },
+    {
+      "id": "it_clang_2397",
+      "widget_id": null,
+      "topic": "Equivalenza tra i passaggi arr[i] e &arr[i][0]",
+      "q": "Esiste una differenza tra le espressioni arr[i] e &arr[i][0] durante il passaggio di una stringa da un array bidimensionale a una funzione?",
+      "hint": "Ricorda qual è l'indirizzo del primo elemento del sotto-array e a cosa decade il nome dell'array.",
+      "options": [
+        "Nessuna differenza: entrambe le espressioni forniscono un puntatore al primo carattere (char*) della i-esima riga",
+        "Sì, arr[i] passa l'intera stringa per valore, mentre &arr[i][0] passa un puntatore",
+        "Sì, &arr[i][0] provoca un errore di compilazione",
+        "Sì, arr[i] causa un Segmentation Fault durante il passaggio"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il nome del sotto-array `arr[i]` viene automaticamente convertito in un puntatore al suo primo elemento `&arr[i][0]`. Per le funzioni sono assolutamente identici.",
+        "Errato. In C gli array non vengono mai passati alle funzioni per valore.",
+        "Errato. Prendere l'indirizzo dell'elemento `&arr[i][0]` è un'operazione del tutto corretta.",
+        "Errato. L'espressione `arr[i]` è il modo standard e sicuro per passare l'indirizzo di una stringa."
+      ]
+    },
+    {
+      "id": "it_clang_2398",
+      "widget_id": "widget_clang_2398",
+      "topic": "Stampa del suffisso di una stringa tramite l'indirizzo di un carattere",
+      "q": "Cosa stamperà il programma passando l'indirizzo &menu[0][6] allo specificatore %s?",
+      "hint": "Conta fino al 6° indice nella parola \"Cheeseburger\" (C=0, h=1, e=2, e=3, s=4, e=5, b=6).",
+      "options": [
+        "burger",
+        "eburger",
+        "Cheeseburger",
+        "burger Milkshake"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'indice 6 nella stringa `\"Cheeseburger\"` punta alla lettera `'b'`. La stampa con lo specificatore `%s`, a partire dall'indirizzo `&menu[0][6]`, stamperà la sottostringa `burger`.",
+        "Errato. La lettera `'e'` si trova al 5° indice.",
+        "Errato. La stampa non inizia dall'inizio dell'array, ma dall'indirizzo del 6° elemento.",
+        "Errato. La funzione `printf` si fermerà al terminatore nullo della prima riga e non passerà a `Milkshake`."
+      ]
+    },
+    {
+      "id": "it_clang_2399",
+      "widget_id": "widget_clang_2399",
+      "topic": "Scambio di elementi (Swap) tra righe di un array",
+      "q": "Quale risultato stamperà il programma dopo lo scambio di valori tra data[0][0] e data[1][1]?",
+      "hint": "Stringhe iniziali: data[0]=\"ab\", data[1]=\"cd\". Scambia i caratteri data[0][0] ('a') e data[1][1] ('d').",
+      "options": [
+        "db ca",
+        "cb ad",
+        "ab cd",
+        "da cb"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `data[0][0]` è uguale a `'a'`, mentre `data[1][1]` è uguale a `'d'`. Dopo l'operazione di swap, la prima riga diventa `\"db\"` e la seconda `\"ca\"`. Verrà stampato `db ca`.",
+        "Errato. I caratteri `data[0][1]` ('b') e `data[1][0]` ('c') non hanno partecipato allo scambio.",
+        "Errato. I valori degli elementi dell'array sono cambiati.",
+        "Errato. I secondi caratteri delle righe ('b' e 'a') sono rimasti ai loro posti."
+      ]
+    },
+    {
+      "id": "it_clang_2400",
+      "widget_id": "widget_clang_2400",
+      "topic": "Accesso a un carattere e spostamento del puntatore in un array di puntatori char*",
+      "q": "Cosa stamperà il programma combinando l'indicizzazione lines[0][2] e l'aritmetica dei puntatori lines[1] + 1?",
+      "hint": "lines[0][2] prende il 3° carattere da \"Alpha\", mentre lines[1] + 1 sposta il puntatore della stringa \"Beta\" in avanti di 1 carattere.",
+      "options": [
+        "p eta",
+        "l eta",
+        "p Beta",
+        "h eta",
+        "a eta"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `lines[0][2]` estrae il carattere `'p'` dalla parola `\"Alpha\"` (A=0, l=1, p=2). L'espressione `lines[1] + 1` dà un puntatore alla sottostringa `\"eta\"` (saltando `'B'`). Il risultato è `p eta`.",
+        "Errato. Il carattere `'l'` ha indice 1.",
+        "Errato. Lo spostamento `+ 1` salterà la lettera iniziale 'B'.",
+        "Errato. La lettera `'h'` si trova all'indice 3.",
+        "Errato. La lettera `'a'` è all'indice 4."
+      ]
+    },
+    {
+      "id": "it_clang_2401",
+      "widget_id": "widget_clang_2401",
+      "topic": "Valore minimo del contatore degli argomenti argc",
+      "q": "A quanto ammonta il parametro argc in un'esecuzione standard del programma senza parametri esterni (ad esempio ./app)?",
+      "hint": "Pensa se il nome del file eseguibile stesso viene conteggiato nel calcolo degli argomenti.",
+      "options": [
+        "1 (argc è uguale ad almeno 1, poiché argv[0] contiene il nome/percorso del programma)",
+        "0 (poiché l'utente non ha passato argomenti personalizzati)",
+        "-1",
+        "Valore indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In un'esecuzione standard `argc` è sempre uguale ad almeno 1, in quanto come primo elemento dell'array `argv[0]` il sistema operativo passa il nome o il percorso dell'eseguibile stesso.",
+        "Errato. Anche in assenza di parametri utente, `argc` è pari a 1 a causa di `argv[0]`.",
+        "Errato. `argc` è un contatore positivo del numero di elementi.",
+        "Errato. Il valore di `argc` viene impostato dal sistema operativo al momento del passaggio del controllo alla funzione `main`."
+      ]
+    },
+    {
+      "id": "it_clang_2402",
+      "widget_id": "widget_clang_2402",
+      "topic": "Indicizzazione degli argomenti utente in argv",
+      "q": "Cosa stamperà il programma se eseguito da riga di comando con: ./main hello world?",
+      "hint": "argv[0] memorizza il nome dell'eseguibile (\"./main\"), mentre i parametri successivi si trovano agli indici 1, 2, ecc.",
+      "options": [
+        "hello",
+        "./main",
+        "world",
+        "hello world"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `argv[0]` contiene `\"./main\"`, `argv[1]` contiene `\"hello\"` e `argv[2]` contiene `\"world\"`. La chiamata `printf(\"%s\\n\", argv[1])` stamperà `hello`.",
+        "Errato. `\"./main\"` è accessibile all'indice `argv[0]`.",
+        "Errato. `\"world\"` si trova in `argv[2]`.",
+        "Errato. Ciascun argomento separato da uno spazio viene inserito in un elemento distinto dell'array `argv`."
+      ]
+    },
+    {
+      "id": "it_clang_2403",
+      "widget_id": "widget_clang_2403",
+      "topic": "Marcatore finale dell'array argv",
+      "q": "A cosa è sempre uguale, secondo lo standard C, l'elemento dell'array argv all'indice argc (argv[argc])?",
+      "hint": "L'array di puntatori agli argomenti termina con uno speciale marcatore vuoto.",
+      "options": [
+        "Al puntatore NULL (la condizione argv[argc] == NULL è vera, il programma stamperà 1)",
+        "A un valore indefinito (la lettura causerà un Segmentation Fault)",
+        "A una stringa vuota \"\"",
+        "Al nome della funzione main stessa"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, l'array `argv` ha dimensione `argc + 1`, dove l'elemento `argv[argc]` è garantito essere un puntatore nullo `NULL`.",
+        "Errato. L'accesso a `argv[argc]` è standardizzato e non causa UB.",
+        "Errato. Viene restituito proprio un puntatore `NULL`, e non un puntatore a una stringa vuota `\"\"`.",
+        "Errato. L'elemento memorizza `NULL` per facilitare l'iterazione sull'elenco dei parametri."
+      ]
+    },
+    {
+      "id": "it_clang_2404",
+      "widget_id": "widget_clang_2404",
+      "topic": "Conversione di argomenti stringa in numeri interi",
+      "q": "Tramite quale funzione dell'header <stdlib.h> un argomento da riga di comando (stringa) viene di solito convertito in tipo int?",
+      "hint": "Ricorda il nome della funzione C standard, acronimo di ASCII to Integer.",
+      "options": [
+        "atoi()",
+        "itoa()",
+        "strlen()",
+        "Cast esplicito di tipo (int)argv[1]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `atoi()` (ASCII to integer) accetta una stringa `const char*` e restituisce il valore numerico corrispondente di tipo `int`.",
+        "Errato. `itoa()` esegue l'azione opposta (da numero a stringa) e non fa parte dello standard C.",
+        "Errato. `strlen()` restituisce la lunghezza della stringa, non converte il suo contenuto in numero.",
+        "Errato. Il cast `(int)argv[1]` converte il tipo del puntatore a un intero (l'indirizzo in memoria), senza analizzare i caratteri della stringa."
+      ]
+    },
+    {
+      "id": "it_clang_2405",
+      "widget_id": null,
+      "topic": "Sintassi di dichiarazione dell'array degli argomenti in main()",
+      "q": "Le scritture int main(int argc, char *argv[]) e int main(int argc, char **argv) sono equivalenti?",
+      "hint": "Nei parametri delle funzioni, un array di puntatori viene convertito a un puntatore a puntatore.",
+      "options": [
+        "Sì, sono assolutamente equivalenti secondo lo standard del linguaggio C",
+        "No, la prima forma lavora con gli array, mentre la seconda provoca un errore di compilazione",
+        "No, la seconda forma è consentita solo in C++"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella sintassi dei parametri delle funzioni C, la dichiarazione di un array `type arr[]` viene automaticamente convertita sintatticamente nel puntatore `type *`. Pertanto `char *argv[]` e `char **argv` sono del tutto identici.",
+        "Errato. Entrambe le forme sono valide e compilano allo stesso modo.",
+        "Errato. Entrambe le forme fanno parte dello standard del linguaggio C a partire da C89."
+      ]
+    },
+    {
+      "id": "it_clang_2406",
+      "widget_id": "widget_clang_2406",
+      "topic": "Sicurezza con gli argomenti e Out-of-bounds access",
+      "q": "Cosa accade se si esegue il programma invocando argv[1][0] senza passare argomenti dalla riga di comando (con il comando ./main)?",
+      "hint": "Senza parametri argc è uguale a 1, quindi argv[1] è uguale a NULL. Cosa accade dereferenziando NULL[0]?",
+      "options": [
+        "Chiusura anomala per dereferenziazione di un puntatore nullo NULL (Segmentation Fault)",
+        "Il programma stamperà il carattere '\\0'",
+        "Il programma stamperà il nome del file eseguibile",
+        "Il programma stamperà il carattere '0'"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Senza argomenti `argc == 1`, e `argv[1]` è uguale a `NULL`. Tentar di leggere il carattere dereferenziato `argv[1][0]` è un'operazione di dereferenziazione di `NULL`, che porta al crash del programma (Segmentation Fault).",
+        "Errato. All'indirizzo `NULL` non ci sono dati accessibili.",
+        "Errato. Il nome del file è memorizzato in `argv[0]`, non in `argv[1]`.",
+        "Errato. L'operazione provocherà immediatamente un errore di accesso alla memoria."
+      ]
+    },
+    {
+      "id": "it_clang_2407",
+      "widget_id": "widget_clang_2407",
+      "topic": "Iterazione sull'array di argomenti argc",
+      "q": "A quanto sarà uguale la variabile sum dopo l'esecuzione del ciclo per l'invocazione: ./app alpha beta gamma?",
+      "hint": "Calcola il numero totale di elementi dell'array argv, incluso il nome del programma.",
+      "options": [
+        "4",
+        "3",
+        "5",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con questa esecuzione `argv` contiene 4 elementi: `\"./app\"`, `\"alpha\"`, `\"beta\"`, `\"gamma\"`. Di conseguenza `argc` è pari a 4. Il ciclo eseguirà 4 iterazioni e `sum` diventerà uguale a 4.",
+        "Errato. 3 è solo il numero di parametri utente senza il nome del programma stesso.",
+        "Errato. Sulla riga di comando vengono passati 3 argomenti + 1 nome di file = 4.",
+        "Errato. La variabile `sum` viene incrementata a ogni iterazione del ciclo."
+      ]
+    },
+    {
+      "id": "it_clang_2408",
+      "widget_id": "widget_clang_2408",
+      "topic": "Verifica del primo carattere dell'argomento durante il parsing dei flag",
+      "q": "In un programma in C, come si verifica se l'argomento passato inizia con il carattere trattino '-' (se è un flag)?",
+      "hint": "Ogni argomento argv[i] è una normale stringa C e il suo primo carattere è accessibile all'indice [0].",
+      "options": [
+        "Verificando la condizione argv[i][0] == '-'",
+        "Con il confronto strcmp(argv[i], \"-\") == 0",
+        "Tramite l'operatore integrato isflag(argv[i])",
+        "Verificando la dimensione sizeof(argv[i]) == 1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `argv[i]` è una stringa (`char*`), il suo primo carattere viene estratto con l'espressione `argv[i][0]`. Il confronto con `'-'` permette di sapere se il parametro inizia con un trattino.",
+        "Errato. `strcmp` con `\"-\"` restituirà 0 solo se l'intero argomento consiste esclusivamente in un singolo trattino.",
+        "Errato. L'operatore `isflag` non esiste in C.",
+        "Errato. `sizeof(argv[i])` restituirà la dimensione del tipo di puntatore `char*` (4 o 8 byte)."
+      ]
+    },
+    {
+      "id": "it_clang_2409",
+      "widget_id": null,
+      "topic": "Terzo parametro envp della funzione main()",
+      "q": "A cosa serve in alcuni sistemi POSIX il terzo argomento main(int argc, char *argv[], char *envp[])?",
+      "hint": "Fai attenzione all'abbreviazione envp (environment pointers).",
+      "options": [
+        "Per accedere a un array di stringhe delle variabili d'ambiente del sistema operativo (Environment Variables)",
+        "Per ottenere il numero di core del processore disponibili",
+        "Per passare i parametri dei permessi di amministratore (sudo)",
+        "Per restituire più codici di errore contemporaneamente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il parametro `char *envp[]` nella programmazione di sistema passa un array di stringhe nella forma `\"KEY=VALUE\"`, contenente tutte le variabili d'ambiente della sessione.",
+        "Errato. Il numero di core viene determinato da funzioni di sistema come `sysconf()`.",
+        "Errato. I permessi di accesso si verificano tramite UID/GID.",
+        "Errato. La funzione `main` restituisce un unico numero intero di tipo `int`."
+      ]
+    },
+    {
+      "id": "it_clang_2410",
+      "widget_id": "widget_clang_2410",
+      "topic": "Ottenimento dell'ultimo argomento tramite argc - 1",
+      "q": "Cosa stamperà il programma all'esecuzione da riga di comando: ./app test1 test2?",
+      "hint": "Calcola l'indice argc - 1: con 3 elementi (nome + 2 argomenti), l'ultimo elemento ha indice 2.",
+      "options": [
+        "test2",
+        "test1",
+        "./app",
+        "NULL",
+        "Chiusura anomala"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Array degli argomenti: `argv[0] = \"./app\"`, `argv[1] = \"test1\"`, `argv[2] = \"test2\"`. Il valore di `argc` è 3. L'espressione `argv[argc - 1]` accederà a `argv[2]` e stamperà `test2`.",
+        "Errato. `test1` si trova all'indice `argv[1]`.",
+        "Errato. `./app` si trova all'indice `argv[0]`.",
+        "Errato. `NULL` si trova all'indice `argv[argc]` (`argv[3]`).",
+        "Errato. L'indice `argc - 1` punta correttamente all'ultimo argomento stringa valido."
+      ]
+    }
+  ]
+}

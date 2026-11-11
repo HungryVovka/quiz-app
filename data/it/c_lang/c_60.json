@@ -1,0 +1,595 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_1841",
+      "widget_id": "widget_clang_1841",
+      "topic": "Conteggio del numero di elementi",
+      "q": "Se in un array {10, 20, 30, -1} il numero di elementi utili è 3, a quale indice si trova il marcatore TAPPO (-1)?",
+      "hint": "Ricorda con quale numero inizia l'indicizzazione degli elementi negli array in C.",
+      "options": [
+        "All'indice 3 (l'indice del delimitatore coincide con il numero di elementi)",
+        "All'indice 4",
+        "All'indice 2",
+        "All'indice -1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'indicizzazione parte da 0 (gli elementi occupano gli indici 0, 1, 2). Il numero di elementi utili N = 3. Di conseguenza, il marcatore di arresto si trova esattamente nella cella arr[N], cioè arr[3].",
+        "Errato. L'indice 4 andrebbe oltre la posizione del delimitatore.",
+        "Errato. L'indice 2 memorizza l'ultimo valore utile (30).",
+        "Errato. Gli indici negativi non vengono utilizzati negli array standard in C."
+      ]
+    },
+    {
+      "id": "it_clang_1842",
+      "widget_id": "widget_clang_1842",
+      "topic": "Conteggio del numero di elementi",
+      "q": "A cosa punta la variabile count dopo il completamento del ciclo while (arr[count] != -1) count++?",
+      "hint": "Rifletti su quale elemento specifico la condizione di prosecuzione del ciclo diventa falsa.",
+      "options": [
+        "Alla cella con il delimitatore corrente -1, permettendo di usare count come indice per inserire un nuovo elemento in coda",
+        "All'ultimo elemento utile dell'array prima del delimitatore",
+        "Alla prima cella dell'array (indice 0)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo si interrompe quando `arr[count] == -1`. Di conseguenza, `count` è pari all'indice del `tappo` corrente. Sovrascrivendo `arr[count] = val`, inseriamo un elemento alla fine, e poi mettiamo un nuovo `-1` all'indice `count + 1`.",
+        "Errato. L'indice dell'ultimo elemento utile è pari a `count - 1`.",
+        "Errato. La variabile torna all'indice 0 solo se l'array era vuoto."
+      ]
+    },
+    {
+      "id": "it_clang_1843",
+      "widget_id": "widget_clang_1843",
+      "topic": "Conteggio del numero di elementi",
+      "q": "È vera l'affermazione: per un array vuoto con delimitatore {-1}, il numero di elementi utili è 0 e il marcatore -1 si trova rigorosamente all'indice 0?",
+      "hint": "Confronta il numero di elementi prima del marcatore con l'indice della prima cella dell'array.",
+      "options": [
+        "Sì, è vero: il valore count = 0 coincide perfettamente con l'indice del delimitatore (empty_arr[0])",
+        "No, per un array vuoto l'indice del delimitatore non è definito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La regola `count == index_of_tappo` funziona in modo universale anche per le strutture vuote: 0 elementi -> tappo all'indice 0.",
+        "Errato. L'indice del delimitatore è chiaramente fissato in memoria ed è pari a 0."
+      ]
+    },
+    {
+      "id": "it_clang_1844",
+      "widget_id": "widget_clang_1844",
+      "topic": "Conteggio del numero di elementi",
+      "q": "La funzione strlen(\"Hello\") restituisce 5 (la lunghezza della stringa senza '\\0'). Quale valore stamperà il programma per str[len]?",
+      "hint": "Rifletti su quale carattere di servizio viene posizionato subito dopo l'ultimo carattere stampabile della stringa.",
+      "options": [
+        "'Y' (poiché il terminatore nullo '\\0' si trova esattamente all'indice len = 5)",
+        "'N'",
+        "'H'",
+        "'o'",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nelle stringhe in C, la lunghezza della stringa è pari all'indice del terminatore nullo `'\\0'`. I caratteri 'H','e','l','l','o' occupano gli indici 0..4, mentre `str[5]` contiene `'\\0'`. L'espressione `str[5] == '\\0'` è vera e stampa 'Y'.",
+        "Errato. La condizione `str[len] == '\\0'` è vera.",
+        "Errato. Il carattere 'H' si trova all'indice `str[0]`.",
+        "Errato. Il carattere 'o' si trova all'indice `str[4]`.",
+        "Errato. Il codice è completamente corretto."
+      ]
+    },
+    {
+      "id": "it_clang_1845",
+      "widget_id": "widget_clang_1845",
+      "topic": "Conteggio del numero di elementi",
+      "q": "La funzione count_elements ha contato n = 5 elementi nell'array prima del marcatore -1. Quale coppia di istruzioni sovrascriverà correttamente il -1 corrente con il nuovo numero 99 e ripristinerà la struttura?",
+      "hint": "Su quale indice si trovava il vecchio marcatore con n=5 e dove occorre spostare il nuovo marcatore?",
+      "options": [
+        "arr[5] = 99; arr[6] = -1;",
+        "arr[4] = 99; arr[5] = -1;",
+        "arr[6] = 99; arr[5] = -1;",
+        "arr[5] = -1; arr[6] = 99;"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Dato che `n = 5`, il marcatore corrente si trova all'indice 5 (`arr[5]`). Lo sovrascriviamo: `arr[5] = 99`, e mettiamo il nuovo delimitatore subito dopo: `arr[6] = -1`.",
+        "Errato. `arr[4] = 99` sovrascriverebbe il 5° elemento utile dell'array.",
+        "Errato. La scrittura all'indice 6 senza impostare `arr[5]` farà sì che 99 si trovi dopo il marcatore e venga ignorato.",
+        "Errato. Prima bisogna sovrascrivere il `tappo` e poi spostarlo più avanti."
+      ]
+    },
+    {
+      "id": "it_clang_1846",
+      "widget_id": "widget_clang_1846",
+      "topic": "Conteggio del numero di elementi",
+      "q": "Cosa succederà all'array {5, 10, 15, -1} (dove count = 3) dopo l'esecuzione delle righe arr[count] = 20; arr[count + 1] = -1;?",
+      "hint": "Segui quale cella verrà sovrascritta dal valore 20 e dove si sposterà il -1.",
+      "options": [
+        "L'array diventerà pari a {5, 10, 15, 20, -1}",
+        "L'array diventerà pari a {5, 10, 15, -1, 20}",
+        "L'array diventerà pari a {20, 5, 10, 15, -1}",
+        "L'elemento 15 verrà sovrascritto dal numero 20",
+        "Si verificherà un ciclo infinito",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `count = 3` l'istruzione `arr[3] = 20` sostituisce il vecchio `-1` con il nuovo valore 20. La seconda istruzione `arr[4] = -1` posiziona subito dopo il nuovo marcatore `tappo`.",
+        "Errato. Il delimitatore si sposterà a destra dopo il nuovo valore.",
+        "Errato. Gli elementi non si spostano a destra, l'aggiunta avviene in coda.",
+        "Errato. L'elemento 15 si trova all'indice 2 e non viene modificato.",
+        "Errato. Il codice viene eseguito in modo lineare.",
+        "Errato. La sintassi e l'aritmetica degli indici sono corrette."
+      ]
+    },
+    {
+      "id": "it_clang_1847",
+      "widget_id": "widget_clang_1847",
+      "topic": "Conteggio del numero di elementi",
+      "q": "Cosa stamperà il programma all'accesso arr[get_len(arr)] per l'array {100, 200, -1}?",
+      "hint": "Quale numero restituirà la funzione get_len e quale elemento si trova nell'array a quell'indice?",
+      "options": [
+        "-1 (poiché get_len restituirà 2 e arr[2] memorizza il delimitatore)",
+        "200",
+        "100",
+        "2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `get_len(arr)` trova il numero di elementi utili (2). L'espressione `arr[2]` accede all'elemento con indice 2, dove è posizionato il delimitatore `-1`.",
+        "Errato. 200 si trova all'indice `arr[1]`.",
+        "Errato. 100 si trova all'indice `arr[0]`.",
+        "Errato. La dereferenziazione `arr[...]` restituisce il valore dall'array, non l'indice stesso."
+      ]
+    },
+    {
+      "id": "it_clang_1848",
+      "widget_id": "widget_clang_1848",
+      "topic": "Conteggio del numero di elementi",
+      "q": "L'array è dichiarato come int data[4] = {1, 2, 3, -1}; (count = 3). Perché il tentativo di aggiungere un altro elemento tramite data[count] = 4; data[count + 1] = -1; porterà a un errore?",
+      "hint": "Verifica l'indice massimo consentito per un array in cui sono allocate esattamente 4 celle.",
+      "options": [
+        "Poiché count = 3, l'impostazione del nuovo tappo all'indice data[4] andrà oltre i limiti dell'array allocato di dimensione 4 (Buffer Overflow)",
+        "Poiché count = 3, il nuovo valore 4 sovrascriverà il primo elemento 1",
+        "L'aggiunta di elementi agli array è vietata dallo standard C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In un array di 4 elementi gli indici validi sono 0, 1, 2, 3. Con `count = 3` il comando `data[count + 1] = -1` tenta di scrivere in `data[4]`, il che costituisce un buffer overflow.",
+        "Errato. L'indice 3 non sovrascrive l'elemento all'indice 0.",
+        "Errato. La modifica del contenuto degli array è consentita, a patto di non violare i limiti della memoria allocata."
+      ]
+    },
+    {
+      "id": "it_clang_1849",
+      "widget_id": "widget_clang_1849",
+      "topic": "Conteggio del numero di elementi",
+      "q": "La funzione pop_back rimuove l'ultimo elemento dall'array {10, 20, 30, -1} (count = 3). Quale stato assumerà l'array dopo la chiamata arr[count - 1] = -1;?",
+      "hint": "Calcola l'indice count - 1 e vedi quale elemento verrà sostituito con -1.",
+      "options": [
+        "{10, 20, -1} — il marcatore -1 sovrascriverà il valore 30 all'indice 2",
+        "{10, 20, 30, -1} — l'array non cambierà",
+        "{-1, 20, 30, -1}",
+        "{10, -1, 30, -1}",
+        "Si verificherà un errore di fuoriuscita dai limiti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `count = 3` l'espressione `count - 1` dà l'indice 2 (dove era memorizzato il valore 30). L'istruzione `arr[2] = -1` sposta il `tappo` a sinistra, riducendo la dimensione dell'array a 2 elementi.",
+        "Errato. L'array ridurrà di 1 il numero di elementi disponibili.",
+        "Errato. L'elemento all'indice 0 (10) non viene modificato.",
+        "Errato. L'elemento all'indice 1 (20) non viene modificato.",
+        "Errato. L'indice 2 rientra nei limiti dell'array."
+      ]
+    },
+    {
+      "id": "it_clang_1850",
+      "widget_id": "widget_clang_1850",
+      "topic": "Conteggio del numero di elementi",
+      "q": "Cosa stamperà la riga printf(\"data[%d] = %d\\n\", count, data[count]); per l'array {7, 8, 9, -1}?",
+      "hint": "Determina il valore di count (numero di elementi prima di -1) e cosa si trova a quell'indice.",
+      "options": [
+        "data[3] = -1",
+        "data[3] = 9",
+        "data[4] = -1",
+        "data[2] = 9"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nell'array ci sono 3 elementi (7, 8, 9), quindi `count` diventerà pari a 3. Il valore di `data[3]` è `-1`. Verrà stampata la riga `data[3] = -1`.",
+        "Errato. Il valore 9 è memorizzato all'indice `data[2]`.",
+        "Errato. Il valore di `count` diventerà 3, non 4.",
+        "Errato. All'indice 2 si trova il numero 9, ma `count` arriverà a 3."
+      ]
+    },
+    {
+      "id": "it_clang_1851",
+      "widget_id": "widget_clang_1851",
+      "topic": "Verifica della pienezza dell'array",
+      "q": "Perché con una capacità del buffer CAP = 5 il numero massimo di elementi utili è esattamente 4 (CAP - 1)?",
+      "hint": "Rifletti su quale struttura dati viene utilizzata per indicare la fine dell'array.",
+      "options": [
+        "Perché 1 cella viene riservata alla memorizzazione del delimitatore (marcatore -1)",
+        "Perché l'indicizzazione in C inizia da 1",
+        "Perché l'ultima cella è sempre riservata dal sistema operativo",
+        "A causa delle limitazioni della funzione printf"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Affinché l'array sia considerato un elenco valido con marcatore `-1`, alla fine deve esserci necessariamente una cella per il marcatore stesso. Se sono allocate N celle, per i dati sono disponibili al massimo N - 1.",
+        "Errato. L'indicizzazione in C inizia da 0.",
+        "Errato. Il sistema operativo non riserva celle all'interno dell'array dell'utente.",
+        "Errato. L'output tramite printf non influisce sulla capacità dell'array."
+      ]
+    },
+    {
+      "id": "it_clang_1852",
+      "widget_id": "widget_clang_1852",
+      "topic": "Verifica della pienezza dell'array",
+      "q": "Quale valore restituirà la funzione is_full per un array di 5 elementi se in esso sono scritti 4 numeri e il marcatore -1 si trova all'indice 4?",
+      "hint": "Confronta il numero di elementi utili con la formula di capacità capacity - 1.",
+      "options": [
+        "true (poiché count == 4 e capacity - 1 == 4)",
+        "false (poiché nell'array è presente il marcatore -1)",
+        "Si verificherà un ciclo infinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo conterà `count = 4`. La condizione `4 == 5 - 1` è vera (`true`), il che indica il completo riempimento della capacità disponibile per i dati.",
+        "Errato. Il marcatore -1 all'ultimo indice indica proprio che non c'è più spazio libero per nuovi elementi utili.",
+        "Errato. Il ciclo si arresterà al marcatore -1."
+      ]
+    },
+    {
+      "id": "it_clang_1853",
+      "widget_id": "widget_clang_1853",
+      "topic": "Verifica della pienezza dell'array",
+      "q": "Cosa visualizzerà il programma durante la verifica dell'array buffer[5] = {1, 2, 3, 4, -1}?",
+      "hint": "Sono rimaste celle libere nell'array di 5 elementi se il marcatore si trova all'indice 4?",
+      "options": [
+        "Full",
+        "Not full"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nell'array ci sono 4 elementi utili (1, 2, 3, 4) e il marcatore `-1` si trova nell'ultima posizione (indice 4). La variabile count diventerà pari a 4, la condizione `4 == 4` verrà satisfied e verrà stampato \"Full\".",
+        "Errato. In un array di 5 celle, 4 sono occupate dai dati e 1 dal marcatore; non c'è spazio libero."
+      ]
+    },
+    {
+      "id": "it_clang_1854",
+      "widget_id": "widget_clang_1854",
+      "topic": "Verifica della pienezza dell'array",
+      "q": "A quale errore critico porterà il tentativo di aggiungere un elemento all'array pieno data[4] = {10, 20, 30, -1} senza un controllo preventivo con is_full?",
+      "hint": "Rifletti su quale indice tenterà di scriversi il nuovo marcatore di arresto durante l'aggiunta dell'elemento.",
+      "options": [
+        "Si verificherà un buffer overflow (Buffer Overflow) a causa della scrittura di data[4] = -1 oltre i limiti dell'array",
+        "L'array aumenterà automaticamente la sua dimensione in memoria",
+        "Il valore 40 sostituirà il valore 10 al primo posto",
+        "Il compilatore bloccherà l'esecuzione del programma",
+        "Il marcatore -1 si cancellerà automaticamente dalla memoria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'array `data` ha indici da 0 a 3. L'istruzione `data[count + 1] = -1` con `count = 3` tenterà di scrivere in `data[4]`, andando oltre i limiti dell'array (Comportamento Indefinito / Buffer Overflow).",
+        "Errato. Gli array statici in C hanno una dimensione fissa.",
+        "Errato. La scrittura avviene agli indici 3 e 4, l'indice 0 non viene toccato.",
+        "Errato. L'errore di fuoriuscita dai limiti si verifica in fase di esecuzione (runtime).",
+        "Errato. Il delimitatore non si rimuove da solo."
+      ]
+    },
+    {
+      "id": "it_clang_1855",
+      "widget_id": "widget_clang_1855",
+      "topic": "Verifica della pienezza dell'array",
+      "q": "Quanti slot liberi per nuovi elementi restituirà get_free_space(arr, 6) per l'array {5, 15, -1}?",
+      "hint": "Sottrai dalla capacità disponibile per i dati (capacity - 1) il numero attuale di elementi.",
+      "options": [
+        "3 slot (massimo 5 elementi, attualmente ne sono occupati 2)",
+        "4 slot",
+        "2 slot",
+        "0 slot"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Capacità `capacity = 6`. Numero massimo di elementi: `6 - 1 = 5`. Numero attuale di elementi `count = 2`. Disponibili per la scrittura: `5 - 2 = 3` slot.",
+        "Errato. 4 slot sarebbero stati disponibili con 1 elemento.",
+        "Errato. 2 è il numero attuale di slot utili occupati.",
+        "Errato. L'array contiene spazio libero."
+      ]
+    },
+    {
+      "id": "it_clang_1856",
+      "widget_id": "widget_clang_1856",
+      "topic": "Verifica della pienezza dell'array",
+      "q": "Grazie a cosa la funzione is_full_fast determina se un array è pieno in tempo costante O(1) senza contare gli elementi?",
+      "hint": "Rifletti su quale posizione specifica deve trovarsi il marcatore se tutti i posti per i dati sono utilizzati.",
+      "options": [
+        "Controlla subito l'ultima cella arr[capacity - 1]: se LÌ NON c'è -1, significa che il marcatore si è spostato oltre la capacità o l'array è pieno",
+        "Richiede la dimensione della memoria allocata al sistema operativo",
+        "Legge una speciale intestazione nascosta dell'array C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se l'array NON è pieno, il delimitatore `-1` deve trovarsi in una delle posizioni da `0` a `capacity - 2`. Se nella posizione `capacity - 1` c'è un valore diverso da `-1`, significa che tutte le celle utili sono occupate.",
+        "Errato. In C i normali puntatori/array non trasmettono informazioni di sistema sulla propria dimensione.",
+        "Errato. In C gli array di base non hanno intestazioni o metadati nascosti."
+      ]
+    },
+    {
+      "id": "it_clang_1857",
+      "widget_id": "widget_clang_1857",
+      "topic": "Verifica della pienezza dell'array",
+      "q": "Qual è il numero massimo di elementi dati che si possono salvare in un array int buf[10] con marcatore -1?",
+      "hint": "Non dimenticare di riservare una cella per l'elemento terminale.",
+      "options": [
+        "9 elementi",
+        "10 elementi",
+        "8 elementi",
+        "11 elementi",
+        "Dipende dall'architettura del processore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La dimensione dell'array è pari a 10. L'ultima decima cella (con indice 9) è riservata al marcatore di arresto `-1`, lasciando per i dati utili 9 celle (indici 0..8).",
+        "Errato. Se si scrivono 10 elementi, non rimarrà spazio per `-1`.",
+        "Errato. 8 è inferiore al numero massimo possibile.",
+        "Errato. Non è possibile salvare più elementi della memoria allocata.",
+        "Errato. La regola è la stessa per tutte le architetture."
+      ]
+    },
+    {
+      "id": "it_clang_1858",
+      "widget_id": "widget_clang_1858",
+      "topic": "Verifica della pienezza dell'array",
+      "q": "Cosa stamperà il programma verificando un array \"vuoto\" di dimensione 1: tiny[1] = {-1}?",
+      "hint": "Si può inserire almeno un numero utile in un array di dimensione 1 se vi è già un marcatore?",
+      "options": [
+        "Full: YES (poiché count = 0 e capacity - 1 = 0, non c'è spazio libero per nuovi dati)",
+        "Full: NO",
+        "Errore di divisione per zero",
+        "Risultato indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un array di 1 elemento può contenere solo il marcatore `-1` stesso (alla posizione 0). Non è possibile aggiungere alcun elemento utile, quindi è contemporaneamente vuoto e completamente pieno (`count = 0 == 1 - 1`).",
+        "Errato. Non ci sono posti liberi per aggiungere dati.",
+        "Errato. Non ci sono errori matematici nel codice.",
+        "Errato. Il codice è completamente deterministico."
+      ]
+    },
+    {
+      "id": "it_clang_1859",
+      "widget_id": "widget_clang_1859",
+      "topic": "Verifica della pienezza dell'array",
+      "q": "Quale ruolo svolge il controllo if (count >= capacity - 1) nella funzione safe_append?",
+      "hint": "Questa condizione valuta il rischio di andare oltre i limiti della memoria allocata durante l'inserimento?",
+      "options": [
+        "Impedisce la scrittura dell'elemento e del marcatore oltre i limiti dell'array (previene il Buffer Overflow)",
+        "Velocizza la ricerca dell'elemento nell'array",
+        "Svuota automaticamente l'array in caso di overflow"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La condizione garantisce che l'operazione di inserimento (`arr[count] = val; arr[count + 1] = -1;`) venga eseguita solo se nell'array c'è spazio almeno per l'elemento E per il nuovo marcatore.",
+        "Errato. È un controllo di sicurezza, non un algoritmo di ricerca.",
+        "Errato. La funzione restituisce `false` senza modificare i dati attuali dell'array."
+      ]
+    },
+    {
+      "id": "it_clang_1860",
+      "widget_id": "widget_clang_1860",
+      "topic": "Verifica della pienezza dell'array",
+      "q": "Quale sarà il risultato dell'espressione count + 2 <= 5 - 1 per l'array arr[5] = {10, 20, -1}?",
+      "hint": "Calcola il valore attuale di count e sostituiscilo nella disuguaglianza.",
+      "options": [
+        "Yes (count = 2; 2 + 2 <= 4 — vero, si possono aggiungere in sicurezza altri 2 elementi)",
+        "No (l'array è pieno)",
+        "Yes, ma si verificherà un guasto durante l'esecuzione",
+        "No, poiché si può aggiungere al massimo 1 elemento",
+        "Errore di compilazione a causa delle parentesi",
+        "Il risultato dipende dai valori degli elementi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nell'array ci sono 2 elementi (`count = 2`). La capacità massima dei dati è `5 - 1 = 4`. L'aggiunta di 2 elementi darà `2 + 2 = 4`, che entra esattamente nell'array. Il programma stamperà \"Yes\".",
+        "Errato. C'è spazio sufficiente nell'array.",
+        "Errato. Non si verificherà alcuna fuoriuscita dai limiti.",
+        "Errato. Lo spazio basta esattamente per 2 elementi.",
+        "Errato. La sintassi della condizione è valida.",
+        "Errato. La logica dipende solo dal numero di elementi e dalla capacità dell'array."
+      ]
+    },
+    {
+      "id": "it_clang_1861",
+      "widget_id": "widget_clang_1861",
+      "topic": "Verifica della pienezza dell'array",
+      "q": "Cosa restituirà la funzione is_full per l'array data[4] = {10, 20, 30, -1}?",
+      "hint": "Valuta l'uguaglianza tra il numero di elementi e il valore capacity - 1.",
+      "options": [
+        "1 (poiché l'array è completamente pieno: 3 elementi utili e marcatore alla posizione 3)",
+        "0 (poiché nell'array è presente il marcatore -1)",
+        "-1",
+        "4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il numero di elementi prima di -1 è pari a 3 (`count = 3`). Per condizione `capacity = 4`. L'espressione `3 == 4 - 1` è vera, quindi l'operatore ternario restituisce 1.",
+        "Errato. La presenza del marcatore nell'ultima posizione testimonia il completo riempimento, non la presenza di spazio libero.",
+        "Errato. La funzione restituisce rigorosamente i valori di flag 1 o 0.",
+        "Errato. La funzione restituisce un risultato booleano (1 o 0), non la dimensione dell'array."
+      ]
+    },
+    {
+      "id": "it_clang_1862",
+      "widget_id": "widget_clang_1862",
+      "topic": "Verifica della pienezza dell'array",
+      "q": "Cosa restituisce l'espressione return i == cap - 1; in linguaggio C se la condizione NON viene soddisfatta?",
+      "hint": "Quale valore numerico corrisponde al booleano false in linguaggio C?",
+      "options": [
+        "L'intero 0 (false)",
+        "L'intero -1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel linguaggio C le operazioni di confronto (inclusa `==`) vengono sempre valutate in un numero intero: `1` se vero e `0` se falso.",
+        "Errato. I valori negativi non vengono utilizzati per indicare la falsità negli operatori di confronto in C."
+      ]
+    },
+    {
+      "id": "it_clang_1863",
+      "widget_id": "widget_clang_1863",
+      "topic": "Verifica della pienezza dell'array",
+      "q": "Quale ramo della condizione si attiverà in main per l'array arr[5] = {1, 2, -1}?",
+      "hint": "Un array di 2 elementi è pieno con una capacità totale di 5?",
+      "options": [
+        "Si attiverà il ramo else e verrà stampato NOT FULL (is_full restituirà 0)",
+        "Si attiverà il ramo if e verrà stampato FULL (is_full restituirà 1)",
+        "Il programma terminerà con un errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nell'array ci sono 2 elementi utili (`count = 2`). Con `capacity = 5` il controllo `2 == 5 - 1` dà `0`. La struttura `if (0)` passa il controllo al blocco `else`.",
+        "Errato. Per riempire un array di capacità 5 occorrono 4 elementi.",
+        "Errato. La sintassi della condizione è assolutamente corretta."
+      ]
+    },
+    {
+      "id": "it_clang_1864",
+      "widget_id": "widget_clang_1864",
+      "topic": "Verifica della pienezza dell'array",
+      "q": "Cosa stamperà la funzione is_full_fast(buf, 4) per l'array {5, 10, 15, -1}?",
+      "hint": "Verifica la condizione arr[capacity - 1] != -1 per l'elemento all'indice 3.",
+      "options": [
+        "Result: 0 (poiché l'elemento buf[3] è pari a -1, quindi la verifica arr[3] != -1 dà 0)",
+        "Result: 1",
+        "Result: -1",
+        "Result: 4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! All'indice `capacity - 1 = 3` si trova il marcatore `-1`. L'espressione `arr[3] != -1` verifica se l'ultimo elemento NON è -1. Poiché è pari a -1, l'espressione restituisce 0 (l'array non è ancora pieno/c'è ancora posto).",
+        "Errato. Controlla attentamente il valore in `buf[3]`.",
+        "Errato. L'espressione di confronto restituisce 1 o 0.",
+        "Errato. Le operazioni di confronto non restituiscono la dimensione della capacità."
+      ]
+    },
+    {
+      "id": "it_clang_1865",
+      "widget_id": "widget_clang_1865",
+      "topic": "Verifica della pienezza dell'array",
+      "q": "Cosa significa il ritorno del valore 0 dalla funzione push?",
+      "hint": "Ricorda le convenzioni standard sul ritorno di un flag di successo o fallimento dalle funzioni di inserimento.",
+      "options": [
+        "L'operazione di aggiunta è stata rifiutata poiché l'array è completamente pieno",
+        "L'operazione è stata eseguita con successo, è stato aggiunto 0",
+        "Si è verificato un errore di memoria (Segmentation Fault)",
+        "L'array è stato svuotato automaticamente",
+        "La funzione è entrata in un ciclo infinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il controllo `if (is_full(arr, cap))` protegge il buffer. Se `is_full` restituisce `1`, allora `push` termina anticipatamente con il codice di stato `0` (fallimento), preservando l'array da un overflow.",
+        "Errato. Lo stato di successo restituisce `1` alla fine della funzione.",
+        "Errato. Il controllo previene l'errore di segmentazione.",
+        "Errato. L'array conserva tutti i suoi elementi attuali.",
+        "Errato. Il codice esegue un semplice `return 0`."
+      ]
+    },
+    {
+      "id": "it_clang_1866",
+      "widget_id": "widget_clang_1866",
+      "topic": "Verifica della pienezza dell'array",
+      "q": "Cosa restituirà is_full(empty, 1) per un array di 1 elemento empty[1] = {-1}?",
+      "hint": "C'è spazio per dati utili in un array di dimensione 1 oltre al delimitatore stesso?",
+      "options": [
+        "1 (poiché count = 0, cap - 1 = 0, 0 == 0 — vero, non ci sono posti liberi per i dati)",
+        "0 (poiché l'array è vuoto)",
+        "Errore di divisione o fuoriuscita dai limiti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per un array di capacità 1 l'unico slot disponibile è occupato dal marcatore `-1`. Non si possono inserire elementi utili (`cap - 1 = 0`), quindi l'array è contemporaneamente vuoto e pieno (non c'è posto per nuovi dati), la funzione restituisce `1`.",
+        "Errato. Nonostante l'assenza di dati, non si possono inserire elementi in un array di capacità 1; è al limite.",
+        "Errato. Il codice legge correttamente `empty[0]` e restituisce `1`."
+      ]
+    },
+    {
+      "id": "it_clang_1867",
+      "widget_id": "widget_clang_1867",
+      "topic": "Verifica della pienezza dell'array",
+      "q": "Quando verrà eseguito il codice all'interno del blocco if (!is_full(arr, 5))?",
+      "hint": "Fai attenzione all'operatore di negazione logica `!` prima della chiamata di funzione.",
+      "options": [
+        "Quando la funzione is_full restituirà 0 (l'array NON è pieno)",
+        "Quando la funzione is_full restituirà 1 (l'array è pieno)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore di negazione logica `!` inverte il risultato. Se `is_full` restituisce `0` (non pieno), `!0` diventa `1` (true) e il blocco di inserimento viene eseguito.",
+        "Errato. Con `is_full == 1` l'espressione `!1` diventerà `0` (false) e il blocco verrà ignorato."
+      ]
+    },
+    {
+      "id": "it_clang_1868",
+      "widget_id": "widget_clang_1868",
+      "topic": "Verifica della pienezza dell'array",
+      "q": "Cosa stamperà la funzione has_space per un array completamente pieno arr[3] = {100, 200, -1}?",
+      "hint": "Verifica la verità della condizione count < capacity - 1 con 2 elementi e capacità 3.",
+      "options": [
+        "0 (poiché non c'è più spazio libero: count = 2, cap - 1 = 2, 2 < 2 — falso)",
+        "1",
+        "2",
+        "-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nell'array ci sono 2 elementi (`count = 2`), il massimo disponibile è `3 - 1 = 2`. La condizione `2 < 2` è falsa, quindi l'operatore ternario restituisce `0` (non c'è posto).",
+        "Errato. Il valore 1 verrà restituito solo se nell'array ci sono meno di 2 elementi.",
+        "Errato. La funzione restituisce 1 o 0.",
+        "Errato. Non vengono restituiti valori negativi."
+      ]
+    },
+    {
+      "id": "it_clang_1869",
+      "widget_id": "widget_clang_1869",
+      "topic": "Verifica della pienezza dell'array",
+      "q": "Quale valore restituirà la funzione check_overflow se l'indice del marcatore i è uguale o superiore a cap - 1?",
+      "hint": "Valuta il risultato del confronto (i >= cap - 1) quando il limite di capacità è esaurito.",
+      "options": [
+        "1 (segnala che il limite di capacità è stato raggiunto o superato)",
+        "0",
+        "Un errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `(i >= cap - 1)` viene valutata a `1` (vero) quando il numero di elementi ha occupato tutta la memoria allocata per i dati.",
+        "Errato. 0 viene restituito solo se `i < cap - 1`.",
+        "Errato. L'espressione di confronto è del tutto valida."
+      ]
+    },
+    {
+      "id": "it_clang_1870",
+      "widget_id": "widget_clang_1870",
+      "topic": "Verifica della pienezza dell'array",
+      "q": "Perché la funzione protetta is_full_safe restituisce 1 se chiamata per un array danneggiato senza marcatore {1, 2, 3}?",
+      "hint": "Rifletti su quale valore di protezione restituisce la funzione se attraversando tutta la memoria allocata il marcatore -1 non viene trovato.",
+      "options": [
+        "Se il ciclo è arrivato alla fine di capacity e non ha trovato -1, l'array è considerato pieno/non sicuro (restituisce 1)",
+        "Restituisce 1 poiché 1 è il primo elemento dell'array",
+        "Entra in un ciclo infinito per sempre",
+        "Restituisce 1 per impostazione predefinita per tutti gli array",
+        "Si verificherà un arresto anomalo al richiamo di return 1",
+        "Il compilatore sostituirà automaticamente 3 con -1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se nei limiti di `capacity` passi il marcatore `-1` non è stato incontrato, la funzione previene in modo sicuro un'ulteriore scrittura restituendo `1` (array pieno / scrittura vietata).",
+        "Errato. Il valore restituito non è legato in alcun modo al primo elemento `arr[0] = 1`.",
+        "Errato. Il ciclo `for` è limitato dal parametro `capacity` e terminerà garantito.",
+        "Errato. Per un array con marcatore al centro la funzione restituirà 0.",
+        "Errato. Il ritorno di `return 1` è assolutamente sicuro.",
+        "Errato. Il compilatore non modifica i valori in memoria durante l'esecuzione."
+      ]
+    }
+  ]
+}

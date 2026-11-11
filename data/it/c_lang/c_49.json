@@ -1,0 +1,597 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_1511",
+      "widget_id": null,
+      "topic": "Output formattato degli indirizzi tramite printf e lo specificatore %p",
+      "q": "Quale specificatore di formato viene utilizzato nella funzione printf per stampare puntatori e indirizzi di memoria?",
+      "hint": "Pensa a quale carattere di controllo è progettato appositamente per i tipi puntatore (pointer).",
+      "options": [
+        "%p",
+        "%d",
+        "%x"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `%p` è progettato appositamente in `printf` per stampare indirizzi di memoria e puntatori.",
+        "Errato. Lo specificatore `%d` viene utilizzato per stampare numeri interi con segno di tipo `int`.",
+        "Errato. Lo specificatore `%x` stampa un `unsigned int` in formato esadecimale, mentre per i puntatori lo standard definisce `%p`."
+      ]
+    },
+    {
+      "id": "it_clang_1512",
+      "widget_id": "widget_clang_1512",
+      "topic": "Output formattato degli indirizzi tramite printf e lo specificatore %p",
+      "q": "In quale sistema di numerazione e formato viene visualizzato un indirizzo di memoria quando si usa lo specificatore %p (ad esempio, 0x7ffd56a2)?",
+      "hint": "Fai attenzione al caratteristico prefisso 0x prima del numero.",
+      "options": [
+        "In formato esadecimale",
+        "In formato decimale",
+        "In formato binario",
+        "In formato ottale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `%p` visualizza l'indirizzo della cella di memoria nel sistema numerico esadecimale (con il prefisso standard `0x`).",
+        "Errato. In formato decimale vengono stampati i normali numeri con lo specificatore `%d` o `%u`.",
+        "Errato. La funzione standard `printf` non stampa dati nel sistema binario.",
+        "Errato. Per il formato ottale viene utilizzato lo specificatore `%o`."
+      ]
+    },
+    {
+      "id": "it_clang_1513",
+      "widget_id": "widget_clang_1513",
+      "topic": "Output formattato degli indirizzi tramite printf e lo specificatore %p",
+      "q": "Cosa stamperà a schermo la chiamata a printf con l'espressione &*pi, se pi contiene l'indirizzo della variabile v?",
+      "hint": "Segui l'ordine di esecuzione: prima la dereferenziazione (*), poi l'estrazione dell'indirizzo (&).",
+      "options": [
+        "L'indirizzo della variabile v in formato esadecimale (lo stesso valore di &v o pi)",
+        "Il valore numerico della variabile v",
+        "L'indirizzo del puntatore pi stesso sullo stack",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La combinazione `&*pi` prima dereferenzia il puntatore (`*pi` dà la variabile `v`), e poi prende subito il suo indirizzo (`&v`). Le operazioni si annullano a vicenda, restituendo lo stesso indirizzo memorizzato in `pi`.",
+        "Errato. Per stampare il valore della variabile si usa lo specificatore `%d` e la dereferenziazione `*pi` senza l'operatore `&`.",
+        "Errato. L'indirizzo della variabile puntatore `pi` stessa si ottiene tramite `&pi`.",
+        "Errato. L'espressione `&*pi` è sintatticamente del tutto corretta in C."
+      ]
+    },
+    {
+      "id": "it_clang_1514",
+      "widget_id": "widget_clang_1514",
+      "topic": "Output formattato degli indirizzi tramite printf e lo specificatore %p",
+      "q": "Quale valore stamperà il programma all'esecuzione del codice printf(\"%d\\n\", *&v); per la variabile int v = 5;?",
+      "hint": "Gli operatori di indirizzo (&) e dereferenziazione (*) usati in sequenza si compensano a vicenda.",
+      "options": [
+        "5",
+        "L'indirizzo esadecimale della variabile v",
+        "0",
+        "Errore di esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `*&v` prima ottiene l'indirizzo della variabile `v` (`&v`), poi lo dereferenzia subito (`*`), restituendo il valore stesso di `v` (5).",
+        "Errato. Per stampare l'indirizzo è necessario lo specificatore `%p` e solo l'operatore di indirizzo `&v`.",
+        "Errato. Il valore della variabile è 5.",
+        "Errato. L'espressione `*&v` è completamente lecita."
+      ]
+    },
+    {
+      "id": "it_clang_1515",
+      "widget_id": null,
+      "topic": "Output formattato degli indirizzi tramite printf e lo specificatore %p",
+      "q": "Quale tipo di argomento richiede strettamente lo specificatore %p secondo lo standard del linguaggio C?",
+      "hint": "Per garantire la portabilità, i puntatori di qualsiasi tipo vengono convertiti in questo tipo generico.",
+      "options": [
+        "void*",
+        "int*",
+        "unsigned long",
+        "char*"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard ISO C, lo specificatore `%p` richiede un argomento di tipo `void*` (o `const void*`). Quando si passano altri puntatori, si raccomanda di effettuare il cast esplicito a `(void*)`.",
+        "Errato. Sebbene `int*` funzioni sulla maggior parte dei compilatori, formalmente lo standard C richiede il tipo `void*`.",
+        "Errato. `unsigned long` è un tipo intero, non un tipo puntatore.",
+        "Errato. `char*` viene utilizzato per stampare stringhe tramite lo specificatore `%s`."
+      ]
+    },
+    {
+      "id": "it_clang_1516",
+      "widget_id": "widget_clang_1516",
+      "topic": "Output formattato degli indirizzi tramite printf e lo specificatore %p",
+      "q": "Qual è la differenza tra l'output di printf(\"%p\", pi) e printf(\"%p\", &pi)?",
+      "hint": "Il puntatore pi contiene l'indirizzo della variabile v, ma la variabile pi stessa si trova a un determinato indirizzo di memoria.",
+      "options": [
+        "pi stampa l'indirizzo della variabile v, mentre &pi stampa l'indirizzo del puntatore pi stesso",
+        "Entrambe le espressioni stampano lo stesso indirizzo",
+        "pi stampa l'indirizzo di v, mentre &pi stampa il valore 5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `pi` contiene l'indirizzo dell'oggetto `v`. L'operatore `&pi` estrae l'indirizzo della cella di memoria in cui è memorizzato il puntatore `pi` stesso.",
+        "Errato. La variabile `v` e il puntatore `pi` sono due oggetti distinti in memoria, situati a indirizzi diversi.",
+        "Errato. Il valore 5 si ottiene tramite la dereferenziazione `*pi` usando lo specificatore `%d`."
+      ]
+    },
+    {
+      "id": "it_clang_1517",
+      "widget_id": "widget_clang_1517",
+      "topic": "Output formattato degli indirizzi tramite printf e lo specificatore %p",
+      "q": "Cosa succede quando si tenta di stampare un puntatore nullo (NULL) usando lo specificatore %p?",
+      "hint": "Nota: stiamo stampando l'indirizzo stesso, non tentando di leggere i dati da esso.",
+      "options": [
+        "printf stamperà in modo sicuro la rappresentazione di sistema dell'indirizzo nullo (ad esempio, (nil) o 0x0)",
+        "Il programma terminerà in modo anomalo con un errore di Segmentation Fault",
+        "Si verificherà un errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La stampa del valore del puntatore stesso (anche se pari a `NULL`) è assolutamente sicura e visualizza `(nil)` o `0x0`. L'errore di accesso alla memoria (Segmentation Fault) si verifica solo quando si tenta di dereferenziare un puntatore nullo (`*p`).",
+        "Errato. La Segmentation Fault si verifica quando si accede alla memoria a un indirizzo nullo, non quando si stampa il valore del puntatore.",
+        "Errato. Il passaggio di un puntatore nullo a `printf` è sintatticamente corretto."
+      ]
+    },
+    {
+      "id": "it_clang_1518",
+      "widget_id": "widget_clang_1518",
+      "topic": "Output formattato degli indirizzi tramite printf e lo specificatore %p",
+      "q": "Cosa stamperà il comando printf(\"%d %d\\n\", *pi, *&v); se int v = 5; int *pi = &v;?",
+      "hint": "Determina a quale valore si riferisce ciascuna delle due espressioni.",
+      "options": [
+        "5 5",
+        "5 0x7ffd56a2",
+        "0x7ffd56a2 5",
+        "0 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `*pi` dereferenzia il puntatore restituendo 5. L'espressione `*&v` prende l'indirizzo di `v` e lo dereferenzia subito, restituendo anch'essa 5. Di conseguenza viene stampato `5 5`.",
+        "Errato. Lo specificatore `%d` richiede numeri interi ed entrambe le espressioni restituiscono il tipo `int` (valore 5), non un indirizzo.",
+        "Errato. Anche il primo valore sarà 5, non un indirizzo.",
+        "Errato. La variabile `v` è inizializzata con il valore 5."
+      ]
+    },
+    {
+      "id": "it_clang_1519",
+      "widget_id": null,
+      "topic": "Output formattato degli indirizzi tramite printf e lo specificatore %p",
+      "q": "Perché l'uso dello specificatore %d al posto di %p per stampare gli indirizzi è scorretto e non portabile in C?",
+      "hint": "Confronta la dimensione (in byte) del tipo int e del tipo puntatore su architetture a 64 bit.",
+      "options": [
+        "Sui sistemi a 64 bit la dimensione di un puntatore (8 byte) supera la dimensione di int (4 byte), il che causa il troncamento dell'indirizzo e un comportamento indefinito",
+        "Lo specificatore %d sovrascrive l'indirizzo in memoria con un valore nullo",
+        "Lo specificatore %p è più veloce di %d"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Sui sistemi a 64 bit i puntatori hanno una dimensione di 64 bit (8 byte), mentre `int` ha solitamente una dimensione di 32 bit (4 byte). L'uso di `%d` tronca la metà superiore dell'indirizzo e viola la corrispondenza dei tipi.",
+        "Errato. L'output tramite `printf` legge i dati e non modifica la memoria.",
+        "Errato. La differenza risiede nella sicurezza dei tipi e nella dimensione dei dati, non nella velocità."
+      ]
+    },
+    {
+      "id": "it_clang_1520",
+      "widget_id": "widget_clang_1520",
+      "topic": "Output formattato degli indirizzi tramite printf e lo specificatore %p",
+      "q": "Quali delle tre espressioni (&v, pi, &*pi) restituiranno lo stesso indirizzo di memoria se pi = &v?",
+      "hint": "Determina quali espressioni forniscono l'indirizzo della variabile v e quali il suo valore.",
+      "options": [
+        "Tutte e tre le espressioni (&v, pi e &*pi)",
+        "Solo &v e pi",
+        "Solo pi e &*pi",
+        "Nessuna di esse"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `&v` è l'indirizzo della variabile `v`, `pi` è il puntatore che memorizza l'indirizzo di `v`, e `&*pi` prende l'indirizzo del valore dereferenziato di `pi` (restituendo di nuovo l'indirizzo di `v`). Tutte e tre le espressioni sono uguali.",
+        "Errato. Anche l'espressione `&*pi` è uguale all'indirizzo della variabile `v`.",
+        "Errato. Anche `&v` è uguale a `pi` e `&*pi`.",
+        "Errato. Tutte e tre le espressioni sono equivalenti e restituiscono l'indirizzo di `v`."
+      ]
+    },
+    {
+      "id": "it_clang_1521",
+      "widget_id": "widget_clang_1521",
+      "topic": "Precedenza degli operatori: differenza tra (*p)++ e *p++",
+      "q": "Quale sarà il valore della variabile val e a quale elemento punterà p dopo l'esecuzione di questo codice?",
+      "hint": "L'incremento postfisso ++ ha una precedenza maggiore rispetto alla dereferenziazione *, ma restituisce il vecchio indirizzo prima dell'incremento.",
+      "options": [
+        "val = 10; p punta ad arr[1] (valore 20)",
+        "val = 11; p punta ad arr[0] (valore 11)",
+        "val = 20; p punta ad arr[1] (valore 20)",
+        "val = 10; p punta ad arr[0] (valore 10)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A causa delle precedenze viene valutato *p++, equivalente a *(p++). L'incremento postfisso sposta p su arr[1], ma restituisce il VECCHIO puntatore ad arr[0]. La dereferenziazione legge 10 in val.",
+        "Errato. Il codice non incrementa il valore all'interno dell'array, viene spostato il puntatore p stesso.",
+        "Errato. L'incremento postfisso restituisce l'indirizzo originale (arr[0]), quindi viene letto 10 e non 20.",
+        "Errato. Il puntatore p viene incrementato e spostato all'elemento successivo (arr[1])."
+      ]
+    },
+    {
+      "id": "it_clang_1522",
+      "widget_id": "widget_clang_1522",
+      "topic": "Precedenza degli operatori: differenza tra (*p)++ e *p++",
+      "q": "A cosa sarà uguale l'elemento arr[0] e dove punterà p dopo l'esecuzione del codice (*p)++?",
+      "hint": "Le parentesi modificano l'ordine di valutazione: prima avviene la dereferenziazione.",
+      "options": [
+        "arr[0] diventerà 11; p punta ancora ad arr[0]",
+        "arr[0] rimarrà 10; p si sposterà su arr[1]",
+        "arr[0] diventerà 11; p si sposterà su arr[1]",
+        "Errore di compilazione: le parentesi attorno a *p non sono consentite"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le parentesi definiscono esplicitamente l'ordine: prima avviene la dereferenziazione (*p), ottenendo il valore di arr[0] (10), e poi a questo valore viene applicato l'incremento. arr[0] diventa 11, mentre il puntatore p non cambia il suo indirizzo.",
+        "Errato. Le parentesi proteggono il puntatore p dall'incremento, viene aumentato il valore.",
+        "Errato. Il puntatore p non viene incrementato, cambia solo il valore in memoria.",
+        "Errato. Le parentesi sono assolutamente lecite e necessarie per gestire la precedenza."
+      ]
+    },
+    {
+      "id": "it_clang_1523",
+      "widget_id": null,
+      "topic": "Precedenza degli operatori: differenza tra (*p)++ e *p++",
+      "q": "Quale operatore ha una precedenza maggiore: l'incremento postfisso (x++) o l'operatore unario di dereferenziazione (*x)?",
+      "hint": "Ricorda la tabella di precedenza degli operatori in C (unari postfissi vs unari prefissi).",
+      "options": [
+        "L'incremento postfisso (++), quindi *p++ viene interpretato dal compilatore come *(p++)",
+        "L'operatore di dereferenziazione (*), quindi *p++ viene interpretato come (*p)++",
+        "Hanno la stessa precedenza e vengono valutati da destra a sinistra",
+        "La precedenza dipende dal tipo di dati a cui punta p"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'incremento postfisso `++` si trova a un livello di precedenza superiore (livello 1) rispetto agli operatori unari prefissi come `*` (livello 2). Pertanto `*p++` viene sempre interpretato come `*(p++)`.",
+        "Errato. L'operatore `*` ha una precedenza inferiore rispetto al `++` postfisso.",
+        "Errato. Il `++` postfisso e il `*` unario si trovano su livelli di precedenza diversi.",
+        "Errato. Le precedenze degli operatori sono sintatticamente fisse e non dipendono dai tipi."
+      ]
+    },
+    {
+      "id": "it_clang_1524",
+      "widget_id": "widget_clang_1524",
+      "topic": "Precedenza degli operatori: differenza tra (*p)++ e *p++",
+      "q": "A cosa sarà uguale la variabile val dopo l'esecuzione dell'espressione int val = *++p;?",
+      "hint": "L'incremento prefisso ++ e l'operatore unario * hanno la STESSA precedenza e vengono valutati DA DESTRA A SINISTRA.",
+      "options": [
+        "val = 20 (il puntatore prima si sposta su arr[1], poi viene dereferenziato)",
+        "val = 10 (il puntatore viene dereferenziato, poi incrementato)",
+        "val = 11 (il valore di arr[0] viene incrementato di 1)",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il `++` prefisso e il `*` unario hanno la stessa precedenza e associatività da destra a sinistra. Prima viene eseguito `++p` (il puntatore passa ad `arr[1]`), poi il risultato della dereferenziazione diventa 20.",
+        "Errato. L'incremento prefisso `++p` esegue lo spostamento PRIMA di restituire il valore.",
+        "Errato. Il valore degli elementi dell'array non cambia, aumenta l'indirizzo in `p`.",
+        "Errato. La sintassi è assolutamente corretta."
+      ]
+    },
+    {
+      "id": "it_clang_1525",
+      "widget_id": "widget_clang_1525",
+      "topic": "Precedenza degli operatori: differenza tra (*p)++ e *p++",
+      "q": "A cosa saranno uguali la variabile val e l'elemento arr[0] dopo l'esecuzione dell'espressione int val = ++*p;?",
+      "hint": "La valutazione avviene da destra a sinistra: prima la dereferenziazione, poi l'incremento prefisso del valore.",
+      "options": [
+        "val = 11, arr[0] = 11",
+        "val = 10, arr[0] = 11",
+        "val = 20, arr[0] = 10",
+        "val = 11, arr[0] = 10"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'associatività da destra a sinistra interpreta l'espressione come `++(*p)`. Prima viene letto il valore all'indirizzo `*p` (10), incrementato tramite incremento prefisso a 11 (scritto in `arr[0]`), e infine il valore 11 viene assegnato a `val`.",
+        "Errato. L'incremento prefisso restituisce il valore già incrementato (11), non quello vecchio (10).",
+        "Errato. Il puntatore non si è spostato su `arr[1]`, è cambiato l'elemento `arr[0]`.",
+        "Errato. La modifica tramite `*p` aggiorna il valore direttamente nell'array `arr[0]`."
+      ]
+    },
+    {
+      "id": "it_clang_1526",
+      "widget_id": null,
+      "topic": "Precedenza degli operatori: differenza tra (*p)++ e *p++",
+      "q": "Qual è l'associatività degli operatori unari (come il ++ prefisso, * unario, & unario) nel linguaggio C?",
+      "hint": "Pensa in quale direzione il compilatore associa gli operatori se sono consecutivi, ad esempio *++p.",
+      "options": [
+        "Da destra a sinistra (Right-to-Left)",
+        "Da sinistra a destra (Left-to-Right)",
+        "Dipende dalla presenza di spazi nel codice",
+        "Non è definita dagli standard C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Tutti gli operatori unari prefissi in C hanno associatività da destra a sinistra (Right-to-Left). Pertanto `*++p` viene valutato come `*(++p)`.",
+        "Errato. Da sinistra a destra vengono valutati gli operatori binari (addizione, moltiplicazione, ecc.) e gli operatori postfissi.",
+        "Errato. Gli spazi non influiscono in alcun modo sull'analisi sintattica.",
+        "Errato. L'associatività è chiaramente regolamentata dallo standard ANSI/ISO C."
+      ]
+    },
+    {
+      "id": "it_clang_1527",
+      "widget_id": null,
+      "topic": "Precedenza degli operatori: differenza tra (*p)++ e *p++",
+      "q": "Devi incrementare la variabile numerica x di 1 tramite il puntatore p (&x). Qual è l'unica scrittura corretta?",
+      "hint": "Ricorda che senza parentesi l'incremento si applicherà al puntatore stesso, non al valore.",
+      "options": [
+        "(*p)++ o ++*p",
+        "*p++",
+        "*p =+ 1",
+        "*(p+1)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per modificare il valore in memoria è necessario garantire la precedenza della dereferenziazione. A tale scopo si utilizzano le parentesi `(*p)++` o la forma prefissa `++*p`.",
+        "Errato. La scrittura `*p++` sposterà il puntatore `p` stesso all'indirizzo successivo in memoria.",
+        "Errato. La scrittura `=+ 1` è una sintassi obsoleta/non corretta (assegnerà +1).",
+        "Errato. `*(p+1)` accederà alla cella di memoria successiva, ma non modificherà il valore."
+      ]
+    },
+    {
+      "id": "it_clang_1528",
+      "widget_id": "widget_clang_1528",
+      "topic": "Precedenza degli operatori: differenza tra (*p)++ e *p++",
+      "q": "A cosa saranno uguali le variabili a e b dopo l'esecuzione di questo frammento di codice?",
+      "hint": "Segui lo spostamento del puntatore p dopo l'esecuzione dell'istruzione *p++.",
+      "options": [
+        "a = 5, b = 15",
+        "a = 5, b = 5",
+        "a = 15, b = 15",
+        "a = 6, b = 15"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `a = *p++` prende il valore di `arr[0]` (5), lo scrive in `a`, e poi sposta il puntatore `p` su `arr[1]`. La riga successiva `b = *p` legge la nuova posizione del puntatore, ovvero `arr[1]` (15).",
+        "Errato. Il puntatore `p` si è spostato all'elemento successivo dopo `*p++`, quindi `b` non può essere 5.",
+        "Errato. `a` riceve il vecchio valore prima dello spostamento del puntatore (5).",
+        "Errato. Il valore dell'elemento dell'array non è aumentato, è stato incrementato solo l'indirizzo."
+      ]
+    },
+    {
+      "id": "it_clang_1529",
+      "widget_id": "widget_clang_1529",
+      "topic": "Precedenza degli operatori: differenza tra (*p)++ e *p++",
+      "q": "A cosa saranno uguali le variabili y e x dopo l'esecuzione delle espressioni nel codice?",
+      "hint": "L'incremento postfisso restituisce prima il valore corrente dell'espressione, poi lo incrementa.",
+      "options": [
+        "y = 100, x = 101",
+        "y = 101, x = 101",
+        "y = 100, x = 100",
+        "y = 101, x = 100"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La dereferenziazione `(*p)` dà 100. L'incremento postfisso assegna alla variabile `y` il valore corrente (100), dopodiché incrementa il valore all'indirizzo (ovvero `x`) a 101.",
+        "Errato. L'incremento postfisso restituisce il valore PRIMA dell'incremento, quindi `y` non è uguale a 101.",
+        "Errato. La variabile `x` viene incrementata di 1 durante il processo di incremento.",
+        "Errato. I valori sono invertiti: `y` riceve 100, mentre `x` diventa 101."
+      ]
+    },
+    {
+      "id": "it_clang_1530",
+      "widget_id": null,
+      "topic": "Precedenza degli operatori: differenza tra (*p)++ e *p++",
+      "q": "Quale di queste espressioni sposta il puntatore p all'elemento successivo dell'array E restituisce il VECCHIO valore a cui puntava p?",
+      "hint": "È un idioma standard del C, spesso utilizzato nella scansione di stringhe e nella copia di buffer.",
+      "options": [
+        "*p++",
+        "(*p)++",
+        "*++p",
+        "++*p"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `*p++` è un classico idioma C. Restituisce il valore corrente (vecchio) `*p` e sposta il puntatore `p` all'elemento successivo.",
+        "Errato. `(*p)++` incrementa il valore all'indirizzo, senza spostare il puntatore stesso.",
+        "Errato. `*++p` prima sposta il puntatore, poi restituisce il nuovo valore.",
+        "Errato. `++*p` incrementa il valore in memoria e restituisce il nuovo valore."
+      ]
+    },
+    {
+      "id": "it_clang_1531",
+      "widget_id": null,
+      "topic": "Passaggio dei parametri per valore (By Value) e comportamento dello stack",
+      "q": "Qual è l'unico meccanismo base di passaggio degli argomenti alle funzioni supportato dal linguaggio C?",
+      "hint": "Anche durante il passaggio di puntatori viene copiata la loro variabile di valore.",
+      "options": [
+        "Passaggio per valore (Pass by Value)",
+        "Passaggio per riferimento (Pass by Reference)",
+        "Passaggio tramite registro globale",
+        "Passaggio per nome (Pass by Name)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il linguaggio C supporta ESCLUSIVAMENTE il passaggio per valore. Quando si chiama una funzione, vengono create copie locali degli argomenti sullo stack.",
+        "Errato. Il passaggio per riferimento (`&`) non esiste in C, è apparso solo in C++.",
+        "Errato. La modalità di passaggio è regolata dalla convenzione di chiamata, ma concettualmente il linguaggio funziona per valore.",
+        "Errato. Il passaggio per nome era presente in linguaggi precedenti come Algol, ma non in C."
+      ]
+    },
+    {
+      "id": "it_clang_1532",
+      "widget_id": "widget_clang_1532",
+      "topic": "Passaggio dei parametri per valore (By Value) e comportamento dello stack",
+      "q": "A cosa saranno uguali x e y nella funzione main dopo l'esecuzione di questo codice?",
+      "hint": "Le variabili a e b all'interno di swap sono copie indipendenti di x e y sullo stack.",
+      "options": [
+        "x = 5, y = 10 (i valori non cambieranno)",
+        "x = 10, y = 5 (i valori si scambieranno di posto)",
+        "x = 0, y = 0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché gli argomenti vengono passati per valore, la funzione `swap` lavora con copie locali di `a` e `b` sul proprio stack frame. Gli originali `x` e `y` in `main` rimangono intatti.",
+        "Errato. La funzione ha modificato solo le proprie copie dei parametri.",
+        "Errato. Non si verifica alcun azzeramento.",
+        "Errato. Il codice è sintatticamente corretto."
+      ]
+    },
+    {
+      "id": "it_clang_1533",
+      "widget_id": "widget_clang_1533",
+      "topic": "Passaggio dei parametri per valore (By Value) e comportamento dello stack",
+      "q": "Perché restituire l'indirizzo di una variabile locale &x da una funzione è un errore critico?",
+      "hint": "Pensa a cosa succede allo stack frame di una funzione dopo la sua conclusione.",
+      "options": [
+        "Lo stack frame della funzione viene distrutto al ritorno, e l'indirizzo &x diventa un puntatore pendente (Dangling Pointer)",
+        "Il compilatore vieta di restituire puntatori dalle funzioni",
+        "Le variabili locali vengono automaticamente trasferite nell'heap (Heap)",
+        "La variabile x viene azzerata prima del ritorno"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La memoria per la variabile locale `x` viene allocata sullo stack di chiamata. Al ritorno dalla funzione lo stack frame viene liberato (invalidato). L'indirizzo restituito punta a memoria non valida (dangling pointer).",
+        "Errato. È possibile restituire puntatori (ad esempio a memoria allocata nell'heap o statica).",
+        "Errato. Il C non trasferisce le variabili automatiche nell'heap.",
+        "Errato. La memoria non viene azzerata, smette semplicemente di appartenere a quella variabile."
+      ]
+    },
+    {
+      "id": "it_clang_1534",
+      "widget_id": null,
+      "topic": "Passaggio dei parametri per valore (By Value) e comportamento dello stack",
+      "q": "Cosa include la struttura dello stack frame (Stack Frame) durante la chiamata a una funzione?",
+      "hint": "Lo stack memorizza tutti i dati necessari per l'esecuzione della funzione corrente e il ritorno da essa.",
+      "options": [
+        "Variabili locali, parametri della funzione, indirizzo di ritorno (Return Address) e il frame pointer salvato",
+        "Solo il codice sorgente della funzione stessa",
+        "Variabili globali e statiche del programma",
+        "Memoria dinamica allocata tramite malloc"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo stack frame della funzione include i parametri passati ad essa, le sue variabili locali, il frame pointer (EBP/RBP) e l'indirizzo di ritorno alla funzione chiamante.",
+        "Errato. Il codice sorgente e di macchina è memorizzato nella sezione `.text`, non sullo stack.",
+        "Errato. Le variabili globali e statiche sono memorizzate nelle sezioni `.data` e `.bss`.",
+        "Errato. La memoria dinamica risiede nell'heap (Heap)."
+      ]
+    },
+    {
+      "id": "it_clang_1535",
+      "widget_id": "widget_clang_1535",
+      "topic": "Passaggio dei parametri per valore (By Value) e comportamento dello stack",
+      "q": "A cosa sarà uguale ptr in main dopo la chiamata a reset_ptr(ptr)?",
+      "hint": "Anche il puntatore ptr viene passato a reset_ptr per valore.",
+      "options": [
+        "ptr punta ancora ad x (&x)",
+        "ptr diventa uguale a NULL",
+        "ptr punta a un indirizzo casuale",
+        "Errore di esecuzione (Segmentation Fault)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il parametro `p` riceve una COPIA dell'indirizzo da `ptr`. All'interno della funzione `reset_ptr` viene azzerata la copia locale `p`. Il puntatore originale `ptr` in `main` non cambia il suo valore.",
+        "Errato. Viene azzerata solo la copia del puntatore all'interno dello stack frame della funzione.",
+        "Errato. L'indirizzo in `ptr` è rimasto invariato.",
+        "Errato. La scrittura nel `p = NULL` locale è sicura."
+      ]
+    },
+    {
+      "id": "it_clang_1536",
+      "widget_id": null,
+      "topic": "Passaggio dei parametri per valore (By Value) e comportamento dello stack",
+      "q": "Quale situazione porterà più probabilmente a un trabocco dello stack (Stack Overflow)?",
+      "hint": "Pensa alla dimensione dello stack e all'intensità di allocazione dello stack frame della funzione.",
+      "options": [
+        "Ricorsione profonda o infinita, nonché la dichiarazione di enormi array locali sullo stack",
+        "Chiamate frequenti alla funzione malloc in un ciclo",
+        "Uso di un numero elevato di variabili globali",
+        "Uso dell'operatore sizeof su strutture di grandi dimensioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo stack ha una dimensione limitata (solitamente 1–8 MB). Ogni chiamata ricorsiva o enorme array locale (ad esempio, `int arr[1000000]`) esaurisce la memoria dello stack, causando uno Stack Overflow.",
+        "Errato. `malloc` alloca memoria nell'heap (Heap) e causa Out of Memory, non Stack Overflow.",
+        "Errato. Le variabili globali sono memorizzate fuori dallo stack.",
+        "Errato. `sizeof` è un operatore a tempo di compilazione, non consuma memoria."
+      ]
+    },
+    {
+      "id": "it_clang_1537",
+      "widget_id": "widget_clang_1537",
+      "topic": "Passaggio dei parametri per valore (By Value) e comportamento dello stack",
+      "q": "A cosa sarà uguale la variabile x dopo la chiamata a double_val(&x)?",
+      "hint": "La funzione accetta una copia dell'indirizzo x, ma dereferenziandolo (*p), accede all'originale.",
+      "options": [
+        "30",
+        "15",
+        "0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Sebbene l'indirizzo `&x` stesso sia copiato nel parametro `p`, la dereferenziazione `*p` accede alla cella di memoria originale `x` in `main` e raddoppia il suo valore (15 * 2 = 30). Questa è un'emulazione del passaggio per riferimento.",
+        "Errato. Tramite la dereferenziazione del puntatore la variabile originale è stata modificata con successo.",
+        "Errato. Il risultato dell'operazione di moltiplicazione per 2 è uguale a 30.",
+        "Errato. La chiamata e il passaggio dell'indirizzo sono corretti."
+      ]
+    },
+    {
+      "id": "it_clang_1538",
+      "widget_id": null,
+      "topic": "Passaggio dei parametri per valore (By Value) e поведение стека",
+      "q": "Perché il passaggio di strutture di grandi dimensioni per valore (ad esempio, void process(struct BigData s)) è considerato una cattiva pratica?",
+      "hint": "Ricorda come vengono passati gli argomenti per valore a livello di memoria.",
+      "options": [
+        "L'intera struttura viene completamente copiata byte per byte sullo stack, consumando memoria e tempo di CPU",
+        "Le strutture non possono essere passate per valore secondo lo standard C",
+        "Questo porta all'azzeramento automatico dei campi della struttura",
+        "I puntatori a strutture funzionano più lentamente rispetto al passaggio per valore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Durante il passaggio per valore il compilatore è costretto a generare codice per copiare tutti i byte della struttura sullo stack di chiamata. Per le strutture grandi è più efficiente passare `const struct BigData *s`.",
+        "Errato. Il passaggio di strutture per valore è sintatticamente lecito.",
+        "Errato. I dati vengono copiati correttamente, non azzerati.",
+        "Errato. Il passaggio di un puntatore (8 byte) è notevolmente più veloce della copia di una grande struttura."
+      ]
+    },
+    {
+      "id": "it_clang_1539",
+      "widget_id": "widget_clang_1539",
+      "topic": "Passaggio dei parametri per valore (By Value) e comportamento dello stack",
+      "q": "A cosa sarà uguale l'elemento nums[0] in main dopo l'esecuzione di questo codice?",
+      "hint": "Nei parametri delle funzioni gli array decadono implicitamente (decay) a puntatori.",
+      "options": [
+        "99 (il valore dell'array è cambiato)",
+        "1 (il valore dell'array non è cambiato)",
+        "0",
+        "Errore di compilazione: gli array non possono essere passati alle funzioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La scrittura `int arr[]` nei parametri della funzione è equivalente a `int *arr`. L'array \"decade\" a puntatore al primo elemento, quindi `arr[0] = 99` modifica la memoria dell'originale `nums[0]`.",
+        "Errato. Poiché viene passato un puntatore all'inizio dell'array, le modifiche si riflettono in `main`.",
+        "Errato. Il valore è assegnato esplicitamente (99).",
+        "Errato. Il nome dell'array si trasforma in un puntatore e viene passato con successo."
+      ]
+    },
+    {
+      "id": "it_clang_1540",
+      "widget_id": null,
+      "topic": "Passaggio dei parametri per valore (By Value) e comportamento dello stack",
+      "q": "In quale ordine (secondo la convenzione di chiamata standard cdecl) gli argomenti vengono solitamente inseriti sullo stack durante la chiamata alla funzione f(a, b, c)?",
+      "hint": "Questo consente alle funzioni con un numero variabile di argomenti (ad esempio printf) di trovare facilmente il primo parametro.",
+      "options": [
+        "Da destra a sinistra (prima c, poi b, poi a)",
+        "Da sinistra a destra (prima a, poi b, poi c)",
+        "In ordine casuale, determinato dal compilatore",
+        "Tutti gli argomenti vengono passati contemporaneamente tramite l'heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella convenzione `cdecl` gli argomenti vengono inseriti sullo stack da destra a sinistra. Di conseguenza, il primo parametro (`a`) si trova in cima allo stack, più vicino all'indirizzo di ritorno.",
+        "Errato. Da sinistra a destra gli argomenti vengono passati in alcuni altri linguaggi (ad esempio Pascal).",
+        "Errato. L'ordine è rigorosamente definito dall'ABI e dalla convenzione di chiamata.",
+        "Errato. La chiamata di funzione utilizza lo stack o i registri della CPU, non l'heap."
+      ]
+    }
+  ]
+}

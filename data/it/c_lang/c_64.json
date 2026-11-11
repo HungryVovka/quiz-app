@@ -1,0 +1,615 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_1961",
+      "widget_id": "widget_clang_1961",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa stamperà il programma dopo uno scorrimento standard a sinistra di 1 posizione per l'array {10, 20, 30, 40, -1}?",
+      "hint": "Rifletti su quale elemento sovrascriverà la primissima cella durante lo scorrimento.",
+      "options": [
+        "20 30 40 ",
+        "10 20 30 ",
+        "10 30 40 ",
+        "40 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo sposta tutti gli elementi di 1 posizione a sinistra (`arr[0]=20`, `arr[1]=30`, `arr[2]=40`, `arr[3]=-1`). Output dell'array fino al marcatore `-1`: `20 30 40 `.",
+        "Errato. L'elemento 10 è stato sovrascritto dal valore 20 durante lo scorrimento.",
+        "Errato. Il valore 20 si è spostato alla posizione 0, non è stato saltato.",
+        "Errato. Si sono spostati tutti gli elementi successivi, non è rimasto solo l'ultimo."
+      ]
+    },
+    {
+      "id": "it_clang_1962",
+      "widget_id": "widget_clang_1962",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa stamperà il programma in caso di scorrimento a sinistra con rotazione ciclica del primo elemento alla fine dell'array {10, 20, 30, 40, -1}?",
+      "hint": "Fai attenzione a dove viene posizionato il valore originale del primo elemento (10).",
+      "options": [
+        "20 30 40 10 ",
+        "10 20 30 40 ",
+        "40 30 20 10 ",
+        "20 30 40 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'elemento iniziale `arr[0]` (10) è stato temporaneamente salvato in `temp`. Dopo lo scorrimento a sinistra degli elementi rimanenti, il valore di `temp` viene inserito nella posizione `arr[3]`. Risultato: `20 30 40 10 `.",
+        "Errato. L'elemento 10 è stato spostato alla fine dei dati utili, non è rimasto al primo posto.",
+        "Errato. Gli elementi non vengono invertiti di ordine.",
+        "Errato. Il primo valore 10 viene salvato e posizionato prima del marcatore `-1`."
+      ]
+    },
+    {
+      "id": "it_clang_1963",
+      "widget_id": "widget_clang_1963",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa stamperà il programma in caso di scorrimento diretto a sinistra di k = 2 posizioni per l'array {10, 20, 30, 40, 50, -1}?",
+      "hint": "Calcola quale elemento si troverà all'indice 0 se l'array viene spostato di 2 posizioni.",
+      "options": [
+        "30 40 50 ",
+        "10 20 30 ",
+        "20 30 40 50 ",
+        "40 50 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `k = 2` ciascun elemento `arr[i]` riceve il valore di `arr[i + 2]`. I primi due elementi (10 e 20) vengono sovrascritti dai valori 30 e 40, e il marcatore `-1` viene spostato alla posizione `arr[3]`. Risultato: `30 40 50 `.",
+        "Errato. I primi due elementi 10 e 20 sono stati sovrascitti.",
+        "Errato. Lo scorrimento è stato eseguito di 2 posizioni, non di 1.",
+        "Errato. Sono stati rimossi 2 elementi dall'inizio, non 3."
+      ]
+    },
+    {
+      "id": "it_clang_1964",
+      "widget_id": "widget_clang_1964",
+      "topic": "Rimozione di elementi",
+      "q": "Qual è la complessità temporale dello scorrimento diretto a sinistra degli elementi di un array di lunghezza N di k posizioni in un singolo passaggio?",
+      "hint": "Ricorda quante iterazioni eseguirà un singolo ciclo su un array di lunghezza N.",
+      "options": [
+        "O(N) — la complessità dipende dal numero di elementi N in un singolo passaggio",
+        "O(k) — dipende solo dall'entità dello scorrimento k",
+        "O(N * k) — dipendenza quadratica a causa dello scorrimento",
+        "O(1) — tempo constante"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo scorrimento diretto `arr[i] = arr[i + k]` in un singolo ciclo attraversa gli elementi dell'array esattamente 1 volta, il che dà una complessità di $O(N)$.",
+        "Errato. Viene spostata tutta la parte restante dell'array di lunghezza $N - k$, che è proporzionale a $N$.",
+        "Errato. Non ci sono cicli annidati se l'operazione viene eseguita in 1 solo passaggio.",
+        "Errato. La memoria dell'array viene aggiornata elemento per elemento in $O(N)$."
+      ]
+    },
+    {
+      "id": "it_clang_1965",
+      "widget_id": "widget_clang_1965",
+      "topic": "Rimozione di elementi",
+      "q": "A quale consecuencia porterà la condizione i <= count nel ciclo di scorrimento a sinistra per un array dichiarata come arr[4]?",
+      "hint": "Verifica quale indice verrà letto dall'espressione arr[i + 1] all'ultimo passaggio.",
+      "options": [
+        "Comportamento indefinito (Undefined Behavior) a causa dell'accesso ad arr[4] fuori dai limiti dell'array",
+        "Il programma stamperà 0",
+        "Il programma stamperà -1",
+        "Nessun errore, l'array verrà riempito di zeri"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `count = 3`, l'ultima iterazione `i = 3` eseguirà `arr[3] = arr[4]`. Poiché l'array è dichiarato come `arr[4]`, gli indici validi sono 0..3. La lettura all'indice 4 supera i limiti della memoria allocata e causa un Undefined Behavior.",
+        "Errato. La lettura fuori dai limiti dell'array non garantisce di ottenere zero.",
+        "Errato. Si tratta di un errore di accesso fuori dai limiti (out-of-bounds access).",
+        "Errato. Il compilatore non espande automaticamente l'array allocato."
+      ]
+    },
+    {
+      "id": "it_clang_1966",
+      "widget_id": "widget_clang_1966",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa stamperà il programma avviando lo scorrimento a sinistra a partire dall'indice start = 2 per l'array {10, 20, 30, 40, 50, -1}?",
+      "hint": "Gli elementi 10 e 20 prima dell'indice start = 2 cambieranno?",
+      "options": [
+        "10 20 40 50 ",
+        "10 30 40 50 ",
+        "20 30 40 50 ",
+        "10 20 30 50 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli elementi prima di `start` (`arr[0]=10`, `arr[1]=20`) rimangono intatti. A partire da `i = 2`, `arr[2]` viene sovrascritto dal valore `arr[3]` (40), rimuovendo il numero 30. L'array diventa `{10, 20, 40, 50, -1}`.",
+        "Errato. L'elemento 20 è rimasto al suo posto.",
+        "Errato. Gli elementi `arr[0]` e `arr[1]` non sono stati modificati.",
+        "Errato. L'elemento 40 non è stato saltato, si è spostato all'indice 2."
+      ]
+    },
+    {
+      "id": "it_clang_1967",
+      "widget_id": "widget_clang_1967",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa stamperà il programma durante lo scorrimento a sinistra di k = 3 posizioni per un array di 3 elementi utili {5, 10, 15, -1}?",
+      "hint": "Rifletti su quanti elementi rimarranno se l'entità dello scorrimento k è uguale o superiore al numero di elementi.",
+      "options": [
+        "arr[0] = -1",
+        "arr[0] = 5",
+        "arr[0] = 0",
+        "arr[0] = 15",
+        "Errore di segmentazione (Segmentation Fault)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `count = 3` e `k = 3`, è soddisfatta la condizione `k >= count`. In `arr[0]` viene scritto direttamente il marcatore `-1`, rendendo l'array vuoto.",
+        "Errato. L'elemento 5 viene rimosso insieme a tutti gli altri.",
+        "Errato. Non è stata effettuata alcuna scrittura del numero 0.",
+        "Errato. Tutti gli elementi vengono eliminati e in `arr[0]` viene scritto `-1`.",
+        "Errato. Il controllo di protezione previene l'accesso fuori dai limiti."
+      ]
+    },
+    {
+      "id": "it_clang_1968",
+      "widget_id": "widget_clang_1968",
+      "topic": "Rimozione di elementi",
+      "q": "Qual è la differenza tra k chiamate di scorrimento di 1 posizione e lo scorrimento diretto di k posizioni in un singolo passaggio?",
+      "hint": "Confronta il numero totale di operazioni di assegnazione con passaggi ripetuti e con un singolo scorrimento diretto.",
+      "options": [
+        "k chiamate eseguono O(k * N) operazioni, mentre lo scorrimento diretto in 1 passaggio richiede O(N)",
+        "Entrambi i metodi eseguono sempre lo stesso numero di assegnazioni O(N)",
+        "Lo scorrimento diretto in 1 passaggio richiede O(N * k) operazioni",
+        "Lo scorrimento di 1 posizione k volte è più veloce delle assegnazioni dirette"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'esecuzione dello scorrimento di 1 posizione per $k$ volte sovrascrive ciascun elemento $k$ volte, impiegando $O(k \\cdot N)$ operazioni. Lo scorrimento diretto sposta ciascun elemento nella sua posizione finale in 1 solo passaggio ($O(N)$).",
+        "Errato. Gli scorrimenti ripetuti eseguono un numero notevolmente maggiore di operazioni di assegnazione.",
+        "Errato. Lo scorrimento diretto è un'ottimizzazione e funziona in tempo lineare $O(N)$.",
+        "Errato. Al contrario, $k$ passaggi creano un carico superfluo."
+      ]
+    },
+    {
+      "id": "it_clang_1969",
+      "widget_id": "widget_clang_1969",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa stamperà il programma durante uno scorrimento a sinistra con estrazione del primo elemento tramite il puntatore head?",
+      "hint": "Rifletti se il valore di arr[0] viene salvato in head prima che venga sovrascritto da arr[1].",
+      "options": [
+        "head=77, arr[0]=88",
+        "head=88, arr[0]=77",
+        "head=77, arr[0]=77",
+        "head=0, arr[0]=88",
+        "head=-1, arr[0]=88"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `head` riceve il valore iniziale `arr[0]` (77) prima di eseguire lo scorrimento. Dopo lo scorrimento, il valore `arr[1]` (88) si sposta in `arr[0]`. Risultato: `head=77, arr[0]=88`.",
+        "Errato. `head` prende il valore di `arr[0]` (77), non di `arr[1]` (88).",
+        "Errato. `arr[0]` viene sovrascritto dall'elemento successivo 88.",
+        "Errato. `head` viene aggiornato in tempo da `arr[0]`.",
+        "Errato. `head` riceve i dati dell'elemento utile (77), non del marcatore `-1`."
+      ]
+    },
+    {
+      "id": "it_clang_1970",
+      "widget_id": "widget_clang_1970",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa stamperà il programma in caso di scorrimento ciclico a sinistra di k = 2 posizioni dell'array {1, 2, 3, 4, 5, -1}?",
+      "hint": "Rifletti su quali primi k elementi passeranno alla fine dell'array prima del marcatore -1.",
+      "options": [
+        "3 4 5 1 2 ",
+        "1 2 3 4 5 ",
+        "4 5 1 2 3 ",
+        "2 3 4 5 1 ",
+        "5 1 2 3 4 ",
+        "1 3 5 2 4 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'array temporaneo `temp` salva i primi due elementi `[1, 2]`. Gli elementi `3, 4, 5` si spostano a sinistra nelle posizioni `0, 1, 2`. Successivamente `1, 2` vengono scritti alla fine nelle posizioni `3, 4`. Risultato: `3 4 5 1 2 `.",
+        "Errato. Gli elementi hanno cambiato posizione.",
+        "Errato. È avvenuto uno scorrimento di 2 posizioni a sinistra, non di 3.",
+        "Errato. Questo è il risultato di uno scorrimento di 1 posizione.",
+        "Errato. Questo è il risultato di uno scorrimento di 4 posizioni.",
+        "Errato. L'ordine degli elementi all'interno dei blocchi trasferiti non è cambiato."
+      ]
+    },
+    {
+      "id": "it_clang_1971",
+      "widget_id": "widget_clang_1971",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa stamperà il programma dopo la filtrazione di tutte le occorrenze di x = 10 dall'array {10, 20, 10, 30, 10, -1}?",
+      "hint": "Rimarranno nell'array filtrato altri elementi oltre ai 10?",
+      "options": [
+        "20 30 ",
+        "10 20 30 ",
+        "20 10 30 ",
+        "30 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il puntatore `read` trova in sequenza i valori 20 e 30, scrivendoli agli indici `write` 0 e 1. Tutti i 10 vengono saltati. Lo spostamento del marcatore `arr[2] = -1` completa la formazione dell'array `{20, 30, -1}`.",
+        "Errato. Tutti e tre i 10 devono essere rimossi.",
+        "Errato. Il secondo 10 (tra 20 e 30) viene filtrato esattamente come gli altri.",
+        "Errato. Il numero 20 non è uguale a x, quindi viene conservato."
+      ]
+    },
+    {
+      "id": "it_clang_1972",
+      "widget_id": "widget_clang_1972",
+      "topic": "Rimozione di elementi",
+      "q": "Qual è la complessità temporale (Time Complexity) della rimozione di tutte le occorrenze di un elemento tramite il metodo dei due puntatori (read e write)?",
+      "hint": "Rifletti su quante volte il puntatore read accederà a ciascun elemento dell'array.",
+      "options": [
+        "O(N) — tempo lineare (un singolo passaggio sull'array)",
+        "O(N^2) — tempo quadratico",
+        "O(1) — tempo costante",
+        "O(N log N) — tempo quasilineare"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il puntatore `read` in un singolo ciclo lineare legge tutti gli $N$ elementi dell'array, mentre `write` sposta immediatamente i dati necessari. La complessità è $O(N)$.",
+        "Errato. $O(N^2)$ si verifica quando si utilizza lo scorrimento a sinistra per ogni elemento trovato.",
+        "Errato. Il tempo costante è impossibile, poiché è necessario esaminare ogni elemento.",
+        "Errato. L'ordinamento non viene utilizzato."
+      ]
+    },
+    {
+      "id": "it_clang_1973",
+      "widget_id": "widget_clang_1973",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa conterrà la cella arr[0] dopo la filtrazione di x = 5 dall'array {5, 5, 5, 5, -1}?",
+      "hint": "Il puntatore di scrittura write si incrementerà almeno una volta se tutti gli elementi sono uguali a x?",
+      "options": [
+        "-1",
+        "5",
+        "0",
+        "Valore indefinito (Undefined Behavior)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nessun elemento soddisfa la condizione `arr[read] != 5`. La variabile `write` rimane pari a 0. Il comando `arr[write] = -1` scrive il marcatore direttamente in `arr[0]`. L'array diventa vuoto `{-1}`.",
+        "Errato. Tutti i 5 sono stati filtrati.",
+        "Errato. Gli zeri non vengono scritti nell'array.",
+        "Errato. La memoria di `arr[0]` è accessibile e sovrascritta con il valore `-1`."
+      ]
+    },
+    {
+      "id": "it_clang_1974",
+      "widget_id": "widget_clang_1974",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa stamperà il programma al tentativo di rimuovere x = 9 dall'array {1, 2, 3, -1}, in cui questo valore non è presente?",
+      "hint": "Il contenuto dell'array cambierà se il valore cercato è assente?",
+      "options": [
+        "1 2 3 ",
+        "1 2 ",
+        "-1 ",
+        "0 1 2 3 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nessun elemento è uguale a 9. Tutti gli elementi vengono copiati in sé stessi (`arr[0]=1`, `arr[1]=2`, `arr[2]=3`), e all'indirizzo `write = 3` viene ripristinato il marcatore `-1`. L'array rimane invariato.",
+        "Errato. Nessun elemento viene rimosso.",
+        "Errato. L'array non viene svuotato.",
+        "Errato. Non vengono aggiunti zeri all'inizio."
+      ]
+    },
+    {
+      "id": "it_clang_1975",
+      "widget_id": "widget_clang_1975",
+      "topic": "Rimozione di elementi",
+      "q": "Quale valore restituirà la funzione remove_all_count durante la rimozione dei 3 dall'array {3, 1, 3, 3, 2, 3, -1}?",
+      "hint": "Conta il numero totale di cifre 3 nell'array iniziale.",
+      "options": [
+        "4",
+        "2",
+        "3",
+        "5",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nell'array ci sono quattro 3 (agli indici 0, 2, 3, 5). La variabile `removed` viene incrementata ad ogni corrispondenza con 3 e al termine è pari a 4.",
+        "Errato. 2 è il numero di elementi utili rimanenti (1 e 2).",
+        "Errato. Sono stati rimossi quattro 3, non tre.",
+        "Errato. I valori 3 sono in tutto quattro.",
+        "Errato. Le corrispondenze sono state trovate e conteggiate."
+      ]
+    },
+    {
+      "id": "it_clang_1976",
+      "widget_id": "widget_clang_1976",
+      "topic": "Rimozione di elementi",
+      "q": "A quale bug porterà l'assenza della riga arr[write] = -1 dopo il completamento del ciclo di filtrazione per l'array {10, 20, 10, 30, -1}?",
+      "hint": "Dove rimarrà il vecchio marcatore di terminazione se non viene sovrascritto all'indirizzo write?",
+      "options": [
+        "Il vecchio marcatore -1 non si sposterà, e durante la stampa sullo schermo appariranno i 'residui' dei vecchi dati: 20 30 10 30 ",
+        "Si verificherà un ciclo infinito durante la stampa",
+        "Errore di compilazione",
+        "L'array diventerà vuoto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Senza `arr[write] = -1` il vecchio marcatore rimarrà alla posizione `arr[4]`. L'array diventerà `{20, 30, 10, 30, -1}`, e il ciclo di stampa mostrerà i dati filtrati insieme al vecchio residuo finale.",
+        "Errato. Il vecchio marcatore `-1` interrompe il ciclo di output.",
+        "Errato. Non ci sono errori sintattici.",
+        "Errato. I dati salvati non vengono distrutti."
+      ]
+    },
+    {
+      "id": "it_clang_1977",
+      "widget_id": "widget_clang_1977",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa stamperà l'algoritmo ingenuo con sottociclo di scorrimento se si dimentica di decrementare l'indice i (i--) dopo lo scorrimento durante la rimozione di x = 2 dall'array {2, 2, 3, 4, -1}?",
+      "hint": "Fai attenzione se il secondo 2 si sposterà all'indice 0 e se verrà verificato nell'iterazione successiva.",
+      "options": [
+        "2 3 4 ",
+        "3 4 ",
+        "2 2 3 4 ",
+        "4 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `i = 0` il primo 2 viene rimosso dallo scorrimento -> `{2, 3, 4, -1}`. Ma poi l'incremento del ciclo `i++` cambia `i` in 1. L'elemento con il nuovo indice `arr[0]` (il secondo 2) viene saltato senza verifica, e verrà stampato `2 3 4 `.",
+        "Errato. Il secondo 2 rimarrà intatto.",
+        "Errato. Il primo 2 è stato rimosso.",
+        "Errato. Il 3 non viene rimosso."
+      ]
+    },
+    {
+      "id": "it_clang_1978",
+      "widget_id": "widget_clang_1978",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa stamperà il programma durante la rimozione di tutti i numeri negativi dall'array {1, -2, 3, -4, 5, -1}?",
+      "hint": "Rifletti su quali numeri soddisfano la condizione di conservazione arr[read] >= 0.",
+      "options": [
+        "1 3 5 ",
+        "-2 -4 ",
+        "1 -2 3 -4 5 ",
+        "5 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La condizione `arr[read] >= 0` salta i numeri `-2` e `-4`. Nell'array vengono scritti solo i valori non negativi 1, 3 e 5.",
+        "Errato. Questo è l'elenco dei valori negativi rimossi.",
+        "Errato. Gli elementi negativi devono essere filtrati.",
+        "Errato. Anche gli elementi 1 e 3 sono maggiori o uguali a zero."
+      ]
+    },
+    {
+      "id": "it_clang_1979",
+      "widget_id": "widget_clang_1979",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa restituirà la funzione remove_all eseguita su un array vuoto arr[3] = {-1}?",
+      "hint": "Quante iterazioni eseguirà il ciclo se l'elemento zero è già uguale al marcatore -1?",
+      "options": [
+        "0",
+        "-1",
+        "1",
+        "Comportamento indefinito (Undefined Behavior)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per una struttura vuota il ciclo `read` non eseguirà alcuna iterazione, poiché `arr[0] == -1`. Viene scritto `arr[0] = -1` e la funzione restituirà `write = 0` (il nuovo numero di elementi).",
+        "Errato. La funzione restituisce la dimensione dell'array `0`.",
+        "Errato. 1 indicherebbe la presenza di un elemento conservato.",
+        "Errato. La gestione dell'array vuoto è corretta."
+      ]
+    },
+    {
+      "id": "it_clang_1980",
+      "widget_id": "widget_clang_1980",
+      "topic": "Rimozione di elementi",
+      "q": "Qual è la complessità spaziale (Space Complexity) dell'algoritmo in-place a due puntatori?",
+      "hint": "È necessario che l'algoritmo allochi un nuovo array ausiliario in memoria?",
+      "options": [
+        "O(1) — memoria costante, tutte le sovrascritture vengono eseguite all'interno dell'array originale",
+        "O(N) — è necessario un secondo array di dimensioni analoghe",
+        "O(N^2) — a causa degli scorrimenti memorizzati"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La modifica in-place sovrascrive lo stesso array durante la lettura. La memoria aggiuntiva è limitata solo dalle variabili `read` e `write`, il che dà $O(1)$.",
+        "Errato. La creazione di un array ausiliario non è richiesta.",
+        "Errato. Non c'è una complessità quadratica di memoria."
+      ]
+    },
+    {
+      "id": "it_clang_1981",
+      "widget_id": "widget_clang_1981",
+      "topic": "Riutilizzo di funzioni",
+      "q": "Cosa stamperà il programma alla chiamata del wrapper insert_head(arr, 2, 99), che delega l'inserimento alla funzione insert_at_k?",
+      "hint": "In quale posizione (indice k) inserisce l'elemento la funzione insert_head?",
+      "options": [
+        "99 10 20 ",
+        "10 20 99 ",
+        "10 99 20 ",
+        "99 20 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `insert_head` passa il valore dell'indice `k = 0` alla funzione base `insert_at_k`. Il numero 99 viene scritto all'inizio dell'array, spostando 10 e 20 a destra.",
+        "Errato. L'indice 0 corrisponde all'inizio dell'array, non alla fine.",
+        "Errato. Per l'inserimento tra 10 e 20 il parametro $k$ deve essere pari a 1.",
+        "Errato. Nessun elemento originale viene sovrascritto, 10 e 20 vengono conservati."
+      ]
+    },
+    {
+      "id": "it_clang_1982",
+      "widget_id": "widget_clang_1982",
+      "topic": "Riutilizzo di funzioni",
+      "q": "Quale valore dell'indice k passa la funzione insert_tail alla funzione universale insert_at_k per inserire un elemento alla fine dell'array?",
+      "hint": "Rifletti su quale indice corrisponde alla prima cella libera dell'array (dove è scritto -1).",
+      "options": [
+        "k = count (al numero attuale di elementi)",
+        "k = 0",
+        "k = count - 1",
+        "k = -1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In un array con indici da $0$ a $count - 1$, la posizione $count$ è la prima cella libera (in cui è scritto il marcatore di fine array `-1`). Pertanto, passando `k = count` si esegue l'inserimento in coda.",
+        "Errato. `k = 0` inserisce l'elemento all'inizio dell'array (head).",
+        "Errato. `k = count - 1` sostituirà o sposterà l'ultimo elemento esistente, anziché aggiungerlo alla fine.",
+        "Errato. Gli indici negativi non sono validi."
+      ]
+    },
+    {
+      "id": "it_clang_1983",
+      "widget_id": "widget_clang_1983",
+      "topic": "Riutilizzo di funzioni",
+      "q": "Cosa stamperà il programma dopo la chiamata sequenziale di insert_head(arr, 2, 5) e insert_tail(arr, 3, 30)?",
+      "hint": "Segui lo stato dell'array prima dopo l'inserimento all'inizio (5), poi dopo l'aggiunta in coda (30).",
+      "options": [
+        "5 10 20 30 ",
+        "10 20 5 30 ",
+        "30 5 10 20 ",
+        "5 30 10 20 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Come primo passaggio `insert_head` inserisce 5 alla posizione 0: `{5, 10, 20, -1}` (la dimensione è diventata 3). Come secondo passaggio `insert_tail` inserisce 30 alla posizione `count = 3`: `{5, 10, 20, 30, -1}`.",
+        "Errato. 5 viene inserito all'inizio, non al centro.",
+        "Errato. 30 viene aggiunto in coda, non all'inizio.",
+        "Errato. Viene mantenuta la corretta sequenza di operazioni."
+      ]
+    },
+    {
+      "id": "it_clang_1984",
+      "widget_id": "widget_clang_1984",
+      "topic": "Riutilizzo di funzioni",
+      "q": "Qual è il beneficio principale (principio DRY) nell'esprimere le funzioni insert_first e insert_last tramite la funzione base insert_at_k?",
+      "hint": "Decodifica l'acronimo DRY (Don't Repeat Yourself).",
+      "options": [
+        "Eliminazione della duplicazione del codice: la logica di controllo dei limiti e di scorrimento degli elementi è contenuta in un'unica funzione",
+        "Velocizzazione dell'esecuzione del codice da parte del compilatore di 2 volte",
+        "Allocazione automatica della memoria dinamica",
+        "Riduzione del numero di variabili utilizzate in memoria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il principio DRY (Don't Repeat Yourself) consente di concentrare gli scorrimenti degli elementi e i controlli dei limiti dell'array in un'unica funzione universale `insert_at_k`, mentre i wrapper specializzati si limitano a specificare indici concreti.",
+        "Errato. La chiamata di funzioni wrapper non velocizza il codice binario, ma migliora solo la struttura dell'architettura del software.",
+        "Errato. I wrapper non modificano la gestione della memoria.",
+        "Errato. Il numero di variabili locali rimane lo stesso."
+      ]
+    },
+    {
+      "id": "it_clang_1985",
+      "widget_id": "widget_clang_1985",
+      "topic": "Riutilizzo di funzioni",
+      "q": "Cosa stamperà printf se si tenta di chiamare insert_head per un array pieno con dimensione massima capacity = 4?",
+      "hint": "Verifica quale codice di errore (0 o 1) restituiscono le funzioni di inserimento in caso di superamento della capacità.",
+      "options": [
+        "0",
+        "1",
+        "-1",
+        "Errore di segmentazione (Segmentation Fault)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'array `{10, 20, 30, -1}` contiene 3 elementi più 1 posto per il marcatore `-1` (in totale 4 celle). Il controllo `count + 1 >= capacity` (dove `3 + 1 >= 4`) restituisce `0` (errore di overflow), che viene trasmesso all'esterno.",
+        "Errato. La restituzione di 1 indicherebbe un'aggiunta riuscita.",
+        "Errato. La funzione restituisce il codice di errore 0.",
+        "Errato. Il controllo della dimensione eviterà il crash del programma."
+      ]
+    },
+    {
+      "id": "it_clang_1986",
+      "widget_id": "widget_clang_1986",
+      "topic": "Riutilizzo di funzioni",
+      "q": "Cosa stamperà il programma alla chiamata di insert_tail per un array vuoto {-1}?",
+      "hint": "Dove verrà posizionato l'elemento 7 se la dimensione attuale count è pari a 0?",
+      "options": [
+        "7 ",
+        "-1 ",
+        "0 7 ",
+        "Errore di esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per un array vuoto `{-1}` il conteggio dà `count = 0`. La chiamata `insert_at_k(arr, 0, 0, 7)` inserisce il numero 7 all'indice 0 e il marcatore `-1` all'indice 1. Risultato dell'output: `7 `.",
+        "Errato. L'elemento 7 è stato aggiunto con successo.",
+        "Errato. Lo zero prima del 7 non viene scritto.",
+        "Errato. L'operazione per un array vuoto è corretta."
+      ]
+    },
+    {
+      "id": "it_clang_1987",
+      "widget_id": "widget_clang_1987",
+      "topic": "Riutilizzo di funzioni",
+      "q": "Qual è la complessità temporale asintotica (Time Complexity) delle funzioni insert_head e insert_tail chiamate tramite insert_at_k?",
+      "hint": "Tieni conto che l'operazione di inserimento al centro/all'inizio richiede lo scorrimento di N elementi, mentre la determinazione della fine dell'array con marcatore -1 richiede l'attraversamento completo.",
+      "options": [
+        "O(N) per entrambe le funzioni",
+        "O(1) per insert_head e O(N) per insert_tail",
+        "O(1) per entrambe le funzioni",
+        "O(N^2) per entrambe le funzioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'inserimento all'inizio `insert_head` richiede lo scorrimento di tutti gli $N$ elementi ($O(N)$). L'inserimento alla fine `insert_tail` richiede o il conteggio della lunghezza in $O(N)$, o l'esecuzione dello scorrimento del marcatore in $O(N)$. Di conseguenza, entrambe le operazioni hanno una complessità di $O(N)$.",
+        "Errato. `insert_head` sposta $N$ elementi, quindi non può funzionare in $O(1)$.",
+        "Errato. L'array non è una lista concatenata con puntatori a head/tail.",
+        "Errato. Non ci sono cicli annidati."
+      ]
+    },
+    {
+      "id": "it_clang_1988",
+      "widget_id": "widget_clang_1988",
+      "topic": "Riutilizzo di funzioni",
+      "q": "Quali valori dell'indice k vengono passati alla funzione esterna insert_at_k(arr, k, val) nella realizzazione di insert_head e insert_tail rispettivamente?",
+      "hint": "Ricorda da quale indice iniziano gli array in C e in quale indice viene scritto l'elemento durante l'aggiunta alla fine.",
+      "options": [
+        "0 per head e count per tail",
+        "0 per head e count - 1 per tail",
+        "1 per head e count per tail",
+        "-1 per head e 0 per tail"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La testa (head) dell'array si trova sempre all'indice `0`. La coda (posizione per aggiungere un nuovo elemento) si trova all'indice `count`.",
+        "Errato. L'indice `count - 1` indica l'ultimo elemento esistente, non quello successivo.",
+        "Errato. La prima posizione di un array in C ha indice 0, non 1.",
+        "Errato. L'indice -1 è fuori dai limiti dell'array."
+      ]
+    },
+    {
+      "id": "it_clang_1989",
+      "widget_id": "widget_clang_1989",
+      "topic": "Riutilizzo di funzioni",
+      "q": "Cosa stamperà il programma passando indici non validi k = -1 e k = 5 alla funzione base insert_at_k per un array di lunghezza 2?",
+      "hint": "Quale valore restituisce la funzione se l'indice k esce dal range valido [0, count]?",
+      "options": [
+        "0 0",
+        "1 1",
+        "0 1",
+        "1 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il controllo `if (k < 0 || k > count)` esclude entrambi gli indici non validi (`-1 < 0` e `5 > 2`). La funzione in entrambi i casi restituisce `0` (operazione rifiutata).",
+        "Errato. Entrambe le chiamate restituiranno l'errore 0.",
+        "Errato. Anche il secondo inserimento fallirà.",
+        "Errato. Il primo inserimento non supererà il controllo."
+      ]
+    },
+    {
+      "id": "it_clang_1990",
+      "widget_id": "widget_clang_1990",
+      "topic": "Riutilizzo di funzioni",
+      "q": "Cosa stamperà il programma dopo le chiamate sequenziali: insert_head(2), insert_head(1), insert_tail(3), insert_tail(4)?",
+      "hint": "Segui l'ordine di aggiunta: l'inserimento di 1 all'inizio lo mette prima del 2, e successivamente 3 e 4 vengono aggiunti in coda.",
+      "options": [
+        "1 2 3 4 ",
+        "2 1 3 4 ",
+        "1 2 4 3 ",
+        "4 3 2 1 ",
+        "2 1 4 3 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Partendo da un array vuoto: 1) `insert_head(2)` -> `{2}`. 2) `insert_head(1)` -> `{1, 2}`. 3) `insert_tail(3)` -> `{1, 2, 3}`. 4) `insert_tail(4)` -> `{1, 2, 3, 4}`. Risultato: `1 2 3 4 `.",
+        "Errato. Il valore 1 è stato inserito all'inizio dopo 2, quindi 1 si troverà prima di 2.",
+        "Errato. 3 è stato aggiunto in coda prima di 4, quindi 3 precede 4.",
+        "Errato. Questo è l'ordine di un'estrazione da uno stack.",
+        "Errato. L'ordine delle chiamate determina l'ordine dei risultati."
+      ]
+    }
+  ]
+}

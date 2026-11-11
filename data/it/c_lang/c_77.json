@@ -1,0 +1,605 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2351",
+      "widget_id": "widget_clang_2351",
+      "topic": "Ricerca della prima occorrenza di un carattere tramite strchr()",
+      "q": "Cosa stamperà il programma durante la ricerca della prima occorrenza del carattere 'o' nella stringa \"hello world\"?",
+      "hint": "strchr() restituisce un puntatore alla prima occorrenza del carattere trovata nella stringa.",
+      "options": [
+        "o world",
+        "orld",
+        "hello world",
+        "o"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strchr()` restituisce un puntatore alla prima occorrenza del carattere `'o'` (nella parola \"hello\"). La stampa da questo indirizzo con lo specificatore `%s` produce il resto della stringa `o world`.",
+        "Errato. `orld` verrebbe stampato dalla funzione `strrchr()`, che cerca i caratteri a partire dalla fine della stringa.",
+        "Errato. Il puntatore viene spostato sulla prima occorrenza di `'o'`, non all'inizio della stringa.",
+        "Errato. La funzione restituisce un puntatore, quindi `%s` stampa tutti i caratteri fino al terminatore nullo."
+      ]
+    },
+    {
+      "id": "it_clang_2352",
+      "widget_id": "widget_clang_2352",
+      "topic": "Ricerca dell'ultima occorrenza di un carattere tramite strrchr()",
+      "q": "Cosa stamperà il programma alla chiamata strrchr(str, 'o') per la stringa \"hello world\"?",
+      "hint": "Fai attenzione alla lettera 'r' nel nome strrchr() (reverse / rightmost).",
+      "options": [
+        "orld",
+        "o world",
+        "hello world",
+        "world"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strrchr()` cerca l'ultima occorrenza (più a destra) del carattere `'o'`, che si trova nella parola \"world\". La stampa tramite puntatore produrrà `orld`.",
+        "Errato. `o world` verrebbe stampato dalla funzione `strchr()`, che cerca la prima occorrenza da sinistra.",
+        "Errato. Il puntatore punta alla lettera `'o'` nella parola \"world\", non all'inizio dell'array.",
+        "Errato. La stampa inizia esattamente dalla lettera `'o'` trovata, non dalla lettera `'w'`."
+      ]
+    },
+    {
+      "id": "it_clang_2353",
+      "widget_id": "widget_clang_2353",
+      "topic": "Ricerca di una sottostringa tramite strstr()",
+      "q": "Quale risultato stamperà printf() durante la ricerca della sottostringa \"gram\" tramite strstr()?",
+      "hint": "strstr() cerca una sottostringa e restituisce un puntatore alla sua prima occorrenza nella stringa originale.",
+      "options": [
+        "gramming in c",
+        "gram",
+        "programming in c",
+        "ming in c"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `strstr()` trova la sottostringa `\"gram\"` nella parola `\"programming\"` e restituisce un puntatore alla lettera `'g'`. La stampa con lo specificatore `%s` produrrà `gramming in c`.",
+        "Errato. La stampa continuerà fino al terminatore nullo finale della stringa originale.",
+        "Errato. La ricerca restituisce un puntatore all'inizio della sottostringa, non all'inizio dell'intera stringa.",
+        "Errato. I caratteri della sottostringa `\"gram\"` non vengono saltati."
+      ]
+    },
+    {
+      "id": "it_clang_2354",
+      "widget_id": null,
+      "topic": "Valore restituito in assenza di corrispondenze",
+      "q": "Cosa restituiscono le funzioni strchr(), strrchr() e strstr() se il carattere o la sottostringa cercata non vengono trovati?",
+      "hint": "L'assenza dell'oggetto cercato viene segnalata dallo standard tramite un puntatore nullo.",
+      "options": [
+        "Un puntatore NULL",
+        "Il numero -1",
+        "Il numero 0",
+        "Un puntatore all'inizio della stringa originale",
+        "Un puntatore al terminatore nullo finale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se il carattere o la sottostringa cercata sono assenti, le funzioni di ricerca restituiscono un puntatore nullo `NULL`.",
+        "Errato. Le funzioni restituiscono puntatori (`char*`), non numeri interi.",
+        "Errato. Sebbene `NULL` sia numericamente equivalente a 0, il tipo corretto di risposta è il puntatore nullo `NULL`.",
+        "Errato. Restituire l'inizio della stringa renderebbe impossibile la verifica degli errori.",
+        "Errato. Restituire `\\0` significherebbe una ricerca riuscita del terminatore nullo."
+      ]
+    },
+    {
+      "id": "it_clang_2355",
+      "widget_id": "widget_clang_2355",
+      "topic": "Calcolo dell'indice del carattere tramite l'aritmetica dei puntatori",
+      "q": "Quale valore di indice stamperà il programma sottraendo l'indirizzo dell'inizio della stringa dal puntatore ottenuto p - str?",
+      "hint": "Calcola a partire da zero lo spostamento del carattere 'W' dall'inizio della stringa \"Hello World\".",
+      "options": [
+        "6",
+        "5",
+        "7",
+        "0",
+        "11"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il carattere `'W'` si trova in 6ª posizione nella stringa `\"Hello World\"` (indici: H=0, e=1, l=2, l=3, o=4, ' '=5, W=6). La sottrazione dei puntatori `p - str` fornisce una differenza di indirizzi pari all'indice `6`.",
+        "Errato. La posizione 5 appartiene allo spazio.",
+        "Errato. La posizione 7 appartiene alla lettera 'o'.",
+        "Errato. 0 è l'indice della prima lettera 'H'.",
+        "Errato. 11 è la lunghezza totale della stringa."
+      ]
+    },
+    {
+      "id": "it_clang_2356",
+      "widget_id": "widget_clang_2356",
+      "topic": "Ricerca del terminatore nullo '\\0' tramite strchr()",
+      "q": "È possibile trovare il carattere terminatore nullo '\\0' utilizzando la funzione strchr()?",
+      "hint": "Lo standard C definisce esplicitamente se il terminatore nullo finale è considerato parte della stringa durante la ricerca.",
+      "options": [
+        "Sì, strchr considera '\\0' parte della stringa e restituirà un puntatore ad esso (il programma stamperà 1)",
+        "No, strchr restituirà NULL poiché legge solo i caratteri fino a '\\0' (il programma stamperà 0)",
+        "L'operazione causa un comportamento indefinito (UB)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, è dichiarato che il terminatore nullo `'\\0'` fa parte della stringa durante la ricerca. La chiamata `strchr(str, '\\0')` restituisce un puntatore valido alla fine della stringa, quindi `p != NULL` è vero e stamperà `1`.",
+        "Errato. La funzione non termina con l'errore `NULL` durante la ricerca di `'\\0'`.",
+        "Errato. Questo è un comportamento documentato e standardizzato."
+      ]
+    },
+    {
+      "id": "it_clang_2357",
+      "widget_id": null,
+      "topic": "Analisi comparativa tra strchr() e strrchr()",
+      "q": "Qual è la differenza fondamentale tra le funzioni strchr() e strrchr()?",
+      "hint": "Ricorda la direzione di ricerca di entrambe le funzioni all'interno dell'array di caratteri.",
+      "options": [
+        "strchr cerca la prima occorrenza di un carattere dall'inizio della stringa, mentre strrchr cerca l'ultima occorrenza (dalla fine)",
+        "strchr funziona solo con i caratteri, mentre strrchr è in grado di cercare intere sottostringhe"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strchr()` cerca da sinistra a destra (prima occorrenza), mentre `strrchr()` cerca da destra a sinistra (ultima occorrenza).",
+        "Errato. Per la ricerca di sottostringhe si usa `strstr()`, mentre entrambe le funzioni in questione cercano caratteri singoli (`char`)."
+      ]
+    },
+    {
+      "id": "it_clang_2358",
+      "widget_id": "widget_clang_2358",
+      "topic": "Sensibilità al maiuscolo/minuscolo nella ricerca con strstr()",
+      "q": "Cosa stamperà il programma durante la ricerca della sottostringa \"world\" nella stringa \"Hello World\"?",
+      "hint": "La funzione strstr() esegue un confronto rigoroso basato sui codici ASCII dei caratteri.",
+      "options": [
+        "Not Found",
+        "Found"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `strstr()` è sensibile al maiuscolo/minuscolo. La lettera `'W'` (codice 87) non è uguale a `'w'` (codice 119), quindi la sottostringa non verrà trovata, la funzione restituirà `NULL` e stamperà `Not Found`.",
+        "Errato. Senza l'uso di funzioni come `strcasestr()`, la distinzione tra maiuscole e minuscole viene rigorosamente rispettata."
+      ]
+    },
+    {
+      "id": "it_clang_2359",
+      "widget_id": "widget_clang_2359",
+      "topic": "Modifica della stringa tramite il puntatore restituito",
+      "q": "Cosa stamperà il programma dopo l'assegnazione *p = 'x' tramite il puntatore ottenuto da strchr()?",
+      "hint": "Il puntatore p punta alla cella di memoria del carattere all'interno dell'array modificabile str.",
+      "options": [
+        "axple",
+        "axxle",
+        "apple",
+        "xpple"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strchr()` restituirà un puntatore alla prima lettera `'p'` (indice 1). L'operazione `*p = 'x'` sostituisce la prima `'p'` con `'x'`. La stringa finale diventa `axple`.",
+        "Errato. La seconda lettera `'p'` rimarrà intatta, poiché `strchr` si ferma alla prima corrispondenza.",
+        "Errato. La modifica della stringa avviene direttamente all'indirizzo tramite la dereferenziazione del puntatore.",
+        "Errato. La prima lettera `'a'` non viene sostituita."
+      ]
+    },
+    {
+      "id": "it_clang_2360",
+      "widget_id": "widget_clang_2360",
+      "topic": "Combinazione di strstr() e aritmetica dei puntatori",
+      "q": "Quale frammento di stringa stamperà il programma con lo scostamento p + 5 dopo la ricerca riuscita della sottostringa \"data\"?",
+      "hint": "Trova l'indirizzo della sottostringa \"data\", calcola la sua lunghezza (4 caratteri) e aggiungi il carattere separatore '_'.",
+      "options": [
+        "value",
+        "_value",
+        "data_value",
+        "e",
+        "test_data_value",
+        "arresto anomalo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `p` punta alla sottostringa `\"data_value\"`. La lunghezza della parola `\"data\"` più un carattere di sottolineatura `'_'` è pari a 5. Lo scostamento `p + 5` sposta il puntatore esattamente all'inizio della parola `\"value\"`.",
+        "Errato. Il carattere `'_'` ha indice `p + 4` e verrebbe saltato con lo scostamento `+ 5`.",
+        "Errato. `data_value` verrebbe stampato con uno scostamento `p + 0`.",
+        "Errato. 'e' è l'ultimo carattere della parola \"value\".",
+        "Errato. Verrà stampata solo la parte di stringa a partire dallo scostamento.",
+        "Errato. Il puntatore non esce dai limiti dell'array."
+      ]
+    },
+    {
+      "id": "it_clang_2361",
+      "widget_id": "widget_clang_2361",
+      "topic": "Assenza del terminatore '\\0' nella chiamata a strncpy()",
+      "q": "Cosa si trova in dest[4] dopo la copia di 5 caratteri dalla stringa \"123456\" tramite strncpy(dest, \"123456\", 5)?",
+      "hint": "Ricorda la trappola principale di strncpy(): se la lunghezza della sorgente è maggiore o uguale a n, il terminatore nullo NON viene scritto nell'array di destinazione.",
+      "options": [
+        "Il carattere '5'",
+        "Il carattere '\\0'",
+        "Il carattere '4'",
+        "Il carattere '6'",
+        "Byte spazzatura"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `strncpy` copierà esattamente 5 byte: `'1'`, `'2'`, `'3'`, `'4'`, `'5'`. Poiché il limite `n=5` è esaurito, il terminatore nullo non verrà aggiunto. In `dest[4]` rimarrà il carattere `'5'`.",
+        "Errato. Il terminatore nullo non viene aggiunto automaticamente se il limite passato è minore o uguale alla lunghezza della sorgente.",
+        "Errato. Il 5° carattere copiato (all'indice 4) è `'5'`.",
+        "Errato. Il carattere `'6'` è il 6° della sequenza ed è oltre il limite.",
+        "Errato. La cella `dest[4]` è stata esplicitamente sovrascritta con il carattere `'5'`."
+      ]
+    },
+    {
+      "id": "it_clang_2362",
+      "widget_id": null,
+      "topic": "Riempimento con zeri (zero-padding) in strncpy()",
+      "q": "Come si comporta strncpy(dest, src, n) se la lunghezza della stringa src è inferiore al parametro n?",
+      "hint": "Fai attenzione alla gestione specifica dei byte rimanenti nel buffer dell'array di destinazione.",
+      "options": [
+        "Riempie tutti i byte rimanenti fino alla quantità n con terminatori nulli '\\0'",
+        "Interrompe la scrittura subito dopo il primo '\\0' copiato, senza modificare il resto del buffer",
+        "Restituisce un errore di esecuzione",
+        "Aumenta la dimensione della stringa sorgente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard `strncpy` impone di riempire con zeri (`'\\0'`) tutto il resto del buffer di destinazione fino a raggiungere la quantità `n` byte, il che può causare cali di prestazioni per `n` grandi.",
+        "Errato. Questa è la differenza rispetto a `strcpy`: `strncpy` azzera tutto il resto fino a `n`.",
+        "Errato. È un comportamento standard e documentato della funzione.",
+        "Errato. La funzione non modifica la stringa sorgente."
+      ]
+    },
+    {
+      "id": "it_clang_2363",
+      "widget_id": "widget_clang_2363",
+      "topic": "Pattern sicuro di utilizzo di strncpy()",
+      "q": "Cosa stamperà il programma impostando manualmente il terminatore nullo con buf[sizeof(buf) - 1] = '\\0'?",
+      "hint": "La dimensione del buffer è 6. L'espressione sizeof(buf) - 1 imposta un massimo di 5 caratteri da copiare.",
+      "options": [
+        "Hello",
+        "Hello World",
+        "Hello ",
+        "Hell"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strncpy` copierà i primi 5 caratteri (`\"Hello\"`), mentre l'assegnazione esplicita `buf[5] = '\\0'` garantisce la corretta terminazione della stringa. Il risultato della stampa è `Hello`.",
+        "Errato. La stringa originale viene troncata alla dimensione del buffer di destinazione.",
+        "Errato. Lo spazio è il 6° carattere e non rientra nel limite di 5 byte.",
+        "Errato. Entrano esattamente 5 lettere della parola \"Hello\"."
+      ]
+    },
+    {
+      "id": "it_clang_2364",
+      "widget_id": "widget_clang_2364",
+      "topic": "Garanzia del terminatore nullo in strncat()",
+      "q": "Cosa stamperà il programma dopo la chiamata a strncat(buf, \" World\", 3) per la stringa \"Hi\"?",
+      "hint": "A differenza di strncpy(), la funzione strncat() aggiunge SEMPRE e in modo garantito il terminatore nullo '\\0' oltre gli n caratteri copiati.",
+      "options": [
+        "Hi Wo",
+        "Hi Wor",
+        "Hi World",
+        "Hi "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strncat` prende dalla sorgente al massimo `n=3` caratteri (`\" Wo\"`), li aggiunge a `\"Hi\"` e aggiunge automaticamente `\\0`. Si ottiene `Hi Wo`.",
+        "Errato. 3 caratteri dalla stringa `\" World\"` sono uno spazio, `'W'` e `'o'`. La lettera `'r'` è la 4ª.",
+        "Errato. Vengono aggiunti solo i primi 3 caratteri della sorgente.",
+        "Errato. Verranno copiati 3 caratteri, non 1."
+      ]
+    },
+    {
+      "id": "it_clang_2365",
+      "widget_id": null,
+      "topic": "Calcolo della dimensione del buffer per strncat()",
+      "q": "Qual è la dimensione minima dell'array di destinazione dest necessaria per una chiamata sicura a strncat(dest, src, n)?",
+      "hint": "Tieni conto della lunghezza attuale della stringa in dest, degli n caratteri da aggiungere e del terminatore nullo finale garantito.",
+      "options": [
+        "strlen(dest) + n + 1 byte",
+        "strlen(dest) + n byte",
+        "n + 1 byte",
+        "sizeof(src) + n byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strncat` legge la stringa esistente di lunghezza `strlen(dest)`, le aggiunge al massimo `n` caratteri e aggiunge `1` byte per `\\0`. In totale sono necessari `strlen(dest) + n + 1` byte.",
+        "Errato. Con questa dimensione mancherebbe 1 byte per il terminatore nullo garantito.",
+        "Errato. La formula non tiene conto della lunghezza dei dati già contenuti in `dest`.",
+        "Errato. La dimensione della sorgente `src` può essere notevolmente maggiore di `n`."
+      ]
+    },
+    {
+      "id": "it_clang_2366",
+      "widget_id": "widget_clang_2366",
+      "topic": "Confronto dei prefissi di stringa tramite strncmp()",
+      "q": "Cosa stamperà il programma alla verifica della condizione strncmp(\"catastrophe\", \"cat\", 3) == 0?",
+      "hint": "strncmp() con un limite n=3 confronta solo i primi 3 caratteri di entrambe le stringhe.",
+      "options": [
+        "Prefix match",
+        "Non stamperà nulla",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I primi 3 caratteri della stringa `\"catastrophe\"` sono `\"cat\"`. Coincidono completamente con la stringa `\"cat\"`. `strncmp` restituirà `0`, e verrà stampato `Prefix match`.",
+        "Errato. Poiché i primi 3 caratteri coincidono, la condizione sarà soddisfatta.",
+        "Errato. La sintassi e la chiamata della funzione sono completamente corrette."
+      ]
+    },
+    {
+      "id": "it_clang_2367",
+      "widget_id": "widget_clang_2367",
+      "topic": "Dipendenza del risultato di strncmp() dal parametro n",
+      "q": "Cosa stamperà il programma confrontando \"apple\" e \"apply\" con i parametri n=4 e n=5?",
+      "hint": "I primi 4 caratteri delle stringhe sono uguali (\"appl\"), mentre i 5° caratteri differiscono ('e' != 'y').",
+      "options": [
+        "1 0",
+        "0 1",
+        "1 1",
+        "0 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I primi 4 caratteri (`\"appl\"`) coincidono, quindi `strncmp(..., 4)` restituisce 0 (`r1 == 0` è vero `1`). Al 5° carattere le lettere `'e'` e `'y'` differiscono, quindi `strncmp(..., 5)` restituisce un valore diverso da zero (`r2 == 0` è falso `0`). Risultato: `1 0`.",
+        "Errato. Con `n=4` le stringhe sono identiche, mentre con `n=5` differiscono.",
+        "Errato. Con `n=5` il confronto rileverà la differenza tra i caratteri `'e'` e `'y'`.",
+        "Errato. Con `n=4` i primi 4 caratteri coincidono completamente."
+      ]
+    },
+    {
+      "id": "it_clang_2368",
+      "widget_id": null,
+      "topic": "Problema di prestazioni di strncpy() con n grande",
+      "q": "Qual è il potenziale problema di prestazioni nella chiamata a strncpy(dest, \"Hi\", 10000)?",
+      "hint": "Ricorda come strncpy() gestisce i byte del buffer rimanenti dopo la fine della stringa sorgente.",
+      "options": [
+        "La funzione impiegherà tempo a scrivere quasi 10000 terminatori nulli '\\0' non necessari",
+        "La funzione causerà una fuga di memoria dinamica",
+        "La funzione entrerà in un ciclo infinito per mancanza di dati",
+        "Si verificherà un errore asincrono nel thread di esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In conformità con lo standard C, `strncpy` riempirà di byte `'\\0'` tutta la parte restante del buffer di destinazione (9998 byte), creando un carico inutile sulla CPU.",
+        "Errato. `strncpy` non alloca memoria dinamica.",
+        "Errato. La lunghezza della stringa è nota, la funzione terminerà dopo aver sovrascritto 10000 byte.",
+        "Errato. Non si verifica alcun crash del thread."
+      ]
+    },
+    {
+      "id": "it_clang_2369",
+      "widget_id": "widget_clang_2369",
+      "topic": "Combinazione di strncpy() e strncat()",
+      "q": "Quale risultato stamperà il programma dopo l'esecuzione della sequenza di operazioni strncpy e strncat?",
+      "hint": "Segui i passaggi: prima viene inserito \"Code\", viene forzato '\\0', e poi vengono aggiunti 2 caratteri da \"Base\".",
+      "options": [
+        "CodeBa",
+        "CodeBase",
+        "CodeB",
+        "Code"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strncpy` copia `\"Code\"`, viene impostato esplicitamente il terminatore nullo in `buf[4]`. Poi `strncat(buf, \"Base\", 2)` aggiunge i primi 2 caratteri (`\"Ba\"`) e `\\0`. Viene stampato `CodeBa`.",
+        "Errato. Il limite di `strncat` è 2, quindi la sottostringa `\"se\"` non verrà aggiunta.",
+        "Errato. Vengono aggiunti esattamente 2 caratteri, non 1.",
+        "Errato. `strncat` modifica la stringa con successo."
+      ]
+    },
+    {
+      "id": "it_clang_2370",
+      "widget_id": "widget_clang_2370",
+      "topic": "Terminazione anticipata di strncmp() su '\\0'",
+      "q": "Cosa restituirà strncmp(\"abc\", \"abc\", 10) se il limite n passato è molto maggiore della lunghezza delle stringhe stesse?",
+      "hint": "strncmp() si ferma quando incontra il terminatore nullo prima di esaurire il limite n?",
+      "options": [
+        "0 (si fermerà al terminatore nullo e restituirà l'uguaglianza)",
+        "10 (restituirà il limite passato)",
+        "-1 (restituirà un errore di superamento dei limiti)",
+        "Comportamento indefinito (UB)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strncmp` interrompe il confronto non appena incontra il terminatore nullo `'\\0'` in una qualsiasi delle stringhe. Le stringhe coincidono, la funzione restituirà `0`.",
+        "Errato. Viene restituita la differenza tra i caratteri, non il limite `n`.",
+        "Errato. Non viene effettuata alcuna uscita dai limiti del carattere `'\\0'`.",
+        "Errato. È il comportamento standard della funzione secondo la specifica C."
+      ]
+    },
+    {
+      "id": "it_clang_2371",
+      "widget_id": "widget_clang_2371",
+      "topic": "Conteggio iterativo delle occorrenze di un carattere tramite strchr()",
+      "q": "Quante volte verrà eseguito l'incremento di count durante il conteggio di tutte le occorrenze del carattere 'a' nella stringa \"banana\"?",
+      "hint": "Dopo ogni occorrenza trovata, il puntatore viene spostato al carattere successivo p++ per proseguire la ricerca lungo la stringa.",
+      "options": [
+        "3",
+        "2",
+        "6",
+        "1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella parola \"banana\" il carattere 'a' si trova agli indici 1, 3 e 5. A ogni corrispondenza `strchr` restituisce un puntatore, `count` aumenta e `p++` sposta la ricerca in avanti. In totale il ciclo verrà eseguito 3 volte.",
+        "Errato. Nella parola ci sono 3 lettere 'a', non 2.",
+        "Errato. La lunghezza della stringa è 6 caratteri, ma vengono verificate solo le occorrenze della lettera 'a'.",
+        "Errato. Il ciclo non termina dopo la prima occorrenza grazie allo spostamento del puntatore."
+      ]
+    },
+    {
+      "id": "it_clang_2372",
+      "widget_id": "widget_clang_2372",
+      "topic": "Ricerca dell'ultimo separatore tramite strrchr()",
+      "q": "Cosa stamperà il programma durante l'estrazione dell'estensione del file dalla stringa \"archive.tar.gz\"?",
+      "hint": "strrchr() trova l'ultimo punto nella stringa, e lo scostamento ext + 1 salta il carattere punto stesso.",
+      "options": [
+        "gz",
+        "tar.gz",
+        ".gz",
+        "archive"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strrchr` troverà l'ultimo punto prima di `\"gz\"` (indice 11). Il puntatore `ext` punta a `\".gz\"`, e `ext + 1` sposta la stampa all'inizio della parola `\"gz\"`.",
+        "Errato. Il primo punto prima di `\"tar\"` viene ignorato, poiché `strrchr` cerca la corrispondenza da destra a sinistra.",
+        "Errato. Il carattere punto è stato saltato sommando uno `ext + 1`.",
+        "Errato. `archive` è il nome del file prima del primo punto."
+      ]
+    },
+    {
+      "id": "it_clang_2373",
+      "widget_id": null,
+      "topic": "Qualificatore const e tipo del valore restituito in C",
+      "q": "Quale tipo di dato restituiscono le funzioni strchr(), strrchr() e strstr() in C quando viene passato loro un puntatore costante (const char *s)?",
+      "hint": "In C non c'è l'overloading delle funzioni, quindi viene restituito un normale puntatore modificabile.",
+      "options": [
+        "char* (in C il qualificatore const viene rimosso nel valore restituito)",
+        "const char* (conserva sempre il qualificatore const)",
+        "void*",
+        "int"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C (a differenza del C++) non esiste l'overloading delle funzioni. La firma `char *strchr(const char *s, int c)` accetta `const char*`, ma restituisce un `char*` non costante, rimuovendo la costanza dall'indirizzo trovato.",
+        "Errato. Rigorosamente `const char*` viene restituito solo in C++ tramite funzioni in overloading.",
+        "Errato. Le funzioni di ricerca stringhe restituiscono sempre puntatori di testo `char*`.",
+        "Errato. Viene restituito un puntatore a carattere, non un numero intero."
+      ]
+    },
+    {
+      "id": "it_clang_2374",
+      "widget_id": "widget_clang_2374",
+      "topic": "Caso limite: ricerca di una sottostringa vuota \"\" in strstr()",
+      "q": "Cosa restituisce la funzione strstr(str, \"\") se viene passata una stringa vuota \"\" come sottostringa da cercare?",
+      "hint": "Fai riferimento alla specifica dello standard ISO C per il caso in cui la lunghezza della sottostringa cercata sia 0.",
+      "options": [
+        "Un puntatore all'inizio della stringa originale str",
+        "Un puntatore NULL",
+        "Un puntatore al terminatore nullo finale",
+        "Errore di esecuzione (Runtime Error)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, se la seconda stringa ha lunghezza zero `\"\"`, la funzione `strstr()` restituisce immediatamente un puntatore all'inizio della prima stringa `str`. Pertanto `p == str` è vero.",
+        "Errato. `NULL` viene restituito solo in assenza di corrispondenze.",
+        "Errato. Viene restituito l'inizio della stringa `str`, non la sua fine.",
+        "Errato. La ricerca di una sottostringa vuota è un'operazione standard valida."
+      ]
+    },
+    {
+      "id": "it_clang_2375",
+      "widget_id": "widget_clang_2375",
+      "topic": "Conteggio di sottostringhe non sovrapposte tramite strstr()",
+      "q": "Cosa stamperà il programma durante il conteggio del numero di sottostringhe \"ab\" nella stringa \"ab_ab_ab\"?",
+      "hint": "A ogni calcolo il puntatore viene spostato della lunghezza della sottostringa trovata (p += 2).",
+      "options": [
+        "3",
+        "2",
+        "1",
+        "0",
+        "8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strstr` trova la sottostringa `\"ab\"` tre volte (agli indici 0, 3 e 6). L'istruzione `p += 2` salta completamente la coppia di caratteri trovata, passando correttamente alla ricerca della successiva.",
+        "Errato. Tutte e 3 le coppie di caratteri `\"ab\"` verranno conteggiate con successo.",
+        "Errato. La ricerca proseguirà grazie all'avanzamento del puntatore `p += 2` nel ciclo.",
+        "Errato. Le occorrenze sono presenti.",
+        "Errato. 8 è la lunghezza totale dell'intera stringa."
+      ]
+    },
+    {
+      "id": "it_clang_2376",
+      "widget_id": "widget_clang_2376",
+      "topic": "Calcolo della distanza tra la prima e l'ultima occorrenza",
+      "q": "Quale distanza in byte (last - first) stamperà il programma per la stringa \"stats\" durante la ricerca di 's'?",
+      "hint": "Calcola gli indici del primo ('s' in posizione 0) e dell'ultimo ('s' in posizione 4) carattere.",
+      "options": [
+        "4",
+        "5",
+        "3",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strchr(\"stats\", 's')` restituirà l'indirizzo dell'elemento con indice 0. `strrchr(\"stats\", 's')` restituirà l'indirizzo dell'elemento con indice 4. La differenza tra i puntatori `4 - 0` è pari a 4.",
+        "Errato. 5 è il numero totale di caratteri nell'array `\"stats\"` incluso il terminatore nullo.",
+        "Errato. La posizione dell'ultimo carattere 's' è 4, non 3.",
+        "Errato. La prima e l'ultima occorrenza si trovano in posizioni diverse."
+      ]
+    },
+    {
+      "id": "it_clang_2377",
+      "widget_id": null,
+      "topic": "Tipo del secondo argomento int c in strchr()",
+      "q": "Perché il secondo argomento della funzione strchr(const char *s, int c) è di tipo int e non char?",
+      "hint": "Pensa alle funzioni di lettura dati getchar() / fgetc() e al passaggio di macro speciali come EOF.",
+      "options": [
+        "Per consentire il passaggio del risultato delle funzioni di input (getchar/fgetc) e della costante EOF senza perdita di tipo",
+        "Per poter cercare numeri interi all'interno della stringa",
+        "Si tratta di un errore storico di standardizzazione di C89 senza un motivo pratico",
+        "Per passare l'ampiezza del bus dati"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le funzioni di input come `fgetc()` e `getchar()` restituiscono `int` per contenere sia un valore `unsigned char` sia la costante `EOF` (-1). La firma `int c` consente di passare direttamente il risultato di queste funzioni a `strchr()`.",
+        "Errato. `strchr` converte comunque l' `int` passato a `unsigned char` prima della ricerca.",
+        "Errato. Si tratta di una scelta architetturale consapevole e comoda della libreria di I/O in C.",
+        "Errato. Non è legato all'ampiezza hardware del bus dati."
+      ]
+    },
+    {
+      "id": "it_clang_2378",
+      "widget_id": "widget_clang_2378",
+      "topic": "Parsing dei percorsi di file tramite strrchr()",
+      "q": "Cosa stamperà il programma durante l'estrazione del nome del file dal percorso \"/usr/local/bin/gcc\"?",
+      "hint": "strrchr() trova l'ultimo slash '/', mentre lo scostamento p + 1 punta al primo carattere del nome del file.",
+      "options": [
+        "gcc",
+        "/gcc",
+        "bin/gcc",
+        "/usr/local/bin/gcc"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strrchr` restituirà un puntatore all'ultimo slash in `/gcc`. Lo scostamento `p + 1` sposta il puntatore alla lettera `'g'`, stampando il nome del file `gcc`.",
+        "Errato. Il carattere `/` viene saltato aggiungendo uno `+ 1` al puntatore.",
+        "Errato. La ricerca avviene da destra, quindi viene trovato l'ultimo separatore del percorso.",
+        "Errato. La stampa non inizia dall'inizio dell'array originale."
+      ]
+    },
+    {
+      "id": "it_clang_2379",
+      "widget_id": "widget_clang_2379",
+      "topic": "Ricerca sequenziale dei caratteri separatori",
+      "q": "Cosa stamperà il programma durante la ricerca sequenziale del secondo carattere '=' nella stringa \"key=value=123\"?",
+      "hint": "Il primo strchr() trova '=', e la chiamata successiva cerca a partire dall'indirizzo spostato p1 + 1.",
+      "options": [
+        "123",
+        "value=123",
+        "key=value=123",
+        "=123"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `p1` trova il primo `'='` (dopo `\"key\"`). La chiamata `strchr(p1 + 1, '=')` inizia la ricerca nella sottostringa `\"value=123\"` e trova il secondo `'='`. Lo scostamento `p2 + 1` stampa quello che segue — `123`.",
+        "Errato. `value=123` verrebbe stampato a partire dal puntatore `p1 + 1`.",
+        "Errato. La stampa non inizia dall'inizio della stringa originale.",
+        "Errato. Il carattere di uguale viene tagliato dallo scostamento `+ 1`."
+      ]
+    },
+    {
+      "id": "it_clang_2380",
+      "widget_id": "widget_clang_2380",
+      "topic": "Ricerca di sottostringhe sovrapposte tramite strstr()",
+      "q": "Quante sottostringhe sovrapposte \"aa\" troverà il programma nella stringa \"aaaa\" con lo scostamento p++?",
+      "hint": "Poiché il puntatore viene spostato di solo 1 carattere (p++), la funzione verifica le posizioni 0, 1 e 2.",
+      "options": [
+        "3",
+        "2",
+        "4",
+        "1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `p++` vengono verificate tutte le posizioni: 1ª occorrenza all'indice 0 (`\"aa\"`), 2ª all'indice 1 (`\"aa\"`), 3ª all'indice 2 (`\"aa\"`). In totale verranno trovate 3 corrispondenze sovrapposte.",
+        "Errato. 2 corrispondenze verrebbero trovate con un passo `p += 2` (senza sovrapposizioni).",
+        "Errato. All'indice 3 rimane solo 1 carattere 'a', dove la sottostringa \"aa\" non può rientrare.",
+        "Errato. La funzione proseguirà la ricerca grazie allo scostamento `p++`."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,623 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_1991",
+      "widget_id": "widget_clang_1991",
+      "topic": "Riutilizzo di funzioni",
+      "q": "Cosa stamperà il programma alla chiamata della funzione remove_head(arr, 3), che chiama la funzione base remove_at_k con indice k = 0?",
+      "hint": "Rifletti su quale elemento viene rimosso dall'array se l'indice di scorrimento è pari a 0.",
+      "options": [
+        "20 30 ",
+        "10 20 ",
+        "10 30 ",
+        "30 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `remove_head` passa `k = 0`. Il numero 10 in prima posizione viene sovrascritto dallo scorrimento a sinistra, l'array diventa `{20, 30, -1}`.",
+        "Errato. È stato rimosso il primo elemento (10), non l'ultimo.",
+        "Errato. È stato sovrascritto l'elemento 10, non 20.",
+        "Errato. È stato rimosso solo un elemento dall'inizio."
+      ]
+    },
+    {
+      "id": "it_clang_1992",
+      "widget_id": "widget_clang_1992",
+      "topic": "Riutilizzo di funzioni",
+      "q": "Cosa stamperà il programma alla chiamata della funzione remove_tail(arr, 3), che calcola l'indice come k = count - 1?",
+      "hint": "Determina quale elemento si trova all'indice count - 1.",
+      "options": [
+        "10 20 ",
+        "20 30 ",
+        "10 30 ",
+        "10 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `count = 3` viene calcolato l'indice della coda `k = 3 - 1 = 2`. L'elemento 30 all'indice 2 viene sovrascritto dal marcatore `-1`. Rimangono gli elementi `{10, 20, -1}`.",
+        "Errato. Viene rimosso l'elemento dalla fine, non dall'inizio.",
+        "Errato. L'elemento 20 si trovava all'indice 1 e non è stato modificato.",
+        "Errato. È stato rimosso solo l'ultimo valore."
+      ]
+    },
+    {
+      "id": "it_clang_1993",
+      "widget_id": null,
+      "topic": "Riutilizzo di funzioni",
+      "q": "Quale indice k è necessario passare alla funzione base remove_at_k(arr, count, k) per implementare la rimozione dell'ultimo elemento dell'array (coda)?",
+      "hint": "Ricorda a quale indice corrisponde l'ultimo elemento utile data la lunghezza count.",
+      "options": [
+        "k = count - 1",
+        "k = count",
+        "k = 0",
+        "k = -1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli elementi utili dell'array occupano gli indici da `0` a `count - 1`. Di conseguenza, l'indice dell'ultima cella occupata è pari a `count - 1`.",
+        "Errato. L'indice `count` punta al marcatore di fine array `-1` o oltre i suoi limiti.",
+        "Errato. `k = 0` si usa per la rimozione del primo elemento (head).",
+        "Errato. Gli indici negativi escono dai limiti dell'array."
+      ]
+    },
+    {
+      "id": "it_clang_1994",
+      "widget_id": "widget_clang_1994",
+      "topic": "Riutilizzo di funzioni",
+      "q": "Cosa stamperà il programma dopo l'esecuzione sequenziale di remove_head e remove_tail per l'array {10, 20, 30, 40, -1}?",
+      "hint": "Segui quali elementi verranno rimossi prima dall'inizio e poi dalla fine dell'array.",
+      "options": [
+        "20 30 ",
+        "10 40 ",
+        "30 40 ",
+        "10 20 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! 1) `remove_head` rimuove 10 (all'indice 0) -> `{20, 30, 40, -1}`, `count` diventa 3. 2) `remove_tail` rimuove 40 (all'indice `3 - 1 = 2`) -> `{20, 30, -1}`. Output: `20 30 `.",
+        "Errato. Sono stati rimossi gli elementi agli estremi (10 e 40), non quelli centrali.",
+        "Errato. 20 e 30 sono rimasti intatti.",
+        "Errato. Dalla fine è stato rimosso l'elemento 40."
+      ]
+    },
+    {
+      "id": "it_clang_1995",
+      "widget_id": "widget_clang_1995",
+      "topic": "Riutilizzo di funzioni",
+      "q": "Cosa restituirà la chiamata di remove_head per un array vuoto {-1} con parametro count = 0?",
+      "hint": "Verifica la condizione di validità dell'indice k quando il numero di elementi count = 0.",
+      "options": [
+        "0",
+        "1",
+        "-1",
+        "Errore di segmentazione (Segmentation Fault)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `count = 0` e `k = 0` la funzione base verifica la condizione `if (k >= count)` (dove `0 >= 0`). La condizione è vera e la funzione restituisce il codice di errore `0`.",
+        "Errato. 1 indica la rimozione riuscita dell'elemento.",
+        "Errato. La funzione restituisce gli stati `0` o `1`.",
+        "Errato. Il controllo previene correttamente l'accesso fuori dai limiti."
+      ]
+    },
+    {
+      "id": "it_clang_1996",
+      "widget_id": null,
+      "topic": "Riutilizzo di funzioni",
+      "q": "Quale valore di k viene passato alla funzione base remove_at_k per implementare il wrapper remove_head(arr, count)?",
+      "hint": "Rifletti da quale indice iniziano gli elementi in C durante la rimozione dalla testa.",
+      "options": [
+        "k = 0",
+        "k = 1",
+        "k = count",
+        "k = -1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In linguaggio C il primo elemento dell'array ha sempre indice `0`.",
+        "Errato. `k = 1` porterebbe alla rimozione del secondo elemento dell'array.",
+        "Errato. `k = count` porterebbe fuori dai limiti dei dati esistenti.",
+        "Errato. Gli indici negativi non sono consentiti."
+      ]
+    },
+    {
+      "id": "it_clang_1997",
+      "widget_id": "widget_clang_1997",
+      "topic": "Riutilizzo di funzioni",
+      "q": "Cosa stamperà il programma dopo una doppia chiamata di remove_head per l'array {5, 10, 15, 20, -1}?",
+      "hint": "Calcola quanti elementi dall'inizio dell'array verranno rimosso in sequenza.",
+      "options": [
+        "15 20 ",
+        "5 10 ",
+        "10 15 20 ",
+        "20 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La prima chiamata a `remove_head` rimuove 5 -> `{10, 15, 20, -1}`. La seconda chiamata a `remove_head` rimuove la testa corrente (10) -> `{15, 20, -1}`.",
+        "Errato. 5 e 10 sono stati rimossi in due chiamate.",
+        "Errato. Sono state eseguite due rimozioni dall'inizio, non una.",
+        "Errato. L'elemento 15 è stato conservato."
+      ]
+    },
+    {
+      "id": "it_clang_1998",
+      "widget_id": "widget_clang_1998",
+      "topic": "Riutilizzo di funzioni",
+      "q": "In cosa consiste il vantaggio architetturale nel chiamare la funzione universale remove_at_k dai wrapper remove_head e remove_tail?",
+      "hint": "Ricorda il principio per evitare la duplicazione del codice (DRY).",
+      "options": [
+        "Concentrazione della logica di scorrimento e del controllo dei limiti in un unico posto (rispetto del principio DRY)",
+        "Accelerazione automatica dell'esecuzione del ciclo da parte del compilatore",
+        "Riduzione del consumo di memoria RAM del programma",
+        "Gestione automatica degli array dinamici"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il principio DRY (Don't Repeat Yourself) garantisce che la complessa logica del ciclo di scorrimento degli elementi e di verifica della correttezza degli indici venga scritta e testata in un unico posto (`remove_at_k`).",
+        "Errato. I wrapper migliorano la leggibilità, ma non velocizzano il tempo di esecuzione.",
+        "Errato. La quantità di memoria non cambia.",
+        "Errato. I wrapper non trasformano gli array statici in dinamici."
+      ]
+    },
+    {
+      "id": "it_clang_1999",
+      "widget_id": "widget_clang_1999",
+      "topic": "Riutilizzo di funzioni",
+      "q": "Cosa stamperà printf al tentativo di passare a remove_at_k indici non validi k = -1 e k = 2 per un array di 2 elementi?",
+      "hint": "Verifica se entrambe le chiamate restituiranno il codice di errore 0 a causa del superamento dei limiti dell'array.",
+      "options": [
+        "0 0",
+        "1 1",
+        "0 1",
+        "1 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La condizione `k < 0 || k >= count` si verificherà per entrambi i casi: `-1 < 0` (vero) e `2 >= 2` (vero). In entrambi i casi la funzione restituirà `0`.",
+        "Errato. Entrambi i tentativi con indici non validi vengono rifiutati.",
+        "Errato. Con `k = 2` l'indice è pari a `count`, il che supera il limite dell'array `0..count-1`.",
+        "Errato. La prima chiamata restituisce 0."
+      ]
+    },
+    {
+      "id": "it_clang_2000",
+      "widget_id": "widget_clang_2000",
+      "topic": "Riutilizzo di funzioni",
+      "q": "Cosa stamperà il programma dopo l'esecuzione della catena: remove_head, remove_tail, remove_at_k(1) per l'array {10, 20, 30, 40, 50, -1}?",
+      "hint": "Esegui le operazioni passo dopo passo: prima rimuovi head, poi tail, e infine rimuovi l'elemento all'indice 1.",
+      "options": [
+        "20 40 ",
+        "10 30 50 ",
+        "20 30 ",
+        "30 40 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! 1) `remove_head` rimuove 10 -> `{20, 30, 40, 50, -1}`. 2) `remove_tail` rimuove 50 -> `{20, 30, 40, -1}`. 3) `remove_at_k(1)` rimuove l'elemento corrente all'indice 1 (30) -> `{20, 40, -1}`. Risultato: `20 40 `.",
+        "Errato. Sono stati rimossi gli elementi 10, 50 e 30.",
+        "Errato. Il terzo passaggio `remove_at_k(1)` ha rimosso 30.",
+        "Errato. Il primo passaggio ha rimosso l'elemento 10."
+      ]
+    },
+    {
+      "id": "it_clang_2001",
+      "widget_id": "widget_clang_2001",
+      "topic": "Algoritmi su array",
+      "q": "Cosa stamperà il programma durante la ricerca dell'elemento massimo nell'array {12, 45, 7, 89, 23, -1}?",
+      "hint": "Trova il numero più grande tra gli elementi prima del delimitatore -1.",
+      "options": [
+        "89",
+        "45",
+        "-1",
+        "12",
+        "23"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `max` viene inizializzata con il primo dato (`arr[0] = 12`). Il ciclo attraversa l'array fino al terminatore `-1`, aggiornando in sequenza `max` con il valore 45, e successivamente 89. Risultato: `89`.",
+        "Errato. 45 viene superato dal valore 89.",
+        "Errato. Il marcatore `-1` serve come condizione di arresto del ciclo e non partecipa al confronto.",
+        "Errato. 12 è solo il valore iniziale.",
+        "Errato. L'elemento 23 è inferiore al massimo 89."
+      ]
+    },
+    {
+      "id": "it_clang_2002",
+      "widget_id": "widget_clang_2002",
+      "topic": "Algoritmi su array",
+      "q": "Cosa stamperà il programma durante la ricerca dell'elemento minimo nell'array {15, 3, 42, 8, -1}?",
+      "hint": "Trova il numero più piccolo tra gli elementi che precedono -1.",
+      "options": [
+        "3",
+        "15",
+        "-1",
+        "8",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Inizialmente `min = 15`. All'iterazione con `arr[1]` avviene l'aggiornamento `min = 3`. Gli elementi utili rimanenti (42 e 8) sono maggiori di 3, quindi la risposta è: `3`.",
+        "Errato. 15 viene sovrascritto dal numero 3.",
+        "Errato. Il delimitatore `-1` viene escluso dalla condizione di controllo del ciclo `arr[i] != -1`.",
+        "Errato. 8 è maggiore del minimo trovato 3.",
+        "Errato. Non c'è alcuno zero nell'array."
+      ]
+    },
+    {
+      "id": "it_clang_2003",
+      "widget_id": "widget_clang_2003",
+      "topic": "Algoritmi su array",
+      "q": "Cosa stamperà il programma durante il calcolo della somma di tutti gli elementi dell'array {1, 2, 3, 4, 5, -1}?",
+      "hint": "Somma tutti i numeri utili fino al marcatore di arresto -1.",
+      "options": [
+        "15",
+        "14",
+        "10",
+        "-1",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo somma gli elementi 1 + 2 + 3 + 4 + 5 = 15 fino ad incontrare il marcatore `-1`.",
+        "Errato. Il marcatore `-1` non viene aggiunto alla variabile `sum`.",
+        "Errato. La somma dei cinque elementi è 15.",
+        "Errato. -1 è il valore del delimitatore, non del risultato.",
+        "Errato. L'accumulo è iniziato con `sum = 0`."
+      ]
+    },
+    {
+      "id": "it_clang_2004",
+      "widget_id": "widget_clang_2004",
+      "topic": "Algoritmi su array",
+      "q": "Cosa stamperà il programma durante la ricerca del prodotto degli elementi utili dell'array {2, 3, 4, -1}?",
+      "hint": "Moltiplica tra loro gli elementi 2, 3 e 4.",
+      "options": [
+        "24",
+        "0",
+        "9",
+        "-1",
+        "12"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `prod` è inizializzata a 1 (`prod = 1`). Nel ciclo viene calcolato sequenzialmente $1 \\cdot 2 \\cdot 3 \\cdot 4 = 24$.",
+        "Errato. L'inizializzazione `prod = 0` porterebbe a zero, ma qui è stata impostata correttamente a 1.",
+        "Errato. Il prodotto di tutti gli elementi è 24.",
+        "Errato. Il terminatore non viene moltiplicato.",
+        "Errato. Hai dimenticato di moltiplicare per 2."
+      ]
+    },
+    {
+      "id": "it_clang_2005",
+      "widget_id": "widget_clang_2005",
+      "topic": "Algoritmi su array",
+      "q": "Cosa stamperà il programma durante il calcolo della media aritmetica per l'array {10, 20, 30, -1}?",
+      "hint": "Dividi la somma degli elementi (60) per la loro quantità (3).",
+      "options": [
+        "20.00",
+        "20",
+        "15.00",
+        "60.00",
+        "0.00"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La somma degli elementi è $10 + 20 + 30 = 60$, la quantità di elementi è `count = 3`. Il cast `(double)sum / count` dà $60.0 / 3 = 20.00$. Lo specificatore `%.2f` stampa `20.00`.",
+        "Errato. Lo specificatore `%.2f` forza la stampa di esattamente due cifre decimali.",
+        "Errato. La divisione avviene per il numero di elementi utili (3), non 4.",
+        "Errato. 60.00 è la somma degli elementi, non la media.",
+        "Errato. Nell'array sono presenti elementi, `count > 0`."
+      ]
+    },
+    {
+      "id": "it_clang_2006",
+      "widget_id": "widget_clang_2006",
+      "topic": "Algoritmi su array",
+      "q": "Cosa stamperà il programma durante la ricerca lineare dell'indice dell'elemento 25 nell'array {5, 15, 25, 35, -1}?",
+      "hint": "Calcola l'indice di posizione (a partire da 0) in cui si trova il numero 25.",
+      "options": [
+        "2",
+        "3",
+        "25",
+        "-1",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli elementi si trovano agli indici: `arr[0]=5`, `arr[1]=15`, `arr[2]=25`. Il valore 25 è stato trovato all'indice `2`.",
+        "Errato. 3 è l'indice dell'elemento 35.",
+        "Errato. La funzione restituisce l'indice della cella trovata, non l'elemento stesso.",
+        "Errato. `-1` viene restituito solo se l'elemento è assente.",
+        "Errato. L'indice 0 contiene il valore 5."
+      ]
+    },
+    {
+      "id": "it_clang_2007",
+      "widget_id": "widget_clang_2007",
+      "topic": "Algoritmi su array",
+      "q": "Cosa stamperà il programma durante il conteggio degli elementi pari nell'array {1, 2, 3, 4, 6, 7, -1}?",
+      "hint": "Conta quanti numeri nell'array sono divisibili per 2 senza resto.",
+      "options": [
+        "3",
+        "4",
+        "7",
+        "2",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli elementi pari nell'array sono 2, 4 e 6. La quantità di numeri pari è `3`.",
+        "Errato. Nell'array ci sono 3 elementi pari e 3 dispari.",
+        "Errato. 7 è un elemento dispari.",
+        "Errato. Sono stati trovati esattamente 3 elementi pari.",
+        "Errato. Il contatore `count` aumenta a ogni numero pari incontrato."
+      ]
+    },
+    {
+      "id": "it_clang_2008",
+      "widget_id": null,
+      "topic": "Algoritmi su array",
+      "q": "Come gestire correttamente un array vuoto con delimitatore {-1} prima di iniziare la ricerca del massimo o del minimo?",
+      "hint": "Rifletti su come verificare la presenza di elementi prima di accedere ad arr[0].",
+      "options": [
+        "Verificare la condizione arr[0] == -1 e gestire il caso dell'array vuoto prima dell'inizializzazione di max/min",
+        "Assegnare max = 0 e avviare il ciclo standard",
+        "Assegnare max = -1 e restituire subito il risultato",
+        "Non serve fare nulla, il ciclo verrà eseguito correttamente senza controlli aggiuntivi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se l'array è vuoto (`arr[0] == -1`), il tentativo di prendere `arr[0]` come `max` iniziale inserirà il delimitatore nel risultato. È obbligatoria una verifica preliminare `arr[0] == -1`.",
+        "Errato. Se tutti gli elementi dell'array sono negativi (ad esempio minori di zero), `max = 0` fornirà un risultato errato.",
+        "Errato. Il valore -1 è un delimitatore, non un numero appartenente ai dati.",
+        "Errato. Tentare di leggere `arr[0]` come valore causerà l'assegnazione errata del delimitatore come massimo/minimo."
+      ]
+    },
+    {
+      "id": "it_clang_2009",
+      "widget_id": "widget_clang_2009",
+      "topic": "Algoritmi su array",
+      "q": "Cosa restituirà la funzione di ricerca find_index in caso di assenza del numero cercato 100 nell'array {10, 20, 30, -1}?",
+      "hint": "Ricorda quale valore speciale viene restituito in caso di ricerca non riuscita.",
+      "options": [
+        "-1",
+        "0",
+        "3",
+        "4",
+        "Comportamento indefinito (Undefined Behavior)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo esamina tutti gli elementi fino al marcatore `-1`. Non trovando il valore 100, la funzione esce dal ciclo e restituisce il valore speciale `-1` (indicatore di assenza).",
+        "Errato. 0 significa che l'elemento è stato trovato nella prima cella.",
+        "Errato. All'indice 3 è memorizzato il terminatore, la ricerca lì si arresta.",
+        "Errato. Il ciclo termina correttamente.",
+        "Errato. Il comportamento è totalmente definito dagli standard del linguaggio C."
+      ]
+    },
+    {
+      "id": "it_clang_2010",
+      "widget_id": "widget_clang_2010",
+      "topic": "Algoritmi su array",
+      "q": "L'indice di quale elemento restituirà la funzione find_max_index in presenza di più duplicati del massimo nell'array {5, 99, 12, 99, 3, -1}?",
+      "hint": "Fai attenzione all'operatore di confronto (> o >=) durante l'aggiornamento dell'indice massimo.",
+      "options": [
+        "1 (indice della prima occorrenza di 99)",
+        "3 (indice della seconda occorrenza di 99)",
+        "99 (il valore stesso)",
+        "0 (primo indice)",
+        "-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La condizione stretta `arr[i] > arr[max_idx]` ignora il valore ripetuto 99 all'indice 3 (poiché `99 > 99` è falso). Di conseguenza `max_idx` rimarrà pari a `1`.",
+        "Errato. Per restituire l'indice 3 sarebbe stata necessaria una condizione non stretta `>=`.",
+        "Errato. La funzione restituisce l'indice dell'elemento, non il valore.",
+        "Errato. All'indice 0 si trova il numero 5.",
+        "Errato. Nell'array sono presenti elementi."
+      ]
+    },
+    {
+      "id": "it_clang_2011",
+      "widget_id": "widget_clang_2011",
+      "topic": "Attraversamento dell'array",
+      "q": "Cosa stamperà il programma durante l'attraversamento della parte utilizzata dell'array {10, 20, 30, -1, 999, 888}?",
+      "hint": "Il ciclo continuerà dopo aver incontrato il terminatore -1?",
+      "options": [
+        "10 20 30 ",
+        "10 20 30 -1 ",
+        "10 20 30 999 888 ",
+        "10 20 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La condizione `arr[i] != -1` ferma il ciclo esattamente sul terminatore. I valori 999 e 888 si trovano oltre il delimitatore e non vengono elaborati.",
+        "Errato. Il marcatore `-1` stesso non viene stampato, poiché il ciclo termina su di esso.",
+        "Errato. L'attraversamento tramite delimitatore non entra nella parte non utilizzata dell'array oltre `-1`.",
+        "Errato. L'elemento 30 precede il delimitatore e fa parte della parte utilizzata."
+      ]
+    },
+    {
+      "id": "it_clang_2012",
+      "widget_id": "widget_clang_2012",
+      "topic": "Attraversamento dell'array",
+      "q": "Cosa stamperà il programma durante il conteggio del numero di elementi nella parte attiva dell'array {5, 4, 3, 2, 1, -1, 0, 0}?",
+      "hint": "Conta solo gli elementi situati strettamente prima di -1.",
+      "options": [
+        "5",
+        "6",
+        "8",
+        "1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli elementi prima del terminatore `-1` sono 5, 4, 3, 2, 1. La loro quantità è pari a 5.",
+        "Errato. Il terminatore `-1` non viene conteggiato come elemento attivo.",
+        "Errato. 8 è la capacità totale dell'array, non la dimensione della parte utilizzata.",
+        "Errato. Sono stati conteggiati tutti e 5 gli elementi utili."
+      ]
+    },
+    {
+      "id": "it_clang_2013",
+      "widget_id": "widget_clang_2013",
+      "topic": "Attraversamento dell'array",
+      "q": "Cosa stamperà il programma se al posto del controllo del delimitatore arr[i] != -1 si utilizza la condizione fissa i < 5?",
+      "hint": "Rifletti se verranno stampati il marcatore -1 stesso e i valori successivi eseguendo 5 iterazioni.",
+      "options": [
+        "10 20 -1 40 50 ",
+        "10 20 ",
+        "10 20 -1 ",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché il ciclo è orientato a un numero fisso di iterazioni `i < 5`, ignorerà il marcatore `-1` e stamperà sia esso sia i vecchi dati/dati spazzatura successivi.",
+        "Errato. Il controllo del terminatore è assente, quindi il ciclo non si fermerà a 20.",
+        "Errato. Il ciclo eseguirà esattamente 5 iterazioni.",
+        "Errato. La sintassi del ciclo con numero fisso di iterazioni è corretta."
+      ]
+    },
+    {
+      "id": "it_clang_2014",
+      "widget_id": "widget_clang_2014",
+      "topic": "Attraversamento dell'array",
+      "q": "Cosa stamperà il programma dopo la modifica della parte utilizzata dell'array {1, 2, 3, -1, 10, 20}?",
+      "hint": "Cambieranno gli elementi 10 e 20 situati dopo il delimitatore -1?",
+      "options": [
+        "2 4 6 ",
+        "2 4 6 -1 10 20 ",
+        "2 4 6 20 40 ",
+        "1 2 3 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il primo ciclo raddoppia i valori 1, 2, 3 fino al terminatore (diventano 2, 4, 6). Il secondo ciclo stampa gli elementi utili aggiornati fino a `-1`.",
+        "Errato. Anche la seconda stampa è limitata dal terminatore e non stamperà i valori successivi.",
+        "Errato. Il terminatore `-1` è rimasto al suo posto e non è stato modificato.",
+        "Errato. Gli elementi sono stati moltiplicati con successo per 2."
+      ]
+    },
+    {
+      "id": "it_clang_2015",
+      "widget_id": "widget_clang_2015",
+      "topic": "Attraversamento dell'array",
+      "q": "Cosa stamperà il programma sommando gli elementi di un array in cui il primo elemento è il delimitatore {-1, 100, 200}?",
+      "hint": "Il ciclo verrà eseguito anche solo una volta se il primo elemento è uguale a -1?",
+      "options": [
+        "0",
+        "300",
+        "-1",
+        "299"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Già alla prima iterazione `arr[0] != -1` è falso. Il ciclo non eseguirà alcun passaggio e il valore di `sum` rimarrà `0`.",
+        "Errato. I numeri 100 e 200 non vengono considerati in quanto situati dopo il marcatore di parte utilizzata vuota.",
+        "Errato. Il delimitatore `-1` non viene aggiunto alla variabile `sum`.",
+        "Errato. I dati oltre il terminatore vengono ignorati."
+      ]
+    },
+    {
+      "id": "it_clang_2016",
+      "widget_id": null,
+      "topic": "Attraversamento dell'array",
+      "q": "Qual è il vantaggio principale nel verificare la condizione arr[i] != SENTINEL durante l'attraversamento di un array?",
+      "hint": "Rifletti se è necessario passare separatamente una variabile per la dimensione dell'array.",
+      "options": [
+        "Consente di elaborare solo i dati effettivamente utilizzati senza dover passare una variabile separata per la dimensione",
+        "Aumenta la velocità di accesso alla memoria RAM a livello hardware",
+        "Espande automaticamente l'array allocato quando viene riempito",
+        "Previene gli avvisi del compilatore sulla mancata inizializzazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'uso di un terminatore (delimitatore) consente alle funzioni di sapere dove finiscono i dati utili basandosi sull'array stesso.",
+        "Errato. Le prestazioni di accesso alla memoria non cambiano.",
+        "Errato. La dimensione del buffer di memoria allocato in C è statica e non si espande automaticamente.",
+        "Errato. Il delimitatore non influisce sugli avvisi del compilatore."
+      ]
+    },
+    {
+      "id": "it_clang_2017",
+      "widget_id": "widget_clang_2017",
+      "topic": "Attraversamento dell'array",
+      "q": "Cosa restituirà la funzione get_last_used alla ricezione dell'ultimo elemento attivo dell'array {7, 14, 21, -1}?",
+      "hint": "Determina l'elemento dopo il quale è subito memorizzato il marcatore -1.",
+      "options": [
+        "21",
+        "7",
+        "-1",
+        "14"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo controlla il valore successivo `arr[i + 1] != -1`. Quando `i = 2` (`arr[2] = 21`), l'elemento successivo `arr[3]` è pari a `-1`. Il ciclo si arresta e restituisce `arr[2]` (21).",
+        "Errato. 7 è il primo elemento dell'array.",
+        "Errato. Il terminatore `-1` viene escluso dal controllo `arr[i + 1] != -1`.",
+        "Errato. 14 è l'elemento centrale, seguito da 21."
+      ]
+    },
+    {
+      "id": "it_clang_2018",
+      "widget_id": "widget_clang_2018",
+      "topic": "Attraversamento dell'array",
+      "q": "Cosa stamperà il programma dopo aver copiato la parte utilizzata da src a dst aggiungendo il marcatore di terminazione?",
+      "hint": "Rifletti se verranno stampati i dati situati dopo il marcatore di fine copiato.",
+      "options": [
+        "1 2 3 ",
+        "1 2 3 -1 99 ",
+        "1 2 3 99 ",
+        "0 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo copia gli elementi 1, 2, 3. Successivamente il comando `dst[i] = -1` imposta esplicitamente il marcatore di fine. La stampa del nuovo array si fermerà su `-1` e stamperà `1 2 3 `.",
+        "Errato. La stampa si fermerà sul marcatore `-1` copiato.",
+        "Errato. L'elemento non utilizzato 99 non è stato copiato nella parte utilizzata di `dst`.",
+        "Errato. I dati sono stati copiati correttamente."
+      ]
+    },
+    {
+      "id": "it_clang_2019",
+      "widget_id": "widget_clang_2019",
+      "topic": "Attraversamento dell'array",
+      "q": "Cosa stamperà il programma cercando i numeri dispari solo nella parte utilizzata dell'array {2, 3, 4, 5, -1, 7, 9}?",
+      "hint": "Considera solo i numeri dispari che precedono il delimitatore -1.",
+      "options": [
+        "3 5 ",
+        "3 5 7 9 ",
+        "2 4 ",
+        "3 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella parte utilizzata prima di `-1` vi sono i numeri 2, 3, 4, 5. Tra questi, i dispari sono 3 e 5. Gli elementi dispari 7 e 9 si trovano dopo il terminatore e vengono ignorati.",
+        "Errato. 7 e 9 si trovano oltre la parte utilizzata.",
+        "Errato. 2 e 4 sono elementi pari.",
+        "Errato. Anche l'elemento dispari 5 fa parte della parte attiva dell'array."
+      ]
+    },
+    {
+      "id": "it_clang_2020",
+      "widget_id": "widget_clang_2020",
+      "topic": "Attraversamento dell'array",
+      "q": "Cosa stamperà il programma se nell'array manca accidentalmente il marcatore -1, ma viene utilizzato un controllo combinato i < 3 && arr[i] != -1?",
+      "hint": "Rifletti se il limite i < 3 fermerà il ciclo al terzo elemento.",
+      "options": [
+        "10 20 30 ",
+        "Comportamento indefinito (Undefined Behavior)",
+        "0 0 0 ",
+        "10 20 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La condizione `i < 3` protegge dall'accesso oltre i limiti dell'array allocato `arr[3]`. Il ciclo leggerà in modo sicuro tutti e 3 gli elementi: `10 20 30 `.",
+        "Errato. La condizione aggiuntiva `i < 3` previene l'uscita dai limiti della memoria.",
+        "Errato. Nell'array sono memorizzati i valori 10, 20, 30.",
+        "Errato. Anche il terzo elemento 30 verrà stampato, poiché `i = 2 < 3`."
+      ]
+    }
+  ]
+}

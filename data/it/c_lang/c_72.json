@@ -1,0 +1,607 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2201",
+      "widget_id": "widget_clang_2201",
+      "topic": "Perdita di precisione nella conversione da double a float",
+      "q": "Cosa accade quando si assegna il valore di una variabile double ad elevata precisione a una variabile di tipo float?",
+      "hint": "Rifletti sulla differenza di precisione della mantissa tra double (53 bit) e float (24 bit).",
+      "options": [
+        "Si verifica un troncamento/arrotondamento della parte frazionaria a causa della minore precisione della mantissa del tipo float",
+        "Il compilatore genera un errore critico e interrompe la build",
+        "Il valore viene automaticamente arrotondato all'intero più vicino",
+        "Il valore viene azzerato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il tipo `double` utilizza 64 bit (53 bit di mantissa, ~15-17 cifre decimali significative), mentre `float` ne utilizza 32 (24 bit di mantissa, ~6-9 cifre significative). Durante la conversione, le cifre significative in eccesso vengono perse a causa dell'arrotondamento al numero rappresentabile più vicino in `float`.",
+        "Errato. La conversione implicita da `double` a `float` è consentita nel linguaggio C, anche se il compilatore potrebbe generare un avviso (`-Wconversion`).",
+        "Errato. La parte frazionaria viene conservata, ma perde di precisione nelle cifre meno significative.",
+        "Errato. Il numero non viene azzerato se rientra nell'intervallo degli esponenti consentito per il tipo `float`."
+      ]
+    },
+    {
+      "id": "it_clang_2202",
+      "widget_id": "widget_clang_2202",
+      "topic": "Scarto dei bit più significativi (Narrowing Conversion)",
+      "q": "Cosa stamperà il programma assegnando l'intero a 64 bit 0x123456789ABCLL a una variabile di tipo int a 32 bit?",
+      "hint": "Nella riduzione di tipo degli interi, i byte più significativi che non entrano nella dimensione del tipo di destinazione vengono semplicemente scartati.",
+      "options": [
+        "56789abc",
+        "12345678",
+        "123456789abc",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella riduzione del tipo da `long long` (8 byte) a `int` (4 byte), i 4 byte più significativi (`0x1234`) vengono scartati. Nella variabile `b` rimangono solo i 4 byte meno significativi (`0x56789ABC`), che vengono stampati tramite lo specificatore `%x`.",
+        "Errato. Vengono scartati i byte più significativi, non quelli meno significativi.",
+        "Errato. Un tipo `int` a 32 bit non può contenere l'intero numero a 64 bit.",
+        "Errato. I byte meno significativi non sono pari a zero, quindi il valore non si azzera."
+      ]
+    },
+    {
+      "id": "it_clang_2203",
+      "widget_id": "widget_clang_2203",
+      "topic": "Limite di precisione IEEE 754 per il tipo float",
+      "q": "Perché il numero 16777217 (2^24 + 1) non può essere rappresentato esattamente nel tipo float?",
+      "hint": "Fai attenzione al numero di bit riservati alla mantissa nel formato IEEE 754 a singola precisione.",
+      "options": [
+        "La mantissa di float memorizza solo 24 bit di precisione, quindi i numeri interi dispari a partire da 2^24 non possono essere memorizzati esattamente",
+        "Il numero supera il valore massimo supportato dal tipo float",
+        "Il tipo float memorizza esclusivamente numeri pari",
+        "Il numero è troppo piccolo per l'esponente di float"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel formato IEEE 754, il tipo `float` ha 23 bit espliciti e 1 bit implicito per la mantissa (in totale 24 bit). $2^{24} = 16777216$ occupa esattamente 24 bit. Il numero $16777217$ richiede 25 bit di precisione, pertanto viene arrotondato al numero rappresentabile pari più vicino, ossia $16777216$.",
+        "Errato. Il valore massimo di `float` è circa $3.4 \\times 10^{38}$, notevolmente superiore a $16777217$.",
+        "Errato. Il tipo `float` può memorizzare numeri dispari purché rientrino nei 24 bit di precisione.",
+        "Errato. L'esponente del tipo `float` copre agevolmente tali intervalli."
+      ]
+    },
+    {
+      "id": "it_clang_2204",
+      "widget_id": null,
+      "topic": "Flag del compilatore per il tracciamento delle conversioni restrittive",
+      "q": "Quale flag nei compilatori GCC e Clang abilita gli avvisi sulle conversioni restrittive implicite tra tipi (ad esempio da double a int o da int a char)?",
+      "hint": "Cerca un flag il cui nome faccia diretto riferimento alla conversione di tipo.",
+      "options": [
+        "-Wconversion",
+        "-Werror",
+        "-Wall",
+        "-O2",
+        "-Wextra"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-Wconversion` avvisa in presenza di conversioni implicite che potrebbero alterare il valore di una variabile o causare una perdita di precisione (ad esempio da intero a virgola mobile con perdita di precisione, o da un tipo più ampio a uno più stretto).",
+        "Errato. `-Werror` trasforma tutti gli avvisi in errori di compilazione.",
+        "Errato. `-Wall` abilita un insieme base di avvisi, ma `-Wconversion` storicamente non ne fa parte a causa dell'elevato numero di segnalazioni su codice datato.",
+        "Errato. `-O2` è un flag di ottimizzazione del codice.",
+        "Errato. `-Wextra` abilita avvisi aggiuntivi, ma non garantisce il controllo completo fornito da `-Wconversion`."
+      ]
+    },
+    {
+      "id": "it_clang_2205",
+      "widget_id": "widget_clang_2205",
+      "topic": "Restrizione implicita predefinita dei letterali reali",
+      "q": "Di quale tipo è per impostazione predefinita il letterale 3.14159265358979323846 nell'espressione 'float f = 3.14159265358979323846;'?",
+      "hint": "I letterali reali senza suffisso nel linguaggio C sono di tipo double, non float.",
+      "options": [
+        "double (si verificherà una conversione restrittiva implicita a float con un avviso del compilatore)",
+        "float",
+        "long double",
+        "int"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, un letterale reale senza suffisso (ad esempio `3.1415...`) è di tipo `double`. Assegnandolo a una variabile di tipo `float`, si verifica una conversione restrittiva implicita (`double` -> `float`), per la quale il compilatore potrebbe generare un avviso.",
+        "Errato. Affinché il letterale sia di tipo `float`, deve contenere il suffisso `f` o `F` (ad esempio `3.14f`).",
+        "Errato. Il suffisso `L` viene utilizzato per `long double`.",
+        "Errato. I numeri con il punto decimale non sono letterali interi."
+      ]
+    },
+    {
+      "id": "it_clang_2206",
+      "widget_id": null,
+      "topic": "Soppressione degli avvisi sulla perdita di precisione",
+      "q": "Come si può indicare esplicitamente al compilatore che lo sviluppatore è consapevole della perdita di precisione dovuta alla conversione restrittiva e desidera sopprimere l'avviso?",
+      "hint": "Utilizza la sintassi del cast esplicito di tipo (explicit type cast).",
+      "options": [
+        "Utilizzare un cast esplicito di tipo: (tipo_destinazione)valore",
+        "Aggiungere la parola chiave volatile prima della variabile",
+        "Utilizzare la parola chiave static",
+        "Utilizzare l'operatore sizeof"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un cast esplicito di tipo (ad esempio `int i = (int)d;`) informa il compilatore che la conversione è intenzionale, sopprimendo l'avviso `-Wconversion`.",
+        "Errato. `volatile` indica al compilatore di non ottimizzare gli accessi in memoria alla variabile.",
+        "Errato. `static` gestisce la durata di memorizzazione e la visibilità della variabile.",
+        "Errato. `sizeof` restituisce soltanto la dimensione in byte di un tipo o di un'espressione."
+      ]
+    },
+    {
+      "id": "it_clang_2207",
+      "widget_id": "widget_clang_2207",
+      "topic": "Cast di un puntatore a un tipo intero di dimensione inferiore",
+      "q": "A quale rischio porta il cast di un puntatore a 64 bit void* a un tipo int a 32 bit su un'architettura a 64 bit?",
+      "hint": "Confronta la dimensione dei puntatori sui sistemi a 64 bit (8 byte) con quella di un int ordinario (4 byte).",
+      "options": [
+        "Al troncamento dei 32 bit più significativi dell'indirizzo e alla perdita del puntatore originale",
+        "All'estensione automatica del tipo int a 64 bit",
+        "Il codice non verrà compilato in alcuna circostanza",
+        "Alla modifica dei dati puntati dal puntatore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Sui sistemi a 64 bit i puntatori occupano 8 byte, mentre `int` ne occupa 4. Con il cast `(int)p` i 32 bit più significativi dell'indirizzo vanno persi, rendendo non valido il valore in caso di conversione opposta da `int` a puntatore. Per memorizzare indirizzi è necessario utilizzare `intptr_t` o `uintptr_t`.",
+        "Errato. Una variabile di tipo `int` non modifica automaticamente la propria dimensione.",
+        "Errato. Il codice verrà compilato, anche se il compilatore genererà un avviso (ad esempio `-Wpointer-to-int-cast`).",
+        "Errato. La conversione del valore del puntatore non modifica i dati presenti in memoria."
+      ]
+    },
+    {
+      "id": "it_clang_2208",
+      "widget_id": "widget_clang_2208",
+      "topic": "Eliminazione della parte frazionaria nei valori double negativi",
+      "q": "Quale valore assumerà la variabile int i in seguito all'assegnazione del valore double d = -3.75?",
+      "hint": "Durante la conversione di un numero reale a intero si verifica il troncamento verso lo zero (truncation towards zero).",
+      "options": [
+        "-3",
+        "-4",
+        "-3.75",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, nella conversione da un tipo a virgola mobile a un tipo intero, la parte frazionaria viene eliminata (troncamento verso lo zero). Per `-3.75` il risultato è `-3`.",
+        "Errato. L'arrotondamento verso il basso a `-4` (floor) non avviene automaticamente.",
+        "Errato. Un tipo `int` non può contenere la parte frazionaria.",
+        "Errato. Viene eliminata solo la parte frazionaria, la parte intera si conserva."
+      ]
+    },
+    {
+      "id": "it_clang_2209",
+      "widget_id": null,
+      "topic": "Overflow prima della conversione di tipo",
+      "q": "Perché l'espressione 'float f = 300000 * 300000;' produce un risultato errato, nonostante float possa contenere 90 000 000 000?",
+      "hint": "Fai attenzione al tipo degli operandi nell'operazione di moltiplicazione PRIMA dell'assegnazione.",
+      "options": [
+        "La moltiplicazione avviene nel tipo int a 32 bit e causa un overflow intero PRIMA dell'assegnazione a float",
+        "Il tipo float non può memorizzare numeri superiori a 1 milione",
+        "Il compilatore esegue automaticamente la moltiplicazione a virgola mobile",
+        "L'operatore * è vietato per i numeri di grandi dimensioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I letterali `300000` sono di tipo `int`. La moltiplicazione `300000 * 300000` viene calcolata nel tipo `int`, dove il massimo rappresentabile è $2147483647$. Il risultato di $90 \\cdot 10^9$ non entra in un `int` e genera un overflow (Undefined Behavior) prima che il valore venga convertito a `float`.",
+        "Errato. `float` può contenere valori dell'ordine di $10^{38}$.",
+        "Errato. La conversione automatica a `float` si verificherebbe solo se almeno uno degli operandi fosse originariamente di tipo `float` (ad esempio `300000.0f`).",
+        "Errato. L'operatore di moltiplicazione è corretto, il problema risiede esclusivamente nel tipo degli operandi."
+      ]
+    },
+    {
+      "id": "it_clang_2210",
+      "widget_id": "widget_clang_2210",
+      "topic": "Cast esplicito di tipo e perdita di dati a runtime",
+      "q": "Cosa stamperà il programma nel confronto b == a, se 'int a = 1000' e 'char b = (char)a'?",
+      "hint": "Un cast esplicito nasconde l'avviso del compilatore, ma non evita la perdita fisica dei bit causata dal troncamento.",
+      "options": [
+        "0",
+        "1",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'intervallo di un `char` a 8 bit va da -128 a 127 (o da 0 a 255). Il numero $1000$ non entra in un `char`. Nella variabile `b` viene conservato solo il byte meno significativo: $1000 \\pmod{256} = -24$ (con signed char). Nel confronto `b == a`, `b` viene promosso a `int` (-24), valore diverso da 1000. Il risultato è 0.",
+        "Errato. La perdita di dati si verifica ugualmente, nonostante il cast esplicito `(char)`.",
+        "Errato. Il cast esplicito di tipo previene l'errore di compilazione.",
+        "Errato. Il troncamento a signed char dipende dall'implementazione o consiste nel taglio dei bit, ma l'operazione di confronto restituisce un risultato falso ben definito (0)."
+      ]
+    },
+    {
+      "id": "it_clang_2211",
+      "widget_id": "widget_clang_2211",
+      "topic": "Priorità delle parentesi nel cast esplicito di tipo",
+      "q": "Cosa stamperà il programma eseguendo l'espressione (double)(a / b)?",
+      "hint": "Fai attenzione alle parentesi: il cast viene applicato al risultato dell'operazione già eseguita all'interno delle parentesi.",
+      "options": [
+        "3.00",
+        "3.50",
+        "3.5",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A causa delle parentesi, viene prima eseguita la divisione intera `a / b` tra due `int` ($7 / 2 = 3$). Successivamente, l'intero `3` viene convertito esplicitamente in `double` (`3.0`). Lo specificatore `%.2f` stampa `3.00`.",
+        "Errato. Si otterrebbe 3.50 scrivendo `(double)a / b`, dove il cast precede la divisione.",
+        "Errato. L'output viene formattato con una precisione di due cifre decimali (`%.2f`).",
+        "Errato. Il codice è sintatticamente del tutto corretto."
+      ]
+    },
+    {
+      "id": "it_clang_2212",
+      "widget_id": "widget_clang_2212",
+      "topic": "Cast dei tipi di puntatore per l'accesso a livello di byte",
+      "q": "Per quale scopo si utilizza in C il cast esplicito di un puntatore del tipo (char *)&num?",
+      "hint": "Un puntatore a char consente di accedere ai singoli byte di qualsiasi oggetto in memoria.",
+      "options": [
+        "Per l'accesso a livello di byte alla rappresentazione interna della variabile in memoria",
+        "Per la conversione automatica di un numero in una stringa di testo",
+        "Per velocizzare i calcoli a livello di processore",
+        "Questo causerà un errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il cast di un puntatore a `char*` (o `unsigned char*`) è consentito dallo standard per ispezionare i byte grezzi della memoria di un oggetto (ad esempio per verificare l'ordine dei byte Little-Endian/Big-Endian).",
+        "Errato. Il cast del puntatore non converte il numero in una stringa ASCII.",
+        "Errato. Il cast esplicito del puntatore modifica solo l'interpretazione dei tipi da parte del compilatore e non velocizza le operazioni aritmetiche.",
+        "Errato. Il cast `(char *)&num` è sintatticamente valido."
+      ]
+    },
+    {
+      "id": "it_clang_2213",
+      "widget_id": "widget_clang_2213",
+      "topic": "Troncamento esplicito da tipo a virgola mobile a int",
+      "q": "A quanto equivale la variabile y come risultato dell'esecuzione dei cast espliciti (int)5.7 + (int)2.8?",
+      "hint": "Il cast esplicito a int elimina la parte frazionaria di ciascun operando prima dell'esecuzione dell'operazione di addizione.",
+      "options": [
+        "7",
+        "8",
+        "8.5",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `(int)5.7` viene troncato a `5` e `(int)2.8` a `2`. L'addizione `5 + 2` dà `7`.",
+        "Errato. Si otterrebbe 8 con un arrotondamento matematico dei numeri prima dell'addizione o con `(int)(5.7 + 2.8)`.",
+        "Errato. Il risultato dell'addizione tra due `int` è un numero intero senza parte frazionaria.",
+        "Errato. Le parti frazionarie vengono eliminate e le parti intere sommate."
+      ]
+    },
+    {
+      "id": "it_clang_2214",
+      "widget_id": null,
+      "topic": "Cast di tipo e lvalue",
+      "q": "È possibile nel linguaggio C assegnare un valore al risultato di un cast esplicito di tipo, ad esempio scrivendo '(int)x = 10;'?",
+      "hint": "Ricorda la differenza tra lvalue (una posizione in memoria scrivibile) e rvalue (un valore temporaneo di un'espressione).",
+      "options": [
+        "No, il risultato dell'operazione di cast è un rvalue e non può trovarsi a sinistra dell'operatore di assegnazione",
+        "Sì, a condizione che la variabile x sia di tipo float",
+        "Sì, il risultato di un cast è sempre un lvalue",
+        "Sì, ma solo quando si converte al tipo void*"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel linguaggio C il risultato dell'operazione di cast `(tipo)expr` è un `rvalue` (un valore temporaneo) e non un `lvalue`. Di conseguenza non gli si può assegnare un valore (generando l'errore di compilazione `expression is not assignable`).",
+        "Errato. Il tipo originale della variabile non cambia il fatto che il cast crei un rvalue.",
+        "Errato. Un cast in C non mantiene lo stato di lvalue.",
+        "Errato. Anche il cast a `void*` crea un valore temporaneo di puntatore."
+      ]
+    },
+    {
+      "id": "it_clang_2215",
+      "widget_id": "widget_clang_2215",
+      "topic": "Cast a void per sopprimere gli avvisi",
+      "q": "Qual è lo scopo della struttura (void)x; all'interno di una funzione?",
+      "hint": "Questa sintassi viene utilizzata per informare esplicitamente il compilatore che una variabile è intenzionalmente inutilizzata.",
+      "options": [
+        "Sopprimere l'avviso del compilatore relativo a una variabile o parametro non utilizzato",
+        "Liberare la memoria occupata dalla variabile x",
+        "Azzerare il valore della variabile x",
+        "Rimuovere forzatamente la variabile dai registri del processore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `(void)x;` non genera codice eseguibile, ma segnala al compilatore che la variabile `x` viene volutamente ignorata, prevenendo avvisi come `-Wunused-parameter` / `-Wunused-variable`.",
+        "Errato. Il cast a `void` non ha alcun effetto sulla gestione della memoria.",
+        "Errato. Il valore di `x` non viene modificato in alcun modo.",
+        "Errato. La variabile conserva la sua posizione nello stack o nei registri all'interno dello scope."
+      ]
+    },
+    {
+      "id": "it_clang_2216",
+      "widget_id": null,
+      "topic": "Priorità dell'operatore unario di cast",
+      "q": "Quale priorità possiede l'operatore di cast esplicito (tipo) rispetto alle operazioni aritmetiche binarie (+, -, *, /)?",
+      "hint": "L'operatore di cast è un operatore unario.",
+      "options": [
+        "Priorità più alta (viene eseguito prima delle operazioni binarie)",
+        "Priorità più bassa (viene eseguito dopo le operazioni binarie)",
+        "Stessa priorità di moltiplicazione e divisione",
+        "La priorità dipende dal tipo di destinazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il cast esplicito `(tipo)` è un operatore unario. Gli operatori unari hanno una priorità superiore a tutti gli operatori aritmetici binari. Pertanto `(double)a / b` converte prima `a` in `double` e solo successivamente esegue la divisione.",
+        "Errato. Il cast unario viene eseguito prima dell'applicazione delle operazioni binarie.",
+        "Errato. Gli operatori unari hanno priorità strettamente superiore rispetto a moltiplicazione e divisione binarie.",
+        "Errato. La priorità dell'operazione sintattica non dipende dal tipo scelto."
+      ]
+    },
+    {
+      "id": "it_clang_2217",
+      "widget_id": "widget_clang_2217",
+      "topic": "Rimozione del qualificatore const tramite cast",
+      "q": "Cosa fa il cast esplicito (int *)ptr, dove ptr è di tipo const int *?",
+      "hint": "Il cast rimuove esplicitamente il qualificatore di costanza (const) dal tipo del puntatore.",
+      "options": [
+        "Rimuove il qualificatore const dal tipo del puntatore",
+        "Crea una nuova copia costante dell'oggetto",
+        "Genera un errore di compilazione durante la fase di build",
+        "Rende automaticamente modificabile in memoria l'oggetto originale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il cast `(int *)ptr` rimuove temporaneamente lo specificatore `const`, restituendo un normale puntatore `int*`. Tuttavia, il tentativo di modificare tramite esso un oggetto dichiarato in origine come `const` causa un Undefined Behavior.",
+        "Errato. Non viene creata alcuna copia dei dati in memoria.",
+        "Errato. Il cast esplicito consente la conversione di tipo ed elimina l'errore o l'avviso di incompatibilità dei tipi.",
+        "Errato. Se l'oggetto si trova in una memoria di sola lettura, il cast non ne modifica gli attributi."
+      ]
+    },
+    {
+      "id": "it_clang_2218",
+      "widget_id": null,
+      "topic": "Problemi di allineamento nel cast dei puntatori (Unaligned Pointer Cast)",
+      "q": "A quale problema può portare il cast di un puntatore char* a int* con successiva dereferenziazione, se l'indirizzo non è allineato al limite di 4 byte?",
+      "hint": "Alcune architetture di processori richiedono l'allineamento degli indirizzi per la lettura di tipi di dati multibyte.",
+      "options": [
+        "A un guasto hardware/eccezione di allineamento (Bus Error) o a un calo di prestazioni",
+        "Il compilatore correggerà automaticamente l'indirizzo in memoria a runtime",
+        "All'azzeramento automatico del valore letto",
+        "Non può portare ad alcun problema"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Su molte architetture (ad esempio ARM o SPARC con allineamento rigido), l'accesso a un `int` (4 byte) a un indirizzo non multiplo di 4 genera un errore hardware (Bus Error / Alignment Fault). Su x86 questo comporta un degrado delle prestazioni.",
+        "Errato. Il compilatore non genera controlli nascosti dell'indirizzo durante la dereferenziazione di puntatori arbitrari.",
+        "Errato. La memoria non viene azzerata.",
+        "Errato. Si tratta di un classico esempio di Undefined Behavior dovuto alla violazione dei requisiti di allineamento."
+      ]
+    },
+    {
+      "id": "it_clang_2219",
+      "widget_id": "widget_clang_2219",
+      "topic": "Cast esplicito da signed a unsigned char",
+      "q": "Cosa stamperà il programma alla verifica ((unsigned char)a == 255) per la variabile int a = -1?",
+      "hint": "Nel cast da signed int a unsigned char il valore viene convertito modulo $2^8 = 256$.",
+      "options": [
+        "1",
+        "0",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con il cast di `-1` a `unsigned char` a 8 bit si verifica la conversione modulo 256: $-1 \\pmod{256} = 255$ (`0xFF`). L'espressione `255 == 255` è vera, viene stampato `1`.",
+        "Errato. A causa delle regole di overflow per i tipi senza segno, `-1` si trasforma nel valore massimo del tipo `unsigned char` (255).",
+        "Errato. Il cast è assolutamente legittimo.",
+        "Errato. La conversione di interi negativi in tipi interi senza segno è rigorosamente disciplinata dallo standard C."
+      ]
+    },
+    {
+      "id": "it_clang_2220",
+      "widget_id": "widget_clang_2220",
+      "topic": "Dereferenziazione di un puntatore generico void*",
+      "q": "Perché è necessario un cast esplicito (int *)p quando si lavora con un puntatore generico void *p prima di eseguire la dereferenziazione?",
+      "hint": "Un puntatore void* non contiene informazioni sul tipo e sulla dimensione dell'oggetto indirizzato.",
+      "options": [
+        "Un puntatore void* non può essere dereferenziato direttamente; il cast specifica il tipo e la dimensione dei dati da leggere",
+        "È richiesto solo per il corretto funzionamento della funzione printf",
+        "Per ottimizzare la velocità di lettura dalla memoria",
+        "Per l'allocazione automatica di memoria per il puntatore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il puntatore `void*` punta a un tipo sconosciuto, perciò il compilatore non sa quanti byte leggere durante la dereferenziazione (`*p` causa errore di compilazione). Il cast `(int *)p` informa il compilatore che all'indirizzo è presente un `int`.",
+        "Errato. È una regola base del linguaggio C, non una particolarità della funzione `printf`.",
+        "Errato. Il cast di tipo non ottimizza la velocità, ma rende l'operazione sintatticamente consentita.",
+        "Errato. Il cast del puntatore non alloca memoria dinamica."
+      ]
+    },
+    {
+      "id": "it_clang_2221",
+      "widget_id": "widget_clang_2221",
+      "topic": "Priorità del cast rispetto alla divisione",
+      "q": "Cosa stamperà il programma valutando l'espressione (float)a / b, dove a = 7 e b = 2?",
+      "hint": "L'operatore unario di cast ha una priorità superiore rispetto all'operatore binario di divisione.",
+      "options": [
+        "3.5",
+        "3.0",
+        "3",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il cast `(float)a` viene eseguito prima della divisione `/`. La variabile `a` viene convertita in `7.0f`. Successivamente `7.0f / 2` promuove anche `2` a `float`, portando a una divisione reale con risultato `3.5`.",
+        "Errato. La divisione intera $7/2 = 3$ si verificherebbe solo in presenza di parentesi `(float)(a / b)`.",
+        "Errato. Il risultato dell'espressione è di tipo `float` e viene stampato dallo specificatore `%.1f`.",
+        "Errato. Il cast esplicito seguito da divisione è sintatticamente del tutto corretto."
+      ]
+    },
+    {
+      "id": "it_clang_2222",
+      "widget_id": "widget_clang_2222",
+      "topic": "Influenza delle parentesi sull'ordine di cast",
+      "q": "Qual è il risultato dell'espressione (double)(a * b), se a = 5 e b = 2 sono di tipo int?",
+      "hint": "Fai attenzione alle parentesi: il cast viene applicato al risultato dell'espressione già calcolata all'interno delle parentesi.",
+      "options": [
+        "10.0",
+        "10.000000",
+        "10",
+        "10.5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A causa delle parentesi viene prima calcolato `a * b` tra due `int` ($5 \\times 2 = 10$). Poi l'intero `10` viene convertito a `double` (`10.0`). Lo specificatore `%.1f` stampa `10.0`.",
+        "Errato. Lo specificatore `%.1f` limita l'output a una sola cifra decimale.",
+        "Errato. Il cast modifica il tipo dell'espressione in `double`, perciò viene stampato un numero a virgola mobile.",
+        "Errato. La moltiplicazione $5 \\times 2$ tra interi non produce alcuna parte frazionaria."
+      ]
+    },
+    {
+      "id": "it_clang_2223",
+      "widget_id": "widget_clang_2223",
+      "topic": "Priorità del cast rispetto all'addizione",
+      "q": "Cosa stamperà il codice valutando l'espressione (int)a + b, dove a = 3.7 (double) e b = 2.4 (double)?",
+      "hint": "L'operatore di cast converte soltanto la variabile 'a' prima che avvenga l'addizione con 'b'.",
+      "options": [
+        "5.4",
+        "6.1",
+        "6.0",
+        "5.0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il cast `(int)a` si applica solo ad `a` e tronca `3.7` a `3`. Successivamente viene eseguita l'addizione `3 + 2.4`. Per le regole delle conversioni implicite `3` viene esteso a `3.0` e il risultato è `5.4`.",
+        "Errato. 6.1 si otterrebbe con una normale addizione `3.7 + 2.4` senza il troncamento di `a`.",
+        "Errato. `(int)(a + b)` darebbe `(int)6.1 = 6`, ma qui il cast è applicato prima dell'addizione.",
+        "Errato. Il secondo addendo `b` mantiene la propria parte frazionaria."
+      ]
+    },
+    {
+      "id": "it_clang_2224",
+      "widget_id": null,
+      "topic": "Classe di priorità dell'operatore di cast",
+      "q": "A quale classe di priorità degli operatori appartiene il cast esplicito (tipo) nel linguaggio C?",
+      "hint": "Il cast di tipo appartiene allo stesso gruppo degli operatori unari più +, meno -, NOT bit a bit ~ e dereferenziazione *.",
+      "options": [
+        "Operatori unari (alta priorità, superiore agli aritmetici binari)",
+        "Operatori moltiplicativi (pari priorità a * e /)",
+        "Operatori additivi (pari priorità a + e -)",
+        "Espressioni primarie (massima priorità insieme alle parentesi)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore di cast `(tipo)` fa parte del gruppo degli operatori unari (insieme a `-`, `+`, `!`, `~`, `*`, `&`, `sizeof`). Gli operatori unari hanno priorità più alta di qualsiasi operatore binario aritmetico, bit a bit o logico.",
+        "Errato. Il cast unario ha priorità superiore rispetto a moltiplicazione/divisione binarie.",
+        "Errato. Il cast viene eseguito rigorosamente prima di addizione e sottrazione binarie.",
+        "Errato. Le espressioni primarie (parentesi, identificatori, letterali) hanno la massima priorità e vengono eseguite prima del cast."
+      ]
+    },
+    {
+      "id": "it_clang_2225",
+      "widget_id": "widget_clang_2225",
+      "topic": "Priorità del cast rispetto all'operatore di modulo %",
+      "q": "Cosa accadrà durante la valutazione di (int)a % b, dove a = 9.8 (double) e b = 4 (int)?",
+      "hint": "Il cast verrà eseguito prima dell'operatore %, trasformando il numero reale in un intero.",
+      "options": [
+        "1",
+        "1.8",
+        "2",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il cast `(int)a` viene eseguito per primo, troncando `9.8` a `9`. L'espressione diventa `9 % 4`, che restituisce come resto `1`. Non vi è errore di compilazione poiché l'operando sinistro di `%` è diventato `int`.",
+        "Errato. L'operatore `%` non funziona con resti reali.",
+        "Errato. $9 / 4 = 2$ con resto 1, non 2.",
+        "Errato. Senza il cast (`a % b`) si verificherebbe un errore di compilazione, ma il cast risolve il problema."
+      ]
+    },
+    {
+      "id": "it_clang_2226",
+      "widget_id": "widget_clang_2226",
+      "topic": "Priorità del cast rispetto alle operazioni bit a bit",
+      "q": "Cosa stamperà il programma valutando l'espressione (unsigned char)a & 0x0F, se a = 0x1234?",
+      "hint": "Il cast di tipo viene eseguito prima dell'operazione bit a bit AND (&).",
+      "options": [
+        "4",
+        "34",
+        "1234",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Prima il cast unario `(unsigned char)0x1234` scarta il byte più significativo, lasciando `0x34`. Poi viene eseguita l'operazione bit a bit AND: `0x34 & 0x0F = 0x04`. Lo specificatore `%x` stampa `4`.",
+        "Errato. `0x34` si otterrebbe senza eseguire l'operazione `& 0x0F`.",
+        "Errato. Il cast scarta il byte più significativo `0x12` prima della mascheratura.",
+        "Errato. Il nibble meno significativo contiene il valore `4`, quindi il risultato non è zero."
+      ]
+    },
+    {
+      "id": "it_clang_2227",
+      "widget_id": "widget_clang_2227",
+      "topic": "Associatività e priorità nelle catene di operazioni moltiplicative",
+      "q": "A quanto equivale il risultato dell'espressione (double)a / b * c con a = 5, b = 2, c = 2 (tutti int)?",
+      "hint": "Le operazioni di divisione e moltiplicazione hanno la stessa priorità e vengono calcolate da sinistra a destra dopo il cast.",
+      "options": [
+        "5.0",
+        "4.0",
+        "2.5",
+        "5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Prima `a` viene convertito in `double` (`5.0`). Successivamente da sinistra a destra: `5.0 / 2 = 2.5` (divisione reale). Poi `2.5 * 2 = 5.0`. Viene stampato `5.0`.",
+        "Errato. L'ordine di calcolo di `*` e `/` è da sinistra a destra, perciò viene prima eseguita la divisione e non la moltiplicazione $b * c$.",
+        "Errato. La moltiplicazione per `c` (2) raddoppia il risultato `2.5` a `5.0`.",
+        "Errato. L'output è formattato come numero reale `5.0`."
+      ]
+    },
+    {
+      "id": "it_clang_2228",
+      "widget_id": "widget_clang_2228",
+      "topic": "Associatività di più operatori di cast",
+      "q": "Qual è l'ordine di applicazione nel cast esplicito sequenziale (double)(int)d per d = 3.9?",
+      "hint": "Gli operatori unari di cast hanno associatività da destra a sinistra.",
+      "options": [
+        "3.0",
+        "3.9",
+        "3",
+        "4.0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli operatori unari hanno associatività da destra a sinistra. Viene eseguito prima il cast più vicino al valore `(int)3.9`, trasformandolo in `3`. Successivamente al risultato si applica `(double)3`, ottenendo `3.0`.",
+        "Errato. `(int)` elimina la parte frazionaria `.9`, che non può più essere recuperata con un secondo cast a `double`.",
+        "Errato. Il cast finale `(double)` modifica il tipo dell'espressione in `double`, stampando `3.0`.",
+        "Errato. L'arrotondamento matematico a 4.0 non avviene."
+      ]
+    },
+    {
+      "id": "it_clang_2229",
+      "widget_id": "widget_clang_2229",
+      "topic": "Priorità di cast e dereferenziazione rispetto all'addizione",
+      "q": "Come viene calcolata l'espressione *(int *)p + 5, dove p è void* a int con valore 100?",
+      "hint": "Il cast e la dereferenziazione vengono eseguiti da destra a sinistra prima dell'addizione binaria.",
+      "options": [
+        "105",
+        "100",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli operatori unari `(int *)` e `*` hanno la stessa priorità e associatività da destra a sinistra: prima `p` viene convertito a `int*`, poi viene dereferenziato `*` leggendo `100`. Solo successivamente si esegue l'addizione binaria `100 + 5 = 105`.",
+        "Errato. L'addizione `+ 5` viene calcolata correttamente dopo la dereferenziazione.",
+        "Errato. L'espressione è sintatticamente del tutto valida.",
+        "Errato. Il puntatore è valido e la dereferenziazione dopo il cast è definita dallo standard."
+      ]
+    },
+    {
+      "id": "it_clang_2230",
+      "widget_id": null,
+      "topic": "Priorità del cast rispetto agli operatori di accesso ai membri (. e ->)",
+      "q": "Quale delle seguenti espressioni causerà un errore di compilazione poiché gli operatori di accesso (. e ->) hanno priorità più alta del cast unario?",
+      "hint": "Fai attenzione alla priorità degli operatori di accesso ai membri di una struttura (. e ->) rispetto al cast unario.",
+      "options": [
+        "(struct S *)p->field — tentativo di accedere al campo field di p prima dell'esecuzione del cast di tipo",
+        "(double)a / b — tentativo di dividere il cast di tipo per b",
+        "(int)a % b — tentativo di calcolare il resto dopo il troncamento di a",
+        "(float)(a + b) — cast del risultato dell'addizione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `->` ha la priorità massima (operatori primari) e viene eseguito PRIMA del cast unario `(struct S *)`. L'espressione `(struct S *)p->field` tenterà prima di accedere a `p->field`, generando un errore di compilazione in quanto `p` è di tipo `void*`. La forma corretta è: `((struct S *)p)->field`.",
+        "Errato. `(double)a / b` converte correttamente `a` in `double` prima della divisione.",
+        "Errato. `(int)a % b` converte prima `a` in `int`, operazione del tutto valida.",
+        "Errato. `(float)(a + b)` calcola prima l'addizione tra parentesi e poi esegue il cast."
+      ]
+    }
+  ]
+}

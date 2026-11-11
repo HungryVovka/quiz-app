@@ -1,0 +1,605 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_1781",
+      "widget_id": "widget_clang_1781",
+      "topic": "Riempimento di un array con tappo",
+      "q": "Cosa conterrà l'array arr dopo l'inserimento da tastiera dei valori 10 20 30 -1?",
+      "hint": "Pensate a quale indice si fermerà il ciclo quando viene rilevato il marcatore di interruzione.",
+      "options": [
+        "L'array memorizzerà {10, 20, 30, -1} con il tappo all'indice 3",
+        "L'array memorizzerà {10, 20, 30, -1, -1}",
+        "Si verificherà un'uscita dai limiti dell'array",
+        "L'array rimarrà vuoto, poiché -1 ha terminato l'esecuzione del programma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I primi 3 valori vengono scritti negli indici 0, 1 e 2. L'input si interrompe sul marcatore -1, dopodiché l'istruzione arr[i] = -1 imposta esplicitamente il tappo all'indice 3.",
+        "Errato. Il marcatore -1 dall'input non viene scritto all'interno del ciclo grazie alla condizione di uscita break.",
+        "Errato. La condizione i < MAX - 1 garantisce correttamente lo spazio per l'elemento di terminazione.",
+        "Errato. Il ciclo farà in tempo a leggere e salvare i numeri 10, 20 e 30."
+      ]
+    },
+    {
+      "id": "it_clang_1782",
+      "widget_id": "widget_clang_1782",
+      "topic": "Riempimento di un array con tappo",
+      "q": "A quale conseguenza porterà l'inserimento da tastiera dei valori 10 20 30 40 -1 durante l'esecuzione di questo codice?",
+      "hint": "Verificate se il numero di iterazioni del ciclo è limitato dalla dimensione della memoria allocata.",
+      "options": [
+        "Si verificherà una scrittura oltre i limiti del buffer (Buffer Overflow) a causa della mancanza di controllo sulla capacità dell'array all'interno del ciclo",
+        "Il programma ignorerà correttamente i numeri 30 e 40 e salverà solo i primi due",
+        "Il compilatore espanderà automaticamente l'array arr",
+        "Il ciclo entrerà in un loop infinito sul valore 30"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo controlla solo val != -1 e continua fino all'inserimento del marcatore. Inserendo 4 o più elementi in un array di 3 celle, si verificherà un'uscita dai limiti dell'array.",
+        "Errato. Manca il controllo sul numero di elementi inseriti nella condizione del while.",
+        "Errato. In C gli array a dimensione fissa non cambiano dimensione a runtime.",
+        "Errato. Il ciclo continuerà semplicemente a riempire la memoria oltre i limiti di arr."
+      ]
+    },
+    {
+      "id": "it_clang_1783",
+      "widget_id": "widget_clang_1783",
+      "topic": "Riempimento di un array con tappo",
+      "q": "Quanti caratteri di testo utile (senza contare lo zero terminatore) potrà leggere la funzione fgets(str, 5, stdin)?",
+      "hint": "Ricordate quanti byte fgets riserva sempre per la terminazione automatica della stringa.",
+      "options": [
+        "Al massimo 4 caratteri, poiché il 5° byte è sempre riservato per il terminatore nullo '\\0'",
+        "Esattamente 5 caratteri",
+        "Al massimo 3 caratteri",
+        "Dipende dal numero di spazi inseriti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione fgets garantisce sempre la terminazione della stringa con uno zero, quindi legge al massimo N - 1 caratteri (cioè 4).",
+        "Errato. Se si leggessero 5 caratteri, non rimarrebbe spazio per il tappo '\\0'.",
+        "Errato. Con un buffer di dimensione 5 si possono inserire fino a 4 caratteri utili.",
+        "Errato. La funzione fgets legge qualsiasi carattere, inclusi gli spazi."
+      ]
+    },
+    {
+      "id": "it_clang_1784",
+      "widget_id": "widget_clang_1784",
+      "topic": "Riempimento di un array con tappo",
+      "q": "Quale errore critico è stato commesso nella creazione dell'array con tappo in questo frammento di codice?",
+      "hint": "Pensate se questa logica garantisce la scrittura esplicita del marcatore finale nell'array.",
+      "options": [
+        "Dopo l'uscita dal ciclo, il marcatore di fine (arr[count] = -1) non viene scritto nell'array",
+        "Il ciclo while dovrebbe iniziare con count = 1",
+        "La lettura tramite scanf non può funzionare all'interno di un ciclo while",
+        "La dimensione dell'array arr non è sufficientemente grande per registrare 9 elementi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'input si arresta quando si riceve -1, ma il valore -1 non viene salvato in arr. Senza la successiva scrittura esplicita arr[count] = -1, l'array rimarrà privo di tappo.",
+        "Errato. L'indicizzazione degli array in C inizia da 0.",
+        "Errato. L'uso di scanf nella condizione del while è assolutamente corretto.",
+        "Errato. Per 9 elementi e 1 tappo, un array di 10 celle è sufficiente."
+      ]
+    },
+    {
+      "id": "it_clang_1785",
+      "widget_id": "widget_clang_1785",
+      "topic": "Riempimento di un array con tappo",
+      "q": "Quale sarà lo stato dell'array arr se la prima stringa inserita da tastiera è -1?",
+      "hint": "Osservate quale valore si troverà all'indice 0 all'uscita immediata dal ciclo.",
+      "options": [
+        "L'array sarà un corretto «array vuoto» con tappo: arr[0] diventerà uguale a -1",
+        "L'array diventerà non valido, poiché il marcatore deve trovarsi dopo almeno un elemento",
+        "Si verificherà un errore di programma durante l'esecuzione di arr[i] = -1",
+        "La variabile i diventerà uguale a -1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'input si interromperà subito, i rimarrà uguale a 0 e l'istruzione arr[0] = -1 scriverà il tappo nella primissima cella.",
+        "Errato. Un array vuoto con tappo al primo indice è una struttura standard e valida.",
+        "Errato. La scrittura all'indice arr[0] è del tutto legittima.",
+        "Errato. L'inizializzazione di i è 0 e non viene decrementata."
+      ]
+    },
+    {
+      "id": "it_clang_1786",
+      "widget_id": "widget_clang_1786",
+      "topic": "Riempimento di un array con tappo",
+      "q": "Perché quando si legge una stringa tramite fgets si usa spesso la sostituzione buf[len - 1] = '\\0'?",
+      "hint": "Ricordate quale carattere di servizio di input fgets conserva nella stringa prima del terminatore nullo.",
+      "options": [
+        "Per rimuovere il carattere di nuova riga '\\n', che fgets salva automaticamente nel buffer quando si preme Invio",
+        "Per ripulire tutto il resto del buffer di memoria",
+        "Senza questo la chiamata a printf non potrà stampare la stringa",
+        "Questo è necessario per liberare correttamente la memoria tramite free"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza di scanf, fgets conserva il carattere di nuova riga '\\n' prima di '\\0'. Sostituire '\\n' con '\\0' sposta il terminatore nullo di 1 posizione a sinistra ed elimina il ritorno a capo superfluo.",
+        "Errato. L'operazione sostituisce esattamente un byte, non l'intero buffer.",
+        "Errato. printf stamperà la stringa anche con '\\n', ma con un ritorno a capo non desiderato.",
+        "Errato. L'array buf è allocato sullo stack, non si applica la chiamata a free."
+      ]
+    },
+    {
+      "id": "it_clang_1787",
+      "widget_id": "widget_clang_1787",
+      "topic": "Riempimento di un array con tappo",
+      "q": "Cosa funge da tappo per l'array di puntatori words nell'esempio fornito?",
+      "hint": "Pensate a quale valore speciale viene utilizzato per indicare la fine dell'elenco dei puntatori.",
+      "options": [
+        "Il puntatore NULL, scritto esplicitamente alla fine dell'array (words[i] = NULL)",
+        "La stringa \"STOP\"",
+        "Il numero -1",
+        "Il terminatore nullo '\\0' all'interno della stringa buffer"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per gli array di puntatori il ruolo di tappo è svolto dal puntatore nullo `NULL`. L'espressione words[i] = NULL garantisce la corretta terminazione dell'array.",
+        "Errato. La stringa \"STOP\" serve come condizione di interruzione dell'input, ma non viene salvata nell'array words.",
+        "Errato. Per i puntatori si usa NULL, non -1.",
+        "Errato. '\\0' termina le singole stringhe, non l'intero array di puntatori words."
+      ]
+    },
+    {
+      "id": "it_clang_1788",
+      "widget_id": "widget_clang_1788",
+      "topic": "Riempimento di un array con tappo",
+      "q": "In quale scenario di input in questo codice si verificherà un'uscita dai limiti dell'array (scrittura all'indirizzo arr[CAPACITY])?",
+      "hint": "Fai attenzione alla logica della condizione del ciclo e al valore del contatore al momento della scrittura del terminatore.",
+      "options": [
+        "Se l'utente inserisce 5 numeri diversi da zero di seguito senza inserire 0",
+        "Se l'utente inserisce subito 0",
+        "Se l'utente inserisce un numero negativo",
+        "L'uscita dai limiti è impossibile in qualsiasi condizione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se si inseriscono 5 numeri (ad esempio 1 2 3 4 5), il ciclo eseguirà 5 iterazioni e il contatore i diventerà pari a 5. L'operazione arr[i] = 0 tenterà di scrivere in arr[5], uscendo dai limiti di arr[5].",
+        "Errato. Se si inserisce 0 subito, i rimarrà 0 e la scrittura avverrà in arr[0].",
+        "Errato. I numeri negativi vengono letti come normali dati, a meno che non siano pari a 0.",
+        "Errato. L'errore «Off-by-one» si verifica a causa della condizione i < CAPACITY invece di i < CAPACITY - 1."
+      ]
+    },
+    {
+      "id": "it_clang_1789",
+      "widget_id": "widget_clang_1789",
+      "topic": "Riempimento di un array con tappo",
+      "q": "Cosa succederà al riempimento dell'array data se l'utente inserisce un carattere non valido (ad esempio la lettera 'a')?",
+      "hint": "Ricordate quale valore restituisce scanf in caso di mancata corrispondenza tra lo specificatore di tipo e l'input.",
+      "options": [
+        "scanf restituirà 0, il ciclo si interromperà e nella posizione corrente i verrà scritto il marcatore -1",
+        "Il carattere 'a' verrà automaticamente convertito nel numero 0 e salvato nell'array",
+        "Il programma andrà in crash con un errore di Segmentation Fault alla chiamata di scanf",
+        "Il ciclo diventerà infinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il controllo `scanf(...) != 1` si attiverà in caso di errore di formattazione. Il ciclo terminerà correttamente e il codice scriverà -1 all'indice i, creando un array valido.",
+        "Errato. scanf non converte automaticamente l'input non numerico.",
+        "Errato. L'input non valido causa un errore di lettura, non un Segmentation Fault.",
+        "Errato. L'istruzione break interrompe immediatamente l'esecuzione del ciclo."
+      ]
+    },
+    {
+      "id": "it_clang_1790",
+      "widget_id": "widget_clang_1790",
+      "topic": "Riempimento di un array con tappo",
+      "q": "In cosa differisce il processo di salvataggio del marcatore -1 in questo ciclo do-while rispetto al ciclo while?",
+      "hint": "Osservate se il corpo del ciclo do-while viene eseguito prima del controllo della condizione di uscita.",
+      "options": [
+        "Il valore -1 viene letto direttamente nella cella dell'array arr[i] prima del controllo della condizione, quindi non è richiesta una scrittura aggiuntiva del marcatore dopo il ciclo",
+        "Il valore -1 viene ignorato e non entra nell'array",
+        "Il ciclo non si fermerà mai all'inserimento di -1",
+        "Il codice causa un errore di compilazione a causa dell'incremento i++ all'interno della condizione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel ciclo do-while la lettura avviene direttamente in arr[i]. Il marcatore -1 inserito si trova subito all'interno dell'array, dopodiché i aumenta e il ciclo termina.",
+        "Errato. Poiché la lettura avviene direttamente all'indirizzo &arr[i], il marcatore finisce nell'array.",
+        "Errato. La condizione `arr[i++] != -1` controlla il valore e termina il ciclo in caso di corrispondenza.",
+        "Errato. L'incremento postfisso all'interno dell'espressione della condizione è del tutto legale."
+      ]
+    },
+    {
+      "id": "it_clang_1791",
+      "widget_id": "widget_clang_1791",
+      "topic": "Riempimento di un array con tappo",
+      "q": "Cosa si troverà nell'array arr prima del tappo -1 se l'utente inserisce da tastiera 5 10 -1 20?",
+      "hint": "Prestate attenzione a quale valore interrompe la verifica nel ciclo while.",
+      "options": [
+        "Solo i numeri 5 e 10",
+        "I numeri 5, 10 e 20",
+        "I numeri 5, 10, -1 e 20",
+        "L'array rimarrà non inizializzato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I primi due numeri (5 e 10) verranno salvati negli indici 0 e 1. Alla lettura di -1 la condizione `val != -1` restituirà falso, il ciclo si interromperà e la chiamata arr[2] = -1 completerà la creazione dell'array.",
+        "Errato. L'input si interrompe sul marcatore -1, il valore 20 non viene nemmeno letto dal ciclo.",
+        "Errato. Il marcatore -1 dell'input non viene scritto come dato, ma segnala soltanto l'arresto.",
+        "Errato. Gli elementi 5 e 10 verranno scritti con successo."
+      ]
+    },
+    {
+      "id": "it_clang_1792",
+      "widget_id": "widget_clang_1792",
+      "topic": "Riempimento di un array con tappo",
+      "q": "L'input da tastiera è 1 2 3 4 5 -1. Cosa succederà al numero 5 con questo ordine di condizioni nel while?",
+      "hint": "Analizzate la valutazione a corto circuito (short-circuit evaluation) e le chiamate a scanf quando i = 4.",
+      "options": [
+        "Il numero 5 verrà letto dal flusso di input nella variabile val, ma non entrerà nell'array arr poiché la verifica i < 4 terminerà il ciclo",
+        "Il numero 5 rimarrà non letto nel flusso di input",
+        "Il numero 5 verrà scritto all'indice arr[4], sovrascrivendo il tappo",
+        "Si verificherà un'uscita dai limiti dell'array durante la chiamata a scanf"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'ordine degli operatori `&&` eseguirà prima `scanf` ed estrarrà `5`, verificherà `5 != -1` (vero), e solo dopo verificherà `i < 4` (falso). Di conseguenza `5` viene consumato dall'input, ma non entra in `arr`.",
+        "Errato. La funzione `scanf` si trovava per prima nella catena `&&`, quindi ha fatto in tempo ad estrarre `5` dal flusso.",
+        "Errato. Poiché `i < 4` ha restituito falso, il corpo del ciclo con la scrittura `arr[i++]` non verrà eseguito.",
+        "Errato. La scrittura nell'array all'interno del corpo del ciclo non avviene."
+      ]
+    },
+    {
+      "id": "it_clang_1793",
+      "widget_id": "widget_clang_1793",
+      "topic": "Riempimento di un array con tappo",
+      "q": "Cosa restituisce la funzione read_until_sentinel se l'utente ha inserito da tastiera 7 8 9 -1?",
+      "hint": "Contate solo il numero di elementi utili letti prima del marcatore.",
+      "options": [
+        "3 (il numero di elementi utili senza contare -1)",
+        "4 (il numero totale di elementi letti)",
+        "-1 (il valore del tappo)",
+        "0 (poiché l'array è terminato)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile count aumenta solo durante la scrittura dei dati utili (7, 8, 9). La scrittura del marcatore arr[count] = -1 avviene dopo il ciclo e non incrementa count.",
+        "Errato. Il marcatore -1 non è considerato un elemento utile.",
+        "Errato. La funzione restituisce la dimensione della parte utilizzata dell'array.",
+        "Errato. Sono stati letti 3 elementi."
+      ]
+    },
+    {
+      "id": "it_clang_1794",
+      "widget_id": "widget_clang_1794",
+      "topic": "Riempimento di un array con tappo",
+      "q": "Qual è il problema dell'inizializzazione dell'array se l'utente inserisce subito -1 all'avvio del programma?",
+      "hint": "Il programma entrerà all'interno del corpo del ciclo while alla lettura di -1?",
+      "options": [
+        "Il primo elemento arr[0] rimarrà «spazzatura» non inizializzata, poiché la scrittura arr[i + 1] = -1 all'interno del ciclo non verrà eseguita",
+        "In arr[0] verrà scritto automaticamente -1",
+        "Il programma terminerà con un errore di Segmentation Fault",
+        "Il ciclo diventerà infinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! All'input iniziale di -1 la condizione `val != -1` darà subito falso. Il corpo del ciclo non verrà eseguito nemmeno una volta e la scrittura `arr[i + 1] = -1` non avverrà. L'array rimarrà senza marcatore.",
+        "Errato. La scrittura del marcatore avveniva all'interno del corpo del ciclo.",
+        "Errato. L'errore di lettura non si verifica, ma la struttura dell'array sarà rovinata.",
+        "Errato. La condizione del while restituirà correttamente false."
+      ]
+    },
+    {
+      "id": "it_clang_1795",
+      "widget_id": "widget_clang_1795",
+      "topic": "Riempimento di un array con tappo",
+      "q": "Come elaborerà questo algoritmo l'input 10 -5 20 -1 30?",
+      "hint": "Il numero -5 è un marcatore di arresto in questo codice?",
+      "options": [
+        "Salverà gli elementi 10, -5, 20 e terminerà l'input su -1",
+        "Terminerà l'input sul numero -5, prendendolo per un marcatore",
+        "Ignorerà il numero -5 e continuerà la lettura",
+        "Sostituirà -5 con 0 e continuerà la lettura"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il codice controlla esplicitamente `val == -1`. Il numero negativo -5 non è uguale a -1, quindi viene letto come un normale valore valido.",
+        "Errato. La condizione esatta di arresto è tassativamente `-1`.",
+        "Errato. `-5` è un numero intero corretto e finirà nell'array.",
+        "Errato. Non c'è alcuna sostituzione di valori nel codice."
+      ]
+    },
+    {
+      "id": "it_clang_1796",
+      "widget_id": "widget_clang_1796",
+      "topic": "Riempimento di un array con tappo",
+      "q": "Come si comporta questo codice se l'utente inserisce una lettera al posto di un numero (ad esempio: 10 abc 20 -1)?",
+      "hint": "Guardate lo specificatore %*s nella seconda chiamata a scanf.",
+      "options": [
+        "Salterà l'input non numerico \"abc\", lo ripulirà dal flusso e continuerà la lettura fino a -1",
+        "Terminerà l'esecuzione con un errore di compilazione",
+        "Andrà in un ciclo infinito a causa del blocco del flusso di input",
+        "Scriverà il valore -1 al posto dell'input alfabetico"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La struttura `scanf(\"%*s\")` legge e scarta la parola errata dal buffer, consentendo al ciclo di continuare a funzionare correttamente fino a `-1`.",
+        "Errato. Il codice è sintatticamente corretto.",
+        "Errato. Il salto del carattere tramite `%*s` previene proprio il loop infinito.",
+        "Errato. Il marcatore `-1` verrà scritto solo all'inserimento esplicito di `-1`."
+      ]
+    },
+    {
+      "id": "it_clang_1797",
+      "widget_id": "widget_clang_1797",
+      "topic": "Riempimento di un array con tappo",
+      "q": "Il buffer arr ha una dimensione di 4 celle. Cosa verrà scritto in arr se l'utente inserisce 10 20 30 40 50 -1?",
+      "hint": "Qual è il valore massimo che può assumere l'indice i secondo la condizione i < 3?",
+      "options": [
+        "{10, 20, 30, -1} — il ciclo si fermerà al superamento del limite i < 3",
+        "{10, 20, 30, 40}",
+        "{10, 20, 30, 40, 50, -1}",
+        "Si verificherà un danneggiamento dello stack a causa della scrittura di 50"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo accetterà esattamente 3 elementi (10, 20, 30). Su `i = 3` la condizione `i < 3` diventerà falsa, il ciclo si interromperà e l'istruzione `arr[3] = -1` chiuderà in sicurezza l'array.",
+        "Errato. La condizione `i < 3` permette la scrittura di soli 3 elementi di dati.",
+        "Errato. L'array contiene solo 4 elementi in totale.",
+        "Errato. Il limite `i < 3` protegge il buffer dall'overflow."
+      ]
+    },
+    {
+      "id": "it_clang_1798",
+      "widget_id": "widget_clang_1798",
+      "topic": "Riempimento di un array con tappo",
+      "q": "A quale bug porterà l'uso dell'incremento prefisso arr[++i] = val durante il riempimento dell'array?",
+      "hint": "Pensate a quale indice riceverà il primo elemento inserito.",
+      "options": [
+        "La cella arr[0] rimarrà saltata e il marcatore -1 sovrascriverà l'ultimo elemento inserito",
+        "Il codice causerà un errore di compilazione",
+        "Tutti gli elementi verranno scritti con uno spostamento a sinistra",
+        "Nessun errore, il codice funziona in modo equivalente ad arr[i++]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `i = 0` l'espressione `++i` prima aumenterà `i` a `1`, quindi il primo valore finirà in `arr[1]`. L'elemento `arr[0]` rimarrà non inizializzato.",
+        "Errato. L'incremento prefisso è sintatticamente valido.",
+        "Errato. Gli elementi si sposteranno a destra a partire dall'indice 1.",
+        "Errato. `++i` e `i++` calcolano i valori degli indici in modo diverso."
+      ]
+    },
+    {
+      "id": "it_clang_1799",
+      "widget_id": "widget_clang_1799",
+      "topic": "Riempimento di un array con tappo",
+      "q": "Quanti elementi utili al massimo può accettare questo ciclo for prima dell'impostazione garantita del marcatore -1?",
+      "hint": "Calcolate la dimensione dell'array arr[6] e il limite del contatore i < 5.",
+      "options": [
+        "5 elementi (indici da 0 a 4)",
+        "6 elementi",
+        "4 elementi",
+        "Un numero infinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo esegue passaggi da `i = 0` a `i = 4` (in totale 5 iterazioni). All'indice `arr[5]` (con `i = 5`) viene sempre garantita la scrittura di `-1`.",
+        "Errato. Il sesto elemento è riservato al marcatore `-1`.",
+        "Errato. La condizione `i < 5` permette di eseguire 5 iterazioni.",
+        "Errato. Il ciclo è strettamente limitato dalla costante 5."
+      ]
+    },
+    {
+      "id": "it_clang_1800",
+      "widget_id": "widget_clang_1800",
+      "topic": "Riempimento di un array con tappo",
+      "q": "Come funziona la scrittura diretta scanf(\"%d\", &arr[i]) al rilevamento del marcatore SENTINEL?",
+      "hint": "Osservate dove viene scritto l'input e cosa succede dopo l'esecuzione di break.",
+      "options": [
+        "Il marcatore viene prima scritto direttamente nella cella arr[i], interrompe il ciclo e l'istruzione arr[i] = SENTINEL lo fissa nuovamente nella stessa cella",
+        "Il marcatore non entra nell'array, lasciando la cella arr[i] vuota",
+        "La scrittura diretta causa un'uscita dai limiti dell'array all'incontro di SENTINEL",
+        "La scrittura diretta è vietata dallo standard C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `scanf` scrive il numero direttamente in `arr[i]`. Se viene inserito `-1`, la verifica `arr[i] == SENTINEL` causa `break` prima di eseguire `i++`. All'uscita dal ciclo `arr[i] = SENTINEL` sovrascrive ancora una volta la stessa cella.",
+        "Errato. Poiché l'indirizzo `&arr[i]` è stato passato a `scanf`, il numero è stato scritto direttamente nell'array.",
+        "Errato. `i < SIZE - 1` protegge dall'uscita dai limiti dell'array.",
+        "Errato. La lettura all'indirizzo dell'elemento dell'array è un pattern standard."
+      ]
+    },
+    {
+      "id": "it_clang_1801",
+      "widget_id": "widget_clang_1801",
+      "topic": "Riempimento di un array con tappo",
+      "q": "Cosa garantisce la condizione i < CAPACITY - 1 prima dell'impostazione automatica di arr[i] = TAPPO?",
+      "hint": "Pensate a quante celle sono allocate per i dati e quante ne lascia la verifica per il marcatore.",
+      "options": [
+        "Rimarrà sempre almeno 1 cella libera per la scrittura sicura del tappo TAPPO senza uscire dai limiti dell'array",
+        "L'array si riempirà esattamente fino a CAPACITY elementi senza impostare il tappo",
+        "Il ciclo eseguirà un'iterazione in più rispetto alla dimensione dell'array",
+        "Si verificherà un ripristino automatico del buffer di input stdin"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se CAPACITY è uguale a 5, il ciclo scriverà al massimo 4 elementi (indici 0..3). L'indice i si fermerà al valore 4, dove verrà scritto in modo sicuro il TAPPO all'indirizzo arr[4].",
+        "Errato. La condizione riserverà spazio per il marcatore.",
+        "Errato. Al contrario, limita le iterazioni predefinendo l'uscita dai limiti del buffer.",
+        "Errato. La condizione controlla solo la variabile contatore e non gestisce il buffer IO."
+      ]
+    },
+    {
+      "id": "it_clang_1802",
+      "widget_id": "widget_clang_1802",
+      "topic": "Riempimento di un array con tappo",
+      "q": "Cosa conterrà l'array arr dopo la chiamata a fill_with_tappo(arr, 4) se l'utente inserisce da tastiera 10 20 30 40?",
+      "hint": "Prestate attenzione al limite delle celle utili con max_size = 4.",
+      "options": [
+        "{10, 20, 30, 0} — il tappo automatico verrà scritto in 4a posizione (indice 3) poiché il limite di elementi è stato superato",
+        "{10, 20, 30, 40, 0} — si verificherà un'uscita dai limiti dell'array",
+        "{10, 20, 30, 40} — il tappo non verrà scritto",
+        "Il programma causerà un errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con max_size = 4 la condizione i < 3 permetterà di scrivere solo 3 elementi utili (10, 20, 30). A i = 3 il ciclo si interromperà e l'istruzione arr[3] = 0 imposterà il tappo.",
+        "Errato. Il limite i < max_size - 1 protegge l'array dall'overflow.",
+        "Errato. L'istruzione arr[i] = 0 viene eseguita sempre dopo l'uscita dal ciclo.",
+        "Errato. La sintassi delle funzioni e delle chiamate è del tutto corretta."
+      ]
+    },
+    {
+      "id": "it_clang_1803",
+      "widget_id": "widget_clang_1803",
+      "topic": "Riempimento di un array con tappo",
+      "q": "Quale compito principale svolge l'assegnazione str[i] = '\\0' dopo la lettura carattere per carattere tramite getchar()?",
+      "hint": "Ricordate come le funzioni standard C distinguono un array di caratteri da una vera e propria stringa.",
+      "options": [
+        "Termina automaticamente l'array di caratteri, trasformandolo in una valida stringa C",
+        "Pulisce il resto dell'array dai dati spazzatura di memoria",
+        "Sposta il cursore di output su una nuova riga",
+        "Invia il marcatore EOF al flusso di input standard"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza delle funzioni di livello superiore, la lettura carattere per carattere non imposta automaticamente lo zero terminatore. L'impostazione manuale di '\\0' all'indice corrente i crea una stringa C corretta.",
+        "Errato. L'espressione modifica solo un byte all'indice i.",
+        "Errato. Lo zero terminatore '\\0' è un marcatore di fine stringa, non un ritorno a capo '\\n'.",
+        "Errato. Le variabili all'interno del programma non influiscono sul flusso stdin."
+      ]
+    },
+    {
+      "id": "it_clang_1804",
+      "widget_id": "widget_clang_1804",
+      "topic": "Riempimento di un array con tappo",
+      "q": "In quale caso l'istruzione data[i] = -1 porterà a un errore di uscita dai limiti dell'array (Buffer Overflow)?",
+      "hint": "Pensate a quale valore assumerà l'indice i se il ciclo funziona completamente secondo la condizione i < MAX.",
+      "options": [
+        "Se l'utente inserisce 4 numeri diversi da zero di seguito, diversi da -1 (il contatore i diventerà pari a 4, e gli indici ammissibili sono 0..3)",
+        "Se l'utente inserisce subito -1",
+        "Se l'utente inserisce solo 2 numeri",
+        "Con qualsiasi input alfabetico errato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La condizione i < MAX si attiverà per i = 0, 1, 2, 3 (4 elementi). Dopo il 4° elemento i aumenterà a 4. L'espressione data[4] = -1 scriverà oltre i limiti di data[4]. Errore Off-by-one!",
+        "Errato. Se si inserisce subito -1, i rimarrà 0 e data[0] = -1 verrà eseguito correttamente.",
+        "Errato. Per 2 numeri i diventerà pari a 2 e data[2] = -1 verrà scritto entro i limiti.",
+        "Errato. L'errore si verifica esattamente quando si riempie l'array fino al limite a causa di un limite del ciclo errato."
+      ]
+    },
+    {
+      "id": "it_clang_1805",
+      "widget_id": "widget_clang_1805",
+      "topic": "Riempimento di un array con tappo",
+      "q": "Dove si troverà il marcatore -1 se l'utente inserisce 10 e poi -1?",
+      "hint": "Seguite il valore dell'indice i dopo la scrittura con successo del primo elemento.",
+      "options": [
+        "Il marcatore -1 verrà scritto all'indice arr[1], completando la parte riempita dell'array",
+        "Il marcatore -1 verrà scritto all'indice arr[0]",
+        "Il marcatore -1 non verrà affatto scritto nell'array",
+        "Il programma si bloccherà in un ciclo infinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il primo numero 10 verrà scritto in arr[0], i diventerà pari a 1. All'inserimento di -1 si attiverà break, il ciclo si interromperà e l'istruzione arr[1] = -1 scriverà il tappo.",
+        "Errato. Il valore 10 farà in tempo a essere scritto all'indice 0.",
+        "Errato. La chiamata esplicita arr[i] = -1 imposterà garantitamente il marcatore.",
+        "Errato. L'istruzione break trasferisce immediatamente il controllo oltre i limiti del ciclo."
+      ]
+    },
+    {
+      "id": "it_clang_1806",
+      "widget_id": "widget_clang_1806",
+      "topic": "Riempimento di un array con tappo",
+      "q": "Perché alla fine dell'array di puntatori list viene impostato il valore NULL (list[count] = NULL)?",
+      "hint": "Pensate a come scorrere un array di puntatori senza passarne la lunghezza esplicita nelle funzioni.",
+      "options": [
+        "NULL funge da tappo, permettendo di scorrere l'array di puntatori nei cicli senza passare esplicitamente la sua dimensione",
+        "Senza questo la chiamata a free() per l'intero array causerà un crash",
+        "Questo pulisce la memoria a cui si riferivano gli elementi \"one\" e \"two\"",
+        "È un requisito dello standard C per il lavoro con i letterali stringa"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Negli array di puntatori (ad esempio in argv) NULL svolge il ruolo di terminatore. Un ciclo come `while(list[i] != NULL)` potrà elaborare correttamente tutti gli elementi.",
+        "Errato. La chiamata a free() per un array di puntatori non pulisce automaticamente la memoria al marcatore NULL.",
+        "Errato. L'assegnazione di NULL a un elemento non modifica le stringhe ad altri indirizzi.",
+        "Errato. Il C consente array di puntatori di qualsiasi struttura, ma la terminazione con NULL è un pattern standard."
+      ]
+    },
+    {
+      "id": "it_clang_1807",
+      "widget_id": "widget_clang_1807",
+      "topic": "Riempimento di un array con tappo",
+      "q": "In quale stato si troverà l'array arr se il flusso di input restituisce subito EOF o un errore di lettura?",
+      "hint": "Verificate il valore della variabile i prima dell'ingresso nel ciclo.",
+      "options": [
+        "L'elemento arr[0] diventerà uguale a -1, creando un valido array vuoto con tappo",
+        "L'array rimarrà non corretto e non inizializzato",
+        "La variabile i riceverà un valore negativo",
+        "Si verificherà un crash del programma (Segmentation Fault) al tentativo di scrittura in arr[0]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La verifica scanf(...) == 1 restituirà subito falso, il ciclo non farà alcuna iterazione, i rimarrà 0. L'istruzione arr[0] = -1 creerà un array vuoto con tappo.",
+        "Errato. La scrittura automatica arr[i] = -1 previene la comparsa di uno stato «spazzatura».",
+        "Errato. La variabile i è inizializzata a zero e non viene decrementata.",
+        "Errato. L'accesso all'indice zero di un array dichiarato è del tutto sicuro."
+      ]
+    },
+    {
+      "id": "it_clang_1808",
+      "widget_id": "widget_clang_1808",
+      "topic": "Riempimento di un array con tappo",
+      "q": "Perché dopo l'esecuzione di strncpy(buf, \"HELLO_WORLD\", sizeof(buf) - 1) si esegue esplicitamente buf[sizeof(buf) - 1] = '\\0'?",
+      "hint": "strncpy garantisce la creazione di una stringa terminata da zero in caso di superamento della dimensione del buffer?",
+      "options": [
+        "Se la stringa sorgente è più lunga del buffer, strncpy NON aggiunge lo zero terminatore, quindi il tappo viene impostato manualmente per prevenire arresti anomali",
+        "La funzione strncpy sovrascrive l'ultimo byte con dati casuali",
+        "Senza questo il buffer buf verrà rimosso automaticamente dalla memoria dello stack",
+        "Questo è necessario per il calcolo corretto di sizeof(buf)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione standard strncpy non garantisce la presenza di '\\0' alla fine se la sorgente supera il limite n. L'impostazione esplicita di `buf[n-1] = '\\0'` è un pattern fondamentale della programmazione sicura.",
+        "Errato. strncpy copia semplicemente esattamente n byte senza terminazione in caso di superamento della lunghezza.",
+        "Errato. La gestione della memoria sullo stack non dipende dal contenuto dell'array.",
+        "Errato. L'operatore sizeof viene calcolato al momento della compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_1809",
+      "widget_id": "widget_clang_1809",
+      "topic": "Riempimento di un array con tappo",
+      "q": "L'utente ha inserito da tastiera: 10 20 -1. Quale valore verrà scritto all'indice data[2]?",
+      "hint": "Calcolate l'incremento di i per ogni elemento fino al momento della lettura di -1.",
+      "options": [
+        "-1 (tappo impostato automaticamente)",
+        "20",
+        "Valore spazzatura dalla memoria",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! 1a iterazione: data[0] = 10, i = 1. 2a iterazione: data[1] = 20, i = 2. 3a iterazione: viene letto -1, si attiva break. Dopo il ciclo data[2] = -1 imposta il marcatore.",
+        "Errato. Il valore 20 è stato scritto in data[1].",
+        "Errato. La scrittura automatica data[i] = -1 sovrascriverà la spazzatura.",
+        "Errato. Viene scritto esplicitamente il valore -1."
+      ]
+    },
+    {
+      "id": "it_clang_1810",
+      "widget_id": "widget_clang_1810",
+      "topic": "Riempimento di un array con tappo",
+      "q": "Cosa restituirà la funzione fill_array(arr, 5) all'inserimento dei numeri 1 2 3 -999?",
+      "hint": "Ricordate come cambia la variabile contatore i alla lettura del marcatore.",
+      "options": [
+        "3 (il numero di elementi utili realmente scritti)",
+        "4 (il numero totale di elementi scritti tenendo conto di SENTINEL)",
+        "-999 (il valore del marcatore)",
+        "5 (la capacità totale)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile i aumenta solo in caso di scrittura con successo dei dati validi (1, 2, 3). All'incontro di -999 il ciclo termina a i = 3, che è ciò che restituisce la funzione.",
+        "Errato. Il valore restituito i riflette il numero di elementi prima del tappo.",
+        "Errato. La funzione restituisce il numero di elementi, non il marcatore stesso.",
+        "Errato. L'input è stato interrotto prima del riempimento di tutto il buffer."
+      ]
+    }
+  ]
+}

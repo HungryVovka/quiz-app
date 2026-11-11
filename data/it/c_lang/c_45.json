@@ -1,0 +1,605 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_1391",
+      "widget_id": "widget_clang_1391",
+      "topic": "Indicizzazione — Indici negativi p[-2]",
+      "q": "È corretta la scrittura p[-2], se p è un puntatore impostato sul terzo elemento di un array (p = &arr[3])?",
+      "hint": "Ricorda in cosa il compilatore espande p[-2] tramite l'aritmetica dei puntatori.",
+      "options": [
+        "Sì, è assolutamente corretta e restituirà il valore dell'elemento arr[1]",
+        "No, gli indici negativi sono vietati dalla sintassi del C",
+        "La scrittura causerà l'arresto anomalo del programma",
+        "Restituirà il valore dell'elemento arr[5]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `p[-2]` viene espansa in `*(p - 2)`. Poiché `p` punta ad `arr[3]`, uno spostamento indietro di due elementi fornisce l'indirizzo di `arr[1]`, la cui dereferenziazione restituisce il valore di `arr[1]`.",
+        "Errato. La sintassi del C consente pienamente gli indici negativi per i puntatori.",
+        "Errato. Se l'accesso avviene entro i limiti dell'array originale, l'operazione è del tutto sicura.",
+        "Errato. Uno spostamento in avanti di 2 elementi si otterrebbe con la scrittura `p[2]`."
+      ]
+    },
+    {
+      "id": "it_clang_1392",
+      "widget_id": "widget_clang_1392",
+      "topic": "Decadimento — Errore nella macro ARRAY_SIZE",
+      "q": "Perché la macro #define SIZE(a) (sizeof(a)/sizeof(a[0])) restituirà un risultato errato se chiamata all'interno della funzione void foo(int arr[10])?",
+      "hint": "Rifletti su cosa sia il parametro arr all'interno del corpo della funzione.",
+      "options": [
+        "Perché il parametro arr decade a puntatore int*, e sizeof(arr) restituirà la dimensione del puntatore e non dell'intero array",
+        "Perché le macro del preprocessore non possono lavorare con gli argomenti delle funzioni",
+        "Perché l'espressione sizeof(a[0]) non funziona all'interno delle funzioni",
+        "Perché la dimensione dell'array arr viene azzerata durante il passaggio"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando viene passato a una funzione, l'array `arr` perde le informazioni sulla sua dimensione e viene convertito nel puntatore `int*`. All'interno della funzione, `sizeof(arr)` restituirà la dimensione del puntatore (4 o 8 byte) e non 40 byte, motivo per cui la macro restituirà un numero di elementi non corretto.",
+        "Errato. Il preprocessore sostituisce il nome della variabile, mentre i tipi vengono calcolati dal compilatore.",
+        "Errato. `sizeof(a[0])` restituirà `sizeof(int)` (4 byte), il che è corretto.",
+        "Errato. La dimensione dell'array non viene azzerata, ma smette di essere nota al tipo della variabile."
+      ]
+    },
+    {
+      "id": "it_clang_1393",
+      "widget_id": "widget_clang_1393",
+      "topic": "Memoria — Frammentazione di un array 2D (int **)",
+      "q": "Qual è la particolarità della disposizione in memoria di un array 2D allocato dinamicamente tramite int **arr = malloc(rows * sizeof(int*)); e un ciclo con malloc per ogni riga?",
+      "hint": "Confronta questo approccio con l'allocazione di un unico blocco di memoria contiguo.",
+      "options": [
+        "Le righe dell'array vengono allocate con chiamate malloc separate e possono essere frammentate in tutto lo heap",
+        "La memoria viene garantita allocata in un unico blocco continuo",
+        "Un tale array non può essere indicizzato usando la consueta sintassi arr[i][j]",
+        "Tutte le righe vengono automaticamente trasferite sullo stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con l'allocazione a due fasi, la memoria per ciascuna riga viene richiesta separatamente dallo heap. Di conseguenza, le righe possono trovarsi a indirizzi di memoria non contigui, il che peggiora la localizzazione dei dati per la cache del processore.",
+        "Errato. La memoria in un unico blocco viene allocata con la dichiarazione `int (*arr)[N] = malloc(...)`.",
+        "Errato. La scrittura `arr[i][j]` funziona perfettamente proprio grazie all'array di puntatori.",
+        "Errato. Le chiamate a `malloc` allocano memoria esclusivamente nello heap."
+      ]
+    },
+    {
+      "id": "it_clang_1394",
+      "widget_id": "widget_clang_1394",
+      "topic": "Puntatori avanzati — Tabella di salto (Jump Table)",
+      "q": "Quale dichiarazione crea correttamente un array di 3 puntatori a funzioni che accettano int e restituiscono void?",
+      "hint": "Usa le parentesi tonde attorno al nome dell'array con l'asterisco per indicare che si tratta di un array di puntatori.",
+      "options": [
+        "void (*funcs[3])(int);",
+        "void *funcs[3](int);",
+        "void (funcs*)[3](int);",
+        "void *funcs(int)[3];"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La struttura `void (*funcs[3])(int)` si legge così: `funcs` è un array di 3 elementi (`[3]`), che sono puntatori (`*`), a funzioni con un parametro `int` che restituiscono `void`.",
+        "Errato. `void *funcs[3](int);` dichiara un array di funzioni che restituiscono `void*` (il che è vietato in C).",
+        "Errato. La sintassi `(funcs*)` è errata.",
+        "Errato. La sintassi `funcs(int)[3]` è errata."
+      ]
+    },
+    {
+      "id": "it_clang_1395",
+      "widget_id": "widget_clang_1395",
+      "topic": "Ottimizzazione — Qualificatore restrict (C99)",
+      "q": "A cosa serve il qualificatore restrict nei parametri delle funzioni con puntatori (ad esempio, void add(int * restrict a, int * restrict b))?",
+      "hint": "Rifletti se il compilatore può ottimizzare il caricamento dalla memoria se è sicuro che l'area a e l'area b non si sovrappongano.",
+      "options": [
+        "Suggerisce al compilatore che i puntatori non fanno riferimento ad aree di memoria sovrapposte, consentendo un'ottimizzazione più aggressiva del codice",
+        "Rende i dati ai quali puntano i puntatori in sola lettura",
+        "Alloca automaticamente la memoria per gli array alla chiamata della funzione",
+        "Vieta l'uso dell'aritmetica dei puntatori con queste variabili"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il qualificatore `restrict` è una garanzia del programmatore al compilatore che l'oggetto a cui punta il puntatore non sarà accessibile tramite altri puntatori in questo ambito (*no aliasing*). Ciò consente di memorizzare in cache i valori nei registri.",
+        "Errato. L'accesso in sola lettura viene specificato dal qualificatore `const`.",
+        "Errato. `restrict` non gestisce l'allocazione della memoria.",
+        "Errato. L'aritmetica dei puntatori rimane completamente disponibile."
+      ]
+    },
+    {
+      "id": "it_clang_1396",
+      "widget_id": "widget_clang_1396",
+      "topic": "Tipi — Decay di un array costante",
+      "q": "A quale tipo viene convertito implicitamente l'array const int arr[5] quando viene passato a una funzione?",
+      "hint": "Il qualificatore const deve preservare la protezione dei dati durante la conversione del tipo.",
+      "options": [
+        "const int *",
+        "int *",
+        "const int **",
+        "void *"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Durante il decadimento (*decay*) vengono conservati tutti i qualificatori del tipo di elemento. Poiché gli elementi erano di tipo `const int`, il puntatore al primo elemento ottiene il tipo `const int *`.",
+        "Errato. La perdita del qualificatore `const` porterebbe a un avviso o errore del compilatore.",
+        "Errato. Un doppio puntatore aggiunge un livello superfluo di indirezione.",
+        "Errato. Non si verifica una conversione automatica a `void*`."
+      ]
+    },
+    {
+      "id": "it_clang_1397",
+      "widget_id": "widget_clang_1397",
+      "topic": "Strutture — Flexible Array Member",
+      "q": "Quale regola fondamentale si applica a un membro di array flessibile (Flexible Array Member) della forma struct Header { int len; char data[]; };?",
+      "hint": "Rifletti su dove debba trovarsi un array senza dimensione fissa all'interno di una struttura.",
+      "options": [
+        "Deve essere l'ultimo membro della struttura e la memoria per esso viene allocata dinamicamente insieme alla struttura tramite malloc",
+        "Deve essere il primo membro della struttura",
+        "La memoria per esso deve essere sempre creata sullo stack",
+        "In una struttura ci possono essere quanti elementi di questo tipo si desidera"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C (C99), un array flessibile (`char data[]`) può essere solo l'ultimo campo di una struttura. Quando si chiama `malloc(sizeof(struct Header) + payload_size)`, per esso viene allocata una coda contigua di memoria.",
+        "Errato. Non può essere il primo membro della struttura.",
+        "Errato. Gli array flessibili sono progettati specificamente per l'allocazione dinamica nello heap.",
+        "Errato. Una struttura può contenere esattamente un solo membro di array flessibile."
+      ]
+    },
+    {
+      "id": "it_clang_1398",
+      "widget_id": "widget_clang_1398",
+      "topic": "Puntatori — Indirizzo dell'array &arr contro indirizzo del puntatore &p",
+      "q": "Sia p un puntatore all'array arr (int *p = arr;). Qual è la differenza fondamentale tra &arr e &p?",
+      "hint": "Esiste nella memoria RAM una variabile separata per memorizzare l'indirizzo di arr?",
+      "options": [
+        "&arr restituisce l'indirizzo dell'array stesso (coincidente con &arr[0]), mentre &p restituisce l'indirizzo della variabile puntatore p",
+        "Non c'è alcuna differenza, restituiscono tipi e indirizzi assolutamente identici",
+        "&arr restituirà NULL, mentre &p un indirizzo valido",
+        "&arr si trova nello heap, mentre &p nella sezione codice"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il nome dell'array `arr` non è una variabile: non viene allocata memoria separata per memorizzare il suo indirizzo. Pertanto, `&arr` è l'indirizzo del blocco dell'array stesso. La variabile `p` è invece una vera variabile sullo stack che memorizza un indirizzo, e `&p` restituisce l'indirizzo di questa cella di memoria.",
+        "Errato. `&arr` ha tipo `int(*)[N]`, mentre `&p` ha tipo `int**`.",
+        "Errato. `&arr` non è mai uguale a `NULL` per un array dichiarato.",
+        "Errato. Entrambi gli oggetti si trovano di norma sullo stack (se dichiarati localmente)."
+      ]
+    },
+    {
+      "id": "it_clang_1399",
+      "widget_id": "widget_clang_1399",
+      "topic": "Basso livello — Allineamento (Alignment)",
+      "q": "Perché il cast di tipo int *p = (int*)(char_buffer + 1) e la successiva dereferenziazione *p possono causare un arresto anomalo del programma su alcuni processori (ARM, SPARC)?",
+      "hint": "Molte architetture richiedono che gli interi a 4 byte siano posizionati a indirizzi multipli di 4.",
+      "options": [
+        "A causa di un errore di allineamento della memoria (Misaligned Memory Access), poiché il tipo int richiede un indirizzo multiplo di 4 byte",
+        "Poiché i tipi char e int non sono compatibili in C",
+        "Perché il cast dei puntatori è vietato dallo standard C",
+        "Perché char_buffer si trova nella memoria in sola lettura"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I processori sono critici nei confronti dell'allineamento (alignment). Le variabili di tipo `int` (4 byte) devono essere collocate a indirizzi multipli di 4. Lo spostamento `char_buffer + 1` crea un indirizzo non allineato, l'accesso al quale provoca un'eccezione hardware (Bus Error) su alcune architetture.",
+        "Errato. Il cast dei puntatori è sintatticamente consentito in C.",
+        "Errato. Il cast dei puntatori è del tutto consentito, ma il programmatore è tenuto a prestare attenzione all'allineamento.",
+        "Errato. L'array `char_buffer` sullo stack è disponibile sia in lettura che in scrittura."
+      ]
+    },
+    {
+      "id": "it_clang_1400",
+      "widget_id": "widget_clang_1400",
+      "topic": "Sicurezza — Qualificatore const char *",
+      "q": "Quale protezione principale garantisce la firma void print_string(const char *str)?",
+      "hint": "Rifletti se questo qualificatore prevenga la modifica accidentale del contenuto della stringa all'interno della funzione.",
+      "options": [
+        "Garantisce che la funzione non potrà modificare i caratteri della stringa tramite il puntatore e consente di passare letterali stringa immutabili",
+        "Garantisce che la funzione libererà la memoria della stringa tramite free()",
+        "Vieta il passaggio di array di caratteri alla funzione",
+        "Velocizza il passaggio della stringa grazie al copiatore nei registri del processore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il puntatore `const char *str` vieta la modifica dei dati `*str = 'a'` all'interno della funzione. Ciò non solo protegge il codice chiamante da bug, ma consente anche di passare in sicurezza letterali stringa (ad esempio `\"Hello\"`) situati in memoria di sola lettura.",
+        "Errato. `const` non ha alcuna relazione con la liberazione della memoria.",
+        "Errato. Gli array `char[]` si convertono facilmente in `const char*`.",
+        "Errato. Il qualificatore `const` è destinato alla sicurezza dei tipi, non all'ottimizzazione diretta dei registri."
+      ]
+    },
+    {
+      "id": "it_clang_1401",
+      "widget_id": "widget_clang_1401",
+      "topic": "Memoria — Modifica di un letterale stringa",
+      "q": "Cosa accadrà quando si tenta di eseguire s[0] = 'h';, se la stringa è dichiarata come char *s = \"Hello\";?",
+      "hint": "Ricorda in quale area di memoria sono memorizzati i letterali stringa in C.",
+      "options": [
+        "Arresto anomalo del programma (Segmentation Fault / UB), poiché i letterali stringa sono memorizzati in memoria di sola lettura",
+        "Il primo carattere verrà modificato con successo e la stringa diventerà \"hello\"",
+        "Il compilatore genererà automaticamente un errore già nella fase di compilazione",
+        "La stringa cambierà, ma le modifiche saranno visibili solo all'interno della funzione corrente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il puntatore `char *s = \"Hello\";` fa riferimento a un letterale stringa nella sezione di memoria `.rodata` (read-only). Il tentativo di scrittura a questo indirizzo causerà un'eccezione hardware di protezione della memoria e un crash del programma.",
+        "Errato. I letterali stringa non sono modificabili. Per una stringa modificabile occorre dichiarare un array: `char s[] = \"Hello\";`.",
+        "Errato. Il vecchio standard C consente la dichiarazione `char *s = \"...\"` senza `const`, quindi il compilatore può solo generare un avviso (warning), ma compilare il codice.",
+        "Errato. La memoria è protetta a livello di sistema operativo indipendentemente dalla funzione."
+      ]
+    },
+    {
+      "id": "it_clang_1402",
+      "widget_id": "widget_clang_1402",
+      "topic": "Aritmetica — Sottostringa tramite spostamento del puntatore",
+      "q": "A quale sottostringa punterà l'espressione s + 2, se char *s = \"Hello\";?",
+      "hint": "Il puntatore viene spostato di 2 caratteri (byte) in avanti dall'inizio della stringa.",
+      "options": [
+        "Alla sottostringa \"llo\"",
+        "Alla sottostringa \"ello\"",
+        "Al carattere 'l'",
+        "Alla stringa vuota \"\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `char` occupa 1 byte, l'aggiunta di `2` sposta l'indirizzo del puntatore di 2 caratteri in avanti. A partire dal terzo carattere, la stringa viene letta come `\"llo\"` fino al terminatore nullo.",
+        "Errato. A `\"ello\"` punta l'espressione `s + 1`.",
+        "Errato. Il carattere `'l'` viene restituito dalla dereferenziazione `*(s + 2)` o `s[2]`, mentre `s + 2` è un puntatore alla sottostringa.",
+        "Errato. Il terminatore nullo si trova all'indirizzo `s + 5`."
+      ]
+    },
+    {
+      "id": "it_clang_1403",
+      "widget_id": "widget_clang_1403",
+      "topic": "Scorrimento — Ricerca della fine della stringa",
+      "q": "Dove si troverà il puntatore s dopo il completamento del ciclo while (*s) s++; per la stringa char *s = \"C\";?",
+      "hint": "La condizione *s verifica la verità del carattere corrente (qualsiasi carattere eccetto '\\0' restituisce true).",
+      "options": [
+        "Sul carattere terminatore nullo '\\0' (subito dopo il carattere 'C')",
+        "Sul carattere 'C'",
+        "Oltre i limiti della stringa di 1 byte dopo il terminatore nullo",
+        "Ritornerà all'inizio della stringa sul carattere 'C'"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Alla prima iterazione `*s` è pari a `'C'` (non zero), viene eseguito `s++`. Alla seconda iterazione `*s` è pari a `'\\0'` (valore 0), la condizione `while(0)` diventa falsa e il ciclo termina. Il puntatore si arresta esattamente su `'\\0'`.",
+        "Errato. Il carattere `'C'` è stato elaborato nella prima iterazione, dopodiché il puntatore è stato avanzato.",
+        "Errato. L'incremento `s++` viene eseguito all'interno del corpo del ciclo, quindi all'arresto della condizione `*s == '\\0'` l'incremento non scatta.",
+        "Errato. I puntatori in C non tornano da soli all'inizio."
+      ]
+    },
+    {
+      "id": "it_clang_1404",
+      "widget_id": "widget_clang_1404",
+      "topic": "Funzioni — Ritorno sicuro di char*",
+      "q": "Quale delle varianti per restituire char* da una funzione è SICURA nel linguaggio C?",
+      "hint": "Rifletti sul ciclo di vita delle variabili sullo stack e della memoria nello heap o in .rodata.",
+      "options": [
+        "Restituire memoria allocata dinamicamente (tramite malloc) o un letterale stringa",
+        "Restituire l'indirizzo di un array locale: char buf[20]; return buf;",
+        "Restituire l'indirizzo di un carattere locale: char c = 'A'; return &c;",
+        "Qualsiasi ritorno di dati locali è sicuro se la funzione viene chiamata in main"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I letterali stringa sono memorizzati nella memoria statica e vivono per tutta la durata dell'esecuzione del programma, mentre la memoria da `malloc()` vive fino alla chiamata di `free()`. Entrambe le opzioni sono sicure. Restituire invece array/variabili locali sullo stack porta a puntatori pendenti (Dangling Pointers).",
+        "Errato. `buf` viene distrutto all'uscita dalla funzione, l'indirizzo restituito non è valido.",
+        "Errato. La variabile `c` vive solo sullo stack della funzione corrente.",
+        "Errato. Lo stack locale viene pulito indipendentemente da chi ha chiamato la funzione."
+      ]
+    },
+    {
+      "id": "it_clang_1405",
+      "widget_id": "widget_clang_1405",
+      "topic": "Array di puntatori — char *argv[]",
+      "q": "Che cos'è il parametro char *argv[] nella funzione standard main(int argc, char *argv[])?",
+      "hint": "Ciascun elemento di questo array punta a una stringa-argomento separata.",
+      "options": [
+        "Un array di puntatori a stringhe di caratteri (argomenti della riga di comando)",
+        "Un'unica stringa lunga separata da spazi",
+        "Un array statico bidimensionale di dimensione fissa",
+        "Un puntatore alla funzione main"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `char *argv[]` (o `char **argv`) è un array in cui ogni elemento `argv[i]` è un puntatore `char*` a una stringa terminata da zero contenente l'`i`-esimo argomento della riga di comando.",
+        "Errato. Gli argomenti sono già suddivisi dal sistema operativo in stringhe separate.",
+        "Errato. È un array di puntatori a dimensione dinamica (la dimensione è determinata da `argc`).",
+        "Errato. Un puntatore a funzione ha una sintassi completamente diversa."
+      ]
+    },
+    {
+      "id": "it_clang_1406",
+      "widget_id": "widget_clang_1406",
+      "topic": "Dimensione — sizeof contro strlen per char*",
+      "q": "A quanto equivalgono i valori di sizeof(str) e strlen(str) per la dichiarazione char *str = \"Hello\"; su un OS a 64 bit?",
+      "hint": "sizeof misura la dimensione del puntatore stesso, mentre strlen conta i caratteri fino a '\\0'.",
+      "options": [
+        "sizeof(str) == 8 byte, strlen(str) == 5 byte",
+        "sizeof(str) == 6 byte, strlen(str) == 5 byte",
+        "sizeof(str) == 5 byte, strlen(str) == 5 byte",
+        "sizeof(str) == 8 byte, strlen(str) == 6 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `str` è un puntatore, quindi `sizeof(str)` restituisce la dimensione dell'indirizzo in memoria (8 byte sui sistemi a 64 bit). La funzione `strlen(str)` conta il numero di caratteri fino al terminatore nullo, escluso quest'ultimo (5 caratteri per `\"Hello\"`).",
+        "Errato. `sizeof(str)` non misura la dimensione dell'array di caratteri, poiché `str` è un puntatore.",
+        "Errato. `sizeof` restituisce la dimensione della variabile puntatore, non la lunghezza della stringa.",
+        "Errato. `strlen` non include il terminatore nullo nella lunghezza calcolata."
+      ]
+    },
+    {
+      "id": "it_clang_1407",
+      "widget_id": "widget_clang_1407",
+      "topic": "Memoria — Terminatore nullo e malloc",
+      "q": "Quanti byte di memoria occorre allocare tramite malloc() per una copia esatta di una stringa src di lunghezza len = strlen(src)?",
+      "hint": "Non dimenticare il carattere di chiusura obbligatorio della stringa.",
+      "options": [
+        "len + 1 byte (per inserire il terminatore nullo '\\0')",
+        "Esattamente len byte",
+        "len * sizeof(int) byte",
+        "len + 2 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `strlen()` restituisce il numero di caratteri visibili senza tenere conto del terminatore nullo di chiusura `'\\0'`. Affinché la memoria allocata possa memorizzare correttamente la stringa in C, è necessario aggiungere 1 byte per `'\\0'`: `malloc(len + 1)`.",
+        "Errato. Se si allocano esattamente `len` byte, non rimarrà spazio per il terminatore nullo e le funzioni di gestione delle stringhe usciranno dai limiti della memoria allocata (UB).",
+        "Errato. I caratteri `char` occupano 1 byte ciascuno (`sizeof(char) == 1`).",
+        "Errato. 2 byte sono ridondanti, ne serve solo 1 per `'\\0'`."
+      ]
+    },
+    {
+      "id": "it_clang_1408",
+      "widget_id": "widget_clang_1408",
+      "topic": "Costanza — char * const p",
+      "q": "Cosa vieta il compilatore nella dichiarazione char * const p = str; per un array modificabile char str[] = \"Test\";?",
+      "hint": "Presta attenzione a dove si trova il qualificatore const — dopo l'asterisco *.",
+      "options": [
+        "La modifica dell'indirizzo p stesso (ad esempio p = NULL o p++), ma i caratteri all'indirizzo possono essere modificati (p[0] = 't')",
+        "La modifica dei caratteri all'indirizzo (*p = 'a')",
+        "Sia la modifica dell'indirizzo che la modifica dei caratteri",
+        "Il passaggio del puntatore p alla funzione printf"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La struttura `char * const p` indica che il puntatore `p` stesso è costante (puntatore costante). Non puoi reindirizzare `p` a un altro indirizzo, ma è consentito modificare i dati all'indirizzo.",
+        "Errato. La modifica dei caratteri viene vietata da `const char *p` (puntatore a costante).",
+        "Errato. Il divieto totale viene impostato dalla combinazione `const char * const p`.",
+        "Errato. `printf` accetta `const char*`, il passaggio è del tutto legale."
+      ]
+    },
+    {
+      "id": "it_clang_1409",
+      "widget_id": "widget_clang_1409",
+      "topic": "Aritmetica — Lunghezza della stringa tramite sottrazione di puntatori",
+      "q": "Cosa restituirà l'espressione end - start, se start punta a 'H' e end a '\\0' nella stringa char str[] = \"Hello\";?",
+      "hint": "Rifletti su quanti elementi giacciono tra l'inizio della stringa e il suo terminatore nullo.",
+      "options": [
+        "5 (la lunghezza della stringa, in modo analogo al funzionamento di strlen)",
+        "6 (incluso il terminatore nullo stesso)",
+        "0",
+        "La differenza degli indirizzi in bit"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `start` ha indice 0 ed `end` ha indice 5 (posizione di `'\\0'`). La sottrazione tra puntatori `end - start` fornisce il numero di elementi compresi tra di essi: `5 - 0 = 5`, il che corrisponde esattamente al valore di `strlen(\"Hello\")`.",
+        "Errato. La differenza tra gli indici 5 e 0 è pari a 5.",
+        "Errato. I puntatori si riferiscono a posizioni diverse in memoria.",
+        "Errato. L'aritmetica dei puntatori calcola la distanza in elementi (`char`), non in bit."
+      ]
+    },
+    {
+      "id": "it_clang_1410",
+      "widget_id": "widget_clang_1410",
+      "topic": "Errori — Passaggio di NULL a strlen",
+      "q": "A quale risultato porterà la chiamata della funzione strlen(ptr), se ptr == NULL?",
+      "hint": "Rifletti se strlen tenti di dereferenziare il puntatore passato.",
+      "options": [
+        "All'arresto anomalo del programma (Segmentation Fault / UB) a causa della dereferenziazione di un puntatore nullo",
+        "La funzione restituirà il valore 0",
+        "La funzione restituirà il valore -1",
+        "Il compilatore sostituirà la chiamata con NULL"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione standard `strlen` non esegue un controllo integrato `if (ptr == NULL)`. Inizia subito a dereferenziare l'indirizzo passato alla ricerca di `'\\0'`, il che, in caso di passaggio di `NULL`, porta a un accesso all'indirizzo 0 e al crash del programma.",
+        "Errato. `strlen` non restituisce 0 per `NULL`; 0 viene restituito solo per una stringa vuota `\"\"`.",
+        "Errato. `strlen` restituisce il tipo non firmato `size_t` e non utilizza valori negativi.",
+        "Errato. L'errore si verifica durante l'esecuzione (runtime)."
+      ]
+    },
+    {
+      "id": "it_clang_1411",
+      "widget_id": "widget_clang_1411",
+      "topic": "Errori — Underflow di size_t in un ciclo inverso",
+      "q": "Perché il ciclo for (size_t i = len - 1; i >= 0; i--) con il tipo di intestazione size_t porterà a un ciclo infinito?",
+      "hint": "Ricorda se il tipo size_t può assumere valori negativi.",
+      "options": [
+        "size_t è un tipo senza segno (unsigned), pertanto la condizione i >= 0 è sempre vera, e quando i == 0 il decremento i-- causa un underflow a SIZE_MAX",
+        "Il ciclo verrà compilato con errore, poiché size_t non si può usare nei cicli for",
+        "La variabile i viene convertita automaticamente in int negativo durante l'esecuzione di i--",
+        "Il ciclo verrà eseguito correttamente, ma salterà il primo elemento arr[0]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `size_t` è un tipo intero senza segno (*unsigned*). Quando `i` è pari a `0`, l'operazione `i--` causa un underflow e `i` diventa pari a `SIZE_MAX` (un numero positivo enorme). La condizione `i >= 0` non diventa mai falsa.",
+        "Errato. `size_t` è un tipo del tutto valido per i cicli, tuttavia occorre tenere conto della sua natura senza segno.",
+        "Errato. Non si verifica alcuna conversione automatica da tipo senza segno a tipo con segno al decremento.",
+        "Errato. Il ciclo diventerà infinito."
+      ]
+    },
+    {
+      "id": "it_clang_1412",
+      "widget_id": "widget_clang_1412",
+      "topic": "Puntatori — Indirizzo iniziale per il percorso inverso",
+      "q": "Sia char *s = \"Hello\"; e len = strlen(s);. A quale indirizzo deve puntare p per iniziare lo scorrimento dall'ULTIMO carattere stampabile?",
+      "hint": "Ricorda che la lunghezza della stringa len non include il terminatore nullo di chiusura '\\0'.",
+      "options": [
+        "p = s + len - 1",
+        "p = s + len",
+        "p = s + len + 1",
+        "p = s - 1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! All'indirizzo `s + len` si trova il terminatore nullo `'\\0'`. Di conseguenza, l'ultimo carattere stampabile della stringa (la lettera `'o'`) è il carattere con indirizzo `s + len - 1` (indice `len - 1`).",
+        "Errato. All'indirizzo `s + len` si trova il terminatore nullo `'\\0'`. Se si inizia da esso, si inizierà l'elaborazione dalla fine della stringa includendo lo zero di servizio.",
+        "Errato. È un indirizzo oltre i limiti della memoria allocata per la stringa.",
+        "Errato. È un indirizzo prima dell'inizio della stringa."
+      ]
+    },
+    {
+      "id": "it_clang_1413",
+      "widget_id": "widget_clang_1413",
+      "topic": "Algoritmi — Inversione di una stringa sul posto (In-place)",
+      "q": "Quale condizione di continuazione del ciclo viene utilizzata durante l'inversione di una stringa con due puntatori convergenti left e right?",
+      "hint": "I puntatori si muovono l'uno verso l'altro: left++, right--.",
+      "options": [
+        "while (left < right)",
+        "while (left != NULL)",
+        "while (*left != '\\0')",
+        "while (left == right)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il puntatore `left` parte dall'inizio della stringa e `right` dall'ultimo carattere. Lo scorrimento/scambio dei caratteri `*left` e `*right` prosegue finché `left < right`. Non appena i puntatori si incontrano al centro o si incrociano, l'inversione è completata.",
+        "Errato. `left != NULL` non fermerà l'algoritmo al centro della stringa.",
+        "Errato. `*left != '\\0'` farà sì che `left` percorra l'intera stringa fino alla fine, scambiando i caratteri due volte e riportando la stringa allo stato iniziale.",
+        "Errato. Con questa condizione il ciclo verrà eseguito al massimo 1 volta solo per stringhe di lunghezza dispari al momento del loro incontro."
+      ]
+    },
+    {
+      "id": "it_clang_1414",
+      "widget_id": "widget_clang_1414",
+      "topic": "Idiomi — Scorrimento inverso tramite puntatore",
+      "q": "Quale ciclo for scorre in modo corretto e sicuro un array int arr[N] dall'ultimo elemento al primo usando un puntatore p?",
+      "hint": "Verifica l'indirizzo iniziale, la condizione di uscita e i passi di decremento.",
+      "options": [
+        "for (int *p = arr + N - 1; p >= arr; p--)",
+        "for (int *p = arr + N; p > arr; p--)",
+        "for (int *p = arr + N - 1; p != NULL; p--)",
+        "for (int *p = arr + N; p >= arr; p--)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il puntatore viene inizializzato con l'indirizzo dell'ultimo elemento `arr + N - 1`. A ogni passo viene eseguito il decremento `p--`. Il ciclo prosegue finché `p >= arr` (incluso l'elemento `arr[0]`).",
+        "Errato. Non si può iniziare da `arr + N`, poiché il primo passo dereferenzierà `arr[N]` (accesso oltre i limiti). Inoltre, `p > arr` salterà `arr[0]`.",
+        "Errato. `p` riduce l'indirizzo di 4 byte a ogni passo e non diventerà mai uguale a `NULL`.",
+        "Errato. L'inizio da `arr + N` porterà all'accesso oltre i limiti dell'array alla prima iterazione."
+      ]
+    },
+    {
+      "id": "it_clang_1415",
+      "widget_id": "widget_clang_1415",
+      "topic": "Standard C — Puntatore a sinistra dell'array (UB)",
+      "q": "In cosa consiste il pericolo di formare il puntatore p = arr - 1 durante uno scorrimento inverso, anche se questo puntatore NON viene dereferenziato?",
+      "hint": "Lo standard C regola chiaramente i limiti dell'aritmetica dei puntatori consentita.",
+      "options": [
+        "Secondo lo standard C, l'ottenimento di un indirizzo prima dell'inizio dell'array è Comportamento Indefinito (Undefined Behavior)",
+        "È del tutto legale e più sicuro rispetto all'uscita dal limite destro dell'array",
+        "Il sistema operativo termina sempre istantaneamente il programma durante il calcolo di un tale indirizzo",
+        "Non c'è alcun pericolo, poiché l'indirizzo semplicemente non verrà dereferenziato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard C consente di puntare agli elementi dell'array da `&arr[0]` a `&arr[N]` (un elemento oltre la fine dell'array). Tuttavia, la formazione dell'indirizzo *prima* del primo elemento (`arr - 1`) è strettamente Comportamento Indefinito, anche se non viene eseguito `*p`.",
+        "Errato. Non è legale secondo lo standard C.",
+        "Errato. Il calcolo dell'indirizzo in sé non causa di norma un crash immediato a livello di sistema operativo, ma il compilatore ha il diritto di applicare ottimizzazioni che distruggono la logica del programma.",
+        "Errato. Il pericolo risiede nelle ottimizzazioni del compilatore basate sulle regole dello standard C."
+      ]
+    },
+    {
+      "id": "it_clang_1416",
+      "widget_id": "widget_clang_1416",
+      "topic": "Trappole — Cattura del terminatore nullo durante l'inversione",
+      "q": "A cosa porterà l'inversione di una stringa se il puntatore destro viene erroneamente inizializzato come right = str + strlen(str) anziché str + strlen(str) - 1?",
+      "hint": "Cosa si trova all'indirizzo str + strlen(str)?",
+      "options": [
+        "Il terminatore nullo '\\0' si sposterà all'inizio della stringa (str[0]), e all'output la stringa apparirà come vuota \"\"",
+        "Il programma cadrà subito con Segmentation Fault",
+        "La stringa verrà invertita correttamente, poiché '\\0' verrà automaticamente ignorato",
+        "La stringa raddoppierà di lunghezza"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! All'indirizzo `str + strlen(str)` si trova il terminatore nullo `'\\0'`. Scambiandolo con il primo carattere `str[0]`, si posizionerà `'\\0'` all'inizio della stringa. Le funzioni di output (ad esempio `printf`) si fermeranno al primo byte e stamperanno una stringa vuota.",
+        "Errato. Non si verificherà alcun crash, poiché la memoria di `str` è accessibile in scrittura.",
+        "Errato. Il C non ignora automaticamente i caratteri: lo scambio verrà eseguito letteralmente.",
+        "Errato. La lunghezza della memoria allocata e i caratteri non raddoppieranno."
+      ]
+    },
+    {
+      "id": "it_clang_1417",
+      "widget_id": "widget_clang_1417",
+      "topic": "Indicizzazione — Indice negativo rispetto alla fine",
+      "q": "Sia end = arr + 5 un puntatore che punta all'elemento oltre la fine dell'array int arr[5]. Come accedere all'ultimo elemento arr[4] tramite il puntatore end?",
+      "hint": "Ricorda la traduzione dell'operatore [] tramite l'aritmetica dei puntatori.",
+      "options": [
+        "end[-1]",
+        "end[0]",
+        "*end--",
+        "&end[-1]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `end[-1]` viene espansa dal compilatore in `*(end - 1)`. Poiché `end` punta alla posizione 5 (oltre la fine), `end - 1` punta all'elemento con indice 4 (`arr[4]`), che è l'ultimo elemento.",
+        "Errato. `end[0]` viene espanso in `*end`: è l'elemento oltre i limiti dell'array.",
+        "Errato. `*end--` modificherà il puntatore `end` stesso e restituirà il valore oltre i limiti a causa dell'incremento/decremento postfisso.",
+        "Errato. `&end[-1]` restituirà l'indirizzo dell'elemento `arr[4]`, non il suo valore."
+      ]
+    },
+    {
+      "id": "it_clang_1418",
+      "widget_id": "widget_clang_1418",
+      "topic": "Algoritmi — Verifica di un palindromo",
+      "q": "Quale condizione all'interno del ciclo while (left < right) dimostra immediatamente che la stringa NON è un palindromo?",
+      "hint": "Un palindromo si legge allo stesso modo da sinistra a destra e da destra a sinistra.",
+      "options": [
+        "if (*left != *right) return 0;",
+        "if (*left == *right) return 0;",
+        "if (*left == '\\0') return 0;",
+        "if (left == right) return 0;"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se a un determinato passo il carattere dall'inizio della stringa `*left` non coincide con il corrispondente carattere dalla fine `*right`, è garantito che la stringa non sia un palindromo.",
+        "Errato. La coincidenza dei caratteri indica invece che la verifica prosegue.",
+        "Errato. L'incontro con il terminatore nullo non è indice di errore se i puntatori sono stati impostati correttamente.",
+        "Errato. L'uguaglianza dei puntatori `left == right` significa che si è raggiunto il centro della stringa."
+      ]
+    },
+    {
+      "id": "it_clang_1419",
+      "widget_id": "widget_clang_1419",
+      "topic": "Ricerca — Comportamento della funzione strrchr",
+      "q": "In cosa differisce il principio di funzionamento della funzione strrchr(s, c) rispetto alla normale strchr(s, c)?",
+      "hint": "Presta attenzione alla lettera 'r' nel nome (Reverse).",
+      "options": [
+        "strrchr cerca l'ULTIMA occorrenza del carattere dalla fine della stringa, mentre strchr cerca la PRIMA dall'inizio",
+        "strrchr cerca il carattere solo nelle stringhe invertite (reversate)",
+        "strrchr rimuove il carattere trovato dalla stringa",
+        "strrchr funziona solo con array di numeri int"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `strrchr` (*string reverse character*) cerca l'ultima occorrenza del carattere `c` nella stringa `s`, eseguendo di fatto la scansione in direzione opposta (da `'\\0'` verso l'inizio). `strchr` cerca invece la prima occorrenza dall'inizio.",
+        "Errato. Funziona con tutte le normali stringhe terminate da zero.",
+        "Errato. La funzione non modifica la stringa, ma restituisce solo un puntatore al carattere trovato.",
+        "Errato. Entrambe le funzioni lavorano con tipi `const char *`."
+      ]
+    },
+    {
+      "id": "it_clang_1420",
+      "widget_id": "widget_clang_1420",
+      "topic": "Array di puntatori — Stampa inversa di un elenco di stringhe",
+      "q": "Come stampare correttamente in console le stringhe dell'array char *words[] = {\"one\", \"two\", \"three\"}; in ordine inverso (\"three\", \"two\", \"one\")?",
+      "hint": "Indicizza l'array di puntatori words[i] da count - 1 fino a 0.",
+      "options": [
+        "for (int i = 2; i >= 0; i--) printf(\"%s\\n\", words[i]);",
+        "for (int i = 0; i < 3; i++) printf(\"%s\\n\", words[2 - i][::-1]);",
+        "for (int i = 3; i > 0; i++) printf(\"%s\\n\", words[i]);",
+        "for (char **p = words; *p != NULL; p--) printf(\"%s\\n\", *p);"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Scorrendo l'indice `i` da `2` (`count - 1`) a `0` incluso, si ottengono in sequenza i puntatori `words[2]` (`\"three\"`), `words[1]` (`\"two\"`) e `words[0]` (`\"one\"`).",
+        "Errato. La sintassi di slicing `[::-1]` non esiste in C (è sintassi Python).",
+        "Errato. La condizione `i > 0` con l'incremento `i++` porterà ad un accesso oltre i limiti e ad un ciclo infinito.",
+        "Errato. L'incremento `p--` dall'inizio dell'array sposta il puntatore nella memoria protetta prima dell'array."
+      ]
+    }
+  ]
+}

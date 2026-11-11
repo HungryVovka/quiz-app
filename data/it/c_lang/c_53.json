@@ -1,0 +1,605 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_1631",
+      "widget_id": "widget_clang_1631",
+      "topic": "Differenza tra le operazioni *p + N e *(p + N)",
+      "q": "Qual è la differenza fondamentale tra le espressioni *p + N e *(p + N) dal punto di vista dell'ordine di esecuzione delle operazioni?",
+      "hint": "Presta attenzione a ciò a cui viene aggiunto il numero N: al valore o all'indirizzo.",
+      "options": [
+        "*p + N prima dereferenzia p e aggiunge N al valore, mentre *(p + N) prima aggiunge N all'indirizzo e poi lo dereferenzia",
+        "*p + N sposta l'indirizzo di p di N byte, mentre *(p + N) sposta l'indirizzo di N elementi",
+        "Non c'è alcuna differenza, il compilatore le traduce nello stesso codice macchina",
+        "L'espressione *p + N è un errore di sintassi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore unario di dereferenziazione `*` ha una precedenza maggiore rispetto al più binario `+`. Pertanto `*p + N` viene valutato come `(*p) + N` (il numero `N` viene sommato al valore dell'elemento), mentre le parentesi in `*(p + N)` forzano l'esecuzione dell'aritmetica dei puntatori `p + N` prima della dereferenziazione dell'indirizzo ottenuto.",
+        "Errato. Nessuna di queste espressioni esegue uno spostamento in byte; `*(p + N)` esegue uno spostamento in elementi del tipo `*p`.",
+        "Errato. Si tratta di operazioni completamente diverse: una modifica il valore, l'altra legge la memoria a un indirizzo con offset.",
+        "Errato. L'espressione `*p + N` è assolutamente valida."
+      ]
+    },
+    {
+      "id": "it_clang_1632",
+      "widget_id": "widget_clang_1632",
+      "topic": "Differenza tra le operazioni *p + N e *(p + N)",
+      "q": "A cosa saranno uguali le variabili a e b dopo l'esecuzione del frammento di codice?",
+      "hint": "Considera che p punta ad arr[0] (con valore 10).",
+      "options": [
+        "a = 12, b = 30",
+        "a = 30, b = 12",
+        "a = 12, b = 12",
+        "a = 30, b = 30"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `*p` restituisce il valore 10. `a = *p + 2` diventa 10 + 2 = 12. Nel caso di `b = *(p + 2)`, l'indirizzo si sposta in avanti di 2 elementi (`&arr[2]`), la cui dereferenziazione restituisce il valore 30.",
+        "Errato. Hai scambiato i risultati delle espressioni.",
+        "Errato. La seconda espressione sposta il puntatore, prendendo quindi un altro elemento dell'array.",
+        "Errato. Nella prima espressione non si verifica alcuno spostamento del puntatore."
+      ]
+    },
+    {
+      "id": "it_clang_1633",
+      "widget_id": null,
+      "topic": "Differenza tra le operazioni *p + N e *(p + N)",
+      "q": "Quale espressione con l'uso delle parentesi quadre (indicizzazione) è completamente equivalente alla notazione *p + N?",
+      "hint": "*p è l'accesso all'elemento zero tramite il puntatore p.",
+      "options": [
+        "p[0] + N",
+        "p[N]",
+        "(p + N)[0]",
+        "p[0 + N]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `*p` è equivalente a `p[0]`, l'espressione `*p + N` corrisponde esattamente a `p[0] + N`.",
+        "Errato. `p[N]` è equivalente a `*(p + N)`, non a `*p + N`.",
+        "Errato. `(p + N)[0]` dereferenzia l'indirizzo con l'offset `N`, il che è equivalente a `*(p + N)`.",
+        "Errato. `p[0 + N]` si espande in `*(p + N)`."
+      ]
+    },
+    {
+      "id": "it_clang_1634",
+      "widget_id": "widget_clang_1634",
+      "topic": "Differenza tra le операции *p + N e *(p + N)",
+      "q": "Quale espressione per ottenere un valore è l'esatto equivalente di *(p + 2)?",
+      "hint": "Ricorda la regola base dello zucchero sintattico per le parentesi quadre.",
+      "options": [
+        "p[2]",
+        "p[0] + 2",
+        "*nums[2]",
+        "&(p + 2)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, `*(p + 2)` è completamente identico a `p[2]`.",
+        "Errato. `p[0] + 2` somma il numero 2 al valore del primo elemento.",
+        "Errato. `*nums[2]` causerà un errore di compilazione, poiché `nums[2]` è un numero (`int`) al quale non è possibile applicare l'operatore unario `*`.",
+        "Errato. `&(p + 2)` tenta di ottenere l'indirizzo da un valore temporaneo dell'espressione."
+      ]
+    },
+    {
+      "id": "it_clang_1635",
+      "widget_id": "widget_clang_1635",
+      "topic": "Differenza tra le операции *p + N e *(p + N)",
+      "q": "A cosa sarà uguale la variabile res dopo l'esecuzione del codice fornito?",
+      "hint": "Il puntatore p punta ad arr[2] (valore 25). Da cosa viene sottratta l'unità?",
+      "options": [
+        "24",
+        "15",
+        "5",
+        "25"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `*p` legge il valore dell'elemento `arr[2]`, ovvero 25. Viene quindi eseguita la sottrazione `25 - 1`, che dà 24. Se l'espressione fosse stata `*(p - 1)`, il risultato sarebbe stato 15.",
+        "Errato. 15 si otterrebbe con lo spostamento del puntatore `*(p - 1)`.",
+        "Errato. 5 è il valore di `arr[0]`.",
+        "Errato. L'unità viene sottratta dal valore 25."
+      ]
+    },
+    {
+      "id": "it_clang_1636",
+      "widget_id": null,
+      "topic": "Differenza tra le операции *p + N e *(p + N)",
+      "q": "Quali sono le precedenze dell'operatore unario di dereferenziazione * e dell'operatore binario di addizione + nelle specifiche del linguaggio C?",
+      "hint": "Gli operatori unari hanno sempre una precedenza maggiore rispetto agli operatori aritmetici binari.",
+      "options": [
+        "L'operatore unario * ha una precedenza maggiore rispetto al + binario",
+        "Il + binario ha una precedenza maggiore rispetto all'unario *",
+        "Entrambi gli operatori hanno la stessa precedenza e vengono valutati da destra a sinistra",
+        "La precedenza dipende dal tipo di dati a cui punta p"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella tabella delle precedenze del C, gli operatori unari (`*`, `&`, `!`, `++`, ecc.) si trovano sopra gli operatori aritmetici binari (`+`, `-`, `*`, `/`). Per questo motivo `*p + N` viene sempre raggruppato come `(*p) + N`.",
+        "Errato. Il più binario ha una precedenza inferiore.",
+        "Errato. Gli operatori unari e binari si trovano su livelli di precedenza diversi.",
+        "Errato. Le precedenze degli operatori sono fissate dallo standard e non dipendono dai tipi di dati."
+      ]
+    },
+    {
+      "id": "it_clang_1637",
+      "widget_id": "widget_clang_1637",
+      "topic": "Differenza tra le операции *p + N e *(p + N)",
+      "q": "Cosa succederà quando si tenta di compilare la Riga 1 (*p + 1 = 10;)?",
+      "hint": "Rifletti se il risultato della valutazione di (*p + 1) sia una cella di memoria modificabile (lvalue).",
+      "options": [
+        "Errore di compilazione: l'espressione *p + 1 è un rvalue e non può stare a sinistra di un operatore di assegnazione",
+        "Compilazione riuscita: il valore di arr[1] diventerà pari a 10",
+        "Compilazione riuscita: il valore di arr[0] diventerà pari a 11",
+        "Errore a tempo di esecuzione (Segmentation Fault)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `*p + 1` calcola un valore temporaneo (rvalue), cioè il risultato della somma tra il numero in memoria e l'unità. Non è possibile assegnare nulla a un numero temporaneo. Invece la Riga 2 (`*(p + 1) = 10;`) è corretta, poiché dereferenzia l'indirizzo e fornisce l'accesso alla memoria (lvalue).",
+        "Errato. Per modificare `arr[1]` occorre usare la Riga 2: `*(p + 1) = 10;`.",
+        "Errato. La Riga 1 causa un errore già in fase di compilazione.",
+        "Errato. È un errore a tempo di compilazione (lvalue required); il codice non arriverà all'esecuzione."
+      ]
+    },
+    {
+      "id": "it_clang_1638",
+      "widget_id": "widget_clang_1638",
+      "topic": "Differenza tra le операции *p + N e *(p + N)",
+      "q": "A quanto saranno uguali il valore di x e l'elemento arr[0] dopo l'esecuzione dell'istruzione (*p)++;?",
+      "hint": "Le parentesi forzano la dereferenziazione, dopo la quale viene applicato l'incremento al valore in memoria.",
+      "options": [
+        "x = 11, arr[0] = 11",
+        "x = 20, arr[0] = 10",
+        "x = 10, arr[0] = 11",
+        "x = 20, arr[0] = 20"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `(*p)++` legge il valore all'indirizzo `p` (`arr[0]`, pari a 10) e incrementa i dati stessi nella cella di memoria di 1. Il valore di `arr[0]` diventa pari a 11. Il puntatore `p` non viene spostato e continua a puntare ad `arr[0]`, pertanto `x = *p` restituisce 11.",
+        "Errato. Il puntatore `p` non si è spostato all'elemento successivo `arr[1]` (20).",
+        "Errato. `arr[0]` è effettivamente aumentato, quindi `*p` restituirà il valore aggiornato 11.",
+        "Errato. L'incremento è stato eseguito sulla cella di memoria `arr[0]`, non sull'indirizzo `p`."
+      ]
+    },
+    {
+      "id": "it_clang_1639",
+      "widget_id": "widget_clang_1639",
+      "topic": "Differenza tra le операции *p + N e *(p + N)",
+      "q": "A quale conseguenza porterà l'esecuzione del codice int val = *(p + 5); se l'array arr è composto da 3 elementi?",
+      "hint": "Un tentativo di leggere la memoria oltre i limiti dell'array allocato in C.",
+      "options": [
+        "Comportamento indefinito (Undefined Behavior) a causa della dereferenziazione di un puntatore fuori dai limiti dell'array",
+        "Ritorno automatico dello 0 da parte del compilatore",
+        "Riallocazione automatica dell'array in memoria",
+        "Errore di compilazione garantito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo spostamento `p + 5` va oltre i limiti dell'array di 3 elementi. La dereferenziazione di tale indirizzo porta a un comportamento indefinito (Undefined Behavior): il programma può leggere spazzatura, bloccarsi con un Segmentation Fault o comportarsi in modo imprevedibile.",
+        "Errato. Il C non garantisce l'azzeramento della memoria oltre i limiti dell'array.",
+        "Errato. La memoria degli array statici non si estende automaticamente.",
+        "Errato. Il compilatore C di solito non controlla gli accessi fuori dai limiti per puntatori grezzi o dinamici durante la compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_1640",
+      "widget_id": "widget_clang_1640",
+      "topic": "Differenza tra le операции *p + N e *(p + N)",
+      "q": "A cosa sarà uguale la variabile res quando si lavora con un puntatore a puntatore nell'espressione **pp + 5?",
+      "hint": "Dipana i due livelli di dereferenziazione: **pp restituisce il valore della variabile a.",
+      "options": [
+        "15",
+        "25",
+        "L'indirizzo della variabile a, incrementato di 5",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli operatori di dereferenziazione vengono eseguiti in sequenza: `*pp` dà il puntatore `p`, il secondo `*(*pp)` dà il valore della variabile `a` (10). Al valore ottenuto 10 viene sommato 5, per un totale di `res = 15`.",
+        "Errato. La variabile `b` (20) non interviene nelle espressioni.",
+        "Errato. Due dereferenziazioni `**pp` leggono completamente un intero `int`, non un indirizzo.",
+        "Errato. Il codice è assolutamente corretto."
+      ]
+    },
+    {
+      "id": "it_clang_1641",
+      "widget_id": "widget_clang_1641",
+      "topic": "Decadimento dell'array in un puntatore (Array Decay)",
+      "q": "Qual è l'essenza del fenomeno del \"decadimento dell'array\" (Array Decay) quando viene passato come parametro di una funzione?",
+      "hint": "Rifletti su cosa viene convertito implicitamente il nome dell'array nella maggior parte delle espressioni.",
+      "options": [
+        "Il nome dell'array viene convertito implicitamente in un puntatore al suo primo elemento (int *), mentre le informazioni sul tipo \"array\" e sulla sua dimensione vanno perse",
+        "L'array perde i valori negativi e viene convertito automaticamente al tipo unsigned",
+        "L'array viene compresso in memoria alla dimensione di una singola parola per risparmiare spazio sullo stack",
+        "Gli elementi dell'array vengono sostituiti con zeri"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando si passa un array a una funzione o nella maggior parte delle espressioni, l'espressione di tipo `T[N]` si converte implicitamente (decade) in `T*`, che fa riferimento a `&arr[0]`. La funzione riceve solo l'indirizzo del primo elemento e perde la dimensione dell'array.",
+        "Errato. Il decadimento non modifica in alcun modo i valori all'interno dell'array e i loro tipi.",
+        "Errato. I dati dell'array rimangono in memoria dove sono stati allocati.",
+        "Errato. Gli elementi non vengono azzerati o puliti."
+      ]
+    },
+    {
+      "id": "it_clang_1642",
+      "widget_id": null,
+      "topic": "Decadimento dell'array in un puntatore (Array Decay)",
+      "q": "In quale dei seguenti casi NON si verifica la conversione implicita (decadimento) dell'array in un puntatore?",
+      "hint": "Ricorda gli operatori che lavorano con le proprietà del tipo array stesso, e non con i suoi elementi.",
+      "options": [
+        "Quando si applica l'operatore sizeof al nome dell'array o si prende l'indirizzo &arr",
+        "Quando si passa un array alla funzione printf tramite lo specificatore %p",
+        "Quando si somma un numero intero al nome dell'array (arr + 1)",
+        "Quando si utilizza l'array nella condizione dell'istruzione if (arr)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le principali eccezioni alla regola del decadimento sono: l'operatore `sizeof(arr)` (restituisce la dimensione in byte dell'intero array), l'operatore di indirizzo `&arr` (restituisce un puntatore all'intero array `T(*)[N]`) e l'inizializzazione con un letterale stringa `char s[] = \"abc\"`.",
+        "Errato. Quando viene passato a `printf`, si verifica il normale decadimento a puntatore.",
+        "Errato. Nell'espressione `arr + 1` l'array `arr` è già decaduto a puntatore `&arr[0]`, al quale viene sommato 1.",
+        "Errato. Nella condizione `if (arr)` l'array viene convertito in un puntatore per il controllo con `NULL`."
+      ]
+    },
+    {
+      "id": "it_clang_1643",
+      "widget_id": "widget_clang_1643",
+      "topic": "Decadimento dell'array in un puntatore (Array Decay)",
+      "q": "Come interpreta il compilatore C i tipi dei parametri nei prototipi f1, f2 e f3?",
+      "hint": "Per il compilatore, nelle intestazioni delle funzioni la sintassi delle parentesi quadre viene completamente convertita.",
+      "options": [
+        "Tutti e tre i prototipi sono identici e vengono convertiti dal compilatore nel singolo tipo void f(int *arr)",
+        "f1 accetta un array statico di 10 elementi, f2 uno dinamico, f3 un puntatore",
+        "f1 controlla i limiti dell'array, mentre f2 e f3 no",
+        "Il compilatore genererà un errore di ridichiarazione della funzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel contesto dei parametri di funzione, la sintassi `T a[N]` e `T a[]` è solo zucchero sintattico. Il compilatore li riscrive immediatamente in `T *a`. Pertanto, per il compilatore `f1`, `f2` e `f3` sono del tutto identici.",
+        "Errato. Il compilatore ignora la dimensione tra parentesi `[10]` e non controlla i limiti.",
+        "Errato. Il controllo dei limiti in C è assente per impostazione predefinita.",
+        "Errato. Le ridichiarazioni dello stesso tipo di firma in C sono del tutto legali."
+      ]
+    },
+    {
+      "id": "it_clang_1644",
+      "widget_id": null,
+      "topic": "Decadimento dell'array in un puntatore (Array Decay)",
+      "q": "Perché quando si passa un array a una funzione il suo contenuto si modifica nella funzione chiamante (main) invece di creare una copia?",
+      "hint": "Rifletti su cosa viene trasmesso esattamente alla funzione per valore.",
+      "options": [
+        "Alla funzione viene passato per valore l'indirizzo copiato del primo elemento (puntatore), quindi la dereferenziazione tramite data[i] modifica la memoria originale",
+        "In C tutti gli array vengono sempre dichiarati automaticamente come variabili globali",
+        "Gli array vengono passati tramite un riferimento integrato all'area di memoria dello stack",
+        "È una speciale illusione ottica del compilatore, i dati vengono ripristinati all'uscita"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A causa del decadimento dell'array, la funzione riceve una copia dell'indirizzo (`int*`). Utilizzando questo indirizzo, la funzione accede alla stessa memoria fisica in cui risiede l'array originale.",
+        "Errato. Gli array locali sono allocati sullo stack e non sono globali.",
+        "Errato. Nel linguaggio C non esiste il tipo \"riferimento\" (reference), a differenza del C++.",
+        "Errato. Le modifiche avvengono fisicamente nella cella di memoria originale."
+      ]
+    },
+    {
+      "id": "it_clang_1645",
+      "widget_id": "widget_clang_1645",
+      "topic": "Decadimento dell'array in un puntatore (Array Decay)",
+      "q": "In cosa decade la prima dimensione di un array bidimensionale matrix[3][4] quando viene passato come parametro di una funzione?",
+      "hint": "Decade solo la dimensione più esterna (l'array di sotto-array).",
+      "options": [
+        "In un puntatore a un array di 4 elementi int: int (*matrix)[4]",
+        "In un doppio puntatore: int **matrix",
+        "In un normale puntatore: int *matrix",
+        "In un array di puntatori: int *matrix[4]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un array bidimensionale è un \"array di 3 array da 4 int\". Durante il decadimento, decade solo l'array esterno, trasformandosi in un puntatore al suo elemento (che è a sua volta un array di 4 `int`). Il tipo finale è `int (*)[4]`.",
+        "Errato. `int **` è un puntatore a puntatore, il che non corrisponde a un blocco di memoria contiguo di un array bidimensionale.",
+        "Errato. `int *` perde il passo di riga di 4 elementi, impedendo la corretta indicizzazione `matrix[i][j]`.",
+        "Errato. `int *matrix[4]` è un array di 4 puntatori, non un puntatore a un array."
+      ]
+    },
+    {
+      "id": "it_clang_1646",
+      "widget_id": null,
+      "topic": "Decadimento dell'array in un puntatore (Array Decay)",
+      "q": "Qual è il principale vantaggio del decadimento dell'array dal punto di vista delle prestazioni del programma?",
+      "hint": "Confronta il passaggio di 1.000.000 elementi con il passaggio di un singolo indirizzo.",
+      "options": [
+        "Viene trasmesso solo un puntatore di dimensione fissa (4/8 byte), eliminando il sovraccarico di copia di tutti gli elementi dell'array sullo stack",
+        "Il compilatore sposta automaticamente gli elementi dell'array in un registro virtuale della GPU",
+        "Ciò consente di eseguire la ricerca nell'array in tempo costante O(1)",
+        "Ciò protegge la memoria dall'usura fisica delle celle RAM"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il passaggio di un array di qualsiasi dimensione enorme si riduce al passaggio di un solo indirizzo a 64 bit nel registro o nello stack, operazione eseguita all'istante `O(1)` senza intasare lo stack con copie.",
+        "Errato. Le unità di elaborazione grafica (GPU) non sono coinvolte in questa operazione.",
+        "Errato. Il decadimento non modifica la complessità algoritmica della ricerca tra gli elementi.",
+        "Errato. È un'affermazione assurda."
+      ]
+    },
+    {
+      "id": "it_clang_1647",
+      "widget_id": "widget_clang_1647",
+      "topic": "Decadimento dell'array in un puntatore (Array Decay)",
+      "q": "Cosa significa l'uso del qualificatore static all'interno delle parentesi quadre del parametro di una funzione (C99): void process(int arr[static 10])?",
+      "hint": "È un suggerimento al compilatore sul numero minimo ammissibile di elementi all'indirizzo passato.",
+      "options": [
+        "L'argomento arr non deve essere NULL e deve puntare a un array contenente almeno 10 elementi",
+        "L'array arr mantiene il suo stato tra le chiamate di funzione",
+        "L'array arr verrà allocato nel segmento di memoria statica (.data)",
+        "La dimensione dell'array è fissa e non può быть ridefinita"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi C99 `[static N]` garantisce al compilatore che il puntatore passato non sia `NULL` e che a quell'indirizzo siano disponibili almeno `N` elementi. Ciò consente ottimizzazioni aggressive e avvisi di errore nell'analisi statica.",
+        "Errato. In questo contesto `static` non rende l'array un oggetto statico con un lungo ciclo di vita.",
+        "Errato. La memoria viene allocata dal chiamante e non viene spostata nel segmento `.data`.",
+        "Errato. È un suggerimento al compilatore sul tipo e sulla dimensione, non un vincolo in fase di compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_1648",
+      "widget_id": null,
+      "topic": "Decadimento dell'array in un puntatore (Array Decay)",
+      "q": "Qual è la differenza tra le espressioni arr e &arr per la dichiarazione int arr[10]?",
+      "hint": "Sebbene i valori degli indirizzi coincidano, i loro tipi e il passo nell'aritmetica dei puntatori differiscono.",
+      "options": [
+        "arr è di tipo int* (puntatore all'elemento), mentre &arr è di tipo int(*)[10] (puntatore all'intero array)",
+        "arr restituisce l'indirizzo, mentre &arr restituisce il valore del primo elemento",
+        "arr è un rvalue, mentre &arr è un lvalue",
+        "Non c'è differenza, entrambe le espressioni sono di tipo int*"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Sebbene numericamente gli indirizzi di `arr` e `&arr` coincidano, i loro tipi sono fondamentalmente diversi: `arr` decade in `int*` (il passo `+1` sposta di 4 byte), mentre `&arr` è di tipo `int(*)[10]` (il passo `+1` sposta di 40 byte — l'intero array).",
+        "Errato. `&arr` restituisce l'indirizzo dell'intero array, non il valore.",
+        "Errato. Di per sé `arr` come nome di array è un lvalue (ma non modificabile per la parte sinistra dell'assegnazione).",
+        "Errato. I tipi sono fondamentalmente diversi, come si nota dall'aritmetica dei puntatori."
+      ]
+    },
+    {
+      "id": "it_clang_1649",
+      "widget_id": "widget_clang_1649",
+      "topic": "Decadimento dell'array in un puntatore (Array Decay)",
+      "q": "Quale valore stamperà la funzione print_exact se le viene passato l'indirizzo dell'array int numbers[10] tramite print_exact(&numbers)?",
+      "hint": "Poiché il parametro accetta un puntatore all'intero array int(*)[10], la dereferenziazione *arr ripristina il tipo array di 10 elementi.",
+      "options": [
+        "40 (10 elementi * sizeof(int)) su sistemi a 32/64 bit",
+        "8 (dimensione di un normale puntatore su un sistema a 64 bit)",
+        "10 (numero di elementi)",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il parametro `int (*arr)[10]` è un puntatore a un array di 10 elementi. Quando viene dereferenziato con `*arr`, otteniamo un'espressione di tipo \"array di 10 int\". L'operatore `sizeof(*arr)` vede il tipo completo dell'array, quindi calcola `10 * sizeof(int) = 40` byte.",
+        "Errato. `sizeof(arr)` avrebbe restituito 8 (dimensione del puntatore), ma abbiamo scritto `sizeof(*arr)`.",
+        "Errato. `sizeof` calcola la dimensione in byte, non il numero di elementi.",
+        "Errato. Il passaggio di `&numbers` è sintatticamente del tutto corretto per questo tipo di parametro."
+      ]
+    },
+    {
+      "id": "it_clang_1650",
+      "widget_id": "widget_clang_1650",
+      "topic": "Decadimento dell'array in un puntatore (Array Decay)",
+      "q": "Cosa succederà quando viene eseguita l'operazione data++ all'interno della funzione step_next(int data[])?",
+      "hint": "Ricorda che all'interno della funzione il parametro data è una normale variabile locale puntatore.",
+      "options": [
+        "Il puntatore locale data si sposterà all'elemento successivo, ma l'array originale in main non cambierà",
+        "Si verificherà un errore di compilazione, poiché è vietato incrementare il nome dell'array",
+        "Il primo elemento dell'array in main verrà sovrascritto e diventerà pari a zero",
+        "Tutta la memoria dell'array originale si sposterà di 4 byte a sinistra"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `int data[]` nei parametri della funzione è decaduto in `int *data`, la variabile `data` passata è solo un puntatore locale ricevuto per valore. Può essere incrementato (`data++`), spostando solo il puntatore locale e senza influire sull'array originale in `main`.",
+        "Errato. L'incremento `arr++` è vietato per il nome dell'array nel suo scope nativo, ma all'interno della funzione `data` è a tutti gli effetti una variabile puntatore `int*`.",
+        "Errato. Viene incrementato l'indirizzo stesso (il puntatore), non il valore in memoria.",
+        "Errato. Non si verifica alcuno spostamento della memoria in RAM."
+      ]
+    },
+    {
+      "id": "it_clang_1651",
+      "widget_id": "widget_clang_1651",
+      "topic": "Puntatori e array bidimensionali",
+      "q": "In quale ordine gli elementi dell'array bidimensionale matrix[2][3] sono disposti nella memoria RAM fisica secondo lo standard C (Row-major order)?",
+      "hint": "La memoria del computer è monodimensionale. In Row-major order gli elementi di una riga si succedono in sequenza.",
+      "options": [
+        "1, 2, 3, 4, 5, 6 (prima l'intera prima riga, poi l'intera seconda)",
+        "1, 4, 2, 5, 3, 6 (prima la prima colonna, poi la seconda e la terza)",
+        "6, 5, 4, 3, 2, 1 (in ordine inverso)",
+        "L'ordine non è garantito e dipende dall'architettura del processore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il linguaggio C utilizza l'ordinamento per righe (Row-major order). Tutti gli elementi della prima riga (`matrix[0][0]`, `matrix[0][1]`, `matrix[0][2]`) si trovano contigui in memoria, e subito dopo l'ultimo elemento della prima riga segue il primo elemento della seconda riga (`matrix[1][0]`).",
+        "Errato. L'ordinamento per colonne (Column-major order) viene utilizzato in Fortran e MATLAB, ma non in C.",
+        "Errato. Gli elementi non vengono invertiti durante la disposizione.",
+        "Errato. Lo standard C fissa rigorosamente la disposizione contigua per righe."
+      ]
+    },
+    {
+      "id": "it_clang_1652",
+      "widget_id": "widget_clang_1652",
+      "topic": "Puntatori e array bidimensionali",
+      "q": "Con quale formula si calcola l'indirizzo in byte dell'elemento arr[i][j] per un array arr[R][C] con indirizzo base Base e dimensione dell'elemento sizeof(T)?",
+      "hint": "Per raggiungere la riga i, occorre saltare i righe complete da C elementi ciascuna.",
+      "options": [
+        "\\text{Base} + (i \\cdot C + j) \\cdot \\text{sizeof}(T)",
+        "\\text{Base} + (j \\cdot R + i) \\cdot \\text{sizeof}(T)",
+        "\\text{Base} + (i + j) \\cdot \\text{sizeof}(T)",
+        "\\text{Base} + (i \\cdot R + j \\cdot C) \\cdot \\text{sizeof}(T)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché prima della riga $i$ vi sono $i$ righe complete, ciascuna contenente $C$ elementi, l'indice lineare dell'elemento si calcola come $(i \\cdot C + j)$. L'indirizzo fisico è pari a $\\text{Base} + (i \\cdot C + j) \\cdot \\text{sizeof}(T)$. Per `arr[2][1]` in `arr[3][4]`, otteniamo uno spostamento di $2 \\cdot 4 + 1 = 9$ elementi (36 byte).",
+        "Errato. Questa formula è tipica del Column-major order.",
+        "Errato. La semplice somma $(i + j)$ non tiene conto del numero di colonne in ogni riga.",
+        "Errato. La moltiplicazione di $i$ per il numero di righe $R$ è errata; occorre moltiplicare per il numero di colonne $C$."
+      ]
+    },
+    {
+      "id": "it_clang_1653",
+      "widget_id": "widget_clang_1653",
+      "topic": "Puntatori e array bidimensionali",
+      "q": "Perché la Variante A con un ciclo esterno su i e uno interno su j funziona notevolmente più velocemente della Variante B nell'elaborazione di grandi matrici?",
+      "hint": "Ricorda il funzionamento della memoria cache del processore (Cache Lines) e i principi della località spaziale.",
+      "options": [
+        "La Variante A attraversa la memoria sequenzialmente (cella per cella), garantendo un'elevata località spaziale (Spatial Locality) e un lavoro efficiente della cache L1/L2",
+        "La Variante B causa un errore di sforamento della linea di cache del processore",
+        "Il compilatore C annulla automaticamente il ciclo interno nella Variante A",
+        "Non c'è differenza di velocità, entrambi i casi eseguono lo stesso numero di addizioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A causa dell'ordinamento per righe (Row-major), la Variante A legge la memoria in sequenza diretta. Il processore carica i dati nelle linee di cache (solitamente di 64 byte) a blocchi interi. Nella Variante B il passo di accesso è pari a $C \\cdot \\text{sizeof}(T)$, causando continui errori di cache (Cache Misses).",
+        "Errato. La Variante B è logicamente corretta, ma estremamente inefficiente in termini di velocità a causa del ricaricamento continuo delle linee di cache.",
+        "Errato. Il compilatore non rimuove i cicli, ma può scambiarne l'ordine durante le ottimizzazioni (Loop Interchanging).",
+        "Errato. Il numero di operazioni matematiche è identico, ma la latenza di accesso alla RAM nella Variante B è notevolmente più alta."
+      ]
+    },
+    {
+      "id": "it_clang_1654",
+      "widget_id": null,
+      "topic": "Puntatori e array bidimensionali",
+      "q": "In cosa decade implicitamente il nome dell'array bidimensionale int matrix[3][4] se utilizzato nella maggior parte delle espressioni?",
+      "hint": "Decade solo la dimensione esterna dell'array.",
+      "options": [
+        "In un puntatore a un array di 4 elementi int: int (*)[4]",
+        "In un doppio puntatore: int **",
+        "In un normale puntatore a int: int *",
+        "In un array di puntatori: int *[3]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un array bidimensionale è un array monodimensionale i cui elementi sono array di 4 `int`. Per le regole del decadimento, il nome `matrix` si trasforma in un puntatore al suo primo elemento, ovvero all'array di 4 `int`: `int (*)[4]`.",
+        "Errato. `int **` è un puntatore a puntatore. Un array bidimensionale non memorizza array di indirizzi in memoria.",
+        "Errato. `int *` è un puntatore a un singolo elemento; con questo tipo si perdono le informazioni sulla larghezza della riga.",
+        "Errato. `int *[3]` è un array di 3 puntatori."
+      ]
+    },
+    {
+      "id": "it_clang_1655",
+      "widget_id": "widget_clang_1655",
+      "topic": "Puntatori e array bidimensionali",
+      "q": "A cosa sarà uguale la variabile val nell'indicizzazione piatta con puntatore lineare ptr[1 * 4 + 2]?",
+      "hint": "1 * 4 + 2 è il calcolo dell'elemento per la riga 1 e la colonna 2 (grid[1][2]).",
+      "options": [
+        "7",
+        "6",
+        "11",
+        "8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché la matrice risiede contigua in memoria, il cast `(int*)grid` consente di accedervi come a un array 1D. L'indice `1 * 4 + 2 = 6` corrisponde al 7° elemento (poiché l'indicizzazione parte da 0). In `grid[1][2]` si trova il numero 7.",
+        "Errato. 6 è `grid[1][1]` (indice 5).",
+        "Errato. 11 è `grid[2][2]` (indice 10).",
+        "Errato. 8 è `grid[1][3]` (indice 7)."
+      ]
+    },
+    {
+      "id": "it_clang_1656",
+      "widget_id": "widget_clang_1656",
+      "topic": "Puntatori e array bidimensionali",
+      "q": "Qual è la differenza fondamentale tra le dichiarazioni int (*p1)[4] e int *p2[4]?",
+      "hint": "Presta attenzione alla precedenza degli operatori: le parentesi modificano il legame del puntatore *.",
+      "options": [
+        "p1 è un singolo puntatore a un array di 4 elementi int, mentre p2 è un array di 4 puntatori a int",
+        "p1 è un array di 4 puntatori, mentre p2 è un puntatore a un array",
+        "Entrambe le notazioni sono equivalenti e indicano un doppio puntatore int **",
+        "p1 è allocato nell'heap, mentre p2 nello stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In `int (*p1)[4]` le parentesi forzano `*` a legarsi a `p1`, formando un singolo puntatore che fa riferimento all'intero array di 4 `int`. In `int *p2[4]` la precedenza delle parentesi quadre `[]` è maggiore, quindi `p2` è un array di 4 elementi di tipo `int*`.",
+        "Errato. I valori sono invertiti.",
+        "Errato. Le variabili hanno una natura e una dimensione in memoria fondamentalmente diverse.",
+        "Errato. Il luogo di allocazione della memoria dipende dal contesto di dichiarazione (globale/locale) e non dal tipo."
+      ]
+    },
+    {
+      "id": "it_clang_1657",
+      "widget_id": "widget_clang_1657",
+      "topic": "Puntatori e array bidimensionali",
+      "q": "Se l'indirizzo base di matrix è 0x2000, quale diventerà l'indirizzo dell'espressione (matrix + 1)?",
+      "hint": "matrix è di tipo int(*)[4]. L'aggiunta di 1 sposta il puntatore della dimensione di un'intera riga (4 elementi int).",
+      "options": [
+        "0x2010 (spostamento di 16 byte)",
+        "0x2004 (spostamento di 4 byte)",
+        "0x2008 (spostamento di 8 byte)",
+        "0x2030 (spostamento di 48 byte)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'unità di memoria per `matrix` di tipo `int(*)[4]` è l'intera riga di 4 elementi `int`. L'operazione `matrix + 1` sposta l'indirizzo di $4 \\cdot \\text{sizeof}(int) = 4 \\cdot 4 = 16$ byte. Nel sistema esadecimale 16 byte = 0x10, quindi $0\\times2000 + 0\\times10 = 0\\times2010$.",
+        "Errato. L'aritmetica con un normale `int*` sposta di 4 byte.",
+        "Errato. 8 byte corrispondono a uno spostamento di 2 elementi `int`.",
+        "Errato. Il calcolo dello spostamento è errato."
+      ]
+    },
+    {
+      "id": "it_clang_1658",
+      "widget_id": null,
+      "topic": "Puntatori e array bidimensionali",
+      "q": "Cosa succederà se si passa una matrice in C a una libreria terza scritta in Fortran o progettata per il Column-major order senza prima trasporla?",
+      "hint": "Rifletti su come vengono interpretate righe e colonne con ordini di memorizzazione diversi.",
+      "options": [
+        "La matrice verrà letta trasposta (righe e colonne risulteranno scambiate)",
+        "Il programma terminerà immediatamente con un Segmentation Fault",
+        "I dati verranno convertiti automaticamente dall'hardware del processore",
+        "La matrice verrà azzerata"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli elementi rimarranno nelle rispettive posizioni in memoria, ma l'interpretazione degli indici `(i, j)` in un linguaggio Column-major li leggerà come se le righe fossero diventate colonne, ovvero la matrice risulterà trasposta.",
+        "Errato. La memoria è allocata correttamente; l'errore sarà logico e non una terminazione anomala.",
+        "Errato. Il processore non ha alcuna cognizione dei concetti di righe e colonne del linguaggio di programmazione.",
+        "Errato. I dati non vengono azzerati."
+      ]
+    },
+    {
+      "id": "it_clang_1659",
+      "widget_id": "widget_clang_1659",
+      "topic": "Puntatori e array bidimensionali",
+      "q": "A cosa sarà uguale la variabile val dopo l'esecuzione di p++ per un puntatore impostato sull'ultimo elemento della prima riga?",
+      "hint": "A causa della contiguità del Row-major order, subito dopo l'ultimo elemento della riga 0 si trova il primo elemento della riga 1.",
+      "options": [
+        "40 (primo elemento della seconda riga arr[1][0])",
+        "Comportamento indefinito (UB)",
+        "0",
+        "10 (ritorno all'inizio della prima riga)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché l'array bidimensionale occupa un'area di memoria contigua, l'elemento `arr[0][2]` confina fisicamente con `arr[1][0]`. L'incremento del puntatore `p++` lo sposta all' `int` successivo in memoria, che è `arr[1][0]` (valore 40).",
+        "Errato. La dereferenziazione è assolutamente legale, poiché l'indirizzo rimane entro i limiti dell'array allocato.",
+        "Errato. La memoria conserva il valore 40.",
+        "Errato. Il puntatore non riparte dall'inizio automaticamente."
+      ]
+    },
+    {
+      "id": "it_clang_1660",
+      "widget_id": "widget_clang_1660",
+      "topic": "Puntatori e array bidimensionali",
+      "q": "Perché quando si passa un array bidimensionale di dimensione statica a una funzione è OBBLIGATORIO specificare il numero di colonne (ad esempio, void process(int arr[][4], int rows))?",
+      "hint": "Ricorda la formula per il calcolo dell'indirizzo dell'elemento arr[i][j].",
+      "options": [
+        "Affinché il compilatore possa calcolare lo spostamento delle righe tramite la formula (i * C + j) * sizeof(T), per la quale la dimensione delle colonne C deve essere nota in fase di compilazione",
+        "Affinché il compilatore possa controllare i limiti dell'array a tempo di esecuzione",
+        "Si tratta di un retaggio sintattico, il numero 4 può essere omesso senza alcuna conseguenza",
+        "Per limitare a 4 il numero di righe trasmesse"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per generare il codice di accesso ad `arr[i][j]`, il compilatore deve conoscere la lunghezza della riga $C$ per moltiplicare $i \\cdot C$. Senza conoscere $C$, è impossibile calcolare l'indirizzo di inizio della riga $i$-esima. Non è invece necessario passare la quantità di righe nella prima dimensione `[]`.",
+        "Errato. Il controllo dei limiti in C non viene eseguito per impostazione predefinita.",
+        "Errato. Omettere la seconda dimensione `int arr[][]` è vietato dallo standard C: il codice non compila.",
+        "Errato. Il numero 4 definisce il numero di colonne, non di righe."
+      ]
+    }
+  ]
+}

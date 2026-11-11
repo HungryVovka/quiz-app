@@ -1,0 +1,609 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2141",
+      "widget_id": "widget_clang_2141",
+      "topic": "Precisione dei tipi float e double",
+      "q": "Cosa stamperà il programma confrontando una variabile float (0.1f) e una double (0.1)?",
+      "hint": "Rifletti su come il numero decimale 0.1 viene rappresentato nel sistema binario con una diversa precisione dei bit di mantissa.",
+      "options": [
+        "0",
+        "1",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il numero 0.1 non ha una rappresentazione esatta nel sistema binario (frazione periodica). Il tipo `float` ha 23 bit di mantissa, mentre `double` ne ha 52. Quando un `float` viene promosso a `double`, i bit mancanti vengono riempiti con zeri, rendendo i valori diversi e facendo restituire 0 al confronto.",
+        "Errato. A causa della diversa precisione delle rappresentazioni nello standard IEEE 754, i valori non coincidono.",
+        "Errato. La conversione implicita da float a double durante il confronto è perfettamente valida.",
+        "Errato. Il comportamento del confronto tra numeri a virgola mobile è rigorosamente definito dallo standard."
+      ]
+    },
+    {
+      "id": "it_clang_2142",
+      "widget_id": null,
+      "topic": "Suffissi dei letterali a virgola mobile",
+      "q": "Quale suffisso è necessario aggiungere a una costante a virgola mobile (ad esempio 3.14) affinché il compilatore la interpreti come float anziché double?",
+      "hint": "Per impostazione predefinita, tutte le costanti a virgola mobile in C senza suffisso sono di tipo double.",
+      "options": [
+        "f o F",
+        "l o L",
+        "d o D",
+        "fl o FL"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il suffisso `f` o `F` indica esplicitamente al compilatore che il letterale è di tipo `float`. Senza suffisso, il letterale è considerato `double`.",
+        "Errato. Il suffisso `l` o `L` viene utilizzato per indicare il tipo `long double`.",
+        "Errato. Il suffisso `d` per i letterali a virgola mobile non esiste nel linguaggio C.",
+        "Errato. Questo suffisso combinato non è previsto dalla sintassi del linguaggio."
+      ]
+    },
+    {
+      "id": "it_clang_2143",
+      "widget_id": "widget_clang_2143",
+      "topic": "Specificatore di output per long double",
+      "q": "Quale specificatore di formato della funzione printf viene utilizzato per la corretta visualizzazione di una variabile di tipo long double?",
+      "hint": "Il modificatore di dimensione per long double è specificato dalla lettera maiuscola 'L'.",
+      "options": [
+        "%Lf",
+        "%lf",
+        "%f",
+        "%lld"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `%Lf` (con la lettera maiuscola `L`) è destinato alla stampa di numeri di tipo `long double`.",
+        "Errato. `%lf` in `printf` viene utilizzato per `double` (sebbene a partire da C99 `%f` e `%lf` in `printf` siano equivalenti).",
+        "Errato. `%f` attende un `double` (o un `float`, promosso automaticamente a `double`).",
+        "Errato. `%lld` viene utilizzato per numeri interi di tipo `long long int`."
+      ]
+    },
+    {
+      "id": "it_clang_2144",
+      "widget_id": "widget_clang_2144",
+      "topic": "Errore di arrotondamento float/double",
+      "q": "Cosa stamperà il programma eseguendo un confronto diretto (0.1 + 0.2) == 0.3?",
+      "hint": "Le frazioni decimali 0.1, 0.2 e 0.3 non possono essere rappresentate esattamente nel formato binario IEEE 754.",
+      "options": [
+        "0",
+        "1",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A causa dell'errore accumulato nella rappresentazione binaria, il risultato di `0.1 + 0.2` è circa `0.30000000000000004`, che non è uguale a `0.3`. L'espressione restituisce 0.",
+        "Errato. A causa delle caratteristiche del formato IEEE 754, questi valori non corrispondono esattamente.",
+        "Errato. L'espressione è sintatticamente corretta.",
+        "Errato. Questo è un comportamento ben definito dell'aritmetica standard a virgola mobile."
+      ]
+    },
+    {
+      "id": "it_clang_2145",
+      "widget_id": "widget_clang_2145",
+      "topic": "Divisione per zero secondo IEEE 754",
+      "q": "Cosa stamperà il programma dividendo un numero reale positivo per 0.0?",
+      "hint": "Lo standard IEEE 754 definisce valori speciali per la divisione per zero, a differenza dei tipi interi.",
+      "options": [
+        "1",
+        "0",
+        "Terminazione anomala del programma (SIGFPE)",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard IEEE 754, la divisione di un numero a virgola mobile positivo per `0.0` produce `+INFINITY`. Poiché `INFINITY` è maggiore di `1000000.0`, la condizione è vera e viene stampato 1.",
+        "Errato. L'espressione `1.0 / 0.0` produce l'infinito, che è strettamente maggiore di 1000000.",
+        "Errato. A differenza della divisione intera per zero, la divisione a virgola mobile non genera un segnale `SIGFPE`.",
+        "Errato. Il comportamento è chiaramente stabilito dallo standard IEEE 754."
+      ]
+    },
+    {
+      "id": "it_clang_2146",
+      "widget_id": "widget_clang_2146",
+      "topic": "Proprietà del valore NaN",
+      "q": "Cosa stamperà il programma eseguendo la divisione 0.0 / 0.0 e il successivo confronto del risultato con se stesso (x == x)?",
+      "hint": "La divisione 0.0 / 0.0 produce il valore NaN (Not a Number), che possiede una proprietà unica nel confronto.",
+      "options": [
+        "0",
+        "1",
+        "Errore di compilazione",
+        "Terminazione anomala"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il risultato di `0.0 / 0.0` è `NaN`. Secondo lo standard IEEE 754, il valore `NaN` non è uguale a nulla, nemmeno a se stesso (`NaN == NaN` restituisce sempre `0`).",
+        "Errato. Il confronto `NaN == NaN` per definizione restituisce falso (0).",
+        "Errato. L'operazione è sintatticamente corretta e viene compilata senza errori.",
+        "Errato. Il programma prosegue regolarmente senza terminare in modo anomalo."
+      ]
+    },
+    {
+      "id": "it_clang_2147",
+      "widget_id": "widget_clang_2147",
+      "topic": "Conversione di tipi a virgola mobile in interi",
+      "q": "Come avviene il passaggio da double/float a int mediante conversione esplicita o implicita?",
+      "hint": "Ricorda se il numero viene arrotondato all'intero più vicino o se la parte frazionaria viene semplicemente troncata.",
+      "options": [
+        "-2 (la parte frazionaria viene troncata / arrotondamento verso lo zero)",
+        "-3 (arrotondamento all'intero inferiore)",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella conversione da un tipo a virgola mobile a un intero, la parte frazionaria viene sempre troncata (troncamento verso lo zero). Per -2.7, il risultato del troncamento sarà -2.",
+        "Errato. L'arrotondamento verso il basso a -3 si ottiene usando la funzione `floor()`, non con il troncamento.",
+        "Errato. La conversione da tipo a virgola mobile a intero è un'operazione standard in C.",
+        "Errato. Il comportamento è definito purché il valore rientri nell'intervallo del tipo di destinazione."
+      ]
+    },
+    {
+      "id": "it_clang_2148",
+      "widget_id": null,
+      "topic": "Tipo predefinito delle costanti a virgola mobile",
+      "q": "Qual è il tipo di dati del letterale 3.14 in C se non vengono specificati suffissi?",
+      "hint": "Senza l'uso dei suffissi 'f' o 'L', il compilatore sceglie il tipo standard a doppia precisione.",
+      "options": [
+        "double",
+        "float",
+        "long double",
+        "int"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard del linguaggio C, qualsiasi letterale a virgola mobile senza suffisso è di tipo `double` per impostazione predefinita.",
+        "Errato. Per ottenere il tipo `float` è necessario un suffisso esplicito `f` o `F`.",
+        "Errato. Per ottenere il tipo `long double` è necessario un suffisso esplicito `l` o `L`.",
+        "Errato. La presenza del punto decimale indica un tipo a virgola mobile."
+      ]
+    },
+    {
+      "id": "it_clang_2149",
+      "widget_id": "widget_clang_2149",
+      "topic": "Formato esponenziale di output",
+      "q": "Cosa stamperà lo specificatore %.1e per il numero 1250.0?",
+      "hint": "Lo specificatore %e formatta il numero in notazione scientifica (esponenziale) con mantissa ed esponente.",
+      "options": [
+        "1.3e+03",
+        "1250.0",
+        "1.25e+03",
+        "0.1e+04"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `%.1e` stampa il numero in forma esponenziale con 1 cifra dopo la virgola: $1250.0 = 1.25 \\times 10^3$. Arrotondando a 1 cifra decimale si ottiene `1.3e+03`.",
+        "Errato. 1250.0 è l'output dello specificatore `%f`.",
+        "Errato. `1.25e+03` conterrebbe 2 cifre dopo la virgola (`%.2e`).",
+        "Errato. La mantissa nella forma esponenziale è sempre normalizzata in modo da avere una sola cifra non nulla prima del punto."
+      ]
+    },
+    {
+      "id": "it_clang_2150",
+      "widget_id": null,
+      "topic": "Specificatori scanf per float e double",
+      "q": "Qual è la differenza fondamentale tra gli specificatori %f e %lf durante la lettura dei dati tramite la funzione scanf?",
+      "hint": "A differenza di printf, dove float viene promosso automaticamente a double, scanf scrive i dati in uno specifico indirizzo di memoria.",
+      "options": [
+        "%f legge il valore in una variabile di tipo float, mentre %lf in una variabile di tipo double",
+        "%f e %lf sono assolutamente intercambiabili in scanf",
+        "%lf legge il tipo long double, mentre %f il tipo double",
+        "%f viene utilizzato per le stringhe e %lf per i numeri"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `scanf` accetta un puntatore a un'area di memoria, quindi distingue rigorosamente i tipi: `%f` si aspetta `float*` (4 byte), mentre `%lf` si aspetta `double*` (8 byte). Utilizzare lo specificatore errato causerà la corruzione della memoria.",
+        "Errato. In `scanf` questi specificatori non sono intercambiabili a causa della diversa dimensione dei tipi in memoria.",
+        "Errato. Per `long double` in `scanf` si usa lo specificatore `%Lf`.",
+        "Errato. Entrambi gli specificatori sono destinati alla lettura di numeri a virgola mobile."
+      ]
+    },
+    {
+      "id": "it_clang_2151",
+      "widget_id": "widget_clang_2151",
+      "topic": "Macro CHAR_BIT",
+      "q": "Cosa definisce la macro CHAR_BIT dell'header <limits.h>?",
+      "hint": "Il nome della costante è una combinazione delle parole 'char' e 'bit'.",
+      "options": [
+        "Il numero di bit in un byte (di solito 8)",
+        "Il valore massimo per il tipo char",
+        "La dimensione del tipo int in byte",
+        "Il numero di byte nel tipo char"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La costante `CHAR_BIT` stabilisce il numero di bit nella minima unità di memoria indirizzabile (byte). Sulla stragrande maggioranza dei sistemi moderni questo valore è 8.",
+        "Errato. Il valore massimo per un char con segno è definito dalla macro `CHAR_MAX`.",
+        "Errato. La dimensione di `int` si verifica usando l'operatore `sizeof(int)`.",
+        "Errato. Il numero di byte in un `char` è sempre garantito essere 1."
+      ]
+    },
+    {
+      "id": "it_clang_2152",
+      "widget_id": null,
+      "topic": "Dimensione minima del tipo int",
+      "q": "Qual è la dimensione minima garantita dallo standard C per il tipo base int (in bit)?",
+      "hint": "Lo standard richiede che l'intervallo di int copra valori almeno da -32767 a 32767.",
+      "options": [
+        "16 bit",
+        "8 bit",
+        "32 bit",
+        "64 bit"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard del linguaggio C garantisce che il tipo `int` abbia una larghezza di almeno 16 bit (intervallo minimo da -32767 a +32767). Sulle moderne architetture a 32/64 bit è solitamente di 32 bit.",
+        "Errato. 8 bit sono garantiti per il tipo `char`.",
+        "Errato. Nella pratica `int` è spesso a 32 bit, ma lo standard garantisce solo un minimo di 16 bit.",
+        "Errato. 64 bit sono garantiti solo per il tipo `long long int`."
+      ]
+    },
+    {
+      "id": "it_clang_2153",
+      "widget_id": "widget_clang_2153",
+      "topic": "Costanti di precisione da float.h",
+      "q": "Cosa indica la macro FLT_DIG dell'header <float.h>?",
+      "hint": "Il nome 'DIG' sta per 'digits' (cifre decimali di precisione).",
+      "options": [
+        "Il numero di cifre decimali esatte garantite per il tipo float",
+        "Il valore decimale massimo del tipo float",
+        "La dimensione del tipo float in byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `FLT_DIG` definisce il numero di cifre decimali esatte dopo la conversione dal formato a virgola mobile a quello decimale senza perdita di precisione (per un normale `float` è 6).",
+        "Errato. Il valore massimo è definito dalla costante `FLT_MAX`.",
+        "Errato. La dimensione viene calcolata tramite `sizeof(float)`."
+      ]
+    },
+    {
+      "id": "it_clang_2154",
+      "widget_id": "widget_clang_2154",
+      "topic": "Modelli di dati (LP64)",
+      "q": "A quanto equivale sizeof(long) sui sistemi Unix-like a 64 bit (Linux/macOS) che utilizzano il modello di dati LP64?",
+      "hint": "Nel nome del modello LP64, le lettere L (Long) e P (Pointer) indicano tipi a 64 bit.",
+      "options": [
+        "8 byte",
+        "4 byte",
+        "2 byte",
+        "16 byte",
+        "Dipende dalla dimensione del file"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel modello LP64 (utilizzato nei sistemi Linux e macOS a 64 bit) i tipi `Long` e `Pointer` hanno una dimensione di 64 bit (8 byte). In Windows a 64 bit (modello LLP64), `long` rimane a 4 byte.",
+        "Errato. `long` occupa 4 byte nei sistemi a 32 bit e in Windows a 64 bit (LLP64).",
+        "Errato. 2 byte sono garantiti per il tipo `short`.",
+        "Errato. 16 byte è solitamente la dimensione di `long double` su alcune architetture x86_64.",
+        "Errato. Le dimensioni dei tipi di dati sono determinate dall'architettura e dal compilatore, non dai file."
+      ]
+    },
+    {
+      "id": "it_clang_2155",
+      "widget_id": "widget_clang_2155",
+      "topic": "Overflow con segno (Signed Overflow)",
+      "q": "Cosa accade secondo lo standard C in caso di overflow di un tipo intero con segno (signed integer overflow)?",
+      "hint": "Il linguaggio C distingue nettamente il comportamento in caso di overflow dei tipi con segno e senza segno.",
+      "options": [
+        "Comportamento indefinito (Undefined Behavior)",
+        "Wrap-around garantito verso numeri negativi modulo 2^n",
+        "Generazione di un'eccezione di sistema",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'overflow dei tipi interi con segno (`signed int`) in C è un comportamento indefinito (Undefined Behavior). Il compilatore ha il diritto di ottimizzare il codice presupponendo che l'overflow non si verifichi.",
+        "Errato. Il wrap-around è garantito solo per i tipi senza segno (`unsigned`).",
+        "Errato. Le eccezioni hardware per overflow di numeri con segno non vengono generate per impostazione predefinita.",
+        "Errato. Si tratta di un errore di logica a runtime, non di un errore sintattico di compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_2156",
+      "widget_id": null,
+      "topic": "Overflow senza segno (Unsigned Overflow)",
+      "q": "Come si comporta l'operazione quando si supera il limite superiore di un tipo senza segno (ad esempio UINT_MAX + 1)?",
+      "hint": "L'aritmetica senza segno rispetta rigorosamente le regole dell'aritmetica modulare $2^n$.",
+      "options": [
+        "Si verifica un azzeramento e un wrap-around a 0 modulo 2^n",
+        "Si verifica un comportamento indefinito (Undefined Behavior)",
+        "Il valore si fissa a UINT_MAX (saturazione)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I tipi senza segno in C eseguono l'aritmetica modulo $2^n$ (dove $n$ è il numero di bit del tipo). Pertanto `UINT_MAX + 1` restituisce in modo rigoroso e prevedibile `0`.",
+        "Errato. Per i tipi senza segno l'overflow è rigorosamente definito dallo standard e NON è un Undefined Behavior.",
+        "Errato. L'aritmetica di saturazione non è usata nel linguaggio C base."
+      ]
+    },
+    {
+      "id": "it_clang_2157",
+      "widget_id": null,
+      "topic": "Gerarchia delle dimensioni dei tipi in C",
+      "q": "Quale relazione tra le dimensioni dei tipi interi di base è rigorosamente garantita dallo standard C?",
+      "hint": "Lo standard garantisce un ordine crescente non stretto della capacità dei tipi (tramite <=).",
+      "options": [
+        "sizeof(char) <= sizeof(short) <= sizeof(int) <= sizeof(long) <= sizeof(long long)",
+        "sizeof(char) < sizeof(short) < sizeof(int) < sizeof(long)",
+        "sizeof(int) è sempre strettamente uguale a 4 byte",
+        "sizeof(long) è sempre strettamente maggiore di sizeof(int)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard C garantisce solo una relazione non stretta tra le dimensioni: `sizeof(char)` (1) $\\le$ `sizeof(short)` $\\le$ `sizeof(int)` $\\le$ `sizeof(long)` $\\le$ `sizeof(long long)`. Le dimensioni di tipi adiacenti possono coincidere.",
+        "Errato. La disuguaglianza stretta non è richiesta; ad esempio `short` e `int` possono essere entrambi di 2 byte.",
+        "Errato. La dimensione di `int` può essere di 2 byte su microcontrollori a 16 bit.",
+        "Errato. Sui sistemi a 32 bit e in Windows a 64 bit `sizeof(long)` è uguale a `sizeof(int)` (entrambi di 4 byte)."
+      ]
+    },
+    {
+      "id": "it_clang_2158",
+      "widget_id": "widget_clang_2158",
+      "topic": "Definizione di sizeof(char)",
+      "q": "A quanto equivale SEMPRE il risultato dell'espressione sizeof(char) secondo lo standard C?",
+      "hint": "Nel linguaggio C il tipo char è l'unità di misura di riferimento per la dimensione di tutti gli altri tipi.",
+      "options": [
+        "Sempre strettamente 1",
+        "Dipende dall'architettura di destinazione (1, 2 o 4)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per definizione dello standard C, `sizeof(char)`, `sizeof(signed char)` e `sizeof(unsigned char)` equivalgono sempre a 1. In C il byte è definito come la dimensione del tipo `char`.",
+        "Errato. Anche se su uno specifico processore DSP un byte fosse composto da 16 o 32 bit, `sizeof(char)` su di esso sarebbe comunque uguale a 1 per specifica dello standard."
+      ]
+    },
+    {
+      "id": "it_clang_2159",
+      "widget_id": null,
+      "topic": "Precisione del tipo double",
+      "q": "Quante cifre decimali esatte di precisione sono assicurate approssimativamente dal tipo double (standard IEEE 754)?",
+      "hint": "Il tipo float con 23 bit di mantissa fornisce ~6–7 cifre, mentre double con 52 bit di mantissa ne fornisce più del doppio.",
+      "options": [
+        "15–17",
+        "6–7",
+        "31–34",
+        "10–12",
+        "20–22",
+        "3–5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il formato a doppia precisione (IEEE 754 double) assegna 52 bit alla mantissa (53 espliciti/impliciti), garantendo una precisione di circa 15–17 cifre decimali.",
+        "Errato. 6–7 cifre sono fornite dal tipo a singola precisione `float`.",
+        "Errato. 31–34 cifre sono fornite dal formato a quadrupla precisione (`quadruple precision`, float a 128 bit).",
+        "Errato. 10–12 cifre non corrispondono a una mantissa di 53 bit.",
+        "Errato. 20–22 cifre vanno oltre le capacità di un `double` a 64 bit.",
+        "Errato. 3–5 cifre sono troppo poche per il tipo double."
+      ]
+    },
+    {
+      "id": "it_clang_2160",
+      "widget_id": "widget_clang_2160",
+      "topic": "Calcolo della dimensione di un array tramite sizeof",
+      "q": "Cosa stamperà il programma per un array di 10 elementi di tipo int su un'architettura in cui sizeof(int) == 4?",
+      "hint": "L'operatore sizeof applicato al nome di un array restituisce la memoria totale occupata dall'intero array in byte.",
+      "options": [
+        "40 10",
+        "10 10",
+        "40 4",
+        "10 4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `sizeof(arr)` restituisce la dimensione totale dell'array in byte ($10 \\times 4 = 40$). La costruzione `sizeof(arr) / sizeof(arr[0])` divide la dimensione totale per la dimensione di un elemento ($40 / 4$), ottenendo il numero di elementi (10). Risultato: `40 10`.",
+        "Errato. `sizeof(arr)` restituisce la dimensione in byte, non il numero di elementi.",
+        "Errato. Il secondo valore deve essere pari al numero di elementi dell'array (10), non alla dimensione del singolo elemento (4).",
+        "Errato. Il primo valore è calcolato come $10 \\times 4 = 40$."
+      ]
+    },
+    {
+      "id": "it_clang_2161",
+      "widget_id": "widget_clang_2161",
+      "topic": "Assenza di effetti collaterali in sizeof",
+      "q": "Cosa stamperà il programma se all'interno dell'operatore sizeof è presente un'espressione con incremento (i++)?",
+      "hint": "L'espressione all'interno di sizeof viene valutata durante l'esecuzione del programma?",
+      "options": [
+        "5",
+        "6",
+        "0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `sizeof` viene valutato dal compilatore durante la fase di compilazione (per i tipi normali). L'operando all'interno di `sizeof` non viene eseguito a runtime, quindi l'effetto collaterale di `i++` viene ignorato e `i` rimane uguale a 5.",
+        "Errato. Le espressioni all'interno di `sizeof` non vengono eseguite a runtime.",
+        "Errato. La variabile `i` mantiene il suo valore originale di 5.",
+        "Errato. L'espressione è sintatticamente corretta."
+      ]
+    },
+    {
+      "id": "it_clang_2162",
+      "widget_id": "widget_clang_2162",
+      "topic": "sizeof per array passati come parametri di funzione",
+      "q": "Cosa stamperà la funzione print_size passando l'array int arr[10] su un sistema a 64 bit?",
+      "hint": "Ricorda in cosa si trasforma un parametro array quando viene passato a una funzione (decadimento dell'array).",
+      "options": [
+        "8 (dimensione del puntatore)",
+        "40 (dimensione dell'intero array)",
+        "10 (numero di elementi)",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando un array viene passato a una funzione, decade implicitamente a un puntatore al suo primo elemento (`int*`). All'interno della funzione `sizeof(arr)` restituisce la dimensione del puntatore, che su un sistema a 64 bit è di 8 byte.",
+        "Errato. La dimensione completa dell'array (40 byte) è accessibile solo nel campo di validità (scope) in cui è stato dichiarato.",
+        "Errato. `sizeof` restituisce la dimensione in byte, non il numero di elementi.",
+        "Errato. La sintassi per il passaggio di un array a una funzione è corretta."
+      ]
+    },
+    {
+      "id": "it_clang_2163",
+      "widget_id": null,
+      "topic": "Fase di valutazione di sizeof",
+      "q": "In quale momento (in caso generale per tipi a dimensione fissa) viene calcolato il valore dell'operatore sizeof?",
+      "hint": "Il risultato di sizeof può essere utilizzato per definire le dimensioni di array statici ed espressioni costanti.",
+      "options": [
+        "In fase di compilazione (compile-time)",
+        "Durante l'esecuzione del programma (runtime)",
+        "In fase di linking (link-time)",
+        "Al caricamento dell'eseguibile in memoria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per tutti i tipi di dati statici, l'operatore `sizeof` è un'espressione valutata durante la compilazione (costante compile-time). L'unica eccezione è rappresentata dagli array a lunghezza variabile (VLA).",
+        "Errato. Durante l'esecuzione vengono calcolate solo le dimensioni dei VLA.",
+        "Errato. Il linker non si occupa del calcolo delle dimensioni dei tipi di dati.",
+        "Errato. Le dimensioni dei tipi vengono fissate dal compilatore durante l'analisi dell'AST."
+      ]
+    },
+    {
+      "id": "it_clang_2164",
+      "widget_id": "widget_clang_2164",
+      "topic": "Dimensione dei puntatori di tipo diverso",
+      "q": "Cosa stamperà il programma confrontando le dimensioni dei puntatori a char e double sulla stessa piattaforma?",
+      "hint": "La dimensione dell'indirizzo di una cella di memoria dipende dal tipo di dati memorizzato a quell'indirizzo?",
+      "options": [
+        "1",
+        "0",
+        "Errore di compilazione",
+        "Dipende dall'architettura del processore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Tutti i puntatori a dati su una specifica architettura hanno la stessa dimensione (ad esempio 4 byte su sistemi a 32 bit o 8 byte su sistemi a 64 bit), poiché memorizzano indirizzi di memoria. L'espressione è vera e stampa 1.",
+        "Errato. Hanno dimensioni diverse i tipi `char` e `double` stessi, ma non i puntatori ad essi.",
+        "Errato. Il confronto tra dimensioni di tipi mediante `==` è valido.",
+        "Errato. Sebbene la dimensione del puntatore dipenda dall'architettura, l'uguaglianza tra di essi è sempre rispettata."
+      ]
+    },
+    {
+      "id": "it_clang_2165",
+      "widget_id": "widget_clang_2165",
+      "topic": "sizeof per letterali stringa",
+      "q": "A quanto equivale il risultato dell'espressione sizeof(\"C language\")?",
+      "hint": "Non dimenticare di considerare il carattere terminatore nullo alla fine dei letterali stringa.",
+      "options": [
+        "11",
+        "10",
+        "8",
+        "4",
+        "12"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La stringa \"C language\" è composta da 10 caratteri visibili. Il compilatore aggiunge automaticamente il terminatore nullo `\\0` alla fine del letterale stringa, quindi la dimensione totale dell'array di caratteri è di 11 byte.",
+        "Errato. 10 è la lunghezza della stringa senza considerare il terminatore nullo (valore restituito da `strlen`).",
+        "Errato. Un letterale stringa in `sizeof` è trattato come un array di caratteri, non come un puntatore.",
+        "Errato. 4 o 8 è la dimensione del puntatore, non del letterale stringa stesso.",
+        "Errato. Nella stringa ci sono esattamente 10 caratteri + 1 byte nullo finale."
+      ]
+    },
+    {
+      "id": "it_clang_2166",
+      "widget_id": null,
+      "topic": "Tipo del valore restituito da sizeof",
+      "q": "Quale tipo intero senza segno standard ha il risultato dell'espressione sizeof?",
+      "hint": "Questo tipo è progettato appositamente per rappresentare le dimensioni degli oggetti e gli indici in memoria.",
+      "options": [
+        "size_t",
+        "unsigned int",
+        "int",
+        "long",
+        "void*"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, l'operatore `sizeof` restituisce un valore di tipo `size_t` — un tipo intero senza segno garantito essere sufficiente per contenere la dimensione di qualsiasi oggetto in memoria.",
+        "Errato. Sui sistemi a 64 bit `unsigned int` può essere più piccolo della larghezza di `size_t`.",
+        "Errato. `int` è un tipo con segno.",
+        "Errato. `long` è un tipo con segno e la sua larghezza può differire da `size_t` a seconda del sistema operativo.",
+        "Errato. `void*` è un tipo puntatore, non un tipo numerico di dimensione."
+      ]
+    },
+    {
+      "id": "it_clang_2167",
+      "widget_id": "widget_clang_2167",
+      "topic": "Sintassi dell'operatore sizeof",
+      "q": "La sintassi sizeof a (senza parentesi tonde) è valida per una variabile in C?",
+      "hint": "Ricorda: sizeof è un operatore unario del linguaggio, non una funzione integrata.",
+      "options": [
+        "Sì, per le variabili e le espressioni le parentesi tonde sono opzionali",
+        "No, le parentesi tonde sono sempre obbligatorie",
+        "Sì, ma solo per il tipo base int",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `sizeof` è un operatore, le parentesi sono obbligatorie solo quando l'operando è il nome di un tipo (ad esempio `sizeof(int)`). Se applicato a un'espressione o a una variabile, le parentesi possono essere omesse (`sizeof a`).",
+        "Errato. Le parentesi sono strettamente necessarie solo per i nomi dei tipi.",
+        "Errato. Questa regola vale per qualsiasi variabile o espressione di qualsiasi tipo.",
+        "Errato. La scrittura `sizeof a` è perfettamente conforme allo standard C."
+      ]
+    },
+    {
+      "id": "it_clang_2168",
+      "widget_id": "widget_clang_2168",
+      "topic": "sizeof per array multidimensionali",
+      "q": "A quanto equivale sizeof(matrix) per un array int matrix[2][5] su un sistema in cui sizeof(int) == 4?",
+      "hint": "Calcola il numero totale di elementi di tipo int in tutte le dimensioni dell'array.",
+      "options": [
+        "40",
+        "10",
+        "20",
+        "8",
+        "50"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il numero totale di elementi nell'array è $2 \\times 5 = 10$. Poiché un `int` occupa 4 byte, la dimensione totale in memoria è $10 \\times 4 = 40$ byte.",
+        "Errato. 10 è il numero totale di elementi, non la loro dimensione in byte.",
+        "Errato. 20 byte sarebbe la dimensione dell'array se il tipo `int` fosse di 2 byte.",
+        "Errato. 8 byte è la dimensione di un puntatore o di un array `int[2]`.",
+        "Errato. Errore nel calcolo del numero di elementi."
+      ]
+    },
+    {
+      "id": "it_clang_2169",
+      "widget_id": null,
+      "topic": "sizeof per tipi incompleti",
+      "q": "Cosa accadrà tentando di applicare sizeof a un tipo incompleto (incomplete type), come sizeof(void) nello standard ISO C?",
+      "hint": "Per calcolare la dimensione di un tipo, il compilatore deve conoscere l'esatto spazio di memoria occupato.",
+      "options": [
+        "Errore di compilazione",
+        "Viene restituito 0",
+        "Viene restituito 1",
+        "Comportamento indefinito a runtime"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il tipo `void` e la dichiarazione di strutture incomplete senza corpo (incomplete types) non hanno una dimensione definita, pertanto un tentativo di calcolarne il `sizeof` nello standard ISO C causerà un errore di compilazione. (In GCC esiste un'estensione in cui sizeof(void) == 1, ma non fa parte dello standard).",
+        "Errato. Il compilatore non restituisce 0, ma considera l'operazione non valida.",
+        "Errato. Il valore 1 viene restituito nell'estensione GCC, ma lo standard C rigoroso lo considera un errore.",
+        "Errato. L'errore viene riscontrato in fase di compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_2170",
+      "widget_id": "widget_clang_2170",
+      "topic": "sizeof per VLA (array a lunghezza variabile)",
+      "q": "Cosa stamperà il programma se l'argomento di sizeof è un tipo di array a lunghezza variabile (VLA) con l'incremento n++?",
+      "hint": "A differenza dei tipi normali, le dimensioni dei VLA vengono calcolate durante l'esecuzione del programma.",
+      "options": [
+        "6",
+        "5",
+        "0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A partire dallo standard C99, per gli array a lunghezza variabile (VLA) la dimensione `sizeof` viene calcolata a runtime. Pertanto l'espressione `n++` all'interno di `sizeof(int[n++])` viene realmente eseguita e `n` incrementa da 5 a 6.",
+        "Errato. Per i tipi tradizionali le espressioni dentro `sizeof` non vengono eseguite, ma i VLA costituiscono un'eccezione a questa regola.",
+        "Errato. La variabile `n` verrà modificata con successo.",
+        "Errato. L'uso di espressioni nei VLA all'interno di `sizeof` è sintatticamente consentito."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,607 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_1931",
+      "widget_id": "widget_clang_1931",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa stamperà il programma dopo lo scorrimento a sinistra durante la rimozione del primo elemento dall'array {10, 20, 30, -1}?",
+      "hint": "Rifletti su quale posizione si sposterà ciascun elemento quando viene rimosso il primissimo numero.",
+      "options": [
+        "20 30 ",
+        "10 20 ",
+        "10 30 ",
+        "30 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo sposta gli elementi a sinistra: `arr[0] = arr[1]` (20), `arr[1] = arr[2]` (30), `arr[2] = arr[3]` (-1). L'array diventa `{20, 30, -1}`, output: `20 30 `.",
+        "Errato. Il primo elemento 10 viene rimosso tramite sovrascrittura.",
+        "Errato. Il 20 non viene saltato durante lo scorrimento.",
+        "Errato. Viene rimosso solo un elemento dall'inizio."
+      ]
+    },
+    {
+      "id": "it_clang_1932",
+      "widget_id": "widget_clang_1932",
+      "topic": "Rimozione di elementi",
+      "q": "Qual è la complessità temporale asintotica (Time Complexity) della rimozione di un elemento dall'inizio (head) di un array?",
+      "hint": "Ricorda quanti elementi in totale devono essere sovrascritti e spostati a sinistra durante la rimozione dall'indice 0.",
+      "options": [
+        "O(N) — poiché è necessario spostare gli N elementi rimanenti a sinistra",
+        "O(1) — tempo costante",
+        "O(N^2) — tempo quadratico",
+        "O(log N) — tempo logaritmico"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per rimuovere il primo elemento è necessario spostare tutti gli elementi successivi e il marcatore `-1` di una posizione a sinistra. Ciò richiede $O(N)$ operazioni.",
+        "Errato. L'eliminazione in $O(1)$ avviene dalla fine dell'array, non dall'inizio.",
+        "Errato. Non ci sono cicli di scorrimento annidati, quindi la complessità è lineare.",
+        "Errato. La ricerca binaria non si applica alla rimozione in un array."
+      ]
+    },
+    {
+      "id": "it_clang_1933",
+      "widget_id": "widget_clang_1933",
+      "topic": "Rimozione di elementi",
+      "q": "Perché durante la rimozione dall'inizio lo scorrimento degli elementi viene eseguito da sinistra a destra (da j = 0 a j < count)?",
+      "hint": "Fai attenzione a quale cella viene sovrascritta per prima per non perdere i dati successivi.",
+      "options": [
+        "Ogni cella arr[j] viene sovrascritta con il valore successivo arr[j + 1], senza interrompere la catena dei dati",
+        "Poiché la memoria nel processore viene letta solo da sinistra a destra",
+        "Per riordinare gli elementi in ordine inverso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il movimento da sinistra a destra consente di trasferire in sequenza i dati da `arr[j + 1]` a `arr[j]`. Lo scorrimento da destra a sinistra sovrascriverebbe la coda dell'array.",
+        "Errato. La direzione è determinata dalla logica algoritmica dello scorrimento, non dall'hardware.",
+        "Errato. L'obiettivo è spostare gli elementi a sinistra, non invertire l'ordine."
+      ]
+    },
+    {
+      "id": "it_clang_1934",
+      "widget_id": "widget_clang_1934",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa restituirà la funzione remove_head durante il tentativo di rimuovere il primo elemento da un array vuoto empty[3] = {-1}?",
+      "hint": "Ricorda quale codice (0 o 1) restituiscono le funzioni di protezione quando non è possibile eseguire l'operazione.",
+      "options": [
+        "0 (operazione rifiutata poiché l'array è vuoto)",
+        "1 (rimozione riuscita)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La condizione `if (arr[0] == -1)` si attiva immediatamente per un array vuoto e restituisce in modo sicuro `0`.",
+        "Errato. La restituzione di 1 indicherebbe una modifica riuscita degli elementi."
+      ]
+    },
+    {
+      "id": "it_clang_1935",
+      "widget_id": "widget_clang_1935",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa conterrà la cella arr[0] dopo la rimozione dell'unico elemento dall'array arr[4] = {42, -1}?",
+      "hint": "Rifletti su quale valore si sposterà al posto dell'unico elemento rimosso.",
+      "options": [
+        "-1",
+        "42",
+        "0",
+        "1",
+        "Valore indefinito (Undefined Behavior)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `count = 1` il ciclo eseguirà 1 iterazione (`j = 0`): `arr[0] = arr[1]`. All'indirizzo `arr[1]` si trovava il marcatore `-1`, che verrà copiato in `arr[0]`. L'array diventerà completamente vuoto.",
+        "Errato. 42 verrà sovrascritto dal valore `-1`.",
+        "Errato. Non viene effettuata alcuna scrittura dello zero.",
+        "Errato. Il numero 1 non partecipa all'assegnazione.",
+        "Errato. L'operazione è strettamente definita e sicura."
+      ]
+    },
+    {
+      "id": "it_clang_1936",
+      "widget_id": "widget_clang_1936",
+      "topic": "Rimozione di elementi",
+      "q": "Quante operazioni di scorrimento (assegnazioni arr[j] = arr[j + 1]) eseguirà il ciclo durante la rimozione dell'elemento head dall'array {10, 20, 30, 40, -1}?",
+      "hint": "Tieni presente che insieme allo scorrimento degli elementi utili deve essere spostato anche il marcatore -1.",
+      "options": [
+        "4",
+        "3",
+        "5",
+        "1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nell'array ci sono 4 elementi utili (`count = 4`). Il ciclo `for (j = 0; j < 4; j++)` eseguirà esattamente 4 passaggi: verranno spostati 3 elementi utili e 1 marcatore `-1`.",
+        "Errato. 3 iterazioni non avrebbero spostato il marcatore `-1`.",
+        "Errato. 5 iterazioni farebbero un accesso fuori dai limiti dell'array.",
+        "Errato. 1 iterazione viene eseguita durante la rimozione da un array con 1 elemento."
+      ]
+    },
+    {
+      "id": "it_clang_1937",
+      "widget_id": "widget_clang_1937",
+      "topic": "Rimozione di elementi",
+      "q": "A cosa saranno uguali arr[0] e arr[1] dopo due chiamate consecutive a pop_front per l'array {1, 2, 3, 4, -1}?",
+      "hint": "Segui quali due elementi usciranno dall'inizio dell'array uno dopo l'altro.",
+      "options": [
+        "arr[0]=3, arr[1]=4",
+        "arr[0]=1, arr[1]=2",
+        "arr[0]=2, arr[1]=3",
+        "arr[0]=4, arr[1]=-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il primo `pop_front` rimuove 1 -> `{2, 3, 4, -1}`. Il secondo `pop_front` rimuove 2 -> `{3, 4, -1}`. Ora `arr[0] = 3` e `arr[1] = 4`.",
+        "Errato. Gli elementi 1 e 2 sono stati rimossi in sequenza.",
+        "Errato. Il valore 2 è stato rimosso durante la seconda chiamata.",
+        "Errato. Sono stati rimossi i primi due elementi, non tre."
+      ]
+    },
+    {
+      "id": "it_clang_1938",
+      "widget_id": "widget_clang_1938",
+      "topic": "Rimozione di elementi",
+      "q": "A quale bug porterà la condizione j < count - 1 nel ciclo di scorrimento durante la rimozione dall'array {10, 20, -1}?",
+      "hint": "Verifica se il ciclo arriverà a spostare il marcatore di terminazione -1.",
+      "options": [
+        "Il marcatore -1 non si sposterà a sinistra, di conseguenza l'elemento 20 verrà duplicato: l'output diventerà 20 20 -1",
+        "Il programma entrerà in un ciclo infinito",
+        "Il marcatore -1 sovrascriverà l'intero array"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `count = 2`, la condizione `j < 1` consentirà di eseguire solo l'iterazione `j = 0` (`arr[0] = arr[1]`, cioè 20). L'assegnazione `arr[1] = arr[2]` (spostamento di `-1`) non verrà eseguita. Otterremo `{20, 20, -1}`.",
+        "Errato. Il ciclo terminerà in 1 iterazione.",
+        "Errato. Il marcatore `-1` non si sposterà affatto."
+      ]
+    },
+    {
+      "id": "it_clang_1939",
+      "widget_id": "widget_clang_1939",
+      "topic": "Rimozione di elementi",
+      "q": "Quale valore verrà scritto nella variabile val dopo l'estrazione dall'inizio dell'array {99, 88, 77, -1}?",
+      "hint": "Guarda quale elemento si trovava all'inizio (all'indice 0) prima dello scorrimento.",
+      "options": [
+        "99",
+        "88",
+        "77",
+        "-1",
+        "0",
+        "1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione salva il primo elemento `arr[0]` (il numero 99) tramite il puntatore `val` prima di eseguire lo scorrimento.",
+        "Errato. 88 è il secondo elemento `arr[1]`, che diventerà il primo DOPO la rimozione.",
+        "Errato. 77 è il terzo elemento.",
+        "Errato. -1 è il marcatore di fine.",
+        "Errato. 0 è il valore iniziale della variabile `val` prima della chiamata.",
+        "Errato. 1 è lo stato restituito per un'esecuzione riuscita della funzione."
+      ]
+    },
+    {
+      "id": "it_clang_1940",
+      "widget_id": "widget_clang_1940",
+      "topic": "Rimozione di elementi",
+      "q": "La scrittura del ciclo for (int j = 1; j <= count; j++) arr[j - 1] = arr[j]; è equivalente allo scorrimento standard a sinistra?",
+      "hint": "Confronta gli indici di lettura e scrittura alla prima (j=1) e all'ultima (j=count) iterazione.",
+      "options": [
+        "Sì, è completamente equivalente (con j = 1 viene eseguito arr[0] = arr[1], e con j = count viene spostato il marcatore)",
+        "No, questa scrittura porta a un errore di accesso fuori dai limiti dell'array"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In questa forma la variabile `j` legge gli elementi dalla posizione `j` e scrive in `j - 1`. I limiti di `j` da 1 a `count` coincidono assolutamente con lo scorrimento standard `arr[j] = arr[j + 1]` con `j` da 0 a `count - 1`.",
+        "Errato. L'indice `arr[count]` è valido e contiene il marcatore `-1`."
+      ]
+    },
+    {
+      "id": "it_clang_1941",
+      "widget_id": "widget_clang_1941",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa stamperà il programma dopo la rimozione dell'elemento dall'indice k = 1 dall'array {10, 20, 30, 40, -1}?",
+      "hint": "Determina quale numero si trova all'indice 1 e quali elementi si sposteranno al suo posto.",
+      "options": [
+        "10 30 40 ",
+        "10 20 40 ",
+        "20 30 40 ",
+        "10 20 30 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo scorrimento inizia da `j = 1`. Vengono eseguite le operazioni: `arr[1] = arr[2]` (30), `arr[2] = arr[3]` (40), `arr[3] = arr[4]` (-1). L'elemento 20 viene sovrascritto e l'array diventa `{10, 30, 40, -1}`.",
+        "Errato. L'elemento 30 si è spostato alla posizione 1, sovrascrivendo 20.",
+        "Errato. L'elemento `arr[0]` (10) è rimasto invariato.",
+        "Errato. Viene rimosso l'elemento all'indice 1 (20), non l'ultimo elemento 40."
+      ]
+    },
+    {
+      "id": "it_clang_1942",
+      "widget_id": "widget_clang_1942",
+      "topic": "Rimozione di elementi",
+      "q": "Qual è la complessità temporale nel caso peggiore (Worst-case Time Complexity) per la rimozione di un elemento per indice k da un array?",
+      "hint": "Rifletti con quale valore di k sarà necessario spostare il maggior numero possibile di elementi.",
+      "options": [
+        "O(N) — rimuovendo il primo elemento (k = 0) occorre spostare l'intero array",
+        "O(1) — la rimozione viene sempre eseguita in tempo costante",
+        "O(N^2) — a causa dello scorrimento dei dati",
+        "O(log N) — l'algoritmo utilizza la divisione a metà"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel caso peggiore (quando `k = 0`) occorrerà spostare $N$ elementi a sinistra, il che dà una complessità lineare $O(N)$.",
+        "Errato. $O(1)$ si ottiene solo rimuovendo dalla fine (`k = count - 1`).",
+        "Errato. L'algoritmo usa un singolo ciclo semplice, quindi la complessità non è quadratica.",
+        "Errato. La rimozione da una posizione arbitraria dell'array non è un'operazione logaritmica."
+      ]
+    },
+    {
+      "id": "it_clang_1943",
+      "widget_id": "widget_clang_1943",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa stamperà il programma eseguendo la chiamata remove_at(arr, 3) per l'array {10, 20, -1}?",
+      "hint": "Confronta l'indice richiesto 3 con il numero effettivo di elementi utili nell'array.",
+      "options": [
+        "0",
+        "1",
+        "-1",
+        "Errore di segmentazione (Segmentation Fault)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nell'array ci sono 2 elementi (`count = 2`). L'indice richiesto `k = 3` viola la condizione `k < count`. Il controllo di sicurezza `if (k < 0 || k >= count)` restituisce `0`.",
+        "Errato. La restituzione di 1 avverrebbe in caso di rimozione riuscita di un elemento esistente.",
+        "Errato. La funzione restituisce un codice di stato `0` o `1`.",
+        "Errato. Il controllo di validità dell'indice previene l'accesso fuori dai limiti dell'array."
+      ]
+    },
+    {
+      "id": "it_clang_1944",
+      "widget_id": "widget_clang_1944",
+      "topic": "Rimozione di elementi",
+      "q": "Quale valore si troverà all'indice arr[2] dopo lo scorrimento per k = 2 nell'array {5, 15, 25, 35, -1}?",
+      "hint": "Guarda quale numero si trovava adiacente a destra (all'indice 3) prima dell'inizio dello scorrimento.",
+      "options": [
+        "35",
+        "25",
+        "15",
+        "-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Inizialmente `arr[2] = 25`. Alla prima iterazione del ciclo `j = 2` viene eseguito `arr[2] = arr[3]`, grazie al quale in `arr[2]` viene scritto il numero 35.",
+        "Errato. 25 si trovava all'indice 2 prima dello scorrimento ed è stato sovrascritto.",
+        "Errato. 15 si trova in `arr[1]` e non cambia.",
+        "Errato. Il marcatore `-1` viene spostato alla posizione `arr[3]`."
+      ]
+    },
+    {
+      "id": "it_clang_1945",
+      "widget_id": "widget_clang_1945",
+      "topic": "Rimozione di elementi",
+      "q": "Come funzionerà il ciclo di scorrimento universale per k = count - 1 (rimozione dell'ultimo elemento dall'array {100, 200, 300, -1})?",
+      "hint": "Calcola quante iterazioni farà il ciclo da j = k a j < count con k = 2 e count = 3.",
+      "options": [
+        "Verrà eseguita 1 iterazione (j = 2), che copierà il marcatore -1 da arr[3] a arr[2], riducendo correttamente l'array a {100, 200, -1}",
+        "Si verificherà un ciclo infinito",
+        "Non verrà eseguita alcuna iterazione",
+        "Si verificherà un errore di accesso fuori dai limiti dell'array"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `count = 3` e `k = 2`, il ciclo `j = 2; j < 3` eseguirà esattamente 1 passaggio: `arr[2] = arr[3]` (copia di `-1`). Il programma stamperà correttamente `100 200 `.",
+        "Errato. La condizione di terminazione del ciclo viene rispettata.",
+        "Errato. L'iterazione `j = 2` viene eseguita poiché `2 < 3` è vero.",
+        "Errato. L'indice `arr[3]` è valido e contiene il marcatore `-1`."
+      ]
+    },
+    {
+      "id": "it_clang_1946",
+      "widget_id": "widget_clang_1946",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa stamperà printf durante la chiamata remove_at(arr, 0) per l'array {7, 14, 21, -1}?",
+      "hint": "Rifletti su quali elementi rimarranno nell'array dopo la sovrascrittura del primissimo numero 7.",
+      "options": [
+        "14 21",
+        "7 14",
+        "7 21",
+        "21 -1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `k = 0` la funzione rimuove il primo elemento (7). L'array dopo lo scorrimento diventa `{14, 21, -1}`. Di conseguenza, `arr[0]` è pari a 14 e `arr[1]` è pari a 21.",
+        "Errato. L'elemento 7 è stato sovrascritto dallo scorrimento.",
+        "Errato. Il valore 7 non viene conservato all'inizio.",
+        "Errato. Il primo elemento è diventato 14, non 21."
+      ]
+    },
+    {
+      "id": "it_clang_1947",
+      "widget_id": "widget_clang_1947",
+      "topic": "Rimozione di elementi",
+      "q": "Quante iterazioni di scorrimento eseguirà il ciclo per k = 2 per un array di 5 elementi {1, 2, 3, 4, 5, -1}?",
+      "hint": "Calcola la differenza count - k per determinare il numero di passaggi di scorrimento.",
+      "options": [
+        "3",
+        "2",
+        "5",
+        "4",
+        "1",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nell'array `count = 5`. Il ciclo eseguirà i passaggi per `j = 2`, `j = 3` e `j = 4` (in totale 3 iterazioni: `count - k = 5 - 2 = 3`).",
+        "Errato. 2 iterazioni non sono sufficienti per spostare il marcatore `-1`.",
+        "Errato. Si avrebbero 5 iterazioni con `k = 0`.",
+        "Errato. 4 iterazioni vengono eseguite con `k = 1`.",
+        "Errato. 1 iterazione viene eseguita con `k = 4`.",
+        "Errato. Il ciclo viene eseguito poiché `2 < 5`."
+      ]
+    },
+    {
+      "id": "it_clang_1948",
+      "widget_id": "widget_clang_1948",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa stamperà il programma dopo la doppia rimozione dell'elemento all'indice 1 dall'array {10, 20, 30, 40, -1}?",
+      "hint": "Segui la modifica del contenuto dell'array dopo la prima rimozione, quindi applica la seconda rimozione al nuovo elemento all'indice 1.",
+      "options": [
+        "10 40",
+        "10 30",
+        "20 40",
+        "30 40"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La prima chiamata `remove_at(arr, 1)` rimuove 20 -> `{10, 30, 40, -1}`. La seconda chiamata `remove_at(arr, 1)` rimuove il nuovo elemento all'indice 1 (il numero 30) -> `{10, 40, -1}`. Risultato: `arr[0] = 10`, `arr[1] = 40`.",
+        "Errato. Il numero 30 è stato rimosso durante la seconda chiamata.",
+        "Errato. Il numero 20 viene rimosso al primo passaggio.",
+        "Errato. `arr[0]` conserva il valore 10."
+      ]
+    },
+    {
+      "id": "it_clang_1949",
+      "widget_id": "widget_clang_1949",
+      "topic": "Rimozione di elementi",
+      "q": "Quale valore otterrà la variabile val alla chiamata remove_at_val(arr, 1, &val) per l'array {10, 20, 30, -1}?",
+      "hint": "Trova l'elemento situato all'indice k = 1 prima dell'inizio dello scorrimento.",
+      "options": [
+        "20",
+        "10",
+        "30",
+        "-1",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! All'indice `k = 1` corrisponde l'elemento 20. Il comando `*val = arr[k]` salva il numero 20 prima di eseguire lo scorrimento.",
+        "Errato. 10 si trova all'indice `k = 0`.",
+        "Errato. 30 si trova all'indice `k = 2`.",
+        "Errato. -1 è il marcatore di fine.",
+        "Errato. 0 è il valore iniziale della variabile `val` prima della chiamata."
+      ]
+    },
+    {
+      "id": "it_clang_1950",
+      "widget_id": "widget_clang_1950",
+      "topic": "Rimozione di elementi",
+      "q": "A quale errore porterà l'avvio del ciclo con j = k + 1 invece di j = k durante il tentativo di rimuovere l'elemento k = 1 nell'array {10, 20, 30, -1}?",
+      "hint": "Rifletti se l'elemento arr[1] verrà sovrascritto se le assegnazioni iniziano dalla cella successiva.",
+      "options": [
+        "L'elemento di destinazione arr[1] (20) rimarrà intatto, e al suo posto verrà rimosso l'elemento successivo (30)",
+        "Si verificherà un ciclo infinito",
+        "Il marcatore -1 sovrascriverà l'intero array",
+        "Il programma andrà in crash per errore di memoria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo inizierà con `j = 2` (`arr[2] = arr[3]`). La cella `arr[1]` contenente il numero 20 viene saltata e non sovrascritta. L'array diventerà `{10, 20, -1}`, cioè al posto dell'elemento all'indice 1 è stato rimosso l'elemento all'indice 2.",
+        "Errato. La condizione di terminazione del ciclo funzionerà normalmente.",
+        "Errato. Verrà spostato solo `arr[2]`.",
+        "Errato. Non si verifica alcun accesso fuori dai limiti dell'array."
+      ]
+    },
+    {
+      "id": "it_clang_1951",
+      "widget_id": "widget_clang_1951",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa stamperà il programma al tentativo di rimuovere la PRIMA occorrenza del valore x = 25 dall'array {10, 25, 30, 25, -1}?",
+      "hint": "Tieni presente che dopo aver trovato il primo 25 la ricerca si interrompe, mentre la seconda corrispondenza rimane.",
+      "options": [
+        "10 30 25 ",
+        "10 30 ",
+        "10 25 30 ",
+        "30 25 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La ricerca lineare trova la prima occorrenza di 25 all'indice `target_idx = 1` ed esegue l'istruzione `break`. Lo scorrimento sovrascrive il primo 25. L'array diventa `{10, 30, 25, -1}`, mentre la seconda occorrenza di 25 viene conservata.",
+        "Errato. Il codice esegue `break` alla prima corrispondenza, quindi il secondo 25 rimane.",
+        "Errato. Il primo 25 è stato rimosso.",
+        "Errato. L'elemento 10 dall'indice 0 non cambia."
+      ]
+    },
+    {
+      "id": "it_clang_1952",
+      "widget_id": "widget_clang_1952",
+      "topic": "Rimozione di elementi",
+      "q": "Qual è la complessità temporale complessiva della ricerca e della successiva rimozione del primo elemento trovato con valore x?",
+      "hint": "Somma la complessità temporale della ricerca lineare O(N) e la complessità dello scorrimento degli elementi O(N).",
+      "options": [
+        "O(N) — la ricerca richiede fino a N passaggi e anche lo scorrimento richiede fino a N passaggi",
+        "O(1) — tempo costante",
+        "O(N^2) — a causa dell'esecuzione annidata",
+        "O(log N) — utilizzando la ricerca binaria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La ricerca del valore $x$ richiede $O(N)$ operazioni. Il successivo scorrimento degli elementi a sinistra richiede anch'esso al massimo $O(N)$. La complessità totale è $O(N) + O(N) = O(N)$.",
+        "Errato. Senza conoscere in anticipo l'indice dell'elemento, è impossibile trovarlo in $O(1)$.",
+        "Errato. Il ciclo di scorrimento viene avviato in sequenza solo dopo il completamento del ciclo di ricerca, non al suo interno.",
+        "Errato. L'array non è ordinato, quindi non è possibile applicare la ricerca binaria."
+      ]
+    },
+    {
+      "id": "it_clang_1953",
+      "widget_id": "widget_clang_1953",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa stamperà il programma alla chiamata remove_val(arr, 99) per l'array {10, 20, 30, -1}?",
+      "hint": "Rifletti su quale codice di ritorno restituirà la funzione se il valore cercato è assente nell'array.",
+      "options": [
+        "0",
+        "1",
+        "-1",
+        "Errore di segmentazione (Segmentation Fault)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'elemento 99 è assente nell'array. Dopo il ciclo di ricerca, l'indice `idx` rimane pari a `-1`. Scatta il controllo `if (idx == -1)` e la funzione restituisce in modo sicuro `0`.",
+        "Errato. La restituzione di 1 avverrebbe in caso di ricerca e rimozione riuscite.",
+        "Errato. La funzione restituisce uno stato `0` o `1`.",
+        "Errato. La condizione `idx == -1` previene il passaggio di un indice negativo al ciclo di scorrimento."
+      ]
+    },
+    {
+      "id": "it_clang_1954",
+      "widget_id": "widget_clang_1954",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa stamperà printf dopo la rimozione dell'elemento x = 5 (situato nella prima posizione) dall'array {5, 10, 15, -1}?",
+      "hint": "Determina quali elementi si sposteranno al primo posto liberato dopo la rimozione del 5.",
+      "options": [
+        "10 15",
+        "5 10",
+        "5 15",
+        "15 -1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'elemento 5 viene trovato all'indice `idx = 0`. Lo scorrimento da `j = 0` sposta `arr[1]` (10) in `arr[0]` e `arr[2]` (15) in `arr[1]`. Gli elementi `arr[0]` e `arr[1]` sono pari a 10 e 15.",
+        "Errato. L'elemento 5 è stato cancellato dallo scorrimento.",
+        "Errato. 5 viene sovrascritto dal numero 10.",
+        "Errato. 10 diventa il primo elemento e 15 il secondo."
+      ]
+    },
+    {
+      "id": "it_clang_1955",
+      "widget_id": "widget_clang_1955",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa stamperà printf alla rimozione di x = 30, quando x è l'ultimo elemento prima del marcatore -1?",
+      "hint": "Rifletti su quali elementi rimarranno all'inizio dell'array se si rimuove solo l'ultimo elemento utile.",
+      "options": [
+        "10 20",
+        "10 30",
+        "20 30",
+        "10 -1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il valore 30 si trova all'indice `idx = 2`. L'iterazione di scorrimento `j = 2` sposta il marcatore `-1` da `arr[3]` a `arr[2]`. I primi due elementi (`10` e `20`) rimangono intatti.",
+        "Errato. 30 viene sovrascritto dal marcatore `-1`.",
+        "Errato. Il primo elemento dell'array rimane 10.",
+        "Errato. `arr[1]` conserva il valore 20."
+      ]
+    },
+    {
+      "id": "it_clang_1956",
+      "widget_id": "widget_clang_1956",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa stamperà l'algoritmo con due puntatori (read e write) durante la rimozione di TUTTE le occorrenze del numero x = 2 dall'array {1, 2, 2, 3, 2, -1}?",
+      "hint": "Filtra l'array lasciando solo i valori che non sono uguali a 2.",
+      "options": [
+        "1 3 ",
+        "1 2 3 ",
+        "1 3 2 ",
+        "3 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'algoritmo filtra gli elementi: i valori non uguali a 2 (cioè 1 e 3) vengono scritti all'indirizzo `write`. Al termine viene inserito il nuovo marcatore `arr[2] = -1`. L'array diventa `{1, 3, -1}`.",
+        "Errato. Tutti i numeri 2 vengono filtrati.",
+        "Errato. Gli elementi vengono sovrascritti in ordine senza conservare i valori rimossi.",
+        "Errato. L'elemento 1 non era uguale a 2 e rimane al suo posto."
+      ]
+    },
+    {
+      "id": "it_clang_1957",
+      "widget_id": "widget_clang_1957",
+      "topic": "Rimozione di elementi",
+      "q": "Quale valore restituirà la funzione remove_all_val durante la rimozione di tutti i 4 dall'array {4, 4, 1, 4, 2, -1}?",
+      "hint": "Conta il numero totale di 4 contenuti in questo array.",
+      "options": [
+        "3",
+        "2",
+        "4",
+        "1",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile contatore `removed` viene incrementata ogni volta che si incontra `arr[read] == 4`. Nell'array ci sono esattamente tre 4, quindi la funzione restituirà `3`.",
+        "Errato. Nell'array sono rimasti 2 elementi (1 e 2), ma la funzione restituisce la quantità di elementi rimossi.",
+        "Errato. Viene indicato il numero di elementi rimossi (3), non il valore stesso (4).",
+        "Errato. È stato rimosso più di un 4.",
+        "Errato. Gli elementi sono stati trovati e rimossi con successo."
+      ]
+    },
+    {
+      "id": "it_clang_1958",
+      "widget_id": "widget_clang_1958",
+      "topic": "Rimozione di elementi",
+      "q": "Qual è il vantaggio principale dell'algoritmo con due puntatori (write/read) rispetto a chiamate ripetute di scorrimento per la rimozione di tutti i duplicati dell'elemento x?",
+      "hint": "Confronta il numero di passaggi sull'array: cicli di scorrimento annidati contro un singolo passaggio.",
+      "options": [
+        "Complessità O(N) invece di O(N^2) — l'array viene percorso una sola volta senza cicli di scorrimento annidati",
+        "L'algoritmo con due puntatori non richiede l'allocazione di memoria sullo stack",
+        "Con due puntatori è possibile ordinare l'array in un solo passaggio",
+        "Non c'è alcuna differenza, la loro complessità temporale è identica"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli scorrimenti ripetuti a ogni `x` trovato richiedono $O(N)$ per ciascun scorrimento (fino a $O(N^2)$ in totale). L'algoritmo con due puntatori in 1 solo passaggio ($O(N)$) sposta gli elementi necessari nelle posizioni finali.",
+        "Errato. Entrambi i metodi lavorano sul posto (in-place) e non richiedono memoria aggiuntiva.",
+        "Errato. L'obiettivo dell'algoritmo è il filtraggio, non l'ordinamento.",
+        "Errato. $O(N)$ è notevolmente più veloce di $O(N^2)$ per array di grandi dimensioni."
+      ]
+    },
+    {
+      "id": "it_clang_1959",
+      "widget_id": "widget_clang_1959",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa conterrà la cella arr[0] dopo la rimozione di tutti gli elementi x = 5 dall'array {5, 5, 5, -1}?",
+      "hint": "Rifletti su quale valore verrebbe scritto all'inizio dell'array se in esso non fosse rimasto alcun elemento idoneo.",
+      "options": [
+        "-1",
+        "5",
+        "0",
+        "Valore indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nessun elemento ha soddisfatto la condizione `arr[read] != 5`. La variabile `write` è rimasta pari a `0`. Il comando `arr[write] = -1` scriverà il marcatore di fine direttamente in `arr[0]`. L'array diventerà vuoto.",
+        "Errato. Tutti gli elementi 5 sono stati filtrati.",
+        "Errato. Non è stata eseguita alcuna assegnazione dello zero.",
+        "Errato. In `arr[0]` è chiaramente scritto il marcatore `-1`."
+      ]
+    },
+    {
+      "id": "it_clang_1960",
+      "widget_id": "widget_clang_1960",
+      "topic": "Rimozione di elementi",
+      "q": "Cosa restituirà la funzione remove_val al tentativo di rimuovere l'elemento x = 10 dall'array vuoto arr[3] = {-1}?",
+      "hint": "Ricorda il codice di ritorno standard della funzione di rimozione quando si tenta di operare su un array vuoto.",
+      "options": [
+        "0",
+        "1",
+        "-1",
+        "Arresto anomalo del programma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il controllo `if (arr[0] == -1)` scatta al primissimo passaggio e restituisce `0`.",
+        "Errato. La restituzione di 1 informa di un'avvenuta rimozione.",
+        "Errato. La funzione restituisce un flag di stato `0` o `1`.",
+        "Errato. Il controllo protegge correttamente dagli errori di esecuzione."
+      ]
+    }
+  ]
+}
