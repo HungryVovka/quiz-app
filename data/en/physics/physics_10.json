@@ -1,0 +1,887 @@
+{
+  "subject": "Physics",
+  "questions": [
+    {
+      "id": "it_phys_334",
+      "widget_id": null,
+      "topic": "Kinematics - Rigid Body Kinematics",
+      "q": "If two points $A$ and $B$ are located on a rotating rigid disk at different distances from the center ($r_A < r_B$), what is the relationship between their angular and tangential speeds?",
+      "hint": "Remember that in a rigid body all points complete a full rotation in the same time interval, and use $v = \\omega r$.",
+      "options": [
+        "They have the same angular speed ($\\omega_A = \\omega_B$), but point $B$ has a greater tangential speed ($v_B > v_A$).",
+        "They have the same tangential speed ($v_A = v_B$), but point $A$ has a greater angular speed ($\\omega_A > \\omega_B$).",
+        "Both angular speed and tangential speed are identical for both points."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since the disk is rigid, all points rotate with the same angular speed $\\omega$. Since tangential speed is $v = \\omega r$, point $B$ at a greater distance from the center moves at a higher tangential speed.",
+        "Incorrect. Tangential speed is not equal: points farther out must travel a larger circumference in the same amount of time.",
+        "Incorrect. Only the angular speed is identical; tangential speeds differ due to the different radius."
+      ]
+    },
+    {
+      "id": "it_phys_335",
+      "widget_id": null,
+      "topic": "Kinematics - Free Fall in a Vacuum",
+      "q": "In a vacuum, two bodies with very different masses $m_1 = 1\\text{ kg}$ and $m_2 = 100\\text{ kg}$ are dropped simultaneously from the same height. Which statement correctly describes their motion?",
+      "hint": "Consider Newton's second law ($F = m a$) combined with the law of gravity ($F = m g$).",
+      "options": [
+        "They hit the ground simultaneously with the same acceleration $g$.",
+        "The $100\\text{ kg}$ body arrives first because it experiences a greater gravitational force.",
+        "The $1\\text{ kg}$ body arrives first because it has less inertia, offering less resistance."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In a vacuum, there is no air resistance. Although the gravitational force is $100$ times greater on the heavier body, its inertia (mass) is also $100$ times greater. The two properties compensate perfectly, and the acceleration $g = \\frac{F}{m}$ is identical for both.",
+        "Incorrect. The force is greater, but the greater inertia exactly offsets the increase in force.",
+        "Incorrect. The smaller inertia is balanced by a proportionally smaller gravitational force."
+      ]
+    },
+    {
+      "id": "it_phys_336",
+      "widget_id": null,
+      "topic": "Work and Energy - Work Done by Centripetal Force",
+      "q": "How much work $W$ does the centripetal force perform on a body moving in a circular orbit at a constant speed?",
+      "hint": "Consider the angle formed at each instant between the centripetal force vector and the tangential displacement vector.",
+      "options": [
+        "A positive work equal to the kinetic energy of the body ($W = K$).",
+        "Strictly zero ($W = 0$).",
+        "A variable work that doubles if the orbit radius is doubled."
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. The centripetal force does not transfer kinetic energy to the body in uniform circular motion.",
+        "Correct! The centripetal force is always perpendicular to the instantaneous displacement (angle $\\theta = 90^\\circ$). Since $W = F \\cdot \\Delta s \\cdot \\cos(90^\\circ) = 0$, the work is zero and the speed remains constant.",
+        "Incorrect. The work is zero regardless of the radius of the orbit."
+      ]
+    },
+    {
+      "id": "it_phys_337",
+      "widget_id": "widget_phys_337",
+      "topic": "Work and Energy - Equilibrium Stability",
+      "q": "In a plot of potential energy $U(x)$, how do you identify a position of stable equilibrium?",
+      "hint": "Consider the second derivative of the potential energy $\\frac{d^2U}{dx^2}$ and the effect of a small perturbation from the equilibrium position.",
+      "options": [
+        "It corresponds to a local maximum of potential energy ($\\frac{d^2U}{dx^2} < 0$).",
+        "It corresponds to a local minimum of potential energy ($\\frac{d^2U}{dx^2} > 0$).",
+        "It corresponds to any point where the potential energy is zero ($U = 0$)."
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Maxima of potential energy correspond to positions of *unstable* equilibrium.",
+        "Correct! At potential energy minima, a small nudge generates a restoring force toward the minimum itself (like a sphere at the bottom of a bowl). Mathematically, the first derivative is zero and the second derivative is positive.",
+        "Incorrect. The absolute value of the potential energy does not determine stability; its spatial variation (derivative) is what matters."
+      ]
+    },
+    {
+      "id": "it_phys_338",
+      "widget_id": null,
+      "topic": "Momentum and Collisions - Center of Mass Frame",
+      "q": "What is the total momentum of an isolated system of bodies as measured by an observer in the center-of-mass reference frame?",
+      "hint": "Think about the velocity of the center of mass relative to itself.",
+      "options": [
+        "It depends on the type of collision occurring between the bodies (elastic or inelastic).",
+        "It is equal to the product of the total mass and the velocity of the fastest body.",
+        "It is always zero, both before and after the collision."
+      ],
+      "ans": 2,
+      "explanations": [
+        "Incorrect. The value does not depend on the type of collision; in the center-of-mass frame, the total momentum is a universal constant for that system.",
+        "Incorrect. It does not correspond to the product with the velocity of an individual body.",
+        "Correct! By definition, in the center-of-mass reference frame (also called the *zero-momentum frame*), the momenta of the particles add vectorially to zero at all times: $\\vec{P}'_{tot} = 0$."
+      ]
+    },
+    {
+      "id": "it_phys_339",
+      "widget_id": null,
+      "topic": "Momentum and Collisions - Classification of Collisions",
+      "q": "If during the impact between two bodies the total kinetic energy of the system **increases** as a result of the collision (for example, due to the explosion of an internal charge), how is the collision defined?",
+      "hint": "Compare this with the definitions of elastic (constant energy) and inelastic collisions (energy decreases).",
+      "options": [
+        "Superelastic (or explosive) collision.",
+        "Perfectly inelastic collision.",
+        "Ideal conservative collision."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! A collision in which the final kinetic energy is greater than the initial kinetic energy is called *superelastic*. Internal potential energy (chemical, elastic, etc.) is converted into additional kinetic energy.",
+        "Incorrect. In a perfectly inelastic collision, kinetic energy is reduced to the minimum value permitted by conservation of momentum.",
+        "Incorrect. A conservative (elastic) collision keeps kinetic energy constant; it does not increase it."
+      ]
+    },
+    {
+      "id": "it_phys_340",
+      "widget_id": null,
+      "topic": "Many-Body Systems - Moment of Inertia and Distance from Axis",
+      "q": "For a rigid body of mass $M$, how does its moment of inertia $I$ relative to a rotation axis change if its mass is redistributed farther from that axis?",
+      "hint": "Recall the definition of moment of inertia for point masses: $I = \\sum m_i r_i^2$.",
+      "options": [
+        "The moment of inertia increases, since $I$ is proportional to the square of the distance $r$ from the axis.",
+        "The moment of inertia decreases, enabling faster rotation for a given torque.",
+        "The moment of inertia remains unchanged, because it depends solely on the total mass $M$."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since $I = \\sum m_i r_i^2$, moving mass farther from the rotation axis (increasing $r$) significantly increases the moment of inertia $I$, raising the body's resistance to changes in angular velocity.",
+        "Incorrect. The moment of inertia increases, making the rotation harder to accelerate.",
+        "Incorrect. Moment of inertia depends not only on mass, but crucially on *how* that mass is distributed in space relative to the axis."
+      ]
+    },
+    {
+      "id": "it_phys_341",
+      "widget_id": null,
+      "topic": "Many-Body Systems - Conservation of Angular Momentum",
+      "q": "Why does an ice skater executing a spin rotate faster when pulling her arms close to her body?",
+      "hint": "Consider the conservation of angular momentum $L = I \\omega$ in the absence of significant external torques.",
+      "options": [
+        "By pulling her arms in, internal forces increase the total angular momentum $L$.",
+        "Pulling her arms in reduces her moment of inertia $I$; consequently, the angular speed $\\omega$ must increase to keep $L$ constant.",
+        "Pulling her arms in reduces her kinetic energy, allowing her body to complete more revolutions."
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Internal forces cannot change the total angular momentum $L$ of the system.",
+        "Correct! In the absence of external torques, angular momentum is conserved ($L = I \\omega = \\text{constant}$). By bringing her arms closer to her body, the distance of mass from the axis decreases, reducing $I$. To compensate, the angular speed $\\omega$ increases.",
+        "Incorrect. In fact, the rotational kinetic energy $K = \\frac{1}{2} I \\omega^2 = \\frac{L^2}{2I}$ increases due to the muscular work performed in pulling the arms inward."
+      ]
+    },
+    {
+      "id": "it_phys_342",
+      "widget_id": null,
+      "topic": "Gravitation - Kepler's Second Law",
+      "q": "Kepler's Second Law (the law of equal areas, which states that a radius vector sweeps out equal areas in equal times) is a direct physical consequence of the conservation of which quantity?",
+      "hint": "Consider the type of force acting on the planet: gravity is a central force (whose torque relative to the Sun is zero).",
+      "options": [
+        "The kinetic energy of the planet along its orbit.",
+        "The angular momentum of the planet relative to the Sun.",
+        "The Earth's interplanetary magnetic field."
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Kinetic energy varies along the elliptical orbit (maximum at perihelion, minimum at aphelion).",
+        "Correct! Since the gravitational force is central, the torque of the force relative to the Sun is zero ($\\vec{\\tau} = \\vec{r} \\times \\vec{F} = 0$). As a result, the angular momentum $\\vec{L}$ is conserved, which mathematically corresponds to a constant areal velocity.",
+        "Incorrect. Magnetic fields are not responsible for the law of equal areas."
+      ]
+    },
+    {
+      "id": "it_phys_343",
+      "widget_id": null,
+      "topic": "Gravitation - Lagrangian Points",
+      "q": "What are Lagrange points (or libration points) in an astronomical system of two massive bodies orbiting each other (e.g., the Sun–Earth system)?",
+      "hint": "Think about the equilibrium between attractive gravitational forces and the centrifugal force in a rotating reference frame.",
+      "options": [
+        "Points in space where the gravitational forces of the two bodies and the centrifugal force balance out, allowing an object of negligible mass to maintain a fixed position relative to them.",
+        "Points along the elliptical orbit where the planet's speed equals its average speed.",
+        "Points where the gravitational potential energy of both bodies simultaneously becomes zero."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! There are 5 Lagrangian points (from $L_1$ to $L_5$) where the combined gravitational attractions of the two large bodies provide precisely the centripetal force required to orbit with them, allowing a satellite to maintain a stable or semi-stable relative position.",
+        "Incorrect. They do not relate to the planet's average orbital speed.",
+        "Incorrect. Potential energy (referenced to infinity) does not vanish at the Lagrangian points."
+      ]
+    },
+    {
+      "id": "it_phys_344",
+      "widget_id": null,
+      "topic": "Kinematics - Projectile Motion and Launch Angle",
+      "q": "For a given initial speed $v_0$, at what launch angle $\\theta$ relative to the horizontal is maximum range (horizontal distance) achieved on flat ground, neglecting air resistance?",
+      "hint": "Consider the range formula $d = \\frac{v_0^2 \\sin(2\\theta)}{g}$ and find for which angle the sine function reaches its maximum.",
+      "options": [
+        "$30^\\circ$",
+        "$45^\\circ$",
+        "$60^\\circ$"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. At $30^\\circ$, the range is smaller than the maximum value (and equals the range obtained at $60^\\circ$).",
+        "Correct! The range is $d = \\frac{v_0^2 \\sin(2\\theta)}{g}$. The maximum value of the sine function is $1$, achieved when its argument is $90^\\circ$, so $2\\theta = 90^\\circ \\implies \\theta = 45^\\circ$.",
+        "Incorrect. At $60^\\circ$, the projectile reaches a higher altitude, but the horizontal range is less than that at $45^\\circ$."
+      ]
+    },
+    {
+      "id": "it_phys_345",
+      "widget_id": null,
+      "topic": "Kinematics - Non-Inertial Reference Frames and Fictitious Forces",
+      "q": "In a reference frame rotating uniformly with angular velocity $\\vec{\\omega}$, what fictitious force acts on an object moving with velocity $\\vec{v}'$ relative to the rotating frame?",
+      "hint": "Distinguish the fictitious force that acts even on stationary bodies from the one that requires a non-zero relative velocity.",
+      "options": [
+        "Coriolis force",
+        "Centripetal force",
+        "Translational inertial force"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The fictitious Coriolis force $\\vec{F}_C = -2m(\\vec{\\omega} \\times \\vec{v}')$ acts uniquely on moving bodies within a rotating reference frame.",
+        "Incorrect. Centripetal force is a real (net) force required in an inertial frame to constrain a body to circular motion.",
+        "Incorrect. Translational inertial force appears when the reference frame translates with linear acceleration, not when it rotates."
+      ]
+    },
+    {
+      "id": "it_phys_346",
+      "widget_id": null,
+      "topic": "Work and Energy - Instantaneous Power",
+      "q": "How is the instantaneous power $P(t)$ expressed for a force $\\vec{F}$ applied to an object moving with instantaneous velocity $\\vec{v}$?",
+      "hint": "Consider the infinitesimal work $dW = \\vec{F} \\cdot d\\vec{r}$ and divide it by the time interval $dt$.",
+      "options": [
+        "$P = \\vec{F} \\cdot \\vec{v}$ (dot product of force and velocity)",
+        "$P = \\vec{F} \\times \\vec{v}$ (cross product of force and velocity)",
+        "$P = \\frac{|\\vec{F}|}{|\\vec{v}|}$ (ratio between the magnitude of force and velocity)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Instantaneous power is $P = \\frac{dW}{dt} = \\vec{F} \\cdot \\frac{d\\vec{r}}{dt} = \\vec{F} \\cdot \\vec{v}$. If the force is perpendicular to velocity, the power delivered is zero.",
+        "Incorrect. The cross product yields a vector, whereas power is a scalar quantity.",
+        "Incorrect. The ratio between magnitudes of force and velocity does not have the physical meaning of power."
+      ]
+    },
+    {
+      "id": "it_phys_347",
+      "widget_id": null,
+      "topic": "Work and Energy - Potential Energy Gradient",
+      "q": "In three-dimensional space, what is the general vector relationship between a conservative force $\\vec{F}$ and the potential energy field $U(x,y,z)$?",
+      "hint": "Use the vector differential operator that measures the direction of maximum change of a scalar function.",
+      "options": [
+        "$\\vec{F} = -\\nabla U$ (force is the negative gradient of potential energy)",
+        "$\\vec{F} = \\nabla \\times U$ (force is the curl of potential energy)",
+        "$\\vec{F} = \\Delta U \\cdot \\vec{r}$ (force is the product of energy change and position vector)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In three dimensions, a conservative force is the negative gradient of potential energy: $\\vec{F} = -\\nabla U = -\\left(\\frac{\\partial U}{\\partial x}\\hat{i} + \\frac{\\partial U}{\\partial y}\\hat{j} + \\frac{\\partial U}{\\partial z}\\hat{k}\\right)$.",
+        "Incorrect. The curl operator applies to vector fields, whereas potential energy $U$ is a scalar field.",
+        "Incorrect. This expression has no mathematical or vector validity."
+      ]
+    },
+    {
+      "id": "it_phys_348",
+      "widget_id": null,
+      "topic": "Momentum and Collisions - Mass Limit in an Elastic Collision",
+      "q": "A ball of negligible mass $m$ undergoes a head-on elastic collision with a stationary wall (or an enormous mass $M \\gg m$). What happens to the velocity of the ball immediately after impact?",
+      "hint": "Analyze the limit of one-dimensional elastic collision equations as $M \\to \\infty$.",
+      "options": [
+        "It bounces backward while maintaining the same speed ($v_f \\approx -v_i$).",
+        "It stops completely, transferring all its kinetic energy to the wall ($v_f = 0$).",
+        "It passes through the wall, continuing without changing its velocity ($v_f = v_i$)."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! From the elastic collision formula $v_f = \\frac{m-M}{m+M} v_i$, if $M \\gg m$ we get $\\frac{m-M}{m+M} \\approx -1$, so $v_f \\approx -v_i$. The ball reverses direction while maintaining the same speed.",
+        "Incorrect. The ball would stop only if it collided with an equal mass ($M = m$) initially at rest.",
+        "Incorrect. Upon impact with a rigid and infinitely massive body, the ball does not continue unchanged."
+      ]
+    },
+    {
+      "id": "it_phys_349",
+      "widget_id": null,
+      "topic": "Momentum and Collisions - Conservation of Angular Momentum in Collisions",
+      "q": "In a collision between two particles, when is conservation of total angular momentum guaranteed relative to a given origin (pivot point)?",
+      "hint": "Recall rotational dynamics (the second cardinal equation) for a system of particles.",
+      "options": [
+        "When the net external torque relative to that origin is zero ($\\vec{\\tau}_{ext} = 0$).",
+        "Only if the collision is perfectly elastic.",
+        "Only if the collision occurs on the equatorial plane of the chosen origin."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since $\\frac{d\\vec{L}_{tot}}{dt} = \\vec{\\tau}_{ext}$, total angular momentum is conserved if the net external torque relative to the pivot is zero. This holds whether the collision is elastic or inelastic.",
+        "Incorrect. Even in inelastic collisions, angular momentum is conserved provided there are no net external torques.",
+        "Incorrect. Conservation of vector angular momentum does not depend on selecting an equatorial plane."
+      ]
+    },
+    {
+      "id": "it_phys_350",
+      "widget_id": null,
+      "topic": "Many-Body Systems - Parallel Axis Theorem",
+      "q": "What does the Parallel Axis Theorem (Huygens-Steiner Theorem) state for the moment of inertia $I$ of a rigid body of mass $M$ about an axis parallel to one passing through the center of mass?",
+      "hint": "The moment of inertia about a general axis is always greater than the moment of inertia about the parallel axis through the center of mass.",
+      "options": [
+        "$I = I_{cm} + M d^2$, where $d$ is the distance between the two parallel axes.",
+        "$I = I_{cm} - M d^2$, where $d$ is the distance between the two axes.",
+        "$I = \\frac{I_{cm}}{d^2}$, where $d$ is the distance between the two axes."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The parallel axis theorem states $I = I_{cm} + M d^2$. The moment of inertia increases by an amount equal to the body's mass multiplied by the square of the distance between the parallel axes.",
+        "Incorrect. The moment of inertia about any parallel axis is always *greater* than that about the center-of-mass axis.",
+        "Incorrect. The correct relationship is a sum of dimensionally consistent terms for moment of inertia."
+      ]
+    },
+    {
+      "id": "it_phys_351",
+      "widget_id": null,
+      "topic": "Many-Body Systems - First Cardinal Equation of Dynamics",
+      "q": "What relation does Newton's second law for a system of particles (First Cardinal Equation) establish?",
+      "hint": "Consider how internal forces cancel in pairs according to Newton's third law.",
+      "options": [
+        "The time derivative of total momentum is equal to the net external force ($\\frac{d\\vec{P}_{tot}}{dt} = \\vec{F}_{ext}$).",
+        "The change in total kinetic energy is equal to the torque of internal forces.",
+        "The net internal force equals the total mass multiplied by angular acceleration."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Newton's second law for systems states that $\\frac{d\\vec{P}_{tot}}{dt} = \\vec{F}_{ext} = M \\vec{a}_{cm}$. Internal forces do not alter total system momentum.",
+        "Incorrect. The change in kinetic energy is related to total work done (both internal and external), not torque.",
+        "Incorrect. By Newton's third law, the sum of internal forces is always zero."
+      ]
+    },
+    {
+      "id": "it_phys_352",
+      "widget_id": null,
+      "topic": "Gravitation - Kepler's Third Law",
+      "q": "Kepler's Third Law states that for planets in the Solar System, the square of the orbital period $T^2$ is proportional to which other geometric property of the orbit?",
+      "hint": "Recall the relation $\\frac{T^2}{a^3} = \\text{constant}$.",
+      "options": [
+        "The cube of the semi-major axis of the elliptical orbit ($a^3$).",
+        "The square of the distance of closest approach to the Sun (perihelion).",
+        "The square root of the mass of the orbiting planet."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Kepler's Third Law states $\\frac{T^2}{a^3} = \\frac{4\\pi^2}{G M_{Sun}} = \\text{constant}$. The square of the orbital period is proportional to the cube of the semi-major axis $a$.",
+        "Incorrect. The law concerns the semi-major axis $a$ of the ellipse, not just the perihelion distance.",
+        "Incorrect. The proportionality constant depends on the mass of the central star ($M_{Sun}$), while the planet's mass is negligible to a first approximation."
+      ]
+    },
+    {
+      "id": "it_phys_353",
+      "widget_id": null,
+      "topic": "Gravitation - Total Mechanical Energy of an Elliptical Orbit",
+      "q": "For a satellite of mass $m$ bound in an elliptical orbit with semi-major axis $a$ around a planet of mass $M$, what is the total mechanical energy $E$ of the system?",
+      "hint": "Remember that for a bound gravitational system (closed orbit), the total mechanical energy must be negative.",
+      "options": [
+        "$E = -G \\frac{M m}{2a}$ (constant, negative energy)",
+        "$E = 0$ at all points in the orbit",
+        "$E = +G \\frac{M m}{a^2}$ (constant, positive energy)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! For a bound orbit (elliptical or circular), total mechanical energy remains constant and negative: $E = -G \\frac{M m}{2a}$. If $E = 0$, the orbit would be parabolic (escape threshold), while if $E > 0$, the orbit would be hyperbolic.",
+        "Incorrect. $E = 0$ represents the threshold value for an open parabolic trajectory (speed exactly equal to escape velocity).",
+        "Incorrect. For a bound system energy must be negative, and the proposed formula is also dimensionally incorrect."
+      ]
+    },
+    {
+      "id": "it_phys_354",
+      "widget_id": null,
+      "topic": "Kinematics - Uniform Rectilinear Motion (Leg 1)",
+      "q": "A car travels a distance of $50\\text{ km}$ in $30\\text{ minutes}$ at constant speed. What is its average speed in this first leg?",
+      "hint": "Calculate speed as $v_1 = \\frac{\\Delta s_1}{\\Delta t_1}$ and convert to $\\text{m/s}$ by dividing by $3.6$.",
+      "options": [
+        "$27.78\\text{ m/s}$ (i.e., $100\\text{ km/h}$)",
+        "$16.67\\text{ m/s}$ (i.e., $60\\text{ km/h}$)",
+        "$50.00\\text{ m/s}$ (i.e., $180\\text{ km/h}$)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! $v_1 = \\frac{50\\text{ km}}{0.5\\text{ h}} = 100\\text{ km/h}$. Converting to $\\text{m/s}$: $\\frac{100}{3.6} \\approx 27.78\\text{ m/s}$.",
+        "Incorrect. $16.67\\text{ m/s}$ would be obtained by mistakenly assuming a duration of $50\\text{ minutes}$.",
+        "Incorrect. Error in dividing distance by time using inconsistent units."
+      ]
+    },
+    {
+      "id": "it_phys_355",
+      "widget_id": null,
+      "topic": "Kinematics - Average Speed During Stop (Leg 2)",
+      "q": "The car stops at a rest area for $20\\text{ minutes}$. What is its average speed during this stop?",
+      "hint": "If the object stays stationary, the displacement $\\Delta s$ is zero.",
+      "options": [
+        "$0\\text{ m/s}$",
+        "$10\\text{ m/s}$",
+        "$2.5\\text{ m/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! During the stop, the car has zero displacement ($\\Delta s = 0$), so the average speed is $0\\text{ m/s}$.",
+        "Incorrect. The car is stopped; it is not moving.",
+        "Incorrect. Any non-zero value is incorrect because the car is stationary."
+      ]
+    },
+    {
+      "id": "it_phys_356",
+      "widget_id": null,
+      "topic": "Kinematics - Speed Conversion (Leg 3)",
+      "q": "Afterward, the car resumes driving at a constant speed of $90\\text{ km/h}$ for $2\\text{ hours}$. What is the average speed in $\\text{m/s}$ during this third leg?",
+      "hint": "Use the conversion relation $1\\text{ m/s} = 3.6\\text{ km/h}$.",
+      "options": [
+        "$25\\text{ m/s}$",
+        "$45\\text{ m/s}$",
+        "$18\\text{ m/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! To convert from $\\text{km/h}$ to $\\text{m/s}$, divide by $3.6$: $v_3 = \\frac{90}{3.6} = 25\\text{ m/s}$.",
+        "Incorrect. $45\\text{ m/s}$ would be obtained by dividing by $2$ instead of $3.6$.",
+        "Incorrect. Calculation error when converting units."
+      ]
+    },
+    {
+      "id": "it_phys_357",
+      "widget_id": null,
+      "topic": "Kinematics - Overall Average Speed",
+      "q": "For the entire trip (leg 1: $50\\text{ km}$ in $30\\text{ min}$; stop: $20\\text{ min}$; leg 3: $90\\text{ km/h}$ for $2\\text{ hours}$), what is the average speed of the car for the whole journey?",
+      "hint": "Calculate total distance $\\Delta s_{tot} = 50 + 0 + 180 = 230\\text{ km}$ and total time $\\Delta t_{tot} = 30 + 20 + 120 = 170\\text{ min} = 2.833\\text{ h}$.",
+      "options": [
+        "$22.55\\text{ m/s}$ (i.e., $81.18\\text{ km/h}$)",
+        "$17.59\\text{ m/s}$ (i.e., $63.33\\text{ km/h}$)",
+        "$31.25\\text{ m/s}$ (i.e., $112.5\\text{ km/h}$)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! $\\Delta s_{tot} = 50 + 0 + (90 \\cdot 2) = 230\\text{ km}$. $\\Delta t_{tot} = 0.5 + 0.333 + 2 = 2.833\\text{ h} = 10200\\text{ s}$. Average speed is $v_m = \\frac{230000\\text{ m}}{10200\\text{ s}} \\approx 22.55\\text{ m/s}$ ($81.18\\text{ km/h}$).",
+        "Incorrect. $17.59\\text{ m/s}$ is the simple arithmetic mean of the three speeds, which ignores differing leg durations.",
+        "Incorrect. Obtained if you forget to include the stop duration in total travel time."
+      ]
+    },
+    {
+      "id": "it_phys_358",
+      "widget_id": null,
+      "topic": "Kinematics - Average Speed vs. Mean of Speeds",
+      "q": "Comparing the actual average speed of the overall journey ($22.55\\text{ m/s}$) with the arithmetic mean of the speeds of individual legs ($\\frac{27.78 + 0 + 25}{3} = 17.59\\text{ m/s}$), which statement is correct?",
+      "hint": "Check which value is larger and recall that average speed is weighted by the duration of each leg.",
+      "options": [
+        "The actual average speed ($22.55\\text{ m/s}$) is greater than the arithmetic mean ($17.59\\text{ m/s}$), because the car traveled longer at higher speed.",
+        "The actual average speed is exactly equal to the arithmetic mean of the speeds.",
+        "The actual average speed is always less than the arithmetic mean of the speeds."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The time-weighted average speed ($22.55\\text{ m/s}$) is greater than the arithmetic mean ($17.59\\text{ m/s}$) because the 90 km/h leg lasts 2 full hours, heavily weighting the overall average.",
+        "Incorrect. The arithmetic mean matches the average speed only if equal time is spent on each leg.",
+        "Incorrect. It is not always smaller; it depends on time distribution among legs."
+      ]
+    },
+    {
+      "id": "it_phys_359",
+      "widget_id": null,
+      "topic": "Kinematics / Acoustics - Echo Advance Time",
+      "q": "A boy stands in front of a cliff face and shouts. His friends, $60\\text{ m}$ behind him, hear his direct voice and, $5\\text{ s}$ later, the echo. Given that $v_{sound} = 340\\text{ m/s}$, how much time BEFORE his friends does the boy hear his own echo?",
+      "hint": "Calculate the time taken by direct sound to reach his friends ($t_{dir} = \\frac{60}{340} \\approx 0.18\\text{ s}$). The echo reaches the boy in $5\\text{ s}$, while for his friends it arrives at $t_{dir} + 5\\text{ s}$.",
+      "options": [
+        "$0.18\\text{ s}$",
+        "$0.50\\text{ s}$",
+        "$1.20\\text{ s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Direct sound travels $60\\text{ m}$ to the friends in $t_{dir} = \\frac{60}{340} \\approx 0.176\\text{ s} \\approx 0.18\\text{ s}$. The friends hear the echo at $t = t_{dir} + 5\\text{ s}$. The boy hears the echo $5\\text{ s}$ after shouting. Thus, the boy hears the echo $0.18\\text{ s}$ before his friends.",
+        "Incorrect. $0.50\\text{ s}$ would be obtained by dividing $60\\text{ m}$ by an incorrect speed.",
+        "Incorrect. Error in accounting for the friends' distance."
+      ]
+    },
+    {
+      "id": "it_phys_360",
+      "widget_id": null,
+      "topic": "Kinematics / Acoustics - Distance to Obstacle via Echo",
+      "q": "In the same mountain shout problem ($v_{sound} = 340\\text{ m/s}$), at what distance $d$ from the cliff is the boy located?",
+      "hint": "The boy hears the echo after $5\\text{ s}$. Sound travels back and forth from the wall: $2d = v_{sound} \\cdot t$.",
+      "options": [
+        "$850\\text{ m}$",
+        "$1700\\text{ m}$",
+        "$680\\text{ m}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The path of the echo for the boy is round-trip ($2d$). Thus $2d = 340 \\cdot 5 = 1700\\text{ m} \\implies d = \\frac{1700}{2} = 850\\text{ m}$.",
+        "Incorrect. $1700\\text{ m}$ is total distance traveled by sound (round-trip), not distance to the wall.",
+        "Incorrect. $680\\text{ m}$ would be obtained by improperly subtracting the $60\\text{ m}$ distance."
+      ]
+    },
+    {
+      "id": "it_phys_361",
+      "widget_id": null,
+      "topic": "Kinematics - Usual Speed Problem",
+      "q": "Anna lives $3\\text{ km}$ from work. Leaving $4\\text{ minutes}$ late, she cycles $7.5\\text{ km/h}$ faster and arrives at her usual time. What is Anna's usual cycling speed?",
+      "hint": "Set up the time equation: $\\frac{3}{v} - \\frac{3}{v + 7.5} = \\frac{4}{60}$. Solve for $v$ and convert to $\\text{m/s}$.",
+      "options": [
+        "$4.17\\text{ m/s}$ (i.e., $15\\text{ km/h}$)",
+        "$2.50\\text{ m/s}$ (i.e., $9\\text{ km/h}$)",
+        "$6.25\\text{ m/s}$ (i.e., $22.5\\text{ km/h}$)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Solving $\\frac{3}{v} - \\frac{3}{v + 7.5} = \\frac{1}{15}\\text{ h}$ yields $v^2 + 7.5v - 337.5 = 0$, giving $v = 15\\text{ km/h}$. In $\\text{m/s}$: $\\frac{15}{3.6} \\approx 4.17\\text{ m/s}$.",
+        "Incorrect. $2.50\\text{ m/s}$ does not satisfy the 4-minute time difference over $3\\text{ km}$.",
+        "Incorrect. $6.25\\text{ m/s}$ ($22.5\\text{ km/h}$) is today's *faster* speed, not her usual speed."
+      ]
+    },
+    {
+      "id": "it_phys_362",
+      "widget_id": null,
+      "topic": "Kinematics - Usual Travel Time Calculation",
+      "q": "Knowing that Anna's commute distance is $3\\text{ km}$ and her usual speed is $15\\text{ km/h}$, how long does she usually take to get to work?",
+      "hint": "Use $t = \\frac{d}{v}$.",
+      "options": [
+        "$12\\text{ minutes}$",
+        "$20\\text{ minutes}$",
+        "$8\\text{ minutes}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! $t = \\frac{3\\text{ km}}{15\\text{ km/h}} = 0.2\\text{ hours} = 0.2 \\cdot 60\\text{ min} = 12\\text{ minutes}$.",
+        "Incorrect. $20\\text{ minutes}$ would result if her speed were $9\\text{ km/h}$.",
+        "Incorrect. $8\\text{ minutes}$ is today's travel time while riding faster ($12 - 4 = 8\\text{ min}$)."
+      ]
+    },
+    {
+      "id": "it_phys_363",
+      "widget_id": null,
+      "topic": "Kinematics - Relative Motion and Train Intersect Point",
+      "q": "Two trains A and B depart toward each other from stations $435\\text{ km}$ apart. Train A travels at $70\\text{ km/h}$ and train B at $75\\text{ km/h}$. After how much time will they meet?",
+      "hint": "Use relative closing speed: $v_{rel} = v_A + v_B = 70 + 75 = 145\\text{ km/h}$.",
+      "options": [
+        "$3\\text{ hours}$",
+        "$4\\text{ hours}$",
+        "$2.5\\text{ hours}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Relative speed is $v_{rel} = 70 + 75 = 145\\text{ km/h}$. Meeting time is $t = \\frac{435\\text{ km}}{145\\text{ km/h}} = 3\\text{ hours}$.",
+        "Incorrect. $4\\text{ hours}$ would be obtained by improperly subtracting speeds or miscalculating.",
+        "Incorrect. Calculation error in dividing $435 / 145$."
+      ]
+    },
+    {
+      "id": "it_phys_364",
+      "widget_id": null,
+      "topic": "Kinematics - Meeting Location of Two Trains",
+      "q": "Knowing that trains A ($70\\text{ km/h}$) and B ($75\\text{ km/h}$) meet after $3\\text{ hours}$, at what distance from train A's departure station do they meet?",
+      "hint": "Calculate distance traveled by train A: $d_A = v_A \\cdot t$.",
+      "options": [
+        "$210\\text{ km}$",
+        "$225\\text{ km}$",
+        "$145\\text{ km}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Train A travels at $70\\text{ km/h}$ for $3\\text{ hours}$, covering $d_A = 70 \\cdot 3 = 210\\text{ km}$ from its departure station.",
+        "Incorrect. $225\\text{ km}$ is distance traveled by train B from its station ($75 \\cdot 3 = 225\\text{ km}$).",
+        "Incorrect. $145\\text{ km}$ is relative speed in km/h, not distance."
+      ]
+    },
+    {
+      "id": "it_phys_365",
+      "widget_id": null,
+      "topic": "Kinematics - Uniformly Accelerated Rectilinear Motion (Acceleration)",
+      "q": "A car starts from rest and covers $1000\\text{ m}$ in $25\\text{ s}$ under constant acceleration. What is its acceleration?",
+      "hint": "Use position equation starting from rest $s = \\frac{1}{2} a t^2$ and solve for $a = \\frac{2s}{t^2}$.",
+      "options": [
+        "$3.2\\text{ m/s}^2$",
+        "$1.6\\text{ m/s}^2$",
+        "$6.4\\text{ m/s}^2$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Rearranging: $a = \\frac{2s}{t^2} = \\frac{2 \\cdot 1000}{(25)^2} = \\frac{2000}{625} = 3.2\\text{ m/s}^2$.",
+        "Incorrect. $1.6\\text{ m/s}^2$ would be obtained by omitting factor of 2 ($a = \\frac{s}{t^2}$).",
+        "Incorrect. $6.4\\text{ m/s}^2$ would result from multiplying by 2 twice."
+      ]
+    },
+    {
+      "id": "it_phys_366",
+      "widget_id": null,
+      "topic": "Kinematics - Final Velocity in km/h",
+      "q": "For the same car ($a = 3.2\\text{ m/s}^2$, $t = 25\\text{ s}$), what final speed is reached, expressed in $\\text{km/h}$?",
+      "hint": "Calculate $v = a \\cdot t$ in $\\text{m/s}$, then multiply by $3.6$ to convert to $\\text{km/h}$.",
+      "options": [
+        "$288\\text{ km/h}$",
+        "$80\\text{ km/h}$",
+        "$144\\text{ km/h}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Speed in m/s is $v = a \\cdot t = 3.2 \\cdot 25 = 80\\text{ m/s}$. In $\\text{km/h}$: $80 \\cdot 3.6 = 288\\text{ km/h}$.",
+        "Incorrect. $80$ is speed in $\\text{m/s}$, not $\\text{km/h}$.",
+        "Incorrect. Conversion error."
+      ]
+    },
+    {
+      "id": "it_phys_367",
+      "widget_id": null,
+      "topic": "Kinematics - Vertical Launch (Height after time t)",
+      "q": "An object is launched straight up with initial speed $v_0 = 20\\text{ m/s}$. What height does it reach after $3\\text{ seconds}$? (Use $g = 9.81\\text{ m/s}^2$)",
+      "hint": "Apply position equation: $h(t) = v_0 t - \\frac{1}{2} g t^2$.",
+      "options": [
+        "$15.9\\text{ m}$",
+        "$60.0\\text{ m}$",
+        "$44.1\\text{ m}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! $h(3) = 20 \\cdot 3 - \\frac{1}{2} \\cdot 9.81 \\cdot (3)^2 = 60 - 44.145 \\approx 15.9\\text{ m}$.",
+        "Incorrect. $60.0\\text{ m}$ ignores gravity deceleration entirely ($v_0 t$).",
+        "Incorrect. $44.1\\text{ m}$ represents only downward displacement due to gravity $\\frac{1}{2} g t^2$."
+      ]
+    },
+    {
+      "id": "it_phys_368",
+      "widget_id": null,
+      "topic": "Kinematics - Vertical Launch (Maximum Height)",
+      "q": "For the same object launched straight up at $v_0 = 20\\text{ m/s}$, what is the maximum height $h_{max}$ reached?",
+      "hint": "At maximum height vertical velocity is zero, so $h_{max} = \\frac{v_0^2}{2g}$.",
+      "options": [
+        "$20.4\\text{ m}$",
+        "$40.8\\text{ m}$",
+        "$15.9\\text{ m}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! $h_{max} = \\frac{v_0^2}{2g} = \\frac{20^2}{2 \\cdot 9.81} = \\frac{400}{19.62} \\approx 20.4\\text{ m}$.",
+        "Incorrect. $40.8\\text{ m}$ would be obtained by omitting factor of 2 in denominator.",
+        "Incorrect. $15.9\\text{ m}$ is height at $t = 3\\text{ s}$, when the object is already falling."
+      ]
+    },
+    {
+      "id": "it_phys_369",
+      "widget_id": null,
+      "topic": "Kinematics - Vertical Launch (Impact Speed)",
+      "q": "With what speed will the object ($v_0 = 20\\text{ m/s}$) hit the ground again, neglecting air resistance?",
+      "hint": "By conservation of mechanical energy or motion symmetry, impact speed equals initial speed in magnitude.",
+      "options": [
+        "$20\\text{ m/s}$",
+        "$0\\text{ m/s}$",
+        "$9.81\\text{ m/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In the absence of air friction, upward and downward motion is symmetrical: the object hits the ground with speed equal in magnitude to launch speed, $20\\text{ m/s}$ (directed downward).",
+        "Incorrect. $0\\text{ m/s}$ is instantaneous speed at maximum height.",
+        "Incorrect. $9.81\\text{ m/s}$ confuses gravitational acceleration with speed."
+      ]
+    },
+    {
+      "id": "it_phys_370",
+      "widget_id": null,
+      "topic": "Kinematics - Free Fall (Fall Time)",
+      "q": "A small stone is dropped from rest from the top of a building $h = 44.1\\text{ m}$ high. What is the fall time $t$? (Use $g = 9.81\\text{ m/s}^2$)",
+      "hint": "Use free fall equation $h = \\frac{1}{2} g t^2$ and solve for $t = \\sqrt{\\frac{2h}{g}}$.",
+      "options": [
+        "$3\\text{ s}$",
+        "$4.5\\text{ s}$",
+        "$2\\text{ s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! $t = \\sqrt{\\frac{2 \\cdot 44.1}{9.81}} = \\sqrt{\\frac{88.2}{9.81}} = \\sqrt{9} = 3\\text{ s}$.",
+        "Incorrect. $4.5\\text{ s}$ would be obtained by dividing height directly by gravitational acceleration.",
+        "Incorrect. Square root extraction error."
+      ]
+    },
+    {
+      "id": "it_phys_371",
+      "widget_id": null,
+      "topic": "Kinematics - Free Fall and Time Dependence",
+      "q": "If the stone's time to reach the ground were double ($2t$), would the building height also be double?",
+      "hint": "Observe the exponent of time in free fall formula $h = \\frac{1}{2} g t^2$.",
+      "options": [
+        "No, height would be 4 times greater ($4h$).",
+        "Yes, height doubles because $h$ and $t$ are directly proportional.",
+        "No, height would remain unchanged."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since $h = \\frac{1}{2} g t^2$, height depends on the SQUARE of time. Substituting $2t$ for $t$: $h' = \\frac{1}{2} g (2t)^2 = 4 \\cdot \\left(\\frac{1}{2} g t^2\\right) = 4h$. Height quadruples.",
+        "Incorrect. Height does not vary linearly with time in accelerated motion.",
+        "Incorrect. Longer fall time necessarily requires greater height."
+      ]
+    },
+    {
+      "id": "it_phys_372",
+      "widget_id": null,
+      "topic": "Kinematics - Average Acceleration Car 1",
+      "q": "A first car goes from $0$ to $100\\text{ km/h}$ in $5\\text{ s}$. What is its average acceleration?",
+      "hint": "Convert $100\\text{ km/h}$ to $\\text{m/s}$ ($27.78\\text{ m/s}$) and calculate $a = \\frac{\\Delta v}{\\Delta t}$.",
+      "options": [
+        "$5.6\\text{ m/s}^2$",
+        "$20\\text{ m/s}^2$",
+        "$3.5\\text{ m/s}^2$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In $\\text{m/s}$: $v = \\frac{100}{3.6} \\approx 27.78\\text{ m/s}$. Average acceleration is $a = \\frac{27.78}{5} \\approx 5.56 \\approx 5.6\\text{ m/s}^2$.",
+        "Incorrect. $20\\text{ m/s}^2$ would be obtained by dividing $100$ by $5$ without converting to $\\text{m/s}$.",
+        "Incorrect. $3.5\\text{ m/s}^2$ is acceleration of second car (taking $8\\text{ s}$)."
+      ]
+    },
+    {
+      "id": "it_phys_373",
+      "widget_id": null,
+      "topic": "Kinematics - Average Acceleration Car 2",
+      "q": "A second car goes from $0$ to $100\\text{ km/h}$ in $8\\text{ s}$. What is its average acceleration?",
+      "hint": "Convert $100\\text{ km/h} = 27.78\\text{ m/s}$ and divide by $8\\text{ s}$.",
+      "options": [
+        "$3.5\\text{ m/s}^2$",
+        "$5.6\\text{ m/s}^2$",
+        "$12.5\\text{ m/s}^2$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! $a = \\frac{27.78}{8} \\approx 3.47 \\approx 3.5\\text{ m/s}^2$.",
+        "Incorrect. $5.6\\text{ m/s}^2$ is acceleration of first car.",
+        "Incorrect. $12.5\\text{ m/s}^2$ would be obtained by dividing $100$ by $8$ without converting speed to $\\text{m/s}$."
+      ]
+    },
+    {
+      "id": "it_phys_374",
+      "widget_id": null,
+      "topic": "Kinematics - Distance Traveled Car 1",
+      "q": "How much distance does the first car ($a \\approx 5.56\\text{ m/s}^2$, $t = 5\\text{ s}$) cover while accelerating from $0$ to $100\\text{ km/h}$?",
+      "hint": "Use distance equation starting from rest $s = \\frac{1}{2} a t^2$ or $s = v_m \\cdot t$.",
+      "options": [
+        "$70\\text{ m}$",
+        "$139\\text{ m}$",
+        "$112\\text{ m}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! $s = \\frac{1}{2} a t^2 = \\frac{1}{2} \\cdot 5.56 \\cdot (5)^2 = 0.5 \\cdot 5.56 \\cdot 25 \\approx 69.4\\text{ m} \\approx 70\\text{ m}$.",
+        "Incorrect. $139\\text{ m}$ would be obtained by multiplying maximum speed by time without dividing by $2$.",
+        "Incorrect. $112\\text{ m}$ is distance traveled by second car."
+      ]
+    },
+    {
+      "id": "it_phys_375",
+      "widget_id": null,
+      "topic": "Kinematics - Distance Traveled Car 2",
+      "q": "How much distance does the second car ($a \\approx 3.47\\text{ m/s}^2$, $t = 8\\text{ s}$) cover while accelerating from $0$ to $100\\text{ km/h}$?",
+      "hint": "Use $s = \\frac{1}{2} a t^2$ or $s = v_m \\cdot t$.",
+      "options": [
+        "$112\\text{ m}$",
+        "$70\\text{ m}$",
+        "$222\\text{ m}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! $s = \\frac{1}{2} a t^2 = \\frac{1}{2} \\cdot 3.47 \\cdot (8)^2 = 0.5 \\cdot 3.47 \\cdot 64 \\approx 111.1\\text{ m} \\approx 112\\text{ m}$.",
+        "Incorrect. $70\\text{ m}$ is distance covered by first car.",
+        "Incorrect. $222\\text{ m}$ would be obtained by multiplying top speed by acceleration time without dividing by $2$."
+      ]
+    },
+    {
+      "id": "it_phys_376",
+      "widget_id": null,
+      "topic": "Kinematics - Average Speed During Acceleration",
+      "q": "What is the average speed $v_m$ of each car during uniform acceleration from $0$ to $100\\text{ km/h}$?",
+      "hint": "In uniformly accelerated motion from rest, average speed is $v_m = \\frac{v_i + v_f}{2}$.",
+      "options": [
+        "$14\\text{ m/s}$ (equal for both)",
+        "$27.78\\text{ m/s}$ for the first, $17.36\\text{ m/s}$ for the second",
+        "$10\\text{ m/s}$ for both"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! For motion under constant acceleration from $0$ to $100\\text{ km/h}$ ($27.78\\text{ m/s}$), average speed is $v_m = \\frac{0 + 27.78}{2} = 13.89\\text{ m/s} \\approx 14\\text{ m/s}$ for both cars.",
+        "Incorrect. Average speed does not vary with acceleration duration if initial and final speeds are identical.",
+        "Incorrect. Error in averaging initial and final speeds."
+      ]
+    },
+    {
+      "id": "it_phys_377",
+      "widget_id": null,
+      "topic": "Kinematics - Braking Deceleration",
+      "q": "A semi-truck travels at $72\\text{ km/h}$. The driver notices an obstacle $100\\text{ m}$ away and begins braking after a reaction time of $0.2\\text{ s}$. If the vehicle takes $10\\text{ s}$ of braking time to stop, what is its deceleration?",
+      "hint": "Convert $72\\text{ km/h}$ to $\\text{m/s}$ and use $v = v_0 - a t_{brake} = 0$.",
+      "options": [
+        "$2\\text{ m/s}^2$",
+        "$7.2\\text{ m/s}^2$",
+        "$1\\text{ m/s}^2$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Converting initial speed: $v_0 = \\frac{72}{3.6} = 20\\text{ m/s}$. Deceleration is $a = \\frac{v_0}{t_{brake}} = \\frac{20\\text{ m/s}}{10\\text{ s}} = 2\\text{ m/s}^2$.",
+        "Incorrect. $7.2\\text{ m/s}^2$ would be obtained by dividing $72\\text{ km/h}$ directly by $10\\text{ s}$ without converting to $\\text{m/s}$.",
+        "Incorrect. Calculation error in speed/time ratio."
+      ]
+    },
+    {
+      "id": "it_phys_378",
+      "widget_id": null,
+      "topic": "Kinematics - Total Stopping Distance and Collision",
+      "q": "For the same truck ($v_0 = 20\\text{ m/s}$, $t_{react} = 0.2\\text{ s}$, deceleration $a = 2\\text{ m/s}^2$), what is total stopping distance, and does the truck avoid hitting the obstacle at $100\\text{ m}$?",
+      "hint": "Total stopping distance is sum of reaction distance ($s_{react} = v_0 \\cdot t_{react}$) and braking distance ($s_{brake} = \\frac{v_0^2}{2a}$).",
+      "options": [
+        "$104\\text{ m}$; the truck hits the obstacle because total distance exceeds $100\\text{ m}$.",
+        "$100\\text{ m}$; the truck stops right in front of the obstacle without hitting it.",
+        "$96\\text{ m}$; the truck stops $4\\text{ m}$ before the obstacle."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Reaction distance: $s_{react} = 20 \\cdot 0.2 = 4\\text{ m}$. Braking distance: $s_{brake} = \\frac{20^2}{2 \\cdot 2} = 100\\text{ m}$. Total distance = $4 + 100 = 104\\text{ m}$. Since $104\\text{ m} > 100\\text{ m}$, the truck hits the obstacle.",
+        "Incorrect. $100\\text{ m}$ includes only braking distance, ignoring distance traveled during the $0.2\\text{ s}$ reaction time.",
+        "Incorrect. $96\\text{ m}$ mistakenly subtracts reaction distance instead of adding it."
+      ]
+    },
+    {
+      "id": "it_phys_379",
+      "widget_id": null,
+      "topic": "Kinematics - Impact Speed",
+      "q": "Knowing that the truck ($v_0 = 20\\text{ m/s}$, $a = 2\\text{ m/s}^2$) begins braking $96\\text{ m}$ away from the obstacle (after $4\\text{ m}$ of reaction distance), at what speed does impact occur?",
+      "hint": "Use $v_{imp}^2 = v_0^2 - 2 a s_{brake}$ with $s_{brake} = 96\\text{ m}$.",
+      "options": [
+        "$14.4\\text{ km/h}$ (i.e., $4\\text{ m/s}$)",
+        "$28.8\\text{ km/h}$ (i.e., $8\\text{ m/s}$)",
+        "$7.2\\text{ km/h}$ (i.e., $2\\text{ m/s}$)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! $v_{imp}^2 = 20^2 - 2 \\cdot 2 \\cdot 96 = 400 - 384 = 16\\text{ m}^2/\\text{s}^2 \\implies v_{imp} = 4\\text{ m/s}$. In $\\text{km/h}$: $4 \\cdot 3.6 = 14.4\\text{ km/h}$.",
+        "Incorrect. Error in taking the square root or calculating braking distance to impact.",
+        "Incorrect. Calculation error in kinematic formula."
+      ]
+    },
+    {
+      "id": "it_phys_380",
+      "widget_id": null,
+      "topic": "Kinematics - Projectile Motion (Flight Altitude)",
+      "q": "An airplane flies horizontally at $v_x = 200\\text{ m/s}$ and drops a package that hits the ground after $12\\text{ s}$. At what altitude is the airplane flying? (Use $g = 9.8\\text{ m/s}^2$)",
+      "hint": "In projectile motion, vertical drop follows $h = \\frac{1}{2} g t^2$.",
+      "options": [
+        "$705.6\\text{ m}$",
+        "$2400\\text{ m}$",
+        "$1411.2\\text{ m}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! $h = \\frac{1}{2} g t^2 = 0.5 \\cdot 9.8 \\cdot (12)^2 = 0.5 \\cdot 9.8 \\cdot 144 = 705.6\\text{ m}$.",
+        "Incorrect. $2400\\text{ m}$ is horizontal distance covered, not altitude.",
+        "Incorrect. $1411.2\\text{ m}$ would be obtained by omitting division by 2."
+      ]
+    },
+    {
+      "id": "it_phys_381",
+      "widget_id": null,
+      "topic": "Kinematics - Projectile Motion (Horizontal Distance)",
+      "q": "For the same package dropped from the airplane ($v_x = 200\\text{ m/s}$, flight time $t = 12\\text{ s}$), what is the horizontal distance covered before hitting the ground?",
+      "hint": "Horizontally, motion is uniform with constant velocity $v_x$: $d_x = v_x \\cdot t$.",
+      "options": [
+        "$2400\\text{ m}$",
+        "$705.6\\text{ m}$",
+        "$1200\\text{ m}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! $d_x = v_x \\cdot t = 200\\text{ m/s} \\cdot 12\\text{ s} = 2400\\text{ m}$.",
+        "Incorrect. $705.6\\text{ m}$ is vertical altitude.",
+        "Incorrect. $1200\\text{ m}$ would result from halving velocity or time by mistake."
+      ]
+    },
+    {
+      "id": "it_phys_382",
+      "widget_id": null,
+      "topic": "Kinematics - Projectile Motion (Total Impact Speed)",
+      "q": "With what total speed $v$ does the package hit the ground after its $12\\text{ s}$ fall? ($v_x = 200\\text{ m/s}$, $g = 9.8\\text{ m/s}^2$)",
+      "hint": "Calculate vertical speed component $v_y = g \\cdot t$ and find magnitude $v = \\sqrt{v_x^2 + v_y^2}$.",
+      "options": [
+        "$232\\text{ m/s}$",
+        "$117.6\\text{ m/s}$",
+        "$317.6\\text{ m/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Vertical component: $v_y = 9.8 \\cdot 12 = 117.6\\text{ m/s}$. Total speed magnitude: $v = \\sqrt{v_x^2 + v_y^2} = \\sqrt{200^2 + 117.6^2} = \\sqrt{40000 + 13829.76} \\approx 232\\text{ m/s}$.",
+        "Incorrect. $117.6\\text{ m/s}$ is only the vertical speed component $v_y$.",
+        "Incorrect. $317.6\\text{ m/s}$ is simple algebraic sum $v_x + v_y$, which ignores orthogonal vector addition."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,803 @@
+{
+  "subject": "Physics",
+  "questions": [
+    {
+      "id": "it_phys_290",
+      "widget_id": null,
+      "topic": "Universal Gravitation - Magnitude of Net Force",
+      "q": "Three billiard balls of equal mass $m = 300\\text{ g}$ are placed at the vertices of a right triangle whose legs measure $a = 30\\text{ cm}$ and $b = 40\\text{ cm}$. What is the magnitude of the net gravitational force $F_{net}$ acting on the ball placed at the vertex of the right angle?",
+      "hint": "Calculate the two attractive forces separately, $F_{12} = G\\frac{m^2}{a^2}$ and $F_{13} = G\\frac{m^2}{b^2}$, and combine them perpendicularly using the Pythagorean theorem: $F_{net} = \\sqrt{F_{12}^2 + F_{13}^2}$.",
+      "options": [
+        "$7.65 \\times 10^{-11}\\text{ N}$",
+        "$10.42 \\times 10^{-11}\\text{ N}$",
+        "$2.92 \\times 10^{-11}\\text{ N}$",
+        "$6.67 \\times 10^{-11}\\text{ N}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Converting the masses to $\\text{kg}$ ($m = 0.3\\text{ kg}$) and the legs to meters ($a = 0.3\\text{ m}$, $b = 0.4\\text{ m}$):\\n$F_{12} = 6.67 \\times 10^{-11} \\cdot \\frac{0.3 \\cdot 0.3}{0.3^2} = 6.67 \\times 10^{-11}\\text{ N}$\\n$F_{13} = 6.67 \\times 10^{-11} \\cdot \\frac{0.3 \\cdot 0.3}{0.4^2} \\approx 3.75 \\times 10^{-11}\\text{ N}$\\nThe magnitude of the net force is $F_{net} = \\sqrt{F_{12}^2 + F_{13}^2} = \\sqrt{(6.67)^2 + (3.75)^2} \\times 10^{-11} \\approx 7.65 \\times 10^{-11}\\text{ N}$.",
+        "Incorrect. $10.42 \\times 10^{-11}\\text{ N}$ is obtained by directly adding the magnitudes of the forces instead of using orthogonal vector addition.",
+        "Incorrect. $2.92 \\times 10^{-11}\\text{ N}$ is obtained by subtracting the magnitudes instead of combining them with the Pythagorean theorem.",
+        "Incorrect. $6.67 \\times 10^{-11}\\text{ N}$ is only the $F_{12}$ component along the $x$-axis."
+      ]
+    },
+    {
+      "id": "it_phys_291",
+      "widget_id": null,
+      "topic": "Universal Gravitation - Direction of Net Force",
+      "q": "For the same three-mass system, knowing that $F_{12} = 6.67 \\times 10^{-11}\\text{ N}$ acts along the $x$-axis and $F_{13} = 3.75 \\times 10^{-11}\\text{ N}$ along the $y$-axis, what is the angle $\\vartheta$ formed by the net force relative to leg $a$ ($x$-axis)?",
+      "hint": "Use the trigonometric relation $\\tan\\vartheta = \\frac{F_{13}}{F_{12}}$.",
+      "options": [
+        "$29^\\circ$ (approx. $30^\\circ$)",
+        "$45^\\circ$",
+        "$60^\\circ$",
+        "$15^\\circ$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! From trigonometry: $\\tan\\vartheta = \\frac{F_{13}}{F_{12}} = \\frac{3.75 \\times 10^{-11}}{6.67 \\times 10^{-11}} \\approx 0.562$. It follows that $\\vartheta = \\arctan(0.562) \\approx 29.36^\\circ \\approx 30^\\circ$.",
+        "Incorrect. $45^\\circ$ would only be obtained if both legs $a$ and $b$ were equal in length, giving $F_{12} = F_{13}$.",
+        "Incorrect. $60^\\circ$ would be obtained by inverting the fraction to $\\frac{F_{12}}{F_{13}}$.",
+        "Incorrect. Error in evaluating the arctangent."
+      ]
+    },
+    {
+      "id": "it_phys_292",
+      "widget_id": null,
+      "topic": "Gravitational Field - Surface Gravitational Acceleration",
+      "q": "Miranda, a moon of Uranus, has a radius $R = 242\\text{ km}$ and a mass $M = 6.68 \\times 10^{19}\\text{ kg}$. What is the acceleration due to gravity $g$ at its surface?",
+      "hint": "Apply the formula for surface gravitational acceleration $g = G \\frac{M}{R^2}$, converting the radius to meters ($242 \\times 10^3\\text{ m}$).",
+      "options": [
+        "$0.076\\text{ m/s}^2$ ($7.6\\text{ cm/s}^2$)",
+        "$0.76\\text{ m/s}^2$",
+        "$1.62\\text{ m/s}^2$",
+        "$0.018\\text{ m/s}^2$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Converting $R = 242000\\text{ m}$: $g = G \\frac{M}{R^2} = 6.67 \\times 10^{-11} \\cdot \\frac{6.68 \\times 10^{19}}{(242 \\times 10^3)^2} = \\frac{4.45558 \\times 10^9}{5.8564 \\times 10^{10}} \\approx 0.0761\\text{ m/s}^2 = 7.6\\text{ cm/s}^2$.",
+        "Incorrect. $0.76\\text{ m/s}^2$ is a scale error by a factor of $10$.",
+        "Incorrect. $1.62\\text{ m/s}^2$ is the acceleration due to gravity on the Moon, not on Miranda.",
+        "Incorrect. Error in calculating the square of the radius in the denominator."
+      ]
+    },
+    {
+      "id": "it_phys_293",
+      "widget_id": null,
+      "topic": "Kinematics in Reduced Gravity - Flight Time",
+      "q": "An object is launched horizontally from the top of a cliff of height $h = 5\\text{ km}$ on Miranda ($g = 0.076\\text{ m/s}^2$). How long does the object remain in the air before hitting the ground?",
+      "hint": "The vertical free fall follows the equation $h = \\frac{1}{2} g t^2 \\implies t = \\sqrt{\\frac{2h}{g}}$.",
+      "options": [
+        "$362.7\\text{ s}$ (approx. $6\\text{ minutes}$)",
+        "$114.7\\text{ s}$",
+        "$31.9\\text{ s}$",
+        "$520.0\\text{ s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Converting $h = 5000\\text{ m}$: $t = \\sqrt{\\frac{2h}{g}} = \\sqrt{\\frac{2 \\cdot 5000}{0.076}} = \\sqrt{131578.9} \\approx 362.74\\text{ s}$.",
+        "Incorrect. $114.7\\text{ s}$ would be obtained by forgetting the factor of $2$ inside the square root ($t = \\sqrt{\\frac{h}{g}}$).",
+        "Incorrect. $31.9\\text{ s}$ is the fall time that would occur on Earth with $g = 9.81\\text{ m/s}^2$.",
+        "Incorrect. Calculation error in the division under the square root."
+      ]
+    },
+    {
+      "id": "it_phys_294",
+      "widget_id": null,
+      "topic": "Kinematics in Reduced Gravity - Horizontal Range",
+      "q": "The object is launched horizontally at $v_0 = 8.50\\text{ m/s}$ and remains in flight for $t = 362.74\\text{ s}$. At what horizontal distance $d$ (range) will it land on Miranda's surface?",
+      "hint": "Along the horizontal axis, the motion is uniform linear motion: $d = v_0 t$.",
+      "options": [
+        "$3.1\\text{ km}$ ($3083\\text{ m}$)",
+        "$1.5\\text{ km}$",
+        "$8.5\\text{ km}$",
+        "$42.6\\text{ km}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! $d = v_0 t = 8.50 \\cdot 362.74 \\approx 3083.29\\text{ m} \\approx 3.1\\text{ km}$.",
+        "Incorrect. $1.5\\text{ km}$ would be obtained with an incorrect or halved flight time.",
+        "Incorrect. $8.5\\text{ km}$ numerically corresponds to the initial velocity value expressed in $\\text{km}$.",
+        "Incorrect. Error converting between meters and kilometers."
+      ]
+    },
+    {
+      "id": "it_phys_295",
+      "widget_id": null,
+      "topic": "Kepler's Third Law - Ratio of Orbital Radii",
+      "q": "The orbital period of Jupiter around the Sun is $T_J = 12 T_E$ (where $T_E$ is Earth's orbital period). Assuming circular orbits, what is the ratio between Jupiter's distance $R_J$ from the Sun and Earth's distance $R_E$ from the Sun ($R_J / R_E$)?",
+      "hint": "Use Kepler's Third Law: $\\frac{R_J^3}{R_E^3} = \\frac{T_J^2}{T_E^2}$.",
+      "options": [
+        "$5.24$",
+        "$12.00$",
+        "$144.00$",
+        "$2.29$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! From Kepler's Third Law, $\\frac{R_J^3}{R_E^3} = \\left(\\frac{T_J}{T_E}\\right)^2 = 12^2 = 144$. Taking the cube root gives $\\frac{R_J}{R_E} = \\sqrt[3]{144} \\approx 5.24$.",
+        "Incorrect. $12.00$ is the ratio of the orbital periods, not the orbital radii.",
+        "Incorrect. $144.00$ is the ratio of the cubes of the orbital radii ($R_J^3 / R_E^3$).",
+        "Incorrect. $2.29$ would be obtained by taking the sixth root instead of the cube root."
+      ]
+    },
+    {
+      "id": "it_phys_296",
+      "widget_id": null,
+      "topic": "Orbital Motion - Orbital Velocity of Jupiter",
+      "q": "Knowing that light takes about $8\\text{ minutes}$ to travel the Earth-Sun distance ($R_E \\approx 1.44 \\times 10^{11}\\text{ m}$) and that $R_J \\approx 5.24 R_E$, what is the orbital velocity $v_J$ of Jupiter around the Sun?",
+      "hint": "Calculate $R_J$, express Jupiter's period in seconds ($T_J = 12 T_E \\approx 3.78 \\times 10^8\\text{ s}$), and use $v_J = \\frac{2\\pi R_J}{T_J}$.",
+      "options": [
+        "$12.5\\text{ km/s}$ ($12500\\text{ m/s}$)",
+        "$29.8\\text{ km/s}$",
+        "$5.4\\text{ km/s}$",
+        "$100.0\\text{ km/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The Earth-Sun distance is $R_E = (3 \\cdot 10^8\\text{ m/s}) \\cdot (8 \\cdot 60\\text{ s}) = 1.44 \\times 10^{11}\\text{ m}$. The Jupiter-Sun distance is $R_J = 5.24 \\cdot 1.44 \\times 10^{11} \\approx 7.55 \\times 10^{11}\\text{ m}$. Jupiter's period is $T_J = 12 \\cdot (365 \\cdot 24 \\cdot 3600\\text{ s}) \\approx 3.78 \\times 10^8\\text{ s}$. The orbital velocity is $v_J = \\frac{2\\pi R_J}{T_J} = \\frac{2\\pi \\cdot 7.55 \\times 10^{11}}{3.78 \\times 10^8} \\approx 12500\\text{ m/s} = 12.5\\text{ km/s}$.",
+        "Incorrect. $29.8\\text{ km/s}$ is the average orbital velocity of Earth around the Sun.",
+        "Incorrect. Calculation error when expressing the orbital period in seconds.",
+        "Incorrect. Unrealistic value due to an error in the powers of $10$ in the denominator."
+      ]
+    },
+    {
+      "id": "it_phys_297",
+      "widget_id": null,
+      "topic": "Orbital Motion - Centripetal Acceleration of Jupiter",
+      "q": "What is the centripetal acceleration $a_J$ of Jupiter along its orbit around the Sun, with $v_J \\approx 12.5\\text{ km/s}$ and orbital radius $R_J \\approx 7.55 \\times 10^{11}\\text{ m}$?",
+      "hint": "Use the centripetal acceleration formula $a_J = \\frac{v_J^2}{R_J}$ or $a_J = \\left(\\frac{2\\pi}{T_J}\\right)^2 R_J$.",
+      "options": [
+        "$2.1 \\times 10^{-4}\\text{ m/s}^2$",
+        "$5.9 \\times 10^{-3}\\text{ m/s}^2$",
+        "$9.8 \\times 10^{-1}\\text{ m/s}^2$",
+        "$1.4 \\times 10^{-6}\\text{ m/s}^2$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Applying $a_J = \\frac{v_J^2}{R_J} = \\frac{(12500)^2}{7.55 \\times 10^{11}} = \\frac{1.5625 \\times 10^8}{7.55 \\times 10^{11}} \\approx 2.07 \\times 10^{-4}\\text{ m/s}^2 \\approx 2.1 \\times 10^{-4}\\text{ m/s}^2$.",
+        "Incorrect. $5.9 \\times 10^{-3}\\text{ m/s}^2$ is the centripetal acceleration of Earth around the Sun.",
+        "Incorrect. Error in squaring the velocity without converting it from $\\text{km/s}$ to $\\text{m/s}$.",
+        "Incorrect. Error in the powers of $10$ during division."
+      ]
+    },
+    {
+      "id": "it_phys_298",
+      "widget_id": null,
+      "topic": "Law of Universal Gravitation - Distance Dependence",
+      "q": "If the distance between the centers of two masses is doubled, how does the gravitational force of attraction between them change?",
+      "hint": "Recall the distance dependence of the gravitational force: $F = G \\frac{m_1 m_2}{r^2}$.",
+      "options": [
+        "It is halved",
+        "It is reduced to one-fourth of its initial value",
+        "It remains unchanged"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. The force does not vary inversely with simple distance, but with the square of the distance.",
+        "Correct! Since the gravitational force varies as $\\frac{1}{r^2}$, doubling the distance ($2r$) makes the denominator $(2r)^2 = 4r^2$, so the force is reduced to one-fourth.",
+        "Incorrect. The gravitational force decreases as distance increases."
+      ]
+    },
+    {
+      "id": "it_phys_299",
+      "widget_id": null,
+      "topic": "Gravitational Potential Energy - Zero Reference Point",
+      "q": "Setting the reference zero at infinite distance, the gravitational potential energy of a two-mass system is always negative.",
+      "hint": "Analyze the formula $U(r) = -G \\frac{m_1 m_2}{r}$.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since the gravitational force is always attractive, setting $U(\\infty) = 0$ yields a potential energy of $U(r) = -G \\frac{m_1 m_2}{r} < 0$ for any finite distance $r$. External work must be done to completely separate the two masses.",
+        "Incorrect. Gravitational potential energy with reference to infinity is always negative."
+      ]
+    },
+    {
+      "id": "it_phys_300",
+      "widget_id": null,
+      "topic": "Escape Velocity - Independence from the Object's Mass",
+      "q": "The escape velocity from a planet's surface depends on the mass of the launched object: a heavier object requires a higher initial velocity to escape gravitational attraction.",
+      "hint": "Consider the equality between initial kinetic energy and the change in potential energy: $\\frac{1}{2} m v_e^2 = G \\frac{M m}{R}$.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Correct! It is false: the escape velocity is expressed as $v_e = \\sqrt{\\frac{2GM}{R}}$, where $m$ (the mass of the launched object) cancels out. Therefore, escape velocity depends solely on the mass $M$ and radius $R$ of the planet.",
+        "Incorrect. The mass of the object cancels out in the mechanical energy conservation equation."
+      ]
+    },
+    {
+      "id": "it_phys_301",
+      "widget_id": null,
+      "topic": "Kepler's First Law - Geometry of Orbits",
+      "q": "Kepler's First Law states that planetary orbits around the Sun are ellipses and that the Sun is located at the exact geometric center of the ellipse.",
+      "hint": "Check which point of the ellipse the Sun occupies according to Kepler's original law.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Correct! It is false: Kepler's First Law states that the Sun occupies one of the two **foci** of the ellipse, not its geometric center.",
+        "Incorrect. The Sun resides at one of the two foci of the elliptical orbit, not at the center."
+      ]
+    },
+    {
+      "id": "it_phys_302",
+      "widget_id": null,
+      "topic": "Kepler's Second Law - Orbital Speed",
+      "q": "At which point in its elliptical orbit around the Sun does a planet move with maximum scalar speed?",
+      "hint": "Recall conservation of angular momentum and the equal-area law (Kepler's Second Law).",
+      "options": [
+        "At aphelion (farthest point from the Sun)",
+        "At perihelion (closest point to the Sun)",
+        "Speed is strictly constant at every point in the orbit"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. At aphelion the planet is at its maximum distance, so its speed is minimal.",
+        "Correct! By Kepler's Second Law (or conservation of angular momentum $L = m r v = \\text{constant}$), at perihelion the radius $r$ is minimal, and consequently the speed $v$ reaches its maximum value.",
+        "Incorrect. Speed is constant only in a perfectly circular orbit; in an elliptical orbit, speed continuously changes."
+      ]
+    },
+    {
+      "id": "it_phys_303",
+      "widget_id": null,
+      "topic": "Satellite Motion - Microgravity and Free Fall",
+      "q": "Astronauts in orbit aboard the International Space Station (ISS) float because Earth's gravitational force is completely absent at that altitude.",
+      "hint": "Calculate the gravitational field value at about $400\\text{ km}$ above Earth's surface (about $90\\%$ of $g_0$).",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Correct! It is false: at the ISS altitude ($400\\text{ km}$), gravity is still about $88-90\\%$ of that on Earth's surface. Astronauts float because both the station and the astronauts are in a continuous state of **free fall** around Earth.",
+        "Incorrect. Gravity in low Earth orbit is nearly equal to Earth's surface gravity; the weightless sensation is due to coordinated free-fall motion."
+      ]
+    },
+    {
+      "id": "it_phys_304",
+      "widget_id": null,
+      "topic": "Geostationary Satellites - Orbital Properties",
+      "q": "A satellite is defined as geostationary if it appears stationary relative to a ground observer; for this purpose, its orbit must lie in the equatorial plane and its orbital period must be $24\\text{ hours}$.",
+      "hint": "Consider which direction and rotational plane allow the satellite to stay perfectly synchronized with Earth's rotation.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! A geostationary orbit is circular, lies in the equatorial plane, and has an orbital period equal to Earth's rotation period ($24\\text{ sidereal hours}$), rotating in the same direction as Earth's rotation.",
+        "Incorrect. These are essential conditions to ensure the satellite occupies a fixed position in the sky as seen from Earth."
+      ]
+    },
+    {
+      "id": "it_phys_305",
+      "widget_id": null,
+      "topic": "Physical Constants - Distinction between G and g",
+      "q": "The universal gravitational constant $G$ and the acceleration due to gravity $g$ are both universal constants that maintain the same value throughout the Universe.",
+      "hint": "Remember the difference between a universal constant ($G$) and a local value ($g$).",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Correct! It is false: $G \\approx 6.67 \\times 10^{-11}\\text{ N}\\cdot\\text{m}^2/\\text{kg}^2$ is a universal constant valid throughout the Universe, whereas $g = G\\frac{M}{R^2}$ is a local quantity that depends on the mass and radius of the planet or celestial body on which it is measured.",
+        "Incorrect. Only $G$ is universal; acceleration $g$ changes from planet to planet (e.g., $1.62\\text{ m/s}^2$ on the Moon, $9.81\\text{ m/s}^2$ on Earth)."
+      ]
+    },
+    {
+      "id": "it_phys_306",
+      "widget_id": null,
+      "topic": "Kinematics - Uniformly Accelerated Rectilinear Motion",
+      "q": "A car starts from rest with a constant acceleration $a = 2.5\\text{ m/s}^2$. What distance does it cover during the first $4\\text{ s}$ of motion?",
+      "hint": "Use the kinematic equation for uniformly accelerated motion starting from rest: $s = \\frac{1}{2} a t^2$.",
+      "options": [
+        "$20\\text{ m}$",
+        "$10\\text{ m}$",
+        "$40\\text{ m}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Applying the formula starting from rest ($v_0 = 0$): $s = \\frac{1}{2} a t^2 = \\frac{1}{2} \\cdot 2.5 \\cdot (4)^2 = \\frac{1}{2} \\cdot 2.5 \\cdot 16 = 20\\text{ m}$.",
+        "Incorrect. $10\\text{ m}$ is obtained by simply multiplying acceleration by time ($a \\cdot t = 2.5 \\cdot 4 = 10$), calculating final velocity instead of displacement.",
+        "Incorrect. $40\\text{ m}$ is obtained by forgetting to divide by $2$ in the formula ($a t^2$)."
+      ]
+    },
+    {
+      "id": "it_phys_307",
+      "widget_id": null,
+      "topic": "Kinematics - Projectile Motion",
+      "q": "A projectile is launched with an initial velocity $v_0 = 20\\text{ m/s}$ at an angle of $30^\\circ$ relative to the horizontal. What is the vertical component of velocity $v_y$ at the highest point of the trajectory?",
+      "hint": "At maximum height (apex), the velocity changes direction from upward to downward.",
+      "options": [
+        "$0\\text{ m/s}$",
+        "$10\\text{ m/s}$",
+        "$17.3\\text{ m/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! At the highest point of projectile motion, the projectile momentarily stops rising before descending, so the vertical velocity component vanishes ($v_y = 0$).",
+        "Incorrect. $10\\text{ m/s}$ is the *initial* vertical velocity component ($v_{0,y} = v_0 \\sin 30^\\circ = 20 \\cdot 0.5 = 10\\text{ m/s}$).",
+        "Incorrect. $17.3\\text{ m/s}$ is the horizontal component of velocity ($v_x = v_0 \\cos 30^\\circ$), which remains constant throughout the flight."
+      ]
+    },
+    {
+      "id": "it_phys_308",
+      "widget_id": null,
+      "topic": "Work and Energy - Work-Energy Theorem",
+      "q": "A block of mass $m = 2\\text{ kg}$ changes its velocity from an initial value $v_i = 3\\text{ m/s}$ to a final value $v_f = 7\\text{ m/s}$. How much net work $W_{net}$ was done on the block?",
+      "hint": "Apply the Work-Energy Theorem: $W_{net} = \\Delta K = \\frac{1}{2} m v_f^2 - \\frac{1}{2} m v_i^2$.",
+      "options": [
+        "$40\\text{ J}$",
+        "$16\\text{ J}$",
+        "$20\\text{ J}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Total work equals the change in kinetic energy: $W_{net} = \\frac{1}{2} m (v_f^2 - v_i^2) = \\frac{1}{2} \\cdot 2 \\cdot (7^2 - 3^2) = 49 - 9 = 40\\text{ J}$.",
+        "Incorrect. $16\\text{ J}$ would be obtained by squaring the difference in velocities $(7-3)^2 = 16$, which is an algebraic error.",
+        "Incorrect. $20\\text{ J}$ would be obtained by calculating $\\frac{1}{2} m (v_f - v_i)^2$ or incorrectly halving the net work."
+      ]
+    },
+    {
+      "id": "it_phys_309",
+      "widget_id": null,
+      "topic": "Work and Energy - Conservation of Mechanical Energy with a Spring",
+      "q": "A spring with spring constant $k = 400\\text{ N/m}$ is compressed by $x = 0.1\\text{ m}$. Upon release, all stored potential energy is transferred to a small ball of mass $m = 0.2\\text{ kg}$. Neglecting friction, with what speed does the ball launch?",
+      "hint": "Equate the elastic potential energy to the ball's kinetic energy: $\\frac{1}{2} k x^2 = \\frac{1}{2} m v^2$.",
+      "options": [
+        "$4.47\\text{ m/s}$",
+        "$2.00\\text{ m/s}$",
+        "$10.0\\text{ m/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! By conservation of mechanical energy: $\\frac{1}{2} k x^2 = \\frac{1}{2} m v^2 \\implies v = x \\sqrt{\\frac{k}{m}} = 0.1 \\cdot \\sqrt{\\frac{400}{0.2}} = 0.1 \\cdot \\sqrt{2000} \\approx 0.1 \\cdot 44.72 = 4.47\\text{ m/s}$.",
+        "Incorrect. $2.00\\text{ m/s}$ corresponds to the potential energy stored in the spring in Joules ($U_e = 2\\text{ J}$), not the velocity.",
+        "Incorrect. Error in simplifying the square root of the ratio $\\frac{k}{m}$."
+      ]
+    },
+    {
+      "id": "it_phys_310",
+      "widget_id": null,
+      "topic": "Impulse and Collisions - Perfectly Inelastic Collision",
+      "q": "A cart of mass $m_1 = 3\\text{ kg}$ moving at $v_1 = 4\\text{ m/s}$ collides with a stationary cart of mass $m_2 = 1\\text{ kg}$. After the collision, the two carts stick together. What is the final velocity of the combined system?",
+      "hint": "Apply conservation of momentum for a perfectly inelastic collision: $m_1 v_1 = (m_1 + m_2) v_f$.",
+      "options": [
+        "$3\\text{ m/s}$",
+        "$4\\text{ m/s}$",
+        "$2\\text{ m/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since momentum is conserved: $p_i = p_f \\implies m_1 v_1 = (m_1 + m_2) v_f \\implies 3 \\cdot 4 = (3 + 1) v_f \\implies 12 = 4 v_f \\implies v_f = 3\\text{ m/s}$.",
+        "Incorrect. $4\\text{ m/s}$ is the initial velocity of the first cart, which decreases due to the increase in total moving mass.",
+        "Incorrect. Calculation error in the denominator by incorrectly adding the masses."
+      ]
+    },
+    {
+      "id": "it_phys_311",
+      "widget_id": null,
+      "topic": "Impulse and Collisions - Impulse-Momentum Theorem and Average Force",
+      "q": "A ball of mass $m = 60\\text{ g}$ ($0.06\\text{ kg}$) hits a racket at $v_i = 20\\text{ m/s}$ and is repelled in the opposite direction at $v_f = -30\\text{ m/s}$. If the impact lasts $\\Delta t = 0.02\\text{ s}$, what is the magnitude of the average force exerted by the racket?",
+      "hint": "Calculate the change in momentum $\\Delta p = m (v_f - v_i)$, paying attention to signs, and use $F_{avg} = \\frac{|\\Delta p|}{\\Delta t}$.",
+      "options": [
+        "$150\\text{ N}$",
+        "$30\\text{ N}$",
+        "$300\\text{ N}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The change in momentum is $\\Delta p = m (v_f - v_i) = 0.06 \\cdot (-30 - 20) = -3\\text{ kg}\\cdot\\text{m/s}$. The magnitude of the impulse is $3\\text{ N}\\cdot\\text{s}$. The average force is $F_{avg} = \\frac{|\\Delta p|}{\\Delta t} = \\frac{3}{0.02} = 150\\text{ N}$.",
+        "Incorrect. $30\\text{ N}$ would be obtained considering the difference in speed magnitudes $|30 - 20| = 10\\text{ m/s}$ instead of direction reversal ($30 - (-20) = 50\\text{ m/s}$).",
+        "Incorrect. Scale error by a factor of $2$ when dividing by contact time."
+      ]
+    },
+    {
+      "id": "it_phys_312",
+      "widget_id": null,
+      "topic": "Many-Body Systems - Center of Mass of a Discrete System",
+      "q": "Two masses $m_1 = 2\\text{ kg}$ and $m_2 = 8\\text{ kg}$ are located on the $x$-axis at positions $x_1 = 0\\text{ m}$ and $x_2 = 5\\text{ m}$, respectively. Where is the center of mass position $x_{CM}$ of the system located?",
+      "hint": "Use the definition of the one-dimensional center of mass: $x_{CM} = \\frac{m_1 x_1 + m_2 x_2}{m_1 + m_2}$.",
+      "options": [
+        "$4\\text{ m}$",
+        "$2.5\\text{ m}$",
+        "$1\\text{ m}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Substituting the values: $x_{CM} = \\frac{2 \\cdot 0 + 8 \\cdot 5}{2 + 8} = \\frac{40}{10} = 4\\text{ m}$. The center of mass is shifted toward the larger mass.",
+        "Incorrect. $2.5\\text{ m}$ is the geometric midpoint, which would be the center of mass only if the two masses were identical.",
+        "Incorrect. $1\\text{ m}$ would be obtained by swapping the masses in the equation, incorrectly shifting toward the lighter mass."
+      ]
+    },
+    {
+      "id": "it_phys_313",
+      "widget_id": null,
+      "topic": "Many-Body Systems - Conservation of Momentum in an Explosion",
+      "q": "A body initially at rest with mass $M = 10\\text{ kg}$ explodes, splitting into two fragments. The first fragment of mass $m_1 = 4\\text{ kg}$ moves at $v_1 = -15\\text{ m/s}$ (to the left). What is the velocity $v_2$ of the second fragment ($m_2 = 6\\text{ kg}$)?",
+      "hint": "The total initial momentum is zero ($p_i = 0$). Consequently, $m_1 v_1 + m_2 v_2 = 0$.",
+      "options": [
+        "$+10\\text{ m/s}$ (to the right)",
+        "$+15\\text{ m/s}$ (to the right)",
+        "$+6\\text{ m/s}$ (to the right)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since $p_i = 0$, we must have $p_f = 0 \\implies m_1 v_1 + m_2 v_2 = 0 \\implies 4 \\cdot (-15) + 6 v_2 = 0 \\implies -60 + 6 v_2 = 0 \\implies v_2 = +10\\text{ m/s}$.",
+        "Incorrect. $+15\\text{ m/s}$ would be obtained assuming the two fragments had equal mass or equal speed magnitude.",
+        "Incorrect. $+6\\text{ m/s}$ would be obtained by dividing momentum by total mass $M$ instead of the second fragment's mass $m_2$."
+      ]
+    },
+    {
+      "id": "it_phys_314",
+      "widget_id": null,
+      "topic": "Kinematics - Uniform Circular Motion",
+      "q": "In uniform circular motion, how does the centripetal acceleration $a_c$ change if the tangential velocity $v$ is doubled while keeping the trajectory radius $r$ constant?",
+      "hint": "Recall the fundamental relation between centripetal acceleration, tangential velocity, and radius: $a_c = \\frac{v^2}{r}$.",
+      "options": [
+        "It doubles ($2 a_c$)",
+        "It quadruples ($4 a_c$)",
+        "It remains unchanged"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Centripetal acceleration does not vary linearly with velocity, but with its square.",
+        "Correct! Since $a_c = \\frac{v^2}{r}$, doubling the velocity ($2v$) makes the numerator $(2v)^2 = 4v^2$. Thus, the centripetal acceleration becomes 4 times greater.",
+        "Incorrect. Keeping the object on the same circular path at double the speed requires a greater centripetal acceleration."
+      ]
+    },
+    {
+      "id": "it_phys_315",
+      "widget_id": null,
+      "topic": "Kinematics - Reference Frames and Acceleration",
+      "q": "An object moves at constant velocity inside a reference frame moving with uniform translational motion relative to a second fixed frame. What is the acceleration of the object measured in the fixed frame?",
+      "hint": "Apply the principle of Galilean relativity and the acceleration addition theorem for inertial frames.",
+      "options": [
+        "Zero ($a = 0$)",
+        "Equal to the frame's translational velocity",
+        "Dependent on the direction of the frame's motion"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since both reference frames are inertial (moving at uniform velocity relative to each other) and the object is not accelerating in the first frame, its acceleration is zero in both frames.",
+        "Incorrect. Frame translational velocity is a velocity, not an acceleration.",
+        "Incorrect. As long as the frame moves with uniform translational motion (without accelerating or rotating), the measured acceleration is zero regardless of direction."
+      ]
+    },
+    {
+      "id": "it_phys_316",
+      "widget_id": null,
+      "topic": "Work and Energy - Properties of Conservative Forces",
+      "q": "Which of the following statements correctly defines a conservative force?",
+      "hint": "Think about how work done depends on the path taken or a closed loop.",
+      "options": [
+        "A force whose work depends solely on the time taken to complete the displacement.",
+        "A force whose work done along any closed path is always equal to zero.",
+        "A force that keeps both the velocity and trajectory of a material point constant."
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Work done by a force depends on spatial positions and applied forces, not on time taken.",
+        "Correct! By definition, a force is conservative if the work done along a closed path is zero ($\\oint \\vec{F} \\cdot d\\vec{r} = 0$), which means the work between two points depends only on the initial and final positions.",
+        "Incorrect. A conservative force (such as gravity) can accelerate or curve an object, changing its velocity."
+      ]
+    },
+    {
+      "id": "it_phys_317",
+      "widget_id": null,
+      "topic": "Work and Energy - Conservation Theorem in the Presence of Friction",
+      "q": "When both conservative and non-conservative forces (such as kinetic friction) act on a physical system, how does total mechanical energy $E = K + U$ change?",
+      "hint": "Relate the change in total mechanical energy to the work done by non-conservative forces $W_{nc}$.",
+      "options": [
+        "Total mechanical energy is still conserved and constant at every instant.",
+        "Mechanical energy increases proportionally to displacement due to heat.",
+        "The change in mechanical energy $\\Delta E$ equals the work done solely by non-conservative forces."
+      ],
+      "ans": 2,
+      "explanations": [
+        "Incorrect. In the presence of friction, total mechanical energy is not conserved (it dissipates into thermal energy).",
+        "Incorrect. Friction does negative work on the system, decreasing mechanical energy rather than increasing it.",
+        "Correct! The mechanical energy theorem states that $\\Delta E = E_f - E_i = W_{nc}$. Since work done by friction is negative, total mechanical energy decreases."
+      ]
+    },
+    {
+      "id": "it_phys_318",
+      "widget_id": null,
+      "topic": "Impulse and Collisions - Characteristics of Elastic Collisions",
+      "q": "What distinguishes a perfectly elastic collision from an inelastic collision between two isolated bodies?",
+      "hint": "Check which physical quantities (momentum and kinetic energy) are conserved in each type of collision.",
+      "options": [
+        "In an elastic collision, only momentum is conserved, while kinetic energy decreases.",
+        "In an elastic collision, both total momentum and total kinetic energy of the system are conserved.",
+        "In an elastic collision, the two bodies join together as one after impact."
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Conservation of momentum alone (with loss of kinetic energy) characterizes inelastic collisions.",
+        "Correct! In a perfectly elastic collision, there is no dissipation of kinetic energy into heat or permanent deformation; thus, both $\\vec{p}_{tot}$ and $K_{tot}$ are conserved.",
+        "Incorrect. When two bodies stick together after collision, it is called a *completely (or perfectly) inelastic collision*."
+      ]
+    },
+    {
+      "id": "it_phys_319",
+      "widget_id": null,
+      "topic": "Impulse and Collisions - Definition and Impulse-Momentum Theorem",
+      "q": "How is the impulse $\\vec{J}$ of a constant force $\\vec{F}$ acting on a body over a time interval $\\Delta t$ defined, and what is it equal to?",
+      "hint": "Recall Newton's second law in the form $\\vec{F} = \\frac{\\Delta \\vec{p}}{\\Delta t}$.",
+      "options": [
+        "It is the dot product $\\vec{F} \\cdot \\Delta \\vec{r}$ and equals the change in kinetic energy.",
+        "It is the cross product $\\vec{F} \\times \\vec{v}$ and equals centripetal force.",
+        "It is the product $\\vec{F} \\Delta t$ and equals the change in the body's momentum $\\Delta \\vec{p}$."
+      ],
+      "ans": 2,
+      "explanations": [
+        "Incorrect. $\\vec{F} \\cdot \\Delta \\vec{r}$ is the definition of *work*, not impulse.",
+        "Incorrect. The cross product between force and velocity does not define impulse.",
+        "Correct! By the Impulse-Momentum Theorem: $\\vec{J} = \\vec{F} \\Delta t = \\Delta \\vec{p}$. The impulse applied to a body equals the change in its momentum."
+      ]
+    },
+    {
+      "id": "it_phys_320",
+      "widget_id": null,
+      "topic": "Many-Body Systems - Motion of the Center of Mass",
+      "q": "If the net external force acting on a system of particles is zero (isolated system, $\\vec{F}_{ext} = 0$), how does the center of mass of the system move?",
+      "hint": "Apply the first cardinal equation of system dynamics: $\\vec{F}_{ext} = M \\vec{a}_{CM}$.",
+      "options": [
+        "It moves with uniform rectilinear motion or remains at rest at constant velocity.",
+        "It continuously accelerates due to internal forces exchanged between particles.",
+        "It necessarily executes simple harmonic motion around the system's midpoint."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since $\\vec{F}_{ext} = 0$, the center of mass acceleration is zero ($\\vec{a}_{CM} = 0$). Consequently, by Newton's first law, the center of mass maintains its state of rest or uniform rectilinear motion.",
+        "Incorrect. Internal forces act in equal and opposite pairs (Newton's third law) and cannot accelerate the center of mass.",
+        "Incorrect. In the absence of external forces, the center of mass does not undergo oscillatory or accelerated motion."
+      ]
+    },
+    {
+      "id": "it_phys_321",
+      "widget_id": null,
+      "topic": "Many-Body Systems - König's Theorem for Angular Momentum",
+      "q": "According to König's Theorem, the total angular momentum $\\vec{L}$ of a system of particles relative to a fixed origin is given by the sum of which two contributions?",
+      "hint": "Distinguish the contribution of the overall motion of the center of mass from the relative motion of particles around it.",
+      "options": [
+        "The angular momentum of the center of mass relative to the fixed origin and the angular momentum of particles relative to the center of mass.",
+        "The kinetic energy of the center of mass and the torque of applied external forces.",
+        "The total momentum of the system and the sum of internal torques."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! König's Theorem decomposes angular momentum into $\\vec{L} = \\vec{L}_{CM} + \\vec{L}'$, where $\\vec{L}_{CM} = \\vec{r}_{CM} \\times M \\vec{v}_{CM}$ is the angular momentum of the center of mass and $\\vec{L}'$ is the internal angular momentum relative to the center of mass.",
+        "Incorrect. Kinetic energy and torque are dimensionally different from angular momentum.",
+        "Incorrect. Linear momentum is a translational vector, not an angular momentum."
+      ]
+    },
+    {
+      "id": "it_phys_322",
+      "widget_id": null,
+      "topic": "Gravitation - Shell Theorem",
+      "q": "Inside a hollow, homogeneous spherical shell of mass $M$, what is the gravitational force exerted on a point mass $m$ placed anywhere inside?",
+      "hint": "Apply the Shell Theorem (or Gauss's Law for gravity) inside a closed surface enclosing no mass.",
+      "options": [
+        "It is zero at any point inside the cavity.",
+        "It is maximum at the exact center of the sphere and decreases near the walls.",
+        "It depends inversely on the square of the distance from the sphere's center."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! By Newton's Shell Theorem, gravitational attractions exerted by different portions of the uniform shell on an internal point cancel out perfectly in every position. The net force is exactly zero.",
+        "Incorrect. The force is not maximum at the center; it is strictly zero everywhere inside the cavity.",
+        "Incorrect. The inverse-square law holds for points *outside* the spherical shell, not inside."
+      ]
+    },
+    {
+      "id": "it_phys_323",
+      "widget_id": null,
+      "topic": "Gravitation - Orbital Speed of Satellites",
+      "q": "For a satellite moving in a circular orbit of radius $r$ around a planet of mass $M$, how does its orbital speed $v$ change as orbital radius increases?",
+      "hint": "Equate gravitational attractive force to centripetal force: $G \\frac{M m}{r^2} = m \\frac{v^2}{r}$.",
+      "options": [
+        "It increases directly proportional to orbital radius ($v \\propto r$).",
+        "It decreases and is inversely proportional to the square root of the radius ($v \\propto \\frac{1}{\\sqrt{r}}$).",
+        "It remains constant regardless of orbital radius."
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. The farther an orbit is from the planet, the weaker the gravitational force, making the orbital speed *smaller*, not larger.",
+        "Correct! Balancing gravitational force and centripetal force gives $v = \\sqrt{\\frac{GM}{r}}$. Thus, orbital speed decreases as radius $r$ increases following a $\\frac{1}{\\sqrt{r}}$ relationship.",
+        "Incorrect. Orbital speed depends explicitly on altitude and orbital radius."
+      ]
+    },
+    {
+      "id": "it_phys_324",
+      "widget_id": null,
+      "topic": "Kinematics - Simple Harmonic Motion",
+      "q": "In simple harmonic motion of a mass attached to a spring, at which point of the trajectory does the object's acceleration reach its maximum magnitude?",
+      "hint": "Recall the relation $a(x) = -\\omega^2 x$, derived from Hooke's law and Newton's second law.",
+      "options": [
+        "At the ends of the oscillation (maximum displacement points $x = \\pm A$)",
+        "At the central equilibrium point ($x = 0$)",
+        "Halfway between the equilibrium point and the endpoint ($x = A/2$)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Acceleration is directly proportional to displacement from equilibrium ($a = -\\omega^2 x$). Consequently, acceleration is maximum in magnitude at turning points ($x = \\pm A$), where restoring spring force is maximum.",
+        "Incorrect. At equilibrium ($x = 0$), restoring spring force is zero, so acceleration is zero (while speed is maximum).",
+        "Incorrect. At this point, acceleration is half of its maximum value."
+      ]
+    },
+    {
+      "id": "it_phys_325",
+      "widget_id": null,
+      "topic": "Kinematics - Acceleration Components in Curvilinear Motion",
+      "q": "In general non-uniform curvilinear motion, what role does the tangential component of acceleration $\\vec{a}_t$ play?",
+      "hint": "Decompose total acceleration into tangential component (parallel to velocity) and normal/centripetal component (perpendicular to velocity).",
+      "options": [
+        "It changes only the magnitude (scalar value) of the velocity vector.",
+        "It changes only the direction of the velocity vector.",
+        "It maintains a constant radius of curvature for the trajectory."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The tangential component $\\vec{a}_t = \\frac{dv}{dt} \\hat{u}_t$ is responsible for changing the magnitude of velocity. Changes in the *direction* of the velocity vector are produced by the centripetal/normal component $\\vec{a}_n$.",
+        "Incorrect. Centripetal acceleration $\\vec{a}_n$ curves the trajectory by changing velocity direction.",
+        "Incorrect. Radius of curvature depends on path geometry, not directly on tangential acceleration."
+      ]
+    },
+    {
+      "id": "it_phys_326",
+      "widget_id": null,
+      "topic": "Work and Energy - Mechanical Power",
+      "q": "How is average power $P$ delivered by a force doing work $W$ in time interval $\\Delta t$ defined?",
+      "hint": "Power measures how rapidly work is done per unit time.",
+      "options": [
+        "$P = \\frac{W}{\\Delta t}$ (ratio of work done to time interval)",
+        "$P = W \\cdot \\Delta t$ (product of work done and time interval)",
+        "$P = \\frac{\\Delta t}{W}$ (ratio of elapsed time to work)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Power is expressed as work done per unit time: $P = \\frac{W}{\\Delta t}$. In the International System of Units, it is measured in Watts ($\\text{J/s}$).",
+        "Incorrect. The product $W \\cdot \\Delta t$ has no physical meaning as delivered power.",
+        "Incorrect. This ratio represents the inverse of power."
+      ]
+    },
+    {
+      "id": "it_phys_327",
+      "widget_id": null,
+      "topic": "Work and Energy - Relation between Conservative Force and Potential Energy",
+      "q": "What is the mathematical relation linking a one-dimensional conservative force $F(x)$ to its potential energy $U(x)$?",
+      "hint": "Remember that work done by a conservative force is the negative of the change in potential energy: $W = -\\Delta U$.",
+      "options": [
+        "$F(x) = -\\frac{dU(x)}{dx}$ (force is the negative derivative of potential energy with respect to position)",
+        "$F(x) = +\\frac{dU(x)}{dx}$ (force is the direct derivative of potential energy with respect to position)",
+        "$F(x) = U(x) \\cdot x$ (force is the product of potential energy and position)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since $dW = F(x) dx = -dU(x)$, conservative force equals negative derivative of potential energy: $F(x) = -\\frac{dU}{dx}$. This means conservative forces always push objects toward *minimum* potential energy configurations.",
+        "Incorrect. The minus sign is missing, which is crucial to indicate the direction toward potential energy minimum.",
+        "Incorrect. Mathematically incorrect and dimensionally wrong."
+      ]
+    },
+    {
+      "id": "it_phys_328",
+      "widget_id": null,
+      "topic": "Impulse and Collisions - Coefficient of Restitution",
+      "q": "What does a coefficient of restitution $e = 0$ indicate in a collision between two bodies?",
+      "hint": "The coefficient of restitution measures collision elasticity and is defined as $e = -\\frac{v_{2f} - v_{1f}}{v_{2i} - v_{1i}}$.",
+      "options": [
+        "The collision is perfectly inelastic and the two bodies move together with the same final velocity.",
+        "The collision is perfectly elastic and total kinetic energy is fully conserved.",
+        "The two bodies bounce off while maintaining the same relative approach speed."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! A coefficient $e = 0$ implies relative separation speed after collision is zero ($v_{2f} - v_{1f} = 0$). The two bodies move as one after impact; the collision is perfectly (or completely) inelastic.",
+        "Incorrect. For a perfectly elastic collision, $e = 1$.",
+        "Incorrect. Bouncing off while preserving relative speed corresponds to an elastic collision ($e = 1$)."
+      ]
+    },
+    {
+      "id": "it_phys_329",
+      "widget_id": null,
+      "topic": "Impulse and Collisions - Conservation of Momentum",
+      "q": "Is total momentum of a system conserved during a collision even if it is strongly inelastic and a large amount of energy is dissipated?",
+      "hint": "Evaluate necessary and sufficient conditions for total momentum conservation.",
+      "options": [
+        "Yes, total momentum is always conserved if net external forces on the system are zero or negligible during impact.",
+        "No, total momentum is conserved only if total kinetic energy is also conserved.",
+        "It is conserved only for the larger mass, while changing for the lighter body."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Conservation of total momentum depends *exclusively* on whether net external force is zero (or negligible during the brief duration of collision). Momentum is conserved in both elastic and inelastic collisions.",
+        "Incorrect. Kinetic energy dissipates in inelastic collisions, but total system momentum remains constant.",
+        "Incorrect. Vector momentum of the *overall system* is conserved; individual body momenta change such that their sum remains unchanged."
+      ]
+    },
+    {
+      "id": "it_phys_330",
+      "widget_id": null,
+      "topic": "Many-Body Systems - Properties of Internal Forces",
+      "q": "In a many-body system, what is the sum of internal torques $\\vec{\\tau}_{int}$ computed relative to the same origin?",
+      "hint": "Consider Newton's Third Law in its strong form (forces between two points act along the line connecting them).",
+      "options": [
+        "It is always exactly zero ($\\vec{\\tau}_{int} = 0$).",
+        "It is non-zero if the system rotates with variable angular velocity.",
+        "It equals the total mass of the system multiplied by center of mass acceleration."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since internal forces act in equal, opposite, and collinear action-reaction pairs along the line joining the two particles, torque generated by each pair relative to any origin cancels out. Thus, $\\vec{\\tau}_{int} = 0$.",
+        "Incorrect. System rotation does not change the fact that the sum of internal torques is strictly zero.",
+        "Incorrect. Incorrect both conceptually and in terms of units."
+      ]
+    },
+    {
+      "id": "it_phys_331",
+      "widget_id": null,
+      "topic": "Many-Body Systems - Concept of Reduced Mass",
+      "q": "How is the reduced mass $\\mu$ defined for a system of two isolated interacting bodies with masses $m_1$ and $m_2$?",
+      "hint": "The reduced mass $\\mu$ simplifies a two-body problem to an equivalent one-body problem and satisfies $\\frac{1}{\\mu} = \\frac{1}{m_1} + \\frac{1}{m_2}$.",
+      "options": [
+        "$\\mu = \\frac{m_1 m_2}{m_1 + m_2}$",
+        "$\\mu = \\frac{m_1 + m_2}{2}$",
+        "$\\mu = \\sqrt{m_1 m_2}$",
+        "$\\mu = m_1 + m_2$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The reduced mass is defined by $\\frac{1}{\\mu} = \\frac{1}{m_1} + \\frac{1}{m_2}$, yielding $\\mu = \\frac{m_1 m_2}{m_1 + m_2}$. It is always smaller than either of the individual masses.",
+        "Incorrect. The expression $\\frac{m_1 + m_2}{2}$ is the arithmetic mean of the two masses, not the reduced mass.",
+        "Incorrect. The expression $\\sqrt{m_1 m_2}$ is the geometric mean of the two masses.",
+        "Incorrect. The expression $m_1 + m_2$ represents the total mass $M_{tot}$ of the system, not the reduced mass."
+      ]
+    },
+    {
+      "id": "it_phys_332",
+      "widget_id": null,
+      "topic": "Gravitation - Schwarzschild Radius",
+      "q": "What is the Schwarzschild radius $R_s$ for a celestial body of mass $M$?",
+      "hint": "It is obtained by equating escape velocity $v_e = \\sqrt{\\frac{2GM}{R}}$ to the speed of light $c$.",
+      "options": [
+        "The limiting radius at which surface escape velocity equals the speed of light $c$.",
+        "The minimum stable circular orbit radius a planet can follow around the Sun.",
+        "The average distance between a planet's center and its first Lagrange point $L_1$."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The Schwarzschild radius $R_s = \\frac{2GM}{c^2}$ defines the critical event horizon size of a black hole, i.e., the radius at which escape velocity equals the speed of light $c$.",
+        "Incorrect. Planet orbital radius depends on mechanical energy and angular momentum, not Schwarzschild radius.",
+        "Incorrect. Lagrange points depend on relative masses in a two-body orbiting system."
+      ]
+    },
+    {
+      "id": "it_phys_333",
+      "widget_id": null,
+      "topic": "Gravitation - Gravitational Field Inside a Planet",
+      "q": "How does gravitational acceleration $g(r)$ vary inside a homogeneous spherical planet of radius $R$ at a distance $r < R$ from its center?",
+      "hint": "Consider that only mass enclosed within radius $r$ (proportional to $r^3$) exerts a net attractive force.",
+      "options": [
+        "It increases directly proportional to distance from center ($g(r) \\propto r$).",
+        "It decreases inversely proportional to the square of distance ($g(r) \\propto \\frac{1}{r^2}$).",
+        "It remains constant and equal to surface value $g_0$ throughout the interior."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! By the Shell Theorem, enclosed mass within radius $r$ is $M(r) = M \\frac{r^3}{R^3}$. Acceleration is $g(r) = G \\frac{M(r)}{r^2} = G \\frac{M r^3}{R^3 r^2} = \\left(G \\frac{M}{R^3}\\right) r$. Thus, $g(r)$ increases linearly from zero at the center to $g_0$ at the surface.",
+        "Incorrect. Inverse-square law $\\frac{1}{r^2}$ holds only outside the planet ($r \\ge R$).",
+        "Incorrect. Acceleration is not constant: it vanishes at the center by symmetry."
+      ]
+    }
+  ]
+}

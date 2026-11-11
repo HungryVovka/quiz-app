@@ -1,0 +1,599 @@
+{
+  "subject": "Physics",
+  "questions": [
+    {
+      "id": "it_phys_257",
+      "widget_id": null,
+      "topic": "Momentum and Impulse - Tennis Racket",
+      "q": "A tennis player receives a ball of mass $m = 60\\text{ g}$, traveling horizontally at a speed of $50\\text{ m/s}$, and hits it back with the racket sending it in the opposite direction at a speed of $40\\text{ m/s}$. What is the magnitude of the impulse transferred to the ball?",
+      "hint": "Impulse is equal to the change in momentum $I = \\Delta q = m(v_f - v_i)$. Remember that the two velocities have opposite directions.",
+      "options": [
+        "$5.4\\text{ kg}\\cdot\\text{m/s}$",
+        "$0.6\\text{ kg}\\cdot\\text{m/s}$",
+        "$2.4\\text{ kg}\\cdot\\text{m/s}$",
+        "$5400\\text{ kg}\\cdot\\text{m/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Converting mass to kilograms ($m = 0.06\\text{ kg}$) and taking into account the opposite direction of the final velocity ($v_i = -50\\text{ m/s}$ and $v_f = +40\\text{ m/s}$), the impulse is $I = \\Delta q = m(v_f - v_i) = 0.06 \\cdot (40 - (-50)) = 0.06 \\cdot 90 = 5.4\\text{ kg}\\cdot\\text{m/s}$ (equal to $5.4\\text{ N}\\cdot\\text{s}$).",
+        "Incorrect. $0.6\\text{ kg}\\cdot\\text{m/s}$ is obtained by subtracting the magnitudes of the velocities ($50 - 40 = 10\\text{ m/s}$) instead of adding them due to the opposite directions.",
+        "Incorrect. $2.4\\text{ kg}\\cdot\\text{m/s}$ considers only the final momentum of the ball without calculating its change.",
+        "Incorrect. $5400\\text{ kg}\\cdot\\text{m/s}$ is obtained by leaving the mass expressed in grams instead of kilograms."
+      ]
+    },
+    {
+      "id": "it_phys_258",
+      "widget_id": null,
+      "topic": "Momentum and Impulse - Rebound off a Wall",
+      "q": "A steel ball of $3\\text{ kg}$ strikes a wall at a speed of $10\\text{ m/s}$, making an angle of $60^\\circ$ with the wall. The ball rebounds with the same speed and at the same angle. If the ball stays in contact with the wall for $0.2\\text{ s}$, what is the magnitude of the average force exerted by the wall on the ball?",
+      "hint": "Calculate the change in momentum along the axis perpendicular to the wall $\\Delta q_x = -2 m v \\sin 60^\\circ$ and divide it by the contact time \\Delta t.",
+      "options": [
+        "$260\\text{ N}$ (approx. $259.8\\text{ N}$)",
+        "$150\\text{ N}$",
+        "$300\\text{ N}$",
+        "$130\\text{ N}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The velocity component perpendicular to the wall is $v_x = v \\sin 60^\\circ$. Since motion along $x$ reverses, the change in momentum is $\\Delta q_x = -2 m v \\sin 60^\\circ = -2 \\cdot 3 \\cdot 10 \\cdot 0.866 = -51.96\\text{ kg}\\cdot\\text{m/s}$. The magnitude of the average force is $F_m = \\frac{|\\Delta q_x|}{\\Delta t} = \\frac{51.96}{0.2} \\approx 260\\text{ N}$.",
+        "Incorrect. $150\\text{ N}$ is obtained by using $\\cos 60^\\circ$ instead of $\\sin 60^\\circ$ for the normal component to the wall.",
+        "Incorrect. $300\\text{ N}$ assumes a perpendicular collision with the wall, ignoring the $60^\\circ$ inclination.",
+        "Incorrect. $130\\text{ N}$ is obtained by forgetting the factor of $2$ due to the velocity direction reversal."
+      ]
+    },
+    {
+      "id": "it_phys_259",
+      "widget_id": null,
+      "topic": "Inelastic Collisions - Final Velocity After Collision",
+      "q": "A car of mass $M_1 = 1800\\text{ kg}$ stopped at a traffic light is rear-ended by a second car of mass $M_2 = 900\\text{ kg}$ traveling at a speed $v_i = 20.0\\text{ m/s}$. Assuming the two cars stick together and move as one, what is their speed immediately after the collision?",
+      "hint": "Apply conservation of momentum for a completely inelastic collision: $(M_1 + M_2) v_f = M_2 v_i$.",
+      "options": [
+        "$6.67\\text{ m/s}$",
+        "$10.00\\text{ m/s}$",
+        "$13.33\\text{ m/s}$",
+        "$5.00\\text{ m/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! By conservation of momentum $q_i = q_f \\implies M_2 v_i = (M_1 + M_2) v_f$. Therefore $v_f = \\frac{M_2 v_i}{M_1 + M_2} = \\frac{900 \\cdot 20}{1800 + 900} = \\frac{18000}{2700} \\approx 6.67\\text{ m/s}$.",
+        "Incorrect. $10.00\\text{ m/s}$ would only be obtained if the two cars had the same mass.",
+        "Incorrect. $13.33\\text{ m/s}$ would be obtained by mistakenly inverting the ratio of masses in the equation.",
+        "Incorrect. Calculation error in the sum of masses in the denominator."
+      ]
+    },
+    {
+      "id": "it_phys_260",
+      "widget_id": null,
+      "topic": "Inelastic Collisions - Final Kinetic Energy",
+      "q": "A car $M_2 = 900\\text{ kg}$ at $20.0\\text{ m/s}$ rear-ends a stationary car $M_1 = 1800\\text{ kg}$, becoming entangled with it. Knowing that after the collision their common speed is $6.67\\text{ m/s}$, what is the remaining total kinetic energy of the system immediately after the collision?",
+      "hint": "Calculate the kinetic energy of the combined system of mass $M_1 + M_2 = 2700\\text{ kg}$ at speed $v_f = 6.67\\text{ m/s}$: $K_f = \\frac{1}{2} (M_1 + M_2) v_f^2$.",
+      "options": [
+        "$60060\\text{ J}$ (approx. $60\\text{ kJ}$)",
+        "$180000\\text{ J}$ ($180\\text{ kJ}$)",
+        "$119940\\text{ J}$ ($120\\text{ kJ}$)",
+        "$30030\\text{ J}$ ($30\\text{ kJ}$)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The total mass of the system after the collision is $M_1 + M_2 = 2700\\text{ kg}$. The final kinetic energy is $K_f = \\frac{1}{2} (M_1 + M_2) v_f^2 = \\frac{1}{2} \\cdot 2700 \\cdot (6.67)^2 \\approx 60060\\text{ J} \\approx 60\\text{ kJ}$.",
+        "Incorrect. $180000\\text{ J}$ is the *initial* kinetic energy of the system $K_i = \\frac{1}{2} M_2 v_i^2$ before the collision.",
+        "Incorrect. $119940\\text{ J}$ corresponds to the kinetic energy *dissipated* during the inelastic collision ($K_i - K_f$).",
+        "Incorrect. $30030\\text{ J}$ would be obtained by considering only the first car and ignoring the mass of the second."
+      ]
+    },
+    {
+      "id": "it_phys_261",
+      "widget_id": null,
+      "topic": "Two-Dimensional Elastic Collisions - Final Velocity",
+      "q": "A billiard ball traveling at $v_i = 5\\text{ m/s}$ hits a second ball of equal mass at rest, and continues with a speed $v_1 = 4.33\\text{ m/s}$ angled at $30^\\circ$ relative to the incoming direction. Assuming an elastic collision, what is the speed $v_2$ of the second ball immediately after the collision?",
+      "hint": "In an elastic collision between equal masses, conservation of kinetic energy holds: $v_i^2 = v_1^2 + v_2^2 \\implies v_2 = \\sqrt{v_i^2 - v_1^2}$.",
+      "options": [
+        "$2.50\\text{ m/s}$",
+        "$0.67\\text{ m/s}$",
+        "$3.50\\text{ m/s}$",
+        "$1.25\\text{ m/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since the masses are identical and the collision is elastic, the simplified kinetic energy equation is $v_i^2 = v_1^2 + v_2^2 \\implies v_2 = \\sqrt{v_i^2 - v_1^2} = \\sqrt{5^2 - 4.33^2} = \\sqrt{25 - 18.75} = \\sqrt{6.25} = 2.50\\text{ m/s}$.",
+        "Incorrect. $0.67\\text{ m/s}$ would be obtained by directly subtracting the speed magnitudes ($5 - 4.33$) instead of working with their squares.",
+        "Incorrect. Error in calculating the difference of squared velocities under the square root.",
+        "Incorrect. $1.25\\text{ m/s}$ would be obtained by mistakenly halving the correct speed value."
+      ]
+    },
+    {
+      "id": "it_phys_262",
+      "widget_id": null,
+      "topic": "Two-Dimensional Elastic Collisions - Deflection Angle",
+      "q": "Another billiard ball of equal mass deflects with $v_1 = 4.33\\text{ m/s}$ at $30^\\circ$ after the elastic collision. Knowing that the second ball moves at $v_2 = 2.50\\text{ m/s}$, what is the angle of inclination $\\theta$ of the trajectory of the second ball relative to the initial direction?",
+      "hint": "Use conservation of momentum along the axis perpendicular to the initial direction: $0 = m v_1 \\sin 30^\\circ + m v_2 \\sin \\theta$.",
+      "options": [
+        "$60^\\circ$",
+        "$30^\\circ$",
+        "$45^\\circ$",
+        "$90^\\circ$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! By conservation of momentum along the vertical $y$-axis: $0 = m v_1 \\sin 30^\\circ + m v_2 \\sin \\theta \\implies \\sin \\theta = -\\frac{v_1 \\sin 30^\\circ}{v_2} = -\\frac{4.33 \\cdot 0.5}{2.5} = -0.866$. It follows that $|\\theta| = \\arcsin(0.866) = 60^\\circ$ downward (the two final velocity vectors form an angle of $30^\\circ + 60^\\circ = 90^\\circ$ between them).",
+        "Incorrect. $30^\\circ$ is the deflection angle of the first ball.",
+        "Incorrect. $45^\\circ$ would only be obtained if the two final speeds $v_1$ and $v_2$ were perfectly equal in magnitude.",
+        "Incorrect. $90^\\circ$ is the total angle *between* the two outgoing directions of the balls, not the angle relative to the initial incoming direction."
+      ]
+    },
+    {
+      "id": "it_phys_263",
+      "widget_id": null,
+      "topic": "Conservation of Momentum - Isolated Systems",
+      "q": "In an isolated system, total momentum is always conserved, in both elastic and inelastic collisions.",
+      "hint": "Consider whether the presence or absence of external forces is the sole factor determining the conservation of momentum.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Conservation of momentum ($\\vec{q}_{tot} = \\text{constant}$) depends solely on the absence of net external forces and holds for any type of collision (elastic, inelastic, or completely inelastic).",
+        "Incorrect. Total momentum is always conserved in isolated systems, regardless of whether kinetic energy is conserved."
+      ]
+    },
+    {
+      "id": "it_phys_264",
+      "widget_id": null,
+      "topic": "Inelastic Collisions - Conservation and Energy Loss",
+      "q": "In a perfectly inelastic collision between two bodies, total momentum is not conserved because the maximum possible amount of kinetic energy is lost.",
+      "hint": "Distinguish between conservation of momentum and conservation of kinetic energy.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Correct! This is false: momentum is always conserved if no external forces act. In a perfectly inelastic collision, the maximum possible amount of kinetic energy is lost (the bodies stick together), but the total momentum of the system remains constant.",
+        "Incorrect. Do not confuse kinetic energy dissipation with momentum, which is still conserved in the absence of external forces."
+      ]
+    },
+    {
+      "id": "it_phys_265",
+      "widget_id": null,
+      "topic": "Impulse-Momentum Theorem - Definition",
+      "q": "The impulse of a constant force applied to a body for a time interval $\\Delta t$ is equal to the change in momentum of the body.",
+      "hint": "Recall the formulation of the impulse-momentum theorem $\\vec{I} = \\vec{F} \\Delta t = \\Delta \\vec{q}$.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The impulse-momentum theorem states that $\\vec{I} = \\vec{F} \\Delta t = \\Delta \\vec{q}$, i.e., the impulse transferred to a body is equal to the change in its momentum.",
+        "Incorrect. This is precisely the mathematical and conceptual definition of the impulse-momentum theorem."
+      ]
+    },
+    {
+      "id": "it_phys_266",
+      "widget_id": null,
+      "topic": "One-Dimensional Elastic Collisions - Equal Masses",
+      "q": "In a head-on elastic collision between two bodies of equal mass, one of which is initially at rest, the incident body comes to a complete stop, transferring all its velocity to the second body.",
+      "hint": "Solve the system of conservation of momentum and kinetic energy by setting $m_1 = m_2$ and $v_{2i} = 0$.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! For two equal masses ($m_1 = m_2$) with the second initially at rest ($v_{2i} = 0$), conservation of momentum and kinetic energy leads to $v_{1f} = 0$ and $v_{2f} = v_{1i}$. The two masses swap velocities exactly.",
+        "Incorrect. In elastic collisions between identical masses (such as billiard balls), the first mass stops, transferring its state of motion entirely to the second."
+      ]
+    },
+    {
+      "id": "it_phys_267",
+      "widget_id": null,
+      "topic": "Physical Quantities - Unit of Measurement for Impulse",
+      "q": "Impulse is a scalar quantity whose SI unit of measurement is the Joule (J).",
+      "hint": "Check whether impulse has a direction and verify its SI unit of measurement ($\\text{N}\\cdot\\text{s}$ or $\\text{kg}\\cdot\\text{m/s}$).",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Correct! This is false: impulse is a vector quantity (it has magnitude, direction, and sense) and its SI unit is $\\text{N}\\cdot\\text{s}$ (or $\\text{kg}\\cdot\\text{m/s}$), whereas the Joule is the unit of measurement for energy and work.",
+        "Incorrect. Impulse is a vector and is measured in Newton-seconds ($\\text{N}\\cdot\\text{s}$), not in Joules."
+      ]
+    },
+    {
+      "id": "it_phys_268",
+      "widget_id": null,
+      "topic": "Elastic Collisions - Conservation of Kinetic Energy",
+      "q": "A collision is defined as elastic if the total kinetic energy of the system before impact is equal to the total kinetic energy after impact.",
+      "hint": "Recall the theoretical definition that distinguishes an elastic collision from an inelastic one.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! By definition, in an elastic collision there is no dissipation of mechanical energy as heat or permanent deformation, so $K_i = K_f$.",
+        "Incorrect. Conservation of total kinetic energy is the fundamental defining characteristic of an elastic collision."
+      ]
+    },
+    {
+      "id": "it_phys_269",
+      "widget_id": null,
+      "topic": "Impact Dynamics - Average Force and Contact Time",
+      "q": "For a given change in momentum $\\Delta q$, an increase in contact time $\\Delta t$ decreases the average force of the impact.",
+      "hint": "Analyze the formula for average force $F_m = \\frac{\\Delta q}{\\Delta t}$.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since $F_m = \\frac{\\Delta q}{\\Delta t}$, if the impact time $\\Delta t$ increases, the average force decreases. This is the working principle behind safety devices such as airbags and helmets.",
+        "Incorrect. Since time is in the denominator of the average force formula, extending the impact time cushions the collision by reducing the force."
+      ]
+    },
+    {
+      "id": "it_phys_270",
+      "widget_id": null,
+      "topic": "Center of Mass - Motion During Collisions",
+      "q": "In an isolated system of two bodies, the velocity of the center of mass changes drastically if the collision is inelastic.",
+      "hint": "Consider the relationship between total momentum and center of mass velocity: $\\vec{v}_{cm} = \\frac{\\vec{q}_{tot}}{M_{tot}}$.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Correct! This is false: since total momentum $\\vec{q}_{tot}$ of an isolated system is always conserved, the velocity of the center of mass $\\vec{v}_{cm} = \\frac{\\vec{q}_{tot}}{M_{tot}}$ also remains completely constant during any type of collision.",
+        "Incorrect. In the absence of external forces, the center of mass continues its uniform straight-line motion unchanged before, during, and after the impact."
+      ]
+    },
+    {
+      "id": "it_phys_271",
+      "widget_id": null,
+      "topic": "Center of Mass - X-Component of Velocity",
+      "q": "A system consists of two point masses: $m_1 = 2\\text{ kg}$ with velocity $v_1 = (2, -3)\\text{ m/s}$ and $m_2 = 3\\text{ kg}$ with velocity $v_2 = (1, 6)\\text{ m/s}$. What is the $x$-component of the center of mass velocity ($v_{CM,x}$)?",
+      "hint": "Apply the mass-weighted average formula: $v_{CM,x} = \\frac{m_1 v_{1,x} + m_2 v_{2,x}}{m_1 + m_2}$.",
+      "options": [
+        "$1.4\\text{ m/s}$",
+        "$2.0\\text{ m/s}$",
+        "$1.0\\text{ m/s}$",
+        "$2.8\\text{ m/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The $x$-component of the center of mass velocity is $v_{CM,x} = \\frac{m_1 v_{1,x} + m_2 v_{2,x}}{m_1 + m_2} = \\frac{2 \\cdot 2 + 3 \\cdot 1}{2 + 3} = \\frac{7}{5} = 1.4\\text{ m/s}$.",
+        "Incorrect. $2.0\\text{ m/s}$ would be obtained by calculating a simple arithmetic mean of the velocities $\\frac{2+1}{2} = 1.5$ or considering only the mass of the first particle.",
+        "Incorrect. $1.0\\text{ m/s}$ corresponds only to the $x$-component of the velocity of the second body.",
+        "Incorrect. Calculation error in the denominator by dividing by only one of the two masses."
+      ]
+    },
+    {
+      "id": "it_phys_272",
+      "widget_id": null,
+      "topic": "Center of Mass - Y-Component of Velocity",
+      "q": "For the same system of two point masses ($m_1 = 2\\text{ kg}$ with $v_{1,y} = -3\\text{ m/s}$; $m_2 = 3\\text{ kg}$ with $v_{2,y} = 6\\text{ m/s}$), what is the $y$-component of the center of mass velocity ($v_{CM,y}$)?",
+      "hint": "Use $v_{CM,y} = \\frac{m_1 v_{1,y} + m_2 v_{2,y}}{m_1 + m_2}$, paying attention to the negative sign of $v_{1,y}$.",
+      "options": [
+        "$2.4\\text{ m/s}$",
+        "$1.5\\text{ m/s}$",
+        "$3.6\\text{ m/s}$",
+        "$-1.2\\text{ m/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The $y$-component of the center of mass velocity is $v_{CM,y} = \\frac{m_1 v_{1,y} + m_2 v_{2,y}}{m_1 + m_2} = \\frac{2 \\cdot (-3) + 3 \\cdot 6}{2 + 3} = \\frac{-6 + 18}{5} = \\frac{12}{5} = 2.4\\text{ m/s}$.",
+        "Incorrect. $1.5\\text{ m/s}$ would be obtained by taking a simple average of the velocities without weighting by their respective masses.",
+        "Incorrect. $3.6\\text{ m/s}$ would be obtained by ignoring the negative sign of component $v_{1,y}$.",
+        "Incorrect. Error in the sign of the numerator in the algebraic addition of the components."
+      ]
+    },
+    {
+      "id": "it_phys_273",
+      "widget_id": null,
+      "topic": "Total Momentum - X-Component",
+      "q": "A system of two point masses has a total mass $M = m_1 + m_2 = 5\\text{ kg}$ and a center of mass velocity with $x$-component $v_{CM,x} = 1.4\\text{ m/s}$. What is the $x$-component of the total momentum of the system ($q_x$)?",
+      "hint": "Use the theorem stating that total momentum is equal to the product of total mass and center of mass velocity: $q_x = (m_1 + m_2) v_{CM,x}$.",
+      "options": [
+        "$7\\text{ kg}\\cdot\\text{m/s}$",
+        "$3.5\\text{ kg}\\cdot\\text{m/s}$",
+        "$14\\text{ kg}\\cdot\\text{m/s}$",
+        "$5\\text{ kg}\\cdot\\text{m/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Total momentum along $x$ is $q_x = (m_1 + m_2) v_{CM,x} = (2 + 3) \\cdot 1.4 = 5 \\cdot 1.4 = 7\\text{ kg}\\cdot\\text{m/s}$.",
+        "Incorrect. $3.5\\text{ kg}\\cdot\\text{m/s}$ would be obtained by multiplying $v_{CM,x}$ only by mass $m_1 = 2\\text{ kg}$ or by half the total mass.",
+        "Incorrect. $14\\text{ kg}\\cdot\\text{m/s}$ would be obtained by mistakenly doubling the momentum result.",
+        "Incorrect. $5\\text{ kg}\\cdot\\text{m/s}$ corresponds to the numerical value of the total mass of the system."
+      ]
+    },
+    {
+      "id": "it_phys_274",
+      "widget_id": null,
+      "topic": "Total Momentum - Y-Component",
+      "q": "For the same system of total mass $M = 5\\text{ kg}$ and center of mass velocity with $y$-component $v_{CM,y} = 2.4\\text{ m/s}$, what is the $y$-component of the total momentum of the system ($q_y$)?",
+      "hint": "Use the relationship $q_y = (m_1 + m_2) v_{CM,y}$.",
+      "options": [
+        "$12\\text{ kg}\\cdot\\text{m/s}$",
+        "$6\\text{ kg}\\cdot\\text{m/s}$",
+        "$24\\text{ kg}\\cdot\\text{m/s}$",
+        "$10\\text{ kg}\\cdot\\text{m/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Total momentum along $y$ is $q_y = (m_1 + m_2) v_{CM,y} = (2 + 3) \\cdot 2.4 = 5 \\cdot 2.4 = 12\\text{ kg}\\cdot\\text{m/s}$.",
+        "Incorrect. $6\\text{ kg}\\cdot\\text{m/s}$ would be obtained by calculating only the momentum of the second particle along $y$ ($m_2 v_{2,y} = 3 \\cdot 6 = 18$) and subtracting incorrect values.",
+        "Incorrect. $24\\text{ kg}\\cdot\\text{m/s}$ would be obtained by mistakenly doubling the result.",
+        "Incorrect. Error in the product of total system mass and center of mass velocity."
+      ]
+    },
+    {
+      "id": "it_phys_275",
+      "widget_id": null,
+      "topic": "Torque - Symbolic Expression for Net Torque",
+      "q": "A cylinder is free to rotate around its central axis. A string wrapped around a drum of radius $R_1$ exerts a force $T_1$ tending to rotate it clockwise, while a second string wrapped around radius $R_2$ exerts a force $T_2$ tending to rotate it counterclockwise. What is the expression for the net torque $\\tau_{net}$ using the convention that counterclockwise is positive?",
+      "hint": "Torque is given by the product of the lever arm and the force. Assign a positive sign to counterclockwise torque and a negative sign to clockwise torque.",
+      "options": [
+        "$\\tau_{net} = R_2 T_2 - R_1 T_1$",
+        "$\\tau_{net} = R_1 T_1 - R_2 T_2$",
+        "$\\tau_{net} = R_1 T_1 + R_2 T_2$",
+        "$\\tau_{net} = (R_1 + R_2)(T_1 + T_2)$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Force $T_1$ produces a clockwise torque $\\tau_1 = -R_1 T_1$, while force $T_2$ produces a counterclockwise torque $\\tau_2 = +R_2 T_2$. Adding the torques algebraically yields $\\tau_{net} = R_2 T_2 - R_1 T_1$.",
+        "Incorrect. This expression would mistakenly assume clockwise as positive and counterclockwise as negative.",
+        "Incorrect. The two forces tend to rotate the cylinder in opposite directions, so their torques subtract rather than add.",
+        "Incorrect. Lever arms act separately on each applied force, not on the sum of the forces."
+      ]
+    },
+    {
+      "id": "it_phys_276",
+      "widget_id": null,
+      "topic": "Torque - Calculation of Net Torque",
+      "q": "Considering the values $T_1 = 5.0\\text{ N}$, $R_1 = 1.0\\text{ m}$, $T_2 = 6.0\\text{ N}$, and $R_2 = 0.50\\text{ m}$, what is the value of the net torque $\\tau_{net}$ relative to the rotation axis?",
+      "hint": "Substitute the values into the equation $\\tau_{net} = R_2 T_2 - R_1 T_1$.",
+      "options": [
+        "$-2.0\\text{ N}\\cdot\\text{m}$",
+        "$+2.0\\text{ N}\\cdot\\text{m}$",
+        "$-8.0\\text{ N}\\cdot\\text{m}$",
+        "$+3.0\\text{ N}\\cdot\\text{m}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Substituting the data: $\\tau_{net} = (6.0\\text{ N} \\cdot 0.50\\text{ m}) - (5.0\\text{ N} \\cdot 1.0\\text{ m}) = 3.0\\text{ N}\\cdot\\text{m} - 5.0\\text{ N}\\cdot\\text{m} = -2.0\\text{ N}\\cdot\\text{m}$.",
+        "Incorrect. $+2.0\\text{ N}\\cdot\\text{m}$ is obtained by reversing the signs of individual torques.",
+        "Incorrect. $-8.0\\text{ N}\\cdot\\text{m}$ would be obtained by adding the magnitudes of the two torques instead of subtracting them.",
+        "Incorrect. $+3.0\\text{ N}\\cdot\\text{m}$ is only the torque due to force $T_2$ without subtracting the torque due to $T_1$."
+      ]
+    },
+    {
+      "id": "it_phys_277",
+      "widget_id": null,
+      "topic": "Rotational Dynamics - Direction of Cylinder Rotation",
+      "q": "A cylinder initially at rest is subjected to a net torque $\\tau_{net} = -2.0\\text{ N}\\cdot\\text{m}$. Knowing that the convention adopted defines clockwise torques as negative, in which direction will the cylinder rotate?",
+      "hint": "A negative net torque indicates that the prevailing torque pushes clockwise.",
+      "options": [
+        "It will start rotating clockwise",
+        "It will start rotating counterclockwise",
+        "It will remain stationary in rotational equilibrium",
+        "It will start translating along the $z$-axis"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since the net torque is negative (meaning torque $\\tau_1 = -5.0\\text{ N}\\cdot\\text{m}$ produced by the first force prevails), the cylinder will accelerate, rotating clockwise.",
+        "Incorrect. Counterclockwise rotation would require a positive net torque ($\\tau_{net} > 0$).",
+        "Incorrect. To remain stationary or in rotational equilibrium, the net torque would have to be exactly zero ($\\tau_{net} = 0$).",
+        "Incorrect. A torque along the rotation axis causes rotation around that axis, not translation."
+      ]
+    },
+    {
+      "id": "it_phys_278",
+      "widget_id": null,
+      "topic": "Conservation of Angular Momentum - Validity Condition",
+      "q": "A mass $m$ rotates on a frictionless surface connected to a string passing through a hole in the center of the table. Why is angular momentum of the mass conserved while the string is pulled downward?",
+      "hint": "Calculate the torque of the string's tension with respect to the center of rotation (hole).",
+      "options": [
+        "Because the force exerted by the string is central and passes through the axis of rotation, so its lever arm is zero and the net torque is zero.",
+        "Because the velocity of the mass during motion remains constant in magnitude and direction.",
+        "Because no radial force acts on the mass while the string is shortened."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The string tension acts along the radial direction pointing toward the center (axis of rotation). Having a zero lever arm relative to the point of rotation implies zero torque ($\\tau = 0$), guaranteeing the conservation of angular momentum ($L = I\\omega = \\text{constant}$).",
+        "Incorrect. Tangential speed does not remain constant: it increases as the radius decreases.",
+        "Incorrect. The radial force is present—it is precisely the tension that keeps the mass in a circular orbit and reduces its radius."
+      ]
+    },
+    {
+      "id": "it_phys_279",
+      "widget_id": null,
+      "topic": "Conservation of Angular Momentum - Tangential Speed Formula",
+      "q": "Applying conservation of angular momentum $m r_1^2 \\omega_1 = m r_2^2 \\omega_2$ to a particle of mass $m$, what is the correct expression for the final tangential speed $v_2$ in terms of $v_1$, $r_1$, and $r_2$?",
+      "hint": "Recall the relationship between tangential speed and angular speed $v = r \\omega$.",
+      "options": [
+        "$v_2 = v_1 \\frac{r_1}{r_2}$",
+        "$v_2 = v_1 \\frac{r_2}{r_1}$",
+        "$v_2 = v_1 \\frac{r_1^2}{r_2^2}$",
+        "$v_2 = v_1 \\sqrt{\\frac{r_1}{r_2}}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Substituting $\\omega = \\frac{v}{r}$ into the conservation law $m r_1^2 \\omega_1 = m r_2^2 \\omega_2$, we obtain $m r_1^2 \\left(\\frac{v_1}{r_1}\\right) = m r_2^2 \\left(\\frac{v_2}{r_2}\\right) \\implies m r_1 v_1 = m r_2 v_2 \\implies v_2 = v_1 \\frac{r_1}{r_2}$.",
+        "Incorrect. This formula would indicate a decrease in speed as the radius decreases, the opposite of what happens.",
+        "Incorrect. $\\frac{r_1^2}{r_2^2}$ is the ratio of angular speeds $\\frac{\\omega_2}{\\omega_1}$, not tangential speeds.",
+        "Incorrect. The dependence of tangential speed on radii is linear with the ratio $\\frac{r_1}{r_2}$, without a square root."
+      ]
+    },
+    {
+      "id": "it_phys_280",
+      "widget_id": null,
+      "topic": "Conservation of Angular Momentum - Final Speed Calculation",
+      "q": "A mass initially rotates with a tangential speed $v_1 = 2.4\\text{ m/s}$ along a circle of radius $r_1 = 0.80\\text{ m}$. By pulling the string, the radius is reduced to $r_2 = 0.48\\text{ m}$. What is the value of the new tangential speed $v_2$?",
+      "hint": "Substitute the data into the relationship $v_2 = v_1 \\frac{r_1}{r_2}$.",
+      "options": [
+        "$4.0\\text{ m/s}$",
+        "$1.44\\text{ m/s}$",
+        "$6.67\\text{ m/s}$",
+        "$3.20\\text{ m/s}$",
+        "$2.00\\text{ m/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Calculating $v_2 = v_1 \\frac{r_1}{r_2} = 2.4 \\cdot \\frac{0.80}{0.48} = 2.4 \\cdot 1.667 = 4.0\\text{ m/s}$.",
+        "Incorrect. $1.44\\text{ m/s}$ is obtained by multiplying by the inverse ratio $\\frac{r_2}{r_1} = \\frac{0.48}{0.80}$.",
+        "Incorrect. $6.67\\text{ m/s}$ is obtained by mistakenly applying the ratio of squares $\\frac{r_1^2}{r_2^2}$.",
+        "Incorrect. Calculation error in the fraction $\\frac{0.80}{0.48}$.",
+        "Incorrect. Value inconsistent with the principle of conservation of angular momentum."
+      ]
+    },
+    {
+      "id": "it_phys_281",
+      "widget_id": null,
+      "topic": "Rotational Dynamics - Change in Angular Speed",
+      "q": "When the radius of rotation is reduced from $r_1 = 0.80\\text{ m}$ to $r_2 = 0.48\\text{ m}$, by what factor does the angular speed $\\omega$ of the mass increase?",
+      "hint": "Calculate the ratio $\\frac{\\omega_2}{\\omega_1} = \\left(\\frac{r_1}{r_2}\\right)^2$.",
+      "options": [
+        "Increases by a factor of $\\approx 2.78$ (equal to $\\frac{25}{9}$)",
+        "Increases by a factor of $1.67$ (equal to $\\frac{5}{3}$)",
+        "Decreases by a factor of $0.36$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! From the conservation of angular momentum $I_1 \\omega_1 = I_2 \\omega_2 \\implies m r_1^2 \\omega_1 = m r_2^2 \\omega_2$, we get $\\frac{\\omega_2}{\\omega_1} = \\frac{r_1^2}{r_2^2} = \\left(\\frac{0.80}{0.48}\\right)^2 = \\left(\\frac{5}{3}\\right)^2 = \\frac{25}{9} \\approx 2.78$.",
+        "Incorrect. $1.67$ is the factor of increase for *tangential* speed $v$, not angular speed $\\omega$.",
+        "Incorrect. Angular speed increases as the radius decreases, it does not decrease."
+      ]
+    },
+    {
+      "id": "it_phys_282",
+      "widget_id": null,
+      "topic": "Multi-Body Systems - Effect of Internal Forces",
+      "q": "Internal forces acting between particles in a multi-body system cannot alter the total momentum of the system itself.",
+      "hint": "Consider Newton's Third Law of Motion (action and reaction) applied to pairs of internal forces.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! By Newton's third law, internal forces act in equal and opposite pairs. Their vector sum is always zero, so internal forces cannot change the total momentum of the system.",
+        "Incorrect. Internal forces can alter the motion of individual particles, but their vector sum is zero and does not change total momentum."
+      ]
+    },
+    {
+      "id": "it_phys_283",
+      "widget_id": null,
+      "topic": "Multi-Body Systems - First Equation of Motion",
+      "q": "The center of mass of a multi-body system moves as if all the mass of the system were concentrated there and only the net external force acted upon it.",
+      "hint": "Recall the fundamental law for center of mass motion: $\\vec{F}_{ext,tot} = M_{tot} \\vec{a}_{CM}$.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! This is the center of mass motion theorem: $\\vec{F}_{ext,tot} = M_{tot} \\vec{a}_{CM}$. The overall motion of the center of mass depends solely on external forces applied to the system.",
+        "Incorrect. It is a fundamental law of system dynamics for point masses."
+      ]
+    },
+    {
+      "id": "it_phys_284",
+      "widget_id": null,
+      "topic": "Multi-Body Systems - Work Done by Internal Forces",
+      "q": "The total work done by internal forces in a system of point masses is always zero, regardless of whether the system is rigid or deformable.",
+      "hint": "Think about what happens to the work of internal forces when the relative distance between two points in the system changes (e.g., an explosion or a stretching spring).",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Correct! This is false: the work done by internal forces is zero only for rigid bodies (where relative distances do not change). For deformable or non-rigid systems (such as a spring or an explosive charge), internal work can be non-zero and convert internal energy into kinetic energy.",
+        "Incorrect. If relative distances between particles change, the relative displacement makes the work of internal forces non-zero."
+      ]
+    },
+    {
+      "id": "it_phys_285",
+      "widget_id": null,
+      "topic": "Multi-Body Systems - König's Theorem for Kinetic Energy",
+      "q": "The total kinetic energy of a multi-body system is always equal solely to the kinetic energy associated with the motion of the center of mass.",
+      "hint": "Recall König's theorem: $K_{tot} = K_{CM} + K'$.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Total kinetic energy also includes energy from rotation or relative motion around the center of mass.",
+        "Correct! This is false: by König's theorem, total kinetic energy is the sum of the kinetic energy of the center of mass ($K_{CM} = \\frac{1}{2} M v_{CM}^2$) and the kinetic energy of the particles relative to the center of mass ($K'$). The contribution $K'$ cannot be ignored."
+      ]
+    },
+    {
+      "id": "it_phys_286",
+      "widget_id": null,
+      "topic": "Multi-Body Systems - Acceleration of Individual Particles in Isolated Systems",
+      "q": "In an isolated multi-body system, the acceleration of each individual particle in the system must necessarily be zero.",
+      "hint": "Distinguish between the acceleration of the center of mass and the accelerations of individual particles caused by internal forces.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Correct! This is false: in an isolated system, the net external force is zero, so it is the acceleration *of the center of mass* that is zero. However, individual particles can accelerate due to internal forces exchanged between them.",
+        "Incorrect. Particles can interact internally (e.g., gravitational or electrical attraction) and thus accelerate, while maintaining a constant velocity of the center of mass."
+      ]
+    },
+    {
+      "id": "it_phys_287",
+      "widget_id": null,
+      "topic": "Multi-Body Systems - Conservation of Total Angular Momentum",
+      "q": "If the sum of torques from external forces relative to a fixed point is zero, the total angular momentum of the multi-body system is conserved.",
+      "hint": "Recall the second rotational equation of system dynamics: $\\frac{d\\vec{L}_{tot}}{dt} = \\vec{\\tau}_{ext,tot}$.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! By the rotational equation of motion $\\frac{d\\vec{L}_{tot}}{dt} = \\vec{\\tau}_{ext,tot}$. If the net external torque is zero ($\\vec{\\tau}_{ext,tot} = 0$), total angular momentum $\\vec{L}_{tot}$ remains constant over time.",
+        "Incorrect. It is the fundamental law of conservation of angular momentum for a multi-body system."
+      ]
+    },
+    {
+      "id": "it_phys_288",
+      "widget_id": null,
+      "topic": "Multi-Body Systems - Geometric Position of the Center of Mass",
+      "q": "The center of mass of a continuous or discrete system of bodies must necessarily lie within the material composing one of the bodies in the system.",
+      "hint": "Think about the position of the center of mass of a ring or a system formed by the Earth and the Moon.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Correct! This is false: the center of mass is a geometric point and can be located in empty space outside the bodies (for example, at the center of a ring or at a point in space between the Earth and the Moon).",
+        "Incorrect. The position of the center of mass depends on the average mass distribution and can be located in regions devoid of matter."
+      ]
+    },
+    {
+      "id": "it_phys_289",
+      "widget_id": null,
+      "topic": "Multi-Body Systems - Momentum in the Center of Mass Frame",
+      "q": "The total momentum of a system of bodies, as measured by an observer in the center of mass frame of reference, is always equal to zero.",
+      "hint": "Consider what the velocity of the center of mass is as seen from the center of mass itself.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In the center of mass frame of reference (zero-momentum frame), the velocity of the center of mass is by definition zero ($v'_{CM} = 0$), and consequently the total momentum $\\vec{q}'_{tot} = M_{tot} \\vec{v}'_{CM} = 0$.",
+        "Incorrect. By definition of the center of mass frame, the vector sum of momenta relative to it is always zero."
+      ]
+    }
+  ]
+}
