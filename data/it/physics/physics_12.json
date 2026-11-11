@@ -1,0 +1,653 @@
+{
+  "subject": "Fisica",
+  "questions": [
+    {
+      "id": "it_phys_434",
+      "widget_id": null,
+      "topic": "Dinamica del Punto Materiale - Moto 2D sotto Forze Costanti (Velocità)",
+      "q": "Due forze $\\vec{F}_1 = (-6\\hat{i} - 4\\hat{j})\\text{ N}$ e $\\vec{F}_2 = (-3\\hat{i} + 7\\hat{j})\\text{ N}$ agiscono su una particella di massa $m = 2\\text{ kg}$ inizialmente ferma nell'origine. Determinare il vettore velocità $\\vec{v}$ della particella dopo un intervallo di tempo $t = 10\\text{ s}$.",
+      "hint": "Calcola prima la forza risultante $\\vec{F} = \\vec{F}_1 + \\vec{F}_2$, poi ricava l'accelerazione $\\vec{a} = \\frac{\\vec{F}}{m}$ e infine la velocità vettoriale con $\\vec{v} = \\vec{a} \\cdot t$.",
+      "options": [
+        "$\\vec{v} = (-45\\hat{i} + 15\\hat{j})\\text{ m/s}$",
+        "$\\vec{v} = (-90\\hat{i} + 30\\hat{j})\\text{ m/s}$",
+        "$\\vec{v} = (-4.5\\hat{i} + 1.5\\hat{j})\\text{ m/s}$",
+        "$\\vec{v} = (-22.5\\hat{i} + 7.5\\hat{j})\\text{ m/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La forza risultante è $\\vec{F} = (-6 - 3)\\hat{i} + (-4 + 7)\\hat{j} = -9\\hat{i} + 3\\hat{j}\\text{ N}$. L'accelerazione è $\\vec{a} = \\frac{\\vec{F}}{2} = -4.5\\hat{i} + 1.5\\hat{j}\\text{ m/s}^2$. Moltiplicando per $t = 10\\text{ s}$ si ottiene $\\vec{v} = \\vec{a} \\cdot t = -45\\hat{i} + 15\\hat{j}\\text{ m/s}$.",
+        "Sbagliato. Questo risultato si ottiene dimenticando di dividere la forza totale per la massa $m = 2\\text{ kg}$.",
+        "Sbagliato. Questa è l'accelerazione $\\vec{a}$ espressa in $\\text{m/s}^2$, non la velocità al tempo $t = 10\\text{ s}$.",
+        "Sbagliato. Errore di calcolo nella somma delle componenti della forza o nell'applicazione del tempo."
+      ]
+    },
+    {
+      "id": "it_phys_435",
+      "widget_id": null,
+      "topic": "Dinamica del Punto Materiale - Moto 2D sotto Forze Costanti (Posizione)",
+      "q": "Con riferimento al problema precedente (forze $\\vec{F}_1 = (-6\\hat{i} - 4\\hat{j})\\text{ N}$ e $\\vec{F}_2 = (-3\\hat{i} + 7\\hat{j})\\text{ N}$, massa $m = 2\\text{ kg}$), determinare il vettore posizione $\\vec{s}$ della particella all'istante $t = 10\\text{ s}$, sapendo che parte da ferma dall'origine.",
+      "hint": "Poiché l'accelerazione $\\vec{a}$ è costante e la particella parte da ferma nell'origine, la legge oraria vettoriale è $\\vec{s} = \\frac{1}{2} \\vec{a} t^2$.",
+      "options": [
+        "$\\vec{s} = (-225\\hat{i} + 75\\hat{j})\\text{ m}$",
+        "$\\vec{s} = (-450\\hat{i} + 150\\hat{j})\\text{ m}$",
+        "$\\vec{s} = (-22.5\\hat{i} + 7.5\\hat{j})\\text{ m}$",
+        "$\\vec{s} = (-112.5\\hat{i} + 37.5\\hat{j})\\text{ m}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Essendo l'accelerazione $\\vec{a} = (-4.5\\hat{i} + 1.5\\hat{j})\\text{ m/s}^2$, applicando $\\vec{s} = \\frac{1}{2} \\vec{a} t^2$ con $t^2 = 100\\text{ s}^2$ si ha $\\vec{s} = 0.5 \\cdot (-4.5\\hat{i} + 1.5\\hat{j}) \\cdot 100 = -225\\hat{i} + 75\\hat{j}\\text{ m}$.",
+        "Sbagliato. Dimenticato il fattore $\\frac{1}{2}$ nella formula della posizione per il moto uniformemente accelerato.",
+        "Sbagliato. Questo valore si ottiene se si usa $t$ anziché $t^2$ nella legge oraria.",
+        "Sbagliato. Dividere ulteriormente per due per un errore nel calcolo dell'accelerazione o del tempo."
+      ]
+    },
+    {
+      "id": "it_phys_436",
+      "widget_id": null,
+      "topic": "Dinamica con Attrito - Piano Orizzontale e Trazione Inclinata",
+      "q": "Una passeggera all'aeroporto trasporta la sua valigia di massa $m = 20\\text{ kg}$ a velocità costante, applicando a una cinghia una forza $F = 35\\text{ N}$ inclinata di un angolo $\\theta = 30^\\circ$ rispetto all'orizzontale. Determinare il coefficiente di attrito dinamico $\\mu_d$ tra la valigia e il pavimento (assumendo $g = 9.81\\text{ m/s}^2$).",
+      "hint": "Poiché il moto è a velocità costante, la forza orizzontale equivale all'attrito: $F \\cos\\theta = F_d = \\mu_d \\cdot N$. La reazione normale è $N = m \\cdot g - F \\sin\\theta$.",
+      "options": [
+        "$\\mu_d \\approx 0.17$",
+        "$\\mu_d \\approx 0.15$",
+        "$\\mu_d \\approx 0.22$",
+        "$\\mu_d \\approx 0.31$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La componente orizzontale è $F_x = 35 \\cdot \\cos(30^\\circ) \\approx 30.31\\text{ N}$. La forza normale verticale è $N = m g - F \\sin(30^\\circ) = 20 \\cdot 9.81 - 35 \\cdot 0.5 = 196.2 - 17.5 = 178.7\\text{ N}$. Di conseguenza $\\mu_d = \\frac{F_x}{N} = \\frac{30.31}{178.7} \\approx 0.17$.",
+        "Sbagliato. $0.15$ si ottiene non sottraendo la componente verticale della trazione $F \\sin\\theta$ dal peso $m \\cdot g$.",
+        "Sbagliato. Errore nell'inversione delle funzioni trigonometriche seno e coseno.",
+        "Sbagliato. Deriva da un errore di calcolo nel valore del peso o nell'equazione di equilibrio verticale."
+      ]
+    },
+    {
+      "id": "it_phys_437",
+      "widget_id": null,
+      "topic": "Dinamica del Moto Circolare - Curva in Piano con Attrito",
+      "q": "Un'automobile di massa $m = 1500\\text{ kg}$, che si muove su una strada orizzontale piana, affronta una curva di raggio $R = 35\\text{ m}$. Se il coefficiente di attrito tra gli pneumatici e l'asfalto è $\\mu = 0.573$, qual è la velocità massima $v_{max}$ con cui l'auto può percorrere la curva senza sbandare (assumendo $g = 9.81\\text{ m/s}^2$)?",
+      "hint": "La forza di attrito massima fornisce la forza centripeta indispensabile per curvare: $F_a = F_c \\implies \\mu m g = m \\frac{v_{max}^2}{R}$, da cui $v_{max} = \\sqrt{\\mu g R}$.",
+      "options": [
+        "$v_{max} \\approx 14.03\\text{ m/s} \\quad (\\approx 50.5\\text{ km/h})$",
+        "$v_{max} \\approx 19.67\\text{ m/s} \\quad (\\approx 70.8\\text{ km/h})$",
+        "$v_{max} \\approx 10.25\\text{ m/s} \\quad (\\approx 36.9\\text{ km/h})$",
+        "$v_{max} \\approx 25.00\\text{ m/s} \\quad (\\approx 90.0\\text{ km/h})$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Eguagliando l'attrito massimo alla forza centripeta si ottiene $v_{max} = \\sqrt{\\mu g R} = \\sqrt{0.573 \\cdot 9.81 \\cdot 35} = \\sqrt{196.74} \\approx 14.03\\text{ m/s}$. Convertendo in $\\text{km/h}$ ($14.03 \\cdot 3.6$) si calcola $\\approx 50.5\\text{ km/h}$.",
+        "Sbagliato. $196.74$ è il valore di $v_{max}^2$, dimenticando di estrarre la radice quadrata.",
+        "Sbagliato. Errore nel valore utilizzato per l'accelerazione gravitazionale $g$ o nel prodotto sotto radice.",
+        "Sbagliato. Risultato derivato da una stima errata non basata sulla formula dell'equilibrio centripeto."
+      ]
+    },
+    {
+      "id": "it_phys_438",
+      "widget_id": null,
+      "topic": "Dinamica sul Piano Inclinato - Condizione di Equilibrio Statico",
+      "q": "Una tempesta di neve fa accumulare neve fresca su una pista da sci. Se il coefficiente di attrito statico tra la neve fresca e lo strato sottostante è $\\mu = 0.46$, qual è l'angolo di massima inclinazione $\\theta$ del pendio affinché lo strato di neve fresca non scivoli via?",
+      "hint": "All'angolo limite di aderenza la componente della forza peso parallela al piano e la forza di attrito statico massima sono uguali: $m g \\sin\\theta = \\mu m g \\cos\\theta \\implies \\tan\\theta = \\mu$.",
+      "options": [
+        "$\\theta \\approx 25^\\circ$",
+        "$\\theta \\approx 27^\\circ$",
+        "$\\theta \\approx 22^\\circ$",
+        "$\\theta \\approx 30^\\circ$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Dalla condizione di equilibrio lungo il piano si ricava $\\tan\\theta = \\mu = 0.46$. Calcolando l'arcotangente: $\\theta = \\arctan(0.46) \\approx 24.7^\\circ \\approx 25^\\circ$.",
+        "Sbagliato. Risultato derivante dall'uso errato della funzione arcoseno al posto dell'arcotangente.",
+        "Sbagliato. Risultato derivante dall'uso errato della funzione arcocoseno.",
+        "Sbagliato. $30^\\circ$ è un valore standard di inclinazione ma non corrisponde a $\\tan\\theta = 0.46$."
+      ]
+    },
+    {
+      "id": "it_phys_439",
+      "widget_id": null,
+      "topic": "Moto Armonico Semplice - Velocità Massima",
+      "q": "Una massa $m = 200\\text{ g}$ oscilla orizzontalmente in assenza di attrito all'estremità di una molla con costante elastica $k = 7.0\\text{ N/m}$. Se la massa viene spostata di $A = 5.0\\text{ cm}$ dalla posizione di equilibrio e rilasciata, calcolare la sua velocità massima $v_{max}$.",
+      "hint": "La pulsazione dell'oscillatore è $\\omega = \\sqrt{\\frac{k}{m}}$. La velocità massima si raggiunge nel passaggio per la posizione di equilibrio ed è data da $v_{max} = A \\cdot \\omega$. Ricorda di convertire la massa in $\\text{kg}$ e lo spostamento in $\\text{m}$.",
+      "options": [
+        "$v_{max} \\approx 0.295\\text{ m/s}$",
+        "$v_{max} \\approx 0.590\\text{ m/s}$",
+        "$v_{max} \\approx 1.75\\text{ m/s}$",
+        "$v_{max} \\approx 0.070\\text{ m/s}$",
+        "$v_{max} \\approx 0.148\\text{ m/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Convertendo i dati: $m = 0.2\\text{ kg}$ e $A = 0.05\\text{ m}$. La pulsazione è $\\omega = \\sqrt{\\frac{7.0}{0.2}} = \\sqrt{35} \\approx 5.916\\text{ rad/s}$. La velocità massima risulta $v_{max} = A \\cdot \\omega = 0.05 \\cdot 5.916 \\approx 0.295\\text{ m/s}$.",
+        "Sbagliato. Risultato raddoppiato per errore nel calcolo dell'ampiezza o della pulsazione.",
+        "Sbagliato. $1.75\\text{ m/s}^2$ è il valore dell'accelerazione massima $a_{max}$, non della velocità.",
+        "Sbagliato. Errore nella conversione delle unità di misura o nel calcolo della radice quadrata.",
+        "Sbagliato. Deriva dal dimenticare di elevare o estrarre correttamente il rapporto $k/m$ sotto radice."
+      ]
+    },
+    {
+      "id": "it_phys_440",
+      "widget_id": null,
+      "topic": "Moto Armonico Semplice - Accelerazione Massima",
+      "q": "Con i dati del problema precedente ($m = 200\\text{ g}$, $k = 7.0\\text{ N/m}$, $A = 5.0\\text{ cm}$), calcolare l'accelerazione massima $a_{max}$ della massa oscillante.",
+      "hint": "L'accelerazione massima nel moto armonico semplice si ha agli estremi dell'oscillazione ed è legata all'ampiezza dalla formula $a_{max} = A \\cdot \\omega^2 = A \\cdot \\frac{k}{m}$.",
+      "options": [
+        "$a_{max} = 1.75\\text{ m/s}^2$",
+        "$a_{max} = 3.50\\text{ m/s}^2$",
+        "$a_{max} = 0.295\\text{ m/s}^2$",
+        "$a_{max} = 0.875\\text{ m/s}^2$",
+        "$a_{max} = 7.00\\text{ m/s}^2$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Essendo $\\omega^2 = \\frac{k}{m} = \\frac{7.0}{0.2} = 35\\text{ rad}^2/\\text{s}^2$, si ottiene l'accelerazione massima con $a_{max} = A \\cdot \\omega^2 = 0.05 \\cdot 35 = 1.75\\text{ m/s}^2$.",
+        "Sbagliato. $3.50\\text{ m/s}^2$ si ottiene non dividendo correttamente per il fattore dell'ampiezza o moltiplicando per due.",
+        "Sbagliato. $0.295\\text{ m/s}^2$ è il valore della velocità massima espressa in $\\text{m/s}$.",
+        "Sbagliato. Errore di dimezzamento nel calcolo finale.",
+        "Sbagliato. Corrisponde al valore della sola costante elastica $k$ senza considerare massa ed ampiezza."
+      ]
+    },
+    {
+      "id": "it_phys_441",
+      "widget_id": null,
+      "topic": "Moto Armonico Semplice - Frequenza di Oscillazione",
+      "q": "Determinare la frequenza di oscillazione $\\nu$ della massa del sistema molla-massa ($m = 200\\text{ g}$, $k = 7.0\\text{ N/m}$).",
+      "hint": "La frequenza $\\nu$ è legata alla pulsazione $\\omega$ dalla relazione $\\nu = \\frac{\\omega}{2\\pi} = \\frac{1}{2\\pi} \\sqrt{\\frac{k}{m}}$.",
+      "options": [
+        "$\\nu \\approx 0.942\\text{ Hz}$",
+        "$\\nu \\approx 5.92\\text{ Hz}$",
+        "$\\nu \\approx 1.06\\text{ Hz}$",
+        "$\\nu \\approx 0.471\\text{ Hz}$",
+        "$\\nu \\approx 2.96\\text{ Hz}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Calcolando prima la pulsazione $\\omega = \\sqrt{\\frac{7.0}{0.2}} \\approx 5.916\\text{ rad/s}$, si ricava la frequenza $\\nu = \\frac{\\omega}{2\\pi} = \\frac{5.916}{2\\pi} \\approx 0.942\\text{ Hz}$.",
+        "Sbagliato. $5.92\\text{ rad/s}$ è la pulsazione angolare $\\omega$, non la frequenza in Hertz $\\nu$.",
+        "Sbagliato. $1.06\\text{ s}$ rappresenta il periodo di oscillazione $T = \\frac{1}{\\nu}$, non la frequenza.",
+        "Sbagliato. Risultato ottenuto dividendo per $4\\pi$ anziché per $2\\pi$.",
+        "Sbagliato. Risultato ottenuto dividendo $\\omega$ soltanto per $\\pi$ invece di $2\\pi$."
+      ]
+    },
+    {
+      "id": "it_phys_442",
+      "widget_id": null,
+      "topic": "Dinamica del Moto Circolare - Condizione di Scivolamento su Piattaforma Girevole",
+      "q": "Un oggetto di massa $M = 1\\text{ kg}$ è poggiato su una piattaforma girevole orizzontale a distanza $R = 6\\text{ m}$ dal centro. Il coefficiente di attrito statico è $\\mu = 1.2$. Se la piattaforma inizia a ruotare da ferma con accelerazione angolare costante $\\alpha = 1\\text{ rad/s}^2$, calcolare l'istante $t$ in cui la massa inizia a muoversi lungo la piattaforma (assumendo $g = 9.81\\text{ m/s}^2$).",
+      "hint": "Calcola la forza di attrito statico massima $F_a = \\mu M g$ e la forza tangenziale $F_t = M \\alpha R$. Eguagliando la somma delle componenti di forza necessarie alla forza d'attrito $F_t + F_c = F_a$ con $F_c = M \\omega^2 R$, si determina $\\omega$ e quindi il tempo $t = \\frac{\\omega}{\\alpha}$.",
+      "options": [
+        "$t \\approx 0.98\\text{ s} \\quad (\\approx 1.0\\text{ s})$",
+        "$t \\approx 2.00\\text{ s}$",
+        "$t \\approx 0.50\\text{ s}$",
+        "$t \\approx 1.96\\text{ s}$",
+        "$t \\approx 3.20\\text{ s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La forza d'attrito massima è $F_a = 1.2 \\cdot 1 \\cdot 9.81 = 11.77\\text{ N}$. La forza tangenziale è $F_t = 1 \\cdot 1 \\cdot 6 = 6\\text{ N}$. Applicando l'equazione di bilancio $F_t + F_c = F_a \\implies 6 + 1 \\cdot \\omega^2 \\cdot 6 = 11.77 \\implies 6 \\omega^2 = 5.77 \\implies \\omega = \\sqrt{\\frac{5.77}{6}} \\approx 0.98\\text{ rad/s}$. Essendo $\\alpha = 1\\text{ rad/s}^2$, l'istante di scivolamento è $t = \\frac{\\omega}{\\alpha} \\approx 0.98\\text{ s} \\approx 1.0\\text{ s}$.",
+        "Sbagliato. $2.00\\text{ s}$ deriva da una stima errata raddoppiando il tempo di scivolamento limite.",
+        "Sbagliato. $0.50\\text{ s}$ si ottiene da un errore nel calcolo della forza di attrito o della radice.",
+        "Sbagliato. $1.96\\text{ s}$ si ottiene trascurando la componente della forza tangenziale $F_t$.",
+        "Sbagliato. Risultato derivante da errori nella conversione dell'accelerazione angolare."
+      ]
+    },
+    {
+      "id": "it_phys_443",
+      "widget_id": null,
+      "topic": "Equilibrio Statico - Tensione del Primo Cavo (Esempio 1)",
+      "q": "Un semaforo di peso $W = 100\\text{ N}$ è sospeso mediante un nodo a tre cavi. Il cavo 3 pende verticalmente sostenendo il semaforo ($T_3 = 100\\text{ N}$), mentre i cavi 1 e 2 formano angoli rispettivamente di $37^\\circ$ e $53^\\circ$ con il supporto orizzontale superiore. Qual è il valore della tensione $T_1$ nel primo cavo?",
+      "hint": "Scomponi le forze lungo gli assi $x$ e $y$: $\\sum F_x = T_2 \\cos 53^\\circ - T_1 \\cos 37^\\circ = 0$ e $\\sum F_y = T_1 \\sin 37^\\circ + T_2 \\sin 53^\\circ - 100 = 0$. Ricava $T_2$ in funzione di $T_1$ e sostituisci.",
+      "options": [
+        "$T_1 = 60.0\\text{ N}$",
+        "$T_1 = 79.8\\text{ N}$",
+        "$T_1 = 100\\text{ N}$",
+        "$T_1 = 133\\text{ N}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Dalla prima equazione lungo $x$ si ha $T_2 = T_1 \\frac{\\cos 37^\\circ}{\\cos 53^\\circ} \\approx 1.33 T_1$. Sostituendo nella seconda equazione verticale: $T_1 \\sin 37^\\circ + 1.33 T_1 \\sin 53^\\circ = 100 \\implies T_1 (0.602 + 1.062) = 100 \\implies T_1 = 60.0\\text{ N}$.",
+        "Sbagliato. $79.8\\text{ N}$ è il valore della tensione $T_2$ nel secondo cavo.",
+        "Sbagliato. $100\\text{ N}$ è il peso totale del semaforo $W$, sostenuto dal cavo verticale $T_3$.",
+        "Sbagliato. $1.33$ è il rapporto tra le due tensioni ($T_2 / T_1$), non la forza in Newton."
+      ]
+    },
+    {
+      "id": "it_phys_444",
+      "widget_id": null,
+      "topic": "Equilibrio Statico - Tensione del Secondo Cavo (Esempio 1)",
+      "q": "Con riferimento al sistema del semaforo in equilibrio ($W = 100\\text{ N}$, angoli $37^\\circ$ e $53^\\circ$), qual è il valore della tensione $T_2$ nel secondo cavo che forma un angolo di $53^\\circ$ con l'orizzontale?",
+      "hint": "Usa la relazione tra le tensioni $T_2 = T_1 \\frac{\\cos 37^\\circ}{\\cos 53^\\circ} \\approx 1.33 T_1$ ed il valore appena calcolato $T_1 = 60.0\\text{ N}$.",
+      "options": [
+        "$T_2 = 79.8\\text{ N}$",
+        "$T_2 = 60.0\\text{ N}$",
+        "$T_2 = 100\\text{ N}$",
+        "$T_2 = 45.0\\text{ N}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Avendo trovato $T_1 = 60.0\\text{ N}$, si calcola $T_2 = 1.33 \\cdot 60.0\\text{ N} = 79.8\\text{ N}$.",
+        "Sbagliato. $60.0\\text{ N}$ è la tensione $T_1$ del primo cavo.",
+        "Sbagliato. $100\\text{ N}$ è la tensione del cavo verticale $T_3$.",
+        "Sbagliato. Errore nel calcolo del rapporto trigonometrico."
+      ]
+    },
+    {
+      "id": "it_phys_445",
+      "widget_id": null,
+      "topic": "Teoria dell'Equilibrio Statico - Simmetria delle Tensioni",
+      "q": "Considera un oggetto di peso $W$ sostenuto da due cavi superiori simmetrici d'aggancio. In quale condizione le tensioni nei due cavi d'aggancio inclinati risultano esattamente uguali ($T_1 = T_2$)?",
+      "hint": "Osserva l'equazione dell'equilibrio orizzontale $T_2 \\cos\\theta_2 - T_1 \\cos\\theta_1 = 0$. In che caso le due componenti si bilanciano con tensioni identiche?",
+      "options": [
+        "Quando i due cavi formano angoli uguali rispetto al supporto orizzontale",
+        "Quando l'angolo di un cavo è esattamente il doppio dell'altro",
+        "Le tensioni sono sempre uguali a prescindere dagli angoli",
+        "Quando la lunghezza dei due cavi è differente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Affinché $T_1 = T_2$, dall'equilibrio orizzontale $T_1 \\cos\\theta_1 = T_2 \\cos\\theta_2$ deve valere $\\cos\\theta_1 = \\cos\\theta_2$, ovvero gli angoli formati dai cavi con la trave orizzontale devono essere identici.",
+        "Sbagliato. Se gli angoli sono diversi, i coseni differiscono e quindi le tensioni devono essere diverse per garantire il bilanciamento orizzontale.",
+        "Sbagliato. Le tensioni variano al variare della geometria della struttura e degli angoli.",
+        "Sbagliato. La lunghezza dei cavi non influenza direttamente l'equilibrio delle forze, ma conta la loro inclinazione angolare."
+      ]
+    },
+    {
+      "id": "it_phys_446",
+      "widget_id": null,
+      "topic": "Dinamica del Moto Circolare - Velocità Massima di Rotazione (Esempio 2)",
+      "q": "Un oggetto di massa $m = 0.500\\text{ kg}$ è legato a una fune di lunghezza $r = 1.50\\text{ m}$ e ruota su una circonferenza orizzontale. Se la fune può sopportare una tensione massima $T_{max} = 50.0\\text{ N}$ prima di spezzarsi, qual è la massima velocità $v_{max}$ che l'oggetto può raggiungere?",
+      "hint": "Eguaglia la tensione massima alla forza centripeta: $T_{max} = m \\frac{v_{max}^2}{r}$, da cui $v_{max} = \\sqrt{\\frac{T_{max} \\cdot r}{m}}$.",
+      "options": [
+        "$v_{max} \\approx 12.2\\text{ m/s}$",
+        "$v_{max} \\approx 150\\text{ m/s}$",
+        "$v_{max} \\approx 6.71\\text{ m/s}$",
+        "$v_{max} \\approx 16.7\\text{ m/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Applicando la formula $v_{max} = \\sqrt{\\frac{T_{max} \\cdot r}{m}} = \\sqrt{\\frac{50.0 \\cdot 1.50}{0.500}} = \\sqrt{150} \\approx 12.247\\text{ m/s} \\approx 12.2\\text{ m/s}$.",
+        "Sbagliato. $150$ è il valore di $v^2$ prima dell'estrazione di radice quadrata.",
+        "Sbagliato. Errore di calcolo nell'inserimento della massa a denominatore.",
+        "Sbagliato. Errore di moltiplicazione/divisione nei passaggi algebrici."
+      ]
+    },
+    {
+      "id": "it_phys_447",
+      "widget_id": null,
+      "topic": "Teoria del Moto Circolare - Origine della Forza Centripeta",
+      "q": "Un corpo di massa $m$ si muove di moto circolare uniforme su un piano orizzontale liscio collegato a una fune. Quale forza fornisce l'accelerazione centripeta necessaria a vincolare il corpo sulla traiettoria circolare?",
+      "hint": "Considera la direzione della forza necessaria per curvare continuamente verso il centro del cerchio.",
+      "options": [
+        "La tensione $T$ esercitata dalla fune sul corpo",
+        "La forza peso del corpo $m \\cdot g$",
+        "La reazione vincolare del piano verso l'alto",
+        "La forza d'inerzia tangenziale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La tensione $T$ diretta verso il centro lungo il raggio della traiettoria fornisce l'unica forza netta radiale e costituisce la forza centripeta responsabile del cambio di direzione della velocità.",
+        "Sbagliato. La forza peso agisce verticalmente ed è bilanciata dalla reazione normale del piano orizzontale.",
+        "Sbagliato. La reazione vincolare bilancia la gravità in direzione verticale e non agisce sul piano radiale.",
+        "Sbagliato. La forza d'inerzia tangenziale non ha direzione radiale verso il centro."
+      ]
+    },
+    {
+      "id": "it_phys_448",
+      "widget_id": null,
+      "topic": "Teoria del Moto Circolare - Legame tra Tensione e Velocità",
+      "q": "In un moto circolare orizzontale con fune di lunghezza costante $r$, come varia la tensione $T$ esercitata dalla fune all'aumentare della velocità tangenziale $v$ del corpo?",
+      "hint": "Ricorda la Seconda Legge di Newton per la direzione radiale: $T = m \\cdot a_c = m \\frac{v^2}{r}$.",
+      "options": [
+        "La tensione $T$ aumenta con il quadrato della velocità ($T \\propto v^2$)",
+        "La tensione $T$ aumenta in modo direttamente proporzionale alla velocità ($T \\propto v$)",
+        "La tensione $T$ diminuisce inversamente alla velocità ($T \\propto 1/v$)",
+        "La tensione $T$ rimane costante indipendentemente dalla velocità"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché la forza centripeta è proporzionale a $v^2$, la tensione $T = m \\frac{v^2}{r}$ cresce quadraticamente all'aumentare della velocità $v$. Raddoppiando la velocità, la tensione quadruplica.",
+        "Sbagliato. La velocità compare al quadrato nell'espressione dell'accelerazione centripeta, non con esponente unitario.",
+        "Sbagliato. Per far girare un corpo più velocemente occorre una forza centripeta maggiore, non minore.",
+        "Sbagliato. La tensione aumenta notevolmente quando aumenta la frequenza o velocità di rotazione."
+      ]
+    },
+    {
+      "id": "it_phys_449",
+      "widget_id": null,
+      "topic": "Gravitazione Universale - Forza di Attrazione Terra-Luna",
+      "q": "Determinare la forza di attrazione gravitazionale tra la Terra e la Luna sapendo che la distanza media Terra-Luna è pari a $d = 384000\\text{ km}$ ($M_T = 5.972 \\cdot 10^{24}\\text{ kg}$, $M_L = 7.34 \\cdot 10^{22}\\text{ kg}$, $G = 6.674 \\cdot 10^{-11}\\text{ N}\\cdot\\text{m}^2/\\text{kg}^2$).",
+      "hint": "Applica la legge di gravitazione universale di Newton: $F = G \\frac{M_T \\cdot M_L}{d^2}$. Ricorda di convertire prima la distanza in metri ($384000\\text{ km} = 3.84 \\cdot 10^8\\text{ m}$).",
+      "options": [
+        "$F \\approx 1.98 \\cdot 10^{20}\\text{ N}$",
+        "$F \\approx 7.61 \\cdot 10^{28}\\text{ N}$",
+        "$F \\approx 1.98 \\cdot 10^{23}\\text{ N}$",
+        "$F \\approx 5.16 \\cdot 10^{14}\\text{ N}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Esprimendo la distanza in metri $d = 3.84 \\cdot 10^8\\text{ m}$, si calcola $F = (6.674 \\cdot 10^{-11}) \\cdot \\frac{(5.972 \\cdot 10^{24}) \\cdot (7.34 \\cdot 10^{22})}{(3.84 \\cdot 10^8)^2} \\approx 1.98 \\cdot 10^{20}\\text{ N}$.",
+        "Sbagliato. Risultato derivato dall'uso della distanza espressa in chilometri anziché in metri.",
+        "Sbagliato. Errore di un fattore $10^3$ nell'ordine di grandezza.",
+        "Sbagliato. Dimenticato di elevare al quadrato la distanza $d$ a denominatore."
+      ]
+    },
+    {
+      "id": "it_phys_450",
+      "widget_id": null,
+      "topic": "Gravitazione Universale - Variazione del Peso con l'Altezza",
+      "q": "A quale altezza $h$ rispetto alla superficie della Terra occorre portarsi affinché il proprio peso si dimezzi? ($R_T = 6371\\text{ km}$, $M_T = 5.972 \\cdot 10^{24}\\text{ kg}$).",
+      "hint": "Imponi l'uguaglianza tra il peso ad altezza $h$ e la metà del peso alla superficie: $G \\frac{M_T m}{(R_T + h)^2} = \\frac{1}{2} G \\frac{M_T m}{R_T^2}$. Semplificando si ricava $(R_T + h)^2 = 2 R_T^2 \\implies h = (\\sqrt{2} - 1) R_T$.",
+      "options": [
+        "$h \\approx 2630\\text{ km}$",
+        "$h \\approx 3185\\text{ km}$",
+        "$h \\approx 6371\\text{ km}$",
+        "$h \\approx 12742\\text{ km}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Ricavando l'altezza dalla relazione $(R_T + h) = \\sqrt{2} R_T$, si ottiene $h = (\\sqrt{2} - 1) R_T \\approx 0.4142 \\cdot 6371\\text{ km} \\approx 2639\\text{ km} \\approx 2630\\text{ km}$.",
+        "Sbagliato. $3185\\text{ km}$ corrisponde semplicemente alla metà del raggio terrestre $R_T / 2$.",
+        "Sbagliato. Ad un'altezza pari al raggio terrestre $h = R_T$, la gravità e il peso diventano $1/4$ di quello superficiale, non la metà.",
+        "Sbagliato. Corrisponde a due volte il raggio terrestre."
+      ]
+    },
+    {
+      "id": "it_phys_451",
+      "widget_id": null,
+      "topic": "Gravitazione Universale - Punto di Equilibrio Gravitazionale Terra-Sole",
+      "q": "A che distanza $x$ dalla Terra, lungo la congiungente Terra-Sole, deve trovarsi una sonda spaziale affinché l'attrazione gravitazionale terrestre compensi esattamente quella solare? ($M_T = 5.972 \\cdot 10^{24}\\text{ kg}$, $M_S = 1.99 \\cdot 10^{30}\\text{ kg}$, distanza Terra-Sole $d = 1.5 \\cdot 10^8\\text{ km}$).",
+      "hint": "Eguaglia le due forze gravitazionali: $G \\frac{M_T m}{x^2} = G \\frac{M_S m}{(d - x)^2}$. Estraendo la radice quadrata ad entrambi i membri si ottiene $\\frac{\\sqrt{M_T}}{x} = \\frac{\\sqrt{M_S}}{d - x}$, da cui $x = \\frac{\\sqrt{M_T}}{\\sqrt{M_S} + \\sqrt{M_T}} d$.",
+      "options": [
+        "$x \\approx 2.6 \\cdot 10^5\\text{ km}$",
+        "$x \\approx 1.5 \\cdot 10^6\\text{ km}$",
+        "$x \\approx 4.5 \\cdot 10^4\\text{ km}$",
+        "$x \\approx 7.5 \\cdot 10^7\\text{ km}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Calcolando il rapporto delle radici delle masse: $\\frac{\\sqrt{M_T}}{\\sqrt{M_S}} = \\sqrt{\\frac{5.972 \\cdot 10^{24}}{1.99 \\cdot 10^{30}}} \\approx 1.732 \\cdot 10^{-3}$. Sostituendo nella relazione $x \\approx 1.732 \\cdot 10^{-3} \\cdot 1.5 \\cdot 10^8\\text{ km} \\approx 2.6 \\cdot 10^5\\text{ km}$.",
+        "Sbagliato. Valore sovrastimato per un errore nella semplificazione del rapporto delle masse.",
+        "Sbagliato. Errore di calcolo nella radice del rapporto tra le masse $M_T$ e $M_S$.",
+        "Sbagliato. $7.5 \\cdot 10^7\\text{ km}$ è il punto medio esatto tra la Terra e il Sole."
+      ]
+    },
+    {
+      "id": "it_phys_452",
+      "widget_id": null,
+      "topic": "Gravitazione Universale - Accelerazione di Gravità sulla Luna",
+      "q": "Sapendo che la massa della Luna è $M_L = 7.34 \\cdot 10^{22}\\text{ kg}$ e il suo raggio è $R_L = 1.74 \\cdot 10^6\\text{ m}$, calcolare l'accelerazione di gravità $g_L$ alla sua superficie.",
+      "hint": "L'accelerazione di gravità superficiale è data dalla formula $g_L = G \\frac{M_L}{R_L^2}$, con $G = 6.674 \\cdot 10^{-11}\\text{ N}\\cdot\\text{m}^2/\\text{kg}^2$.",
+      "options": [
+        "$g_L \\approx 1.62\\text{ m/s}^2$",
+        "$g_L \\approx 9.81\\text{ m/s}^2$",
+        "$g_L \\approx 2.81\\text{ m/s}^2$",
+        "$g_L \\approx 0.81\\text{ m/s}^2$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Applicando la formula $g_L = (6.674 \\cdot 10^{-11}) \\cdot \\frac{7.34 \\cdot 10^{22}}{(1.74 \\cdot 10^6)^2} = \\frac{4.8987 \\cdot 10^{12}}{3.0276 \\cdot 10^{12}} \\approx 1.62\\text{ m/s}^2$.",
+        "Sbagliato. $9.81\\text{ m/s}^2$ è l'accelerazione di gravità media sulla superficie terrestre.",
+        "Sbagliato. Errore nel calcolo del quadrato del raggio lunare $R_L$.",
+        "Sbagliato. Corrisponde a circa la metà dell'accelerazione di gravità lunare reale."
+      ]
+    },
+    {
+      "id": "it_phys_453",
+      "widget_id": null,
+      "topic": "Gravitazione e Dinamica Orbitale - Sistema Stellare Binario",
+      "q": "Il sistema stellare binario di Plaskett è formato da una coppia di stelle di massa uguale $M$ che percorrono un'orbita circolare attorno al loro centro di massa comune (coincidente con il punto medio della congiungente). La velocità orbitale di ciascuna stella è $v = 220\\text{ km/s}$ e il periodo di rotazione è $T = 14.4\\text{ giorni}$. Si determini la massa $M$ di ciascuna stella.",
+      "hint": "Calcola prima il raggio dell'orbita $r = \\frac{v \\cdot T}{2\\pi}$ (convertendo $T$ in secondi). La distanza tra le due stelle è $2r$. Uguagliando la forza di gravità reciproca alla forza centripeta: $G \\frac{M^2}{(2r)^2} = M \\frac{v^2}{r} \\implies M = \\frac{4 v^2 r}{G}$.",
+      "options": [
+        "$M \\approx 1.26 \\cdot 10^{32}\\text{ kg}$",
+        "$M \\approx 6.30 \\cdot 10^{31}\\text{ kg}$",
+        "$M \\approx 2.52 \\cdot 10^{32}\\text{ kg}$",
+        "$M \\approx 3.15 \\cdot 10^{30}\\text{ kg}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il periodo in secondi è $T = 14.4 \\cdot 86400 = 1.24416 \\cdot 10^6\\text{ s}$. Il raggio orbitale è $r = \\frac{220000 \\cdot 1.24416 \\cdot 10^6}{2\\pi} \\approx 4.356 \\cdot 10^{10}\\text{ m}$. Dalla condizione dinamica $M = \\frac{4 v^2 r}{G} = \\frac{4 \\cdot (220000)^2 \\cdot (4.356 \\cdot 10^{10})}{6.674 \\cdot 10^{-11}} \\approx 1.26 \\cdot 10^{32}\\text{ kg}$.",
+        "Sbagliato. Risultato dimezzato per errore nell'uso della distanza $2r$ nell'equazione di gravitazione.",
+        "Sbagliato. Risultato raddoppiato per non aver diviso correttamente per il fattore centripeto.",
+        "Sbagliato. Errore nella conversione del periodo da giorni in secondi."
+      ]
+    },
+    {
+      "id": "it_phys_454",
+      "widget_id": null,
+      "topic": "Terza Legge di Keplero - Distanza di Marte dal Sole",
+      "q": "Il periodo di rotazione (rivoluzione) di Marte intorno al Sole è di $687\\text{ giorni}$, pari a $1.88\\text{ anni}$. Determinare la distanza di Marte dal Sole usando la distanza Terra-Sole ($1\\text{ UA}$) come unità di riferimento.",
+      "hint": "Applica la terza legge di Keplero nella forma $\\frac{T^2}{r^3} = \\text{costante}$. Esprimendo il periodo in anni e la distanza in Unità Astronomiche ($T_T = 1\\text{ anno}$, $r_T = 1\\text{ UA}$), la distanza di Marte si ricava come $r_M = (T_M)^{2/3}$.",
+      "options": [
+        "$1.52\\text{ volte la distanza Terra-Sole}$",
+        "$2.82\\text{ volte la distanza Terra-Sole}$",
+        "$3.53\\text{ volte la distanza Terra-Sole}$",
+        "$1.22\\text{ volte la distanza Terra-Sole}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con $T_M = 1.88\\text{ anni}$, applicando la terza legge di Keplero si ottiene $r_M = (1.88)^{2/3} = \\sqrt[3]{1.88^2} = \\sqrt[3]{3.5344} \\approx 1.52\\text{ UA}$ (ovvero $1.52$ volte la distanza Terra-Sole).",
+        "Sbagliato. $2.82$ si ottiene elevando direttamente al quadrato il periodo senza estrarre la radice cubica.",
+        "Sbagliato. $3.53$ corrisponde a $T_M^2$, cioè il quadrato del periodo orbitale.",
+        "Sbagliato. Risultato derivato da un calcolo errato dell'esponente $2/3$."
+      ]
+    },
+    {
+      "id": "it_phys_455",
+      "widget_id": null,
+      "topic": "Gravitazione e Moto Orbitale - Periodo dell'Orbita attorno a Giove",
+      "q": "Una navicella spaziale è in orbita intorno a Giove. Il raggio dell'orbita è pari a $3$ volte il raggio del pianeta ($R_G = 71500\\text{ km}$). Sapendo che alla superficie di Giove il campo gravitazionale è pari a $23\\text{ N/kg}$, calcolare il periodo dell'orbita della navicella.",
+      "hint": "Esprimi il prodotto $G M_G$ tramite la gravità superficiale: $g_G = \\frac{G M_G}{R_G^2} \\implies G M_G = g_G R_G^2$. Il periodo dell'orbita di raggio $r = 3 R_G$ è $T = 2\\pi \\sqrt{\\frac{r^3}{G M_G}} = 2\\pi \\sqrt{\\frac{27 R_G}{g_G}}$.",
+      "options": [
+        "$16\\text{ ore}$",
+        "$8\\text{ ore}$",
+        "$24\\text{ ore}$",
+        "$32\\text{ ore}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Sostituendo i dati $R_G = 7.15 \\cdot 10^7\\text{ m}$ e $g_G = 23\\text{ m/s}^2$: $T = 2\\pi \\sqrt{\\frac{27 \\cdot 7.15 \\cdot 10^7}{23}} = 2\\pi \\sqrt{8.393 \\cdot 10^7} \\approx 2\\pi \\cdot 9161.5 \\approx 57564\\text{ s}$. Convertendo in ore: $\\frac{57564}{3600} \\approx 15.99\\text{ ore} \\approx 16\\text{ ore}$.",
+        "Sbagliato. $8\\text{ ore}$ si ottiene se si dimentica il fattore $3^3 = 27$ a numeratore della radice.",
+        "Sbagliato. Valore sovrastimato per errore nei fattori di conversione dei secondi in ore.",
+        "Sbagliato. Risultato derivante da un raddoppio improprio del tempo orbitale."
+      ]
+    },
+    {
+      "id": "it_phys_456",
+      "widget_id": null,
+      "topic": "Satelliti Areostazionari - Raggio dell'Orbita Synchrona di Marte",
+      "q": "Marte ha una massa di circa $6.42 \\cdot 10^{23}\\text{ kg}$ e compie una rotazione completa su se stesso in $24\\text{ h e } 37\\text{ min}$. A che distanza dal centro del pianeta andrebbe posizionato un satellite artificiale affinché rimanga sempre fermo al di sopra di un dato punto della superficie di Marte?",
+      "hint": "Converti il periodo di rotazione in secondi: $T = 24 \\cdot 3600 + 37 \\cdot 60 = 88620\\text{ s}$. Applica l'equazione dell'orbita sincrona $r = \\left( \\frac{G M T^2}{4\\pi^2} \\right)^{1/3}$.",
+      "options": [
+        "$2.04 \\cdot 10^7\\text{ m}$",
+        "$4.22 \\cdot 10^7\\text{ m}$",
+        "$1.12 \\cdot 10^6\\text{ m}$",
+        "$8.50 \\cdot 10^7\\text{ m}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Sostituendo $T = 88620\\text{ s}$, $M = 6.42 \\cdot 10^{23}\\text{ kg}$ e $G = 6.674 \\cdot 10^{-11}$: $r^3 = \\frac{(6.674 \\cdot 10^{-11}) \\cdot (6.42 \\cdot 10^{23}) \\cdot (88620)^2}{4\\pi^2} \\approx 8.516 \\cdot 10^{21}\\text{ m}^3$. Estraendo la radice cubica: $r = \\sqrt[3]{8.516 \\cdot 10^{21}} \\approx 2.042 \\cdot 10^7\\text{ m} = 2.04 \\cdot 10^7\\text{ m}$.",
+        "Sbagliato. $4.22 \\cdot 10^7\\text{ m}$ è il raggio dell'orbita geostazionaria attorno alla Terra.",
+        "Sbagliato. Risultato dovuto al mancato elevamento al quadrato del periodo $T$.",
+        "Sbagliato. Valore di $r^3$ espresso prima dell'estrazione della radice cubica."
+      ]
+    },
+    {
+      "id": "it_phys_457",
+      "widget_id": null,
+      "topic": "Velocità di Fuga - Pianeta Marte",
+      "q": "Determinare la velocità di fuga necessaria per sfuggire alla gravità del pianeta Marte, sapendo che il suo raggio è pari a $3430\\text{ km}$ e la sua massa è pari a $6.37 \\cdot 10^{23}\\text{ kg}$.",
+      "hint": "Usa la formula della velocità di fuga $v_{fuga} = \\sqrt{\\frac{2 G M}{R}}$. Ricorda di esprimere il raggio in metri: $R = 3.43 \\cdot 10^6\\text{ m}$.",
+      "options": [
+        "$4977\\text{ m/s} = 4.98\\text{ km/s}$",
+        "$11200\\text{ m/s} = 11.2\\text{ km/s}$",
+        "$2380\\text{ m/s} = 2.38\\text{ km/s}$",
+        "$7070\\text{ m/s} = 7.07\\text{ km/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Calcolando $v_{fuga} = \\sqrt{\\frac{2 \\cdot (6.674 \\cdot 10^{-11}) \\cdot (6.37 \\cdot 10^{23})}{3.43 \\cdot 10^6}} = \\sqrt{24785830} \\approx 4978,5\\text{ m/s} \\approx 4977\\text{ m/s} = 4.98\\text{ km/s}$.",
+        "Sbagliato. $11.2\\text{ km/s}$ è la velocità di fuga dalla superficie della Terra.",
+        "Sbagliato. $2.38\\text{ km/s}$ è la velocità di fuga dalla superficie della Luna.",
+        "Sbagliato. Risultato derivato dalla mancanza del fattore $2$ sotto la radice quadrata ($v_{orb}$)."
+      ]
+    },
+    {
+      "id": "it_phys_458",
+      "widget_id": null,
+      "topic": "Velocità di Fuga - In funzione dell'Accelerazione Superficiale",
+      "q": "Un pianeta di raggio $R = 6.0 \\cdot 10^7\\text{ m}$ ha un campo gravitazionale sulla superficie di intensità $g = 30\\text{ m/s}^2$. Qual è la velocità di fuga dal pianeta?",
+      "hint": "Ricordando che $g = \\frac{G M}{R^2}$, possiamo sostituire $G M = g R^2$ nell'equazione della velocità di fuga per ottenere $v_{fuga} = \\sqrt{2 g R}$.",
+      "options": [
+        "$60\\text{ km/s}$",
+        "$30\\text{ km/s}$",
+        "$120\\text{ km/s}$",
+        "$42\\text{ km/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Applicando $v_{fuga} = \\sqrt{2 g R} = \\sqrt{2 \\cdot 30 \\cdot (6.0 \\cdot 10^7)} = \\sqrt{3.6 \\cdot 10^9} = \\sqrt{3600 \\cdot 10^6} = 60000\\text{ m/s} = 60\\text{ km/s}$.",
+        "Sbagliato. $30\\text{ km/s}$ si ottiene se si dimentica di moltiplicare per $2$ sotto radice.",
+        "Sbagliato. Risultato raddoppiato per errore di calcolo.",
+        "Sbagliato. Risultato dovuto ad un'estrazione errata della radice quadrata di $3.6 \\cdot 10^9$."
+      ]
+    },
+    {
+      "id": "it_phys_459",
+      "widget_id": null,
+      "topic": "Conservazione dell'Energia - Lancio Perpendicolare e Massima Distanza",
+      "q": "Un corpo viene lanciato perpendicolarmente alla superficie terrestre con una velocità pari a metà della velocità di fuga ($v = \\frac{1}{2} v_{fuga}$). A quale distanza massima $r_{max}$ dal centro terrestre si ferma? (Si trascurino gli attriti).",
+      "hint": "Usa la conservazione dell'energia meccanica: $E_i = \\frac{1}{2}m v^2 - \\frac{G M m}{R_T}$. Essendo $v^2 = \\frac{1}{4} v_{fuga}^2 = \\frac{1}{4} \\left(\\frac{2 G M}{R_T}\\right) = \\frac{G M}{2 R_T}$, si ottiene $E_i = -\\frac{3}{4} \\frac{G M m}{R_T}$. Nel punto di massima distanza $v=0$, quindi $E_f = -\\frac{G M m}{r_{max}}$.",
+      "options": [
+        "$\\frac{4}{3} R_T$",
+        "$2 R_T$",
+        "$\\frac{3}{2} R_T$",
+        "$\\frac{5}{4} R_T$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Eguagliando l'energia iniziale e finale: $-\\frac{3}{4} \\frac{G M m}{R_T} = -\\frac{G M m}{r_{max}} \\implies r_{max} = \\frac{4}{3} R_T$ (ovvero un'altezza $h = \\frac{1}{3} R_T$ sopra la superficie).",
+        "Sbagliato. $2 R_T$ si otterrebbe erroneamente ipotizzando un campo gravitazionale uniforme.",
+        "Sbagliato. $3/2 R_T$ deriva da un errore nel bilancio dell'energia cinetica iniziale.",
+        "Sbagliato. Risultato derivato da un'errata inversione della frazione $3/4$."
+      ]
+    },
+    {
+      "id": "it_phys_460",
+      "widget_id": null,
+      "topic": "Lavoro ed Energia Cinetica - Accelerazione di un'Automobile",
+      "q": "Calcolare il lavoro $L$ fatto dal motore di un'automobile di massa $m = 700\\text{ kg}$ per portarne la velocità da $0$ a $90\\text{ km/h}$ (trascurando gli attriti). Determinare inoltre a quale frazione dell'energia cinetica iniziale si riduce l'energia cinetica se la velocità si dimezza.",
+      "hint": "Converti la velocità in $\\text{m/s}$ ($90\\text{ km/h} = 25\\text{ m/s}$). Applica il teorema dell'energia cinetica $L = \\Delta K = \\frac{1}{2}m v_f^2$.",
+      "options": [
+        "$L \\approx 2.2 \\cdot 10^5\\text{ J}$ e l'energia cinetica si riduce a $1/4$",
+        "$L \\approx 4.4 \\cdot 10^5\\text{ J}$ e l'energia cinetica si riduce a $1/2$",
+        "$L \\approx 2.2 \\cdot 10^5\\text{ J}$ e l'energia cinetica si riduce a $1/8$",
+        "$L \\approx 1.1 \\cdot 10^5\\text{ J}$ e l'energia cinetica si riduce a $1/4$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Convertendo $v_f = 25\\text{ m/s}$, il lavoro è $L = \\frac{1}{2} \\cdot 700 \\cdot 25^2 = 218750\\text{ J} \\approx 2.2 \\cdot 10^5\\text{ J}$. Se la velocità si dimezza ($v' = v/2$), l'energia cinetica diventa $K' = \\frac{1}{2}m (v/2)^2 = \\frac{1}{4} (\\frac{1}{2}m v^2) = \\frac{1}{4} K$, riducendosi a $1/4$ del valore originario.",
+        "Sbagliato. $4.4 \\cdot 10^5\\text{ J}$ si ottiene se si dimentica di dividere per $2$ nella formula dell'energia cinetica.",
+        "Sbagliato. L'energia cinetica varia con il quadrato della velocità ($1/2^2 = 1/4$), non con il cubo ($1/8$).",
+        "Sbagliato. $1.1 \\cdot 10^5\\text{ J}$ si ottiene usando erratamente $v = 25/2\\text{ m/s}$ nel calcolo del lavoro iniziale."
+      ]
+    },
+    {
+      "id": "it_phys_461",
+      "widget_id": null,
+      "topic": "Teorema dell'Energia Cinetica - Calcolo della Velocità Finale",
+      "q": "Ad un corpo di massa $m = 500\\text{ g}$ viene applicata una forza che produce un lavoro $L = 4\\text{ J}$. Se il corpo si muoveva inizialmente con una velocità $v_i = 3\\text{ m/s}$, calcolare la sua velocità finale $v_f$.",
+      "hint": "Converti la massa in chilogrammi ($m = 0.5\\text{ kg}$). Usa il teorema dell'energia cinetica $L = \\frac{1}{2}m v_f^2 - \\frac{1}{2}m v_i^2$ e isola $v_f$.",
+      "options": [
+        "$v_f = 5\\text{ m/s}$",
+        "$v_f = 4\\text{ m/s}$",
+        "$v_f = 25\\text{ m/s}$",
+        "$v_f = 7\\text{ m/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'energia cinetica iniziale è $K_i = \\frac{1}{2} (0.5) (3^2) = 2.25\\text{ J}$. Dal teorema del lavoro $L = K_f - K_i \\implies 4 = \\frac{1}{2}(0.5) v_f^2 - 2.25 \\implies 0.25 v_f^2 = 6.25 \\implies v_f^2 = 25 \\implies v_f = 5\\text{ m/s}$.",
+        "Sbagliato. Risultato derivato da un errore nel sommare il lavoro all'energia cinetica iniziale.",
+        "Sbagliato. $25$ è il valore del quadrato della velocità $v_f^2$, dimenticando di estrarre la radice quadrata.",
+        "Sbagliato. Errore di calcolo nella conversione dei grammi in chilogrammi."
+      ]
+    },
+    {
+      "id": "it_phys_462",
+      "widget_id": null,
+      "topic": "Teorema dell'Energia Cinetica - Forza Frenante",
+      "q": "Un corpo di massa $m = 90\\text{ kg}$ che procede alla velocità di $10\\text{ m/s}$ riduce la propria velocità fino a $3\\text{ m/s}$ durante una frenata di $40\\text{ m}$. Calcolare il modulo della forza frenante media $F$ che agisce su di esso.",
+      "hint": "Il lavoro compiuto dalla forza frenante è $L = -F \\cdot s$. Per il teorema dell'energia cinetica, $L = \\Delta K = \\frac{1}{2}m (v_f^2 - v_i^2)$.",
+      "options": [
+        "$F \\approx 100\\text{ N}$",
+        "$F \\approx 200\\text{ N}$",
+        "$F \\approx 410\\text{ N}$",
+        "$F \\approx 50\\text{ N}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variazione di energia cinetica è $\\Delta K = \\frac{1}{2} \\cdot 90 \\cdot (3^2 - 10^2) = 45 \\cdot (9 - 100) = -4095\\text{ J}$. Essendo $L = -F \\cdot s = -4095\\text{ J}$, si ha $F = \\frac{4095}{40} = 102.375\\text{ N} \\approx 100\\text{ N}$.",
+        "Sbagliato. Risultato raddoppiato per errore di calcolo nel fattore $1/2$.",
+        "Sbagliato. $410\\text{ N}$ si ottiene se si dimentica di dividere per la distanza di frenata $s = 40\\text{ m}$.",
+        "Sbagliato. Deriva dal considerare la variazione di velocità $(10 - 3)$ invece della variazione dei quadrati delle velocità."
+      ]
+    },
+    {
+      "id": "it_phys_463",
+      "widget_id": null,
+      "topic": "Energia Cinetica ed Equivalente in Esplosivo - Scontro di Locomotive",
+      "q": "Due locomotive di massa $m = 120 \\cdot 10^3\\text{ kg}$ ciascuna si trovano a distanza $d = 6.4\\text{ km}$ l'una dall'altra e vengono poste in moto frontale l'una contro l'altra con accelerazione costante $a = 0.26\\text{ m/s}^2$. Calcolare l'energia cinetica totale al momento dell'impatto e la massa di tritolo equivalente necessaria per sviluppare la stessa energia, sapendo che $1\\text{ t}$ ($1000\\text{ kg}$) di tritolo sviluppa $4.18 \\cdot 10^9\\text{ J}$.",
+      "hint": "Le locomotive si scontrano nel punto medio $s = d/2 = 3200\\text{ m}$. La velocità di ciascuna all'impatto soddisfa $v^2 = 2 a s$. L'energia cinetica totale è $K_{tot} = 2 \\cdot \\left(\\frac{1}{2} m v^2\\right) = m (2 a s)$. Sostituisci i valori per trovare $K_{tot}$ e poi dividi per l'energia specifica del tritolo ($4.18 \\cdot 10^6\\text{ J/kg}$).",
+      "options": [
+        "$K_{tot} \\approx 2 \\cdot 10^8\\text{ J}$ e $M_{TNT} \\approx 48\\text{ kg}$",
+        "$K_{tot} \\approx 1 \\cdot 10^8\\text{ J}$ e $M_{TNT} \\approx 24\\text{ kg}$",
+        "$K_{tot} \\approx 4 \\cdot 10^8\\text{ J}$ e $M_{TNT} \\approx 96\\text{ kg}$",
+        "$K_{tot} \\approx 2 \\cdot 10^8\\text{ J}$ e $M_{TNT} \\approx 480\\text{ kg}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Ogni locomotiva percorre $s = 3200\\text{ m}$, quindi $v^2 = 2 \\cdot 0.26 \\cdot 3200 = 1664\\text{ m}^2/\\text{s}^2$. L'energia cinetica di una singola locomotiva è $K_1 = \\frac{1}{2} (120000) (1664) \\approx 10^8\\text{ J}$, e l'energia totale è $K_{tot} = 2 K_1 = 1.9968 \\cdot 10^8\\text{ J} \\approx 2 \\cdot 10^8\\text{ J}$. Dividendo per l'energia di $1\\text{ kg}$ di tritolo ($4.18 \\cdot 10^6\\text{ J}$): $M_{TNT} = \\frac{1.9968 \\cdot 10^8}{4.18 \\cdot 10^6} \\approx 47.8\\text{ kg} \\approx 48\\text{ kg}$.",
+        "Sbagliato. $1 \\cdot 10^8\\text{ J}$ e $24\\text{ kg}$ si calcolano considerando l'energia cinetica di una sola locomotiva anziché di entrambe.",
+        "Sbagliato. Risultato raddoppiato per aver considerato la distanza intera $6.4\\text{ km}$ per ciascuna locomotiva anziché $3.2\\text{ km}$.",
+        "Sbagliato. Errore di un fattore $10$ nella conversione da tonnellate a chilogrammi di tritolo."
+      ]
+    },
+    {
+      "id": "it_phys_464",
+      "widget_id": null,
+      "topic": "Cinematica e Lavoro nel Protone - Velocità Finale in Acceleratore Lineare",
+      "q": "Un protone ($m = 1.67 \\cdot 10^{-27}\\text{ kg}$) entra in uno stadio di un acceleratore lineare di lunghezza $d = 3.5\\text{ cm}$ con velocità iniziale $v_i = 2.7 \\cdot 10^7\\text{ m/s}$. Subendo un'accelerazione costante $a = 3.6 \\cdot 10^{15}\\text{ m/s}^2$, calcolare la sua velocità $v_f$ all'uscita dallo stadio.",
+      "hint": "Converti la lunghezza in metri ($d = 0.035\\text{ m}$). Utilizza la relazione cinematica $v_f^2 = v_i^2 + 2 a d$.",
+      "options": [
+        "$v_f \\approx 3.1 \\cdot 10^7\\text{ m/s}$",
+        "$v_f \\approx 6.2 \\cdot 10^7\\text{ m/s}$",
+        "$v_f \\approx 2.9 \\cdot 10^7\\text{ m/s}$",
+        "$v_f \\approx 9.8 \\cdot 10^{14}\\text{ m/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Convertendo $d = 0.035\\text{ m}$, si ottiene $v_f^2 = (2.7 \\cdot 10^7)^2 + 2 \\cdot (3.6 \\cdot 10^{15}) \\cdot 0.035 = 7.29 \\cdot 10^{14} + 2.52 \\cdot 10^{14} = 9.81 \\cdot 10^{14}\\text{ m}^2/\\text{s}^2$. Estraendo la radice quadrata: $v_f = \\sqrt{9.81 \\cdot 10^{14}} \\approx 3.13 \\cdot 10^7\\text{ m/s} \\approx 3.1 \\cdot 10^7\\text{ m/s}$.",
+        "Sbagliato. Risultato raddoppiato per errore nel calcolo della radice.",
+        "Sbagliato. Deriva dall'aver dimenticato il fattore $2$ nel termine $2 a d$.",
+        "Sbagliato. $9.8 \\cdot 10^{14}$ è il valore del quadrato della velocità $v_f^2$ in $\\text{m}^2/\\text{s}^2$."
+      ]
+    },
+    {
+      "id": "it_phys_465",
+      "widget_id": null,
+      "topic": "Cinematica e Lavoro nel Protone - Guadagno in Energia Cinetica",
+      "q": "Un protone di massa $m = 1.67 \\cdot 10^{-27}\\text{ kg}$ accelera con un'accelerazione $a = 3.6 \\cdot 10^{15}\\text{ m/s}^2$ su una distanza $d = 3.5\\text{ cm}$, aumentando la sua velocità da $v_i = 2.7 \\cdot 10^7\\text{ m/s}$ a $v_f \\approx 3.1 \\cdot 10^7\\text{ m/s}$. Calcolare l'incremento di energia cinetica $\\Delta K$ ottenuto in questa sezione.",
+      "hint": "Il guadagno in energia cinetica è pari al lavoro compiuto dalla forza: $\\Delta K = L = F \\cdot d = m a d$, oppure alla differenza tra le energie cinetiche finale ed iniziale $\\Delta K = \\frac{1}{2}m (v_f^2 - v_i^2)$.",
+      "options": [
+        "$\\Delta K \\approx 1.9 \\cdot 10^{-13}\\text{ J}$",
+        "$\\Delta K \\approx 3.8 \\cdot 10^{-13}\\text{ J}$",
+        "$\\Delta K \\approx 2.1 \\cdot 10^{-10}\\text{ J}$",
+        "$\\Delta K \\approx 8.0 \\cdot 10^{-14}\\text{ J}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Usando i valori arrotondati della velocità $v_f = 3.1 \\cdot 10^7\\text{ m/s}$ e $v_i = 2.7 \\cdot 10^7\\text{ m/s}$, si ottiene $\\Delta K = \\frac{1}{2} (1.67 \\cdot 10^{-27}) \\cdot [(3.1 \\cdot 10^7)^2 - (2.7 \\cdot 10^7)^2] = 0.835 \\cdot 10^{-27} \\cdot (9.61 - 7.29) \\cdot 10^{14} \\approx 1.937 \\cdot 10^{-13}\\text{ J} \\approx 1.9 \\cdot 10^{-13}\\text{ J}$ (il valore esatto non arrotondato $m a d$ vale $2.1 \\cdot 10^{-13}\\text{ J}$).",
+        "Sbagliato. Risultato raddoppiato per mancata divisione per $2$.",
+        "Sbagliato. Errore nell'ordine di grandezza derivante dall'uso di $d = 3.5$ anziché $d = 0.035\\text{ m}$.",
+        "Sbagliato. Errore nel calcolo del quadrato della differenza di velocità."
+      ]
+    }
+  ]
+}

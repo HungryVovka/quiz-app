@@ -1,0 +1,887 @@
+{
+  "subject": "Fisica",
+  "questions": [
+    {
+      "id": "it_phys_334",
+      "widget_id": null,
+      "topic": "Cinematica - Cinematica del Corpo Rigido",
+      "q": "Se due punti $A$ e $B$ si trovano su un disco rigido in rotazione a distanze diverse dal centro ($r_A < r_B$), qual è la relazione tra le loro velocità angolari e tangenziali?",
+      "hint": "Ricorda che in un corpo rigido tutti i punti compiono un giro completo nello stesso intervallo di tempo, e usa $v = \\omega r$.",
+      "options": [
+        "Hanno la stessa velocità angolare ($\\omega_A = \\omega_B$), ma il punto $B$ ha una velocità tangenziale maggiore ($v_B > v_A$).",
+        "Hanno la stessa velocità tangenziale ($v_A = v_B$), ma il punto $A$ ha una velocità angolare maggiore ($\\omega_A > \\omega_B$).",
+        "Sia la velocità angolare sia la velocità tangenziale sono identiche per entrambi i punti."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Essendo il disco rigido, tutti i punti ruotano con la stessa velocità angolare $\\omega$. Poiché la velocità tangenziale è $v = \\omega r$, il punto $B$ a distanza maggiore dal centro si muove a una velocità tangenziale superiore.",
+        "Sbagliato. La velocità tangenziale non è uguale: chi si trova più all'esterno deve percorrere una circonferenza più lunga nello stesso tempo.",
+        "Sbagliato. Solo la velocità angolare è identica; le velocità tangenziali differiscono a causa del diverso raggio."
+      ]
+    },
+    {
+      "id": "it_phys_335",
+      "widget_id": null,
+      "topic": "Cinematica - Caduta Libera nel Vuoto",
+      "q": "Nel vuoto, due corpi con masse molto diverse $m_1 = 1\\text{ kg}$ e $m_2 = 100\\text{ kg}$ vengono lasciati cadere contemporaneamente dalla stessa altezza. Quale affermazione descrive correttamente il loro moto?",
+      "hint": "Considera la seconda legge di Newton ($F = m a$) unita alla legge di gravitazione ($F = m g$).",
+      "options": [
+        "Arrivano a terra contemporaneamente con la stessa accelerazione $g$.",
+        "Il corpo di $100\\text{ kg}$ arriva prima perché subisce una forza di gravità maggiore.",
+        "Il corpo di $1\\text{ kg}$ arriva prima perché ha un'inerzia minore che oppone meno resistenza."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel vuoto non c'è attrito dell'aria. Sebbene la forza gravitazionale sia $100$ volte maggiore sul corpo più pesante, anche la sua inerzia (massa) è $100$ volte maggiore. Le due proprietà si compensano perfettamente e l'accelerazione $g = \\frac{F}{m}$ è identica per entrambi.",
+        "Sbagliato. La forza è maggiore, ma l'inerzia maggiore compensa esattamente l'aumento di forza.",
+        "Sbagliato. La minore inerzia è bilanciata da una forza di gravità proporzionalmente minore."
+      ]
+    },
+    {
+      "id": "it_phys_336",
+      "widget_id": null,
+      "topic": "Lavoro ed Energia - Lavoro della Forza Centripeta",
+      "q": "Quanto lavoro $L$ compie la forza centripeta su un corpo che percorre un'orbita circolare a velocità scalare costante?",
+      "hint": "Valuta l'angolo formato in ogni istante tra il vettore forza centripeta e il vettore spostamento tangenziale.",
+      "options": [
+        "Un lavoro positivo pari all'energia cinetica del corpo ($L = K$).",
+        "Rigorosamente zero ($L = 0$).",
+        "Un lavoro variabile che raddoppia se si raddoppia il raggio dell'orbita."
+      ],
+      "ans": 1,
+      "explanations": [
+        "Sbagliato. La forza centripeta non trasferisce energia cinetica al corpo nel moto circolare uniforme.",
+        "Corretto! La forza centripeta è sempre perpendicolare allo spostamento istantaneo (angolo $\\theta = 90^\\circ$). Poiché $L = F \\cdot \\Delta s \\cdot \\cos(90^\\circ) = 0$, il lavoro è nullo e il modulo della velocità rimane costante.",
+        "Sbagliato. Il lavoro è nullo indipendentemente dal raggio dell'orbita."
+      ]
+    },
+    {
+      "id": "it_phys_337",
+      "widget_id": "widget_phys_337",
+      "topic": "Lavoro ed Energia - Stabilità dell'Equilibrio",
+      "q": "In un grafico dell'energia potenziale $U(x)$, come si individua una posizione di equilibrio stabile?",
+      "hint": "Considera la derivata seconda dell'energia potenziale $\\frac{d^2U}{dx^2}$ e l'effetto di una piccola perturbazione dalla posizione di equilibrio.",
+      "options": [
+        "Corrisponde a un punto di massimo locale dell'energia potenziale ($\\frac{d^2U}{dx^2} < 0$).",
+        "Corrisponde a un punto di minimo locale dell'energia potenziale ($\\frac{d^2U}{dx^2} > 0$).",
+        "Corrisponde a qualsiasi punto in cui l'energia potenziale si annulla ($U = 0$)."
+      ],
+      "ans": 1,
+      "explanations": [
+        "Sbagliato. I punti di massimo dell'energia potenziale corrispondono a posizioni di equilibrio *instabile*.",
+        "Corretto! Nei punti di minimo dell'energia potenziale, una piccola spinta genera una forza di richiamo verso il punto di minimo stesso (come una sfera sul fondo di una conca). Matematicamente la derivata prima è nulla e la derivata seconda è positiva.",
+        "Sbagliato. Il valore assoluto dell'energia potenziale non determina la stabilità; conta la sua variazione spaziale (derivata)."
+      ]
+    },
+    {
+      "id": "it_phys_338",
+      "widget_id": null,
+      "topic": "Impulso e Urti - Sistema del Centro di Massa",
+      "q": "Qual è il valore della quantità di moto totale di un sistema isolato di corpi se misurata da un osservatore situato nel sistema di riferimento del centro di massa?",
+      "hint": "Pensa alla velocità del centro di massa rispetto a se stesso.",
+      "options": [
+        "Dipende dal tipo di urto che avviene tra i corpi (elastico o anelastico).",
+        "È pari al prodotto tra la massa totale e la velocità del corpo più veloce.",
+        "È sempre uguale a zero, sia prima sia dopo l'urto."
+      ],
+      "ans": 2,
+      "explanations": [
+        "Sbagliato. Il valore non dipende dal tipo di urto; nel sistema del centro di massa la quantità di moto totale è una costante universale per quel sistema.",
+        "Sbagliato. Non corrisponde al prodotto con la velocità del singolo corpo.",
+        "Corretto! Per definizione, nel sistema di riferimento del centro di massa (detto anche *zero-momentum frame*), le quantità di moto delle particelle si sommano vettorialmente dando sempre zero: $\\vec{P}'_{tot} = 0$."
+      ]
+    },
+    {
+      "id": "it_phys_339",
+      "widget_id": null,
+      "topic": "Impulso e Urti - Classificazione degli Urti",
+      "q": "Se durante l'impatto tra due corpi l'energia cinetica totale del sistema **aumenta** a seguito dell'urto (ad esempio per l'esplosione di una carica interna), come si definisce l'urto?",
+      "hint": "Confronta con le definizioni di urto elastico (energia costante) ed anelastico (energia che diminuisce).",
+      "options": [
+        "Urto superelastico (o esplosivo).",
+        "Urto perfettamente anelastico.",
+        "Urto conservativo ideale."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un urto in cui l'energia cinetica finale è maggiore di quella iniziale è detto *superelastico*. L'energia potenziale interna (chimica, elastica, ecc.) viene convertita in energia cinetica aggiuntiva.",
+        "Sbagliato. In un urto perfettamente anelastico l'energia cinetica si riduce al valore minimo consentito dalla conservazione della quantità di moto.",
+        "Sbagliato. Un urto conservativo (elastico) mantiene costante l'energia cinetica, non la aumenta."
+      ]
+    },
+    {
+      "id": "it_phys_340",
+      "widget_id": null,
+      "topic": "Sistemi a Molti Corpi - Momento d'Inerzia e Distanza dall'Asse",
+      "q": "Per un corpo rigido di massa $M$, come varia il suo momento d'inerzia $I$ rispetto a un asse di rotazione se la sua massa viene ridistribuita più lontano dall'asse stesso?",
+      "hint": "Richiama la definizione di momento d'inerzia per punti materiali: $I = \\sum m_i r_i^2$.",
+      "options": [
+        "Il momento d'inerzia aumenta, poiché $I$ è proporzionale al quadrato della distanza $r$ dall'asse.",
+        "Il momento d'inerzia diminuisce, favorendo una rotazione più rapida a parità di momento torcente.",
+        "Il momento d'inerzia rimane invariato, perché dipende unicamente dalla massa totale $M$."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché $I = \\sum m_i r_i^2$, allontanare la massa dall'asse di rotazione (aumentare $r$) fa crescere notevolmente il momento d'inerzia $I$, aumentando la resistenza del corpo alle variazioni della velocità angolare.",
+        "Sbagliato. Il momento d'inerzia aumenta, rendendo la rotazione più difficile da accelerare.",
+        "Sbagliato. Il momento d'inerzia non dipende solo dalla massa, ma crucialmente da *come* la massa è distribuita nello spazio rispetto all'asse."
+      ]
+    },
+    {
+      "id": "it_phys_341",
+      "widget_id": null,
+      "topic": "Sistemi a Molti Corpi - Conservazione del Momento Angolare",
+      "q": "Per quale motivo una pattinatrice su ghiaccio che sta eseguendo una piroetta ruota più velocemente quando stringe le braccia al corpo?",
+      "hint": "Considera la conservazione del momento angolare $L = I \\omega$ in assenza di momenti torcenti esterni significativi.",
+      "options": [
+        "Stringendo le braccia le forze interne aumentano il momento angolare totale $L$.",
+        "Stringendo le braccia riduce il suo momento d'inerzia $I$; di conseguenza la velocità angolare $\\omega$ deve aumentare per mantenere costante $L$.",
+        "Stringendo le braccia riduce la sua energia cinetica, consentendo al corpo di completare più giri."
+      ],
+      "ans": 1,
+      "explanations": [
+        "Sbagliato. Le forze interne non possono modificare il momento angolare totale $L$ del sistema.",
+        "Corretto! In assenza di momenti di forze esterne, il momento angolare si conserva ($L = I \\omega = \\text{costante}$). Avvicinando le braccia al corpo, la distanza delle masse dall'asse diminuisce, facendo diminuire $I$. Per compensare, la velocità angolare $\\omega$ aumenta.",
+        "Sbagliato. In realtà l'energia cinetica rotazionale $K = \\frac{1}{2} I \\omega^2 = \\frac{L^2}{2I}$ aumenta, grazie al lavoro muscolare compiuto per tirare verso l'interno le braccia."
+      ]
+    },
+    {
+      "id": "it_phys_342",
+      "widget_id": null,
+      "topic": "Gravitazione - Seconda Legge di Keplero",
+      "q": "La Seconda Legge di Keplero (legge delle aree, secondo cui il raggio vettore spazza aree uguali in tempi uguali) è la diretta conseguenza fisica della conservazione di quale grandezza?",
+      "hint": "Considera il tipo di forza che agisce sul pianeta: la gravità è una forza centrale (il cui momento torcente rispetto al Sole è nullo).",
+      "options": [
+        "Dell'energia cinetica del pianeta lungo l'orbita.",
+        "Del momento angolare del pianeta rispetto al Sole.",
+        "Del campo magnetico terrestre interplanetario."
+      ],
+      "ans": 1,
+      "explanations": [
+        "Sbagliato. L'energia cinetica varia lungo l'orbita ellittica (massima al perielio, minima all'afelio).",
+        "Corretto! Poiché la forza gravitazionale è centrale, il momento torcente della forza rispetto al Sole è nullo ($\\vec{\\tau} = \\vec{r} \\times \\vec{F} = 0$). Di conseguenza il momento angolare $\\vec{L}$ si conserva ed equivale matematicamente alla velocità areale costante.",
+        "Sbagliato. I campi magnetici non sono responsabili della legge delle aree."
+      ]
+    },
+    {
+      "id": "it_phys_343",
+      "widget_id": null,
+      "topic": "Gravitazione - Punti Lagrangiani",
+      "q": "Cosa rappresentano i punti di Lagrange (o punti di librazione) in un sistema astronomico formato da due corpi massivi che orbitano l'uno attorno all'altro (ad esempio, il sistema Sole–Terra)?",
+      "hint": "Pensa all'equilibrio tra forze attrattive e forza centrifuga in un sistema di riferimento rotante.",
+      "options": [
+        "Punti dello spazio in cui le forze gravitazionali dei due corpi e la forza centrifuga si bilanciano, consentendo a un oggetto di massa trascurabile di rimanere in posizione fissa rispetto ad essi.",
+        "Punti lungo l'orbita ellittica in cui la velocità del pianeta è pari alla sua velocità media.",
+        "Punti in cui l'energia potenziale gravitazionale dei due corpi si annulla simultaneamente."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Esistono 5 punti lagrangiani (da $L_1$ ad $L_5$) dove le attrazioni gravitazionali combinate dei due corpi grandi forniscono esattamente la forza centripeta necessaria per ruotare insieme ad essi, permettendo a un satellite di mantenere una posizione relativa stabile o semistabile.",
+        "Sbagliato. Non riguardano la velocità media dell'orbita del pianeta.",
+        "Sbagliato. L'energia potenziale con riferimento all'infinito non si annulla nei punti lagrangiani."
+      ]
+    },
+    {
+      "id": "it_phys_344",
+      "widget_id": null,
+      "topic": "Cinematica - Moto Parabolico e Angolo di Lancio",
+      "q": "A parità di velocità iniziale $v_0$, per quale angolo di lancio $\\theta$ rispetto all'orizzontale si ottiene la massima gittata (spostamento orizzontale) su un piano orizzontale, trascurando la resistenza dell'aria?",
+      "hint": "Considera la formula della gittata $d = \\frac{v_0^2 \\sin(2\\theta)}{g}$ e trova per quale angolo la funzione seno raggiunge il suo massimo.",
+      "options": [
+        "$30^\\circ$",
+        "$45^\\circ$",
+        "$60^\\circ$"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Sbagliato. A $30^\\circ$ la gittata è inferiore al valore massimo (ed è pari a quella che si otterrebbe a $60^\\circ$).",
+        "Corretto! La gittata è $d = \\frac{v_0^2 \\sin(2\\theta)}{g}$. Il valore massimo del seno è $1$, che si ottiene quando l'argomento è $90^\\circ$, ossia $2\\theta = 90^\\circ \\implies \\theta = 45^\\circ$.",
+        "Sbagliato. A $60^\\circ$ il proiettile raggiunge una quota maggiore, ma la gittata orizzontale risulta inferiore a quella ottenuta a $45^\\circ$."
+      ]
+    },
+    {
+      "id": "it_phys_345",
+      "widget_id": null,
+      "topic": "Cinematica - Sistemi Non Inerziali e Forza Apparente",
+      "q": "In un sistema di riferimento in rotazione uniforme con velocità angolare $\\vec{\\omega}$, quale forza apparente agisce su un corpo in movimento con velocità $\\vec{v}'$ rispetto al sistema rotante?",
+      "hint": "Distingui la forza apparente che agisce anche sui corpi fermi da quella che richiede una velocità relativa diversa da zero.",
+      "options": [
+        "La forza di Coriolis",
+        "La forza centripeta",
+        "La forza d'inerzia traslazionale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La forza apparente di Coriolis $\\vec{F}_C = -2m(\\vec{\\omega} \\times \\vec{v}')$ agisce unicamente sui corpi in movimento all'interno di un sistema di riferimento rotante.",
+        "Sbagliato. La forza centripeta è la forza reale (o risultante) necessaria in un sistema inerziale per vincolare un corpo a un moto circolare.",
+        "Sbagliato. La forza d'inerzia traslazionale compare quando il sistema di riferimento trasla con un'accelerazione lineare, non quando ruota."
+      ]
+    },
+    {
+      "id": "it_phys_346",
+      "widget_id": null,
+      "topic": "Lavoro ed Energia - Potenza Istantanea",
+      "q": "Come si esprime la potenza istantanea $P(t)$ sviluppata da una forza $\\vec{F}$ applicata a un corpo che si muove con velocità istantanea $\\vec{v}$?",
+      "hint": "Considera il lavoro infinitesimo $dL = \\vec{F} \\cdot d\\vec{r}$ e dividilo per l'intervallo di tempo $dt$.",
+      "options": [
+        "$P = \\vec{F} \\cdot \\vec{v}$ (prodotto scalare tra forza e velocità)",
+        "$P = \\vec{F} \\times \\vec{v}$ (prodotto vettoriale tra forza e velocità)",
+        "$P = \\frac{|\\vec{F}|}{|\\vec{v}|}$ (rapporto tra il modulo della forza e quello della velocità)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La potenza istantanea è $P = \\frac{dL}{dt} = \\vec{F} \\cdot \\frac{d\\vec{r}}{dt} = \\vec{F} \\cdot \\vec{v}$. Se la forza è perpendicolare alla velocità, la potenza erogata è zero.",
+        "Sbagliato. Il prodotto vettoriale produce un vettore, mentre la potenza è una grandezza scalare.",
+        "Sbagliato. Il rapporto tra i moduli della forza e della velocità non ha il significato fisico di potenza."
+      ]
+    },
+    {
+      "id": "it_phys_347",
+      "widget_id": null,
+      "topic": "Lavoro ed Energia - Gradiente dell'Energia Potenziale",
+      "q": "In uno spazio tridimensionale, qual è la relazione vettoriale generale tra una forza conservativa $\\vec{F}$ e il campo dell'energia potenziale $U(x,y,z)$?",
+      "hint": "Utilizza l'operatore differenziale vettoriale che misura la direzione di massima variazione di una funzione scalare.",
+      "options": [
+        "$\\vec{F} = -\\nabla U$ (la forza è il negativo del gradiente dell'energia potenziale)",
+        "$\\vec{F} = \\nabla \\times U$ (la forza è il rotore dell'energia potenziale)",
+        "$\\vec{F} = \\Delta U \\cdot \\vec{r}$ (la forza è il prodotto tra la variazione di energia e il vettore posizione)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In tre dimensioni la forza conservativa è il negativo del gradiente dell'energia potenziale: $\\vec{F} = -\\nabla U = -\\left(\\frac{\\partial U}{\\partial x}\\hat{i} + \\frac{\\partial U}{\\partial y}\\hat{j} + \\frac{\\partial U}{\\partial z}\\hat{k}\\right)$.",
+        "Sbagliato. L'operatore rotore si applica a campi vettoriali, mentre l'energia potenziale $U$ è un campo scalare.",
+        "Sbagliato. Questa espressione non ha validità analitica né vettoriale."
+      ]
+    },
+    {
+      "id": "it_phys_348",
+      "widget_id": null,
+      "topic": "Impulso e Urti - Limite di Massa in un Urto Elastico",
+      "q": "Una pallina di massa trascurabile $m$ urta elasticamente e frontalmente una parete immobile (o una massa enorme $M \\gg m$). Cosa accade alla velocità della pallina subito dopo l'impatto?",
+      "hint": "Analizza il limite delle equazioni dell'urto elastico unidimensionale per $M \\to \\infty$.",
+      "options": [
+        "Rimbalza all'indietro mantenendo la stessa velocità in modulo ($v_f \\approx -v_i$).",
+        "Si ferma completamente cedendo tutta la sua energia cinetica alla parete ($v_f = 0$).",
+        "Atraversa la parete proseguendo senza variare la propria velocità ($v_f = v_i$)."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Dalla formula per l'urto elastico $v_f = \\frac{m-M}{m+M} v_i$, se $M \\gg m$ si ottiene $\\frac{m-M}{m+M} \\approx -1$, quindi $v_f \\approx -v_i$. La pallina inverte il verso mantenendo la stessa velocità in modulo.",
+        "Sbagliato. La pallina si fermerebbe soltanto se urtasse una massa uguale ($M = m$) inizialmente ferma.",
+        "Sbagliato. Nell'impatto con un corpo rigido e infinitamente massiccio la pallina non prosegue inalterata."
+      ]
+    },
+    {
+      "id": "it_phys_349",
+      "widget_id": null,
+      "topic": "Impulso e Urti - Conservazione del Momento Angolare negli Urti",
+      "q": "In un urto tra due particelle, quando è garantita la conservazione del momento angolare totale del sistema rispetto a un dato polo?",
+      "hint": "Richiama la Seconda Equazione Cardinale della dinamica per un sistema di punti.",
+      "options": [
+        "Quando il momento risultante delle sole forze esterne rispetto a quel polo è nullo ($\\vec{\\tau}_{est} = 0$).",
+        "Soltanto se l'urto è perfettamente elastico.",
+        "Soltanto se l'urto avviene sul piano equatoriale del polo scelto."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché $\\frac{d\\vec{L}_{tot}}{dt} = \\vec{\\tau}_{est}$, il momento angolare totale si conserva se il momento delle forze esterne rispetto al polo è nullo. Ciò vale indipendentemente dal fatto che l'urto sia elastico o anelastico.",
+        "Sbagliato. Anche negli urti anelastici il momento angolare si conserva purché non vi siano momenti di forze esterne.",
+        "Sbagliato. La conservazione del momento angolare vettoriale prescinde dalla scelta del piano equatoriale."
+      ]
+    },
+    {
+      "id": "it_phys_350",
+      "widget_id": null,
+      "topic": "Sistemi a Molti Corpi - Teorema di Huygens-Steiner",
+      "q": "Cosa stabilisce il Teorema di Huygens-Steiner per il momento d'inerzia $I$ di un corpo rigido di massa $M$ rispetto a un asse parallelo a quello passante per il centro di massa?",
+      "hint": "Il momento d'inerzia rispetto a un asse generico è sempre maggiore del momento d'inerzia rispetto all'asse baricentrico parallelo.",
+      "options": [
+        "$I = I_{CM} + M d^2$, dove $d$ è la distanza tra i due assi paralleli.",
+        "$I = I_{CM} - M d^2$, dove $d$ è la distanza tra i due assi.",
+        "$I = \\frac{I_{CM}}{d^2}$, dove $d$ è la distanza tra i due assi."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il teorema di Huygens-Steiner afferma che $I = I_{CM} + M d^2$. Il momento d'inerzia aumenta di un termine pari alla massa del corpo per il quadrato della distanza tra i due assi paralleli.",
+        "Sbagliato. Il momento d'inerzia rispetto a un asse generico è sempre *maggiore* di quello relativo all'asse passante per il CM.",
+        "Sbagliato. La relazione corretta è una somma di termini dimensionalmente coerenti con un momento d'inerzia."
+      ]
+    },
+    {
+      "id": "it_phys_351",
+      "widget_id": null,
+      "topic": "Sistemi a Molti Corpi - Prima Equazione Cardinale",
+      "q": "Quale relazione stabilisce la Prima Equazione Cardinale della dinamica per un sistema di particelle?",
+      "hint": "Considera come le forze interne si annullano a coppie per il terzo principio della dinamica.",
+      "options": [
+        "La derivata temporale della quantità di moto totale del sistema è pari alla risultante delle sole forze esterne ($\\frac{d\\vec{P}_{tot}}{dt} = \\vec{F}_{est}$).",
+        "La variazione dell'energia cinetica totale è pari al momento delle forze interne.",
+        "La risultante delle forze interne è uguale alla massa totale per l'accelerazione angolare."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La prima equazione cardinale esprime che $\\frac{d\\vec{P}_{tot}}{dt} = \\vec{F}_{est} = M \\vec{a}_{CM}$. Le forze interne non alterano la quantità di moto totale del sistema.",
+        "Sbagliato. La variazione di energia cinetica è legata al lavoro totale delle forze (sia interne che esterne), non al loro momento.",
+        "Sbagliato. Per il terzo principio della dinamica, la somma delle forze interne è sempre rigorosamente nulla."
+      ]
+    },
+    {
+      "id": "it_phys_352",
+      "widget_id": null,
+      "topic": "Gravitazione - Terza Legge di Keplero",
+      "q": "La Terza Legge di Keplero stabilisce che per i pianeti del Sistema Solare il quadrato del periodo di rivoluzione $T^2$ è proporzionale a quale altra grandezza geometrica dell'orbita?",
+      "hint": "Richiama la relazione $\\frac{T^2}{a^3} = \\text{costante}$.",
+      "options": [
+        "Al cubo del semiasse maggiore dell'orbita ellittica ($a^3$).",
+        "Al quadrato della distanza di minimo avvicinamento al Sole (perielio).",
+        "Alla radice quadrata della massa del pianeta in orbita."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La Terza Legge di Keplero afferma che $\\frac{T^2}{a^3} = \\frac{4\\pi^2}{G M_{Sole}} = \\text{costante}$. Il quadrato del periodo orbitale è proporzionale al cubo del semiasse maggiore $a$.",
+        "Sbagliato. La legge riguarda l'intero semiasse maggiore dell'ellisse $a$, non la sola distanza di perielio.",
+        "Sbagliato. La costante di proporzionalità dipende dalla massa della stella centrale ($M_{Sole}$), mentre la massa del pianeta è trascurabile in prima approssimazione."
+      ]
+    },
+    {
+      "id": "it_phys_353",
+      "widget_id": null,
+      "topic": "Gravitazione - Energia Meccanica Totale di un'Orbita Ellittica",
+      "q": "Per un satellite di massa $m$ vincolato in un'orbita ellittica di semiasse maggiore $a$ attorno a un pianeta di massa $M$, qual è il valore dell'energia meccanica totale $E$ del sistema?",
+      "hint": "Ricorda che per un sistema gravitazionale legato (orbita chiusa) l'energia meccanica totale deve essere negativa.",
+      "options": [
+        "$E = -G \\frac{M m}{2a}$ (energia costante e negativa)",
+        "$E = 0$ in ogni punto dell'orbita",
+        "$E = +G \\frac{M m}{a^2}$ (energia costante e positiva)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per un'orbita legata (ellittica o circolare) l'energia meccanica totale si mantiene costante e negativa: $E = -G \\frac{M m}{2a}$. Se $E = 0$ l'orbita sarebbe parabolica (limite di fuga), mentre se $E > 0$ l'orbita sarebbe iperbolica.",
+        "Sbagliato. $E = 0$ rappresenta il valore soglia per un'orbita aperta di parabola (velocità pari esattamente alla velocità di fuga).",
+        "Sbagliato. Per un sistema legato l'energia deve essere negativa, e la formula proposta è anche dimensionalmente incorretta."
+      ]
+    },
+    {
+      "id": "it_phys_354",
+      "widget_id": null,
+      "topic": "Cinematica - Moto Rettilineo Uniforme (Tratto 1)",
+      "q": "Un'auto percorre una distanza di $50\\text{ km}$ in $30\\text{ minuti}$ a velocità costante. Qual è la sua velocità media in questo primo tratto?",
+      "hint": "Calcola la velocità come $v_1 = \\frac{\\Delta s_1}{\\Delta t_1}$ e convertila in $\\text{m/s}$ dividendo per $3.6$.",
+      "options": [
+        "$27.78\\text{ m/s}$ (ossia $100\\text{ km/h}$)",
+        "$16.67\\text{ m/s}$ (ossia $60\\text{ km/h}$)",
+        "$50.00\\text{ m/s}$ (ossia $180\\text{ km/h}$)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! $v_1 = \\frac{50\\text{ km}}{0.5\\text{ h}} = 100\\text{ km/h}$. Convertendo in $\\text{m/s}$: $\\frac{100}{3.6} \\approx 27.78\\text{ m/s}$.",
+        "Sbagliato. $16.67\\text{ m/s}$ si otterrebbe considerando erroneamente una durata di $50\\text{ minuti}$.",
+        "Sbagliato. Errore nel dividere la distanza per il tempo espressi in unità non omogenee."
+      ]
+    },
+    {
+      "id": "it_phys_355",
+      "widget_id": null,
+      "topic": "Cinematica - Velocità Media in Sosta (Tratto 2)",
+      "q": "L'auto si ferma in una piazzola di sosta per $20\\text{ minuti}$. Qual è la velocità media durante questa sosta?",
+      "hint": "Se il corpo rimane fermo, lo spostamento $\\Delta s$ è nullo.",
+      "options": [
+        "$0\\text{ m/s}$",
+        "$10\\text{ m/s}$",
+        "$2.5\\text{ m/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Durante la sosta l'auto non compie alcuno spostamento ($\\Delta s = 0$), quindi la velocità media è $0\\text{ m/s}$.",
+        "Sbagliato. L'auto è ferma, non si muove.",
+        "Sbagliato. Qualsiasi valore diverso da zero è incorretto poiché il corpo è immobile."
+      ]
+    },
+    {
+      "id": "it_phys_356",
+      "widget_id": null,
+      "topic": "Cinematica - Conversione di Velocità (Tratto 3)",
+      "q": "Successivamente l'auto riparte e viaggia a una velocità costante di $90\\text{ km/h}$ per $2\\text{ ore}$. A quanti $\\text{m/s}$ corrisponde la velocità media in questo terzo tratto?",
+      "hint": "Usa la relazione di conversione $1\\text{ m/s} = 3.6\\text{ km/h}$.",
+      "options": [
+        "$25\\text{ m/s}$",
+        "$45\\text{ m/s}$",
+        "$18\\text{ m/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per convertire da $\\text{km/h}$ a $\\text{m/s}$ si divide per $3.6$: $v_3 = \\frac{90}{3.6} = 25\\text{ m/s}$.",
+        "Sbagliato. $45\\text{ m/s}$ si otterrebbe dividendo per $2$ anziché per $3.6$.",
+        "Sbagliato. Errore di calcolo nella conversione delle unità di misura."
+      ]
+    },
+    {
+      "id": "it_phys_357",
+      "widget_id": null,
+      "topic": "Cinematica - Velocità Media Complessiva",
+      "q": "Per l'intero viaggio (tratto 1: $50\\text{ km}$ in $30\\text{ min}$; sosta: $20\\text{ min}$; tratto 3: $90\\text{ km/h}$ per $2\\text{ ore}$), qual è la velocità media dell'auto lungo tutto il percorso?",
+      "hint": "Calcola la distanza totale $\\Delta s_{tot} = 50 + 0 + 180 = 230\\text{ km}$ e il tempo totale $\\Delta t_{tot} = 30 + 20 + 120 = 170\\text{ min} = 2.833\\text{ h}$.",
+      "options": [
+        "$22.55\\text{ m/s}$ (ossia $81.18\\text{ km/h}$)",
+        "$17.59\\text{ m/s}$ (ossia $63.33\\text{ km/h}$)",
+        "$31.25\\text{ m/s}$ (ossia $112.5\\text{ km/h}$)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! $\\Delta s_{tot} = 50 + 0 + (90 \\cdot 2) = 230\\text{ km}$. $\\Delta t_{tot} = 0.5 + 0.333 + 2 = 2.833\\text{ h} = 10200\\text{ s}$. La velocità media è $v_{m} = \\frac{230000\\text{ m}}{10200\\text{ s}} \\approx 22.55\\text{ m/s}$ ($81.18\\text{ km/h}$).",
+        "Sbagliato. $17.59\\text{ m/s}$ è la semplice media aritmetica delle tre velocità, che non tiene conto delle diverse durate dei tratti.",
+        "Sbagliato. Si otterrebbe dimenticando di includere il tempo di sosta nel tempo totale di viaggio."
+      ]
+    },
+    {
+      "id": "it_phys_358",
+      "widget_id": null,
+      "topic": "Cinematica - Velocità Media vs Media delle Velocità",
+      "q": "Confrontando la velocità media effettiva dell'intero viaggio ($22.55\\text{ m/s}$) con la media aritmetica delle velocità dei singoli tratti ($\\frac{27.78 + 0 + 25}{3} = 17.59\\text{ m/s}$), quale affermazione è corretta?",
+      "hint": "Verifica quale valore è maggiore e ricorda che la velocità media si calcola ponderando sulle durate temporali dei singoli tratti.",
+      "options": [
+        "La velocità media reale ($22.55\\text{ m/s}$) è maggiore della media aritmetica delle velocità ($17.59\\text{ m/s}$), poiché l'auto ha viaggiato più a lungo a velocità elevata.",
+        "La velocità media reale è esattamente uguale alla media aritmetica delle velocità.",
+        "La velocità media reale è sempre inferiore alla media aritmetica delle velocità."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La velocità media ponderata sui tempi ($22.55\\text{ m/s}$) è maggiore della media aritmetica ($17.59\\text{ m/s}$) perché la parte di viaggio a $90\\text{ km/h}$ dura ben 2 ore, influenzando maggiormente la media complessiva.",
+        "Sbagliato. La media aritmetica coincide con la velocità media solo se i tempi di percorrenza di ciascun tratto sono uguali.",
+        "Sbagliato. Non è sempre inferiore; dipende dalla distribuzione dei tempi di percorrenza."
+      ]
+    },
+    {
+      "id": "it_phys_359",
+      "widget_id": null,
+      "topic": "Cinematica / Acustica - Anticipo dell'Eco",
+      "q": "Un ragazzo si trova di fronte a una parete rocciosa e urla. I suoi compagni, $60\\text{ m}$ dietro di lui, sentono la voce diretta e dopo $5\\text{ s}$ l'eco. Sapendo che $v_{suono} = 340\\text{ m/s}$, quanto tempo PRIMA dei compagni il ragazzo sente il proprio eco?",
+      "hint": "Calcola il tempo impiegato dal suono diretto per raggiungere i compagni ($t_{dir} = \\frac{60}{340} \\approx 0.18\\text{ s}$). L'eco per il ragazzo impiega $5\\text{ s}$, mentre per i compagni arriva a $t_{dir} + 5\\text{ s}$.",
+      "options": [
+        "$0.18\\text{ s}$",
+        "$0.50\\text{ s}$",
+        "$1.20\\text{ s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il suono diretto percorre $60\\text{ m}$ verso i compagni in $t_{dir} = \\frac{60}{340} \\approx 0.176\\text{ s} \\approx 0.18\\text{ s}$. I compagni sentono l'eco a $t = t_{dir} + 5\\text{ s}$. Il ragazzo invece sente l'eco dopo $5\\text{ s}$ dal grido. Quindi il ragazzo sente l'eco $0.18\\text{ s}$ prima dei suoi compagni.",
+        "Sbagliato. $0.50\\text{ s}$ si otterrebbe dividendo $60\\text{ m}$ per una velocità teorica errata.",
+        "Sbagliato. Errore nel considerare la distanza dei compagni."
+      ]
+    },
+    {
+      "id": "it_phys_360",
+      "widget_id": null,
+      "topic": "Cinematica / Acustica - Distanza dall'Ostacolo tramite l'Eco",
+      "q": "Nel medesimo problema del grido in montagna ($v_{suono} = 340\\text{ m/s}$), a quale distanza $d$ dalla parete di roccia si trova il ragazzo?",
+      "hint": "Il ragazzo sente l'eco dopo $5\\text{ s}$. Il suono percorre andata e ritorno dalla parete: $2d = v_{suono} \\cdot t$.",
+      "options": [
+        "$850\\text{ m}$",
+        "$1700\\text{ m}$",
+        "$680\\text{ m}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il percorso dell'eco per il ragazzo è andata e ritorno ($2d$). Quindi $2d = 340 \\cdot 5 = 1700\\text{ m} \\implies d = \\frac{1700}{2} = 850\\text{ m}$.",
+        "Sbagliato. $1700\\text{ m}$ è la distanza totale percorsa dal suono (andata + ritorno), non la distanza dalla parete.",
+        "Sbagliato. $680\\text{ m}$ si otterrebbe sottraendo indebitamente i $60\\text{ m}$ dei compagni dalla distanza totale."
+      ]
+    },
+    {
+      "id": "it_phys_361",
+      "widget_id": null,
+      "topic": "Cinematica - Problema di Incontro e Velocità Abituale",
+      "q": "Anna vive a $3\\text{ km}$ dal lavoro. Uscendo con $4\\text{ minuti}$ di ritardo, pedala a una velocità superiore di $7.5\\text{ km/h}$ ed arriva alla solita ora. A quale velocità pedala solitamente Anna?",
+      "hint": "Imposta l'equazione sui tempi: $\\frac{3}{v} - \\frac{3}{v + 7.5} = \\frac{4}{60}$. Risolvi per $v$ e converti in $\\text{m/s}$.",
+      "options": [
+        "$4.17\\text{ m/s}$ (ossia $15\\text{ km/h}$)",
+        "$2.50\\text{ m/s}$ (ossia $9\\text{ km/h}$)",
+        "$6.25\\text{ m/s}$ (ossia $22.5\\text{ km/h}$)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Risolvendo $\\frac{3}{v} - \\frac{3}{v + 7.5} = \\frac{1}{15}\\text{ h}$ si ottiene l'equazione $v^2 + 7.5v - 337.5 = 0$, da cui $v = 15\\text{ km/h}$. In $\\text{m/s}$: $\\frac{15}{3.6} \\approx 4.17\\text{ m/s}$.",
+        "Sbagliato. $2.50\\text{ m/s}$ non soddisfa la differenza di tempo di 4 minuti su $3\\text{ km}$.",
+        "Sbagliato. $6.25\\text{ m/s}$ ($22.5\\text{ km/h}$) è la velocità *maggiorata* di oggi, non quella solita."
+      ]
+    },
+    {
+      "id": "it_phys_362",
+      "widget_id": null,
+      "topic": "Cinematica - Calcolo del Tempo Solito di Percorrenza",
+      "q": "Sapendo che la distanza casa-lavoro di Anna è $3\\text{ km}$ e che la sua velocità solita è $15\\text{ km/h}$, quanto tempo impiega solitamente per andare al lavoro?",
+      "hint": "Usa la relazione $t = \\frac{d}{v}$.",
+      "options": [
+        "$12\\text{ minuti}$",
+        "$20\\text{ minuti}$",
+        "$8\\text{ minuti}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! $t = \\frac{3\\text{ km}}{15\\text{ km/h}} = 0.2\\text{ ore} = 0.2 \\cdot 60\\text{ min} = 12\\text{ minuti}$.",
+        "Sbagliato. $20\\text{ minuti}$ si otterrebbe se la velocità fosse $9\\text{ km/h}$.",
+        "Sbagliato. $8\\text{ minuti}$ è il tempo impiegato oggi correndo più veloce ($12 - 4 = 8\\text{ min}$)."
+      ]
+    },
+    {
+      "id": "it_phys_363",
+      "widget_id": null,
+      "topic": "Cinematica - Moto Relativo e Incontro di Due Treni",
+      "q": "Due treni A e B partono l'uno verso l'altro da due stazioni distanti $435\\text{ km}$. Il treno A viaggia a $70\\text{ km/h}$ e B a $75\\text{ km/h}$. Dopo quanto tempo si incontreranno?",
+      "hint": "Usa la velocità relativa di avvicinamento: $v_{rel} = v_A + v_B = 70 + 75 = 145\\text{ km/h}$.",
+      "options": [
+        "$3\\text{ ore}$",
+        "$4\\text{ ore}$",
+        "$2.5\\text{ ore}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La velocità relativa è $v_{rel} = 70 + 75 = 145\\text{ km/h}$. Il tempo di incontro è $t = \\frac{435\\text{ km}}{145\\text{ km/h}} = 3\\text{ ore}$.",
+        "Sbagliato. $4\\text{ ore}$ si otterrebbe considerando solo la velocità del primo treno ($435 / 70 \\approx 6.2\\text{ h}$) o sottraendo le velocità.",
+        "Sbagliato. Errore di calcolo nella divisione $435 / 145$."
+      ]
+    },
+    {
+      "id": "it_phys_364",
+      "widget_id": null,
+      "topic": "Cinematica - Punto di Incontro tra Due Treni",
+      "q": "Sapendo che i treni A ($70\\text{ km/h}$) e B ($75\\text{ km/h}$) si incontrano dopo $3\\text{ ore}$, a quale distanza dalla stazione di partenza del treno A avviene l'incontro?",
+      "hint": "Calcola la distanza percorsa dal treno A nel tempo di incontro: $d_A = v_A \\cdot t$.",
+      "options": [
+        "$210\\text{ km}$",
+        "$225\\text{ km}$",
+        "$145\\text{ km}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il treno A viaggia a $70\\text{ km/h}$ per $3\\text{ ore}$, percorrendo $d_A = 70 \\cdot 3 = 210\\text{ km}$ dalla propria stazione di partenza.",
+        "Sbagliato. $225\\text{ km}$ è la distanza percorsa dal treno B dalla sua stazione ($75 \\cdot 3 = 225\\text{ km}$).",
+        "Sbagliato. $145\\text{ km}$ è la velocità relativa dei due treni, non una distanza."
+      ]
+    },
+    {
+      "id": "it_phys_365",
+      "widget_id": null,
+      "topic": "Cinematica - Moto Rettilineo Uniformemente Accelerato (Accelerazione)",
+      "q": "Un'automobile parte da ferma e percorre $1000\\text{ m}$ in $25\\text{ s}$ accelerando costantemente. Qual è il valore della sua accelerazione?",
+      "hint": "Usa la legge oraria del moto partendo da fermo $s = \\frac{1}{2} a t^2$ e ricava l'accelerazione $a = \\frac{2s}{t^2}$.",
+      "options": [
+        "$3.2\\text{ m/s}^2$",
+        "$1.6\\text{ m/s}^2$",
+        "$6.4\\text{ m/s}^2$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Applicando la formula inversa: $a = \\frac{2s}{t^2} = \\frac{2 \\cdot 1000}{(25)^2} = \\frac{2000}{625} = 3.2\\text{ m/s}^2$.",
+        "Sbagliato. $1.6\\text{ m/s}^2$ si otterrebbe dimenticando il fattore $2$ al numeratore ($a = \\frac{s}{t^2}$).",
+        "Sbagliato. $6.4\\text{ m/s}^2$ si otterrebbe moltiplicando per 2 due volte."
+      ]
+    },
+    {
+      "id": "it_phys_366",
+      "widget_id": null,
+      "topic": "Cinematica - Velocità Finale in km/h",
+      "q": "Con la stessa automobile ($a = 3.2\\text{ m/s}^2$, $t = 25\\text{ s}$), quale velocità finale viene raggiunta, espressa in $\\text{km/h}$?",
+      "hint": "Calcola prima $v = a \\cdot t$ in $\\text{m/s}$ e poi moltiplica per $3.6$ per convertire in $\\text{km/h}$.",
+      "options": [
+        "$288\\text{ km/h}$",
+        "$80\\text{ km/h}$",
+        "$144\\text{ km/h}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La velocità in metri al secondo è $v = a \\cdot t = 3.2 \\cdot 25 = 80\\text{ m/s}$. In $\\text{km/h}$: $80 \\cdot 3.6 = 288\\text{ km/h}$.",
+        "Sbagliato. $80\\text{ km/h}$ è il valore della velocità espresso in $\\text{m/s}$, non in $\\text{km/h}$.",
+        "Sbagliato. Errore nella conversione delle unità di misura."
+      ]
+    },
+    {
+      "id": "it_phys_367",
+      "widget_id": null,
+      "topic": "Cinematica - Lancio Verticale (Altezza dopo un tempo t)",
+      "q": "Un corpo viene lanciato verso l'alto con velocità iniziale $v_0 = 20\\text{ m/s}$. Che altezza raggiunge dopo $3\\text{ secondi}$? (Usa $g = 9.81\\text{ m/s}^2$)",
+      "hint": "Applica la legge oraria del moto di lancio verticale: $h(t) = v_0 t - \\frac{1}{2} g t^2$.",
+      "options": [
+        "$15.9\\text{ m}$",
+        "$60.0\\text{ m}$",
+        "$44.1\\text{ m}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! $h(3) = 20 \\cdot 3 - \\frac{1}{2} \\cdot 9.81 \\cdot (3)^2 = 60 - 44.145 \\approx 15.9\\text{ m}$.",
+        "Sbagliato. $60.0\\text{ m}$ trascura del tutto la decelerazione dovuta alla gravità ($v_0 t$).",
+        "Sbagliato. $44.1\\text{ m}$ rappresenta soltanto lo spostamento verso il basso dovuto alla gravità $\\frac{1}{2} g t^2$."
+      ]
+    },
+    {
+      "id": "it_phys_368",
+      "widget_id": null,
+      "topic": "Cinematica - Lancio Verticale (Altezza Massima)",
+      "q": "Per lo stesso corpo lanciato verso l'alto a $v_0 = 20\\text{ m/s}$, qual è la massima altezza $h_{max}$ raggiunta?",
+      "hint": "Nel punto di massima altezza la velocità verticale si annulla, quindi $h_{max} = \\frac{v_0^2}{2g}$.",
+      "options": [
+        "$20.4\\text{ m}$",
+        "$40.8\\text{ m}$",
+        "$15.9\\text{ m}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! $h_{max} = \\frac{v_0^2}{2g} = \\frac{20^2}{2 \\cdot 9.81} = \\frac{400}{19.62} \\approx 20.4\\text{ m}$.",
+        "Sbagliato. $40.8\\text{ m}$ si otterrebbe dimenticando di dividere per $2$ a denominatore.",
+        "Sbagliato. $15.9\\text{ m}$ è l'altezza al tempo $t = 3\\text{ s}$, quando il corpo si trova già nella fase di discesa."
+      ]
+    },
+    {
+      "id": "it_phys_369",
+      "widget_id": null,
+      "topic": "Cinematica - Lancio Verticale (Velocità al Suolo)",
+      "q": "Con quale velocità il corpo ($v_0 = 20\\text{ m/s}$) giungerà nuovamente al suolo, trascurando la resistenza dell'aria?",
+      "hint": "Per la conservazione dell'energia meccanica o la simmetria del moto di caduta, la velocità di impatto è uguale in modulo a quella iniziale.",
+      "options": [
+        "$20\\text{ m/s}$",
+        "$0\\text{ m/s}$",
+        "$9.81\\text{ m/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In assenza di attrito dell'aria, il moto di salita e discesa è perfettamente simmetrico: il corpo impatta il suolo con una velocità uguale in modulo alla velocità di lancio, ossia $20\\text{ m/s}$ (diretta verso il basso).",
+        "Sbagliato. $0\\text{ m/s}$ è la velocità istantanea nel punto di massima altezza.",
+        "Sbagliato. $9.81\\text{ m/s}$ confonde l'accelerazione di gravità con la velocità."
+      ]
+    },
+    {
+      "id": "it_phys_370",
+      "widget_id": null,
+      "topic": "Cinematica - Caduta Libera (Tempo di Caduta)",
+      "q": "Dalla cima di un palazzo alto $h = 44.1\\text{ m}$ viene lasciato cadere un piccolo sasso da fermo. Quanto vale il tempo di caduta $t$? (Usa $g = 9.81\\text{ m/s}^2$)",
+      "hint": "Usa la legge oraria della caduta da fermo $h = \\frac{1}{2} g t^2$ e ricava $t = \\sqrt{\\frac{2h}{g}}$.",
+      "options": [
+        "$3\\text{ s}$",
+        "$4.5\\text{ s}$",
+        "$2\\text{ s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! $t = \\sqrt{\\frac{2 \\cdot 44.1}{9.81}} = \\sqrt{\\frac{88.2}{9.81}} = \\sqrt{9} = 3\\text{ s}$.",
+        "Sbagliato. $4.5\\text{ s}$ si otterrebbe dividendo direttamente l'altezza per l'accelerazione di gravità.",
+        "Sbagliato. Errore nell'estrazione della radice quadrata."
+      ]
+    },
+    {
+      "id": "it_phys_371",
+      "widget_id": null,
+      "topic": "Cinematica - Caduta Libera e Dipendenza Temporale",
+      "q": "Se il tempo di arrivo al suolo del sasso fosse stato il doppio ($2t$), l'altezza del palazzo sarebbe stata anch'essa il doppio?",
+      "hint": "Osserva l'esponente del tempo nella formula della caduta libera $h = \\frac{1}{2} g t^2$.",
+      "options": [
+        "No, l'altezza sarebbe stata 4 volte maggiore ($4h$).",
+        "Sì, l'altezza raddoppia poiché $h$ e $t$ sono direttamente proporzionali.",
+        "No, l'altezza sarebbe rimasta invariata."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché $h = \\frac{1}{2} g t^2$, l'altezza dipende dal QUADRATO del tempo. Sostituendo $2t$ al posto di $t$: $h' = \\frac{1}{2} g (2t)^2 = 4 \\cdot \\left(\\frac{1}{2} g t^2\\right) = 4h$. L'altezza quadruplica.",
+        "Sbagliato. L'altezza non varia linearmente con il tempo nel moto accelerato.",
+        "Sbagliato. Un tempo di caduta maggiore richiede necessariamente un'altezza maggiore."
+      ]
+    },
+    {
+      "id": "it_phys_372",
+      "widget_id": null,
+      "topic": "Cinematica - Accelerazione Media Auto 1",
+      "q": "Una prima automobile passa da $0$ a $100\\text{ km/h}$ in $5\\text{ s}$. Qual è il valore della sua accelerazione media?",
+      "hint": "Converti $100\\text{ km/h}$ in $\\text{m/s}$ ($27.78\\text{ m/s}$) e calcola $a = \\frac{\\Delta v}{\\Delta t}$.",
+      "options": [
+        "$5.6\\text{ m/s}^2$",
+        "$20\\text{ m/s}^2$",
+        "$3.5\\text{ m/s}^2$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In $\\text{m/s}$: $v = \\frac{100}{3.6} \\approx 27.78\\text{ m/s}$. L'accelerazione media è $a = \\frac{27.78}{5} \\approx 5.56 \\approx 5.6\\text{ m/s}^2$.",
+        "Sbagliato. $20\\text{ m/s}^2$ si otterrebbe dividendo $100$ per $5$ senza convertire la velocità in $\\text{m/s}$.",
+        "Sbagliato. $3.5\\text{ m/s}^2$ è l'accelerazione della seconda auto (che impiega $8\\text{ s}$)."
+      ]
+    },
+    {
+      "id": "it_phys_373",
+      "widget_id": null,
+      "topic": "Cinematica - Accelerazione Media Auto 2",
+      "q": "Una seconda automobile passa da $0$ a $100\\text{ km/h}$ in $8\\text{ s}$. Qual è il valore della sua accelerazione media?",
+      "hint": "Converti $100\\text{ km/h} = 27.78\\text{ m/s}$ e dividi per $8\\text{ s}$.",
+      "options": [
+        "$3.5\\text{ m/s}^2$",
+        "$5.6\\text{ m/s}^2$",
+        "$12.5\\text{ m/s}^2$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! $a = \\frac{27.78}{8} \\approx 3.47 \\approx 3.5\\text{ m/s}^2$.",
+        "Sbagliato. $5.6\\text{ m/s}^2$ è l'accelerazione della prima auto.",
+        "Sbagliato. $12.5\\text{ m/s}^2$ si otterrebbe dividendo $100$ per $8$ senza convertire la velocità in $\\text{m/s}$."
+      ]
+    },
+    {
+      "id": "it_phys_374",
+      "widget_id": null,
+      "topic": "Cinematica - Spazio Percorso Auto 1",
+      "q": "Quanto spazio percorre la prima automobile ($a \\approx 5.56\\text{ m/s}^2$, $t = 5\\text{ s}$) durante l'accelerazione da $0$ a $100\\text{ km/h}$?",
+      "hint": "Usa la formula dello spazio per il moto accelerato partendo da fermo $s = \\frac{1}{2} a t^2$ oppure $s = v_m \\cdot t$.",
+      "options": [
+        "$70\\text{ m}$",
+        "$139\\text{ m}$",
+        "$112\\text{ m}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! $s = \\frac{1}{2} a t^2 = \\frac{1}{2} \\cdot 5.56 \\cdot (5)^2 = 0.5 \\cdot 5.56 \\cdot 25 \\approx 69.4\\text{ m} \\approx 70\\text{ m}$.",
+        "Sbagliato. $139\\text{ m}$ si otterrebbe moltiplicando la velocità massima per il tempo senza dividere per $2$.",
+        "Sbagliato. $112\\text{ m}$ è lo spazio percorso dalla seconda auto."
+      ]
+    },
+    {
+      "id": "it_phys_375",
+      "widget_id": null,
+      "topic": "Cinematica - Spazio Percorso Auto 2",
+      "q": "Quanto spazio percorre la seconda automobile ($a \\approx 3.47\\text{ m/s}^2$, $t = 8\\text{ s}$) durante l'accelerazione da $0$ a $100\\text{ km/h}$?",
+      "hint": "Usa $s = \\frac{1}{2} a t^2$ oppure $s = v_m \\cdot t$.",
+      "options": [
+        "$112\\text{ m}$",
+        "$70\\text{ m}$",
+        "$222\\text{ m}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! $s = \\frac{1}{2} a t^2 = \\frac{1}{2} \\cdot 3.47 \\cdot (8)^2 = 0.5 \\cdot 3.47 \\cdot 64 \\approx 111.1\\text{ m} \\approx 112\\text{ m}$.",
+        "Sbagliato. $70\\text{ m}$ è lo spazio percorso dalla prima auto.",
+        "Sbagliato. $222\\text{ m}$ si otterrebbe moltiplicando la velocità massima per il tempo di accelerazione senza dividere per $2$."
+      ]
+    },
+    {
+      "id": "it_phys_376",
+      "widget_id": null,
+      "topic": "Cinematica - Velocità Media nelle Accelerazioni",
+      "q": "Qual è la velocità media $v_m$ di ciascuna delle due automobili durante la fase di accelerazione uniforme da $0$ a $100\\text{ km/h}$?",
+      "hint": "Nel moto uniformemente accelerato partendo da fermo, la velocità media è $v_m = \\frac{v_i + v_f}{2}$.",
+      "options": [
+        "$14\\text{ m/s}$ (uguale per entrambe)",
+        "$27.78\\text{ m/s}$ per la prima, $17.36\\text{ m/s}$ per la seconda",
+        "$10\\text{ m/s}$ per entrambe"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per un moto con accelerazione costante che varia da $0$ a $100\\text{ km/h}$ ($27.78\\text{ m/s}$), la velocità media è $v_m = \\frac{0 + 27.78}{2} = 13.89\\text{ m/s} \\approx 14\\text{ m/s}$ per entrambe le auto.",
+        "Sbagliato. La velocità media non varia in funzione della durata dell'accelerazione se le velocità iniziale e finale sono identiche.",
+        "Sbagliato. Errore nel calcolare la media della velocità iniziale e finale."
+      ]
+    },
+    {
+      "id": "it_phys_377",
+      "widget_id": null,
+      "topic": "Cinematica - Decelerazione di Frenata",
+      "q": "Un autotreno viaggia alla velocità di $72\\text{ km/h}$. Il conducente si accorge di un ostacolo a $100\\text{ m}$ ed inizia a frenare dopo un tempo di reazione di $0.2\\text{ s}$. Se il mezzo impiega $10\\text{ s}$ di sola frenata per fermarsi, qual è il valore della sua decelerazione?",
+      "hint": "Converti $72\\text{ km/h}$ in $\\text{m/s}$ e usa la relazione $v = v_0 - a t_{fren} = 0$.",
+      "options": [
+        "$2\\text{ m/s}^2$",
+        "$7.2\\text{ m/s}^2$",
+        "$1\\text{ m/s}^2$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Convertendo la velocità iniziale: $v_0 = \\frac{72}{3.6} = 20\\text{ m/s}$. La decelerazione è $a = \\frac{v_0}{t_{fren}} = \\frac{20\\text{ m/s}}{10\\text{ s}} = 2\\text{ m/s}^2$.",
+        "Sbagliato. $7.2\\text{ m/s}^2$ si otterrebbe dividendo $72\\text{ km/h}$ direttamente per $10\\text{ s}$ senza convertire in $\\text{m/s}$.",
+        "Sbagliato. Errore di calcolo nel rapporto velocità/tempo."
+      ]
+    },
+    {
+      "id": "it_phys_378",
+      "widget_id": null,
+      "topic": "Cinematica - Spazio Totale di Arresto e Impatto",
+      "q": "Per lo stesso autotreno ($v_0 = 20\\text{ m/s}$, $t_{reaz} = 0.2\\text{ s}$, decelerazione $a = 2\\text{ m/s}^2$), qual è lo spazio totale di arresto e l'autotreno riesce ad evitare l'ostacolo posto a $100\\text{ m}$?",
+      "hint": "Lo spazio totale è la somma dello spazio di reazione ($s_{reaz} = v_0 \\cdot t_{reaz}$) e dello spazio di frenata ($s_{fren} = \\frac{v_0^2}{2a}$).",
+      "options": [
+        "$104\\text{ m}$; l'autotreno investe l'ostacolo poiché lo spazio totale supera i $100\\text{ m}$.",
+        "$100\\text{ m}$; l'autotreno si ferma esattamente a ridosso dell'ostacolo senza urtarlo.",
+        "$96\\text{ m}$; l'autotreno si ferma $4\\text{ m}$ prima dell'ostacolo."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Spazio di reazione: $s_{reaz} = 20 \\cdot 0.2 = 4\\text{ m}$. Spazio di frenata: $s_{fren} = \\frac{20^2}{2 \\cdot 2} = 100\\text{ m}$. Spazio totale = $4 + 100 = 104\\text{ m}$. Poiché $104\\text{ m} > 100\\text{ m}$, l'autotreno urta l'ostacolo.",
+        "Sbagliato. $100\\text{ m}$ include solo lo spazio di frenata e trascura lo spazio percorso durante i $0.2\\text{ s}$ di reazione.",
+        "Sbagliato. $96\\text{ m}$ sottrae erroneamente lo spazio di reazione anziché sommarlo."
+      ]
+    },
+    {
+      "id": "it_phys_379",
+      "widget_id": null,
+      "topic": "Cinematica - Velocità di Impatto",
+      "q": "Sapendo che l'autotreno ($v_0 = 20\\text{ m/s}$, $a = 2\\text{ m/s}^2$) inizia a frenare a $96\\text{ m}$ dall'ostacolo (dopo $4\\text{ m}$ di reazione), a quale velocità avviene l'impatto con l'ostacolo?",
+      "hint": "Usa la relazione del moto accelerato $v_{imp}^2 = v_0^2 - 2 a s_{fren}$ inserendo $s_{fren} = 96\\text{ m}$.",
+      "options": [
+        "$14.4\\text{ km/h}$ (ossia $4\\text{ m/s}$)",
+        "$28.8\\text{ km/h}$ (ossia $8\\text{ m/s}$)",
+        "$7.2\\text{ km/h}$ (ossia $2\\text{ m/s}$)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! $v_{imp}^2 = 20^2 - 2 \\cdot 2 \\cdot 96 = 400 - 384 = 16\\text{ m}^2/\\text{s}^2 \\implies v_{imp} = 4\\text{ m/s}$. In $\\text{km/h}$: $4 \\cdot 3.6 = 14.4\\text{ km/h}$.",
+        "Sbagliato. Errore nell'estrazione della radice quadrata o nel calcolo dello spazio di frenata fino all'impatto.",
+        "Sbagliato. Errore di calcolo nella formula del moto."
+      ]
+    },
+    {
+      "id": "it_phys_380",
+      "widget_id": null,
+      "topic": "Cinematica - Moto Parabolico (Altezza di Volo)",
+      "q": "Un aereo vola orizzontalmente a $v_x = 200\\text{ m/s}$ e lascia cadere un pacco che tocca terra dopo $12\\text{ s}$. A quale altezza vola l'aereo? (Usa $g = 9.8\\text{ m/s}^2$)",
+      "hint": "Nel moto del proiettile, la caduta verticale segue la legge $h = \\frac{1}{2} g t^2$.",
+      "options": [
+        "$705.6\\text{ m}$",
+        "$2400\\text{ m}$",
+        "$1411.2\\text{ m}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! $h = \\frac{1}{2} g t^2 = 0.5 \\cdot 9.8 \\cdot (12)^2 = 0.5 \\cdot 9.8 \\cdot 144 = 705.6\\text{ m}$.",
+        "Sbagliato. $2400\\text{ m}$ è la distanza orizzontale percorsa dal pacco, non l'altezza.",
+        "Sbagliato. $1411.2\\text{ m}$ si otterrebbe dimenticando di dividere per $2$ nella formula della caduta libera."
+      ]
+    },
+    {
+      "id": "it_phys_381",
+      "widget_id": null,
+      "topic": "Cinematica - Moto Parabolico (Gittata Orizzontale)",
+      "q": "Per lo stesso pacco lanciato dall'aereo ($v_x = 200\\text{ m/s}$, tempo di volo $t = 12\\text{ s}$), quanto vale la distanza orizzontale percorsa prima di toccare il suolo?",
+      "hint": "Orizzontalmente il moto è rettilineo uniforme con velocità costante $v_x$: $d_x = v_x \\cdot t$.",
+      "options": [
+        "$2400\\text{ m}$",
+        "$705.6\\text{ m}$",
+        "$1200\\text{ m}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! $d_x = v_x \\cdot t = 200\\text{ m/s} \\cdot 12\\text{ s} = 2400\\text{ m}$.",
+        "Sbagliato. $705.6\\text{ m}$ è l'altezza verticale da cui cade il pacco.",
+        "Sbagliato. $1200\\text{ m}$ si otterrebbe dimezzando erroneamente la velocità o il tempo."
+      ]
+    },
+    {
+      "id": "it_phys_382",
+      "widget_id": null,
+      "topic": "Cinematica - Moto Parabolico (Velocità di Impatto Totale)",
+      "q": "Con quale velocità totale $v$ il pacco tocca il suolo al termine dei $12\\text{ s}$ di caduta? ($v_x = 200\\text{ m/s}$, $g = 9.8\\text{ m/s}^2$)",
+      "hint": "Calcola la componente verticale della velocità $v_y = g \\cdot t$ e determina il modulo $v = \\sqrt{v_x^2 + v_y^2}$.",
+      "options": [
+        "$232\\text{ m/s}$",
+        "$117.6\\text{ m/s}$",
+        "$317.6\\text{ m/s}$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Componente verticale: $v_y = 9.8 \\cdot 12 = 117.6\\text{ m/s}$. Modulo della velocità totale: $v = \\sqrt{v_x^2 + v_y^2} = \\sqrt{200^2 + 117.6^2} = \\sqrt{40000 + 13829.76} \\approx 232\\text{ m/s}$.",
+        "Sbagliato. $117.6\\text{ m/s}$ è soltanto la componente verticale $v_y$ della velocità.",
+        "Sbagliato. $317.6\\text{ m/s}$ è la semplice somma algebrica $v_x + v_y$, che non tiene conto del carattere vettoriale ortogonale delle componenti."
+      ]
+    }
+  ]
+}
