@@ -1,0 +1,605 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_1151",
+      "widget_id": "widget_clang_1151",
+      "topic": "Differenza tra #define e const — Fase di elaborazione",
+      "q": "In quale fase dell'esecuzione/build del programma vengono elaborati la macro `#define NUM 100` e la costante `const int num = 100;`?",
+      "hint": "Quale dei due esegue una sostituzione testuale prima dell'avvio del compilatore vero e proprio?",
+      "options": [
+        "#define viene elaborato dal preprocessore (semplice sostituzione testuale), mentre const viene gestito dal compilatore con il controllo dei tipi",
+        "Entrambi vengono elaborati esclusivamente dal compilatore durante la fase di generazione del codice macchina",
+        "#define funziona durante l'esecuzione del programma (runtime), mentre const nella fase di preprocessamento",
+        "Entrambi vengono elaborati dal linker nella fase di collegamento dei file oggetto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `#define` viene elaborato dal preprocessore testuale prima della fase di compilazione (il preprocessore non conosce i tipi di dati né le regole del C). La variabile `const int` viene creata e controllata direttamente dal compilatore nel rispetto dei tipi e degli ambiti di visibilità.",
+        "Errato. Il preprocessore lavora rigorosamente PRIMA del compilatore.",
+        "Errato. Durante l'esecuzione (runtime) il preprocessore non esiste più.",
+        "Errato. Il linker lavora con i simboli già generati, non sostituisce il testo."
+      ]
+    },
+    {
+      "id": "it_clang_1152",
+      "widget_id": "widget_clang_1152",
+      "topic": "Memoria e indirizzi — Ottenere l'indirizzo tramite l'operatore &",
+      "q": "È possibile ottenere l'indirizzo in memoria tramite l'operatore `&` per una macro `#define NUM 100` e per una costante `const int num = 100;`?",
+      "hint": "Un letterale numerico nel codice possiede un indirizzo fisico nello stack o nella sezione dati?",
+      "options": [
+        "È possibile prendere l'indirizzo di una variabile const (&num), mentre per #define non è possibile poiché la macro non è un oggetto in memoria",
+        "È possibile prendere l'indirizzo di entrambi gli oggetti nello stesso modo",
+        "Per #define è possibile prendere l'indirizzo, mentre per const no, perché const è memorizzato in un registro protetto della CPU",
+        "Prendere l'indirizzo di una variabile const causa sempre un errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `const int num` è un oggetto a tutti gli effetti con uno spazio allocato in memoria (sullo stack o in `.rodata`), quindi `&num` è legale. `#define NUM 100` inserisce il letterale `100`, e i letterali non hanno un indirizzo in memoria (`&100` causerà un errore).",
+        "Errato. I letterali testuali di `#define` non hanno un indirizzo.",
+        "Errato. Le variabili `const` sono memorizzate nella RAM.",
+        "Errato. Prendere l'indirizzo di una variabile `const` restituisce un puntatore di tipo `const int*`."
+      ]
+    },
+    {
+      "id": "it_clang_1153",
+      "widget_id": null,
+      "topic": "Debugging — Visibilità nei debugger (GDB/LLDB)",
+      "q": "Perché durante il debugging il debugger vede il nome della variabile `const int MAX_USERS = 50;`, ma 'non conosce' il nome `#define MAX_USERS 50`?",
+      "hint": "Cosa rimane nel codice C dopo il lavoro del preprocessore?",
+      "options": [
+        "Il preprocessore rimuove il nome #define e lo sostituisce con il numero 50 prima della compilazione, quindi il nome non entra nella tabella dei simboli",
+        "I debugger nascondono intenzionalmente le macro per ottimizzare l'uso della RAM",
+        "Le macro #define vengono crittografate dal compilatore durante la creazione delle informazioni di debug DWARF",
+        "La variabile const viene inserita nel registro del debugger, mentre #define nella memoria virtuale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando il compilatore genera la tabella delle informazioni per il debugger (DWARF/PDB), tutte le occorrenze di `MAX_USERS` definite da `#define` sono già state sostituite dal numero `50`. Quel nome semplicemente non esiste nella tabella dei simboli.",
+        "Errato. Il debugger mostra tutto ciò che è presente nella tabella dei simboli.",
+        "Errato. Non avviene alcuna crittografia delle macro.",
+        "Errato. Ciò è dovuto all'architettura del preprocessore."
+      ]
+    },
+    {
+      "id": "it_clang_1154",
+      "widget_id": "widget_clang_1154",
+      "topic": "Ambito di visibilità — Blocchi locali nelle funzioni",
+      "q": "Come differisce l'ambito di visibilità (Scope) tra `#define` e `const` dichiarati all'interno di un blocco di funzione `{ ... }`?",
+      "hint": "Il preprocessore reagisce alla parentesi graffa di chiusura `}`?",
+      "options": [
+        "const rispetta i confini del blocco {}, mentre #define rimane disponibile più avanti nel codice fino alla fine del file (se non viene richiamato #undef)",
+        "Entrambi vengono distrutti automaticamente all'uscita dalle parentesi graffe {}",
+        "#define è visibile solo all'interno della funzione, mentre const diventa sempre globale",
+        "Non c'è alcuna differenza tra i loro ambiti di visibilità"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `const int x` è limitata al blocco di visibilità corrente `{}`. Il preprocessore ignora la sintassi del C, quindi `#define` continuerà ad avere effetto nel file anche fuori dalla funzione.",
+        "Errato. Il preprocessore non presta attenzione alle parentesi graffe.",
+        "Errato. È l'esatto contrario: `const` rispetta il blocco locale, mentre `#define` si estende fino alla fine dell'unità di traduzione.",
+        "Errato. La differenza nell'ambito di visibilità è fondamentale."
+      ]
+    },
+    {
+      "id": "it_clang_1155",
+      "widget_id": "widget_clang_1155",
+      "topic": "Dimensioni degli array — Espressioni costanti (ICE in C89)",
+      "q": "Perché nello standard C89/C90 per dichiarare un array statico `int arr[SIZE];` si usava `#define SIZE 10` invece di `const int SIZE = 10;`?",
+      "hint": "Una variabile const in C è una vera 'costante a tempo di compilazione' (Integer Constant Expression)?",
+      "options": [
+        "In C (a differenza del C++) una variabile const non è un'espressione costante a tempo di compilazione (ICE) e in C89 non poteva definire la dimensione di un array statico",
+        "Nello standard C89 la parola chiave const non esisteva",
+        "Perché #define alloca automaticamente la memoria per l'array nello heap",
+        "Perché const int occupa troppo spazio nello stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C, una variabile `const int` indica una variabile 'read-only' e non una vera costante a tempo di compilazione (Integer Constant Expression). Pertanto, prima dell'introduzione dei VLA in C99, definire la dimensione di un array statico tramite `const int` in C89 era vietato dallo standard.",
+        "Errato. La parola chiave `const` era già presente in ANSI C (C89).",
+        "Errato. Gli array statici vengono allocati nello stack o nella sezione dati.",
+        "Errato. `const int` occupa esattamente la stessa memoria di `int` (di norma 4 byte)."
+      ]
+    },
+    {
+      "id": "it_clang_1156",
+      "widget_id": "widget_clang_1156",
+      "topic": "Alternative — Enumerazioni enum vs #define",
+      "q": "Qual è il vantaggio principale dell'uso delle enumerazioni `enum` rispetto a `#define` quando si dichiara un gruppo di costanti intere?",
+      "hint": "Pensa al controllo dei tipi, al raggruppamento e alla visualizzazione dei valori durante il debugging.",
+      "options": [
+        "enum crea un tipo intero correlato, assegna automaticamente i valori, è visibile nel debugger e viene controllato dal compilatore",
+        "enum funziona più velocemente durante l'esecuzione rispetto a una macro",
+        "enum permette di memorizzare numeri decimali (double) e stringhe di testo",
+        "enum costringe il compilatore ad allocare memoria nei registri della CPU"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `enum` unisce costanti logicamente correlate in un unico tipo, permette l'auto-incremento dei valori (`0, 1, 2...`), è ben visualizzato nel debugger e viene controllato dal compilatore quando passato a un `switch`.",
+        "Errato. Nel codice compilato, i valori di `enum` e `#define` si trasformano in numeri identici e hanno la stessa velocità.",
+        "Errato. In C le costanti `enum` possono essere solo numeri interi (`int`).",
+        "Errato. `enum` non ha alcuna relazione diretta con la memoria dei registri."
+      ]
+    },
+    {
+      "id": "it_clang_1157",
+      "widget_id": "widget_clang_1157",
+      "topic": "Collegamento (Linkage) — Costanti globali tra moduli",
+      "q": "Come fornire correttamente l'accesso a una sola costante globale in più file .c senza duplicare la sua memoria?",
+      "hint": "Quale parola chiave viene utilizzata per il collegamento esterno (External Linkage)?",
+      "options": [
+        "Dichiarare extern const int MY_VAL; nel file .h e definire const int MY_VAL = 100; in un unico file .c",
+        "Scrivere #define extern MY_VAL 100 nel file header",
+        "Dichiarare const static int MY_VAL = 100; in ciascun file .c",
+        "In C è impossibile usare la stessa variabile const in più file"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'uso combinato di `extern const int MY_VAL;` nel file `.h` e la definizione `const int MY_VAL = 100;` in un solo file `.c` alloca memoria in un unico punto del programma e vi dà accesso a tutti gli altri moduli.",
+        "Errato. La sintassi `#define extern` è priva di senso.",
+        "Errato. `static const` creerebbe una copia separata della variabile in ciascun file `.c`, duplicando la memoria.",
+        "Errato. Il collegamento esterno tramite `extern` è pienamente supportato in C."
+      ]
+    },
+    {
+      "id": "it_clang_1158",
+      "widget_id": "widget_clang_1158",
+      "topic": "Sicurezza dei tipi — Conversione implicita dei tipi",
+      "q": "A quale insidia nei calcoli può portare la sostituzione di `const double SCALE = 2.0;` con `#define SCALE 2`?",
+      "hint": "Cosa succederà eseguendo la divisione `int x = 5; int res = x / SCALE;`?",
+      "options": [
+        "Il numero 2 senza punto viene interpretato come int, il che può causare una divisione intera con il troncamento della parte decimale",
+        "La macro #define 2 causerà un immediato overflow dello stack",
+        "Il compilatore genererà un errore di incompatibilità tra i tipi della macro e double",
+        "Il valore di SCALE verrà arrotondato automaticamente al numero pari più vicino"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La scrittura `#define SCALE 2` inserisce un `int` implicito. Nell'espressione `5 / 2` avverrà una divisione intera (risultato `2`). La costante `const double SCALE = 2.0;` avrebbe forzato una divisione in virgola mobile (risultato `2.5`).",
+        "Errato. Lo stack non va in overflow per questo motivo.",
+        "Errato. Il preprocessore non controlla i tipi e il compilatore eseguirà semplicemente operazioni tra interi.",
+        "Errato. Il preprocessore non effettua alcun arrotondamento speciale."
+      ]
+    },
+    {
+      "id": "it_clang_1159",
+      "widget_id": "widget_clang_1159",
+      "topic": "Costanza — const int * vs int * const",
+      "q": "Qual è la differenza concettuale tra `const int *p` e `int * const p`?",
+      "hint": "Fai attenzione a quale lato dell'asterisco `*` si trova la parola chiave `const`.",
+      "options": [
+        "const int *p è un puntatore a costante (non si può cambiare il valore *p), mentre int * const p è un puntatore costante (non si può cambiare l'indirizzo p stesso)",
+        "const int *p vieta di modificare l'indirizzo, mentre int * const p vieta di modificare il valore",
+        "Non c'è assolutamente alcuna differenza tra queste due scritture",
+        "int * const p viene utilizzato solo nel preprocessore, mentre const int *p nel compilatore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Regola 'leggi da destra a sinistra': `const int *p` — p è un puntatore a `const int` (i dati sono protetti da modifiche, l'indirizzo può cambiare). `int * const p` — puntatore const a `int` (l'indirizzo è fisso, i dati all'indirizzo possono cambiare).",
+        "Errato. I significati sono scambiati.",
+        "Errato. Il comportamento di questi puntatori differisce radicalmente.",
+        "Errato. Entrambe le strutture appartengono alla sintassi standard del C."
+      ]
+    },
+    {
+      "id": "it_clang_1160",
+      "widget_id": "widget_clang_1160",
+      "topic": "Modifica — Tentativo di bypass tramite cast dei tipi (UB)",
+      "q": "Cosa succede se si tenta di 'aggirare' la costanza usando un cast di tipo `*(int*)&c = 20;` per `const int c = 10;` e per `#define C 10`?",
+      "hint": "Il codice `*(int*)&10 = 20;` compilerà?",
+      "options": [
+        "Per const questo porterà a un Comportamento Indefinito (UB), mentre per #define il codice non compilerà nemmeno",
+        "In entrambi i casi il valore cambierà con successo in 20",
+        "Per #define il valore cambierà in 20, mentre per const si verificherà un errore sintattico",
+        "Il compilatore ignorerà automaticamente questa riga in entrambi i casi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La scrittura `*(int*)&10 = 20;` con la macro `#define` causerà un errore di compilazione (non si può prendere l'indirizzo di un letterale `10`). Per `const int c` il codice compilerà, ma tentare di modificare la memoria fisicamente costante provocherà un Undefined Behavior (UB) o un Segmentation Fault.",
+        "Errato. Prendere l'indirizzo di un letterale da `#define` bloccherà la compilazione.",
+        "Errato. È impossibile modificare un letterale definito da macro.",
+        "Errato. Il compilatore non ignora le istruzioni di scrittura."
+      ]
+    },
+    {
+      "id": "it_clang_1161",
+      "widget_id": "widget_clang_1161",
+      "topic": "Pratica const — Parametri di funzione e protezione delle API",
+      "q": "In quale dei seguenti casi l'uso del modificatore const è l'unica scelta corretta rispetto a #define?",
+      "hint": "Pensa al passaggio di indirizzi e alla protezione della memoria da modifiche accidentali all'interno delle funzioni.",
+      "options": [
+        "Quando si passa un puntatore a un buffer a una funzione per garantire che la funzione non ne modifichi il contenuto (ad esempio, void print_buf(const char *buf))",
+        "Quando si imposta la versione del programma per la build del progetto",
+        "Quando si configura la compilazione condizionale per diversi sistemi operativi",
+        "Quando si crea una macro testuale per calcolare il massimo tra due numeri"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Proteggere i parametri delle funzioni e i puntatori dalle modifiche (API Read-Only) è un compito che le macro `#define` non possono gestire. Lo specificatore `const` obbliga il compilatore a verificare che la funzione non modifichi accidentalmente i dati tramite il puntatore passato.",
+        "Errato. La versione del programma per la build viene solitamente definita tramite `#define` in un file header o negli argomenti del compilatore.",
+        "Errato. La compilazione condizionale esegue un filtraggio testuale tramite `#ifdef`, dove `const` non è applicabile.",
+        "Errato. Il calcolo del massimo richiede una logica, non uno specificatore di tipo."
+      ]
+    },
+    {
+      "id": "it_clang_1162",
+      "widget_id": "widget_clang_1162",
+      "topic": "Pratica #define — Compilazione condizionale",
+      "q": "Per quale dei seguenti compiti la direttiva #define è insostituibile e non è possibile utilizzare la parola chiave const?",
+      "hint": "Cosa funziona prima della fase di traduzione del codice C in codice macchina?",
+      "options": [
+        "Includere o escludere blocchi di codice a seconda della piattaforma target (ad esempio, #ifdef _WIN32)",
+        "Dichiarare la costante matematica PI",
+        "Creare una tabella di ricerca (Lookup table) per il seno",
+        "Passare la dimensione di un array a una funzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La compilazione condizionale (`#ifdef`, `#ifndef`, `#if`) funziona durante la fase di preprocessamento e determina quali righe di codice arriveranno effettivamente al compilatore. Le variabili `const` esistono nel codice tradotto e non possono gestire il processo di build.",
+        "Errato. Per la costante PI è perfettamente adatto `const double PI = 3.14159265;`.",
+        "Errato. Le tabelle di valori sono gestite al meglio come array `static const`.",
+        "Errato. Il passaggio della dimensione di un array è un normale parametro `size_t`."
+      ]
+    },
+    {
+      "id": "it_clang_1163",
+      "widget_id": "widget_clang_1163",
+      "topic": "Pratica const — Array costanti e tabelle",
+      "q": "Perché per una tabella di ricerca (Lookup Table) `const char LOOKUP_TABLE[256] = { ... }` si raccomanda l'uso di const anziché #define?",
+      "hint": "Come sostituirebbe il preprocessore il corpo della macro se si tentasse di scrivere `#define LOOKUP { ... }`?",
+      "options": [
+        "const crea un unico array tipizzato in memoria, mentre la macro inserirebbe l'array ripetutamente 'così com'è' in ogni punto di chiamata",
+        "#define non sa lavorare con le parentesi graffe { }",
+        "Gli array creati tramite #define vengono creati esclusivamente nello heap",
+        "Le macro non possono contenere più di 10 elementi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Usando `#define LOOKUP {1, 2, 3}`, la sostituzione testuale dell'array in ogni sezione di codice porterebbe a espressioni ricreate da capo o sintatticamente non valide. L'array `const` alloca esattamente un unico blocco compatto nella sezione di memoria `.rodata`.",
+        "Errato. Il preprocessore sa sostituire le parentesi graffe, ma ciò genererebbe il caos sintattico.",
+        "Errato. Il preprocessore non gestisce affatto l'allocazione di memoria dinamica.",
+        "Errato. La lunghezza delle macro è limitata solo dalla dimensione del file di testo."
+      ]
+    },
+    {
+      "id": "it_clang_1164",
+      "widget_id": "widget_clang_1164",
+      "topic": "Pratica const — Sicurezza dei tipi e debugging",
+      "q": "Perché per la dichiarazione di singole costanti fisiche o matematiche (ad esempio, `const float GRAVITY = 9.81f`) si preferisce const rispetto a #define?",
+      "hint": "Pensa ai tipi di dati (float vs double) e all'aiuto del debugger.",
+      "options": [
+        "const garantisce un tipo di dato rigoroso e conserva il nome nei simboli del debugger, a differenza del testo privo di tipo in #define",
+        "const funziona più velocemente a livello di processore",
+        "#define consuma sempre memoria RAM a runtime",
+        "const permette di modificare il valore della variabile tramite normali funzioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La scrittura `const float` garantisce che il numero sia un `float` a 32 bit e non un `double`, evitando conversioni di tipo implicite. Inoltre, il nome `GRAVITY` verrà conservato nel debugger (GDB), mentre `#define` verrà sostituito con il numero `9.81f` e 'scomparirà'.",
+        "Errato. Dopo l'ottimizzazione del compilatore, la velocità di lavoro con la costante è pari a quella con un letterale.",
+        "Errato. `#define` è solo testo, non 'consuma' RAM di per sé.",
+        "Errato. La variabile `const` viene creata proprio per impedire modifiche."
+      ]
+    },
+    {
+      "id": "it_clang_1165",
+      "widget_id": "widget_clang_1165",
+      "topic": "Pratica #define — Manipolazione di testo e token",
+      "q": "Quale di questi compiti può essere risolto solo dalla direttiva #define e non da una variabile const?",
+      "hint": "Cosa sa fare solo il preprocessore testuale con i nomi delle variabili?",
+      "options": [
+        "Convertire il nome di un argomento passato o un'espressione in un letterale stringa (#x)",
+        "Memorizzare un numero decimale in virgola mobile",
+        "Passare un indirizzo costante a una funzione",
+        "Memorizzare un valore di tipo carattere (char)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli operatori di metaprogrammazione, come la stringificazione (`#x`) e la concatenazione di token (`a ## b`), lavorano sul testo sorgente del programma prima della compilazione. Le costanti `const` sono oggetti del codice già compilato e non possono manipolare gli identificatori.",
+        "Errato. I numeri decimali si memorizzano perfettamente in un `const double`.",
+        "Errato. Un puntatore `const` trasmette perfettamente un indirizzo costante.",
+        "Errato. `const char` è il modo standard per memorizzare un carattere."
+      ]
+    },
+    {
+      "id": "it_clang_1166",
+      "widget_id": "widget_clang_1166",
+      "topic": "Restrizioni sintattiche — Costanti negli istruzioni switch",
+      "q": "Perché nel C classico (prima di C23) non è possibile utilizzare `const int OPTION = 1;` come etichetta case di un'istruzione switch?",
+      "hint": "Una variabile const in C è un'espressione costante a tempo di compilazione (Integer Constant Expression)?",
+      "options": [
+        "Le etichette case richiedono un'Integer Constant Expression (ICE), mentre const in C indica solo una variabile read-only, quindi si usano enum o #define",
+        "La variabile const occupa memoria dinamica nello heap",
+        "L'istruzione switch sa confrontare solo le stringhe",
+        "Il compilatore vieta l'uso di const all'interno di qualsiasi ciclo o condizione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza del C++, in C una variabile `const int` è una 'variabile protetta dalla scrittura' e non una vera costante a tempo di compilazione (ICE). Per lo standard C le etichette `case` richiedono un ICE, pertanto in esse si usano letterali/numeri, `enum` o `#define`.",
+        "Errato. Le variabili `const` vengono allocate nello stack o nella sezione dati, non nello heap.",
+        "Errato. `switch` funziona con i tipi interi (`int`, `char`, `enum`).",
+        "Errato. `const` può essere utilizzato in qualsiasi blocco di codice."
+      ]
+    },
+    {
+      "id": "it_clang_1167",
+      "widget_id": "widget_clang_1167",
+      "topic": "Sistemi Embedded — Allocazione nella memoria Flash",
+      "q": "Perché nei microcontrollori per le grandi tabelle dati si usa `static const uint8_t ROM_DATA[]` anziché #define?",
+      "hint": "In quale memoria il compilatore colloca un array tipizzato garantito come immutabile?",
+      "options": [
+        "Il modificatore const permette al compilatore di posizionare l'array nella memoria Flash (ROM), risparmiando preziosa memoria RAM",
+        "#define occupa memoria RAM per ciascun elemento",
+        "const comprime automaticamente i dati con l'algoritmo gzip",
+        "Gli array creati da #define non possono essere letti dal microcontrollore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nei microcontrollori la RAM è estremamente limitata (poche decine di kilobyte), mentre la Flash (ROM) è molto più capiente. Dichiarare l'array come `static const` indica al compilatore di allocarlo direttamente nella memoria non volatile Flash (.rodata), senza copiarlo nella RAM all'avvio.",
+        "Errato. `#define` è testo che si espanderà all'inizializzazione dell'array nella memoria in cui verrà dichiarato.",
+        "Errato. Il compilatore non esegue alcuna compressione gzip integrata.",
+        "Errato. I microcontrollori leggono qualsiasi tipo di dato."
+      ]
+    },
+    {
+      "id": "it_clang_1168",
+      "widget_id": "widget_clang_1168",
+      "topic": "Pratica #define — Sostituzione di funzioni per i test (Mock)",
+      "q": "In che modo #define aiuta a sostituire le chiamate di funzione (ad esempio `read_sensor()`) con stub nei test unitari senza riscrivere il codice di produzione?",
+      "hint": "Cosa farà il preprocessore durante la build del banco di prova?",
+      "options": [
+        "Tramite #define read_sensor() mock_read_sensor() il preprocessore reindirizza le chiamate prima della fase di compilazione",
+        "const traccia automaticamente le chiamate di funzione e le intercetta a runtime",
+        "#define esegue il codice all'interno di una macchina virtuale",
+        "const congela forzatamente il valore restituito dalla funzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella build di test, tramite la macro `#define read_sensor() mock_read_sensor()`, tutte le chiamate alla funzione originale vengono sostituite dal preprocessore con un 'mock' di test, consentendo di collaudare il codice senza hardware reale.",
+        "Errato. `const` è un modificatore di tipo e non può intercettare le chiamate a runtime.",
+        "Errato. Il preprocessore non crea alcuna macchina virtuale.",
+        "Errato. `const` non influisce sui valori restituiti dalle funzioni esterne."
+      ]
+    },
+    {
+      "id": "it_clang_1169",
+      "widget_id": "widget_clang_1169",
+      "topic": "Pratica const — Sicurezza dei puntatori a costante",
+      "q": "Qual è il vantaggio principale dell'uso di const nella firma `void process(const MyStruct *obj)` rispetto al passaggio senza const o tramite macro?",
+      "hint": "Cosa succede se un programmatore all'interno di process() scrive per errore `obj->id = 5`?",
+      "options": [
+        "Il compilatore genererà un errore in fase di build se si tenta accidentalmente di modificare i campi della struttura tramite il puntatore obj",
+        "La funzione solleverà un errore durante l'esecuzione (runtime error)",
+        "Il preprocessore rimuoverà il codice della funzione process",
+        "La struttura verrà copiata automaticamente nella memoria dinamica"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La struttura `const MyStruct *obj` rende i dati 'di sola lettura'. Qualsiasi errore di battitura o tentativo accidentale di scrittura (`obj->field = 10`) verrà immediatamente bloccato dal compilatore in fase di build.",
+        "Errato. L'errore si verifica in fase di compilazione, non a runtime.",
+        "Errato. Il codice della funzione rimarrà al suo posto.",
+        "Errato. Non viene effettuata alcuna copia della memoria, viene passato un puntatore."
+      ]
+    },
+    {
+      "id": "it_clang_1170",
+      "widget_id": "widget_clang_1170",
+      "topic": "Best Practices — Scelta tra #define, const ed enum",
+      "q": "Quale combinazione di regole rappresenta lo standard di qualità (Best Practice) comunemente accettato in C?",
+      "hint": "Formula una chiara separazione delle responsabilità tra enum, const e #define.",
+      "options": [
+        "enum per enumerazioni e costanti intere, const per parametri di funzione e variabili tipizzate, #define per macro e build condizionale",
+        "Usare solo #define per qualsiasi compito, rinunciando completamente a const ed enum",
+        "Usare const solo per le stringhe e #define per tutti i tipi di numeri",
+        "Sostituire tutte le funzioni con macro #define per la massima velocità"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! È il 'gold standard' dello sviluppo C: 1) `enum` fornisce costanti rigorose per `switch`/`case` e gruppi di flag; 2) `const` garantisce la sicurezza delle API delle funzioni e delle variabili tipizzate; 3) `#define` si applica strettamente per scopo (include guard, build condizionale `#ifdef`, metaprogrammazione).",
+        "Errato. L'uso totale di `#define` priva il codice del controllo dei tipi e compromette il debugging.",
+        "Errato. `const` si adatta perfettamente anche ai tipi numerici.",
+        "Errato. Trasformare tutte le funzioni in macro porta all'aumento della dimensione del codice (code bloat) e a effetti collaterali."
+      ]
+    },
+    {
+      "id": "it_clang_1171",
+      "widget_id": "widget_clang_1171",
+      "topic": "Qualificatori — Combinazione const volatile",
+      "q": "Cosa significa la dichiarazione `const volatile uint32_t *reg` quando si lavora con i registri hardware dei microcontrollori?",
+      "hint": "const protegge dalla modifica del valore da parte dell'hardware e volatile costringe a leggere direttamente la memoria?",
+      "options": [
+        "È vietato modificare il valore del registro dal programma (Read-Only), ma esso può essere modificato dall'esterno (dall'hardware), quindi il compilatore non deve ottimizzare le letture ripetute",
+        "La variabile è assolutamente immutabile e il compilatore ne conserva il valore in un registro della CPU",
+        "Il codice genererà un errore di compilazione poiché const e volatile si escludono a vicenda",
+        "Il puntatore è costante, ma i dati al suo interno possono essere sovrascritti liberamente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `const` vieta al programma di scrivere dati a quell'indirizzo (`*reg = 5` genererà un errore). `volatile` vieta al compilatore di ottimizzare o memorizzare in cache la lettura da questa memoria, costringendolo ad accedere al registro hardware ogni volta poiché il valore cambia via hardware.",
+        "Errato. `volatile` vieta proprio il caching del valore nei registri della CPU.",
+        "Errato. La combinazione `const volatile` è del tutto valida e ampiamente usata nei driver e nello sviluppo Embedded.",
+        "Errato. `const` si riferisce al tipo indicato `uint32_t`, non al puntatore stesso."
+      ]
+    },
+    {
+      "id": "it_clang_1172",
+      "widget_id": "widget_clang_1172",
+      "topic": "Puntatori — Puntatori const multilivello",
+      "q": "Cosa vieta di modificare il qualificatore const nella dichiarazione `const int **ptr`?",
+      "hint": "Leggi la dichiarazione da destra a sinistra.",
+      "options": [
+        "Vieta la modifica del valore dereferenziato **ptr (il numero intero stesso)",
+        "Vieta la modifica del puntatore di secondo livello *ptr",
+        "Vieta la modifica del puntatore di primo livello ptr stesso",
+        "Vieta la modifica di tutti i livelli di indirizzamento"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lettura da destra a sinistra: `ptr` è un puntatore a un puntatore a `const int`. Sia `ptr` che il puntatore intermedio `*ptr` possono essere modificati, ma il valore finale `**ptr` è protetto dalla scrittura.",
+        "Errato. Per vietare la modifica di `*ptr`, occorre dichiarare `int * const *ptr`.",
+        "Errato. Per rendere costante `ptr` stesso, occorre scrivere `const int ** const ptr`.",
+        "Errato. È protetto solo il valore finale di tipo `int`."
+      ]
+    },
+    {
+      "id": "it_clang_1173",
+      "widget_id": "widget_clang_1173",
+      "topic": "Memoria — Sezione .rodata e comportamento del layout",
+      "q": "In quale sezione di memoria del file eseguibile viene solitamente collocata la variabile globale `const int MAX_CONN = 100;`?",
+      "hint": "Come si traduce l'acronimo .rodata?",
+      "options": [
+        "Nella sezione .rodata (Read-Only Data), protetta dalla scrittura dal sistema operativo",
+        "Nella sezione .bss insieme alle variabili non inizializzate",
+        "Nella sezione .text accanto alle istruzioni macchina del codice delle funzioni",
+        "Nello stack del processo (Stack)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le costanti globali vengono collocate nella sezione `.rodata`. Il sistema operativo, caricando il binario, contrassegna queste pagine di memoria come 'di sola lettura', per cui qualsiasi tentativo di scrittura causa l'arresto anomalo del programma (Segmentation Fault).",
+        "Errato. In `.bss` vengono collocate le variabili globali e statiche non inizializzate.",
+        "Errato. In `.text` si trovano le istruzioni eseguibili del processore (il codice).",
+        "Errato. Nello stack vengono allocate solo le variabili locali all'interno delle funzioni."
+      ]
+    },
+    {
+      "id": "it_clang_1174",
+      "widget_id": "widget_clang_1174",
+      "topic": "Firme delle funzioni — Restituzione di un puntatore const",
+      "q": "Perché una funzione restituisce un puntatore costante: `const char* get_version(void)`?",
+      "hint": "Cosa succede se il codice chiamante tenta di scrivere un byte all'indirizzo ottenuto?",
+      "options": [
+        "Per impedire al codice chiamante di modificare la stringa restituita tramite il puntatore ottenuto",
+        "Per restituire una stringa salvata nello heap",
+        "Affinché la funzione compili senza utilizzare l'istruzione return",
+        "Per prevenire un leak di memoria al termine della funzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La restituzione di `const char*` garantisce che il chiamante possa leggere la stringa, ma se tenta di eseguire `str[0] = 'v'`, il compilatore genererà immediatamente un errore in fase di build.",
+        "Errato. Il punto di allocazione della memoria (stack, heap, .rodata) non è determinato dal qualificatore `const`.",
+        "Errato. `return` rimane comunque obbligatorio.",
+        "Errato. La gestione della memoria viene eseguita dalle funzioni `free`/`malloc`."
+      ]
+    },
+    {
+      "id": "it_clang_1175",
+      "widget_id": "widget_clang_1175",
+      "topic": "Array — const nei parametri delle funzioni",
+      "q": "Come interpreta il compilatore il parametro `void process(const int arr[10])` nella firma di una funzione C?",
+      "hint": "In C gli array vengono passati per valore?",
+      "options": [
+        "Come il passaggio di un puntatore const int *arr — la dimensione 10 viene ignorata, ma agli elementi dell'array è vietata la modifica",
+        "Come il passaggio dell'array per valore creando una copia di 10 elementi",
+        "Come un errore di compilazione, poiché const non si può applicare agli array",
+        "Come la creazione di una variabile nella memoria dinamica"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C gli array nei parametri di funzione decadono sempre implicitamente a puntatori (`decay`). La scrittura `const int arr[10]` è del tutto equivalente a `const int *arr`. Il modificatore `const` vieta di modificare gli elementi dell'array all'interno della funzione.",
+        "Errato. In C gli array non vengono mai passati per valore.",
+        "Errato. È una pratica standard e frequente in C.",
+        "Errato. La funzione non alloca memoria dinamica."
+      ]
+    },
+    {
+      "id": "it_clang_1176",
+      "widget_id": "widget_clang_1176",
+      "topic": "Sintassi — Equivalenza di East Const e West Const",
+      "q": "C'è differenza tra le dichiarazioni `const int a = 5;` e `int const a = 5;`?",
+      "hint": "La posizione di const rispetto al nome del tipo int.",
+      "options": [
+        "No, entrambe le scritture sono assolutamente identiche e indicano un numero intero costante",
+        "const int a rende costante il valore, mentre int const a rende costante l'indirizzo",
+        "int const a è un errore di compilazione nello standard C99",
+        "const int a è memorizzato nello stack, mentre int const a nella sezione .rodata"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Entrambe le scritture sono del tutto equivalenti. La posizione di `const` prima o dopo il tipo base (`const int` — West const, `int const` — East const) non ne cambia il significato. Tuttavia, quando si lavora con i puntatori, la posizione rispetto all'asterisco `*` diventa fondamentale.",
+        "Errato. La posizione rispetto al tipo base `int` non modifica il tipo della variabile.",
+        "Errato. Entrambe le sintassi sono valide in tutti gli standard del C.",
+        "Errato. Il luogo di memorizzazione è determinato dall'ambito di visibilità (locale/globale), non dallo stile di scrittura."
+      ]
+    },
+    {
+      "id": "it_clang_1177",
+      "widget_id": "widget_clang_1177",
+      "topic": "Strutture — Campi con qualificatore const",
+      "q": "A quale limitazione porta la dichiarazione di un campo con il qualificatore const all'interno di una struttura: `struct User { const int id; char name[20]; };`?",
+      "hint": "È possibile riassegnare la struttura per intero (`u1 = u2`), se uno dei campi contiene const?",
+      "options": [
+        "La struttura può essere inizializzata alla creazione, ma il campo id non può essere modificato e l'intera struttura non può essere copiata tramite semplice assegnazione (u1 = u2)",
+        "La struttura smette di occupare spazio nella memoria RAM",
+        "Il campo id diventerà uguale per tutte le istanze create della struttura",
+        "Le istanze di tale struttura possono essere create solo come variabili globali"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il campo costante `id` rende l'istanza parzialmente immutabile. Per questo motivo l'operazione standard di copia dell'intera struttura `u1 = u2;` viene vietata dal compilatore, poiché sovrascriverebbe `u1.id`.",
+        "Errato. La dimensione della struttura in memoria non cambia.",
+        "Errato. Ogni struttura manterrà il suo valore univoco di `id` assegnato all'inizializzazione.",
+        "Errato. La struttura può essere creata sia nello stack che nello heap."
+      ]
+    },
+    {
+      "id": "it_clang_1178",
+      "widget_id": "widget_clang_1178",
+      "topic": "Compilazione — Rimozione del qualificatore const (Discarding const)",
+      "q": "Cosa succede tentando di assegnare un puntatore `const char *src` a un normale puntatore `char *dst = src;` senza un cast esplicito del tipo?",
+      "hint": "Il compilatore protegge la sicurezza di const durante una normale assegnazione?",
+      "options": [
+        "Il compilatore emetterà un avviso/errore 'initialization discards const qualifier from pointer target type'",
+        "Il programma compilerà senza avvisi, cambiando automaticamente il tipo di src",
+        "Il programma si interromperà immediatamente con un errore al momento dell'avvio",
+        "Il valore del puntatore src verrà azzerato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il compilatore impedisce il tentativo di aggirare implicitamente la protezione di `const`. Tentare di scrivere `const char*` in `char*` genera un avviso (o un errore con il flag `-Werror`) sulla perdita implicita del qualificatore `const`.",
+        "Errato. Il compilatore C rileverà necessariamente la violazione delle regole sui qualificatori.",
+        "Errato. L'errore si verifica in fase di compilazione, non a runtime.",
+        "Errato. I dati del puntatore non vengono modificati."
+      ]
+    },
+    {
+      "id": "it_clang_1179",
+      "widget_id": "widget_clang_1179",
+      "topic": "Standard — Tipo del letterale stringa in C vs C++",
+      "q": "Qual è il tipo ufficiale del letterale stringa \"hello\" in C rispetto al C++?",
+      "hint": "Il tipo del letterale in C contiene la parola const?",
+      "options": [
+        "In C il tipo del letterale è char[6] (senza const!), anche se scriverci sopra è vietato (UB); in C++ il tipo è const char[6]",
+        "In C il tipo del letterale è const char[6], mentre in C++ è char[6]",
+        "In entrambi i linguaggi il tipo è identico — const char*",
+        "In C il letterale stringa ha tipo void*"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C, per ragioni storiche, un letterale stringa ha tipo `char[]` (senza il qualificatore `const`). Pertanto il codice `char *p = \"hello\";` compilerà in C senza avvisi, ma la scrittura `p[0] = 'H'` causerà un Comportamento Indefinito (UB). In C++ il tipo del letterale è rigorosamente `const char[]`.",
+        "Errato. È l'esatto contrario: il qualificatore `const` per i letterali è sancito dallo standard C++.",
+        "Errato. In C il qualificatore `const` nel letterale è assente a livello di tipo.",
+        "Errato. Il letterale stringa in C ha tipo array `char[N]`."
+      ]
+    },
+    {
+      "id": "it_clang_1180",
+      "widget_id": "widget_clang_1180",
+      "topic": "Standard C23 — Il concetto di constexpr nel linguaggio C",
+      "q": "Quale parola chiave per la gestione delle costanti è stata ufficialmente introdotta nell'ultimo standard del linguaggio C (C23)?",
+      "hint": "Questa parola chiave proviene dal C++ e garantisce una vera costanza a tempo di compilazione.",
+      "options": [
+        "constexpr — per la creazione di vere costanti a tempo di compilazione (Integer Constant Expression)",
+        "readonly — per vietare la modifica delle variabili locali",
+        "immutable — per proteggere gli array dall'overflow",
+        "final — per vietare la ridefinizione delle funzioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard C23 ha aggiunto la parola chiave `constexpr`. A differenza del classico `const` (che in C crea variabili 'read-only'), `constexpr` garantisce che il valore sia calcolato a tempo di compilazione e possa essere utilizzato nei `case` e nelle dimensioni degli array statici.",
+        "Errato. `readonly` non è una parola chiave dello standard C.",
+        "Errato. `immutable` è usata in altri linguaggi (ad es. Rust), ma non in C.",
+        "Errato. `final` fa parte dell'OOP in C++ e Java."
+      ]
+    }
+  ]
+}

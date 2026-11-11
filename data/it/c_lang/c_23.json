@@ -1,0 +1,605 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_721",
+      "widget_id": "widget_clang_721",
+      "topic": "Matrici — Puntatore a un array int (*p)[N]",
+      "q": "Cosa stamperà `printf` accedendo a `p[1][2]` tramite un puntatore a un array `int (*p)[3]`?",
+      "hint": "`p[1]` punta alla seconda riga dell'array (`{4, 5, 6}`): è corretto?",
+      "options": [
+        "6",
+        "5",
+        "3",
+        "2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La dichiarazione `int (*p)[3]` crea un puntatore a un array di 3 interi. L'espressione `p[1]` seleziona la seconda riga `{4, 5, 6}`, e l'indice `[2]` ne prende il terzo elemento — 6.",
+        "Sbagliato. 5 è l'elemento `p[1][1]`.",
+        "Sbagliato. 3 è l'elemento della prima riga `p[0][2]`.",
+        "Sbagliato. 2 è l'elemento `p[0][1]`."
+      ]
+    },
+    {
+      "id": "it_clang_722",
+      "widget_id": "widget_clang_722",
+      "topic": "Matrici — Indirizzamento lineare i * cols + j",
+      "q": "A cosa equivale l'espressione `p[1 * cols + 1]` durante la lettura lineare di una matrice `2x3` tramite un puntatore monodimensionale?",
+      "hint": "Quale elemento della matrice bidimensionale `m[i][j]` si trova all'indice lineare 4?",
+      "options": [
+        "50",
+        "40",
+        "20",
+        "60"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In memoria le matrici sono memorizzate in modo contiguo per righe (row-major order). L'indice $1 \\times 3 + 1 = 4$ corrisponde al 5° elemento del blocco di memoria contiguo: `m[0][0]` (10), `m[0][1]` (20), `m[0][2]` (30), `m[1][0]` (40), `m[1][1]` (50).",
+        "Sbagliato. 40 si trova all'indice 3 (`m[1][0]`).",
+        "Sbagliato. 20 si trova all'indice 1 (`m[0][1]`).",
+        "Sbagliato. 60 si trova all'indice 5 (`m[1][2]`)."
+      ]
+    },
+    {
+      "id": "it_clang_723",
+      "widget_id": "widget_clang_723",
+      "topic": "Puntatori — Array di puntatori int *arr[N]",
+      "q": "Cosa stamperà `printf(\"%d\", *arr[1])` per l'array di puntatori `int *arr[3] = {&x, &y, &z}`?",
+      "hint": "Quale indirizzo è memorizzato in `arr[1]` e qual è il suo valore al momento della dereferenziazione `*`?",
+      "options": [
+        "20",
+        "10",
+        "30",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `int *arr[3]` crea un array di 3 puntatori. L'elemento `arr[1]` contiene l'indirizzo della variabile `y`. L'operatore di dereferenziazione `*arr[1]` estrae il valore di `y`, che è pari a 20.",
+        "Sbagliato. 10 è il valore di `*arr[0]` (variabile `x`).",
+        "Sbagliato. 30 è il valore di `*arr[2]` (variabile `z`).",
+        "Sbagliato. Gli array di puntatori sono del tutto validi in C."
+      ]
+    },
+    {
+      "id": "it_clang_724",
+      "widget_id": "widget_clang_724",
+      "topic": "Operatore sizeof — Dimensione dell'intera matrice e dimensione di una singola riga",
+      "q": "Cosa stamperà `printf` per `sizeof(a)` e `sizeof(a[0])` di una matrice `int a[3][4]` con `int` a 4 byte?",
+      "hint": "Calcola il volume totale dell'intera matrice di $3 \\times 4$ elementi e la dimensione di una riga composta da 4 elementi.",
+      "options": [
+        "48 16",
+        "12 4",
+        "48 4",
+        "12 16"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'intera matrice contiene $3 \\times 4 = 12$ elementi da 4 byte ciascuno, ovvero $12 \\times 4 = 48$ byte. L'elemento `a[0]` è una riga di 4 interi che occupa $4 \\times 4 = 16$ byte. Output: `48 16`.",
+        "Sbagliato. 12 e 4 indicano il numero di elementi, non la dimensione in byte.",
+        "Sbagliato. 4 byte è la dimensione di un singolo elemento `int`, non dell'intera riga `a[0]`.",
+        "Sbagliato. Ricalcola attentamente la dimensione dell'intera matrice."
+      ]
+    },
+    {
+      "id": "it_clang_725",
+      "widget_id": "widget_clang_725",
+      "topic": "Matrici — Sintassi combinata (*(a + i))[j]",
+      "q": "A cosa equivale l'espressione `(*(a + 1))[0]` per la matrice `int a[2][2] = {{5, 10}, {15, 20}}`?",
+      "hint": "Quale riga seleziona l'espressione `*(a + 1)`?",
+      "options": [
+        "15",
+        "5",
+        "10",
+        "20"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `*(a + 1)` ottiene il sottoarray della seconda riga (`a[1]`). L'applicazione dell'indice `[0]` legge il suo primo elemento `a[1][0]`, pari a 15.",
+        "Sbagliato. 5 è l'elemento `(*(a + 0))[0]` (`a[0][0]`).",
+        "Sbagliato. 10 è l'elemento `(*(a + 0))[1]` (`a[0][1]`).",
+        "Sbagliato. 20 è l'elemento `(*(a + 1))[1]` (`a[1][1]`)."
+      ]
+    },
+    {
+      "id": "it_clang_726",
+      "widget_id": "widget_clang_726",
+      "topic": "Algoritmi — Attraversamento della diagonale principale a[i][i]",
+      "q": "A cosa sarà uguale la variabile `sum` dopo aver eseguito il ciclo sulla diagonale `a[i][i]`?",
+      "hint": "Somma gli elementi che si trovano all'intersezione tra righe e colonne uguali: (0,0), (1,1), (2,2).",
+      "options": [
+        "6",
+        "0",
+        "3",
+        "1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `a[i][i]` accede agli elementi della diagonale principale della matrice: `a[0][0]` (1), `a[1][1]` (2) e `a[2][2]` (3). La somma è $1 + 2 + 3 = 6$.",
+        "Sbagliato. Gli elementi fuori dalla diagonale sono pari a 0, ma sulla diagonale principale ci sono i numeri 1, 2 e 3.",
+        "Sbagliato. 3 è solo l'ultimo elemento della diagonale.",
+        "Sbagliato. Ricalcola la somma di tutti e tre gli elementi."
+      ]
+    },
+    {
+      "id": "it_clang_727",
+      "widget_id": "widget_clang_727",
+      "topic": "Memoria dinamica — Allocazione di una matrice dinamica tramite int **",
+      "q": "A cosa equivale l'elemento `m[1][0]` per una struttura bidimensionale creata dinamicamente?",
+      "hint": "Il valore 42 è stato assegnato con successo alla prima cella della seconda riga?",
+      "options": [
+        "42",
+        "0",
+        "Dati spazzatura in memoria",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il codice crea un array di puntatori `m`, in cui ogni puntatore memorizza il proprio array dinamico monodimensionale `int`. L'operazione `m[1][0] = 42` scrive correttamente il valore nella seconda riga e stampa 42.",
+        "Sbagliato. Il valore 42 è stato sovrascritto esplicitamente sulla memoria non inizializzata.",
+        "Sbagliato. La variabile ha ricevuto il valore 42 prima della stampa.",
+        "Sbagliato. La creazione di matrici dinamiche tramite `int**` è un pattern classico del C."
+      ]
+    },
+    {
+      "id": "it_clang_728",
+      "widget_id": "widget_clang_728",
+      "topic": "Array di stringhe — Dimensione di un array bidimensionale di caratteri char a[N][M]",
+      "q": "A cosa equivale `sizeof(a)` per un array bidimensionale di caratteri `char a[2][10]`?",
+      "hint": "Quanti elementi `char` in totale vengono allocati in memoria indipendentemente dalla lunghezza delle stringhe memorizzate?",
+      "options": [
+        "20",
+        "5",
+        "16",
+        "8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'array bidimensionale `char a[2][10]` alloca un blocco di memoria contiguo esattamente per $2 \\times 10 = 20$ elementi di tipo `char`. Poiché `sizeof(char) == 1`, la dimensione totale è di 20 byte.",
+        "Sbagliato. 5 è il numero totale di caratteri nelle frasi \"hi\" e \"bye\".",
+        "Sbagliato. 16 byte verrebbero occupati da un array di puntatori `char *a[2]` su un sistema a 64 bit.",
+        "Sbagliato. 8 byte è la dimensione di un normale puntatore."
+      ]
+    },
+    {
+      "id": "it_clang_729",
+      "widget_id": "widget_clang_729",
+      "topic": "Memoria — Cast di tipo di una matrice a un puntatore piatto (int*)a",
+      "q": "Cosa stamperà `printf` leggendo il primo elemento `p[0]` e l'ultimo `p[3]` di una matrice `2x2` tramite un puntatore piatto?",
+      "hint": "In quale ordine gli elementi della matrice `{{1, 2}, {3, 4}}` sono disposti nella memoria contigua?",
+      "options": [
+        "1 4",
+        "1 2",
+        "1 3",
+        "2 3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In memoria gli elementi della matrice `2x2` sono disposti in modo strettamente sequenziale: indice 0: `a[0][0]` (1), indice 1: `a[0][1]` (2), indice 2: `a[1][0]` (3), indice 3: `a[1][1]` (4). `p[0]` è pari a 1 e `p[3]` è pari a 4.",
+        "Sbagliato. 1 e 2 sono gli elementi della prima riga `p[0]` e `p[1]`.",
+        "Sbagliato. 1 e 3 sono gli elementi `p[0]` e `p[2]`.",
+        "Sbagliato. Verifica l'ordine degli elementi in memoria."
+      ]
+    },
+    {
+      "id": "it_clang_730",
+      "widget_id": "widget_clang_730",
+      "topic": "Parametri delle funzioni — Passaggio di un array bidimensionale int m[][N]",
+      "q": "Cosa stamperà la funzione `print_val` passando la matrice `a[2][3]`?",
+      "hint": "A quale elemento della matrice originale `a` corrisponde l'indice `m[1][1]`?",
+      "options": [
+        "5",
+        "4",
+        "2",
+        "6"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando si passa una matrice a una funzione, specificare la seconda dimensione `[][3]` è obbligatorio. L'elemento `m[1][1]` fa riferimento alla seconda riga e alla seconda colonna della matrice, ovvero al numero 5.",
+        "Sbagliato. 4 è l'elemento `m[1][0]`.",
+        "Sbagliato. 2 è l'elemento `m[0][1]`.",
+        "Sbagliato. 6 è l'elemento `m[1][2]`."
+      ]
+    },
+    {
+      "id": "it_clang_731",
+      "widget_id": "widget_clang_731",
+      "topic": "Array multidimensionali — Array tridimensionale a[2][2][2]",
+      "q": "A cosa equivale l'elemento `a[1][0][1]` in un array tridimensionale `int a[2][2][2]`?",
+      "hint": "Passo 1: seleziona il blocco [1]. Passo 2: seleziona la riga [0] di questo blocco. Passo 3: prendi l'elemento [1].",
+      "options": [
+        "6",
+        "5",
+        "2",
+        "7"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'indice `a[1]` seleziona il secondo blocco bidimensionale `{{5, 6}, {7, 8}}`. L'indice `[0]` ne estrae la prima riga `{5, 6}`. L'indice `[1]` estrae il secondo elemento di questa riga — 6.",
+        "Sbagliato. 5 è l'elemento `a[1][0][0]`.",
+        "Sbagliato. 2 è l'elemento del primo blocco `a[0][0][1]`.",
+        "Sbagliato. 7 è l'elemento `a[1][1][0]`."
+      ]
+    },
+    {
+      "id": "it_clang_732",
+      "widget_id": "widget_clang_732",
+      "topic": "Inizializzazione — Inizializzazione parziale delle righe di una matrice",
+      "q": "Cosa stamperà `printf` per gli elementi `a[0][1]` e `a[1][2]` con la dichiarazione `int a[2][3] = {{1}, {4, 5}}`?",
+      "hint": "Con cosa vengono sostituiti gli elementi mancanti nelle righe della matrice durante l'inizializzazione tra parentesi graffe?",
+      "options": [
+        "0 0",
+        "1 5",
+        "0 5",
+        "Dati spazzatura Dati spazzatura"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se per un sottoarray (riga) non sono specificati tutti gli elementi, le celle rimanenti vengono automaticamente azzerate. La prima riga diventa `{1, 0, 0}`, la seconda `{4, 5, 0}`. I valori di `a[0][1]` e `a[1][2]` sono pari a 0.",
+        "Sbagliato. 1 è l'elemento `a[0][0]` e 5 è `a[1][1]`.",
+        "Sbagliato. Anche `a[1][2]` è pari a 0, poiché la terza cella della seconda riga è omessa.",
+        "Sbagliato. L'inizializzazione esplicita garantisce l'assenza di dati spazzatura."
+      ]
+    },
+    {
+      "id": "it_clang_733",
+      "widget_id": "widget_clang_733",
+      "topic": "Doppia dereferenziazione — Espressione **(a + 1) per un array bidimensionale",
+      "q": "A cosa equivale l'espressione `**(a + 1)` per la matrice `int a[2][3] = {{1, 2, 3}, {4, 5, 6}}`?",
+      "hint": "Quale riga restituisce la prima dereferenziazione `*(a + 1)` e quale elemento restituisce la seconda `*`?",
+      "options": [
+        "4",
+        "1",
+        "2",
+        "5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `a + 1` sposta il puntatore alla 2ª riga della matrice. La prima dereferenziazione `*(a + 1)` converte il tipo in un puntatore al primo elemento di questa riga (`&a[1][0]`). La seconda dereferenziazione `**(a + 1)` estrae il valore di `a[1][0]`, pari a 4.",
+        "Sbagliato. 1 è l'elemento `**a` (`a[0][0]`).",
+        "Sbagliato. 2 è l'elemento `*(*a + 1)` (`a[0][1]`).",
+        "Sbagliato. 5 è l'elemento `*(*(a + 1) + 1)` (`a[1][1]`)."
+      ]
+    },
+    {
+      "id": "it_clang_734",
+      "widget_id": "widget_clang_734",
+      "topic": "Aritmetica dei puntatori — Sintassi *(*(a) + 2)",
+      "q": "A cosa equivale l'espressione `*(*(a) + 2)` per la matrice `int a[2][3] = {{10, 20, 30}, {40, 50, 60}}`?",
+      "hint": "A quale elemento della matrice `a[i][j]` corrisponde questa sintassi?",
+      "options": [
+        "30",
+        "20",
+        "60",
+        "10"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `*(a)` è una forma abbreviata di `*(a + 0)`, ovvero della prima riga `a[0]`. Aggiungendo `+ 2` si ottiene l'indirizzo del 3° elemento di questa riga (`&a[0][2]`). La dereferenziazione estrae 30.",
+        "Sbagliato. 20 è l'elemento `*(*(a) + 1)` (`a[0][1]`).",
+        "Sbagliato. 60 è l'elemento della 3ª colonna della seconda riga `*(*(a + 1) + 2)` (`a[1][2]`).",
+        "Sbagliato. 10 è l'elemento iniziale `**a` (`a[0][0]`)."
+      ]
+    },
+    {
+      "id": "it_clang_735",
+      "widget_id": "widget_clang_735",
+      "topic": "C99 — Array a lunghezza variabile bidimensionali (VLA)",
+      "q": "È valida la dimensione dinamica VLA della matrice `int a[n][m]` e `a[1][2]` stamperà il valore 99 in C99+?",
+      "hint": "Lo standard C99 supporta la dichiarazione dinamica di VLA sullo stack?",
+      "options": [
+        "Stamperà 99",
+        "Errore di compilazione",
+        "Comportamento indefinito",
+        "Stamperà 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard C99 consente gli array a lunghezza variabile (VLA). Le dimensioni `n` ed `m` vengono calcolate a tempo di esecuzione e l'operazione `a[1][2] = 99` stamperà correttamente 99.",
+        "Sbagliato. Un errore si verificherebbe solo nel vecchio standard C89.",
+        "Sbagliato. L'uso dei VLA è pienamente regolamentato da C99.",
+        "Sbagliato. Il valore della cella è stato modificato esplicitamente in 99."
+      ]
+    },
+    {
+      "id": "it_clang_736",
+      "widget_id": "widget_clang_736",
+      "topic": "C99 — Inizializzatori designati di array (Designated Initializers)",
+      "q": "Cosa stamperà `printf` inizializzando l'array tramite `[2] = 10, 20`?",
+      "hint": "Da quale indice prosegue il riempimento dell'array dopo aver specificato l'indice esplicito `[2]`?",
+      "options": [
+        "0 20",
+        "10 20",
+        "0 10",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C99 l'inizializzatore `[2] = 10` imposta `a[2] = 10`. L'elemento successivo senza indice (`20`) viene scritto nella posizione successiva `a[3]`. Gli elementi non specificati (`a[0]`, `a[1]`, `a[4]`) vengono azzerati. L'elemento `a[1]` è pari a 0, mentre `a[3]` è pari a 20.",
+        "Sbagliato. `a[1]` non è stato inizializzato esplicitamente, quindi assume valore 0.",
+        "Sbagliato. 10 è stato scritto in `a[2]`, non in `a[3]`.",
+        "Sbagliato. Gli inizializzatori designati sono standardizzati in C99."
+      ]
+    },
+    {
+      "id": "it_clang_737",
+      "widget_id": "widget_clang_737",
+      "topic": "C99 — Inizializzatori designati di strutture (Designators for Structs)",
+      "q": "Cosa stamperà `printf(\"%d %d\", p.x, p.y)` utilizzando i campi espliciti `.y = 5, .x = 10`?",
+      "hint": "L'ordine di inizializzazione dipende dalla sequenza di dichiarazione dei campi nella struttura?",
+      "options": [
+        "10 5",
+        "5 10",
+        "0 5",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli inizializzatori designati `.field` in C99 consentono di riempire i campi di una struttura in qualsiasi ordine. `p.x` riceve il valore 10, mentre `p.y` riceve il valore 5.",
+        "Sbagliato. `p.x` corrisponde a quanto passato con `.x = 10`.",
+        "Sbagliato. Tutti i campi specificati sono stati inizializzati con successo.",
+        "Sbagliato. La sintassi è del tutto corretta per C99."
+      ]
+    },
+    {
+      "id": "it_clang_738",
+      "widget_id": "widget_clang_738",
+      "topic": "C99 — Membri array flessibili (Flexible Array Members)",
+      "q": "A cosa equivale `sizeof(struct Flex)` per una struttura con un array flessibile `int data[]` alla fine?",
+      "hint": "L'operatore `sizeof` tiene conto della dimensione degli elementi dell'array flessibile `data[]`?",
+      "options": [
+        "4",
+        "0",
+        "8",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C99 un elemento array flessibile alla fine della struttura (`int data[]`) non aumenta la dimensione della struttura stessa quando si invoca `sizeof`. Viene considerato solo il campo `len` (4 byte su sistemi a 32/64 bit) più l'allineamento.",
+        "Sbagliato. La struttura contiene almeno il campo fisso `int len`.",
+        "Sbagliato. L'allineamento non richiede 4 byte aggiuntivi per un singolo `int`.",
+        "Sbagliato. Gli array flessibili sono una funzionalità standard di C99."
+      ]
+    },
+    {
+      "id": "it_clang_739",
+      "widget_id": "widget_clang_739",
+      "topic": "C99 — Calcolo di sizeof per VLA a tempo di esecuzione",
+      "q": "A cosa equivale l'espressione `sizeof(a) / sizeof(a[0])` per l'array VLA `int a[n]` con `n = 5`?",
+      "hint": "`sizeof` viene calcolato a tempo di esecuzione (runtime) per gli array a lunghezza variabile in C99?",
+      "options": [
+        "5",
+        "1",
+        "0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza degli array ordinari, dove `sizeof` viene calcolato in fase di compilazione, per i VLA in C99 esso viene valutato a tempo di esecuzione. La dimensione totale in byte $5 \\times \\text{sizeof(int)}$ divisa per $\\text{sizeof(int)}$ dà esattamente 5.",
+        "Sbagliato. La dimensione dell'array VLA viene calcolata dinamicamente in modo corretto.",
+        "Sbagliato. `sizeof` per un VLA non restituisce 0.",
+        "Sbagliato. L'espressione è del tutto valida."
+      ]
+    },
+    {
+      "id": "it_clang_740",
+      "widget_id": "widget_clang_740",
+      "topic": "Qualificatori — Puntatore a costante const int *p",
+      "q": "Cosa stamperà `printf(\"%d\", *p)` leggendo indirettamente `x` tramite `const int *p`, se la variabile `x` stessa è stata modificata direttamente (`x = 20`)?",
+      "hint": "`const int *p` vieta di modificare il valore della variabile originale `x` tramite il suo nome esplicito?",
+      "options": [
+        "20",
+        "10",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La dichiarazione `const int *p` vieta unicamente la modifica del valore *tramite il puntatore* `p` (`*p = ...` genererà un errore). Modificare direttamente la variabile `x` è consentito e il puntatore `p` legge il valore aggiornato 20.",
+        "Sbagliato. 10 è il vecchio valore prima della scrittura.",
+        "Sbagliato. Modificare un oggetto ordinario non-const `x` è legale.",
+        "Sbagliato. In questo caso non c'è alcun comportamento indefinito."
+      ]
+    },
+    {
+      "id": "it_clang_741",
+      "widget_id": "widget_clang_741",
+      "topic": "C99 — La funzione snprintf e il suo valore di ritorno",
+      "q": "Cosa stamperanno `res` e `strlen(buf)` chiamando `snprintf(buf, 5, \"Hello, World!\")`?",
+      "hint": "Cosa restituisce `snprintf`: il numero di byte effettivamente scritti o il numero di byte che SAREBBERO stati scritti senza limiti?",
+      "options": [
+        "13 4",
+        "4 4",
+        "5 4",
+        "13 5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C99 `snprintf` restituisce il numero di caratteri che SAREBBERO stati scritti (13 escludendo il terminatore nullo). In un buffer di dimensione 5 vengono inseriti 4 caratteri + il terminatore nullo `\\0` (\"Hell\\0\"), quindi `strlen(buf)` è pari a 4.",
+        "Sbagliato. Sarebbe stato restituito 4 se `snprintf` avesse restituito il numero di caratteri effettivamente scritti.",
+        "Sbagliato. `res` non è uguale alla dimensione del buffer.",
+        "Sbagliato. La lunghezza della stringa nel buffer escludendo il terminatore nullo è 4."
+      ]
+    },
+    {
+      "id": "it_clang_742",
+      "widget_id": "widget_clang_742",
+      "topic": "C99 — Dichiarazione di variabili nel ciclo for (Block scope)",
+      "q": "Cosa stamperà il codice in presenza di due variabili `i` (una esterna e una all'interno del blocco `for`)?",
+      "hint": "La variabile definita in `for(int i = ...)` nasconde (shadows) l'omonima variabile esterna?",
+      "options": [
+        "10 0",
+        "10 11",
+        "10 10",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `i` dichiarata nella intestazione del `for` è visibile solo all'interno del corpo del ciclo e nasconde la `i` esterna. All'interno del ciclo viene stampato 10, e al suo termine la `i` esterna rimane pari a 0.",
+        "Sbagliato. La `i` esterna non cambia durante l'esecuzione del ciclo.",
+        "Sbagliato. I valori delle variabili sono differenti.",
+        "Sbagliato. La dichiarazione di una variabile all'interno del `for` è consentita a partire da C99."
+      ]
+    },
+    {
+      "id": "it_clang_743",
+      "widget_id": "widget_clang_743",
+      "topic": "C99 — Tipo booleano _Bool",
+      "q": "A cosa equivale il valore di `(int)b` quando si assegna `_Bool b = 100`?",
+      "hint": "In quale valore si trasforma qualsiasi numero diverso da zero quando viene convertito nel tipo `_Bool`?",
+      "options": [
+        "1",
+        "100",
+        "0",
+        "255"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo C99, la conversione di qualsiasi valore scalare non nullo nel tipo `_Bool` produce sempre 1. Il cast `(int)b` restituirà 1.",
+        "Sbagliato. `_Bool` memorizza solo 0 o 1.",
+        "Sbagliato. 0 si ottiene solo assegnando un valore nullo.",
+        "Sbagliato. In questo caso non si verifica alcun overflow come con `char`."
+      ]
+    },
+    {
+      "id": "it_clang_744",
+      "widget_id": "widget_clang_744",
+      "topic": "Qualificatori — Puntatore costante int * const p",
+      "q": "Cosa stamperà `printf(\"%d\", a)` dopo l'esecuzione di `*p = 30` tramite un puntatore costante `int * const p`?",
+      "hint": "Cosa rappresenta la costante in `int * const p`: l'indirizzo nel puntatore o i dati a cui esso punta?",
+      "options": [
+        "30",
+        "10",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `int * const p` indica che il puntatore `p` stesso è costante (non è possibile modificare l'indirizzo a cui punta). Tuttavia, i dati `*p` possono essere modificati, quindi `a` diventa pari a 30.",
+        "Sbagliato. 10 era il valore iniziale.",
+        "Sbagliato. Un errore si verificherebbe solo tentando di scrivere `p = &b`.",
+        "Sbagliato. La modifica di un puntatore costante dereferenziato è del tutto legale."
+      ]
+    },
+    {
+      "id": "it_clang_745",
+      "widget_id": "widget_clang_745",
+      "topic": "Puntatori — Indicizzazione rispetto a un puntatore sfalsato p[2]",
+      "q": "A cosa equivale il valore di `p[2]` se `p = &a[1]` per l'array `a = {1, 2, 3, 4, 5}`?",
+      "hint": "A quale equivalente dell'espressione `*(p + 2)` rispetto all'array originale corrisponde `p[2]`?",
+      "options": [
+        "4",
+        "3",
+        "2",
+        "5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `p` punta ad `a[1]` (valore 2), `p[0]` è `a[1]`, `p[1]` è `a[2]` e `p[2]` è `a[3]`, il cui valore è pari a 4.",
+        "Sbagliato. 3 è `p[1]` (`a[2]`).",
+        "Sbagliato. 2 è `p[0]` (`a[1]`).",
+        "Sbagliato. 5 è `p[3]` (`a[4]`)."
+      ]
+    },
+    {
+      "id": "it_clang_746",
+      "widget_id": "widget_clang_746",
+      "topic": "Preprocessore — Effetti collaterali della rivalutazione degli argomenti nelle macro",
+      "q": "Cosa stamperà `printf(\"%d %d\", x, y)` per `MAX(x++, y++)` con valori iniziali `x = 2, y = 3`?",
+      "hint": "Espandi la macro `((x++) > (y++) ? (x++) : (y++))` e conta il numero di incrementi.",
+      "options": [
+        "3 5",
+        "3 4",
+        "4 4",
+        "3 3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La macro si espande in `((x++) > (y++) ? (x++) : (y++))`. Dapprima vengono confrontati 2 e 3: `x` diventa 3, `y` diventa 4. Poiché la condizione è falsa, viene eseguito il ramo `(y++)`: viene selezionato il valore 4 e `y` viene incrementato una seconda volta a 5. Risultato: `x = 3, y = 5`.",
+        "Sbagliato. `y` è aumentato due volte, non una.",
+        "Sbagliato. `x++` è stato valutato solo una volta nella condizione.",
+        "Sbagliato. Gli effetti collaterali si sono verificati."
+      ]
+    },
+    {
+      "id": "it_clang_747",
+      "widget_id": "widget_clang_747",
+      "topic": "C99 — Qualificatore restrict",
+      "q": "A cosa serve la parola chiave `restrict`, introdotta nello standard C99?",
+      "hint": "Quale garanzia fornisce il programmatore al compilatore riguardo all'aliasing dei puntatori?",
+      "options": [
+        "Garantisce che l'oggetto sia accessibile solo tramite questo puntatore (per ottimizzazioni)",
+        "Rende il puntatore sicuro per i thread (thread-safe)",
+        "Vieta di modificare la memoria a cui punta il puntatore",
+        "Rilascia automaticamente la memoria all'uscita dalla funzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il qualificatore `restrict` informa il compilatore che per tutta la durata di vita di questo puntatore nessun altro puntatore accederà alla stessa area di memoria (assenza di pointer aliasing), consentendo al compilatore di effettuare ottimizzazioni aggressive dei registri.",
+        "Sbagliato. `restrict` non è in alcun modo correlato al multithreading.",
+        "Sbagliato. Il divieto di modifica della memoria si definisce con la parola chiave `const`.",
+        "Sbagliato. La gestione della memoria rimane manuale."
+      ]
+    },
+    {
+      "id": "it_clang_748",
+      "widget_id": "widget_clang_748",
+      "topic": "Tipi di dati — Promozione degli interi (Integer Promotions)",
+      "q": "Cosa stamperà `printf(\"%d\", c + 1)` per `unsigned char c = 255`?",
+      "hint": "A quale tipo viene convertito automaticamente `unsigned char` quando partecipa a operazioni aritmetiche?",
+      "options": [
+        "256",
+        "0",
+        "-1",
+        "255"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per via della regola di Integer Promotion, i tipi di dimensione inferiore a `int` (`char`, `short`) vengono automaticamente promossi a `int` con segno prima di eseguire operazioni aritmetiche. Il risultato è $255 + 1 = 256$ senza overflow di `unsigned char`.",
+        "Sbagliato. Si otterrebbe 0 solo se il risultato venisse immediatamente stroncato di nuovo ad `unsigned char`.",
+        "Sbagliato. Il numero non subisce overflow verso valori negativi con segno.",
+        "Sbagliato. L'addizione con 1 è stata eseguita."
+      ]
+    },
+    {
+      "id": "it_clang_749",
+      "widget_id": "widget_clang_749",
+      "topic": "Sintassi — Commutatività dell'operatore di indicizzazione 2[a]",
+      "q": "Cosa stamperà `printf(\"%d\", 2[a])` per l'array `int a[3] = {10, 20, 30}`?",
+      "hint": "In cosa si trasforma l'espressione `i[a]` secondo le regole del linguaggio C?",
+      "options": [
+        "30",
+        "20",
+        "10",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C la sintassi `a[i]` viene tradotta dal compilatore come `*(a + i)`. Poiché l'addizione è commutativa, `*(2 + a)` è del tutto equivalente a `2[a]` e restituisce `a[2]`, ovvero 30.",
+        "Sbagliato. 20 è l'elemento `1[a]` (`a[1]`).",
+        "Sbagliato. 10 è l'elemento `0[a]` (`a[0]`).",
+        "Sbagliato. La sintassi `N[arr]` è del tutto legale in C."
+      ]
+    },
+    {
+      "id": "it_clang_750",
+      "widget_id": "widget_clang_750",
+      "topic": "C99 — Commenti su una singola riga //",
+      "q": "In quale standard del linguaggio C sono stati introdotti ufficialmente i commenti su una singola riga `//`?",
+      "hint": "In precedenza questo stile di commento faceva parte dello standard C++, mentre in C89 esistevano solo i commenti `/* ... */`.",
+      "options": [
+        "C99",
+        "C89 / C90",
+        "C11",
+        "K&R C (1978)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I commenti su una singola riga del tipo `//` sono stati ereditati dal C++ e introdotti ufficialmente nello standard del C proprio in C99. In C89/C90 erano consentiti solo i commenti multilinea `/* ... */`.",
+        "Sbagliato. In C89/C90 i commenti `//` costituivano un errore di compilazione (o venivano considerati un'estensione del compilatore).",
+        "Sbagliato. In C11 erano già presenti da tempo.",
+        "Sbagliato. Nel C classico K&R non esistevano i commenti `//`."
+      ]
+    }
+  ]
+}

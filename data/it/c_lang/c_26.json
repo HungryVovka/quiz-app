@@ -1,0 +1,569 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_811",
+      "widget_id": "widget_clang_811",
+      "topic": "Terminologia — Parametri formali e argomenti effettivi",
+      "q": "Vero o Falso: le variabili `x` e `y` nell'intestazione di una funzione sono parametri formali, mentre i numeri `5` e `6` al momento della chiamata `func(5, 6)` sono argomenti effettivi?",
+      "hint": "Come vengono chiamati i \"contenitori\" nella dichiarazione di una funzione e i valori concreti passati durante la chiamata?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili `x` e `y` specificate nella dichiarazione della funzione sono parametri formali (contenitori). I valori `5` e `6` con cui viene chiamata la funzione sono detti argomenti effettivi.",
+        "Errato. È una distinzione terminologica fondamentale nella programmazione in C."
+      ]
+    },
+    {
+      "id": "it_clang_812",
+      "widget_id": "widget_clang_812",
+      "topic": "Parametri — Indipendenza delle chiamate di funzione",
+      "q": "Vero o Falso: l'associazione tra parametri formali e argomenti effettivi è valida solo durante la chiamata di funzione corrente e le chiamate successive non conservano memoria degli argomenti precedenti?",
+      "hint": "La funzione conserva lo stato delle variabili locali tra chiamate indipendenti se non sono dichiarate come static?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Ogni chiamata di funzione viene creata in modo indipendente sullo stack. L'associazione dei parametri dura esattamente per la durata dell'esecuzione della chiamata corrente. La variabile `x` in `main` rimarrà uguale a 10 dopo due chiamate a `update(x)`.",
+        "Errato. Le chiamate successive sono indipendenti e non conservano lo stato delle esecuzioni precedenti."
+      ]
+    },
+    {
+      "id": "it_clang_813",
+      "widget_id": "widget_clang_813",
+      "topic": "Istruzione return — Corrispondenza del tipo di ritorno",
+      "q": "Cosa stamperà `printf(\"%d\", res)` alla chiamata di `divide(7, 2)` per una funzione con tipo di ritorno `int`?",
+      "hint": "Quale sarà il risultato della divisione intera $7 / 2$ e come si accorda con il tipo di ritorno `int`?",
+      "options": [
+        "3",
+        "3.5",
+        "4",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La divisione di due interi `7 / 2` in C effettua una divisione intera troncando la parte decimale, ottenendo `3`. Poiché il tipo di ritorno della funzione è `int`, il risultato `3` viene restituito e stampato a schermo.",
+        "Errato. Per ottenere 3.5 gli operandi o il tipo di ritorno della funzione dovrebbero essere di tipo `float`/`double`.",
+        "Errato. L'arrotondamento avviene per difetto (troncamento).",
+        "Errato. $7$ è maggiore di $2$, il risultato della divisione non è 0."
+      ]
+    },
+    {
+      "id": "it_clang_814",
+      "widget_id": "widget_clang_814",
+      "topic": "Istruzione return — Punti di uscita multipli da una funzione",
+      "q": "È consentito in C utilizzare più istruzioni `return` in diversi rami condizionali all'interno della stessa funzione?",
+      "hint": "Cosa succede alla prima esecuzione di un'istruzione `return` all'interno di una funzione?",
+      "options": [
+        "Sì, è consentito; la funzione terminerà al primo return incontrato",
+        "Vietato — in una funzione C89 può esserci rigorosamente un solo return",
+        "Consentito, ma verrà eseguito sempre e solo l'ultimo return"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C è consentito inserire quante istruzioni `return` siano necessarie secondo la logica del programma. La funzione interrompe immediatamente la sua esecuzione non appena ne viene eseguita una qualsiasi.",
+        "Errato. Lo standard C89 non limita il numero di istruzioni `return` nel corpo della funzione.",
+        "Errato. Dopo l'esecuzione di un qualsiasi `return`, il resto del codice della funzione non viene eseguito."
+      ]
+    },
+    {
+      "id": "it_clang_815",
+      "widget_id": "widget_clang_815",
+      "topic": "Prototipi — Discrepanza tra prototipo e definizione",
+      "q": "Cosa accadrà se la firma nel prototipo `int calc(int a, int b);` differisce per numero di parametri dalla definizione `int calc(int a)`?",
+      "hint": "In che modo il compilatore verifica la corrispondenza tra il prototipo e la definizione di una funzione?",
+      "options": [
+        "Errore di compilazione — la firma della definizione non coincide con il prototipo",
+        "Compilerà, il secondo parametro diventerà automaticamente 0",
+        "La funzione ignorerà il prototipo",
+        "Errore a tempo di esecuzione (runtime)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Uno dei compiti principali del prototipo di funzione è aiutare il compilatore a individuare gli errori sintattici. La mancata corrispondenza del numero o dei tipi di parametri tra prototipo e definizione causa un errore di compilazione.",
+        "Errato. Il compilatore non sostituisce valori per i parametri mancanti.",
+        "Errato. Il prototipo deve corrispondere rigorosamente alla definizione reale della funzione.",
+        "Errato. L'errore viene rilevato durante la fase di compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_816",
+      "widget_id": "widget_clang_816",
+      "topic": "Array nelle funzioni — Effetti collaterali durante la modifica degli elementi",
+      "q": "Vero o Falso: la chiamata `reset_first(data)` modificherà l'elemento `data[0]` dell'array originale in `main`, poiché l'array viene passato per indirizzo (puntatore)?",
+      "hint": "Gli elementi dell'array vengono passati per copia o la funzione accede direttamente alla memoria dell'array originale?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando si passa un array a una funzione, viene passato l'indirizzo del suo primo elemento. Le modifiche agli elementi dell'array all'interno della funzione influenzeranno l'array nel programma chiamante (`main`). Verrà stampato 0.",
+        "Errato. A differenza dei tipi base (`int`, `float`), gli array vengono passati con accesso agli elementi originali."
+      ]
+    },
+    {
+      "id": "it_clang_817",
+      "widget_id": "widget_clang_817",
+      "topic": "Architettura in C — Isolamento dell'input/output dell'utente",
+      "q": "Quale delle seguenti affermazioni spiega meglio perché il calcolo dell'area `areaTriangolo` è stato realizzato senza `scanf` e `printf` all'interno del corpo della funzione?",
+      "hint": "In che modo l'isolamento dell'input/output influisce sul riutilizzo della funzione da altri moduli o interfacce grafiche?",
+      "options": [
+        "Questo rende la funzione universale: può essere chiamata da qualsiasi altra funzione senza imporre l'I/O da console",
+        "L'uso di printf all'interno delle funzioni riduce la precisione del tipo float",
+        "Le funzioni con tipo di ritorno float vietano la chiamata a scanf",
+        "Questo è richiesto dalle specifiche dello standard C89 per tutte le funzioni matematiche",
+        "Il preprocessore C89 non è in grado di gestire printf all'interno delle funzioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un buon stile di progettazione in C prevede che una funzione puramente logica o matematica interagisca solo tramite i parametri di input e `return`. L'input/output dell'utente viene organizzato in `main` o in funzioni dedicate.",
+        "Errato. `printf` non influisce in alcun modo sulla precisione dei calcoli di tipo `float`.",
+        "Errato. La chiamata a `scanf` è tecnicamente consentita, ma è sconsigliata dal punto di vista architettonico.",
+        "Errato. Lo standard non lo vieta, è una raccomandazione di progettazione del codice.",
+        "Errato. Il preprocessore funziona indipendentemente dalle chiamate a `printf`."
+      ]
+    },
+    {
+      "id": "it_clang_818",
+      "widget_id": "widget_clang_818",
+      "topic": "Funzioni void — Return vuoto per l'uscita anticipata",
+      "q": "Vero o Falso: nelle funzioni `void`, l'istruzione `return;` senza specificare un'espressione viene usata per uscire anticipatamente dalla funzione al verificarsi di una determinata condizione?",
+      "hint": "Quale espressione deve contenere `return` in una funzione di tipo `void`?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando una funzione è di tipo `void`, è possibile utilizzare l'istruzione `return;` senza argomenti per interrompere immediatamente l'esecuzione (ad esempio, se viene passato un argomento non valido).",
+        "Errato. L'uso di un `return;` vuoto è completamente conforme allo standard."
+      ]
+    },
+    {
+      "id": "it_clang_819",
+      "widget_id": "widget_clang_819",
+      "topic": "Ricorsione — Condizione di arresto (Caso base)",
+      "q": "Cosa accadrà se nella funzione ricorsiva `recursive_print` si rimuove la condizione di controllo `if (n <= 0) return;`?",
+      "hint": "Cosa succede allo stack delle chiamate in caso di ricorsione infinita?",
+      "options": [
+        "Si verificherà una ricorsione infinita e un overflow dello stack (Stack Overflow)",
+        "La funzione verrà eseguita esattamente 1 volta",
+        "Il compilatore genererà un errore in fase di build",
+        "Il programma verrà compilato e terminerà senza stampare nulla"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Senza un caso base (condizione di arresto), la funzione chiamerà se stessa all'infinito, esaurirà la memoria disponibile dello stack di chiamate e si interromperà con un errore di Stack Overflow.",
+        "Errato. La funzione continuerà a chiamare se stessa all'infinito con valori decrescenti di `n`.",
+        "Errato. Sintatticamente il codice senza il ramo `if` è valido, il compilatore non conosce la profondità della ricorsione.",
+        "Errato. La stampa avverrà finché lo stack non andrà in overflow."
+      ]
+    },
+    {
+      "id": "it_clang_820",
+      "widget_id": "widget_clang_820",
+      "topic": "Memoria — Conservazione dello stato tramite variabili static",
+      "q": "Cosa stamperanno tre chiamate successive a `printf(\"%d \", get_next_id());`?",
+      "hint": "A quanto equivale il valore di `id` alla prima chiamata e come lo modifica l'incremento postfisso `id++`?",
+      "options": [
+        "100 101 102 ",
+        "100 100 100 ",
+        "101 102 103 ",
+        "0 1 2 ",
+        "101 101 101 ",
+        "0 0 0 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile statica `static int id = 100;` viene inizializzata a 100 all'avvio del programma. Alla prima chiamata l'incremento postfisso restituisce 100 e imposta `id = 101`. Alla seconda restituisce 101 impostando `id = 102`. Alla terza restituisce 102.",
+        "Errato. La variabile conserva il suo valore tra le chiamate grazie a `static`.",
+        "Errato. L'incremento postfisso `id++` restituisce prima il valore corrente (100) e poi lo incrementa.",
+        "Errato. Il valore iniziale della variabile è impostato esplicitamente a 100.",
+        "Errato. L'incremento viene conservato nella memoria del programma.",
+        "Errato. La variabile ha un'inizializzazione esplicita a 100."
+      ]
+    },
+    {
+      "id": "it_clang_821",
+      "widget_id": "widget_clang_821",
+      "topic": "Puntatori — Passaggio di funzioni come argomenti",
+      "q": "Cosa stamperà la chiamata `apply(add, 3, 4)`?",
+      "hint": "Come viene valutata l'espressione `op(x, y)` all'interno di `apply` se come `op` viene passata la funzione `add`?",
+      "options": [
+        "7",
+        "12",
+        "34",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `apply` accetta un puntatore a funzione `int (*op)(int, int)`. Passando `add`, la chiamata `op(x, y)` diventa `add(3, 4)`, che restituisce come risultato 7.",
+        "Errato. La funzione `add` esegue la somma $3 + 4 = 7$, non la moltiplicazione.",
+        "Errato. Gli argomenti non vengono concatenati come stringhe.",
+        "Errato. Il passaggio di puntatori a funzione è un meccanismo del tutto standard in C."
+      ]
+    },
+    {
+      "id": "it_clang_822",
+      "widget_id": "widget_clang_822",
+      "topic": "Ambito di visibilità — Oscuramento delle variabili globali (Shadowing)",
+      "q": "Cosa stamperà `show(5)` se nel programma è dichiarata una variabile globale `int val = 50` e la funzione ha un parametro con lo stesso nome `int val`?",
+      "hint": "Quale variabile ha la priorità più alta nell'ambito di visibilità interno della funzione?",
+      "options": [
+        "5 (il parametro locale oscura la variabile globale)",
+        "50 (la variabile globale ha la priorità)",
+        "Errore di compilazione — ridichiarazione del nome val"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili locali e i parametri di funzione oscurano (shadow) le variabili globali con lo stesso nome all'interno del proprio blocco di visibilità. All'interno di `show`, il nome `val` si riferisce all'argomento passato 5.",
+        "Errato. Il parametro locale interno sovrascrive l'ambito globale.",
+        "Errato. La dichiarazione di un parametro locale con il nome di una variabile globale è consentita dallo standard."
+      ]
+    },
+    {
+      "id": "it_clang_823",
+      "widget_id": "widget_clang_823",
+      "topic": "C89 — La parola chiave inline nello standard rigoroso C89",
+      "q": "Vero o Falso: la parola chiave `inline` è una parte ufficiale dello standard C89 (ANSI C)?",
+      "hint": "In quale standard del linguaggio C la parola chiave `inline` è entrata ufficialmente a far parte delle specifiche del linguaggio?",
+      "options": [
+        "Falso",
+        "Vero"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nello standard ufficiale C89 / C90 la parola chiave `inline` non esisteva. È stata aggiunta allo standard C solo in C99 (sebbene in GCC esistesse sotto forma di estensione `__inline__`).",
+        "Errato. In C89 `inline` non faceva parte del set di parole chiave standard."
+      ]
+    },
+    {
+      "id": "it_clang_824",
+      "widget_id": "widget_clang_824",
+      "topic": "Strutture — Passaggio di strutture per valore nelle funzioni",
+      "q": "La chiamata `change_box(my_box)` modificherà il valore del campo `my_box.size` nella funzione `main`?",
+      "hint": "In C le strutture vengono passate alle funzioni per valore (copia) o per riferimento per impostazione predefinita?",
+      "options": [
+        "No, stamperà 10 (la struttura è passata per valore)",
+        "Sì, stamperà 99 (la struttura cambierà)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Come i tipi base, le strutture in C vengono passate alle funzioni per valore per impostazione predefinita (viene creata una copia locale completa della struttura). Le modifiche alla copia locale in `change_box` non influiscono su `my_box` in `main`. Stamperà 10.",
+        "Errato. Per modificare la struttura originale, è necessario passare un puntatore ad essa (`struct Box *`)."
+      ]
+    },
+    {
+      "id": "it_clang_825",
+      "widget_id": "widget_clang_825",
+      "topic": "Array — Passaggio esplicito della dimensione dell'array nei parametri",
+      "q": "Perché quando si passa un array a una funzione in C si passa quasi sempre un parametro aggiuntivo con la sua dimensione `int n`?",
+      "hint": "Un puntatore a un array conserva le informazioni sul numero dei suoi elementi?",
+      "options": [
+        "Perché l'array decade a puntatore e perde l'informazione sulla sua dimensione",
+        "Così richiede il compilatore — senza dimensione l'array non compila",
+        "Per allocare memoria dinamica sullo stack",
+        "Per cambiare il tipo degli elementi da int a float"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C la funzione riceve solo un puntatore al primo elemento dell'array e non sa dove l'array finisce. Pertanto, il passaggio della dimensione `int n` come secondo argomento è necessario per scorrere in sicurezza l'array in un ciclo.",
+        "Errato. La funzione compila anche senza dimensione, ma non conoscerà il numero di elementi.",
+        "Errato. L'allocazione di memoria avviene prima della chiamata della funzione.",
+        "Errato. Il tipo degli elementi dell'array è fisso e non cambia."
+      ]
+    },
+    {
+      "id": "it_clang_826",
+      "widget_id": "widget_clang_826",
+      "topic": "Parametri — Parametri formali ed argomenti effettivi",
+      "q": "In cosa differiscono i parametri formali di una funzione dagli argomenti effettivi?",
+      "hint": "Cosa viene dichiarato durante la descrizione della struttura di una funzione e cosa viene passato al momento della sua chiamata?",
+      "options": [
+        "I parametri formali sono i nomi delle variabili nella dichiarazione della funzione; gli argomenti effettivi sono i valori concreti passati durante la chiamata",
+        "I parametri formali vengono passati solo per riferimento, mentre gli argomenti effettivi solo per valore",
+        "Gli argomenti effettivi sono specificati nel corpo della funzione, mentre quelli formali nel blocco main",
+        "Non differiscono in nulla, sono sinonimi nello standard C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I parametri formali (`x`, `y`) definiscono l'elenco e i tipi di \"contenitori\" nell'intestazione della funzione. Gli argomenti effettivi (`5`, `6`) sono i valori concreti forniti dal programma chiamante durante una specifica chiamata.",
+        "Errato. La modalità di passaggio è determinata dal tipo di parametro e dalla sintassi, non dai termini.",
+        "Errato. I parametri formali sono specificati nell'intestazione della funzione, mentre gli argomenti effettivi durante la chiamata.",
+        "Errato. Questa distinzione è fondamentale per comprendere la chiamata delle funzioni."
+      ]
+    },
+    {
+      "id": "it_clang_827",
+      "widget_id": "widget_clang_827",
+      "topic": "Funzioni void — Assenza di valore restituito",
+      "q": "Perché nella funzione `somma` viene utilizzato il tipo di ritorno `void`?",
+      "hint": "Questa funzione restituisce il valore calcolato al programma chiamante tramite return o lo stampa direttamente?",
+      "options": [
+        "Perché la funzione non restituisce un valore al programma chiamante, ma stampa solo il risultato a schermo",
+        "Perché la funzione accetta argomenti di tipo int",
+        "Perché in C è vietato restituire risultati da funzioni con cicli for",
+        "Perché il tipo void velocizza l'esecuzione del ciclo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il tipo `void` viene specificato quando la funzione viene eseguita per effetti collaterali (ad esempio la stampa a schermo) e non deve restituire alcun valore al programma chiamante.",
+        "Errato. I tipi dei parametri di input non determinano il tipo del valore restituito dalla funzione.",
+        "Errato. È tranquillamente possibile restituire valori tramite `return` da funzioni che contengono cicli.",
+        "Errato. Il tipo `void` indica l'assenza di un risultato, non ottimizza i cicli."
+      ]
+    },
+    {
+      "id": "it_clang_828",
+      "widget_id": "widget_clang_828",
+      "topic": "Funzioni void — Sintassi e assenza di espressioni in return",
+      "q": "Vero o Falso: nelle funzioni di tipo `void`, l'istruzione `return` deve essere omessa oppure chiamata senza espressioni (`return;`) per un'uscita anticipata?",
+      "hint": "Si può scrivere `return val;` in una funzione con tipo di ritorno `void`?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se la funzione ha tipo `void`, non restituisce un risultato. L'istruzione `return` può essere omessa completamente oppure si può scrivere `return;` senza argomenti per una conclusione anticipata.",
+        "Errato. La restituzione di qualsiasi espressione da una funzione `void` causerà un errore di compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_829",
+      "widget_id": "widget_clang_829",
+      "topic": "Prototipi — Controllo del numero e dei tipi di argomenti",
+      "q": "Cosa farà il compilatore se si tenta di chiamare `areaTriangolo(10.0)` quando il prototipo dichiara due parametri `float`?",
+      "hint": "In che modo il prototipo aiuta il compilatore a individuare errori sintattici durante la chiamata?",
+      "options": [
+        "Genererà un errore di mancata corrispondenza del numero di argomenti in fase di compilazione",
+        "Sostituirà automaticamente 0.0f come secondo argomento",
+        "Compilerà il codice e assegnerà al secondo argomento un valore spazzatura casuale",
+        "Genererà un avviso, ma sostituirà il parametro mancante con uno"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il prototipo informa il compilatore sul numero e sui tipi di parametri. Il passaggio di un numero inferiore o superiore di argomenti causerà un errore di compilazione.",
+        "Errato. Il compilatore C non inserisce valori predefiniti per gli argomenti.",
+        "Errato. In presenza di un prototipo, la discrepanza dei parametri viene intercettata prima della build.",
+        "Errato. Non è possibile chiamare una funzione con un numero errato di parametri in presenza di un prototipo."
+      ]
+    },
+    {
+      "id": "it_clang_830",
+      "widget_id": "widget_clang_830",
+      "topic": "Array e funzioni — Passaggio dell'indirizzo e modifica degli elementi",
+      "q": "A cosa saranno uguali gli elementi dell'array `elenco` dopo la chiamata a `incAll(elenco)`?",
+      "hint": "Verrà aggiunto 1 a ciascun elemento dell'array originale `{4, 3, 7, 12, -9}`?",
+      "options": [
+        "{5, 4, 8, 13, -8}",
+        "{4, 3, 7, 12, -9}",
+        "{1, 1, 1, 1, 1}",
+        "{0, 0, 0, 0, 0}"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `incAll` accetta un array e incrementa ogni suo elemento di 1 (`a[i] = a[i] + 1`). L'array viene modificato in loco, quindi il risultato è: `{5, 4, 8, 13, -8}`.",
+        "Errato. L'array viene passato per indirizzo, quindi le modifiche si conservano.",
+        "Errato. Gli elementi vengono incrementati di 1 rispetto ai valori iniziali, non impostati a 1.",
+        "Errato. L'array non viene azzerato."
+      ]
+    },
+    {
+      "id": "it_clang_831",
+      "widget_id": "widget_clang_831",
+      "topic": "Calcolo delle funzioni — Sostituzione degli argomenti",
+      "q": "A quanto equivale il valore di `z` dopo l'esecuzione di `int z = f(5, 6)` per la funzione matematica $f(x, y) = 5x + 3y$?",
+      "hint": "Calcola l'espressione $5 \\times 5 + 3 \\times 6$.",
+      "options": [
+        "43",
+        "30",
+        "28",
+        "56"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Sostituendo gli argomenti effettivi $x = 5$ e $y = 6$ si ottiene: $5 \\times 5 + 3 \\times 6 = 25 + 18 = 43$.",
+        "Errato. Verifica la precedenza delle operazioni e i valori: $25 + 18 = 43$.",
+        "Errato. Ricalcola $5 \\times 5 = 25$ e $3 \\times 6 = 18$.",
+        "Errato. Il valore di $5 \\times 6 + 3 \\times 5$ è 45, mentre noi abbiamo $5 \\times 5 + 3 \\times 6 = 43$."
+      ]
+    },
+    {
+      "id": "it_clang_832",
+      "widget_id": "widget_clang_832",
+      "topic": "Istruzione return — Terminazione dell'esecuzione di una funzione",
+      "q": "Perché l'istruzione `y = y - x;` nel corpo della funzione `max` è contrassegnata come codice irraggiungibile (never executed)?",
+      "hint": "Cosa succede alla funzione subito dopo l'esecuzione di un'istruzione `return`?",
+      "options": [
+        "Perché qualsiasi istruzione return precedente causa l'uscita immediata dalla funzione",
+        "Perché la variabile y non è dichiarata",
+        "Perché l'operatore di sottrazione è vietato dopo una ramificazione if-else",
+        "Perché le condizioni if ed else coprono solo i numeri positivi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'istruzione `return` interrompe l'esecuzione della funzione nel punto stesso in cui viene incontrata. Poiché entrambi i rami `if` ed `else` contengono un `return`, il controllo viene restituito al programma chiamante prima della riga `y = y - x;`.",
+        "Errato. La variabile `y` è dichiarata nell'elenco dei parametri formali.",
+        "Errato. L'operatore di sottrazione è del tutto legale.",
+        "Errato. La condizione `x > y` copre qualsiasi valore numerico."
+      ]
+    },
+    {
+      "id": "it_clang_833",
+      "widget_id": "widget_clang_833",
+      "topic": "Prototipi — Vantaggio del posizionamento prima di main()",
+      "q": "Qual è il vantaggio principale nell'utilizzare i prototipi di funzione prima di `main()`?",
+      "hint": "Dove si posiziona per convenzione il corpo delle funzioni e cosa permette il prototipo al compilatore?",
+      "options": [
+        "Consente di posizionare le definizioni delle funzioni dopo main() e aiuta il compilatore a individuare gli errori di chiamata",
+        "Consente di non specificare il tipo di ritorno nel corpo della funzione",
+        "Riduce la dimensione del file binario compilato",
+        "Rende automaticamente globali tutte le variabili della funzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il prototipo dichiara la firma della funzione prima della sua definizione reale. Ciò consente di inserire il codice delle funzioni dopo `main()` e dà al compilatore la possibilità di verificare i tipi degli argomenti durante le chiamate.",
+        "Errato. Il tipo di ritorno è obbligatorio sia nel prototipo che nella definizione.",
+        "Errato. I prototipi servono per il controllo dei tipi e non influiscono sulla dimensione del codice finale.",
+        "Errato. I prototipi non modificano in alcun modo l'ambito di visibilità delle variabili locali."
+      ]
+    },
+    {
+      "id": "it_clang_834",
+      "widget_id": "widget_clang_834",
+      "topic": "Parametri — Associazione dinamica alla chiamata",
+      "q": "Vero o Falso: l'associazione dei parametri viene creata dinamicamente ad ogni chiamata e non conserva memoria delle chiamate precedenti alla funzione?",
+      "hint": "I calcoli nella chiamata `a2 = areaTriangolo(7.5, 14.0)` dipendono dalla precedente chiamata `a1 = areaTriangolo(10.0, 20.0)`?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Ogni chiamata di funzione è isolata e indipendente. L'associazione dei parametri agisce solo durante l'esecuzione corrente della funzione, dopodiché lo stato viene ripristinato.",
+        "Errato. Tra le normali chiamate non viene conservata alcuna memoria dei parametri."
+      ]
+    },
+    {
+      "id": "it_clang_835",
+      "widget_id": "widget_clang_835",
+      "topic": "Norme di progettazione — Isolamento di Input e Output (I/O)",
+      "q": "Vero o Falso: secondo le regole del codice pulito, una funzione di calcolo (ad esempio il calcolo dell'area) non dovrebbe eseguire essa stessa operazioni di I/O (`scanf`/`printf`), a meno che non sia progettata specificamente per l'input interattivo?",
+      "hint": "Chi dovrebbe gestire l'interazione con l'utente: la funzione di calcolo pura oppure il codice chiamante / main?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Una funzione di calcolo deve interagire con il programma chiamante solo attraverso i parametri e il `return`. Ciò consente di riutilizzarla in altri programmi o moduli senza vincoli con la console.",
+        "Errato. È una norma fondamentale di progettazione del codice modulare in C."
+      ]
+    },
+    {
+      "id": "it_clang_836",
+      "widget_id": "widget_clang_836",
+      "topic": "Array — Risultato dell'esecuzione della funzione incAll",
+      "q": "Quale elemento si troverà all'indice `a[4]` dell'array `elenco` al termine della chiamata `incAll(elenco)`?",
+      "hint": "Il valore iniziale di `elenco[4]` era `-9`. Aggiungi 1.",
+      "options": [
+        "-8",
+        "-9",
+        "-10",
+        "0",
+        "8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il quinto elemento iniziale dell'array è pari a `-9`. L'espressione `a[i] = a[i] + 1` incrementa il suo valore di 1: $-9 + 1 = -8$.",
+        "Errato. Il valore `-9` è cambiato, poiché l'array è stato passato per indirizzo.",
+        "Errato. $-9 + 1 = -8$, non $-10$.",
+        "Errato. Ricalcola $-9 + 1$.",
+        "Errato. Il segno del numero rimane negativo."
+      ]
+    },
+    {
+      "id": "it_clang_837",
+      "widget_id": "widget_clang_837",
+      "topic": "Identificatori — Regole di denominazione delle funzioni",
+      "q": "Vero o Falso: il nome di una funzione in C segue le stesse identiche regole sintattiche degli identificatori delle normali variabili?",
+      "hint": "Il nome di una funzione può iniziare con una cifra, contenere spazi o caratteri speciali?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I nomi delle funzioni, come quelli delle variabili, devono iniziare con una lettera o un trattino basso, possono contenere cifre e non possono coincidere con le parole chiave del C. Il nome `2nd_calc_val` non è valido poiché inizia con una cifra.",
+        "Errato. Le regole di denominazione degli identificatori sono identiche per variabili e funzioni."
+      ]
+    },
+    {
+      "id": "it_clang_838",
+      "widget_id": "widget_clang_838",
+      "topic": "Istruzione return — Conversione di tipo durante la restituzione",
+      "q": "Cosa accadrà al valore `2.5` ottenuto dal calcolo `(float)5 / 2` quando viene restituito da una funzione `calc_ratio` con tipo di ritorno `int`?",
+      "hint": "A quale tipo il linguaggio C converte l'espressione restituita se il tipo della funzione è `int`?",
+      "options": [
+        "Il valore verrà convertito implicitamente in int e troncherà la parte decimale (restituirà 2)",
+        "Si verificherà un errore di compilazione a causa dell'incompatibilità dei tipi",
+        "Verrà restituito 2.5 senza modifiche",
+        "Il programma si interromperà con un errore a tempo di esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se il tipo dell'espressione in `return` differisce dal tipo della funzione, il C converte automaticamente il valore restituito al tipo della funzione. Il numero reale `2.5` viene convertito in `int` e troncato a `2`.",
+        "Errato. La conversione implicita dei tipi base durante la restituzione da una funzione è consentita.",
+        "Errato. Una funzione di tipo `int` non può restituire un valore in virgola mobile.",
+        "Errato. La conversione di tipo avviene correttamente in fase di esecuzione."
+      ]
+    },
+    {
+      "id": "it_clang_839",
+      "widget_id": "widget_clang_839",
+      "topic": "Prototipi — Nomi di argomenti significativi",
+      "q": "Perché nel prototipo è consigliato specificare nomi di argomenti chiari (ad esempio `float base, float altezza`), sebbene i nomi dei parametri formali non siano obbligatori nei prototipi?",
+      "hint": "In che modo i nomi dei parametri nella firma influiscono sulla leggibilità e sull'autodocumentazione del codice?",
+      "options": [
+        "Questo aumenta la leggibilità del codice e rende chiara la funzione dei parametri",
+        "Così richiede il compilatore GCC per un corretto linking",
+        "Senza i nomi dei parametri la funzione viene eseguita più lentamente",
+        "Questo previene un guasto durante il passaggio di numeri negativi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'uso di nomi di parametri significativi anche nei prototipi aumenta la leggibilità del codice e funge da documentazione integrata per il programmatore.",
+        "Errato. Il compilatore non richiede i nomi dei parametri nel prototipo.",
+        "Errato. I nomi dei parametri non influiscono sulla velocità di esecuzione.",
+        "Errato. I nomi non influiscono sul controllo del segno o dei valori numerici."
+      ]
+    },
+    {
+      "id": "it_clang_840",
+      "widget_id": "widget_clang_840",
+      "topic": "Parametri — Regola di corrispondenza degli argomenti effettivi",
+      "q": "Secondo quali tre criteri gli argomenti effettivi passati durante una chiamata devono corrispondere ai parametri formali della funzione?",
+      "hint": "Ricorda i requisiti per il passaggio dell'elenco degli argomenti al momento della chiamata della funzione.",
+      "options": [
+        "Per numero, posizione e tipo",
+        "Per dimensione di memoria, nome della variabile ed ambito di visibilità",
+        "Per segno, lunghezza della stringa e maiuscole/minuscole",
+        "Per ordine di dichiarazione in main, modificatori const e static"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli argomenti effettivi devono corrispondere ai parametri formali per numero (stesso numero di argomenti), posizione (ordine di passaggio) e tipo (compatibilità dei tipi).",
+        "Errato. I nomi delle variabili durante la chiamata possono essere assolutamente qualsiasi cosa.",
+        "Errato. I segni e le lunghezze delle stringhe non sono criteri di corrispondenza dei parametri.",
+        "Errato. Le regole principali del C sono numero, posizione e tipo."
+      ]
+    }
+  ]
+}

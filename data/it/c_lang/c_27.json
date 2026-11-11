@@ -1,0 +1,597 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_841",
+      "widget_id": null,
+      "topic": "Sintassi delle funzioni — Elementi della dichiarazione",
+      "q": "Quali elementi principali devono essere inclusi nell'intestazione (firma) di una funzione in C?",
+      "hint": "Ricorda l'ordine di indicazione del tipo di ritorno, del nome della funzione e dell'elenco dei parametri.",
+      "options": [
+        "Tipo di ritorno, nome della funzione ed elenco dei parametri tra parentesi tonde",
+        "Nome della funzione, istruzione goto e dimensione della memoria allocata",
+        "Elenco delle variabili locali e nome del modulo chiamante",
+        "Solo il nome della funzione e il punto e virgola"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'intestazione di una funzione è composta dal tipo di ritorno (o `void`), dal nome della funzione e dall'elenco dei parametri con i loro tipi racchiuso tra parentesi tonde.",
+        "Errato. La parola chiave `goto` e la memoria non vengono specificate nell'intestazione della funzione.",
+        "Errato. Le variabili locali vengono dichiarate all'interno del corpo della funzione, non nella sua intestazione.",
+        "Errato. Senza specificare il tipo di ritorno e le parentesi, l'intestazione non è valida."
+      ]
+    },
+    {
+      "id": "it_clang_842",
+      "widget_id": "widget_clang_842",
+      "topic": "Passaggio di parametri — Passaggio per valore per i tipi base",
+      "q": "Cosa stamperà l'istruzione `printf(\"%d\", num)` dopo l'esecuzione della chiamata `double_val(num)`?",
+      "hint": "La variabile nel programma chiamante viene modificata se un parametro di tipo base viene passato per valore?",
+      "options": [
+        "10",
+        "20",
+        "0",
+        "Errore a tempo di esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C gli argomenti di tipo base (`int`, `float`, `char`) vengono passati per valore. La funzione `double_val` riceve una copia locale della variabile, quindi le modifiche al suo interno non influenzano `num` in `main`. Stamperà 10.",
+        "Errato. La modifica `x = x * 2` avviene solo sulla copia locale all'interno della funzione.",
+        "Errato. Il valore di `num` rimane quello iniziale (10).",
+        "Errato. La chiamata è del tutto corretta e viene eseguita senza errori."
+      ]
+    },
+    {
+      "id": "it_clang_843",
+      "widget_id": null,
+      "topic": "Ambito di visibilità — Ciclo di vita delle variabili locali",
+      "q": "Vero o Falso: le variabili locali dichiarate all'interno di una funzione vengono create alla chiamata di tale funzione e distrutte automaticamente all'uscita da essa (se non viene usata la parola chiave static)?",
+      "hint": "Dove viene allocata la memoria per le normali variabili automatiche di una funzione durante la sua chiamata?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le normali variabili locali sono allocate nella memoria stack. Esistono solo durante l'esecuzione della funzione e vengono distrutte al suo termine.",
+        "Errato. Le variabili locali non vengono conservate tra le chiamate se non sono contrassegnate come `static`."
+      ]
+    },
+    {
+      "id": "it_clang_844",
+      "widget_id": "widget_clang_844",
+      "topic": "Valutazione delle funzioni — Chiamate di funzione annidate",
+      "q": "Cosa stamperà `printf(\"%d\", res)` durante l'esecuzione della chiamata annidata `add(add(2, 3), 4)`?",
+      "hint": "Calcola prima la chiamata interna `add(2, 3)`, poi passa il risultato alla chiamata esterna.",
+      "options": [
+        "9",
+        "5",
+        "24",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Prima viene valutata l'espressione interna `add(2, 3)`, che restituisce 5. Poi viene chiamata la funzione esterna `add(5, 4)`, il cui risultato è 9.",
+        "Errato. 5 è solo il risultato della chiamata interna `add(2, 3)`.",
+        "Errato. La funzione esegue la somma, non la moltiplicazione.",
+        "Errato. Il passaggio del risultato di una funzione come argomento di un'altra è del tutto valido."
+      ]
+    },
+    {
+      "id": "it_clang_845",
+      "widget_id": "widget_clang_845",
+      "topic": "Funzioni void — Errore di restituzione di un valore",
+      "q": "Cosa accadrà se si tenta di compilare la funzione `calculate_sum` con tipo di ritorno `void`?",
+      "hint": "È consentito specificare un'espressione nell'istruzione return se la funzione ha tipo void?",
+      "options": [
+        "Errore di compilazione — una funzione di tipo void non può restituire un valore",
+        "Il programma verrà compilato e restituirà la somma dei numeri a e b",
+        "Avviso del compilatore, ma il programma stamperà 0",
+        "Errore a tempo di esecuzione durante la chiamata della funzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In una funzione con tipo di ritorno `void`, l'istruzione `return` non può contenere un'espressione da restituire. Ciò causa un errore di compilazione.",
+        "Errato. Il compilatore bloccherà la build a causa della mancata corrispondenza tra il tipo `void` e l'espressione restituita.",
+        "Errato. Si tratta di un errore sintattico critico, non di un semplice avviso.",
+        "Errato. L'errore viene rilevato prima dell'esecuzione, durante la fase di compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_846",
+      "widget_id": null,
+      "topic": "Prototipi — Collocazione nel codice sorgente",
+      "q": "In quale punto del file sorgente in C vengono solitamente collocati i prototipi delle funzioni secondo le buone norme di programmazione?",
+      "hint": "Dove si trovano i prototipi rispetto a main() e al corpo delle funzioni stesse?",
+      "options": [
+        "All'inizio del file, prima della funzione main() e prima delle definizioni delle funzioni stesse",
+        "Alla fine del file, dopo tutte le implementazioni delle funzioni",
+        "All'interno del ramo else nella funzione principale",
+        "Il posizionamento dei prototipi prima di main è vietato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I prototipi vengono solitamente collocati all'inizio del file (dopo le inclusioni `#include`), affinché il compilatore sia a conoscenza delle funzioni prima della loro chiamata in `main()` o in altre funzioni.",
+        "Errato. Se si colloca il prototipo alla fine del file, questo perde il suo scopo poiché il compilatore non lo vedrà prima delle chiamate.",
+        "Errato. I prototipi si dichiarano a livello globale del file, non all'interno di strutture condizionali.",
+        "Errato. È proprio prima di `main()` che si raccomanda di posizionarli."
+      ]
+    },
+    {
+      "id": "it_clang_847",
+      "widget_id": "widget_clang_847",
+      "topic": "Array nelle funzioni — Modifica degli elementi in un ciclo",
+      "q": "Cosa stamperà `printf(\"%d\", arr[1])` dopo la chiamata a `scale(arr, 3)`?",
+      "hint": "Trova il valore iniziale di `arr[1]` e applica l'operazione `*= 2`.",
+      "options": [
+        "8",
+        "4",
+        "2",
+        "16"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Inizialmente `arr[1]` è pari a 4. Poiché l'array viene passato per indirizzo, l'operazione `nums[i] *= 2` moltiplica l'elemento dell'array originale per 2: $4 \\times 2 = 8$.",
+        "Errato. Il valore 4 era presente prima della chiamata della funzione `scale`.",
+        "Errato. La moltiplicazione $4 \\times 2$ dà 8.",
+        "Errato. L'operazione viene eseguita una volta per iterazione per ciascun elemento."
+      ]
+    },
+    {
+      "id": "it_clang_848",
+      "widget_id": null,
+      "topic": "Architettura del C — Vantaggi dell'uso delle funzioni",
+      "q": "Quale delle seguenti affermazioni NON è un vantaggio della suddivisione del codice in funzioni?",
+      "hint": "Rifletti se la suddivisione del codice in funzioni garantisce l'assenza di errori logici o sintattici.",
+      "options": [
+        "Correzione automatica di qualsiasi errore sintattico o logico nel codice",
+        "Riutilizzo del codice (evitare la duplicazione del codice)",
+        "Miglioramento della leggibilità e della struttura del programma",
+        "Semplificazione del testing e del debugging dei singoli moduli"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La suddivisione del codice in funzioni ne migliora la struttura, ma non può correggere automaticamente gli errori del programmatore.",
+        "Errato. Evitare la duplicazione del codice è uno dei principali vantaggi delle funzioni.",
+        "Errato. Il miglioramento della leggibilità è un merito diretto del codice modulare.",
+        "Errato. Le funzioni isolate sono effettivamente molto più semplici da testare."
+      ]
+    },
+    {
+      "id": "it_clang_849",
+      "widget_id": "widget_clang_849",
+      "topic": "Istruzione return — Uscita anticipata da un ciclo",
+      "q": "Cosa restituirà la chiamata a `find_first_negative` per l'array `{3, 5, -2, -8, 4}`?",
+      "hint": "Su quale elemento la condizione `arr[i] < 0` sarà soddisfatta eseguendo il `return`?",
+      "options": [
+        "-2",
+        "-8",
+        "3",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La scansione procede in ordine: 3 (>=0), 5 (>=0), -2 (<0). Sull'elemento `-2` la condizione `arr[i] < 0` risulta vera, viene eseguito `return arr[i]` e la funzione termina immediatamente restituendo `-2`.",
+        "Errato. Il ciclo non raggiungerà l'elemento `-8`, poiché terminerà al primo numero negativo `-2`.",
+        "Errato. L'elemento 3 è positivo.",
+        "Errato. La funzione restituirebbe 0 solo nel caso in cui non vi fossero affatto numeri negativi nell'array."
+      ]
+    },
+    {
+      "id": "it_clang_850",
+      "widget_id": null,
+      "topic": "Parametri — Importanza dell'ordine degli argomenti",
+      "q": "Vero o Falso: in C, durante la chiamata di una funzione, il valore del primo argomento effettivo viene sempre passato al primo parametro formale, il secondo al secondo e così via (l'ordine è rigorosamente fissato per posizione)?",
+      "hint": "Il compilatore C associa i parametri in base ai loro nomi o esclusivamente in base al loro ordine durante la chiamata?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C il passaggio degli argomenti avviene rigorosamente per posizione (corrispondenza posizionale). Il primo argomento alla chiamata corrisponde al primo parametro dell'intestazione della funzione, il secondo al secondo.",
+        "Errato. In C non esistono argomenti con nome, la corrispondenza è strettamente posizionale."
+      ]
+    },
+    {
+      "id": "it_clang_851",
+      "widget_id": "widget_clang_851",
+      "topic": "Restituzione di puntatori — Pericolo di restituire l'indirizzo di una variabile locale",
+      "q": "Cosa accadrà se si tenta di utilizzare il valore restituito dalla funzione `get_pointer()`?",
+      "hint": "La variabile locale temp esiste ancora in memoria dopo il termine della funzione?",
+      "options": [
+        "Comportamento indefinito (Undefined Behavior) — la variabile temp cessa di esistere dopo l'uscita dalla funzione",
+        "Stamperà sempre 42 con garanzia",
+        "Errore di compilazione — in C è vietato restituire puntatori da funzioni",
+        "La variabile temp verrà automaticamente spostata nell'area di memoria globale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile locale `temp` è allocata sullo stack e viene distrutta all'uscita dalla funzione. Restituire il suo indirizzo crea un puntatore sospeso (dangling pointer), il cui accesso porta a un comportamento indefinito.",
+        "Errato. La memoria occupata da `temp` viene liberata e il valore memorizzato può essere sovrascritto in qualsiasi momento.",
+        "Errato. È possibile restituire puntatori da funzioni, ma devono puntare a memoria valida (ad esempio statica o dinamica).",
+        "Errato. Le variabili locali non modificano automaticamente la propria classe di memoria."
+      ]
+    },
+    {
+      "id": "it_clang_852",
+      "widget_id": "widget_clang_852",
+      "topic": "Parametri di tipo array — Perdita delle informazioni sulla dimensione (Array Decay)",
+      "q": "A quanto equivarrà il valore di `sizeof(arr)` all'interno della funzione `check_size(int arr[])` su un sistema a 64 bit?",
+      "hint": "In cosa viene convertito implicitamente un parametro array quando viene passato a una funzione?",
+      "options": [
+        "Alla dimensione del puntatore (8 byte)",
+        "Alla dimensione totale dell'array in byte (40 byte)",
+        "Al numero di elementi nell'array (10)",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nei parametri di una funzione, la dichiarazione `int arr[]` è equivalente a `int *arr`. L'operatore `sizeof` all'interno della funzione restituirà la dimensione del puntatore (8 byte su sistemi a 64 bit), non la dimensione dell'array originale.",
+        "Errato. La funzione perde l'informazione sulla dimensione originale dell'array, poiché riceve solo un puntatore.",
+        "Errato. `sizeof` restituisce il numero di byte, non di elementi, e per un puntatore sarà la dimensione dell'indirizzo.",
+        "Errato. Un puntatore occupa una quantità di memoria fissa in base all'architettura."
+      ]
+    },
+    {
+      "id": "it_clang_853",
+      "widget_id": null,
+      "topic": "Parametri di funzione — Differenza tra func(void) e func()",
+      "q": "Qual è la differenza tra la dichiarazione della firma `void print_msg(void)` e `void print_msg()` in C?",
+      "hint": "Quale delle due sintassi vieta rigorosamente il passaggio di qualsiasi argomento durante la chiamata?",
+      "options": [
+        "`func(void)` indica esplicitamente che la funzione non accetta argomenti, mentre `func()` indica un numero non specificato di parametri",
+        "`func()` vieta la chiamata della funzione, mentre `func(void)` la consente",
+        "Non c'è alcuna differenza, sono completi sinonimi",
+        "`func(void)` restituisce void, mentre `func()` restituisce il tipo int"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `func(void)` stabilisce rigorosamente che la funzione non accetta alcun argomento. La sintassi `func()` indica che l'elenco dei parametri non è specificato, consentendo di passare argomenti senza il controllo dei tipi da parte del compilatore.",
+        "Errato. Entrambe le funzioni possono essere chiamate, ma il controllo degli argomenti funzionerà diversamente.",
+        "Errato. In C queste due sintassi hanno un diverso livello di rigore nel controllo dei tipi di argomento.",
+        "Errato. Il tipo di ritorno in entrambi i casi è specificato a sinistra come `void`."
+      ]
+    },
+    {
+      "id": "it_clang_854",
+      "widget_id": null,
+      "topic": "Progettazione delle funzioni — Funzioni pure (Pure Functions)",
+      "q": "Qual è la caratteristica principale che definisce una funzione «pura» (pure function)?",
+      "hint": "Il risultato di una funzione pura dipende dallo stato esterno e modifica i dati globali?",
+      "options": [
+        "Restituisce lo stesso risultato a parità di argomenti di input e non produce effetti collaterali",
+        "Contiene obbligatoriamente al suo interno un ciclo e un output in console",
+        "Non accetta parametri di input e non restituisce nulla",
+        "Legge i dati dalla tastiera utilizzando scanf"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Una funzione pura è deterministica (il suo risultato dipende solo dagli argomenti passati) e non genera effetti collaterali (non modifica variabili globali, non effettua operazioni di I/O).",
+        "Errato. L'I/O è un effetto collaterale che viola la «purezza» della funzione.",
+        "Errato. Una funzione senza parametri e senza valore di ritorno di solito fa affidamento sullo stato globale.",
+        "Errato. La lettura dell'input dell'utente rientra tra gli effetti collaterali."
+      ]
+    },
+    {
+      "id": "it_clang_855",
+      "widget_id": null,
+      "topic": "Modularità — Autodocumentazione e riutilizzo del codice",
+      "q": "Vero o Falso: estrarre frammenti di codice riutilizzabili o complessi in funzioni separate rende il programma più comprensibile, semplifica il debugging ed evita la duplicazione del codice?",
+      "hint": "La scomposizione di un problema in piccole funzioni aiuta ad affrontarne la risoluzione passo dopo passo?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'approccio modulare e la scomposizione delle attività in funzioni sono principi fondamentali per la scrittura di codice di qualità, manutenibile e leggibile.",
+        "Errato. La suddivisione in funzioni è uno dei modi migliori per migliorare la struttura del programma."
+      ]
+    },
+    {
+      "id": "it_clang_856",
+      "widget_id": "widget_clang_856",
+      "topic": "Passaggio di parametri — Modifica della copia di un parametro",
+      "q": "Cosa stamperà `printf(\"%d\", val)` dopo l'esecuzione della chiamata `reset(val)`?",
+      "hint": "In C le variabili di tipo base vengono passate per valore (copia)?",
+      "options": [
+        "15",
+        "0",
+        "Errore di compilazione",
+        "Valore spazzatura casuale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché il parametro `a` viene passato per valore, la funzione `reset` lavora con una copia locale della variabile. L'assegnazione `a = 0` non modifica l'originale `val` in `main`. Verrà stampato 15.",
+        "Errato. La modifica del parametro è avvenuta solo all'interno del contesto locale della funzione.",
+        "Errato. Il codice è scritto senza errori sintattici.",
+        "Errato. Il valore di `val` è ben definito ed è pari a 15."
+      ]
+    },
+    {
+      "id": "it_clang_857",
+      "widget_id": null,
+      "topic": "Prototipi — Avviso di dichiarazione implicita della funzione",
+      "q": "Cosa accadrà se si tenta di chiamare una funzione prima della sua dichiarazione e definizione nel file?",
+      "hint": "Come reagisce il compilatore a un identificatore sconosciuto durante la chiamata di una функция без прототипа?",
+      "options": [
+        "Il compilatore genererà un avviso o un errore di dichiarazione implicita della funzione",
+        "Il programma mecreerà automaticamente il corpo della функция durante l'esecuzione",
+        "La chiamata di funzione verrà ignorata senza alcun messaggio",
+        "Tutti gli argomenti della chiamata diventeranno automaticamente globali"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se il compilatore incontra una chiamata di funzione senza un prototipo o una definizione previa, segnala un errore o un avviso di dichiarazione implicita (implicit declaration).",
+        "Errato. Il compilatore non può generare il codice di una funzione inesistente.",
+        "Errato. Le chiamate a funzioni non dichiarate vengono intercettate durante la fase di build.",
+        "Errato. L'ambito di visibilità degli argomenti non cambia."
+      ]
+    },
+    {
+      "id": "it_clang_858",
+      "widget_id": "widget_clang_858",
+      "topic": "Istruzione return — Restituzione dei risultati di espressioni aritmetiche",
+      "q": "Cosa stamperà `printf(\"%.1f\", average(5, 10))`?",
+      "hint": "Calcola l'espressione $(5 + 10) / 2.0f$.",
+      "options": [
+        "7.5",
+        "7.0",
+        "15.0",
+        "5.0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione nel `return` somma i numeri interi $5 + 10 = 15$ e poi divide per il divisore in virgola mobile `2.0f`, ottenendo `7.5` di tipo `float`.",
+        "Errato. Il divisore `2.0f` è in virgola mobile, quindi non si verifica il troncamento intero a 7.0.",
+        "Errato. 15.0 è la somma dei numeri prima della divisione.",
+        "Errato. Verifica la correttezza del calcolo della media aritmetica."
+      ]
+    },
+    {
+      "id": "it_clang_859",
+      "widget_id": "widget_clang_859",
+      "topic": "Ricorsione — Calcolo passo-passo della somma",
+      "q": "Quale valore restituirà la chiamata alla функция ricorsiva `sum(3)`?",
+      "hint": "Sviluppa la catena di chiamate: $3 + \\text{sum}(2) = 3 + 2 + \\text{sum}(1) = \\dots$",
+      "options": [
+        "6",
+        "3",
+        "5",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Catena di chiamate: `sum(3)` $= 3 + \\text{sum}(2) = 3 + 2 + \\text{sum}(1) = 3 + 2 + 1 + \\text{sum}(0) = 3 + 2 + 1 + 0 = 6$.",
+        "Errato. 3 è solo il primo operando della somma.",
+        "Errato. Ricalcola la somma dei numeri da 1 a 3.",
+        "Errato. 0 viene restituito solo nel passo base per `sum(0)`."
+      ]
+    },
+    {
+      "id": "it_clang_860",
+      "widget_id": "widget_clang_860",
+      "topic": "Array nei parametri — Omissione della prima dimensione",
+      "q": "Perché nella dichiarazione di un array monodimensionale nei parametri di una funzione `void print_arr(int a[])` la dimensione dell'array tra parentesi può essere omessa?",
+      "hint": "In quale struttura sintattica il compilatore converte un array specificato nei parametri di una funzione?",
+      "options": [
+        "Perché il parametro array viene convertito dal compilatore in un puntatore al suo primo elemento",
+        "Perché la dimensione dell'array è predefinita a 100",
+        "Perché il C alloca memoria per l'array in modo dinamico a ogni chiamata",
+        "È un errore sintattico — l'indicazione della dimensione è sempre obbligatoria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nell'intestazione di una funzione la sintassi `int a[]` subisce il decay a puntatore `int *a`. Il compilatore non ha bisogno della dimensione dell'array, poiché viene passato solo l'indirizzo del primo elemento.",
+        "Errato. Non esistono dimensioni predefinite integrate.",
+        "Errato. L'allocazione di memoria per l'array avviene nel programma chiamante prima della chiamata.",
+        "Errato. Omettere la dimensione tra parentesi per gli array monodimensionali nei parametri è del tutto consentito."
+      ]
+    },
+    {
+      "id": "it_clang_861",
+      "widget_id": "widget_clang_861",
+      "topic": "Ambito di visibilità — Variabili locali statiche (static)",
+      "q": "Cosa stamperà il programma dopo tre chiamate successive alla funzione counter()?",
+      "hint": "Le variabili locali statiche vengono inizializzate una sola volta e mantengono il proprio valore tra le chiamate di funzione.",
+      "options": [
+        "1 2 3",
+        "1 1 1",
+        "0 0 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La parola chiave static rende la variabile 'c' statica. La memoria per essa viene allocata una sola volta e il valore viene conservato tra le chiamate: 1, poi 2, poi 3.",
+        "Errato. Sarebbe così senza la parola chiave static, in quanto la variabile c verrebbe ricreata sullo stack a ogni chiamata.",
+        "Errato. L'incremento c++ avviene prima della stampa del valore."
+      ]
+    },
+    {
+      "id": "it_clang_862",
+      "widget_id": "widget_clang_862",
+      "topic": "Puntatori nelle funzioni — Emulazione del passaggio per riferimento",
+      "q": "Cosa stamperà printf(\"%d %d\", x, y) dopo l'esecuzione della funzione swap(&x, &y)?",
+      "hint": "Il passaggio degli indirizzi delle variabili consente alla funzione di modificare i valori originali nel contesto chiamante.",
+      "options": [
+        "10 5",
+        "5 10",
+        "10 10",
+        "0 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Passando i puntatori (gli indirizzi delle variabili &x e &y), la funzione swap scambia i valori dei puntatori dereferenziati, modificando le variabili x e y in main.",
+        "Errato. I valori si scambiano: x diventa 10 e y diventa 5.",
+        "Errato. La variabile y non sovrascrive x senza salvare il vecchio valore di x in una variabile temporanea.",
+        "Errato. Il codice dereferenzia correttamente i puntatori e non si verifica alcun azzeramento."
+      ]
+    },
+    {
+      "id": "it_clang_863",
+      "widget_id": "widget_clang_863",
+      "topic": "Modificatore const — Protezione dei dati nei parametri puntatore",
+      "q": "Cosa accadrà se si tenta di compilare la funzione modify_data(const int *ptr)?",
+      "hint": "Fai attenzione alla posizione della parola chiave const rispetto al tipo di dato e all'asterisco.",
+      "options": [
+        "Errore di compilazione — è vietato modificare il valore puntato da const int*",
+        "Il codice verrà compilato con successo e modificherà il valore della variabile",
+        "Avviso del compilatore, ma il valore cambierà",
+        "Errore a tempo di esecuzione (Segmentation fault)",
+        "Il programma entrerà in un ciclo infinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La dichiarazione const int *ptr indica che il valore puntato è di sola lettura. Il tentativo di modificare *ptr causa un errore di compilazione.",
+        "Errato. Il compilatore C controlla rigorosamente il qualificatore const durante un tentativo di scrittura.",
+        "Errato. Si tratta di un errore critico sui tipi, non di un semplice avviso.",
+        "Errato. L'errore viene rilevato durante la fase di compilazione, non durante l'esecuzione del programma.",
+        "Errato. Non ci sono cicli nel codice."
+      ]
+    },
+    {
+      "id": "it_clang_864",
+      "widget_id": "widget_clang_864",
+      "topic": "Ricorsione — Assenza del caso base",
+      "q": "Quale conseguenza avrà la chiamata alla funzione infinite_recursion(5)?",
+      "hint": "È presente nella funzione una condizione di arresto (caso base della ricorsione)?",
+      "options": [
+        "Stack Overflow (overflow dello stack) e chiusura anomala del programma",
+        "Ciclo infinito senza consumo di memoria",
+        "Il programma si arresterà quando n diventerà uguale a 0",
+        "Errore di compilazione dovuto alla chiamata ricorsiva"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione non ha un caso base (condizione di uscita). Ogni chiamata ricorsiva crea un nuovo frame sullo stack, portando rapidamente all'esaurimento della memoria dello stack (Stack Overflow).",
+        "Errato. Le chiamate di funzione consumano memoria stack per l'indirizzo di ritorno e gli argomenti locali.",
+        "Errato. Non c'è una condizione che verifichi n == 0, gli argomenti scendono nei numeri negativi: -1, -2, ecc.",
+        "Errato. La ricorsione in C è del tutto consentita sintatticamente."
+      ]
+    },
+    {
+      "id": "it_clang_865",
+      "widget_id": null,
+      "topic": "Puntatori a funzione — Sintassi di dichiarazione",
+      "q": "Quale sintassi dichiara correttamente un puntatore pf a una funzione che accetta due parametri di tipo int e restituisce un int?",
+      "hint": "Le parentesi tonde attorno al nome del puntatore (*pf) sono obbligatorie a causa della precedenza degli operatori.",
+      "options": [
+        "int (*pf)(int, int);",
+        "int *pf(int, int);",
+        "int pf*(int, int);",
+        "(int*) pf(int, int);",
+        "void (*pf)(int, int);",
+        "int (*pf)();"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi int (*pf)(int, int) dichiara un puntatore pf a funzione. Le parentesi attorno a *pf definiscono la precedenza, distinguendo un puntatore a funzione da una funzione che restituisce un puntatore.",
+        "Errato. int *pf(int, int) dichiara una funzione pf che restituisce un puntatore a int.",
+        "Errato. L'asterisco deve stare prima del nome del puntatore all'interno delle parentesi.",
+        "Errato. Questa è una sintassi non valida per la dichiarazione di un puntatore a funzione.",
+        "Errato. Un tale puntatore presupporrebbe un tipo di ritorno void, non int.",
+        "Errato. La sintassi senza specificare i parametri è obsoleta e non imposta i tipi degli argomenti accettati."
+      ]
+    },
+    {
+      "id": "it_clang_866",
+      "widget_id": null,
+      "topic": "Parola chiave inline — Inserimento in linea del codice delle funzioni",
+      "q": "Vero o Falso: la parola chiave inline suggerisce al compilatore di incorporare il corpo della funzione direttamente nel punto di chiamata per evitare l'overhead della chiamata di funzione?",
+      "hint": "L'istruzione inline è un suggerimento per l'ottimizzatore del compilatore?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il modificatore inline suggerisce al compilatore di sostituire la chiamata di funzione con il suo corpo per velocizzare l'esecuzione, anche se la decisione finale spetta al compilatore.",
+        "Errato. La parola chiave inline viene usata proprio per l'inserimento in linea del codice."
+      ]
+    },
+    {
+      "id": "it_clang_867",
+      "widget_id": null,
+      "topic": "Funzioni con numero variabile di argomenti — Libreria stdarg.h",
+      "q": "Quale macro dell'header file <stdarg.h> viene utilizzata per inizializzare il lavoro con l'elenco degli argomenti variabili?",
+      "hint": "Ricorda le macro standard: va_list, va_start, va_arg, va_end.",
+      "options": [
+        "va_start",
+        "va_arg",
+        "va_end",
+        "va_list",
+        "va_init"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La macro va_start(args, last_fixed_arg) inizializza un puntatore di tipo va_list per accedere ai successivi argomenti opzionali.",
+        "Errato. va_arg viene utilizzata per estrarre l'argomento successivo del tipo specificato.",
+        "Errato. va_end termina il lavoro con l'elenco degli argomenti e pulisce le risorse.",
+        "Errato. va_list è un tipo di dato per memorizzare lo stato dell'attraversamento degli argomenti, non una macro di inizializzazione.",
+        "Errato. La macro va_init non esiste nello standard C."
+      ]
+    },
+    {
+      "id": "it_clang_868",
+      "widget_id": null,
+      "topic": "Passaggio di strutture — Per valore contro per puntatore",
+      "q": "Quale affermazione riguardante il passaggio di strutture alle funzioni in C è la più precisa?",
+      "hint": "Rifletti sul costo in termini di prestazioni nel copiare i campi di una struttura quando si trasmette una grande quantità di dati.",
+      "options": [
+        "Le strutture possono essere passate sia per valore sia per puntatore, ma il passaggio per puntatore è più efficiente per le strutture di grandi dimensioni",
+        "In C le strutture possono essere passate esclusivamente per puntatore",
+        "Il passaggio di una struttura per valore consente alla funzione di modificare i campi originali della struttura in main"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C le strutture possono essere passate per valore (vengono copiati tutti i byte), ma per risparmiare memoria e tempo si passa solitamente un puntatore (const StructType *).",
+        "Errato. Il passaggio per valore è pienamente supportato dallo standard del linguaggio C.",
+        "Errato. Nel passaggio per valore viene creata una copia locale, e le modifiche all'interno della funzione non influiscono sull'originale."
+      ]
+    },
+    {
+      "id": "it_clang_869",
+      "widget_id": null,
+      "topic": "Funzione main — Codice di ritorno",
+      "q": "Cosa significa secondo lo standard comune il valore restituito 0 dalla funzione main?",
+      "hint": "Quale codice restituisce il programma al sistema operativo in caso di esecuzione completata con successo?",
+      "options": [
+        "Termine con successo del programma (EXIT_SUCCESS)",
+        "Errore di memoria insufficiente (Out of Memory)",
+        "Errore critico non definito",
+        "Richiesta al sistema operativo di riavviare il programma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La restituzione di 0 da main (o della macro EXIT_SUCCESS) segnala al sistema operativo che il programma è terminato senza errori.",
+        "Errato. Gli errori sono solitamente indicati da codici di ritorno diversi da zero (ad esempio 1, -1 o EXIT_FAILURE).",
+        "Errato. Qualsiasi codice diverso da zero viene interpretato dal SO come un errore.",
+        "Errato. Il codice di ritorno non gestisce il riavvio del programma da parte del sistema operativo."
+      ]
+    },
+    {
+      "id": "it_clang_870",
+      "widget_id": null,
+      "topic": "Linkage delle funzioni — Funzioni statiche (Internal Linkage)",
+      "q": "Cosa significa lo specificatore static prima della dichiarazione di una funzione a livello globale di un file (static void helper(void))?",
+      "hint": "Una tale funzione sarà visibile in altre unità di traduzione (file .c) durante la build del progetto?",
+      "options": [
+        "La funzione ha linkage interno (Internal Linkage) ed è limitata all'ambito di visibilità del file corrente",
+        "La funzione conserva automaticamente i valori di tutte le sue variabili locali tra le chiamate",
+        "La funzione può essere chiamata esattamente una volta durante l'esecuzione del programma",
+        "La funzione viene eseguita automaticamente prima della chiamata a main()",
+        "La funzione non può accettare parametri",
+        "Il compilatore disabilita completamente le ottimizzazioni per questa funzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La parola chiave static per una funzione globale limita il suo ambito di visibilità al file corrente (translation unit), prevenendo conflitti di nomi durante il linking.",
+        "Errato. La limitazione della visibilità della funzione non rende automaticamente statiche tutte le sue variabili locali.",
+        "Errato. La parola chiave static non impone alcuna limitazione sul numero di chiamate alla funzione.",
+        "Errato. La funzione viene chiamata normalmente per nome, non automaticamente prima di main.",
+        "Errato. Una funzione statica può accettare argomenti esattamente come una funzione normale.",
+        "Errato. Il modificatore static non influisce sul livello di ottimizzazione del compilatore."
+      ]
+    }
+  ]
+}

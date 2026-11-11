@@ -1,0 +1,605 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_175",
+      "widget_id": null,
+      "topic": "Fondamenti di C — Funzione principale dell'applicazione (main)",
+      "q": "Quale blocco di codice è il punto di ingresso principale da cui inizia l'esecuzione di qualsiasi programma standard in C?",
+      "hint": "Il nome di questa funzione è obbligatoriamente presente in tutti i programmi eseguibili in C.",
+      "options": [
+        "`main()`",
+        "`include()`",
+        "`stdio()`",
+        "`printf()`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `main()` è il punto di ingresso principale; l'esecuzione del programma C inizia proprio da essa.",
+        "Errato. `#include` è una direttiva del preprocessore per includere file header.",
+        "Errato. `stdio.h` è la libreria standard di input/output, non una funzione.",
+        "Errato. `printf()` è una funzione di libreria per la stampa di testo sulla console."
+      ]
+    },
+    {
+      "id": "it_clang_176",
+      "widget_id": null,
+      "topic": "GCC — Nome del file eseguibile predefinito",
+      "q": "Come si chiama per impostazione predefinita il file eseguibile creato se non viene specificato il flag `-o` durante la compilazione con il comando `gcc main.c`?",
+      "hint": "Il nome del file risale alle origini di UNIX (assembler output).",
+      "options": [
+        "`a.out` (o `a.exe` in Windows)",
+        "`main.out` (o `main.exe`)",
+        "`primo.out`",
+        "`output.bin`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se non si passa il flag `-o`, il compilatore GCC salverà il risultato binario con il nome `a.out` (in Windows `a.exe`).",
+        "Errato. Il nome del file sorgente non viene automaticamente trasferito nel nome del binario.",
+        "Errato. Il compilatore non assegna un nome simile per impostazione predefinita.",
+        "Errato. Il file `output.bin` non viene creato per impostazione predefinita."
+      ]
+    },
+    {
+      "id": "it_clang_177",
+      "widget_id": null,
+      "topic": "GCC — Impostazione del nome del file di output (-o)",
+      "q": "Tramite quale flag del compilatore gcc viene specificato il nome del file eseguibile finale generato?",
+      "hint": "Il flag è composto da una sola lettera minuscola derivata dalla parola 'output'.",
+      "options": [
+        "`-o <nome>`",
+        "`-out <nome>`",
+        "`-name <nome>`",
+        "`-exe <nome>`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-o <nome_file>` imposta un nome personalizzato per il file eseguibile compilato.",
+        "Errato. Il flag `-out` non esiste in GCC.",
+        "Errato. Il flag `-name` si usa nell'utility `find`, ma non nel compilatore GCC.",
+        "Errato. GCC non ha un flag `-exe`."
+      ]
+    },
+    {
+      "id": "it_clang_178",
+      "widget_id": null,
+      "topic": "Memoria — Allocazione delle variabili durante l'esecuzione",
+      "q": "In quale tipo di memoria del computer viene allocato lo spazio per le variabili del programma durante la sua esecuzione?",
+      "hint": "Memoria ad accesso casuale veloce e volatile.",
+      "options": [
+        "Memoria ad accesso casuale (RAM)",
+        "Disco rigido (HDD / NVMe)",
+        "Cache del browser",
+        "Scheda di memoria flash esterna"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! All'avvio del programma, le variabili vengono allocate nella memoria ad accesso casuale (RAM) sullo stack o nello heap.",
+        "Errato. Sul disco rigido è memorizzato il file del programma stesso, ma non le variabili dinamiche di esecuzione.",
+        "Errato. La cache del browser non ha alcuna relazione con la memoria di un'applicazione C.",
+        "Errato. I supporti esterni vengono utilizzati per la memorizzazione permanente dei dati."
+      ]
+    },
+    {
+      "id": "it_clang_179",
+      "widget_id": null,
+      "topic": "Tipi di dati — Tipi primitivi in C",
+      "q": "Quali tra i seguenti tipi di dati appartengono ai tipi base (primitivi) del linguaggio C?",
+      "hint": "Tipi per memorizzare caratteri, numeri interi e numeri reali.",
+      "options": [
+        "`char`, `int`, `float`",
+        "`string`, `integer`, `double`",
+        "`text`, `number`, `decimal`",
+        "`byte`, `int`, `boolean`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `char`, `int` e `float` sono tipi fondamentali integrati del linguaggio C.",
+        "Errato. I tipi `string` e `integer` non esistono come parole chiave base in C (le stringhe sono rappresentate da array di `char`).",
+        "Errato. I tipi `text`, `number` e `decimal` non esistono in C.",
+        "Errato. I tipi `byte` e `boolean` non esistevano nel C89 classico (il tipo logico `_Bool` è stato introdotto successivamente in C99)."
+      ]
+    },
+    {
+      "id": "it_clang_180",
+      "widget_id": null,
+      "topic": "Variabili — Dichiarazione obbligatoria (Declaration)",
+      "q": "Quale regola deve essere rigorosamente rispettata quando si lavora con le variabili nel linguaggio C?",
+      "hint": "Il C è un linguaggio a tipizzazione statica.",
+      "options": [
+        "Ogni variabile deve essere dichiarata specificandone il tipo prima del suo utilizzo",
+        "Le variabili possono essere utilizzate senza previa dichiarazione",
+        "Il tipo della variabile viene determinato automaticamente al momento dell'assegnazione del valore",
+        "È necessario dichiarare solo le variabili numeriche"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C il compilatore richiede la dichiarazione esplicita del tipo di tutte le variabili prima del loro utilizzo.",
+        "Errato. In C non è possibile utilizzare variabili non dichiarate (ciò causerà un errore di compilazione).",
+        "Errato. L'inferenza automatica del tipo alla prima assegnazione è tipica dei linguaggi dinamici.",
+        "Errato. È necessario dichiarare variabili di qualsiasi tipo."
+      ]
+    },
+    {
+      "id": "it_clang_181",
+      "widget_id": null,
+      "topic": "Operatori — Assegnazione ed espressione x = x + 3",
+      "q": "Cosa succede quando viene eseguita la riga di codice `x = x + 3;` in un programma C?",
+      "hint": "Prima viene valutata la parte destra dell'espressione, poi viene sovrascritta la variabile a sinistra.",
+      "options": [
+        "Viene calcolato il valore corrente di `x + 3` e salvato nuovamente nella variabile `x`",
+        "Viene verificata l'uguaglianza tra la variabile `x` e l'espressione `x + 3`",
+        "Si verifica un errore di compilazione a causa di una contraddizione algebrica",
+        "Il valore di `x` viene azzerato e impostato a 3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `=` calcola il valore dell'espressione a destra (`x + 3`) e assegna il risultato alla variabile `x` a sinistra.",
+        "Errato. Per verificare l'uguaglianza si utilizza l'operatore `==`.",
+        "Errato. In programmazione questa è un'operazione standard per modificare il valore di una variabile.",
+        "Errato. Il vecchio valore di `x` non viene ignorato, ma sommato a 3."
+      ]
+    },
+    {
+      "id": "it_clang_182",
+      "widget_id": null,
+      "topic": "Libreria standard — Header stdio.h",
+      "q": "Quale libreria è necessario includere tramite `#include` per lavorare con la funzione formattata `printf()`?",
+      "hint": "Il nome sta per Standard Input / Output.",
+      "options": [
+        "`stdio.h`",
+        "`stdlib.h`",
+        "`math.h`",
+        "`string.h`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il file header `stdio.h` contiene le dichiarazioni delle funzioni di input/output come `printf` e `scanf`.",
+        "Errato. `stdlib.h` contiene funzioni di gestione della memoria (`malloc`), generazione di numeri casuali e gestione dei processi.",
+        "Errato. `math.h` contiene funzioni matematiche (`sqrt`, `pow`).",
+        "Errato. `string.h` contiene funzioni per la manipolazione delle stringhe (`strlen`, `strcpy`)."
+      ]
+    },
+    {
+      "id": "it_clang_183",
+      "widget_id": null,
+      "topic": "printf — Specificatori di formato (%d, %f, %c)",
+      "q": "Quali specificatori di formato stampano in `printf` rispettivamente un numero intero, un numero reale e un singolo carattere?",
+      "hint": "%d — decimal/integer, %f — float, %c — char.",
+      "options": [
+        "`%d`, `%f`, `%c`",
+        "`%i`, `%r`, `%s`",
+        "`%int`, `%flt`, `%chr`",
+        "`%d`, `%d`, `%d`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `%d` formatta numeri interi (int), `%f` numeri in virgola mobile (float/double), `%c` singoli caratteri (char).",
+        "Errato. `%s` si usa per le stringhe e `%r` non è uno specificatore di base.",
+        "Errato. Gli specificatori di formato sono composti da brevi lettere identificative.",
+        "Errato. L'uso di `%d` per tutti i tipi porterebbe a un'interpretazione errata dei byte."
+      ]
+    },
+    {
+      "id": "it_clang_184",
+      "widget_id": null,
+      "topic": "Sequenze di escape — A capo (\\n)",
+      "q": "Quale sequenza di escape viene utilizzata per spostare il cursore su una nuova riga durante la stampa?",
+      "hint": "È indicata da un backslash e dalla lettera 'n' (newline).",
+      "options": [
+        "`\\n`",
+        "`\\t`",
+        "`\\b`",
+        "`\\\\`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il carattere `\\n` indica un a capo (line feed / newline).",
+        "Errato. `\\t` inserisce un carattere di tabulazione orizzontale.",
+        "Errato. `\\b` sposta il cursore indietro di uno spazio (backspace).",
+        "Errato. `\\\\` stampa un singolo carattere backslash."
+      ]
+    },
+    {
+      "id": "it_clang_185",
+      "widget_id": null,
+      "topic": "Sequenze di escape — Escape dei doppi apici",
+      "q": "Come si stampa il carattere doppio apice all'interno di un letterale stringa `printf(\"...\");`?",
+      "hint": "L'escape dei caratteri si effettua utilizzando il backslash.",
+      "options": [
+        "`\\\"`",
+        "`\\\\`",
+        "`\\'`",
+        "`\\q`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il carattere di escape `\\\"` permette di inserire un doppio apice all'interno di una stringa senza chiuderla prematuramente.",
+        "Errato. `\\\\` stampa un carattere backslash.",
+        "Errato. `\\'` fa l'escape del singolo apice.",
+        "Errato. La sequenza `\\q` non esiste in C."
+      ]
+    },
+    {
+      "id": "it_clang_186",
+      "widget_id": null,
+      "topic": "Input dei dati — Funzione scanf()",
+      "q": "Qual è la sintassi corretta per la chiamata alla funzione `scanf` per leggere un numero intero da tastiera nella variabile `var`?",
+      "hint": "Il primo argomento è la stringa di formato, mentre il secondo è l'indirizzo della variabile di destinazione.",
+      "options": [
+        "`scanf(\"%d\", &var);`",
+        "`scanf(\"%d\", var);`",
+        "`scanf(var, \"%d\");`",
+        "`input(\"%d\", &var);`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `scanf(\"%d\", &var);` legge un numero intero e lo scrive all'indirizzo della variabile `var`.",
+        "Errato. Omettere la commerciale `&` passerà il valore della variabile anziché il suo indirizzo, provocando un segfault.",
+        "Errato. L'ordine degli argomenti è invertito.",
+        "Errato. La funzione `input` non esiste nella libreria standard del C."
+      ]
+    },
+    {
+      "id": "it_clang_187",
+      "widget_id": null,
+      "topic": "Puntatori — Operatore di indirizzo (&) in scanf",
+      "q": "Perché davanti al nome della variabile nella chiamata `scanf(\"%d\", &var);` si inserisce il simbolo `&`?",
+      "hint": "L'operatore & restituisce un puntatore alla posizione in memoria.",
+      "options": [
+        "Passa a `scanf` l'indirizzo della cella di memoria affinché la funzione possa scriverci il valore inserito",
+        "Converte il valore inserito in formato stringa",
+        "Verifica se la variabile è vuota",
+        "Esegue la somma delle variabili"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `&` (address-of) passa l'indirizzo della variabile, fornendo a `scanf` la posizione in memoria per scrivere i dati.",
+        "Errato. L'operatore `&` non esegue conversioni di tipo.",
+        "Errato. Il controllo dei valori viene effettuato tramite confronto.",
+        "Errato. L'operatore di addizione è `+`."
+      ]
+    },
+    {
+      "id": "it_clang_188",
+      "widget_id": null,
+      "topic": "Sintassi — Commenti su singola riga e multilinea",
+      "q": "Quali caratteri delimitano i commenti su singola riga e multilinea nel codice sorgente C?",
+      "hint": "I commenti su riga singola iniziano con due slash, mentre quelli multilinea sono racchiusi tra slash e asterisco.",
+      "options": [
+        "`//` per una riga e `/* ... */` per più righe",
+        "`#` per una riga e `<!-- ... -->` per più righe",
+        "`/*` per una riga e `// ... //` per più righe",
+        "`--` per una riga e `{ ... }` per più righe"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `//` definisce un commento su riga singola (dallo standard C99), mentre `/* ... */` crea un blocco di commento multilinea.",
+        "Errato. `#` si usa in Python/Bash e nelle direttive del preprocessore C, mentre `<!-- -->` si usa in HTML.",
+        "Errato. La sintassi è invertita.",
+        "Errato. `--` si usa in SQL/Lua e `{ }` definisce i blocchi di codice in C."
+      ]
+    },
+    {
+      "id": "it_clang_189",
+      "widget_id": null,
+      "topic": "Costanti — Differenza tra costanti e variabili",
+      "q": "Qual è la differenza principale tra una costante e una variabile nel linguaggio C?",
+      "hint": "Pensa al nome: costante (const) vs variabile (var).",
+      "options": [
+        "Il valore di una costante non può essere modificato dopo l'inizializzazione, mentre il valore di una variabile può cambiare durante l'esecuzione",
+        "Le costanti occupano molto più spazio in memoria rispetto alle variabili",
+        "Le variabili possono essere utilizzate solo per numeri interi",
+        "Le costanti sono memorizzate su disco, mentre le variabili solo in RAM"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le costanti sono dichiarate come entità non modificabili (read-only); un nuovo tentativo di assegnazione genererà un errore di compilazione.",
+        "Errato. La dimensione della memoria è determinata dal tipo di dati, non dallo stato di modificabilità.",
+        "Errato. Le variabili possono essere di qualsiasi tipo (`float`, `char`, `double`, ecc.).",
+        "Errato. Entrambi i tipi di dati vengono memorizzati in RAM durante l'esecuzione."
+      ]
+    },
+    {
+      "id": "it_clang_190",
+      "widget_id": null,
+      "topic": "Costanti — Parola chiave const",
+      "q": "Qual è la sintassi corretta per dichiarare una variabile non modificabile utilizzando lo specificatore `const`?",
+      "hint": "Lo specificatore const si posiziona prima del tipo di dato.",
+      "options": [
+        "`const <tipo> <nome> = <valore>;`",
+        "`define <tipo> <nome> = <valore>;`",
+        "`constant <nome> : <tipo> = <valore>;`",
+        "`static <tipo> <nome> == <valore>;`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `const int MAX = 100;` dichiara un intero costante.",
+        "Errato. Per le macro del preprocessore si usa `#define`, non `define`.",
+        "Errato. La parola chiave `constant` non esiste in C (si usa `const`).",
+        "Errato. `static` definisce la durata di vita e l'ambito di visibilità, mentre l'operatore `==` effettua un confronto."
+      ]
+    },
+    {
+      "id": "it_clang_191",
+      "widget_id": null,
+      "topic": "Preprocessore — Definizioni di macro (#define)",
+      "q": "Come si dichiara una costante simbolica globale usando una direttiva del preprocessore?",
+      "hint": "La direttiva inizia con un cancelletto, non richiede l'indicazione del tipo né il punto e virgola finale.",
+      "options": [
+        "`#define <NOME> <valore>`",
+        "`#const <NOME> = <valore>`",
+        "`define <NOME> (<valore>);`",
+        "`#include <NOME> <valore>`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La direttiva `#define BUFFER_SIZE 1024` sostituisce la sottostringa `BUFFER_SIZE` con `1024` prima della fase di compilazione.",
+        "Errato. La direttiva `#const` non esiste.",
+        "Errato. `define` senza il cancelletto `#` non è una direttiva del preprocessore.",
+        "Errato. `#include` si usa solo per includere i file header."
+      ]
+    },
+    {
+      "id": "it_clang_192",
+      "widget_id": null,
+      "topic": "Identificatori — Regole di denominazione delle variabili",
+      "q": "A quale regola deve necessariamente corrispondere il primo carattere di un identificatore valido (nome di variabile) in C?",
+      "hint": "Un identificatore non può iniziare con un numero.",
+      "options": [
+        "Deve essere una lettera dell'alfabeto latino o un carattere di sottolineatura `_`",
+        "Può essere una qualsiasi cifra da 0 a 9",
+        "Può essere un carattere speciale ($, %, @)",
+        "Deve essere obbligatoriamente una lettera maiuscola"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il nome di una variabile in C deve iniziare con una lettera (`a-z`, `A-Z`) o un trattino basso `_`. Le cifre sono consentite dal secondo carattere in poi.",
+        "Errato. Far iniziare il nome di una variabile con una cifra è vietato dalla sintassi del linguaggio.",
+        "Errato. Caratteri speciali come `$`, `%`, `@` sono vietati nei nomi di variabile.",
+        "Errato. Maiuscole o minuscole sono indifferenti per il primo carattere."
+      ]
+    },
+    {
+      "id": "it_clang_193",
+      "widget_id": null,
+      "topic": "Identificatori — Sensibilità al maiuscolo/minuscolo (Case Sensitivity)",
+      "q": "Cosa significa la proprietà di sensibilità al maiuscolo/minuscolo (Case Sensitivity) nel linguaggio C?",
+      "hint": "Pensa se le variabili 'myVar' e 'myvar' indicheranno la stessa cella di memoria.",
+      "options": [
+        "Le lettere minuscole e maiuscole sono distinte (ad esempio, `count` e `Count` sono due variabili diverse)",
+        "Tutti i nomi di variabile vengono automaticamente convertiti in maiuscolo",
+        "Il compilatore ignora le differenze tra caratteri e cifre",
+        "Gli identificatori possono essere scritti solo con lettere minuscole"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il linguaggio C è case-sensitive, quindi `var`, `Var` e `VAR` sono tre identificatori completamente indipendenti.",
+        "Errato. Il C non converte i caratteri in un unico formato.",
+        "Errato. Le differenze sono considerate rigorosamente dal compilatore.",
+        "Errato. Si possono usare lettere di qualsiasi registro."
+      ]
+    },
+    {
+      "id": "it_clang_194",
+      "widget_id": null,
+      "topic": "Identificatori — Restrizioni e parole riservate",
+      "q": "Qual è la restrizione principale imposta sulla scelta del nome di una variabile in C?",
+      "hint": "Le parole chiave del linguaggio (int, return, if, else) sono riservate dal compilatore.",
+      "options": [
+        "Il nome non deve coincidere con parole chiave riservate del linguaggio (ad esempio `int`, `return`, `double`, `if`)",
+        "Il nome non può superare i 3 caratteri di lunghezza",
+        "Il nome non può contenere cifre al suo interno",
+        "Il nome deve coincidere con il nome del file `.c` del sorgente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le parole riservate della sintassi C (come `for`, `while`, `int`, `return`) non possono essere utilizzate come nomi di variabili.",
+        "Errato. La lunghezza di un identificatore può essere notevolmente maggiore (lo standard garantisce la distinzione dei primi 31-63 caratteri).",
+        "Errato. Le cifre sono consentite all'interno e alla fine del nome.",
+        "Errato. Il nome della variabile non ha alcuna relazione con il nome del file del codice sorgente."
+      ]
+    },
+    {
+      "id": "it_clang_195",
+      "widget_id": null,
+      "topic": "I/O in C — Particolarità di scanf con lo specificatore %c",
+      "q": "Cosa succede durante l'esecuzione del seguente codice se l'utente inserisce prima il numero 42 e preme Invio, e poi tenta di inserire il carattere 'A'?\\n\\n```c\\nint x;\\nchar c;\\nscanf(\"%d\", &x);\\nscanf(\"%c\", &c);\\n```",
+      "hint": "Pensa a cosa succede al carattere di a capo '\\n' nel buffer di input stdin dopo la prima chiamata a scanf.",
+      "options": [
+        "La variabile `c` riceverà il carattere di a capo `\\n`, poiché `%c` non ignora gli spazi bianchi a differenza di `%d`",
+        "Il programma funzionerà correttamente e scriverà 'A' nella variabile `c`",
+        "Il programma terminerà con un errore di Segmentation Fault",
+        "Il secondo `scanf` ignorerà `\\n` e rimarrà in attesa dell'inserimento del carattere 'A'"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `%d` ignora i caratteri spazio iniziali (spazi, a capo), mentre `%c` legge qualsiasi carattere successivo, compreso il `\\n` rimasto nel buffer dopo la prima pressione di Invio.",
+        "Errato. Il carattere `'A'` non finirà in `c`, perché `scanf(\"%c\", ...)` ha immediatamente letto il `\\n` rimasto nel buffer.",
+        "Errato. Non ci sono errori di indirizzamento, gli indirizzi delle variabili passate sono corretti.",
+        "Errato. L'ignoramento degli spazi per `%c` avviene solo se davanti ad esso viene specificato uno spazio nel formato: `scanf(\" %c\", &c);`."
+      ]
+    },
+    {
+      "id": "it_clang_196",
+      "widget_id": null,
+      "topic": "Operatori in C — Restrizioni dell'operatore resto della divisione (%)",
+      "q": "Quale sarà il risultato del tentativo di compilare il seguente codice?\\n\\n```c\\nfloat x = 5.5;\\nint y = 2;\\nint res = x % y;\\n```",
+      "hint": "Ricorda a quali tipi di dati è applicabile l'operatore di modulo % nel linguaggio C.",
+      "options": [
+        "Errore di compilazione: l'operatore `%` è applicabile solo a operandi interi",
+        "Il codice compila e `res` sarà uguale a 1",
+        "Il codice compila e `res` sarà uguale a 1.5",
+        "Il programma crasha in runtime con errore Floating point exception"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel linguaggio C l'operatore binario `%` (resto della divisione) richiede che entrambi gli operandi siano di tipo intero (`int`, `char`, `long`, ecc.). Per i numeri in virgola mobile è necessario usare la funzione `fmod()` da `<math.h>`.",
+        "Errato. Il compilatore restituirà un errore sintattico e non genererà il binario.",
+        "Errato. L'operatore `%` non funziona con `float`.",
+        "Errato. L'errore si verifica nella fase di compilazione, non durante l'esecuzione."
+      ]
+    },
+    {
+      "id": "it_clang_197",
+      "widget_id": null,
+      "topic": "Variabili e costanti — const vs #define in C",
+      "q": "Qual è la differenza fondamentale tra la dichiarazione `const int N = 100;` e la direttiva `#define N 100` nello standard C89/C99?",
+      "hint": "Pensa se una variabile const sia una vera costante al momento della compilazione (constant expression) in C.",
+      "options": [
+        "`const` crea una variabile in sola lettura (read-only variable), mentre `#define` esegue una sostituzione di testo tramite il preprocessore",
+        "`const` esegue una sostituzione di testo, mentre `#define` alloca una regione di RAM",
+        "Non c'è alcuna differenza tra loro, sono assoluti sinonimi",
+        "`#define` funziona solo per stringhe letterali, mentre `const` solo per numeri"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C il qualificatore `const` crea una variabile il cui valore è protetto da modifiche (read-only), ma rimane una variabile in memoria. La direttiva `#define` viene elaborata dal preprocessore prima della compilazione tramite semplice sostituzione testuale.",
+        "Errato. I ruoli sono descritti al contrario.",
+        "Errato. Ad esempio, in C89 `const int N = 10;` non può essere usata nelle etichette `case N:` di un `switch`, mentre `#define N 10` sì.",
+        "Errato. Sia `#define` che `const` funzionano con qualsiasi tipo di dato supportato."
+      ]
+    },
+    {
+      "id": "it_clang_198",
+      "widget_id": null,
+      "topic": "Operazioni di assegnazione — Effetti collaterali e Comportamento Indefinito (UB)",
+      "q": "Cosa succede durante l'esecuzione della riga di codice `x = x++;`?",
+      "hint": "Modifica di una stessa variabile due volte tra punti di sequenza (sequence points) o senza ordinamento.",
+      "options": [
+        "Si verifica un Comportamento Indefinito (Undefined Behavior)",
+        "Il valore di `x` aumenterà garantito di 1",
+        "Il valore di `x` non cambierà",
+        "Il programma restituirà un errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Modificare la stessa variabile più di una volta all'interno della stessa operazione / senza punti di sequenza porta a un Comportamento Indefinito (Undefined Behavior) secondo lo standard C.",
+        "Errato. Il comportamento dello standard non garantisce alcun risultato concreto.",
+        "Errato. Anche se su alcuni compilatori il valore potrebbe rimanere invariato, non è possibile fare affidamento su questo.",
+        "Errato. Sintatticamente l'espressione è valida, ma semanticamente contiene un UB."
+      ]
+    },
+    {
+      "id": "it_clang_199",
+      "widget_id": null,
+      "topic": "Preprocessore — Macro con parametri e parentesi",
+      "q": "Quale valore stamperà il seguente frammento di codice?\\n\\n```c\\n#define MULT(a, b) a * b\\n...\\nint res = MULT(2 + 3, 4 + 1);\\nprintf(\"%d\", res);\\n```",
+      "hint": "Ricorda che il preprocessore esegue una sostituzione di testo diretta senza considerare la priorità delle operazioni aritmetiche.",
+      "options": [
+        "15",
+        "25",
+        "20",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il preprocessore sostituirà l'espressione con `2 + 3 * 4 + 1`. Considerando la precedenza della moltiplicazione otteniamo: `2 + 12 + 1 = 15`. Per ottenere 25, gli argomenti nella macro dovrebbero essere racchiusi tra parentesi: `((a) * (b))`.",
+        "Errato. 25 si otterrebbe con la sostituzione `(2 + 3) * (4 + 1)`, ma le parentesi nella macro non sono presenti.",
+        "Errato. L'aritmetica del calcolo dà 15.",
+        "Errato. La sostituzione è sintatticamente corretta."
+      ]
+    },
+    {
+      "id": "it_clang_200",
+      "widget_id": null,
+      "topic": "Funzione printf — Incompatibilità degli specificatori di tipo",
+      "q": "Cosa succede quando si chiama `printf(\"%d\", 3.14f);`?",
+      "hint": "Pensa a come vengono passati gli argomenti tramite va_list e come vengono interpretati i byte sullo stack / nei registri.",
+      "options": [
+        "Il programma stamperà un valore non corretto/spazzatura a causa della mancata corrispondenza dello specificatore di formato (`%d` si aspetta `int`, ma è stato passato `float`)",
+        "Il programma convertirà automaticamente `3.14f` al numero 3 e stamperà '3'",
+        "Il programma restituirà un errore durante la compilazione",
+        "Verrà stampato '3.140000'"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `printf` non conosce i tipi reali degli argomenti passati e si limita a leggere dallo stack/registri quanti byte richiede lo specificatore di formato (`%d` legge `int`). L'interpretazione dei bit di un `float` come `int` porta alla stampa di un valore imprevedibile.",
+        "Errato. Non viene eseguito alcun casting implicito all'interno della funzione variadica `printf` basandosi sulla stringa di formato.",
+        "Errato. Lo standard C consente la build, anche se i compilatori moderni con il flag `-Wall` emetteranno un avviso.",
+        "Errato. Per `float` è richiesto lo specificatore `%f`."
+      ]
+    },
+    {
+      "id": "it_clang_201",
+      "widget_id": null,
+      "topic": "Identificatori in C — Nomi riservati e regole",
+      "q": "Quale dei seguenti identificatori è NON VALIDO o riservato dagli standard del linguaggio C per uso interno dall'implementazione (compilatore/libreria)?",
+      "hint": "Ricorda le regole di denominazione degli identificatori e le restrizioni sull'uso dei caratteri di sottolineatura.",
+      "options": [
+        "`_MyVariable`",
+        "`my_variable`",
+        "`var123`",
+        "`x_y_z`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli identificatori che iniziano con un trattino basso seguito da una lettera maiuscola (nonché quelli che iniziano con due trattini bassi `__`) sono riservati dallo standard C per il compilatore e la libreria standard.",
+        "Errato. È un identificatore utente completamente valido.",
+        "Errato. Nome valido: contiene lettere, cifre e non inizia con una cifra.",
+        "Errato. Identificatore valido con caratteri di sottolineatura."
+      ]
+    },
+    {
+      "id": "it_clang_202",
+      "widget_id": null,
+      "topic": "Operazioni sui tipi — Divisione intera",
+      "q": "Cosa stamperà la seguente istruzione?\\n\\n```c\\nfloat val = 5 / 2;\\nprintf(\"%f\", val);\\n```",
+      "hint": "Presta attenzione ai tipi degli operandi 5 e 2 prima del calcolo del risultato della divisione.",
+      "options": [
+        "2.000000",
+        "2.500000",
+        "2",
+        "0.000000"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché entrambi gli operandi `5` e `2` sono di tipo `int`, viene eseguita una divisione intera scartando la parte decimale: `5 / 2 = 2`. Successivamente il valore `2` viene convertito implicitamente in `float` (`2.0`) e stampato con `%f`.",
+        "Errato. Per ottenere `2.500000`, almeno uno degli operandi dovrebbe essere in virgola mobile (ad esempio `5.0 / 2`).",
+        "Errato. Lo specificatore `%f` stampa sempre un numero reale con parte decimale.",
+        "Errato. Il risultato della divisione non è 0."
+      ]
+    },
+    {
+      "id": "it_clang_203",
+      "widget_id": null,
+      "topic": "Funzione scanf — Omissione dell'operatore di indirizzo (&)",
+      "q": "A quale conseguenza porterà l'esecuzione del codice `int x; scanf(\"%d\", x);` (senza specificare l'operatore `&`)?",
+      "hint": "Pensa a come scanf usa il secondo argomento per salvare il valore letto da stdin.",
+      "options": [
+        "A un'interruzione anomala del programma (Segmentation Fault / Access Violation) a causa del tentativo di scrittura a un indirizzo arbitrario",
+        "La variabile `x` compilerà e scriverà il valore correttamente",
+        "Il programma creerà automaticamente un puntatore temporaneo",
+        "Il valore verrà scritto in un registro del processore senza lavorare con la memoria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `scanf` si aspetta di ricevere l'indirizzo di un'area di memoria (`int *`). Passando una variabile non inizializzata `x`, si trasmette il valore spazzatura contenuto in essa come indirizzo di memoria su cui `scanf` tenterà di scrivere, terminando il processo con un errore di segmentazione.",
+        "Errato. L'operatore `&` è obbligatorio per scrivere i risultati di `scanf` in variabili semplici.",
+        "Errato. Il compilatore non corregge l'operatore di indirizzamento `&` omesso.",
+        "Errato. La scrittura avviene sempre tramite indirizzamento in memoria."
+      ]
+    },
+    {
+      "id": "it_clang_204",
+      "widget_id": null,
+      "topic": "Caratteri di controllo (Sequenze di escape) nelle stringhe",
+      "q": "Quanti byte (senza considerare il carattere nullo finale '\\0') occupa in memoria il letterale stringa `\"Hello\\n\\\"World\\\"\"`?",
+      "hint": "Conta il numero di caratteri, ricordando che le sequenze di escape (ad esempio \\n e \\\") sono codificate da esattamente un byte ciascuna.",
+      "options": [
+        "13",
+        "15",
+        "16",
+        "11"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Contiamo i caratteri: H(1), e(2), l(3), l(4), o(5), \\n(6), \"(7), W(8), o(9), r(10), l(11), d(12), \"(13). In totale 13 byte.",
+        "Errato. I caratteri backslash `\\` all'interno delle sequenze di escape `\\n` e `\\\"` non sono considerati caratteri separati.",
+        "Errato. Si tratta di una stima per eccesso della lunghezza della stringa.",
+        "Errato. Mancano le virgolette con escape o l'a capo."
+      ]
+    }
+  ]
+}

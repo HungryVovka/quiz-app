@@ -1,0 +1,425 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_430",
+      "widget_id": null,
+      "topic": "Qualificatori di tipo — Scopo della parola chiave restrict",
+      "q": "Quale informazione fornisce al compilatore il qualificatore `restrict` applicato a un puntatore?",
+      "hint": "Pensa al problema della sovrapposizione delle aree di memoria (pointer aliasing).",
+      "options": [
+        "Il puntatore è l'unico modo per accedere all'oggetto in memoria durante la sua vita, consentendo ottimizzazioni aggressive",
+        "Vieta la modifica dell'indirizzo memorizzato nel puntatore",
+        "Vieta la scrittura all'indirizzo specificato da parte di altri thread",
+        "Limita l'ambito di visibilità del puntatore al blocco di codice corrente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il qualificatore `restrict` (introdotto in C99) garantisce che il puntatore sia l'unico modo per accedere all'oggetto indirizzato in tale ambito, consentendo al compilatore di eseguire ottimizzazioni aggressive.",
+        "Errato. Il divieto di modificare l'indirizzo memorizzato nel puntatore è stabilito dalla costanza del puntatore stesso (`type * const ptr`).",
+        "Errato. `restrict` non ha a che fare con la sincronizzazione multithread o la protezione dalla scrittura da altri thread.",
+        "Errato. L'ambito del puntatore è determinato dal blocco di dichiarazione e dalle regole di linking classiche, non dal qualificatore `restrict`."
+      ]
+    },
+    {
+      "id": "it_clang_431",
+      "widget_id": "widget_clang_431",
+      "topic": "Puntatori — Sottrazione di puntatori (ptrdiff_t)",
+      "q": "Cosa stamperà il frammento di codice sottraendo due puntatori di tipo diverso con un diverso livello di dereferenziazione?",
+      "hint": "Pensa a quale significato fisico abbia la differenza tra puntatori `p2 - p1` e in quali unità viene misurata.",
+      "options": [
+        "2",
+        "8",
+        "1",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sottrazione di due puntatori dello stesso tipo (`int*`) restituisce il numero di elementi di tipo `int` tra di essi, non i byte. `&arr[3] - &arr[1]` dà `3 - 1 = 2` (il tipo del risultato è `ptrdiff_t`).",
+        "Errato. La differenza sarebbe 8 se si sottraessero gli indirizzi in byte (2 elementi da 4 byte), tuttavia l'aritmetica dei puntatori tiene conto automaticamente della dimensione del tipo.",
+        "Errato. La distanza tra gli indici 3 e 1 è di 2 elementi, non 1.",
+        "Errato. La sottrazione di puntatori a elementi dello stesso array è un'operazione del tutto lecita in C."
+      ]
+    },
+    {
+      "id": "it_clang_432",
+      "widget_id": "widget_clang_432",
+      "topic": "Macro del preprocessore — Riespansione e igiene delle macro",
+      "q": "Cosa stamperà il programma nel widget quando un'espressione con incremento viene passata alla macro `MAX`?",
+      "hint": "Espandi manualmente la macro `MAX(a++, b)` e osserva quante volte viene valutato `a++`.",
+      "options": [
+        "6",
+        "5",
+        "7",
+        "Comportamento non definito (Undefined Behavior)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `MAX(a++, b)` si espande in `((a++) > (b) ? (a++) : (b))`. Poiché `5 > 3` è vero, `a++` viene valutato nella condizione (valore 5, `a` diventa 6) e poi un'altra volta nel ramo `?` (restituisce 6 e `a` diventa 7). Il risultato dell'espressione stessa è 6.",
+        "Errato. A causa della ri-valutazione dell'argomento con l'effetto collaterale `a++`, il valore dell'espressione supera il 5 iniziale.",
+        "Errato. Il valore della variabile `a` dopo l'esecuzione dell'espressione diventerà 7, ma la macro stessa restituisce il valore prima del secondo incremento, cioè 6.",
+        "Errato. Sebbene il passaggio di effetti collaterali alle macro sia considerata una cattiva pratica, questa espressione ha un ordine di valutazione ben definito nell'operatore ternario."
+      ]
+    },
+    {
+      "id": "it_clang_433",
+      "widget_id": "widget_clang_433",
+      "topic": "Virgola mobile — Inaccuratezza del confronto float e conversione di tipo",
+      "q": "Perché la condizione `(f == 0.1)` nel codice mostrato restituirà false e stamperà \"NOT EQUAL\"?",
+      "hint": "Ricorda qual è il tipo predefinito per la costante `0.1` nel linguaggio C (`float` o `double`?).",
+      "options": [
+        "La costante numerica `0.1` è di tipo `double`, e `0.1f` non può essere rappresentato esattamente in binario, quindi le loro rappresentazioni binarie differiscono",
+        "La funzione `printf` non supporta il tipo `float`",
+        "L'operatore `==` non si applica ai numeri in virgola mobile in C",
+        "Le variabili `float` vengono convertite automaticamente in `int` durante il confronto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il letterale `0.1` è di tipo `double`. A causa dell'imprecisione della rappresentazione binaria delle frazioni, `0.1f` (float) convertito implicitamente a `double` possiede bit meno significativi diversi rispetto alla costante `0.1` (double). Il confronto restituisce false.",
+        "Errato. La funzione `printf` funziona perfettamente con i tipi in virgola mobile.",
+        "Errato. L'operatore `==` è sintatticamente applicabile a `float` e `double`, tuttavia la precisione esatta spesso fallisce a causa di errori di arrotondamento.",
+        "Errato. I numeri in virgola mobile non vengono convertiti in `int` nel confronto tra loro; avviene invece la conversione da `float` a `double`."
+      ]
+    },
+    {
+      "id": "it_clang_434",
+      "widget_id": "widget_clang_434",
+      "topic": "Limiti dei tipi — Overflow di interi con segno (Signed Integer Overflow)",
+      "q": "A cosa porta l'overflow di un intero con segno (`signed int`) secondo lo standard C?",
+      "hint": "Il comportamiento di `signed int` differisce da quello di `unsigned int` quando si supera `INT_MAX`?",
+      "options": [
+        "Comportamento non definido (Undefined Behavior)",
+        "Wrap-around in modulo 2^N",
+        "Conversione automatica a `long long`",
+        "Generazione del segnale `SIGFPE`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'overflow di un intero **con segno** (`signed int`) è un Undefined Behavior. Al contrario, l'overflow **senza segno** (`unsigned int`) è rigorosamente definito dallo standard come wrap-around modulo $2^N$.",
+        "Errato. Il wrap-around garantito modulo $2^N$ esiste solo per i tipi `unsigned`. Per `signed int` si tratta rigorosamente di Undefined Behavior.",
+        "Errato. Il linguaggio C non esegue l'espansione automatica della dimensione del tipo di variabile in caso di overflow.",
+        "Errato. Il segnale `SIGFPE` viene generalmente generato in caso di divisione per zero, non in caso di overflow di interi."
+      ]
+    },
+    {
+      "id": "it_clang_435",
+      "widget_id": "widget_clang_435",
+      "topic": "Puntatori — Puntatore a funzione con conversione di tipo",
+      "q": "Cosa succede quando si chiama una funzione tramite un puntatore con una firma non corrispondente?",
+      "hint": "Pensa alle convenzioni di chiamata (calling conventions) e al passaggio degli argomenti tramite stack/registri.",
+      "options": [
+        "Comportamento non definito (Undefined Behavior)",
+        "Conversione automatica degli argomenti",
+        "Errore di compilazione",
+        "Ritorno del valore 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiamata a una funzione tramite un puntatore il cui tipo non corrisponde al tipo effettivo della funzione è un Undefined Behavior (a causa della violazione della convenzione di chiamata e della mancata corrispondenza dello stack frame/registri).",
+        "Errato. Il compilatore non genera adattatori per la conversione dei tipi di argomento quando si effettua una chiamata tramite un puntatore convertito.",
+        "Errato. La conversione esplicita del tipo di puntatore silenzia l'errore del compilatore, quindi il codice verrà compilato ma si comporterà in modo imprevedibile a runtime.",
+        "Errato. La chiamata a un puntatore incompatibile non garantisce il ritorno dello zero e porta a un comportamento non definito."
+      ]
+    },
+    {
+      "id": "it_clang_436",
+      "widget_id": "widget_clang_436",
+      "topic": "Variabili statiche — Durata e ambito di visibilità",
+      "q": "Cosa stamperà il frammento di codice in caso di dichiarazione locale di un array `static` all'interno del blocco di un ciclo?",
+      "hint": "Quante volte viene creata e inizializzata una variabile `static` durante l'esecuzione del programma?",
+      "options": [
+        "\"1 2 3 \"",
+        "\"1 1 1 \"",
+        "\"0 0 0 \"",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Una variabile statica viene inizializzata solo una volta all'avvio del programma. A ogni iterazione del ciclo viene eseguito `arr[0]++`, quindi il valore viene conservato e incrementato: 1, poi 2, poi 3. Output: \"1 2 3 \".",
+        "Errato. Il valore \"1 1 1 \" verrebbe stampato per un normale array automatico (non `static`), ricreato a ogni iterazione.",
+        "Errato. L'array è inizializzato a zero, ma le operazioni di incremento `arr[0]++` ne modificano i valori.",
+        "Errato. La dichiarazione di variabili `static` all'interno di blocchi e cicli è del tutto lecita in C."
+      ]
+    },
+    {
+      "id": "it_clang_437",
+      "widget_id": "widget_clang_437",
+      "topic": "Virgola mobile — Divisione per zero in float/double (IEEE 754)",
+      "q": "Cosa stamperà il programma dividendo `1.0f` per `0.0f` secondo lo standard IEEE 754?",
+      "hint": "Ricorda come viene gestita la divisione per zero per i numeri in virgola mobile a differenza degli interi.",
+      "options": [
+        "`inf` (Infinito)",
+        "Errore di esecuzione (Segmentation fault / Crash)",
+        "0.000000",
+        "`nan` (Not a Number)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La divisione di un numero in virgola mobile positivo non nullo per `0.0`, secondo lo standard IEEE 754, non causa un arresto anomalo ma restituisce il valore speciale più infinito (`inf`).",
+        "Errato. Un arresto anomalo (o un'eccezione hardware) si verifica dividendo per zero numeri *interi*, ma non numeri nel formato IEEE 754.",
+        "Errato. La divisione di un numero positivo per zero dà infinito, non zero.",
+        "Errato. Il risultato `nan` si ottiene in casi indeterminati del tipo `0.0 / 0.0` o `inf / inf`, ma non con `1.0f / 0.0f`."
+      ]
+    },
+    {
+      "id": "it_clang_438",
+      "widget_id": "widget_clang_438",
+      "topic": "Conversione di tipo — Integer Promotions (Promozione di interi)",
+      "q": "Quali будут il tipo e il risultato dell'espressione `(a + b)` per `char a = 100, b = 100` su sistemi a 32/64 bit?",
+      "hint": "In quale tipo vengono automaticamente promossi i tipi `char` e `short` quando partecipano ad operazioni aritmetiche?",
+      "options": [
+        "Tipo `int`, risultato 200 (senza overflow di `char`)",
+        "Tipo `char`, risultato -56 a causa dell'overflow del `char` a 8 bit",
+        "Tipo `unsigned char`, risultato 200",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In base alla regola delle Integer Promotions, gli operandi di tipo inferiore a `int` (`char`, `short`) vengono automaticamente promossi al tipo `int` prima di eseguire operazioni aritmetiche. Non si verifica l'overflow di `char`, il risultato è `200` (tipo `int`).",
+        "Errato. L'overflow e il wrap-around con segno fino a -56 si verificherebbero se il risultato venisse convertito immediatamente in `char`, tuttavia l'operando `a + b` viene calcolato nel tipo `int`.",
+        "Errato. La promozione converte un `char` con segno in un `int` con segno, non in un `unsigned char`.",
+        "Errato. L'addizione di variabili di tipo `char` è un'operazione del tutto corretta in C."
+      ]
+    },
+    {
+      "id": "it_clang_439",
+      "widget_id": "widget_clang_439",
+      "topic": "Puntatori — Dichiarazioni complesse (Clockwise/Spiral Rule)",
+      "q": "Cosa significa la dichiarazione `void (*signal(int sig, void (*func)(int)))(int)`?",
+      "hint": "Usa la regola della spirale (Clockwise/Spiral Rule) per la lettura delle dichiarazioni in C.",
+      "options": [
+        "La funzione `signal` accetta un `int` e un puntatore a funzione, e restituisce un puntatore a funzione",
+        "Un puntatore alla funzione signal che accetta due parametri",
+        "Un array di puntatori a funzioni che restituiscono void",
+        "Errore di sintassi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo la regola della spirale (Clockwise/Spiral Rule), `signal` è una funzione che accetta un `int` e un puntatore a funzione `void (*)(int)`, e restituisce un puntatore a funzione di tipo `void (*)(int)`.",
+        "Errato. La stessa `signal` qui è la dichiarazione di una funzione, non di una variabile puntatore.",
+        "Errato. In questa sintassi mancano le parentesi quadre `[]` che indicherebbero un array.",
+        "Errato. È la classica dichiarazione sintatticamente corretta della funzione standard `signal` da `<signal.h>`."
+      ]
+    },
+    {
+      "id": "it_clang_440",
+      "widget_id": "widget_clang_440",
+      "topic": "Memoria — Ridimensionamento di un blocco tramite realloc(ptr, 0)",
+      "q": "Quale comportamento mostra la funzione standard `realloc(ptr, 0)` negli standard C moderni (C11/C17/C23)?",
+      "hint": "Ricorda i chiarimenti dello standard C11/C17 riguardo alla chiamata di `realloc` con dimensione zero.",
+      "options": [
+        "Il comportamento dipende dall'implementazione o è considerato obsoleto (Undefined / Implementation-defined behavior)",
+        "È garantito che sia equivalente a `free(ptr)` e restituisca `NULL`",
+        "Causa un errore di compilazione",
+        "Alloca un blocco di dimensione minima pari a 1 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiamata a `realloc(ptr, 0)` differiva storicamente tra diverse piattaforme. In C11/C17 tale comportamento è dichiarato Implementation-defined / deprecato, mentre nello standard C23 la chiamata a `realloc` con dimensione zero è ufficialmente classificata come Undefined Behavior.",
+        "Errato. Lo standard C11/C17 rifiuta esplicitamente di garantire che `realloc(ptr, 0)` sia sempre equivalente a `free(ptr)`.",
+        "Errato. Si tratta di un errore/caratteristica a tempo di esecuzione, non di un errore di sintassi in compilazione.",
+        "Errato. Lo standard non obbliga ad allocare 1 byte per una richiesta pari a zero."
+      ]
+    },
+    {
+      "id": "it_clang_441",
+      "widget_id": null,
+      "topic": "Strict Aliasing Rule — Accesso alla memoria tramite puntatori di tipi diversi",
+      "q": "La regola dello Strict Aliasing consente di accedere a un oggetto di qualsiasi tipo tramite un puntatore di tipo `char*` o `unsigned char*`?",
+      "hint": "Ricorda le eccezioni alle regole di aliasing per l'ispezione della memoria byte per byte.",
+      "options": [
+        "Sì, i tipi `char*` e `unsigned char*` sono consentiti dallo standard per l'accesso byte per byte a qualsiasi oggetto",
+        "No, questo causa Undefined Behavior per tutti i tipi tranne `char` stesso",
+        "È consentito solo se l'oggetto si trova nello stack",
+        "È consentito solo se prima viene eseguito un cast esplicito a `void*`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard C fa un'eccezione esplicita per `char*`, `signed char*` e `unsigned char*`, consentendo di fare aliasing sulla memoria di qualsiasi tipo per la lettura/scrittura byte per byte.",
+        "Errato. I tipi carattere (`char*`, `unsigned char*`) costituiscono un'eccezione speciale alla Strict Aliasing Rule.",
+        "Errato. La regola di aliasing dipende dai tipi di puntatori, non dalla posizione dell'oggetto (stack/heap).",
+        "Errato. Il cast esplicito a `void*` non annulla le regole di Strict Aliasing, a differenza dell'uso dei tipi carattere."
+      ]
+    },
+    {
+      "id": "it_clang_442",
+      "widget_id": null,
+      "topic": "Ordine di valutazione — Ordine di valutazione degli argomenti di una funzione",
+      "q": "In quale ordine vengono valutati gli argomenti durante la chiamata alla funzione `f(a(), b())` in C?",
+      "hint": "Esiste un punto di sequenza (sequence point) o un ordine garantito tra la valutazione degli argomenti?",
+      "options": [
+        "L'ordine di valutazione degli argomenti non è specificato dallo standard (Unspecified Behavior)",
+        "Rigorosamente da sinistra a destra",
+        "Rigorosamente da destra a sinistra (a causa della convenzione di chiamata `cdecl`)",
+        "In parallelo su thread arbitrari"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'ordine di valutazione degli argomenti di una funzione in C è Unspecified Behavior. Il compilatore ha il diritto di valutare `a()` e `b()` in qualsiasi ordine.",
+        "Errato. A differenza del C++17 (in cui l'ordine di valutazione degli argomenti è rigorosamente definito), in C l'ordine rimane Unspecified.",
+        "Errato. L'ordine di passaggio degli argomenti allo stack/registri non obbliga il compilatore a valutare le relative espressioni da destra a sinistra.",
+        "Errato. Gli argomenti vengono valutati in sequenza all'interno di un singolo thread, ma il loro ordine relativo non è garantito."
+      ]
+    },
+    {
+      "id": "it_clang_443",
+      "widget_id": null,
+      "topic": "Durata degli oggetti — Letterali composti (Compound Literals)",
+      "q": "Qual è la durata di un letterale composto `(int[]){1, 2, 3}` creato all'interno del blocco di una funzione?",
+      "hint": "La durata di un compound literal all'interno di una funzione differisce dagli oggetti temporanei in C++?",
+      "options": [
+        "Coincide con la durata automatica del blocco in cui è dichiarato",
+        "Termina immediatamente dopo l'esecuzione dell'istruzione (espressione) corrente",
+        "Ha una durata statica (fino al termine del programma)",
+        "Provoca un errore di compilazione se utilizzato all'interno di funzioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un letterale composto creato all'interno del blocco di una funzione ha una durata automatica (automatic storage duration) associata a tale blocco.",
+        "Errato. Un letterale composto esiste fino alla fine del suo ambito/blocco di visibilità (`scope`), anziché venire distrutto alla fine dell'espressione.",
+        "Errato. Solo i letterali composti dichiarati all'esterno delle funzioni (a livello globale) hanno una durata statica.",
+        "Errato. I letterali composti (introdotti in C99) sono del tutto leciti all'interno delle funzioni."
+      ]
+    },
+    {
+      "id": "it_clang_444",
+      "widget_id": null,
+      "topic": "Qualificatori di tipo — Scopo del qualificatore volatile",
+      "q": "Quale garanzia fornisce al compilatore il qualificatore `volatile` quando si accede a una variabile?",
+      "hint": "Ricorda l'ottimizzazione della lettura dai registri e l'interazione con l'hardware (MMIO).",
+      "options": [
+        "Ogni lettura e scrittura della variabile è garantita direttamente in memoria, impedendo al compilatore di ottimizzarle o memorizzarle nei registri",
+        "Garantisce l'atomicità delle operazioni sulla variabile durante l'accesso multithread",
+        "Rende la variabile thread-safe e previene le race condition (Data Races)",
+        "Impedisce di modificare il valore della variabile dopo l'inizializzazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il qualificatore `volatile` informa il compilatore che il valore della variabile può cambiare dall'esterno, quindi le ottimizzazioni (caching nei registri, eliminazione di scritture \"ridondanti\") sono vietate.",
+        "Errato. `volatile` non fornisce alcuna garanzia di atomicità (a tale scopo si usa `_Atomic` in C11).",
+        "Errato. `volatile` non è un mezzo di sincronizzazione e non previene le Data Race nei programmi multithread.",
+        "Errato. Il divieto di modifica del valore è stabilito dal qualificatore `const`, non da `volatile`."
+      ]
+    },
+    {
+      "id": "it_clang_445",
+      "widget_id": null,
+      "topic": "Linkage dei simboli — Linkage interno vs esterno (Internal vs External Linkage)",
+      "q": "Quale linkage ottiene una variabile globale o una funzione dichiarata con la parola chiave `static`?",
+      "hint": "Questa variabile sarà accessibile da altri file (.c) durante il linking?",
+      "options": [
+        "Linkage interno (Internal linkage) — il nome è accessibile solo all'interno della presente unità di traduzione",
+        "Linkage esterno (External linkage) — il nome viene esportato per tutti i moduli",
+        "Nessun linkage (No linkage)",
+        "Linkage dinamico (Dynamic linkage)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La parola chiave `static` a livello di file assegna alla variabile o alla funzione un linkage interno (Internal linkage), limitandone la visibilità al file/unità di traduzione corrente.",
+        "Errato. Hanno linkage esterno le normali variabili globali e le funzioni senza il qualificatore `static` (o con `extern`).",
+        "Errato. Non hanno alcun linkage (No linkage) le variabili locali di funzione (comprese le `static` locali).",
+        "Errato. Il termine \"linkage dinamico\" si riferisce al collegamento con le librerie condivise (shared libraries) durante il caricamento, non ai qualificatori del linguaggio."
+      ]
+    },
+    {
+      "id": "it_clang_446",
+      "widget_id": null,
+      "topic": "Funzioni variadiche — Promozione degli argomenti predefinita (Default Argument Promotions)",
+      "q": "Cosa succede agli argomenti `float` e `char` quando vengono passati a una funzione variadica (ad es. `printf` o `va_start`)?",
+      "hint": "Ricorda le regole di Default Argument Promotions per i parametri non fissati.",
+      "options": [
+        "`float` viene promosso automaticamente a `double`, e `char` viene promosso a `int`",
+        "Gli argomenti vengono passati nel loro tipo originale senza modifiche",
+        "`float` e `char` vengono convertiti al tipo `void*`",
+        "Il passaggio dei tipi `float` e `char` alle funzioni variadiche è vietato dallo standard"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando si passano argomenti alla parte opzionale di una funzione variadica, si applicano le Default Argument Promotions: `float` viene convertito in `double`, e i tipi interi inferiori a `int` (`char`, `short`) in `int` o `unsigned int`.",
+        "Errato. La promozione automatica degli argomenti è una regola obbligatoria dello standard C per le chiamate variadiche.",
+        "Errato. Gli argomenti non vengono convertiti in puntatori `void*`.",
+        "Errato. Il loro passaggio è del tutto consentito, ma all'interno della funzione tramite `va_arg` devono essere estratti tenendo conto della promozione (ad esempio, `va_arg(ap, double)` per float)."
+      ]
+    },
+    {
+      "id": "it_clang_447",
+      "widget_id": null,
+      "topic": "Macro — Costrutto do { ... } while(0)",
+      "q": "Perché le macro-espressioni multilinea vengono racchiuse in un blocco `do { ... } while(0)`?",
+      "hint": "Pensa a cosa accadrebbe utilizzando una macro di questo tipo all'interno di un costrutto `if (...) MACRO(); else ...`",
+      "options": [
+        "Affinché la macro formi una singola istruzione, che funzioni correttamente all'interno di `if-else` e richieda un punto e virgola dopo di sé",
+        "Per garantire un ciclo infinito nell'ottimizzazione del compilatore",
+        "Per impedire la creazione di variabili locali all'interno della macro",
+        "Per trasformare la macro in un blocco di codice atomico"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'involucro `do { ... } while(0)` trasforma sintatticamente un blocco composto in un'istruzione singola, prevenendo errori sintattici nei rami `if-else` (ad esempio un `else` isolato) e consentendo di inserire `;` dopo la macro.",
+        "Errato. La condizione `while(0)` è falsa, quindi il ciclo viene eseguito esattamente 1 volta e non va mai in loop infinito.",
+        "Errato. Le variabili locali si possono creare liberamente all'interno del corpo di `do { ... }`.",
+        "Errato. Questo costrutto non garantisce l'atomicità dell'esecuzione a livello hardware."
+      ]
+    },
+    {
+      "id": "it_clang_448",
+      "widget_id": null,
+      "topic": "Multithreading (C11) — Race condition (Data Race)",
+      "q": "A cosa porta l'accesso simultaneo di due thread alla stessa variabile non atomica se almeno un thread effettua una scrittura?",
+      "hint": "Fai riferimento allo standard C11 e al termine Data Race.",
+      "options": [
+        "A una race condition (Data Race), che comporta un Comportamento non definito (Undefined Behavior)",
+        "Alla sospensione garantita di uno dei thread da parte del sistema",
+        "All'applicazione automatica di un blocco (mutex) a livello di compilatore",
+        "Alla chiamata del gestore del segnale `SIGSEGV`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C11, la situazione in cui due thread accedono in parallelo allo stesso oggetto in memoria senza sincronizzazione e almeno uno di essi esegue una scrittura è una Data Race e porta a Undefined Behavior.",
+        "Errato. Le variabili ordinarie non contengono meccanismi integrati di blocco o sospensione dei thread.",
+        "Errato. Il compilatore C non aggiunge automaticamente i mutex attorno agli accessi alle variabili ordinarie.",
+        "Errato. Il segnale `SIGSEGV` di solito si verifica in caso di accesso a un indirizzo non valido, non in presenza di una race condition in memoria valida."
+      ]
+    },
+    {
+      "id": "it_clang_449",
+      "widget_id": null,
+      "topic": "Ottimizzazione e sicurezza — Dead Store Elimination e memset",
+      "q": "Perché la funzione standard `memset()` può essere pericolosa per azzerare un buffer contenente una password prima di `free()`?",
+      "hint": "Cosa fa il compilatore se vede una scrittura in memoria che successivamente non viene più letta da nessuna parte?",
+      "options": [
+        "Il compilatore potrebbe rimuovere completamente la chiamata a `memset()` in fase di ottimizzazione (Dead Store Elimination), in quanto la memoria non viene più utilizzata",
+        "`memset()` non può scrivere zeri nella memoria dinamica",
+        "`memset()` causa l'overflow dello stack durante l'azzeramento dei buffer dinamici",
+        "La chiamata a `free()` ripristina automaticamente i dati sovrascritti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I compilatori eseguono la Dead Store Elimination: se la memoria azzerata da `memset` non viene letta in seguito prima della distruzione/liberazione, il compilatore ha il diritto di eliminare `memset`, lasciando la password in memoria. Per questo motivo si utilizzano `memset_s` o `explicit_bzero`.",
+        "Errato. `memset` funziona perfettamente con qualsiasi memoria indirizzabile, compreso l'heap.",
+        "Errato. `memset` esegue la scrittura all'indirizzo passato e di per sé non influisce sullo stack.",
+        "Errato. `free` si limita a restituire la memoria al gestore dell'heap, senza ripristinare i valori precedenti."
+      ]
+    },
+    {
+      "id": "it_clang_450",
+      "widget_id": null,
+      "topic": "Puntatori — Allineamento dei puntatori e max_align_t",
+      "q": "Quale allineamento di memoria è garantito dalla chiamata standard `malloc(size)`?",
+      "hint": "Ricorda i tipi base del C e il massimo allineamento richiesto nel sistema.",
+      "options": [
+        "Un allineamento adatto a qualsiasi tipo di dato fondamentale (corrispondente a `max_align_t`)",
+        "Allineamento rigoroso al confine di 1 byte (nessun allineamento)",
+        "Allineamento rigoroso al confine di pagina di memoria (4096 byte)",
+        "Un allineamento esattamente pari alla dimensione del blocco richiesto (size)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `malloc` garantisce la restituzione di un puntatore allineato a un confine adatto alla memorizzazione di qualsiasi tipo di dato standard (equivalente all'allineamento di `max_align_t`).",
+        "Errato. L'allineamento byte per byte causerebbe un errore di allineamento (Alignment Fault) durante l'accesso a tipi come `double` o `int` su molte architetture.",
+        "Errato. L'allineamento alle pagine di memoria è garantito da funzioni quali `posix_memalign` o `aligned_alloc`, ma non dalla normale `malloc`.",
+        "Errato. L'allineamento dipende dai requisiti della piattaforma/architettura, non dall'argomento `size`."
+      ]
+    }
+  ]
+}

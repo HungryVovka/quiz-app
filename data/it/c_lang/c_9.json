@@ -1,0 +1,581 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_280",
+      "widget_id": null,
+      "topic": "Diramazione — Esecuzione sequenziale vs Diramazione",
+      "q": "È vero che gli algoritmi sequenziali (composti solo da una sequenza lineare di comandi) sono in grado di risolvere assolutamente qualsiasi problema computazionale nella programmazione?",
+      "hint": "Pensaci: è possibile trovare, ad esempio, il massimo tra due numeri senza condizioni e senza la scelta di alternative?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Le semplici sequenze lineari di istruzioni non sono in grado di risolvere problemi in cui la scelta dell'azione dipende dai dati di input. Per questo sono necessarie strutture di diramazione.",
+        "Corretto! Per risolvere la maggior parte dei problemi reali sono necessarie strutture di controllo più complesse, come la selezione (diramazione)."
+      ]
+    },
+    {
+      "id": "it_clang_281",
+      "widget_id": "widget_clang_281",
+      "topic": "Diramazione — Firma della funzione main",
+      "q": "Cosa accadrà durante la compilazione del codice main() { ... } senza specificare int prima di main() negli standard moderni del linguaggio C (C99 e successivi)?",
+      "hint": "Ricorda le regole del tipo implicito (implicit int) negli standard C vecchi e moderni.",
+      "options": [
+        "Negli standard più vecchi (C89/C90) verrà compilato grazie all'int implicito (implicit int), ma in C99+ genererà un avviso o un errore di compilazione",
+        "È un errore sintattico, vietato in tutti gli standard C",
+        "Il compilatore sostituirà automaticamente void al posto di int",
+        "Il programma verrà compilato senza alcun avviso in tutti gli standard"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel vecchio standard C89 il tipo di ritorno omesso era considerato predefinito come `int`, ma a partire da C99 la regola dell'«implicit int» è stata completamente rimossa dal linguaggio.",
+        "Errato. Nello standard C89/C90 era consentito omettere `int` prima di `main()`.",
+        "Errato. Il compilatore non inserisce `void`; in precedenza veniva inserito `int` per impostazione predefinita.",
+        "Errato. A partire da C99, l'assenza del tipo di ritorno causa un errore o un avviso del compilatore."
+      ]
+    },
+    {
+      "id": "it_clang_282",
+      "widget_id": "widget_clang_282",
+      "topic": "Diramazione — Il problema del dangling else",
+      "q": "A quale istruzione if si riferisce la parola chiave else nel codice del widget (in assenza di parentesi graffe)?",
+      "hint": "Rifletti sulla regola di associazione del ramo else agli if precedenti nel linguaggio C.",
+      "options": [
+        "Al secondo if (annidato) (x > 0)",
+        "Al primo if (esterno) (a > 0)",
+        "Il compilatore restituirà un errore a causa dell'ambiguità",
+        "Il ramo else verrà ignorato dal compilatore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C il ramo `else` viene sempre associato all'istruzione `if` precedente più vicina che non ha ancora un `else` associato (a meno che un blocco esplicito `{}` non definisca un altro scope).",
+        "Errato. Nonostante l'rientranza, il compilatore associa `else` al più vicino `if (x > 0)`.",
+        "Errato. Non c'è ambiguità per il compilatore, poiché la regola associa in modo univoco `else` all'`if` più vicino.",
+        "Errato. Il ramo `else` viene compilato correttamente e associato all'`if` interno."
+      ]
+    },
+    {
+      "id": "it_clang_283",
+      "widget_id": "widget_clang_283",
+      "topic": "Diramazione — Errore di assegnazione = al posto del confronto ==",
+      "q": "Cosa accadrà durante l'esecuzione del codice mostrato nel widget, dove nella condizione c'è scritto x = y invece di x == y?",
+      "hint": "Ricorda quale valore restituisce l'operazione di assegnazione = in C e come viene interpretato come condizione logica.",
+      "options": [
+        "Il valore di y (5) verrà assegnato a x, la condizione diventerà vera (>0) e verrà stampato \"Equal\"",
+        "Il compilatore darà un errore e vieterà l'operazione `=` all'interno di `if`",
+        "La condizione restituirà sempre 0 (falso)",
+        "La variabile y prenderà il valore di x"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `x = y` assegna 5 alla variabile `x` e restituisce 5. Secondo le regole del C, qualsiasi valore diverso da zero è vero, quindi il ramo `if` verrà eseguito.",
+        "Errato. In C l'assegnazione all'interno delle condizioni è sintatticamente consentita, anche se i compilatori possono mostrare un avviso.",
+        "Errato. Il risultato dell'assegnazione è 5, che viene interpretato come vero (non zero).",
+        "Errato. L'operatore `=` assegna il valore dell'operando destro a quello sinistro, quindi il valore di `y` viene copiato in `x`, e non viceversa."
+      ]
+    },
+    {
+      "id": "it_clang_284",
+      "widget_id": null,
+      "topic": "Diramazione — Passaggio degli argomenti a scanf",
+      "q": "È vero che quando si leggono numeri interi con scanf(\"%d\", &x); è obbligatorio passare l'indirizzo della variabile (&x) e non il suo valore (x)?",
+      "hint": "Pensaci: la funzione scanf può modificare il valore di una variabile esterna se le viene passata solo una copia del suo valore?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `scanf` deve scrivere i dati letti nella memoria della variabile, quindi deve ricevere l'indirizzo di questa variabile tramite l'operatore `&`.",
+        "Errato. Passare `x` al posto di `&x` causerà un tentativo di scrittura a un indirizzo arbitrario e un arresto anomalo del programma (Segmentation Fault)."
+      ]
+    },
+    {
+      "id": "it_clang_285",
+      "widget_id": null,
+      "topic": "Diramazione — Comportamento dell'algoritmo con valori uguali",
+      "q": "Come si comporterà l'algoritmo per trovare il massimo tra due numeri se come argomenti x e y vengono inseriti due numeri uguali (x = 5, y = 5)?",
+      "hint": "Segui l'esecuzione della condizione x > y quando x = 5 e y = 5.",
+      "options": [
+        "La condizione 5 > 5 restituirà 'falso', il programma passerà al ramo else e stamperà 5 (il valore di y)",
+        "La condizione 5 > 5 restituirà 'vero', il programma passerà al ramo if e stamperà 5 (il valore di x)",
+        "Il programma terminerà con un errore di divisione per zero",
+        "Il programma entrerà in un ciclo infinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `5 > 5` è falso, l'esecuzione passerà al ramo `else`, che stamperà il valore di `y` (cioè 5). Il risultato 5 è il massimo corretto.",
+        "Errato. La disuguaglianza stretta `5 > 5` dà un risultato falso, quindi viene scelto il ramo `else`.",
+        "Errato. L'aritmetica del confronto tra numeri non contiene operazioni di divisione.",
+        "Errato. La struttura `if...else` è un controllo singolo e non crea cicli."
+      ]
+    },
+    {
+      "id": "it_clang_286",
+      "widget_id": "widget_clang_286",
+      "topic": "Diramazione — Operatore ternario come equivalente di if...else",
+      "q": "È vero che l'espressione con l'operatore ternario max = (x > y) ? x : y; è totalmente equivalente alla struttura if (x > y) max = x; else max = y;?",
+      "hint": "Confronta il principio di funzionamento delle condizioni nell'operatore ternario e nella struttura if...else.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore ternario `?:` verifica la condizione e restituisce o la prima espressione (se vera) o la seconda (se falsa).",
+        "Errato. Si tratta di forme di scrittura del controllo di flusso concettualmente e logicamente identiche."
+      ]
+    },
+    {
+      "id": "it_clang_287",
+      "widget_id": null,
+      "topic": "Diramazione — Logica dei diagrammi di flusso",
+      "q": "È vero che entrambi i rami della diramazione («vero» e «falso») nel diagramma di flusso si ricongiungono in un unico punto del flusso prima della conclusione (FINE / END)?",
+      "hint": "Rifletti su come si uniscono i rami dell'algoritmo dopo l'esecuzione delle azioni alternative.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel diagramma di flusso i rami «vero» e «falso», dopo aver eseguito le rispettive operazioni di output (`x` o `y`), si uniscono in un unico flusso di controllo che porta al blocco finale.",
+        "Errato. Il diagramma di flusso mostra chiaramente la fusione dei rami prima della conclusione."
+      ]
+    },
+    {
+      "id": "it_clang_288",
+      "widget_id": "widget_clang_288",
+      "topic": "Diramazione — Output formattato in printf",
+      "q": "Cosa stamperà la chiamata printf(\"Massimo: %d\", x); se il valore di x è uguale a 10?",
+      "hint": "Ricorda come lo specificatore %d sostituisce il valore di una variabile intera.",
+      "options": [
+        "Massimo: 10",
+        "Massimo: %d 10",
+        "10",
+        "Massimo: x"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `%d` all'interno della stringa di formato viene sostituito dalla rappresentazione testuale del numero intero contenuto nella variabile `x` (10).",
+        "Errato. Lo specificatore `%d` viene sostituito dal valore e non viene mantenuto nell'output finale.",
+        "Errato. Verrà stampato anche il testo \"Massimo: \" prima dello specificatore.",
+        "Errato. Al posto del nome della variabile viene inserito il suo valore numerico."
+      ]
+    },
+    {
+      "id": "it_clang_289",
+      "widget_id": null,
+      "topic": "Diramazione — Equivalenza delle condizioni",
+      "q": "È vero che sostituire la condizione if (x > y) con if (!(x <= y)) produrrà un comportamento del programma assolutamente identico per tutti i numeri interi?",
+      "hint": "Applica le leggi della logica alle disuguaglianze strette e non strette per i numeri interi.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La negazione dell'operatore `x <= y` è equivalente al controllo stretto `x > y` per tutti i numeri interi.",
+        "Errato. Queste espressioni sono logicamente del tutto equivalenti."
+      ]
+    },
+    {
+      "id": "it_clang_290",
+      "widget_id": null,
+      "topic": "Diramazione — Comportamento in assenza del ramo else",
+      "q": "Cosa accadrà durante l'esecuzione del programma se nel codice si omette il ramo else (usando solo if(condizione)) e la condizione verificata risulta falsa?",
+      "hint": "Ricorda le caratteristiche del funzionamento della forma abbreviata delle strutture di diramazione.",
+      "options": [
+        "Il blocco di istruzioni all'interno di if verrà saltato e l'esecuzione proseguirà direttamente dall'istruzione successiva a if",
+        "Il programma terminerà con un errore in fase di esecuzione (runtime error)",
+        "Il compilatore genererà un errore a causa dell'assenza del blocco else obbligatorio",
+        "Il programma entrerà in un ciclo di attesa infinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ramo `else` non è obbligatorio. Se la condizione è falsa, il ramo `if` viene semplicemente saltato e il controllo passa oltre.",
+        "Errato. L'assenza del ramo `else` è un comportamento del tutto normale nel linguaggio C.",
+        "Errato. Il ramo `else` è opzionale, quindi il compilatore non restituirà alcun errore.",
+        "Errato. Un singolo `if` senza `else` non crea cicli."
+      ]
+    },
+    {
+      "id": "it_clang_291",
+      "widget_id": "widget_clang_291",
+      "topic": "Diramazione — Ricerca del massimo senza il ramo else",
+      "q": "Cosa stamperà il frammento di codice del widget, in cui l'algoritmo per trovare il massimo è realizzato con un singolo if?",
+      "hint": "Osserva se il valore della variabile max cambia dopo la verifica della condizione x > y.",
+      "options": [
+        "20",
+        "10",
+        "0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Inizialmente `max` è pari a 20 (`y`). Poiché la condizione `10 > 20` è falsa, il corpo dell'`if` viene saltato e la variabile `max` mantiene il valore 20.",
+        "Errato. Il valore di `max` sarebbe cambiato in 10 solo se `x` fosse stato strettamente maggiore di `y`.",
+        "Errato. La variabile `max` è stata inizializzata con il valore di `y` (20) e non zero.",
+        "Errato. La sintassi del codice è corretta e verrà compilata senza errori."
+      ]
+    },
+    {
+      "id": "it_clang_292",
+      "widget_id": null,
+      "topic": "Diramazione — Interpretazione delle condizioni in C",
+      "q": "In che modo il compilatore C interpreta il risultato dell'espressione all'interno delle parentesi dell'istruzione if (condizione)?",
+      "hint": "Ricorda quali valori numerici sono considerati veri in C e quali falsi.",
+      "options": [
+        "Il valore 0 viene interpretato come falso, mentre qualsiasi valore diverso da zero come vero",
+        "Sono considerati veri solo i numeri positivi, mentre i numeri negativi sono falsi",
+        "L'espressione deve necessariamente restituire il tipo booleano bool da stdbool.h",
+        "All'interno di if è consentito utilizzare esclusivamente operatori di confronto (>, <, ==)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel linguaggio C il concetto di verità si basa sui numeri: il valore `0` corrisponde al falso, mentre qualsiasi numero diverso da `0` (compresi i numeri negativi) è considerato vero.",
+        "Errato. Anche i numeri negativi sono diversi da zero, quindi vengono percepiti dal compilatore come veri.",
+        "Errato. Il tipo `bool` in C è stato introdotto successivamente (in C99), e storicamente e sintatticamente si può usare qualsiasi tipo intero o floating point come condizione.",
+        "Errato. Qualsiasi espressione aritmetica o chiamata di funzione che restituisce un numero può fungere da condizione."
+      ]
+    },
+    {
+      "id": "it_clang_293",
+      "widget_id": "widget_clang_293",
+      "topic": "Diramazione — Errore sintattico nel collegamento tra if ed else",
+      "q": "Cosa accadrà tentando di compilare il frammento di codice mostrato nel widget?",
+      "hint": "Fai attenzione alla presenza dell'istruzione printf(\"Y\"); tra il ramo if e il ramo else in assenza di parentesi graffe.",
+      "options": [
+        "Il compilatore restituirà un errore, poiché else è stato separato da if da un'istruzione esterna",
+        "Il codice verrà compilato e stamperà \"Y\"",
+        "Il codice verrà compilato e stamperà \"Z\"",
+        "Il codice verrà compilato e stamperà \"YZ\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Senza parentesi graffe, all'`if` si riferisce solo `printf(\"X\");`. La riga successiva `printf(\"Y\");` termina la struttura condizionale, rendendo la parola chiave `else` sintatticamente isolata.",
+        "Errato. Il compilatore genererà l'errore `error: 'else' without a previous 'if'`.",
+        "Errato. Il codice non supererà la fase di compilazione a causa dell'errore sintattico nel collegamento di `else`.",
+        "Errato. Il programma non verrà neanche compilato."
+      ]
+    },
+    {
+      "id": "it_clang_294",
+      "widget_id": null,
+      "topic": "Diramazione — Analisi del funzionamento dell'algoritmo con l'input dell'utente",
+      "q": "Quale sarà il risultato del programma per la ricerca del massimo se l'utente inserisce i valori 15 e 20?",
+      "hint": "Sostituisci i valori in scanf: x = 15, y = 20 e calcola la condizione x > y.",
+      "options": [
+        "Il programma stamperà 20, poiché il ramo if verrà saltato e verrà eseguito l'else",
+        "Il programma stamperà 15",
+        "Il programma terminerà con un errore a causa dell'ordine errato dei numeri",
+        "Il programma richiederà un nuovo inserimento dei dati"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il valore di `x` diventerà 15 e quello di `y` 20. Il controllo `15 > 20` darà falso, il controllo passerà al blocco `else` e il programma stamperà `20`.",
+        "Errato. La condizione `15 > 20` è falsa, quindi il primo ramo `if` non verrà eseguito.",
+        "Errato. L'ordine di inserimento dei numeri non influisce sul funzionamento del programma, li confronterà correttamente.",
+        "Errato. La funzione `scanf` eseguirà l'input una volta e passerà il controllo oltre."
+      ]
+    },
+    {
+      "id": "it_clang_295",
+      "widget_id": "widget_clang_295",
+      "topic": "Diramazione — Aritmetica come condizione",
+      "q": "Cosa stamperà il frammento di codice del widget se come condizione in if viene passata l'espressione aritmetica x - y?",
+      "hint": "Calcola il valore dell'espressione 5 - 5 e ricorda come viene interpretato nel blocco condizione.",
+      "options": [
+        "\"Same\"",
+        "\"Diff\"",
+        "Errore di compilazione",
+        "Non stamperà nulla"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `x - y` dà `5 - 5 = 0`. Il numero `0` viene interpretato in C come falso, quindi viene eseguito il ramo `else`, che stampa \"Same\".",
+        "Errato. Il ramo `if` viene eseguito solo quando il risultato dell'espressione è diverso da zero.",
+        "Errato. Il passaggio di un'espressione aritmetica in `if` è sintatticamente corretto.",
+        "Errato. Verrà eseguito il ramo `else` e stamperà \"Same\"."
+      ]
+    },
+    {
+      "id": "it_clang_296",
+      "widget_id": null,
+      "topic": "Diramazione — Corrispondenza tra pseudocodice e codice C",
+      "q": "Quale riga di codice in linguaggio C corrisponde esattamente al passaggio dello pseudocodice «se x>y allora stampa x»?",
+      "hint": "Trova nel codice C la combinazione dell'istruzione condizionale e della funzione di output per il caso in cui la condizione è vera.",
+      "options": [
+        "if(x>y) printf(\"Massimo: %d\", x);",
+        "scanf(\"%d\", &x);",
+        "else printf(\"Massimo: %d\", y);",
+        "main() { int x, y; }"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il passaggio «se x>y» si traduce in `if(x>y)`, e «allora stampa x» in una chiamata alla funzione di stampa `printf(..., x)`.",
+        "Errato. `scanf` corrisponde al passaggio dello pseudocodice «leggi x».",
+        "Errato. Questa riga corrisponde al passaggio «altrimenti stampa y».",
+        "Errato. Questa riga è una dichiarazione di funzione e variabili, non una diramazione."
+      ]
+    },
+    {
+      "id": "it_clang_297",
+      "widget_id": "widget_clang_297",
+      "topic": "Diramazione — Condizioni a cascata else if",
+      "q": "Cosa stamperà la struttura a cascata del widget per x = 10?",
+      "hint": "Verifica le condizioni in ordine: prima la prima, poi la seconda se la prima è falsa.",
+      "options": [
+        "\"B\"",
+        "\"A\"",
+        "\"C\"",
+        "\"BC\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La prima condizione `10 < 5` è falsa. Il controllo passa a `else if`. La seconda condizione `10 < 15` è vera, quindi viene eseguito `printf(\"B\")` e l'intera struttura termina.",
+        "Errato. La prima condizione `10 < 5` non è soddisfatta, e dopo il primo `else if` corrispondente i restanti rami vengono saltati.",
+        "Errato. Il controllo non raggiungerà il ramo `else` (`\"C\"`), poiché la condizione `else if` è risultata vera.",
+        "Errato. La struttura a cascata `if...else if...else` esegue solo il primo ramo vero, e non una combinazione di più rami."
+      ]
+    },
+    {
+      "id": "it_clang_298",
+      "widget_id": null,
+      "topic": "Diagrammi di flusso — Sequenza logica del diagramma di flusso",
+      "q": "Qual è la sequenza rigorosa dei passaggi per l'esecuzione dell'algoritmo di ricerca del massimo in un diagramma di flusso?",
+      "hint": "Segui le frecce dal blocco BEGIN verso il basso fino al controllo della condizione.",
+      "options": [
+        "Input di x -> Input di y -> Controllo x > y -> Output del risultato (x o y) -> Fine (END)",
+        "Controllo x > y -> Input di x -> Input di y -> END",
+        "Input simultaneo di x e y -> Output di x -> END",
+        "Input di x -> Controllo x > y -> Input di y -> END"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il diagramma di flusso stabilisce chiaramente l'ordine: prima viene letto `x`, poi `y`, dopodiché c'è la diramazione secondo `x > y` verso l'output di `x` o `y` e la conclusione dell'algoritmo.",
+        "Errato. Non è possibile confrontare le variabili finché non vengono lette.",
+        "Errato. Prima vengono letti gli argomenti, e l'output di `x` dipende dal risultato del confronto.",
+        "Errato. `y` deve essere letto prima di eseguire il controllo `x > y`."
+      ]
+    },
+    {
+      "id": "it_clang_299",
+      "widget_id": null,
+      "topic": "Diramazione — La trappola del punto e virgola dopo if",
+      "q": "Come si comporterà il programma se si inserisce accidentalmente un punto e virgola subito dopo l'istruzione if, ad esempio: if (x > y); printf(\"%d\", x);?",
+      "hint": "Pensa a cosa rappresenta un punto e virgola per il compilatore C.",
+      "options": [
+        "Il punto e virgola verrà interpretato come un'istruzione vuota, quindi printf verrà sempre eseguito, indipendentemente dalla condizione",
+        "Il compilatore genererà un errore di sintassi",
+        "La chiamata a printf non verrà mai eseguita",
+        "Il programma entrerà in un ciclo infinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il punto e virgola `;` crea un'istruzione vuota. La condizione `if (x > y);` controlla questa istruzione vuota, mentre il `printf` successivo viene sempre eseguito come un'istruzione separata e indipendente.",
+        "Errato. È una sintassi valida in C (sebbene spesso rappresenti un errore logico del programmatore).",
+        "Errato. La chiamata a `printf` si trova all'esterno del blocco condizionale e verrà eseguita incondizionatamente.",
+        "Errato. Un singolo `if` con un'istruzione vuota non crea un ciclo."
+      ]
+    },
+    {
+      "id": "it_clang_300",
+      "widget_id": null,
+      "topic": "Diramazione — Uso delle parentesi graffe {} nei blocchi if",
+      "q": "Cosa accadrà se in un blocco if occorre eseguire più istruzioni, ma queste non vengono raggruppate da parentesi graffe {}?",
+      "hint": "Ricorda quante istruzioni per impostazione predefinita appartengono all'istruzione if in assenza di parentesi graffe.",
+      "options": [
+        "Al ramo if apparterrà solo la prima istruzione, mentre le altre verranno sempre eseguite, indipendentemente dalla condizione",
+        "Il compilatore raggrupperà automaticamente tutte le istruzioni successive in un unico blocco fino alla fine della funzione",
+        "Il programma verrà compilato con un errore fatale \"Missing block braces\"",
+        "Tutte le istruzioni all'interno di if verranno ignorate dal compilatore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se non si usano le parentesi graffe `{}` per creare un'istruzione composta, al ramo `if` apparterrà solo la prima istruzione che lo segue. Tutte le altre istruzioni verranno eseguite in normale ordine lineare.",
+        "Errato. Senza graffe `{}` solo la prima istruzione appartiene alla condizione.",
+        "Errato. Le parentesi graffe non sono obbligatorie se il ramo `if` contiene esattamente un'istruzione, quindi il compilatore non restituirà alcun errore.",
+        "Errato. La prima istruzione si legherà a `if` e non verrà ignorata."
+      ]
+    },
+    {
+      "id": "it_clang_301",
+      "widget_id": "widget_clang_301",
+      "topic": "Diramazione — NOT logico (!) e controllo dello zero",
+      "q": "Cosa stamperà il frammento di codice nel widget per x = 0?",
+      "hint": "Ricorda come l'operatore di negazione ! cambia la verità dello zero in C.",
+      "options": [
+        "Zero",
+        "Not zero",
+        "Non stamperà nulla",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel linguaggio C `0` è considerato falso. L'operatore di negazione `!0` trasforma il falso in vero (`1`), quindi si attiva il ramo `if` e viene stampato \"Zero\".",
+        "Errato. Poiché `x = 0`, l'espressione `!x` dà vero (`1`), indirizzando l'esecuzione al primo ramo.",
+        "Errato. Si attiverà il primo ramo `if` e stamperà \"Zero\".",
+        "Errato. Il codice verrà compilato senza errori."
+      ]
+    },
+    {
+      "id": "it_clang_302",
+      "widget_id": "widget_clang_302",
+      "topic": "Diramazione — Valutazione a corto circuito delle condizioni (Short-circuit evaluation)",
+      "q": "Cosa stamperà il frammento di codice del widget e quale sarà il valore della variabile y dopo l'esecuzione della condizione?",
+      "hint": "Pensa se la parte destra dell'AND logico (&&) verrà valutata se la parte sinistra restituisce già falso (0).",
+      "options": [
+        "Stamperà 5 (la seconda espressione ++y > 5 non è stata valutata)",
+        "Stamperà 6",
+        "Stamperà \"A6\"",
+        "Errore in fase di esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `&&` utilizza la valutazione a corto circuito: poiché `x != 0` è falso (`0 != 0` -> 0), la parte destra `++y > 5` non viene nemmeno valutata. La variabile `y` rimane uguale a 5.",
+        "Errato. In C con l'operatore `&&`, se l'operando sinistro è uguale a 0, l'operando destro viene ignorato per ottimizzazione.",
+        "Errato. La condizione `if` risulta falsa, quindi il ramo con la stampa di \"A\" non viene eseguito.",
+        "Errato. La valutazione a corto circuito è un comportamento standard del C che non causa errori di runtime."
+      ]
+    },
+    {
+      "id": "it_clang_303",
+      "widget_id": null,
+      "topic": "Diramazione — Operatori di confronto non stretto",
+      "q": "In cosa differisce il risultato della valutazione della condizione if (x >= y) da if (x > y) se le variabili sono uguali (x = 5, y = 5)?",
+      "hint": "Confronta la disuguaglianza stretta con quella non stretta in caso di uguaglianza degli operandi.",
+      "options": [
+        "x >= y restituirà vero (1), mentre x > y restituirà falso (0)",
+        "Entrambe le condizioni restituiranno vero (1)",
+        "Entrambe le condizioni restituiranno falso (0)",
+        "L'espressione x >= y causerà un errore di sintassi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La disuguaglianza non stretta `>=` include il caso di uguaglianza, quindi `5 >= 5` è vero. La disuguaglianza stretta `5 > 5` è falsa.",
+        "Errato. La disuguaglianza stretta `>` non è soddisfatta in caso di valori uguali.",
+        "Errato. La disuguaglianza non stretta `>=` è vera in caso di valori uguali.",
+        "Errato. `>=` è uno standard operatore binario di confronto in C."
+      ]
+    },
+    {
+      "id": "it_clang_304",
+      "widget_id": "widget_clang_304",
+      "topic": "Diramazione — Comportamento delle condizioni if annidate senza else",
+      "q": "Cosa stamperà il programma del widget per i valori a = 5 e b = 10?",
+      "hint": "Segui passo passo: la prima condizione viene eseguita? La seconda condizione viene eseguita?",
+      "options": [
+        "2",
+        "1",
+        "Non stamperà nulla",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La prima condizione `a > 0` (5 > 0) è vera, quindi il programma entra nell'`if` interno. Lì viene verificato `b < 5` (10 < 5), che è falso, quindi si attiva il ramo `else` ad esso associato, stampando \"2\".",
+        "Errato. La condizione annidata `b < 5` è falsa, quindi viene eseguito il suo blocco `else`.",
+        "Errato. Si attiverà il ramo `else` nella struttura annidata e stamperà \"2\".",
+        "Errato. Il codice non contiene errori di sintassi."
+      ]
+    },
+    {
+      "id": "it_clang_305",
+      "widget_id": null,
+      "topic": "Diramazione — OR logico (||)",
+      "q": "In quale caso l'espressione complessa (a > 0 || b > 0) restituirà falso (0)?",
+      "hint": "Ricorda la tabella di verità per l'operatore OR logico.",
+      "options": [
+        "Solo quando sia a <= 0 sia b <= 0 contemporaneamente",
+        "Quando almeno una delle variabili è minore o uguale a 0",
+        "Quando a <= 0, ma b > 0",
+        "Questa espressione è sempre vera"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `||` dà falso (`0`) solo quando **entrambi** i suoi operandi sono contemporaneamente falsi.",
+        "Errato. Se almeno uno degli operandi è vero, l'operatore `||` restituisce vero (`1`).",
+        "Errato. Se `b > 0`, l'operando destro è vero, e quindi l'intera espressione con `||` è vera.",
+        "Errato. L'espressione può essere falsa se entrambe le condizioni sono false."
+      ]
+    },
+    {
+      "id": "it_clang_306",
+      "widget_id": "widget_clang_306",
+      "topic": "Diramazione — Scrittura sicura delle condizioni (Yoda conditions)",
+      "q": "Quale vantaggio offre lo stile di scrittura della condizione if (5 == x) rispetto a quello standard if (x == 5)?",
+      "hint": "Pensa a cosa accadrebbe se lo sviluppatore commettesse un errore di battitura scrivendo un solo segno = al posto di due ==.",
+      "options": [
+        "Un errore di battitura accidentale if (5 = x) causerà un errore di compilazione, impedendo di effettuare un'assegnazione per sbaglio",
+        "Tale codice viene eseguito a livello hardware due volte più velocemente",
+        "La sintassi 5 == x consente di confrontare i numeri in virgola mobile senza perdita di precisione",
+        "È l'unica sintassi corretta adottata nello standard C99"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se si scrive accidentalmente `if (x = 5)`, il C eseguirà l'assegnazione. Ma se si scrive `if (5 = x)`, il compilatore restituirà un errore, poiché non è possibile assegnare un valore al letterale `5`.",
+        "Errato. Questo stile non influisce sulla velocità di esecuzione o sullo standard del linguaggio; il suo scopo è prevenire bug dovuti a errori di battitura.",
+        "Errato. Le Yoda conditions non influiscono sulla precisione del confronto tra numeri in virgola mobile.",
+        "Errato. Entrambi gli ordini degli operandi (`x == 5` e `5 == x`) sono pienamente conformi agli standard C."
+      ]
+    },
+    {
+      "id": "it_clang_307",
+      "widget_id": null,
+      "topic": "Diramazione — Trasformazione degli algoritmi di selezione",
+      "q": "È vero che qualsiasi algoritmo con diramazione if...else può sempre essere riscritto utilizzando solo strutture if singole senza usare else?",
+      "hint": "Pensa se è possibile sostituire else con un secondo if con la condizione opposta.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ramo `else` può sempre essere sostituito logicamente da un'istruzione `if` separata con condizione invertita, anche se ciò potrebbe rendere il codice meno leggibile.",
+        "Errato. Dal punto di vista strutturale `else` non è un elemento strettamente obbligatorio del linguaggio."
+      ]
+    },
+    {
+      "id": "it_clang_308",
+      "widget_id": "widget_clang_308",
+      "topic": "Diramazione — Incremento postfisso nella condizione",
+      "q": "Cosa stamperà il codice nel widget con un valore iniziale x = 3?",
+      "hint": "Ricorda la differenza tra incremento postfisso (x++) e prefisso (++x) durante il controllo della condizione.",
+      "options": [
+        "A",
+        "B",
+        "AB",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'incremento postfisso `x++` restituisce prima il valore corrente (3), che viene interpretato come vero, e solo successivamente incrementa `x` a 4. Pertanto verrà eseguito il ramo `if` e stamperà \"A\".",
+        "Errato. Poiché il valore iniziale `x = 3` è diverso da zero, la condizione è vera.",
+        "Errato. Si attiverà solo un ramo `if`, stampando \"A\".",
+        "Errato. Sintatticamente l'incremento postfisso all'interno di `if` è del tutto legale."
+      ]
+    },
+    {
+      "id": "it_clang_309",
+      "widget_id": null,
+      "topic": "Diramazione — Scopo delle strutture di diramazione",
+      "q": "Quale delle seguenti affermazione descrive con maggiore precisione lo scopo della struttura di controllo della diramazione (selezione) in C?",
+      "hint": "Pensa a come la diramazione modifica l'esecuzione sequenziale del programma.",
+      "options": [
+        "Consente di modificare l'ordine di esecuzione delle istruzioni in base alla veridicità della condizione",
+        "Consente di ripetere ciclicamente un blocco di istruzioni per un numero determinato di volte",
+        "Consente di allocare dinamicamente la memoria operativa",
+        "Serve esclusivamente per l'inserimento di dati da parte dell'utente tramite tastiera"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le strutture di controllo di selezione (diramazione) offrono al programma la possibilità di deviare dall'esecuzione strettamente sequenziale dei comandi e di scegliere rami alternativi di codice in base alle verifiche.",
+        "Errato. La ripetizione dei blocchi è un compito dei cicli, non della diramazione.",
+        "Errato. Dell'allocazione della memoria si occupano funzioni come `malloc`.",
+        "Errato. L'input dei dati viene effettuato tramite funzioni come `scanf`."
+      ]
+    }
+  ]
+}

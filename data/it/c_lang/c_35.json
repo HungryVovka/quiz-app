@@ -1,0 +1,601 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_1091",
+      "widget_id": "widget_clang_1091",
+      "topic": "Memoria dinamica — Cast del tipo per malloc()",
+      "q": "È necessario eseguire il cast esplicito del valore restituito dalla funzione malloc() in C puro (ad esempio, int *p = (int*)malloc(...);)?",
+      "hint": "Come avviene in C il cast di tipo da un puntatore void* ad altri tipi di puntatori?",
+      "options": [
+        "No, in C il tipo void* viene convertito automaticamente e in modo sicuro in qualsiasi altro tipo di puntatore",
+        "Sì, nel linguaggio C è strettamente obbligatorio, altrimenti il codice non compila",
+        "Sì, senza il cast esplicito il compilatore alloca sempre esattamente 1 byte di memoria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel linguaggio C un puntatore `void*` viene convertito implicitamente in qualsiasi tipo di puntatore a oggetto. Il cast esplicito non è richiesto (e non è nemmeno raccomandato, in quanto può nascondere la mancanza di `#include <stdlib.h>`).",
+        "Sbagliato. Il cast esplicito è obbligatorio solo in C++, ma non in C puro.",
+        "Sbagliato. La funzione `malloc()` alloca tanti byte quanti specificati nel suo argomento, indipendentemente dal cast di tipo."
+      ]
+    },
+    {
+      "id": "it_clang_1092",
+      "widget_id": null,
+      "topic": "Memoria dinamica — Differenza tra calloc() e malloc()",
+      "q": "Qual è la differenza chiave tra la funzione calloc() e malloc()?",
+      "hint": "Pensa allo stato in cui si trova la memoria allocata subito dopo la chiamata.",
+      "options": [
+        "calloc() azzera la memoria allocata (riempie i byte di zeri), mentre malloc() lascia dati spazzatura in memoria",
+        "calloc() alloca la memoria nello stack, mentre malloc() nello heap",
+        "calloc() può allocare memoria solo per le strutture, mentre malloc() solo per i tipi base",
+        "calloc() libera automaticamente la memoria all'uscita dalla funzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `calloc(num, size)` inizializza inoltre l'intero blocco di memoria allocato a zero, mentre `malloc(bytes)` vi lascia il vecchio contenuto non inizializzato («spazzatura»).",
+        "Sbagliato. Entrambe le funzioni allocano memoria dinamica nello heap.",
+        "Sbagliato. Entrambe le funzioni sono universali e funzionano con qualsiasi tipo di dato.",
+        "Sbagliato. La memoria allocata da `calloc()` deve essere liberata manualmente tramite `free()`."
+      ]
+    },
+    {
+      "id": "it_clang_1093",
+      "widget_id": "widget_clang_1093",
+      "topic": "Memoria dinamica — Comportamento di realloc(NULL, size)",
+      "q": "Come si comporta la funzione realloc(NULL, size) se le viene passato NULL come primo argomento?",
+      "hint": "La funzione agirà come l'allocazione di un nuovo blocco di memoria?",
+      "options": [
+        "È equivalente alla chiamata malloc(size)",
+        "Si verificherà un errore di segmentazione (Segmentation Fault)",
+        "Restituirà NULL senza allocare memoria",
+        "Causerà la terminazione anomala del programma tramite abort()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard ISO C, se il primo argomento di `realloc()` è un puntatore nullo `NULL`, la funzione si comporta esattamente come `malloc(size)`.",
+        "Sbagliato. Il passaggio di `NULL` è gestito dallo standard e non causa arresti anomali.",
+        "Sbagliato. La memoria verrà allocata con successo se ci sono risorse sufficienti nel sistema.",
+        "Sbagliato. Non si verifica alcuna terminazione anomala."
+      ]
+    },
+    {
+      "id": "it_clang_1094",
+      "widget_id": "widget_clang_1094",
+      "topic": "Strutture — Allineamento (Padding) e dimensione sizeof",
+      "q": "Perché sizeof(struct Data) per la struttura struct Data { char a; int b; }; su un sistema a 64 bit è solitamente pari a 8 byte anziché 5?",
+      "hint": "In che modo il processore ottimizza la lettura dei dati dalla memoria?",
+      "options": [
+        "Il compilatore aggiunge byte di riempimento (padding) per allineare i campi ai confini degli indirizzi in memoria",
+        "Il tipo char nelle strutture occupa sempre 4 byte",
+        "La dimensione di qualsiasi struttura in C viene automaticamente arrotondata al multiplo di 8 più vicino",
+        "Si tratta di un errore del compilatore, in realtà la dimensione è 5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per i processori è più efficiente leggere dati da indirizzi multipli della dimensione del tipo (ad esempio, un `int` a un indirizzo multiplo di 4). Il compilatore inserisce byte «vuoti» (padding) dopo `char a` affinché `int b` si trovi all'indirizzo corretto.",
+        "Sbagliato. Il tipo `char` occupa sempre esattamente 1 byte.",
+        "Sbagliato. L'arrotondamento avviene fino all'allineamento del campo più severo della struttura, non sempre fino a 8.",
+        "Sbagliato. Si tratta del normale funzionamento dell'allineamento dei dati (Data Alignment)."
+      ]
+    },
+    {
+      "id": "it_clang_1095",
+      "widget_id": "widget_clang_1095",
+      "topic": "Gestione della memoria — Doppia liberazione (Double Free)",
+      "q": "A cosa porta una seconda chiamata a free(ptr) per lo stesso indirizzo senza una riallocazione intermedia della memoria?",
+      "hint": "La chiamata a free() modifica il valore del puntatore ptr stesso?",
+      "options": [
+        "A un comportamento indefinito (Undefined Behavior) e a un probabile crash del programma o vulnerabilità di sicurezza",
+        "A una seconda pulizia della memoria senza alcuna conseguenza negativa",
+        "La seconda chiamata a free() viene semplicemente ignorata dal sistema operativo",
+        "La memoria viene trasferita automaticamente in uno stack di riserva"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La doppia liberazione della memoria (Double Free) corrompe le strutture interne dell'allocatore dello heap, causando Comportamento Indefinito (UB), crash del programma o vulnerabilità di sicurezza.",
+        "Sbagliato. La memoria non può essere liberata due volte.",
+        "Sbagliato. `free()` non sa che la memoria è già stata liberata se il valore del puntatore non è stato azzerato (`ptr = NULL`).",
+        "Sbagliato. La memoria dallo heap non può essere trasferita nello stack."
+      ]
+    },
+    {
+      "id": "it_clang_1096",
+      "widget_id": null,
+      "topic": "Gestione della memoria — Chiamata a free(NULL)",
+      "q": "È sicuro passare un puntatore nullo alla funzione free(NULL)?",
+      "hint": "È necessario inserire un controllo if (ptr != NULL) prima di chiamare free(ptr)?",
+      "options": [
+        "Sì, lo standard garantisce che free(NULL) non esegua alcuna azione ed sia assolutamente sicuro",
+        "No, si verificherà un Segmentation Fault",
+        "È sicuro solo se prima si chiama set_null_handler()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, la chiamata a `free(NULL)` non fa nulla ed è garantita come sicura. I controlli aggiuntivi `if (ptr != NULL) free(ptr);` sono ridondanti.",
+        "Sbagliato. Non si verifica alcun errore di esecuzione.",
+        "Sbagliato. Non è necessario chiamare alcuna funzione aggiuntiva."
+      ]
+    },
+    {
+      "id": "it_clang_1097",
+      "widget_id": "widget_clang_1097",
+      "topic": "Strutture — Operatore freccia (->)",
+      "q": "Quale sintassi è sintatticamente equivalente all'espressione ptr->field, dove ptr è un puntatore a una struttura?",
+      "hint": "Come combinare l'operatore di dereferenziazione * e l'operatore di accesso al campo .",
+      "options": [
+        "(*ptr).field",
+        "*ptr.field",
+        "&(ptr.field)",
+        "ptr.*field"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `ptr->field` è zucchero sintattico per `(*ptr).field`. Le parentesi attorno a `*ptr` sono obbligatorie a causa della precedenza degli operatori.",
+        "Sbagliato. La sintassi `*ptr.field` significa `*(ptr.field)` a causa della precedenza più alta dell'operatore punto `.`, il che causerà un errore di compilazione.",
+        "Sbagliato. Questo ottiene l'indirizzo del campo.",
+        "Sbagliato. L'operatore `.*` non esiste nel linguaggio C (esiste in C++)."
+      ]
+    },
+    {
+      "id": "it_clang_1098",
+      "widget_id": "widget_clang_1098",
+      "topic": "Unioni (Unions) — Allocazione in memoria",
+      "q": "A quanti byte equivale sizeof dell'unione union Data { char c; int i; double d; }, se sizeof(double) == 8?",
+      "hint": "In che modo gli elementi di un'unione (union) condividono la memoria tra loro?",
+      "options": [
+        "Alla dimensione dell'elemento più grande (8 byte, tenendo conto di eventuali requisiti di allineamento)",
+        "Alla somma delle dimensioni di tutti gli elementi (1 + 4 + 8 = 13 byte)",
+        "Sempre 4 byte",
+        "Alla dimensione del primo elemento dichiarato (1 byte)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In una `union` tutti i campi sono memorizzati allo stesso indirizzo di memoria iniziale. La dimensione totale della `union` è pari alla dimensione del suo campo più grande (in questo caso `double` — 8 byte).",
+        "Sbagliato. La somma delle dimensioni descrive il comportamento dei campi nelle normali `struct`, non nelle `union`.",
+        "Sbagliato. La variabile deve contenere il tipo più grande (`double`).",
+        "Sbagliato. L'ordine di dichiarazione dei campi non determina la memoria totale della `union`."
+      ]
+    },
+    {
+      "id": "it_clang_1099",
+      "widget_id": "widget_clang_1099",
+      "topic": "Gestione della memoria — Perdita di memoria (Memory Leak)",
+      "q": "Cosa succede alla memoria allocata tramite malloc() se si sovrascrive il suo puntatore (ptr = malloc(100); ptr = NULL;) senza chiamare free()?",
+      "hint": "Il programma sarà in grado di accedere a questo blocco di memoria in seguito?",
+      "options": [
+        "Si verifica una perdita di memoria (Memory Leak): la memoria rimane occupata fino al termine del processo, ma l'accesso ad essa è andato perduto",
+        "La memoria viene liberata automaticamente dal garbage collector di C",
+        "Il sistema operativo restituisce forzatamente la memoria allo heap quando viene assegnato NULL",
+        "Si verifica un errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel linguaggio C non esiste un garbage collector integrato. Se si perde l'unico puntatore a un blocco allocato nello heap, tale memoria rimarrà inaccessibile e non riutilizzabile fino all'uscita dal programma.",
+        "Sbagliato. In C non c'è alcun garbage collector automatico.",
+        "Sbagliato. L'assegnazione `ptr = NULL` modifica solo il valore del puntatore locale, non lo stato dello heap allocato.",
+        "Sbagliato. Il compilatore non traccia le perdite di memoria dinamica durante la fase di compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_1100",
+      "widget_id": "widget_clang_1100",
+      "topic": "Strutture — Membro array flessibile (Flexible Array Member)",
+      "q": "Quale regola si applica a un membro array flessibile di una struttura (C99 Flexible Array Member, ad esempio struct Buffer { int len; char data[]; })?",
+      "hint": "Dove deve trovarsi tale array all'interno della struttura e qual è la sua sintassi?",
+      "options": [
+        "Deve essere l'ultimo elemento della struttura e deve essere dichiarato con parentesi quadre vuote []",
+        "Può trovarsi in qualsiasi punto della struttura e sostituire il nome del tipo",
+        "Per il suo utilizzo è necessario dichiarare una dimensione pari a -1",
+        "Può essere l'unico campo della struttura"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A partire da C99, il membro array flessibile (`type name[]`) deve essere rigorosamente l'ultimo membro della struttura, e la struttura stessa deve contenere almeno un altro campo con nome.",
+        "Sbagliato. Tale array non può trovarsi al centro della struttura, in quanto il compilatore non sarebbe in grado di calcolare gli offset dei campi successivi.",
+        "Sbagliato. Le dimensioni negative degli array non sono valide.",
+        "Sbagliato. Una struttura con un solo array flessibile è vietata dallo standard."
+      ]
+    },
+    {
+      "id": "it_clang_1101",
+      "widget_id": "widget_clang_1101",
+      "topic": "Funzioni — Passaggio di tipi base per valore",
+      "q": "Cosa succederà alla variabile val nel codice chiamante dopo l'esecuzione della funzione void increment(int x) { x++; }?",
+      "hint": "Viene creata una copia locale della variabile quando un argomento viene passato per valore?",
+      "options": [
+        "Il valore della variabile val non cambierà, poiché la funzione lavora con una sua copia locale",
+        "La variabile val aumenterà di 1",
+        "Si verificherà un errore di compilazione, poiché non è possibile modificare i parametri della funzione",
+        "Si verificherà un errore di segmentazione (Segmentation Fault)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel linguaggio C i parametri dei tipi base (`int`, `float`, `char`) vengono sempre passati per valore (Pass by Value). La funzione riceve una copia della variabile, quindi qualsiasi modifica a `x` all'interno di `increment` non influisce sulla variabile originale `val`.",
+        "Sbagliato. La funzione lavora con una copia sullo stack.",
+        "Sbagliato. Modificare il valore di un parametro locale all'interno della funzione è assolutamente legale.",
+        "Sbagliato. La memoria dello stack è allocata correttamente."
+      ]
+    },
+    {
+      "id": "it_clang_1102",
+      "widget_id": "widget_clang_1102",
+      "topic": "Funzioni — Simulazione del passaggio per riferimento tramite puntatori",
+      "q": "Come modificare correttamente il valore della variabile val nel codice chiamante dall'interno della funzione?",
+      "hint": "Quale indirizzo deve essere passato alla funzione e come accedervi?",
+      "options": [
+        "Passare l'indirizzo della variabile &val alla funzione void increment(int *x) e dereferenziarlo con (*x)++",
+        "Dichiarare la funzione come void increment(int &x)",
+        "Dichiarare l'argomento con lo specificatore reference int x",
+        "Chiamare la funzione tramite l'operatore super"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C non esistono veri «riferimenti» come in C++. La simulazione del passaggio per riferimento si ottiene passando esplicitamente l'indirizzo della variabile (`&val`) e dereferenziando il puntatore (`*x`) all'interno della funzione.",
+        "Sbagliato. La sintassi `int &x` riguarda i riferimenti in C++; in C puro causerà un errore di compilazione.",
+        "Sbagliato. Lo specificatore `reference` non esiste in C.",
+        "Sbagliato. L'operatore `super` non esiste in C."
+      ]
+    },
+    {
+      "id": "it_clang_1103",
+      "widget_id": "widget_clang_1103",
+      "topic": "Passaggio di strutture — Copia per valore vs Tramite puntatore",
+      "q": "Cosa succede quando si passa una struttura di grandi dimensioni a una funzione per valore (ad esempio, void process(struct BigData d))?",
+      "hint": "In che modo il passaggio di oggetti di grandi dimensioni influisce sull'uso dello stack e sulle prestazioni?",
+      "options": [
+        "L'intera struttura viene copiata byte per byte nello stack, il che può rallentare il programma e causare uno stack overflow",
+        "Alla funzione viene passato solo un puntatore alla struttura",
+        "Il compilatore reindirizza automaticamente la struttura nello heap",
+        "Il passaggio di strutture per valore è vietato dallo standard C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza degli array, le strutture in C vengono passate interamente per valore. Il passaggio di una struttura enorme copia tutti i suoi byte nello stack frame della funzione, causando un calo delle prestazioni. Pertanto, le strutture di grandi dimensioni vengono passate tramite puntatore: `const struct BigData *d`.",
+        "Sbagliato. Senza l'operatore `*` viene passata una copia completa.",
+        "Sbagliato. Lo heap non viene coinvolto automaticamente.",
+        "Sbagliato. Il passaggio di strutture per valore è completamente legale."
+      ]
+    },
+    {
+      "id": "it_clang_1104",
+      "widget_id": "widget_clang_1104",
+      "topic": "Firme delle funzioni — Prototipo void print_val() prima di C23",
+      "q": "Cosa significava la dichiarazione del prototipo della funzione void print_val() (con parentesi vuote) negli standard precedenti a C23?",
+      "hint": "Questo comportamento era diverso da void print_val(void)?",
+      "options": [
+        "La funzione può accettare un numero arbitrario (sconosciuto) di argomenti di qualsiasi tipo",
+        "La funzione non accetta alcun argomento",
+        "La funzione può essere chiamata solo senza passare parametri",
+        "È un errore sintattico di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Prima di C23, le parentesi vuote `()` in una dichiarazione (prototipo) indicavano che la funzione accettava un numero sconosciuto di argomenti (stile K&R). Per vietare rigorosamente gli argomenti, bisognava scrivere `void print_val(void)`.",
+        "Sbagliato. Il divieto rigoroso degli argomenti era specificato dalla parola chiave `void` tra parentesi.",
+        "Sbagliato. Al contrario, il compilatore permetteva di passare argomenti senza controllo dei tipi.",
+        "Sbagliato. Si tratta di una sintassi obsoleta ma valida."
+      ]
+    },
+    {
+      "id": "it_clang_1105",
+      "widget_id": null,
+      "topic": "Puntatori a funzioni — Richiamo (Callback)",
+      "q": "Perché a una funzione viene spesso passato un puntatore a un'altra funzione come parametro (ad esempio in qsort)?",
+      "hint": "Come rendere un algoritmo di ordinamento o di elaborazione universale per qualsiasi dato?",
+      "options": [
+        "Per implementare un meccanismo di callback e personalizzare il comportamento dell'algoritmo",
+        "Per velocizzare l'esecuzione della funzione sfruttando la compilazione JIT",
+        "Per aggirare il limite sul numero massimo di parametri della funzione",
+        "Affinché la funzione non occupi spazio nello stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il passaggio di un puntatore a funzione consente di personalizzare dall'esterno la logica di funzionamento della funzione chiamata (ad esempio, passando un comparatore `int (*compar)(const void*, const void*)` a `qsort`).",
+        "Sbagliato. In C non c'è compilazione JIT, un puntatore è un normale indirizzo di istruzione.",
+        "Sbagliato. Il puntatore a funzione viene passato come un normale argomento.",
+        "Sbagliato. La chiamata tramite puntatore crea comunque uno stack frame standard."
+      ]
+    },
+    {
+      "id": "it_clang_1106",
+      "widget_id": "widget_clang_1106",
+      "topic": "Numero variabile di argomenti — Macro di <stdarg.h>",
+      "q": "Quale sequenza di macro da <stdarg.h> è obbligatoria nell'implementazione di una funzione con un numero variabile di argomenti (Funzione Variadica)?",
+      "hint": "Ricorda l'ordine: inizializzazione, lettura dell'argomento, conclusione.",
+      "options": [
+        "va_start, va_arg, va_end",
+        "va_init, va_get, va_close",
+        "std_start, std_arg, std_stop",
+        "va_open, va_read, va_free"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo standard di elaborazione degli argomenti `...` richiede l'inizializzazione dell'elenco tramite `va_start`, l'estrazione di ciascun parametro specificandone il tipo tramite `va_arg` e obbligatoriamente la chiusura/pulizia dell'elenco tramite `va_end`.",
+        "Sbagliato. I nomi `va_init` / `va_get` / `va_close` non esistono in `<stdarg.h>`.",
+        "Sbagliato. Nomi delle macro errati.",
+        "Sbagliato. Sintassi inventata."
+      ]
+    },
+    {
+      "id": "it_clang_1107",
+      "widget_id": "widget_clang_1107",
+      "topic": "Modificatore const — Limitazione della modifica dei parametri",
+      "q": "Cosa succederà quando si tenta di compilare la funzione void display(const char *str) { str[0] = 'A'; }?",
+      "hint": "Cosa protegge esattamente la parola chiave const in const char *str?",
+      "options": [
+        "Si verificherà un errore di compilazione, poiché il contenuto della memoria di str è di sola lettura (read-only)",
+        "Il carattere verrà modificato con successo durante l'esecuzione",
+        "Cambierà l'indirizzo del puntatore str stesso",
+        "La funzione meerà automaticamente una copia della stringa nello heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `const char *str` vieta la modifica dei dati presenti all'indirizzo `str`. Il tentativo di scrivere un valore in `str[0]` causa un errore di compilazione.",
+        "Sbagliato. Il compilatore bloccherà tale tentativo già nella fase di compilazione.",
+        "Sbagliato. L'indirizzo `str` stesso può essere modificato (`str++`), è vietato modificare il buffer sottostante.",
+        "Sbagliato. Non viene creata alcuna copia."
+      ]
+    },
+    {
+      "id": "it_clang_1108",
+      "widget_id": null,
+      "topic": "Funzioni — Decadimento dell'array a puntatore (Array Decay)",
+      "q": "A quanto equivale sizeof(arr) all'interno della funzione void test(int arr[100]) su un sistema a 64 bit?",
+      "hint": "Il parametro dell'array mantiene la sua reale dimensione quando viene passato a una funzione?",
+      "options": [
+        "8 byte (la dimensione di un puntatore a int su un'architettura a 64 bit)",
+        "400 byte (100 elementi * 4 byte)",
+        "100 byte",
+        "4 byte (la dimensione di un singolo int)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando un array viene passato a una funzione, il parametro `int arr[100]` perde le informazioni sulla dimensione e decade (decays) a un puntatore `int *arr`. L'operatore `sizeof(arr)` all'interno della funzione restituirà la dimensione del puntatore stesso (8 byte su sistemi a 64 bit).",
+        "Sbagliato. La dimensione originale dell'array di 400 byte viene «dimenticata» all'interno della funzione.",
+        "Sbagliato. Il numero di elementi non equivale alla dimensione della memoria.",
+        "Sbagliato. 4 byte è `sizeof(int)`, non la dimensione del puntatore."
+      ]
+    },
+    {
+      "id": "it_clang_1109",
+      "widget_id": "widget_clang_1109",
+      "topic": "Restituzione di valori — Passaggio del risultato tramite argomenti",
+      "q": "Perché le funzioni spesso restituiscono un codice di errore (int status) e trasmettono i dati calcolati tramite puntatori nei parametri (ad esempio, int get_value(int *out_val))?",
+      "hint": "Quanti valori può restituire l'istruzione return nel linguaggio C?",
+      "options": [
+        "Perché l'istruzione return in C può restituire solo un valore, mentre una funzione deve spesso restituire sia lo stato di esecuzione che i dati ottenuti",
+        "Perché il passaggio tramite return funziona sempre più lentamente di una chiamata a malloc",
+        "Perché la restituzione di tipi int tramite return è vietata dallo standard ISO C",
+        "Questo viene fatto per impedire le ottimizzazioni del compilatore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il linguaggio C consente di restituire un solo valore da una funzione tramite `return`. Il paradigma di restituire lo stato di errore (`0` — successo, diverso da zero — errore) tramite `return` e i dati tramite parametri puntatore (`out_val`) è un pattern di progettazione comune per le API in C.",
+        "Sbagliato. L'istruzione `return` inserisce il valore in un registro del processore e funziona alla massima velocità.",
+        "Sbagliato. `return int` è completamente legale.",
+        "Sbagliato. Questo non ha nulla a che fare con le ottimizzazioni."
+      ]
+    },
+    {
+      "id": "it_clang_1110",
+      "widget_id": "widget_clang_1110",
+      "topic": "Ottimizzazione — Qualificatore restrict nei parametri (C99)",
+      "q": "Cosa indica al compilatore un puntatore con lo specificatore restrict (ad esempio, void copy(int * restrict dst, const int * restrict src))?",
+      "hint": "Le aree di memoria dst e src possono sovrapporsi in questo caso?",
+      "options": [
+        "Garantisce che i puntatori dst e src non facciano riferimento alla stessa area di memoria o ad aree sovrapposte (No Aliasing)",
+        "Rende i dati indicati dai puntatori accessibili in sola lettura",
+        "Costringe il compilatore ad allocare automaticamente la memoria nello heap",
+        "Vieta la chiamata della funzione in un ambiente multithread"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `restrict` (C99) indica al compilatore che l'oggetto puntato sarà manipolato solo tramite questo puntatore. Ciò risolve il problema dell'aliasing dei puntatori (Pointer Aliasing) e consente l'autovettorizzazione dei cicli.",
+        "Sbagliato. Della protezione dalla scrittura si occupa `const`.",
+        "Sbagliato. `restrict` non si occupa dell'allocazione di memoria.",
+        "Sbagliato. `restrict` non influisce sulla sicurezza dei thread."
+      ]
+    },
+    {
+      "id": "it_clang_1111",
+      "widget_id": "widget_clang_1111",
+      "topic": "Preprocessore — Effetti collaterali nelle macro",
+      "q": "Cosa succederà quando si chiama la macro SQUARE(i++) con #define SQUARE(x) ((x) * (x)) e int i = 3;?",
+      "hint": "Come vengono espanse le macro prima della fase di compilazione?",
+      "options": [
+        "L'incremento i++ verrà eseguito due volte a causa della sostituzione del testo, provocando effetti collaterali e comportamento indefinito",
+        "Verrà calcolato 3 * 3 = 9, e poi i diventerà pari a 4",
+        "Si verificherà un errore di compilazione",
+        "L'incremento verrà eseguito solo una volta grazie all'ottimizzatore del compilatore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le macro del preprocessore sostituiscono il proprio argomento esattamente «così com'è». L'espressione si espanderà in `((i++) * (i++))`. Questo porta a un doppio incremento della variabile `i` senza un punto di sequenza intermedio (Sequence Point), generando un Comportamento Indefinito (Undefined Behavior).",
+        "Sbagliato. Le macro non calcolano gli argomenti in anticipo, a differenza delle funzioni.",
+        "Sbagliato. Il codice è sintatticamente corretto e verrà compilato.",
+        "Sbagliato. L'ottimizzatore non modifica la sostituzione del testo del preprocessore."
+      ]
+    },
+    {
+      "id": "it_clang_1112",
+      "widget_id": "widget_clang_1112",
+      "topic": "Stringhe — Literali stringa e memoria",
+      "q": "Qual è la differenza chiave tra char *s1 = \"hello\"; e char s2[] = \"hello\";?",
+      "hint": "In quale area di memoria sono memorizzati i literali stringa e possono essere modificati?",
+      "options": [
+        "s1 punta a un'area di memoria non modificabile (.rodata), mentre s2 crea un array modificabile nello stack",
+        "s1 e s2 sono assolutamente identici e sono memorizzati nella stessa area di memoria",
+        "s1 non può essere modificato, ma anche a s2 è vietato apportare modifiche",
+        "s2 si occupa dell'allocazione di memoria nello heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `char *s1` crea un puntatore a un literale nella sezione di sola lettura (`.rodata`). Un tentativo di modificare `s1[0]` causerà un Segmentation Fault. La sintassi `char s2[]` copia i caratteri del literale in un normale array locale sullo stack, che può essere modificato liberamente.",
+        "Sbagliato. Si comportano in modo fondamentalmente diverso quando si tenta di modificarne gli elementi.",
+        "Sbagliato. Gli elementi dell'array `s2` possono essere modificati (`s2[0] = 'H'`).",
+        "Sbagliato. L'array `s2` viene allocato sullo stack, non nello heap."
+      ]
+    },
+    {
+      "id": "it_clang_1113",
+      "widget_id": "widget_clang_1113",
+      "topic": "Preprocessore — Operatore di stringificazione (#)",
+      "q": "Cosa fa l'operatore # (cancelletto) prima di un argomento in una macro del preprocessore (ad esempio, #define TO_STR(x) #x)?",
+      "hint": "Come trasformare un nome o un'espressione passata in una stringa durante la fase di preprocessing?",
+      "options": [
+        "Trasforma l'argomento passato in un literale stringa, racchiudendolo tra doppi apici",
+        "Esegue l'unione (concatenazione) di due token",
+        "Converte un argomento numerico in formato esadecimale",
+        "Rimuove i commenti dall'argomento"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `#` nelle macro è chiamato operatore di stringificazione (Stringification). Converte il token lessicale passato `x` in un literale stringa `\"x\"`.",
+        "Sbagliato. Per la concatenazione dei token si usa l'operatore `##`.",
+        "Sbagliato. Il preprocessore non si occupa della conversione dei sistemi di numerazione.",
+        "Sbagliato. I commenti vengono rimossi dal preprocessore prima del calcolo delle macro."
+      ]
+    },
+    {
+      "id": "it_clang_1114",
+      "widget_id": "widget_clang_1114",
+      "topic": "Preprocessore — Operatore di concatenazione di token (##)",
+      "q": "Per cosa viene utilizzato l'operatore ## (doppio cancelletto) nelle macro del preprocessore?",
+      "hint": "Come unire due parole o identificatori in un unico nuovo simbolo?",
+      "options": [
+        "Per la concatenazione (unione) di due token in un unico token",
+        "Per creare un OR logico tra gli argomenti",
+        "Per elevare l'argomento di sinistra alla potenza di quello di destra",
+        "Per l'escape dei caratteri speciali"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `##` (Token Concatenation) unisce i due token ai suoi lati in un unico nuovo identificatore/token durante l'esecuzione del preprocessore.",
+        "Sbagliato. L'OR logico in C è `||`.",
+        "Sbagliato. In C non esiste un operatore integrato per l'elevamento a potenza (si usa `pow()`).",
+        "Sbagliato. L'escape viene eseguito con il backslash `\\`."
+      ]
+    },
+    {
+      "id": "it_clang_1115",
+      "widget_id": null,
+      "topic": "File di intestazione — Include Guard",
+      "q": "Perché nei file di intestazione (.h) si usano le direttive #ifndef, #define e #endif (Include Guard) o #pragma once?",
+      "hint": "Cosa succede se un file include lo stesso file .h più volte tramite altri file?",
+      "options": [
+        "Per impedire l'inclusione ripetuta del contenuto del file di intestazione ed errori di ridichiarazione di tipi e strutture",
+        "Per velocizzare l'esecuzione della funzione main() a tempo di esecuzione",
+        "Per rendere private le funzioni all'interno del file",
+        "Per nascondere il codice sorgente del file di intestazione al compilatore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli Include Guard garantiscono che il corpo del file di intestazione venga compilato dal traduttore esattamente una volta nell'ambito di un'unità di traduzione, prevenendo errori come `redefinition of struct`.",
+        "Sbagliato. Si tratta di una protezione in fase di compilazione, non di un'accelerazione del tempo di esecuzione.",
+        "Sbagliato. Per la riservatezza delle funzioni si usa il modificatore `static`.",
+        "Sbagliato. Il compilatore necessita dell'accesso alle dichiarazioni di funzioni e tipi."
+      ]
+    },
+    {
+      "id": "it_clang_1116",
+      "widget_id": "widget_clang_1116",
+      "topic": "Stringhe — Funzione strlen() vs sizeof()",
+      "q": "Cosa restituirà strlen(str) per l'array char str[] = \"Hello\";?",
+      "hint": "strlen() tiene conto del byte zero finale '\\0'?",
+      "options": [
+        "5 (lunghezza della stringa senza considerare il terminatore nullo)",
+        "6 (dimensione dell'array considerando il terminatore nullo)",
+        "8 (dimensione del puntatore)",
+        "1 (dimensione di un singolo carattere)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `strlen()` conta il numero di caratteri nella stringa PRIMA del byte zero finale `'\\0'`. Per `\"Hello\"` restituirà 5. Invece `sizeof(str)` restituirà 6 byte, in quanto include lo stesso `'\\0'`.",
+        "Sbagliato. 6 verrà restituito dall'operatore `sizeof(str)`.",
+        "Sbagliato. `str` qui è un array di dimensione fissa, non un puntatore.",
+        "Sbagliato. 1 è `sizeof(char)`."
+      ]
+    },
+    {
+      "id": "it_clang_1117",
+      "widget_id": "widget_clang_1117",
+      "topic": "Sicurezza — Pericolo della funzione strcpy()",
+      "q": "Perché l'uso della funzione standard strcpy(dst, src) è considerato pericoloso in C?",
+      "hint": "strcpy() controlla i limiti del buffer di destinazione dst?",
+      "options": [
+        "Non controlla la dimensione del buffer di destinazione dst, il che porta a un overflow del buffer (Buffer Overflow)",
+        "Esegue le operazioni decine di volte più lentamente rispetto alla normale funzione memcpy",
+        "Rimuove il terminatore nullo nella stringa di destinazione",
+        "Alloca memoria nello heap senza l'autorizzazione dell'utente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strcpy()` copia i byte da `src` a `dst` finché non incontra `'\\0'`. Se la stringa `src` è più lunga del buffer `dst` allocato, si verificherà un superamento dei limiti di memoria (Buffer Overflow), che è una causa frequente di vulnerabilità critiche.",
+        "Sbagliato. Le prestazioni di `strcpy` sono vicine a quelle di `memcpy`.",
+        "Sbagliato. `strcpy` copia sempre il terminatore nullo.",
+        "Sbagliato. La funzione non gestisce la memoria dinamica."
+      ]
+    },
+    {
+      "id": "it_clang_1118",
+      "widget_id": "widget_clang_1118",
+      "topic": "Preprocessore — Idioma do { ... } while(0)",
+      "q": "Perché le macro multilinea in C vengono racchiuse nel costrutto sintattico do { ... } while(0)?",
+      "hint": "Pensa a come si comporta una macro composta da più istruzioni all'interno di un blocco if (...) senza parentesi graffe.",
+      "options": [
+        "Affinché la macro diventi una singola istruzione composta che si espande in modo sicuro nei costrutti if/else e richiede ';' alla fine",
+        "Affinché la macro venga eseguita in un ciclo continuo",
+        "Affinché il compilatore renda automaticamente la macro una funzione inline",
+        "Per vietare il passaggio di parametri alla macro"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il trucco `do { ... } while(0)` raggruppa diverse espressioni della macro in un unico blocco, consentendo di inserire un punto e virgola `;` dopo la chiamata alla macro senza violare la sintassi di `if (...) MACRO(); else ...`.",
+        "Sbagliato. Il ciclo verrà eseguito esattamente una volta, poiché la condizione `while(0)` è sempre falsa.",
+        "Sbagliato. La macro rimane una sostituzione di testo del preprocessore.",
+        "Sbagliato. È possibile passare parametri a una macro di questo tipo."
+      ]
+    },
+    {
+      "id": "it_clang_1119",
+      "widget_id": null,
+      "topic": "Stringhe — Carattere terminatore nullo ('\\0')",
+      "q": "Cosa determina la fine effettiva di una stringa C (Null-terminated string) in memoria?",
+      "hint": "Come fanno le funzioni di stringa (printf, strlen) a capire dove interrompere la lettura?",
+      "options": [
+        "Il byte zero '\\0' (carattere con codice ASCII 0)",
+        "Il carattere di nuova riga '\\n'",
+        "Una variabile speciale di lunghezza memorizzata prima della stringa",
+        "Il carattere spazio ' '"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel linguaggio C le stringhe sono «null-terminated»: la loro terminazione è indicata dal terminatore nullo `'\\0'` (un byte con valore 0).",
+        "Sbagliato. `\\n` è semplicemente un carattere di nuova riga.",
+        "Sbagliato. Le stringhe C non memorizzano informazioni sulla loro lunghezza nelle intestazioni.",
+        "Sbagliato. Lo spazio ha codice ASCII 32 ed è un normale carattere."
+      ]
+    },
+    {
+      "id": "it_clang_1120",
+      "widget_id": "widget_clang_1120",
+      "topic": "Stringhe — Confronto di stringhe tramite strcmp()",
+      "q": "Cosa restituisce la funzione strcmp(str1, str2) se le stringhe str1 e str2 corrispondono perfettamente?",
+      "hint": "Fai attenzione: 0 significa nessuna differenza tra le stringhe!",
+      "options": [
+        "0",
+        "1",
+        "true",
+        "-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `strcmp()` restituisce `0` se le stringhe sono lessicograficamente identiche. Se la prima stringa è minore della seconda viene restituito un numero negativo (`<0`), se è maggiore un numero positivo (`>0`).",
+        "Sbagliato. 1 viene restituito se la prima stringa è maggiore della seconda in base ai codici ASCII.",
+        "Sbagliato. `strcmp` restituisce un numero intero `int`, non un `bool`.",
+        "Sbagliato. -1 viene restituito se la prima stringa è minore della seconda."
+      ]
+    }
+  ]
+}

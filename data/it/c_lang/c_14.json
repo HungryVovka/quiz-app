@@ -1,0 +1,603 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_451",
+      "widget_id": "widget_clang_451",
+      "topic": "Ciclo while — Incrementi postfissi e condizione",
+      "q": "Cosa stamperà questo frammento di codice con il ciclo `while`?",
+      "hint": "Pensate a quando avviene esattamente l'incremento postfisso `i++` durante la chiamata a `printf`.",
+      "options": [
+        "012",
+        "123",
+        "0123",
+        "Ciclo infinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Alla prima iterazione viene stampato `0` e `i` diventa 1. Alla seconda viene stampato `1` (`i` diventa 2). Alla terza viene stampato `2` (`i` diventa 3). Alla quarta la verifica `3 < 3` è falsa e il ciclo termina. Output: \"012\".",
+        "Errato. L'incremento postfisso restituisce il valore *prima* dell'incremento, quindi la prima cifra sarà 0 e non 1.",
+        "Errato. Il ciclo verrà eseguito esattamente 3 volte (con `i = 0, 1, 2`), per `i = 3` la condizione diventerà falsa.",
+        "Errato. La variabile `i` incrementa a ogni iterazione, quindi la condizione di uscita verrà garantita."
+      ]
+    },
+    {
+      "id": "it_clang_452",
+      "widget_id": "widget_clang_452",
+      "topic": "Ciclo while — Ciclo infinito (Infinite Loop)",
+      "q": "Cosa succederà durante l'esecuzione del codice riportato?",
+      "hint": "Notate l'assenza dell'aggiornamento del contatore `i` all'interno del corpo del ciclo.",
+      "options": [
+        "Il programma entrerà in un ciclo infinito (Infinite Loop), stampando continuamente il carattere '0'",
+        "Stamperà i numeri da 0 a 4",
+        "Errore di compilazione",
+        "Non stamperà nulla e terminerà immediatamente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Come descritto nella presentazione, se ci si dimentica di aggiornare la variabile di controllo (incremento `i++`), la condizione `i < 5` sarà sempre vera, portando a un ciclo infinito (looping).",
+        "Errato. Il valore di `i` non cambia mai e rimane pari a 0, quindi la condizione `i < 5` non diventerà mai falsa.",
+        "Errato. Sintatticamente il codice è assolutamente corretto; si tratta di un errore logico al runtime.",
+        "Errato. Poiché `i = 0`, la condizione `0 < 5` è vera già al primo ingresso nel ciclo."
+      ]
+    },
+    {
+      "id": "it_clang_453",
+      "widget_id": "widget_clang_453",
+      "topic": "Ciclo do...while — Garanzia di esecuzione del corpo",
+      "q": "Cosa stamperà questo frammento di codice con il costrutto `do...while`?",
+      "hint": "Ricordate la differenza principale del `do...while`: il corpo del ciclo viene sempre eseguito ALMENO una volta prima della verifica della condizione.",
+      "options": [
+        "10",
+        "Non stamperà nulla",
+        "Ciclo infinito",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel `do...while` il corpo viene eseguito almeno 1 volta. La `printf` stamperà 10, poi `x` diventerà 11. La verifica `11 < 5` restituirà falso e il ciclo terminerà. Output: \"10\".",
+        "Errato. A differenza del `while`, nel `do...while` la condizione viene verificata DOPO la prima iterazione, quindi la stampa avverrà.",
+        "Errato. La condizione `x < 5` viene verificata dopo l'incremento di `x` a 11 e interrompe subito il ciclo.",
+        "Errato. La sintassi `do { ... } while(cond);` è scritta senza errori."
+      ]
+    },
+    {
+      "id": "it_clang_454",
+      "widget_id": "widget_clang_454",
+      "topic": "Ciclo for — Sezioni dell'intestazione vuote",
+      "q": "La sintassi `for (;;)` è valida e cosa stamperà questo codice?",
+      "hint": "I punti e virgola senza espressioni all'interno di `for(;;)` creano un ciclo infinito, la cui uscita è possibile tramite `break`.",
+      "options": [
+        "012",
+        "Errore di sintassi a causa delle sezioni vuote nel `for`",
+        "Ciclo infinito",
+        "0123"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Tutte e tre le sezioni del `for` sono opzionali. Il costrutto `for(;;)` crea un ciclo infinito, ma l'istruzione `if (i >= 3) break;` lo interrompe anticipatamente quando `i = 3`. Output: \"012\".",
+        "Errato. L'intestazione `for(;;)` è completamente legale nel linguaggio C.",
+        "Errato. L'uscita anticipata dal ciclo è garantita dall'istruzione `break`.",
+        "Errato. Quando `i = 3` si attiverà il `break` prima della chiamata a `printf`."
+      ]
+    },
+    {
+      "id": "it_clang_455",
+      "widget_id": null,
+      "topic": "Equivalenza dei cicli — Relazione tra for e while",
+      "q": "Quale delle seguenti affermazioni sull'intercambiabilità dei cicli `for` e `while` è corretta?",
+      "hint": "Ricordate il materiale delle diapositive: «for = while travestito».",
+      "options": [
+        "I cicli `for` e `while` sono funzionalmente equivalenti: qualsiasi ciclo `for` può essere riscritto con `while` e viceversa",
+        "Il ciclo `for` è più veloce a livello hardware rispetto al `while`",
+        "Il costrutto `while` non può essere utilizzato se il numero di iterazioni è noto in anticipo",
+        "Il ciclo `do...while` è l'unico modo per scrivere un'iterazione con parametro"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C i costrutti `for` e `while` sono assolutamente equivalenti. `for(A; B; C) D;` corrisponde perfettamente a `A; while(B) { D; C; }` (eccetto alcune peculiarità dell'istruzione `continue`).",
+        "Errato. Il compilatore genera codice macchina assolutamente identico per cicli equivalenti `for` e `while`.",
+        "Errato. Il `while` è perfettamente adatto per un numero di iterazioni noto in anticipo (ad esempio con un contatore esterno `i++`).",
+        "Errato. Il `do...while` differisce solo per la post-verifica della condizione, non per il supporto dei parametri."
+      ]
+    },
+    {
+      "id": "it_clang_456",
+      "widget_id": "widget_clang_456",
+      "topic": "Controllo del ciclo — Istruzioni break e continue",
+      "q": "Cosa stamperà il frammento di codice con l'uso combinato di `continue` e `break`?",
+      "hint": "Seguite le iterazioni: `continue` salta il resto del corpo, mentre `break` interrompe istantaneamente l'intero ciclo.",
+      "options": [
+        "124",
+        "1234",
+        "12",
+        "1245"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `i=1` e `i=2` vengono stampati '1' e '2'. Con `i=3` si attiva `continue` (la stampa viene saltata). Con `i=4` viene stampato '4'. Con `i=5` si attiva `break` (il ciclo termina). Output finale: \"124\".",
+        "Errato. Il valore 3 viene saltato a causa della chiamata a `continue`.",
+        "Errato. Anche il valore 4 farà in tempo a essere stampato prima che `i` diventi pari a 5.",
+        "Errato. Il valore 5 non verrà stampato perché il `break` interrompe il ciclo prima della `printf`."
+      ]
+    },
+    {
+      "id": "it_clang_457",
+      "widget_id": "widget_clang_457",
+      "topic": "Condizioni nei cicli — Decremento postfisso nelle condizioni",
+      "q": "Cosa stamperà questo ciclo `while (i--)`?",
+      "hint": "Prima viene valutato il valore di `i` per la condizione, poi `i` viene decrementato e solo dopo viene eseguito il corpo.",
+      "options": [
+        "210",
+        "321",
+        "3210",
+        "210-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! 1) `i=3`: la condizione è vera (3), `i` diventa 2, stampa 2. 2) `i=2`: la condizione è vera (2), `i` diventa 1, stampa 1. 3) `i=1`: la condizione è vera (1), `i` diventa 0, stampa 0. 4) `i=0`: la condizione è falsa (0), il ciclo termina. Output: \"210\".",
+        "Errato. All'interno del corpo del ciclo `i` è già decrementato di 1 a causa del decremento postfisso, quindi il 3 iniziale non verrà stampato.",
+        "Errato. Il ciclo farà esattamente 3 iterazioni, stampando 2, 1 e 0.",
+        "Errato. Con `i=0` il controllo della condizione restituisce falso e il corpo del ciclo non viene eseguito."
+      ]
+    },
+    {
+      "id": "it_clang_458",
+      "widget_id": null,
+      "topic": "Esercizi pratici — Elaborazione di una sequenza fino allo zero terminatore",
+      "q": "Quale costrutto di ciclo è più naturale per risolvere il problema: «Leggere numeri da tastiera e sommarli finché l'utente non inserisce 0»?",
+      "hint": "Consultate l'elenco degli esercizi dalla presentazione (diapositiva 15).",
+      "options": [
+        "Un ciclo `while` o `do...while` con il controllo del numero inserito diverso da zero",
+        "Un ciclo fisso `for (int i = 0; i < 100; i++)`",
+        "Ripetuti copia-incolla della funzione `scanf` senza l'uso di cicli",
+        "L'uso delle eccezioni in C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In situazioni in cui il numero di iterazioni non è noto in anticipo e dipende dall'input dell'utente, è ideale il `while` o il `do...while`, che controlla la condizione di arresto (inserimento dello zero).",
+        "Errato. Non sappiamo in anticipo quanti numeri inserirà l'utente — 5 o 500, quindi un `for` fisso con limite 100 non è adatto.",
+        "Errato. La duplicazione del codice (copia-incolla) è la soluzione peggiore, criticata nelle diapositive 4-5.",
+        "Errato. Nel linguaggio C non esistono eccezioni integrate (try-catch)."
+      ]
+    },
+    {
+      "id": "it_clang_459",
+      "widget_id": "widget_clang_459",
+      "topic": "Operatore virgola — Contatori multipli nel ciclo for",
+      "q": "Cosa stamperà questo ciclo con più espressioni nell'intestazione `for`?",
+      "hint": "Seguite la modifica di entrambe le variabili: `i` cresce di 1, mentre `j` diminuisce di 3 a ogni passo.",
+      "options": [
+        "10 8 6 ",
+        "10 8 ",
+        "10 9 8 ",
+        "10 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Iterazione 1: `i=0, j=10` (0<10), somma 10. Passo: `i=1, j=7`. Iterazione 2: `1<7`, somma 8. Passo: `i=2, j=4`. Iterazione 3: `2<4`, somma 6. Passo: `i=3, j=1`. Iterazione 4: `3<1` (falso). Output: \"10 8 6 \".",
+        "Errato. Al terzo passo `2 < 4` è ancora vero, quindi verrà stampato anche il terzo numero 6.",
+        "Errato. La variabile `j` diminuisce di 3 e non di 1, quindi le somme diminuiranno con un passo di 2.",
+        "Errato. Il ciclo eseguirà 3 iterazioni e non una sola."
+      ]
+    },
+    {
+      "id": "it_clang_460",
+      "widget_id": "widget_clang_460",
+      "topic": "Cicli annidati — Modifica del contatore esterno all'interno del ciclo interno",
+      "q": "Cosa stamperà il programma se il contatore del ciclo esterno `i` viene modificato all'interno del ciclo interno?",
+      "hint": "Calcolate come cambia la variabile `i` nei cicli esterno e interno.",
+      "options": [
+        "25",
+        "24",
+        "0123",
+        "Ciclo infinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! 1) Esterno `i=0`. Il ciclo interno incrementa `i` di 2 (`i` diventa 2). Output: '2'. Passo del ciclo esterno `i++` rende `i=3`. 2) Verifica `3 < 4` (vero). Il ciclo interno incrementa `i` di 2 (`i` diventa 5). Output: '5'. Passo del ciclo esterno `i++` rende `i=6`. 3) Verifica `6 < 4` (falso). Fine. Output: \"25\".",
+        "Errato. Nella seconda iterazione `i` aumenterà da 3 a 5, non a 4.",
+        "Errato. A causa degli incrementi nel ciclo interno, la variabile esterna `i` cresce molto più velocemente del passo standard di 1.",
+        "Errato. Il ciclo terminerà correttamente in 2 passi esterni."
+      ]
+    },
+    {
+      "id": "it_clang_461",
+      "widget_id": null,
+      "topic": "Algoritmi pratici — Ricerca del massimo in una sequenza",
+      "q": "Quale errore comune si commette nell'inizializzazione della variabile `max` prima del ciclo di ricerca del massimo tra $n$ numeri interi inseriti?",
+      "hint": "Pensate a cosa succede se l'utente inserisce solo numeri negativi (ad esempio: -5, -10, -2).",
+      "options": [
+        "Inizializzazione `max = 0`, per cui il programma restituirà un risultato errato (0) se tutti i numeri inseriti sono strettamente negativi",
+        "Inizializzazione di `max` con il primo numero inserito della sequenza",
+        "Inizializzazione `max = INT_MIN` dall'header file `<limits.h>`",
+        "Uso di una variabile contatore per le iterazioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se si inizializza `max = 0` e i dati di input contengono solo numeri negativi (ad esempio -5, -20), la condizione `a > max` non sarà mai vera e il programma restituirà erroneamente 0.",
+        "Errato. L'inizializzazione di `max` con il primo elemento della sequenza è l'approccio corretto e sicuro.",
+        "Errato. L'uso di `INT_MIN` è una soluzione corretta per gli interi con segno.",
+        "Errato. L'uso di un contatore di iterazioni è necessario per controllare il numero di passi del ciclo."
+      ]
+    },
+    {
+      "id": "it_clang_462",
+      "widget_id": "widget_clang_462",
+      "topic": "Errori sintattici — Punto e virgola dopo while",
+      "q": "A quale effetto porterà un punto e virgola `;` accidentale subito dopo la condizione del ciclo `while (i < 3);`?",
+      "hint": "Il punto e virgola forma un corpo di ciclo vuoto. Verificate se `i` cambia all'interno di questo corpo vuoto.",
+      "options": [
+        "Il programma si bloccherà in un ciclo vuoto infinito",
+        "Stamperà 012",
+        "Stamperà 0 e terminerà",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il punto e virgola rende un'istruzione vuota il corpo del ciclo. Poiché `i = 0` non cambia all'interno di questo ciclo vuoto, la condizione `0 < 3` rimane vera per sempre e il programma si blocca sul posto.",
+        "Errato. Il blocco tra parentesi graffe sottostante diventerà un normale blocco di codice, ma il controllo non ci arriverà mai a causa del blocco sul `;`.",
+        "Errato. La stampa non avverrà affatto, poiché `printf` si trova dopo il ciclo vuoto infinito.",
+        "Errato. L'istruzione vuota `;` è sintatticamente legale in C, quindi il compilatore non restituirà alcun errore."
+      ]
+    },
+    {
+      "id": "it_clang_463",
+      "widget_id": null,
+      "topic": "Sintassi do...while — Punto e virgola finale",
+      "q": "Qual è la particolarità sintattica della conclusione del ciclo `do...while` rispetto a un normale `while`?",
+      "hint": "Fate riferimento alle regole di sintassi nella diapositiva 22.",
+      "options": [
+        "Dopo la parentesi di chiusura della condizione `while(condizione);` è obbligatorio mettere il punto e virgola",
+        "Alla fine di `while(condizione)` è tassativamente vietato mettere il punto e virgola",
+        "Il corpo del `do...while` non può consistere in più istruzioni",
+        "Nel ciclo `do...while` è vietato usare le istruzioni `break` o `continue`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Come mostrato nella diapositiva 22 della presentazione, la sintassi del costrutto richiede un punto e virgola obbligatorio alla fine: `do { ... } while(cond);`.",
+        "Errato. L'assenza del punto e virgola alla fine del `do...while` porterà a un errore di compilazione.",
+        "Errato. Il corpo del ciclo `do...while` può contenere qualsiasi blocco di istruzioni composto `{ ... }`.",
+        "Errato. Le istruzioni di controllo del ciclo (`break`, `continue`) funzionano perfettamente all'interno del `do...while`."
+      ]
+    },
+    {
+      "id": "it_clang_464",
+      "widget_id": "widget_clang_464",
+      "topic": "Tipi senza segno — Rischio di underflow",
+      "q": "Cosa stamperà il ciclo con una variabile senza segno `unsigned int` in caso di decremento fino a zero?",
+      "hint": "Notate la chiamata esplicita a `break` quando `i == 0`.",
+      "options": [
+        "2 1 0 ",
+        "2 1 ",
+        "Ciclo infinito",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `i=2`, `i=1` e `i=0` vengono stampati i rispettivi valori. Quando `i=0`, si attiva la condizione `if (i == 0) break;` e il ciclo si interrompe. Output: \"2 1 0 \". (Senza `break` si verificherebbe un underflow a `UINT_MAX` e un ciclo infinito).",
+        "Errato. L'iterazione con `i = 0` farà in tempo a essere eseguita e a stampare '0' prima dell'attivazione del `break`.",
+        "Errato. In questo codice è presente un controllo esplicito `if (i == 0) break;` che protegge dal ciclo infinito.",
+        "Errato. L'uso di `unsigned int` nell'intestazione del ciclo è legale."
+      ]
+    },
+    {
+      "id": "it_clang_465",
+      "widget_id": "widget_clang_465",
+      "topic": "Ambito di visibilità (Scope) — Variabili del ciclo (C99)",
+      "q": "Cosa stamperà la `printf` dopo la fine del ciclo `for` se all'interno del ciclo è dichiarata una variabile con lo stesso nome?",
+      "hint": "Ricordate le regole di oscuramento delle variabili (Variable Shadowing) e l'ambito delle variabili dichiarate nel `for`.",
+      "options": [
+        "100",
+        "3",
+        "2",
+        "Errore di compilazione a causa della ridichiarazione di `i`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `int i = 0` dichiarata nell'intestazione del `for` ha un ambito limitato solo a questo ciclo. Essa oscura la `i` esterna. Dopo il completamento del ciclo, la `i` esterna rimane pari a 100. Output: \"100\".",
+        "Errato. La variabile interna del ciclo viene distrutta all'uscita dal ciclo senza modificare la `i` esterna.",
+        "Errato. Il valore del contatore del ciclo non viene trasferito alla variabile esterna.",
+        "Errato. La dichiarazione di una variabile in un blocco interno/intestazione di ciclo con lo stesso nome è assolutamente legale in C99."
+      ]
+    },
+    {
+      "id": "it_clang_466",
+      "widget_id": "widget_clang_466",
+      "topic": "Ciclo do...while — Post-elaborazione della condizione",
+      "q": "Quante volte verrà eseguito il corpo di questo ciclo `do...while`?",
+      "hint": "Ricordate che il `do...while` controlla la condizione solo DOPO l'esecuzione del corpo del ciclo.",
+      "options": [
+        "0 volte",
+        "1 volta",
+        "2 volte",
+        "All'infinito"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Nel do...while il corpo è garantito essere eseguito almeno 1 volta prima del controllo della condizione.",
+        "Corretto! Il corpo verrà eseguito 1 volta: `x` diventerà pari a 1. Successivamente verrà verificata la condizione `1 < 0` — è falsa e il ciclo terminerà.",
+        "Errato. Dopo la prima iterazione `x = 1`, quindi il controllo `1 < 0` fermerà il ciclo.",
+        "Errato. La condizione è falsa già al primo controllo."
+      ]
+    },
+    {
+      "id": "it_clang_467",
+      "widget_id": null,
+      "topic": "Cicli infiniti — Equivalenza della sintassi",
+      "q": "I costrutti `while (1)` e `for (;;)` sono funzionalmente e prestazionalmente equivalenti nel linguaggio C?",
+      "hint": "Pensate se il codice macchina generato differisce per queste due opzioni.",
+      "options": [
+        "Sì, sono assolutamente equivalenti",
+        "No, `while (1)` funziona più lentamente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Entrambi i costrutti creano un ciclo infinito. I compilatori C li traducono in un codice macchina assolutamente identico di salto incondizionato.",
+        "Errato. Non vi è alcuna differenza nelle prestazioni o nel comportamento tra di essi a livello di codice compilato."
+      ]
+    },
+    {
+      "id": "it_clang_468",
+      "widget_id": "widget_clang_468",
+      "topic": "Cicli annidati — Conteggio delle iterazioni totali",
+      "q": "A cosa sarà uguale il valore della variabile `count` dopo l'esecuzione dei cicli annidati?",
+      "hint": "Nei cicli annidati il numero totale di iterazioni del ciclo interno è pari al prodotto delle iterazioni dei cicli esterno e interno.",
+      "options": [
+        "3",
+        "4",
+        "7",
+        "12",
+        "16"
+      ],
+      "ans": 3,
+      "explanations": [
+        "Errato. Questo è solo il numero di iterazioni del ciclo esterno.",
+        "Errato. Questo è solo il numero di iterazioni del ciclo interno per un singolo passaggio del ciclo esterno.",
+        "Errato. Le iterazioni dei cicli annidati si moltiplicano, non si sommano.",
+        "Corretto! Il ciclo esterno viene eseguito 3 volte (i = 0, 1, 2). A ogni passo il ciclo interno viene eseguito 4 volte (j = 0, 1, 2, 3). In totale: 3 * 4 = 12.",
+        "Errato. Il ciclo esterno viene eseguito 3 volte, non 4."
+      ]
+    },
+    {
+      "id": "it_clang_469",
+      "widget_id": "widget_clang_469",
+      "topic": "Operatore continue — Rischio di saltare l'incremento nel while",
+      "q": "Cosa succederà durante l'esecuzione di questo codice con un ciclo `while` e l'istruzione `continue`?",
+      "hint": "Osservate cosa succede al contatore `i` quando la chiamata a `continue` passa il controllo direttamente alla condizione del `while`.",
+      "options": [
+        "Il programma stamperà 0 1 2",
+        "Il programma entrerà in un ciclo infinito (Infinite Loop)",
+        "Errore di compilazione"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Il codice non arriverà al completamento a causa del ciclo infinito.",
+        "Corretto! Quando `i` diventa pari a 1, si attiva `continue`. Il controllo salta direttamente alla verifica della condizione `while (i < 3)`, saltando `i++`. Il valore di `i` rimarrà per sempre pari a 1, portando a un ciclo infinito.",
+        "Errato. Sintatticamente il codice è completamente corretto."
+      ]
+    },
+    {
+      "id": "it_clang_470",
+      "widget_id": "widget_clang_470",
+      "topic": "Gestione delle stringhe — Ricerca del terminatore '\\0' tramite while",
+      "q": "A cosa sarà uguale la variabile `len` dopo l'esecuzione di questo ciclo di scorrimento della stringa?",
+      "hint": "L'array di caratteri \"C-lang\" contiene le lettere 'C', '-', 'l', 'a', 'n', 'g' e il carattere terminatore nullo '\\0' invisibile.",
+      "options": [
+        "5",
+        "6",
+        "7",
+        "0"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. La lunghezza della parola \"C-lang\" è di 6 caratteri.",
+        "Corretto! La stringa \"C-lang\" è composta da 6 caratteri visibili. Il ciclo incrementa `len` finché non incontra la barriera nulla `\\0`. Risultato: 6.",
+        "Errato. Il byte di terminazione nullo `\\0` termina il ciclo e non incrementa il contatore.",
+        "Errato. Il primo carattere 'C' non è uguale a `\\0`, quindi il ciclo inizierà a funzionare."
+      ]
+    },
+    {
+      "id": "it_clang_471",
+      "widget_id": "widget_clang_471",
+      "topic": "Condizioni complesse — AND logico (&&) nell'intestazione del for",
+      "q": "Cosa stamperà la `printf` dopo il completamento del ciclo?",
+      "hint": "Il ciclo si fermerà non appena almeno una delle parti della condizione `i < 5 && i != 3` diventerà falsa.",
+      "options": [
+        "0",
+        "2",
+        "3",
+        "4",
+        "5",
+        "Ciclo infinito"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Errato. La variabile `i` farà in tempo ad aumentare nelle prime iterazioni.",
+        "Errato. Con `i = 2` le condizioni `2 < 5` e `2 != 3` sono vere, quindi il passo `i++` aumenterà `i` fino a 3.",
+        "Corretto! Nelle iterazioni `i = 0, 1, 2` entrambe le parti della condizione sono vere. Quando `i` diventa pari a 3, il controllo `i != 3` dà falso. Il ciclo termina e la `printf` stampa 3.",
+        "Errato. Il ciclo non arriverà a 4 a causa dell'arresto quando `i = 3`.",
+        "Errato. La condizione `i != 3` interrompe il ciclo prima di raggiungere 5.",
+        "Errato. Il contatore aumenta a ogni passo, non c'è un ciclo infinito."
+      ]
+    },
+    {
+      "id": "it_clang_472",
+      "widget_id": "widget_clang_472",
+      "topic": "Algoritmo pratico — Somma delle cifre di un numero",
+      "q": "A cosa sarà uguale il valore di `sum` dopo la scomposizione del numero nel ciclo `while`?",
+      "hint": "L'operazione `% 10` dà l'ultima cifra del numero, mentre `/= 10` la scarta.",
+      "options": [
+        "3",
+        "5",
+        "6",
+        "123"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Errato. Questa è solo la prima cifra estratta (3).",
+        "Errato. Questa è la somma delle prime due cifre (3 + 2).",
+        "Corretto! Passo 1: `123 % 10 = 3`, `sum` = 3, `n` = 12. Passo 2: `12 % 10 = 2`, `sum` = 5, `n` = 1. Passo 3: `1 % 10 = 1`, `sum` = 6, `n` = 0. La condizione `n > 0` diventa falsa. Risposta: 6.",
+        "Errato. L'algoritmo somma le singole cifre, non il numero iniziale."
+      ]
+    },
+    {
+      "id": "it_clang_473",
+      "widget_id": "widget_clang_473",
+      "topic": "Variabile flag — Uscita anticipata per condizione",
+      "q": "A cosa sarà uguale l'indice `i` dopo il completamento della ricerca dell'elemento con valore 5?",
+      "hint": "Osservate attentamente se il ramo `else` (che contiene `i++`) viene eseguito quando viene trovata la corrispondenza.",
+      "options": [
+        "2",
+        "3",
+        "4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'elemento con valore 5 si trova all'indice 2 (`arr[2] == 5`). In questa iterazione viene eseguito il ramo `found = 1`, mentre `else` viene saltato (l'indice `i` rimane pari a 2). Al passo successivo `!found` dà 0 e il ciclo termina.",
+        "Errato. Poiché l'incremento `i++` si trovava nel ramo `else`, al momento della corrispondenza `i` non è aumentato fino a 3.",
+        "Errato. La ricerca viene interrotta dal flag `found` non appena viene individuato il 5."
+      ]
+    },
+    {
+      "id": "it_clang_474",
+      "widget_id": "widget_clang_474",
+      "topic": "Casi limite — Tipi a virgola mobile imprecisi (float/double)",
+      "q": "Qual è il pericolo critico della condizione `x != 1.0` quando si lavora con i tipi `double` o `float` in un ciclo?",
+      "hint": "Ricordate come i numeri a virgola mobile vengono memorizzati nella memoria binaria del computer.",
+      "options": [
+        "A causa dell'errore di arrotondamento `x` può «scavallare» il valore esatto 1.0 ed entrare in un ciclo infinito",
+        "È un errore di sintassi del compilatore C",
+        "Il ciclo non eseguirà mai alcuna iterazione",
+        "Il tipo `double` non può essere utilizzato nelle intestazioni dei cicli `for`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I numeri frazionari (ad esempio 0.2) non possono essere rappresentati con precisione nel sistema binario. L'errore accumulato farà sì che `x` diventi ad esempio 0.9999999999999999, e poi 1.1999999999999999, senza mai coincidere esattamente con `1.0`.",
+        "Errato. Sintatticamente il codice è assolutamente corretto; si tratta di un errore logico di precisione dei calcoli.",
+        "Errato. La prima iterazione con `x = 0.0` si avvierà senza problemi.",
+        "Errato. Le variabili a virgola mobile possono essere usate nel `for`, ma devono essere confrontate tramite una disuguaglianza del tipo `x < 1.0` e non strettamente con `!=`."
+      ]
+    },
+    {
+      "id": "it_clang_475",
+      "widget_id": "widget_clang_475",
+      "topic": "Errori per principianti — Accumulatore non inizializzato",
+      "q": "Questo codice garantisce l'ottenimento della somma corretta dei numeri da 1 a 5 (ovvero 15)?",
+      "hint": "Verificate il valore iniziale della variabile locale `sum` prima della prima addizione.",
+      "options": [
+        "No, poiché la variabile `sum` non è inizializzata a zero e contiene valore spazzatura",
+        "Sì, in C tutte le variabili locali vengono automaticamente inizializzate a zero"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili locali in C NON vengono inizializzate automaticamente a zero. La variabile `sum` contiene un valore casuale rimasto in memoria («spazzatura»), al quale verrà sommato `i`, portando a un risultato imprevedibile.",
+        "Errato. Nel linguaggio C le variabili locali automatiche contengono valore spazzatura arbitrario dalla memoria se non vengono esplicitamente inizializzate (`int sum = 0;`)."
+      ]
+    },
+    {
+      "id": "it_clang_476",
+      "widget_id": "widget_clang_476",
+      "topic": "Istruzione break — Ambito di azione nei cicli annidati",
+      "q": "A cosa sarà uguale la variabile `total` dopo l'esecuzione del codice?",
+      "hint": "Ricordate che l'istruzione `break` interrompe SOLO il singolo ciclo immediatamente all'interno del quale si trova.",
+      "options": [
+        "1",
+        "3",
+        "6",
+        "9",
+        "0"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Il ciclo esterno eseguirà 3 iterazioni.",
+        "Corretto! Il ciclo esterno eseguirà 3 iterazioni (`i = 0, 1, 2`). All'interno, all'iterazione `j = 0` aumenterà `total++`. All'iterazione `j = 1` si attiverà `break`, che uscirà dal ciclo interno. In totale: 1 operazione per ciascuno dei 3 passaggi del ciclo esterno = 3.",
+        "Errato. Il ciclo interno termina anticipatamente a `j = 1`, senza raggiungere `j = 2`.",
+        "Errato. Senza l'istruzione `break` il risultato sarebbe stato 9 (3 * 3).",
+        "Errato. La variabile `total` aumenterà sicuramente alla prima iterazione di ogni ciclo."
+      ]
+    },
+    {
+      "id": "it_clang_477",
+      "widget_id": "widget_clang_477",
+      "topic": "Incremento prefisso — Influenza sulla condizione del ciclo",
+      "q": "A cosa sarà uguale la variabile `count` dopo il completamento del ciclo `while (++i < 3)`?",
+      "hint": "Con l'incremento prefisso `++i` la variabile aumenta PRIMA del controllo della condizione.",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Il ciclo eseguirà più di un'iterazione.",
+        "Corretto! 1) `++i` rende `i = 1`. Controllo `1 < 3` (vero), `count` diventa 1. 2) `++i` rende `i = 2`. Controllo `2 < 3` (vero), `count` diventa 2. 3) `++i` rende `i = 3`. Controllo `3 < 3` (falso), il ciclo termina. Output: 2.",
+        "Errato. Al terzo passo `i` diventerà pari a 3 e la condizione `3 < 3` fermerà il ciclo.",
+        "Errato. Il ciclo eseguirà esattamente 2 iterazioni."
+      ]
+    },
+    {
+      "id": "it_clang_478",
+      "widget_id": "widget_clang_478",
+      "topic": "Limiti degli array — Errore fuori di uno (Off-by-one)",
+      "q": "Quale errore pericoloso è presente nel ciclo di scorrimento di un array di 5 elementi?",
+      "hint": "Ricordate qual è l'indice dell'ultimo elemento di un array di dimensione 5.",
+      "options": [
+        "Accesso oltre i limiti dell'array (Out-of-bounds read) all'iterazione `i = 5`",
+        "L'indice dell'array in C non può iniziare da 0",
+        "Errore di sintassi nell'intestazione del `for`",
+        "Il ciclo verrà eseguito solo 4 volte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C gli elementi di un array di 5 elementi hanno indici da `0` a `4`. La condizione `i <= 5` porterà al tentativo di lettura di `arr[5]`, uscendo dai limiti della memoria allocata e causando Comportamento Indefinito (Undefined Behavior).",
+        "Errato. La numerazione degli array in C inizia sempre proprio da 0.",
+        "Errato. La sintassi del ciclo è corretta.",
+        "Errato. A causa del segno `<=` il ciclo tenterà di eseguire 6 iterazioni (per `i = 0, 1, 2, 3, 4, 5`)."
+      ]
+    },
+    {
+      "id": "it_clang_479",
+      "widget_id": "widget_clang_479",
+      "topic": "Conteggio alla rovescia — Conteggio delle iterazioni da N a 0",
+      "q": "Quante iterazioni eseguirà il ciclo di conteggio alla rovescia `for (int i = 3; i >= 0; i--)`?",
+      "hint": "Non dimenticate di prendere in considerazione l'iterazione in cui `i` diventa strettamente pari a 0.",
+      "options": [
+        "3",
+        "4",
+        "5",
+        "0",
+        "Ciclo infinito",
+        "1"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. È stata dimenticata l'iterazione per `i = 0`.",
+        "Corretto! Il ciclo verrà eseguito per i valori `i = 3`, `i = 2`, `i = 1` e `i = 0`. Poiché il segno del controllo è `>=`, il valore 0 rientra nel ciclo. In totale: 4 iterazioni.",
+        "Errato. I valori minori di 0 (ad esempio -1) non supereranno il controllo `i >= 0`.",
+        "Errato. Il valore iniziale `i = 3` soddisfa la condizione `3 >= 0`.",
+        "Errato. Poiché `i` è un `int` con segno, diventerà normalmente pari a -1, la condizione si interromperà e non ci sarà alcun ciclo infinito.",
+        "Errato. Il ciclo farà 4 passi."
+      ]
+    },
+    {
+      "id": "it_clang_480",
+      "widget_id": null,
+      "topic": "Gestione dell'annidamento — Uscita anticipata da più cicli",
+      "q": "Quale costrutto del linguaggio C permette di effettuare un'uscita immediata contemporaneamente da più cicli profondamente annidati verso un'etichetta speciale?",
+      "hint": "Un normale `break` esce solo da un singolo ciclo corrente.",
+      "options": [
+        "L'istruzione `goto`",
+        "L'istruzione `break 2;`",
+        "L'istruzione `continue`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Sebbene `goto` sia considerato uno strumento sconsigliato, l'uscita da cicli fortemente annidati verso un'etichetta (ad esempio `goto cleanup;`) è una delle poche attività classiche in C in cui l'uso di `goto` è giustificato dagli standard di stile.",
+        "Errato. Nel linguaggio C l'istruzione `break` non accetta parametri numerici per la profondità di uscita (a differenza di alcuni altri linguaggi come PHP).",
+        "Errato. `continue` passa soltanto il controllo alla successiva iterazione del ciclo PIÙ INTERNO."
+      ]
+    }
+  ]
+}

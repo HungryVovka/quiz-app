@@ -1,0 +1,625 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_119",
+      "widget_id": "widget_clang_119",
+      "topic": "Linux CLI — Misurazione del tempo di esecuzione (time)",
+      "q": "Cosa significano i valori real, user e sys nell'output del comando time ./app?",
+      "hint": "Distingui tra il tempo reale (wall-clock) e il tempo CPU nelle diverse modalità.",
+      "options": [
+        "real — tempo fisico di esecuzione, user — tempo CPU nel codice utente, sys — tempo CPU nelle chiamate di sistema (kernel)",
+        "real — tempo di lavoro del disco, user — tempo di immissione da tastiera, sys — tempo di sistema del SO",
+        "real — tempo di compilazione, user — tempo di esecuzione, sys — tempo di debugging",
+        "real — tempo di memoria, user — tempo di processore, sys — tempo di scheda video"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `real` è il tempo effettivo trascorso («wall-clock»). `user` è il tempo CPU totale dedicato al codice del programma. `sys` è il tempo CPU speso dal kernel per eseguire le chiamate di sistema del programma.",
+        "Sbagliato. Questi sono indicatori precisi della distribuzione delle risorse del processore.",
+        "Sbagliato. `time` misura i parametri di un singolo processo specifico durante l'esecuzione.",
+        "Sbagliato. I parametri descrivono solo il tempo CPU e di sistema."
+      ]
+    },
+    {
+      "id": "it_clang_120",
+      "widget_id": "widget_clang_120",
+      "topic": "Linux CLI — Disassemblaggio con objdump",
+      "q": "A cosa serve il comando objdump -d durante l'analisi di un programma C compilato?",
+      "hint": "La lettera -d sta per disassemble.",
+      "options": [
+        "Per visualizzare le istruzioni assembly in codice macchina delle sezioni dell'eseguibile",
+        "Per rimuovere la tabella dei simboli dal binario",
+        "Per decompilare il codice macchina e riportarlo in codice sorgente C",
+        "Per verificare la presenza di memory leak nella memoria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `objdump -d` disassembla le sezioni eseguibili di un file binario ELF, consentendo di vedere le reali istruzioni macchina in assembly.",
+        "Sbagliato. Della rimozione dei simboli si occupa l'utility `strip`.",
+        "Sbagliato. `objdump` mostra il codice assembly, non ricrea il codice sorgente C.",
+        "Sbagliato. Della verifica dei memory leak si occupa `Valgrind`."
+      ]
+    },
+    {
+      "id": "it_clang_121",
+      "widget_id": "widget_clang_121",
+      "topic": "Linux CLI — Rimozione dei simboli con l'utility strip",
+      "q": "Cosa fa il comando strip su un file binario dell'applicazione?",
+      "hint": "Pensa a come ridurre le dimensioni del file finale di release.",
+      "options": [
+        "Rimuove la tabella dei simboli e le informazioni di debug per ridurre le dimensioni del file",
+        "Comprime il file binario con l'algoritmo gzip",
+        "Elimina il file eseguibile dal disco in modo irreversibile",
+        "Svuota la memoria dinamica (heap) dell'applicazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'utility `strip` rimuove le tabelle dei simboli e le sezioni di debug DWARF, riducendo notevolmente la dimensione del file eseguibile o della libreria condivisa `.so` prima della release.",
+        "Sbagliato. `strip` non usa archiviazione o compressione, rimuove i metadati.",
+        "Sbagliato. Per eliminare i file si usa `rm`.",
+        "Sbagliato. `strip` opera sul file statico su disco, non sulla memoria durante l'esecuzione."
+      ]
+    },
+    {
+      "id": "it_clang_122",
+      "widget_id": "widget_clang_122",
+      "topic": "Linux CLI — Analisi delle dimensioni delle sezioni ELF (size)",
+      "q": "Quali informazioni restituisce l'utility da riga di comando size ./app?",
+      "hint": "Ricorda le sezioni standard dei file ELF: text, data, bss.",
+      "options": [
+        "Le dimensioni delle sezioni di memoria .text, .data e .bss del file eseguibile in byte",
+        "La dimensione del file su disco tenendo conto di tutti i permessi di accesso",
+        "La dimensione della memoria virtuale allocata al momento dell'avvio",
+        "Il numero di righe di codice nel progetto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'utility `size` mostra la dimensione dei segmenti principali del file binario: `.text` (codice), `.data` (dati globali inizializzati) e `.bss` (dati non inizializzati).",
+        "Sbagliato. La dimensione su disco è mostrata da `ls -lh` o `stat`.",
+        "Sbagliato. Il consumo dinamico di memoria viene misurato da utility come `top`, `ps` o `valgrind`.",
+        "Sbagliato. Le righe di codice vengono conteggiate da `cloc` o `wc -l`."
+      ]
+    },
+    {
+      "id": "it_clang_123",
+      "widget_id": "widget_clang_123",
+      "topic": "Linux CLI — Profilazione con gprof",
+      "q": "Quale flag è necessario passare a GCC durante la build per analizzare le prestazioni del codice C tramite gprof?",
+      "hint": "Questo flag fa sì che il compilatore inserisca codice per raccogliere dati di profilazione in gmon.out.",
+      "options": [
+        "-pg",
+        "-profile",
+        "-gprof",
+        "-O3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-pg` inserisce contatori di chiamate di funzione nell'eseguibile. All'avvio del programma viene generato il file `gmon.out`, che viene poi analizzato da `gprof`.",
+        "Sbagliato. Il flag `-profile` non esiste in GCC.",
+        "Sbagliato. Il nome dell'utility è `gprof`, ma il flag del compilatore è `-pg`.",
+        "Sbagliato. `-O3` imposta il livello di ottimizzazione, non la profilazione."
+      ]
+    },
+    {
+      "id": "it_clang_124",
+      "widget_id": "widget_clang_124",
+      "topic": "Linux CLI — Sanitizer (AddressSanitizer)",
+      "q": "Cosa fa il parametro -fsanitize=address durante la build di un programma C?",
+      "hint": "AddressSanitizer (ASan) rileva gli errori di gestione della memoria direttamente a runtime.",
+      "options": [
+        "Integra un controllo dinamico rapido di out-of-bounds sugli array, use-after-free e memory leak a runtime",
+        "Ottimizza l'allineamento degli indirizzi nella memoria RAM",
+        "Crittografa i puntatori nel file binario",
+        "Verifica la conformità dello stile di codice allo standard PEP/MISRA"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! AddressSanitizer (ASan) sostituisce le chiamate di memoria e aggiunge controlli alla «shadow memory», terminando l'esecuzione con un report chiaro immediato a ogni sforamento dei limiti di un array o uso dopo la liberazione (use-after-free).",
+        "Sbagliato. ASan aumenta il consumo di memoria e rallenta leggermente il programma, ma non lo ottimizza.",
+        "Sbagliato. Nessuna crittografia viene eseguita.",
+        "Sbagliato. ASan opera durante l'esecuzione (runtime), non sullo stile del codice."
+      ]
+    },
+    {
+      "id": "it_clang_125",
+      "widget_id": "widget_clang_125",
+      "topic": "Linux CLI — Conversione di indirizzi in codice tramite addr2line",
+      "q": "Perché gli sviluppatori C utilizzano l'utility da riga di comando addr2line?",
+      "hint": "Il nome dell'utility sta per Address to Line.",
+      "options": [
+        "Converte un indirizzo di memoria esadecimale da un report di errore nel file C e nel numero di riga corrispondente",
+        "Calcola il numero totale di righe negli indirizzi di memoria",
+        "Associa gli indirizzi delle librerie a indirizzi IP di rete",
+        "Formatta il codice sorgente su un'unica riga"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se il programma crashato contiene i simboli di debug, `addr2line -e ./app 0x...` tradurrà l'indirizzo virtuale dell'istruzione nel nome del file `.c` e nella riga esatta di codice.",
+        "Sbagliato. L'utility non conta il numero di righe nel progetto.",
+        "Sbagliato. L'utility lavora con i simboli DWARF dei file ELF.",
+        "Sbagliato. È uno strumento di debugging binario/DWARF, non di formattazione del testo."
+      ]
+    },
+    {
+      "id": "it_clang_126",
+      "widget_id": "widget_clang_126",
+      "topic": "Linux CLI — Esecuzione di prova della build con make -n",
+      "q": "Cosa fa il flag -n (o --just-print) quando si invoca il sistema di build make?",
+      "hint": "Questo flag è utile per vedere quali comandi verrebbero eseguiti da make.",
+      "options": [
+        "Stampa i comandi che VERRANNO eseguiti per la build, ma non li esegue («dry run»)",
+        "Avvia la build con esecuzione parallela su N thread",
+        "Ignora tutti gli errori nel file Makefile",
+        "Crea un nuovo Makefile vuoto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `make -n` stampa sulla console l'intera catena di comandi per il compilatore e il linker senza eseguirli realmente. Questo aiuta a fare il debug del `Makefile` stesso.",
+        "Sbagliato. Della build parallela si occupa il flag `-j`.",
+        "Sbagliato. L'ignorare gli errori viene fatto con il flag `-k` o `-i`.",
+        "Sbagliato. `make -n` non crea file."
+      ]
+    },
+    {
+      "id": "it_clang_127",
+      "widget_id": "widget_clang_127",
+      "topic": "Linux CLI — Build parallela con make -j",
+      "q": "Cosa significa l'argomento -j4 nel comando make -j4?",
+      "hint": "La lettera j sta per jobs.",
+      "options": [
+        "Avvia fino a 4 task paralleli (task di compilazione) contemporaneamente per velocizzare la compilazione",
+        "Imposta il 4° livello di ottimizzazione del compilatore",
+        "Esegue la build solo del 4° file della lista",
+        "Imposta un limite di 4 GB di memoria RAM per la build"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-jN` definisce il numero di task eseguiti contemporaneamente (compilazione di file `.c` indipendenti), il che velocizza notevolmente la build su processori multicore.",
+        "Sbagliato. L'ottimizzazione è regolata dai flag del compilatore nel Makefile (ad es. `-O2`).",
+        "Sbagliato. `-j4` non seleziona il 4° file in ordine.",
+        "Sbagliato. Il flag non gestisce la quantità di memoria."
+      ]
+    },
+    {
+      "id": "it_clang_128",
+      "widget_id": "widget_clang_128",
+      "topic": "GDB CLI — Stampa di array tramite puntatore",
+      "q": "Cosa stamperà il comando (gdb) print *ptr@5 nel debugger GDB se ptr è un puntatore int*?",
+      "hint": "Il simbolo @ permette di specificare il numero di elementi da visualizzare in un array contiguo.",
+      "options": [
+        "I primi 5 elementi dell'array a cui punta ptr",
+        "Il valore del 5° elemento dell'array (ptr[5])",
+        "Il valore all'indirizzo ptr moltiplicato per 5",
+        "Un errore di sintassi (l'operatore @ non è consentito in GDB)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `*ptr@len` in GDB permette di stampare un array di `len` elementi a partire dall'indirizzo `ptr`.",
+        "Sbagliato. Il quinto elemento viene stampato come `print ptr[4]` o `print *(ptr+4)`.",
+        "Sbagliato. Per la moltiplicazione si usa il classico operatore `*`.",
+        "Sbagliato. L'operatore `@` è una funzionalità speciale di GDB per lavorare con la memoria tramite puntatori."
+      ]
+    },
+    {
+      "id": "it_clang_129",
+      "widget_id": "widget_clang_129",
+      "topic": "GDB CLI — Punti di osservazione (Watchpoints)",
+      "q": "In cosa differisce il comando (gdb) watch counter da un normale (gdb) break?",
+      "hint": "Un watchpoint non reagisce al raggiungimento di una riga di codice, ma alla modifica della memoria.",
+      "options": [
+        "watch sospende l'esecuzione del programma nel momento in cui il valore della variabile counter CAMBIA",
+        "watch sospende il programma alla prima LETTURA della variabile counter",
+        "watch traccia i memory leak della variabile counter",
+        "watch rimuove la variabile counter dalla memoria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un `watchpoint` ferma il programma subito dopo che un'istruzione della CPU modifica il valore nella variabile/area di memoria monitorata.",
+        "Sbagliato. Per monitorare la lettura della memoria si usa `rwatch` (read watchpoint).",
+        "Sbagliato. I watchpoint di GDB non cercano memory leak.",
+        "Sbagliato. Il comando non modifica la struttura della memoria del programma."
+      ]
+    },
+    {
+      "id": "it_clang_130",
+      "widget_id": "widget_clang_130",
+      "topic": "Linux CLI — Esecuzione autonoma del preprocessore cpp",
+      "q": "Quale funzione svolge il binario cpp su un sistema Linux?",
+      "hint": "cpp non è C++, ma C PreProcessor.",
+      "options": [
+        "È un preprocessore C autonomo che sostituisce le direttive #include e le macro senza invocare il compilatore",
+        "È un compilatore C++",
+        "È un'utility per la verifica della sintassi C",
+        "È un gestore di pacchetti di librerie C/C++"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `cpp` (C PreProcessor) avvia direttamente il preprocessore C. Il risultato è un testo elaborato con macro espanse ed header inseriti.",
+        "Sbagliato. Il compilatore C++ è `g++` o `clang++`.",
+        "Sbagliato. `cpp` esegue sostituzioni testuali, non un'analisi sintattica completa.",
+        "Sbagliato. I gestori di pacchetti sono `conan`, `vcpkg` o i tool di sistema come apt/dnf."
+      ]
+    },
+    {
+      "id": "it_clang_131",
+      "widget_id": "widget_clang_131",
+      "topic": "Linux CLI — Visualizzazione dei dump di dati tramite xxd",
+      "q": "Perché gli sviluppatori C utilizzano utility come xxd o hexdump?",
+      "hint": "Pensa al lavoro con file di dati binari o dump non testuali.",
+      "options": [
+        "Per visualizzare il contenuto di file binari in formato esadecimale (hex) e ASCII",
+        "Per convertire il codice C in HTML",
+        "Per comprimere i file in formato hex",
+        "Per crittografare i dati del programma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le utility `xxd` e `hexdump` mostrano i byte grezzi dei file binari in una griglia esadecimale con l'output parallelo dei caratteri ASCII stampabili.",
+        "Sbagliato. Della conversione del codice in HTML si occupano i syntax highlighter come `highlight`.",
+        "Sbagliato. La rappresentazione esadecimale aumenta le dimensioni del file, non le comprime.",
+        "Sbagliato. L'utility mostra semplicemente i byte."
+      ]
+    },
+    {
+      "id": "it_clang_132",
+      "widget_id": "widget_clang_132",
+      "topic": "Linux CLI — Aggiornamento della cache delle librerie (ldconfig)",
+      "q": "Perché si esegue il comando sudo ldconfig dopo aver copiato una nuova libreria .so nella cartella di sistema /usr/local/lib?",
+      "hint": "Come fa il linker dinamico a trovare rapidamente le librerie senza scansionare completamente tutte le cartelle?",
+      "options": [
+        "Aggiorna la cache di sistema delle librerie dinamiche (/etc/ld.so.cache), consentendo al loader di trovarle immediatamente",
+        "Compila i sorgenti della libreria in un file oggetto",
+        "Verifica che la libreria non contenga virus",
+        "Riavvia tutte le applicazioni C in esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il loader dinamico `ld.so` legge la cache binaria `/etc/ld.so.cache`. Il comando `ldconfig` scansiona le directory di sistema e aggiorna questa cache e i link simbolici.",
+        "Sbagliato. `ldconfig` non compila codice.",
+        "Sbagliato. Dei controlli di sicurezza si occupa un software antivirus.",
+        "Sbagliato. I processi non vengono riavviati durante l'aggiornamento della cache `ldconfig`."
+      ]
+    },
+    {
+      "id": "it_clang_133",
+      "widget_id": "widget_clang_133",
+      "topic": "Linux CLI — Modifica di RPATH tramite patchelf",
+      "q": "Per cosa si usa lo strumento patchelf quando si lavora con binari compilati in Linux?",
+      "hint": "Permette di modificare i metadati di un file ELF esistente.",
+      "options": [
+        "Permette di modificare l'RPATH e il nome dell'interprete dinamico in un file ELF esistente senza ricompilare",
+        "Corregge automaticamente i bug nel codice C",
+        "Applica patch al kernel Linux per velocizzare le chiamate di sistema",
+        "Converte i binari ELF nel formato .exe per Windows"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'utility `patchelf` consente di modificare i campi di servizio dell'header ELF di eseguibili o `.so` pronti (ad esempio cambiare il percorso delle dipendenze `RPATH` o dell'interprete `ld-linux.so`).",
+        "Sbagliato. `patchelf` non ha relazione con i bug semantici del codice sorgente C.",
+        "Sbagliato. L'utility lavora con i file ELF dell'utente, non con il kernel.",
+        "Sbagliato. Per l'esecuzione su Windows si usano Wine o la cross-compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_134",
+      "widget_id": "widget_clang_134",
+      "topic": "Linux CLI — Demangling dei simboli con c++filt",
+      "q": "Perché uno sviluppatore C potrebbe aver bisogno dell'utility c++filt durante l'analisi delle tabelle dei simboli?",
+      "hint": "Quando si chiamano librerie C++ da C o in codice misto compilato, i nomi delle funzioni vengono alterati (mangling).",
+      "options": [
+        "Decodifica («demangla») i nomi dei simboli alterati dal compilatore (ad esempio, _Z3foov -> foo())",
+        "Converte il codice C++ in C puro",
+        "Filtra le stringhe letterali nel file binario",
+        "Rimuove il codice C++ da un progetto C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I compilatori C++ (e alcune funzioni C) alterano i nomi delle funzioni nella tabella dei simboli per supportare l'overloading. `c++filt` riconverte il nome alterato in una firma di funzione leggibile.",
+        "Sbagliato. Non esegue la traduzione del codice.",
+        "Sbagliato. Per filtrare le stringhe si usano `grep` o `strings`.",
+        "Sbagliato. `c++filt` si limita a decodificare le stringhe di testo dei simboli."
+      ]
+    },
+    {
+      "id": "it_clang_135",
+      "widget_id": "widget_clang_135",
+      "topic": "Linux CLI — Profilatore di memoria Massif (Valgrind)",
+      "q": "Quale compito svolge lo strumento Massif all'interno di Valgrind (--tool=massif)?",
+      "hint": "Massif costruisce un grafico dell'utilizzo della memoria nel tempo.",
+      "options": [
+        "Profila il consumo di memoria RAM (heap/stack) nel tempo e genera snapshot dei punti di picco delle chiamate",
+        "Cerca condizioni di data race in programmi multithread",
+        "Verifica le prestazioni della scheda grafica (GPU)",
+        "Libera automaticamente la memoria dinamica non rilasciata"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `Massif` è un profilatore dell'heap. Scatta istantanee dettagliate dell'allocazione di memoria durante l'esecuzione del programma e mostra quali funzioni hanno allocato più memoria al momento del picco.",
+        "Sbagliato. Della ricerca delle data race si occupano gli strumenti `Helgrind` o `DRD` di Valgrind.",
+        "Sbagliato. Valgrind lavora con la CPU e la memoria dell'host.",
+        "Sbagliato. Valgrind non modifica il comportamento del codice né chiama `free` al posto del programmatore."
+      ]
+    },
+    {
+      "id": "it_clang_136",
+      "widget_id": "widget_clang_136",
+      "topic": "Linux CLI — UndefinedBehaviorSanitizer (UBSan)",
+      "q": "Cosa rileva il flag di compilazione -fsanitize=undefined?",
+      "hint": "UBSan cerca comportamenti non definiti durante l'esecuzione: overflow di signed int, divisioni per 0, ecc.",
+      "options": [
+        "Intercetta situazioni di comportamento non definito (signed overflow, divisione per 0, shift di bit non validi) durante l'esecuzione del programma",
+        "Trova le variabili non utilizzate in fase di compilazione",
+        "Rileva funzioni prive di uno specificatore return",
+        "Impedisce la compilazione del codice se non è presente la funzione main"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! UndefinedBehaviorSanitizer (UBSan) inserisce controlli sulle operazioni a runtime che violano lo standard (signed integer overflow, dereferenziazione di puntatori nulli, accessi a puntatori non allineati).",
+        "Sbagliato. Le variabili non utilizzate vengono rilevate dal flag statico `-Wunused-variable`.",
+        "Sbagliato. Il controllo sull'assenza del return si attiva con il flag `-Wreturn-type`.",
+        "Sbagliato. Questo viene verificato dal linker per impostazione predefinita."
+      ]
+    },
+    {
+      "id": "it_clang_137",
+      "widget_id": "widget_clang_137",
+      "topic": "GDB CLI — Modalità batch per CI/CD",
+      "q": "Perché negli script di test automatico (CI/CD) si usano i flag gdb -batch -ex \"bt\" ./app core?",
+      "hint": "Il flag -batch disabilita la modalità interattiva, mentre -ex esegue un comando di debug.",
+      "options": [
+        "Per estrarre automaticamente il backtrace dallo stack da un file core di un programma crashato nella console e chiudere immediatamente GDB",
+        "Per connettersi in modo interattivo a un server che è andato in crash",
+        "Per forzare il riavvio di un programma crashato",
+        "Per convertire un file core in codice C testuale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-batch` disabilita il prompt interattivo di GDB, `-ex \"bt\"` esegue il comando di stampa dello stack di chiamate (`backtrace`) sul file `core` generato dal crash e restituisce immediatamente il controllo alla pipeline.",
+        "Sbagliato. `-batch` esclude l'interazione interattiva.",
+        "Sbagliato. In questa modalità GDB legge soltanto il dump di memoria.",
+        "Sbagliato. Il codice sorgente non viene ricostruito dal file `core`."
+      ]
+    },
+    {
+      "id": "it_clang_138",
+      "widget_id": "widget_clang_138",
+      "topic": "Linux CLI — File system virtuale /proc",
+      "q": "Cosa si può scoprire leggendo il file virtuale /proc/$PID/maps di un programma C in esecuzione?",
+      "hint": "Il file maps contiene informazioni sui segmenti di indirizzi di memoria del processo.",
+      "options": [
+        "La mappa dell'indirizzamento della memoria virtuale del processo (indirizzi di stack, heap, librerie .so caricate e i relativi permessi di accesso)",
+        "Tutti i file `.c` sorgenti usati dal programma",
+        "La cronologia dei comandi inseriti dall'utente nel programma",
+        "Password e chiavi di crittografia del processo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il file `/proc/$PID/maps` contiene una panoramica completa dello spazio di indirizzamento del processo: intervalli di indirizzi virtuali, permessi (`rwxp`), offset e moduli dinamici caricati.",
+        "Sbagliato. I file sorgente C non sono contenuti nell'interfaccia virtuale del kernel `/proc`.",
+        "Sbagliato. Della cronologia di input si occupano altre librerie (readline/bash history).",
+        "Sbagliato. Questo file mostra lo schema di memoria, non dati segreti dell'applicazione."
+      ]
+    },
+    {
+      "id": "it_clang_139",
+      "widget_id": "widget_clang_139",
+      "topic": "Linux CLI — Visualizzazione dei file descriptor aperti (lsof)",
+      "q": "Per quale motivo un programmatore C utilizza il comando lsof -p <PID>?",
+      "hint": "lsof sta per List Open Files.",
+      "options": [
+        "Mostra tutti i file aperti, le socket di rete e le pipe tenute aperte dal processo specificato",
+        "Calcola il numero di righe nei file del progetto",
+        "Termina forzatamente il processo con il PID specificato",
+        "Svuota la cache su disco del processo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `lsof -p <PID>` mostra un elenco di tutti i file descriptor aperti (inclusi file regolari, dispositivi, socket di rete e canali FIFO) utilizzati dal processo indicato. Utile per trovare leak di file descriptor.",
+        "Sbagliato. Le righe dei file si contano con `wc`.",
+        "Sbagliato. Della terminazione dei processi si occupa il comando `kill`.",
+        "Sbagliato. Della pulizia delle cache si occupa il kernel del SO."
+      ]
+    },
+    {
+      "id": "it_clang_140",
+      "widget_id": null,
+      "topic": "GCC — Ottimizzazione e debugging (-O0)",
+      "q": "È vero che il flag -O0 disabilita le ottimizzazioni del compilatore GCC, rendendo la generazione del codice estremamente lineare e comoda per il debugging passo-passo in GDB?",
+      "hint": "Al livello -O0, le istruzioni in codice macchina corrispondono strettamente all'ordine delle righe nel sorgente C.",
+      "options": [
+        "Vero (-O0 disabilita le ottimizzazioni, evitando «salti» tra le righe durante il debugging)",
+        "Falso (Il flag -O0 attiva il livello massimo di ottimizzazione)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-O0` disabilita la maggior parte delle trasformazioni del codice. Le variabili non vengono eliminate dalla memoria nei registri senza necessità e l'ordine delle istruzioni rispecchia fedelmente il codice C originale.",
+        "Sbagliato. Le ottimizzazioni massime standardizzate si attivano con i flag `-O3` o `-Ofast`."
+      ]
+    },
+    {
+      "id": "it_clang_141",
+      "widget_id": "widget_clang_141",
+      "topic": "Linux CLI — Sostituzione delle funzioni tramite LD_PRELOAD",
+      "q": "Cosa succede quando si avvia un programma specificando la variabile d'ambiente LD_PRELOAD?",
+      "hint": "Questa variabile imposta una libreria prioritaria per il loader ld.so.",
+      "options": [
+        "Il loader dinamico carica la libreria specificata prima di tutte le altre, consentendo di intercettare (hookare) funzioni come malloc() o write()",
+        "Il programma viene ricompilato forzatamente da capo prima di essere chiamato",
+        "Il loader restituisce un errore di sicurezza e blocca completamente l'esecuzione del binario"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `LD_PRELOAD` permette di inserire la propria libreria `.so` con la massima priorità. Se al suo interno è dichiarata una funzione `malloc()`, il loader collegherà le chiamate dell'applicazione direttamente alla tua implementazione.",
+        "Sbagliato. `LD_PRELOAD` funziona solo nella fase di collegamento delle librerie dinamiche da parte del loader all'avvio, senza ricompilazione.",
+        "Sbagliato. Il loader avvierà correttamente il programma (a meno che non sia attiva la modalità SUID per file appartenenti all'utente root)."
+      ]
+    },
+    {
+      "id": "it_clang_142",
+      "widget_id": null,
+      "topic": "Linux CLI — Determinazione dei parametri dei binari con l'utility file",
+      "q": "Quale utility consente di scoprire all'istante l'architettura di un file binario (32/64-bit), il tipo di collegamento (dynamically linked) e la presenza di simboli di debug (stripped / not stripped)?",
+      "hint": "Una semplice utility di sistema per determinare il tipo di file tramite la sua firma.",
+      "options": [
+        "file ./app",
+        "cat ./app",
+        "stat ./app",
+        "type ./app"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `file` analizza gli header dei numeri magici (Magic Numbers) e restituisce un riepilogo dettagliato: `ELF 64-bit LSB executable, x86-64, dynamically linked, with debug_info, not stripped`.",
+        "Sbagliato. `cat` si limiterà a stampare caratteri binari incomprensibili sullo schermo del terminale.",
+        "Sbagliato. `stat` mostra i permessi di accesso, la dimensione del file e i timestamp (atime, mtime, ctime).",
+        "Sbagliato. `type` indica se un comando è integrato nella shell (builtin) o se è un file esterno."
+      ]
+    },
+    {
+      "id": "it_clang_143",
+      "widget_id": null,
+      "topic": "GCC — Trasformazione dei warning in errori (-Werror)",
+      "q": "Quale tra i seguenti flag del compilatore GCC costringe a trattare assolutamente tutti i warning come errori fatali, interrompendo la build?",
+      "hint": "Utilizzato nei sistemi CI/CD per garantire un'elevata qualità del codice.",
+      "options": [
+        "-Werror",
+        "-Wall",
+        "-Wextra",
+        "-Wfatal-errors",
+        "-Wpedantic"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-Werror` indica a GCC di interrompere il processo di compilazione al riscontro di anche un solo warning.",
+        "Sbagliato. `-Wall` abilita soltanto un set base di warning.",
+        "Sbagliato. `-Wextra` abilita controlli aggiuntivi.",
+        "Sbagliato. `-Wfatal-errors` interrompe la compilazione al primo ERRORE (error), ma non trasforma i warning in errori.",
+        "Sbagliato. `-Wpedantic` emette warning sulla non conformità allo standard ISO C rigido."
+      ]
+    },
+    {
+      "id": "it_clang_144",
+      "widget_id": "widget_clang_144",
+      "topic": "Linux CLI — Segnali predefiniti dei processi",
+      "q": "Quale segnale viene inviato a un processo per impostazione predefinita quando si chiama il comando kill <PID> senza flag aggiuntivi?",
+      "hint": "Questo segnale richiede al processo di terminare correttamente il proprio lavoro (numero di segnale 15).",
+      "options": [
+        "SIGTERM (15)",
+        "SIGKILL (9)",
+        "SIGINT (2)",
+        "SIGSEGV (11)",
+        "SIGHUP (1)",
+        "SIGABRT (6)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `kill PID` invia il segnale `SIGTERM` (15), dando al programma la possibilità di intercettarlo, ripulire le risorse e terminare in modo regolare.",
+        "Sbagliato. `SIGKILL` (9) viene inviato specificando esplicitamente `kill -9` o `kill -KILL`.",
+        "Sbagliato. `SIGINT` (2) viene solitamente inviato con la combinazione di tasti `Ctrl+C`.",
+        "Sbagliato. `SIGSEGV` (11) viene generato dal kernel in caso di violazione della protezione della memoria.",
+        "Sbagliato. `SIGHUP` (1) viene inviato quando si chiude il terminale.",
+        "Sbagliato. `SIGABRT` (6) viene invocato dalla funzione `abort()` o dal fallimento di un `assert()`."
+      ]
+    },
+    {
+      "id": "it_clang_145",
+      "widget_id": null,
+      "topic": "GCC — Compilazione statica con la libreria standard",
+      "q": "È vero che quando si compila un programma C con il flag -static il file eseguibile finale include tutte le funzioni libc necessarie (ad esempio printf, malloc) e non richiede le librerie libc.so per l'esecuzione?",
+      "hint": "La compilazione statica incorpora il codice delle librerie direttamente all'interno del binario.",
+      "options": [
+        "Vero (Il file risulta autonomo, ma di dimensioni notevolmente maggiori)",
+        "Falso (Le librerie condivise vengono comunque caricate a runtime)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-static` indica al linker di incorporare tutto il codice delle librerie all'interno dell'eseguibile stesso. L'applicazione non richiede librerie `.so` esterne, ma aumenta di dimensioni.",
+        "Sbagliato. Con il linking dinamico le librerie vengono caricate tramite `ld.so`, ma con `-static` il loader dinamico non viene affatto utilizzato."
+      ]
+    },
+    {
+      "id": "it_clang_146",
+      "widget_id": "widget_clang_146",
+      "topic": "GDB CLI — Stampa delle variabili locali in tutti i frame dello stack",
+      "q": "Cosa fa il comando bt full nel debugger GDB?",
+      "hint": "Il comando bt (backtrace) mostra lo stack delle chiamate, mentre il modificatore full espande l'output.",
+      "options": [
+        "Stampa lo stack di chiamate delle funzioni (backtrace), mostrando le variabili locali in ciascun frame dello stack",
+        "Riavvia il debugging del programma con una pulizia completa di tutti i breakpoint",
+        "Stampa il codice assembly completo della funzione corrente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `bt full` non solo stampa i nomi delle funzioni e i numeri di riga dello stack di chiamate, ma visualizza anche automaticamente i valori di tutte le variabili locali per ciascun frame.",
+        "Sbagliato. Il riavvio si effettua con il comando `run`, e la cancellazione dei breakpoint con `delete`.",
+        "Sbagliato. Il codice assembly viene mostrato dal comando `disassemble`."
+      ]
+    },
+    {
+      "id": "it_clang_147",
+      "widget_id": null,
+      "topic": "Linux CLI — Indicizzazione del codice sorgente (ctags)",
+      "q": "Quale utility crea un file di indice 'tags' per spostarsi rapidamente alle definizioni di funzioni, strutture e tipi di dati negli editor da riga di comando (Vim/Emacs)?",
+      "hint": "Il nome dell'utility contiene la parola tags.",
+      "options": [
+        "ctags",
+        "gcc-index",
+        "objdump",
+        "grep"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'utility `ctags` (o `exuberant-ctags` / `universal-ctags`) scansiona i file C e crea una tabella di indici che consente a Vim di passare all'istante alla dichiarazione di una funzione posizionandosi su di essa.",
+        "Sbagliato. L'utility `gcc-index` non esiste nella suite di strumenti standard.",
+        "Sbagliato. `objdump` lavora con file ELF già compilati.",
+        "Sbagliato. `grep` effettua una ricerca testuale nei file, ma non genera una struttura di indici."
+      ]
+    },
+    {
+      "id": "it_clang_148",
+      "widget_id": "widget_clang_148",
+      "topic": "GCC — Analisi della copertura del codice con i test (gcov)",
+      "q": "Quale opzione di compilazione deve essere passata a GCC affinché durante l'esecuzione del programma vengano generati file di dati statistici (.gcda/.gcno) per lo strumento gcov?",
+      "hint": "Questo flag abilita la generazione di istruzioni per il conteggio della copertura del codice (Code Coverage).",
+      "options": [
+        "--coverage (o -fprofile-arcs -ftest-coverage)",
+        "-fPIC -shared",
+        "-fsanitize=address",
+        "-g -O3",
+        "-pg"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `--coverage` strumenta il codice in modo che durante l'esecuzione del programma vengano create statistiche sull'invocazione di ogni riga per la successiva analisi di copertura tramite `gcov` / `lcov`.",
+        "Sbagliato. `-fPIC -shared` si usano per compilare librerie dinamiche.",
+        "Sbagliato. `-fsanitize=address` attiva ASan per la ricerca di errori di memoria.",
+        "Sbagliato. `-g -O3` abilitano i simboli di debug e l'ottimizzazione massima.",
+        "Sbagliato. `-pg` si usa per la profilazione dei tempi di chiamata tramite l'utility `gprof`."
+      ]
+    },
+    {
+      "id": "it_clang_149",
+      "widget_id": "widget_clang_149",
+      "topic": "Linux CLI — Reindirizzamento di stdout e stderr nello stesso file",
+      "q": "Quale sintassi nella shell Bash unisce e reindirizza SIA lo standard output (stdout) SIA lo standard error (stderr) nel file log.txt?",
+      "hint": "In Bash moderno si usa l'operatore compatto &>.",
+      "options": [
+        "./app &> log.txt (oppure ./app > log.txt 2>&1)",
+        "./app 2> log.txt",
+        "./app < log.txt",
+        "./app 1>&2 log.txt",
+        "./app | log.txt",
+        "./app >> log.txt 0>&1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `&> log.txt` (o la classica `> log.txt 2>&1`) reindirizza entrambi i file descriptor (1 e 2) nello stesso file specificato.",
+        "Sbagliato. `2> log.txt` reindirizzerà SOLO gli errori (stderr).",
+        "Sbagliato. `< log.txt` invia il file allo standard input (stdin).",
+        "Sbagliato. `1>&2` reindirizza stdout in stderr.",
+        "Sbagliato. Il simbolo `|` crea una pipe per trasmettere il flusso a un altro programma, non a un file.",
+        "Sbagliato. `0>&1` collega l'input allo standard output."
+      ]
+    }
+  ]
+}

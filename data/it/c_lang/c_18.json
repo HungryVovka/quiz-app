@@ -1,0 +1,605 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_571",
+      "widget_id": "widget_clang_571",
+      "topic": "Operatore sizeof — Decadimento dell'array in un parametro puntatore",
+      "q": "Cosa stamperà `sizeof(arr)` all'interno della funzione `void test(int arr[10])` su un'architettura a 64 bit?",
+      "hint": "Ricorda in cosa il compilatore trasforma qualsiasi parametro array nelle intestazioni delle funzioni.",
+      "options": [
+        "8",
+        "40",
+        "10",
+        "4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nei parametri di funzione la specifica della dimensione dell'array `[10]` viene ignorata dal compilatore e il tipo `int arr[10]` si trasforma implicitamente nel puntatore `int *arr`. Su un sistema a 64 bit la dimensione di qualsiasi puntatore è pari a 8 byte.",
+        "Errato. 40 byte ($10 \\times 4$) sarebbe il valore di `sizeof(arr)` per un array locale al di fuori dei parametri di funzione.",
+        "Errato. `sizeof` restituisce la dimensione del tipo in byte, non il numero di elementi.",
+        "Errato. 4 è la dimensione del singolo tipo `int`, mentre l'operando è un puntatore."
+      ]
+    },
+    {
+      "id": "it_clang_572",
+      "widget_id": "widget_clang_572",
+      "topic": "Standard C99 — Valutazione dell'operando sizeof per array VLA a runtime",
+      "q": "Cosa stamperà `printf(\"%zu %d\", sizeof(arr), n)` durante la dichiarazione del VLA `int arr[n++]` con `n = 5`?",
+      "hint": "Per un VLA, `sizeof` è un contesto non valutato (unevaluated context) o un'espressione valutata a runtime?",
+      "options": [
+        "20 6",
+        "20 5",
+        "24 6",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per i tipi ordinari `sizeof` è un'espressione costante in fase di compilazione. Tuttavia, per i VLA (array a lunghezza variabile) la dimensione viene calcolata a runtime! L'espressione `n++` viene valutata: la dimensione dell'array prende il valore 5 ($5 \\times 4 = 20$ byte), mentre la variabile `n` stessa viene incrementata a 6. Output: `20 6`.",
+        "Errato. L'effetto collaterale di `n++` è obbligatoriamente eseguito, poiché l'operando è un VLA.",
+        "Errato. La dimensione dell'array viene calcolata in base al vecchio valore `n = 5`.",
+        "Errato. Il codice è perfettamente valido nello standard C99 e successivi."
+      ]
+    },
+    {
+      "id": "it_clang_573",
+      "widget_id": "widget_clang_573",
+      "topic": "Operatore sizeof — Assenza di effetti collaterali per tipi staticamente noti",
+      "q": "A quanto equivarranno `s` e `i` dopo l'esecuzione di `size_t s = sizeof(arr[i++])` per un array di dimensione fissa?",
+      "hint": "Gli effetti collaterali (come `i++`) vengono valutati all'interno di `sizeof` per i tipi ordinari?",
+      "options": [
+        "4 1",
+        "4 2",
+        "20 1",
+        "20 2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se l'operando di `sizeof` non è un VLA, l'espressione al suo interno NON viene valutata durante l'esecuzione (Unevaluated Context). Il compilatore considera solo il tipo dell'espressione `arr[i++]` (ovvero `int`, dimensione 4 byte). L'incremento `i++` non viene eseguito, quindi `i` rimane pari a 1. Output: `4 1`.",
+        "Errato. L'espressione `i++` viene scartata dal compilatore e non eseguita a runtime.",
+        "Errato. `arr[i]` è un singolo elemento di tipo `int` (4 byte), non l'intero array.",
+        "Errato. L'incremento `i++` non avviene e l'operando viene valutato come un singolo elemento."
+      ]
+    },
+    {
+      "id": "it_clang_574",
+      "widget_id": "widget_clang_574",
+      "topic": "Standard C99 — Membro array flessibile (Flexible Array Member) e sizeof",
+      "q": "Il membro array flessibile `char data[]` viene preso in considerazione nel calcolo di `sizeof(struct Buffer)`?",
+      "hint": "Quanta memoria aggiunge un membro array flessibile alla fine della struttura secondo lo standard?",
+      "options": [
+        "4",
+        "0",
+        "8",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C99, il membro array flessibile (Flexible Array Member) `char data[]` non aggiunge byte alla dimensione della struttura stessa restituita da `sizeof`. Nella dimensione della struttura rientra solo `int length` (4 byte, più eventuale allineamento). La memoria per l'array flessibile stesso viene allocata dinamicamente tramite `malloc`.",
+        "Errato. Il campo `int length` occupa 4 byte, quindi la dimensione della struttura non è 0.",
+        "Errato. 8 byte si otterrebbero solo in presenza di padding, ma per un singolo `int` l'allineamento è solitamente di 4 byte.",
+        "Errato. La sintassi degli array flessibili è ufficiale a partire da C99."
+      ]
+    },
+    {
+      "id": "it_clang_575",
+      "widget_id": "widget_clang_575",
+      "topic": "Operatore sizeof — Confronto tra sizeof(arr) e sizeof(&arr)",
+      "q": "Cosa stamperà `printf(\"%zu %zu\", sizeof(arr), sizeof(&arr))` su un sistema a 64 bit per `int arr[10]`?",
+      "hint": "Quali sono i tipi delle espressioni `arr` e `&arr` dal punto di vista dell'operando `sizeof`?",
+      "options": [
+        "40 8",
+        "40 40",
+        "8 8",
+        "10 8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `arr` in `sizeof(arr)` rappresenta l'array stesso `int[10]`, quindi restituirà $10 \\times 4 = 40$ byte. L'espressione `&arr` ha tipo \"puntatore a un array\" (`int(*)[10]`). Poiché l'operando è un PUNTATORE, `sizeof(&arr)` restituisce la dimensione del puntatore: 8 byte. Output: `40 8`.",
+        "Errato. `&arr` è un puntatore, la sua dimensione è pari a 8 byte, non 40.",
+        "Errato. Il nome dell'array `arr` all'interno di `sizeof` non decade in un semplice puntatore.",
+        "Errato. `sizeof` calcola la dimensione in byte, non il numero di elementi."
+      ]
+    },
+    {
+      "id": "it_clang_576",
+      "widget_id": "widget_clang_576",
+      "topic": "Tipi di dati — Conversione senza segno nel confronto con il risultato di sizeof (size_t)",
+      "q": "A cosa valuterà la condizione `if (-1 < sizeof(arr))` per l'array `int arr[3]`?",
+      "hint": "Quale tipo restituisce l'operatore `sizeof` e come avviene la conversione di tipo nel confronto tra signed e unsigned?",
+      "options": [
+        "False",
+        "True",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `sizeof` restituisce un valore di tipo `size_t` (intero senza segno). Per le regole di conversione dei tipi (Usual Arithmetic Conversions), il numero con segno `-1` nel confronto con l'unsigned `size_t` viene convertito automaticamente a `size_t`. Su un sistema a 64 bit, `-1` diventa `18446744073709551615` (`SIZE_MAX`). La condizione `18446744073709551615 < 12` è falsa (False)!",
+        "Errato. Sebbene matematicamente $-1 < 12$, la conversione implicita da `-1` con segno a `size_t` senza segno rende il valore enormemente grande.",
+        "Errato. Il confronto tra interi con e senza segno è sintatticamente corretto.",
+        "Errato. La logica della conversione dei tipi è rigorosamente definita dallo standard C."
+      ]
+    },
+    {
+      "id": "it_clang_577",
+      "widget_id": "widget_clang_577",
+      "topic": "Standard C99 — Applicazione di sizeof a un letterale composto (Compound Literal)",
+      "q": "A quanto equivale il risultato di `sizeof((double[]){1.0, 2.0, 3.0})`?",
+      "hint": "Quale tipo e quale dimensione ha questo array anonimo?",
+      "options": [
+        "24",
+        "8",
+        "3",
+        "32"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il letterale composto `(double[]){1.0, 2.0, 3.0}` crea un array anonimo di 3 elementi di tipo `double`. Nello standard C `sizeof(double)` è pari a 8 byte. La dimensione totale dell'array è: $3 \\times 8 = 24$ byte.",
+        "Errato. 8 byte è la dimensione di un singolo elemento `double`.",
+        "Errato. 3 è il numero di elementi, non il volume di memoria in byte.",
+        "Errato. La memoria allocata corrisponde esattamente a 3 elementi `double`."
+      ]
+    },
+    {
+      "id": "it_clang_578",
+      "widget_id": "widget_clang_578",
+      "topic": "Tipi di puntatori — Array di puntatori vs Puntatore a un array in sizeof",
+      "q": "Cosa stamperà `printf(\"%zu %zu\", sizeof(a), sizeof(b))` su un sistema a 64 bit per `int *a[5]` e `int (*b)[5]`?",
+      "hint": "Quale tra questi è un array di 5 puntatori e quale un singolo puntatore?",
+      "options": [
+        "40 8",
+        "8 40",
+        "40 40",
+        "8 8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `a` è un array di 5 puntatori `int*`. La sua dimensione è pari a $5 \\times 8 = 40$ byte. `b` è UN singolo puntatore a un array `int[5]`. La dimensione di qualsiasi puntatore è pari a 8 byte. Output: `40 8`.",
+        "Errato. I tipi sono invertiti: `a` è un array e `b` è un singolo puntatore.",
+        "Errato. `b` non è un array, le parentesi `(*b)` lo rendono un puntatore.",
+        "Errato. `a` è un array, quindi la sua dimensione è la somma della dimensione di tutti gli elementi."
+      ]
+    },
+    {
+      "id": "it_clang_579",
+      "widget_id": "widget_clang_579",
+      "topic": "Standard C99 — Conteggio degli elementi di un array con inizializzatore designato",
+      "q": "A quanto equivale il numero di elementi dell'array `sizeof(arr) / sizeof(arr[0])` con la dichiarazione `int arr[] = {[10] = 42}`?",
+      "hint": "Qual è l'indice massimo specificato nell'inizializzatore designato e quante celle allocherà in totale il compilatore?",
+      "options": [
+        "11",
+        "10",
+        "1",
+        "44"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'inizializzatore designato `[10] = 42` imposta esplicitamente l'elemento con indice 10. Il compilatore alloca memoria per gli indici da 0 a 10 inclusi, cioè per 11 elementi. Numero di elementi: $11 \\times 4 / 4 = 11$.",
+        "Errato. Poiché l'indicizzazione parte da 0, l'indice massimo 10 corrisponde a 11 elementi.",
+        "Errato. Gli elementi da 0 a 9 vengono creati e azzerati automaticamente.",
+        "Errato. 44 è la dimensione dell'array in byte ($11 \\times 4$), mentre la domanda riguarda il numero di elementi."
+      ]
+    },
+    {
+      "id": "it_clang_580",
+      "widget_id": "widget_clang_580",
+      "topic": "Operatore sizeof — Sezioni di un array tridimensionale",
+      "q": "A quanto equivale `sizeof(a[0])` per un array tridimensionale `int a[2][3][4]` con un `int` da 4 byte?",
+      "hint": "Quale tipo ha la sezione `a[0]` e qual è la sua dimensione?",
+      "options": [
+        "48",
+        "96",
+        "12",
+        "16"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'array `a` ha tipo `int[2][3][4]`. La sezione `a[0]` è un array bidimensionale di tipo `int[3][4]`. Numero di elementi al suo interno: $3 \\times 4 = 12$. In byte: $12 \\times 4 = 48$ byte.",
+        "Errato. 96 è la dimensione completa dell'intero array `sizeof(a)` ($2 \\times 3 \\times 4 \\times 4$).",
+        "Errato. 12 è il numero di elementi `int` nella sezione, mentre `sizeof` restituisce i byte.",
+        "Errato. 16 è la dimensione di una singola riga dell'ultima dimensione `int[4]`."
+      ]
+    },
+    {
+      "id": "it_clang_581",
+      "widget_id": "widget_clang_581",
+      "topic": "Operatore sizeof — Tipi di array incompleti (Incomplete Types)",
+      "q": "Cosa succede quando si tenta di applicare `sizeof` a un tipo di array incompleto `extern int incomplete_arr[];`?",
+      "hint": "Il compilatore conosce la dimensione esatta dell'array nell'unità di traduzione corrente?",
+      "options": [
+        "Errore di compilazione: `sizeof` non può essere applicato a tipi di dati incompleti",
+        "Restituirà 0",
+        "Restituirà 8 (dimensione del puntatore)",
+        "Comportamento indefinito in fase di linking (linker error)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, l'operando di `sizeof` deve avere un tipo completo (complete type). Per `extern int incomplete_arr[];` la dimensione dell'array non è definita in questo punto di traduzione, per cui tentare di calcolarne il `sizeof` causa un errore di compilazione.",
+        "Errato. Il compilatore non sostituisce 0 per i tipi incompleti.",
+        "Errato. Un array senza dimensione esplicita non decade automaticamente in un puntatore all'interno di `sizeof`.",
+        "Errato. L'errore viene rilevato rigorosamente in fase di compilazione, non di linking."
+      ]
+    },
+    {
+      "id": "it_clang_582",
+      "widget_id": "widget_clang_582",
+      "topic": "Operatore sizeof — Buffer di un array di caratteri vs Letterale stringa",
+      "q": "A quanto equivalgono `sizeof(a)` e `sizeof(\"abc\")` per `char a[10] = \"abc\"`?",
+      "hint": "Ricordi la differenza tra la dimensione del buffer allocato per l'array e la dimensione del letterale stringa?",
+      "options": [
+        "10 4",
+        "4 4",
+        "10 3",
+        "3 4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `sizeof(a)` calcola la memoria totale dell'array specificata nella dichiarazione: 10 byte. Il letterale stringa `\"abc\"` è composto da 3 caratteri più il terminatore nullo `'\\0'`, la sua dimensione è pari a 4 byte. Output: `10 4`.",
+        "Errato. La dimensione dell'array `a` è esplicitamente fissata a 10 byte.",
+        "Errato. Il letterale stringa `\"abc\"` include sempre `\\0`, quindi la sua dimensione è 4.",
+        "Errato. `sizeof` per `a` restituisce la dimensione dell'array, non la lunghezza della stringa contenuta."
+      ]
+    },
+    {
+      "id": "it_clang_583",
+      "widget_id": "widget_clang_583",
+      "topic": "Standard C99 — Dimensione di un array VLA multidimensionale",
+      "q": "A quanto equivale `sizeof(a)` per un array VLA bidimensionale `int a[n][m]` con `n = 2, m = 3` e un `int` da 4 byte?",
+      "hint": "La formula per la dimensione in memoria di un VLA funziona esattamente come per i normali array.",
+      "options": [
+        "24",
+        "6",
+        "8",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il VLA bidimensionale `int a[n][m]` calcola la dimensione totale a runtime moltiplicando tutte le dimensioni per la dimensione del tipo: $n \\times m \\times \\text{sizeof}(int) = 2 \\times 3 \\times 4 = 24$ byte.",
+        "Errato. 6 è il numero totale di elementi nella matrice.",
+        "Errato. 8 è la dimensione di un puntatore, ma `a` è dichiarato come array VLA.",
+        "Errato. Gli array VLA multidimensionali sono pienamente supportati dallo standard C99."
+      ]
+    },
+    {
+      "id": "it_clang_584",
+      "widget_id": "widget_clang_584",
+      "topic": "Operatore sizeof — Calcolo del numero totale di elementi di una matrice",
+      "q": "Quale valore restituirà la formula `sizeof(a) / sizeof(a[0][0])` per l'array `int a[4][5]`?",
+      "hint": "Cosa si ottiene dividendo la dimensione totale dell'intera matrice per la dimensione di un singolo elemento?",
+      "options": [
+        "20",
+        "4",
+        "5",
+        "80"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `sizeof(a)` è pari alla memoria totale della matrice ($4 \\times 5 \\times 4 = 80$ byte). `sizeof(a[0][0])` è la dimensione di un singolo elemento `int` (4 byte). Il risultato della divisione è: $80 / 4 = 20$ (numero totale di celle nella matrice).",
+        "Errato. 4 è il numero di righe `sizeof(a) / sizeof(a[0])`.",
+        "Errato. 5 è il numero di colonne `sizeof(a[0]) / sizeof(a[0][0])`.",
+        "Errato. 80 è la dimensione della matrice in byte."
+      ]
+    },
+    {
+      "id": "it_clang_585",
+      "widget_id": "widget_clang_585",
+      "topic": "Stringhe e sizeof — Letterali stringa con terminatori nulli incorporati",
+      "q": "A quanto equivale `sizeof(str)` per l'array `char str[] = \"a\\0b\\0c\"`?",
+      "hint": "Ricorda di considerare tutti i caratteri espliciti, incluso `\\0`, oltre al terminatore nullo finale implicito.",
+      "options": [
+        "6",
+        "1",
+        "5",
+        "3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il letterale stringa è composto dalla seguente sequenza di byte: `'a'`, `'\\0'`, `'b'`, `'\\0'`, `'c'`, più un terminatore nullo finale `'\\0'` implicito del letterale stesso. In totale 6 byte. L'operatore `sizeof(str)` restituisce la dimensione totale dell'array: 6.",
+        "Errato. 1 è il valore restituito da `strlen(str)`, che si arresta al primo `\\0`.",
+        "Errato. È stato dimenticato il terminatore nullo finale implicito del letterale stringa.",
+        "Errato. I caratteri `\\0` sono byte di dati a tutti gli effetti nell'array."
+      ]
+    },
+    {
+      "id": "it_clang_586",
+      "widget_id": "widget_clang_586",
+      "topic": "Puntatori e array — Combinazione di scostamento del puntatore e indicizzazione",
+      "q": "A quanto equivale il valore dell'espressione `p[1]`, se `p = a + 2` per l'array `a[] = {10, 20, 30, 40}`?",
+      "hint": "L'espressione `p[1]` si espande in `*(p + 1)`. A quale elemento dell'array originale punterà questo indirizzo?",
+      "options": [
+        "40",
+        "30",
+        "20",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `p` punta ad `a[2]` (valore 30). L'espressione `p[1]` calcola l'indirizzo `p + 1`, che corrisponde ad `a[3]`, e lo dereferenzia, restituendo 40.",
+        "Errato. 30 è `p[0]` (elemento `a[2]`).",
+        "Errato. 20 è `p[-1]` (elemento `a[1]`).",
+        "Errato. L'elemento `a[3]` si trova entro i limiti dell'array."
+      ]
+    },
+    {
+      "id": "it_clang_587",
+      "widget_id": "widget_clang_587",
+      "topic": "Array di puntatori — Accesso agli elementi tramite dereferenziazione",
+      "q": "A quanto equivale il risultato dell'espressione `*arr[1]` per l'array di puntatori `int *arr[3]`?",
+      "hint": "Considera la precedenza degli operatori: le parentesi quadre `[]` hanno precedenza rispetto alla dereferenziazione `*`.",
+      "options": [
+        "2",
+        "1",
+        "3",
+        "Indirizzo della variabile b"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `arr` è un array di puntatori `int*`. L'elemento `arr[1]` memorizza l'indirizzo `&b`. La dereferenziazione `*arr[1]` restituisce il valore della variabile `b`, cioè 2.",
+        "Errato. 1 si otterrebbe dereferenziando `*arr[0]`.",
+        "Errato. 3 si otterrebbe dereferenziando `*arr[2]`.",
+        "Errato. L'indirizzo viene restituito senza l'operatore di dereferenziazione `*`."
+      ]
+    },
+    {
+      "id": "it_clang_588",
+      "widget_id": "widget_clang_588",
+      "topic": "Memoria — Inizializzazione automatica di array statici",
+      "q": "Cosa stamperà `printf` durante la stampa degli elementi di un array dichiarato con la parola chiave `static` senza inizializzatore?",
+      "hint": "Con quali valori vengono inizializzate le variabili con durata di memorizzazione statica (static storage duration)?",
+      "options": [
+        "0 0 0",
+        "Valori indefiniti (dati spazzatura dalla memoria)",
+        "Errore di compilazione",
+        "1 1 1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili e gli array con durata di memorizzazione statica (`static` o globali) vengono automaticamente azzerati secondo lo standard C prima dell'avvio del programma.",
+        "Errato. Dati spazzatura dalla memoria vengono associati solo a variabili automatiche (locali) senza `static`.",
+        "Errato. Dichiarare un array senza un inizializzatore esplicito è sintatticamente corretto.",
+        "Errato. I valori predefiniti sono zeri."
+      ]
+    },
+    {
+      "id": "it_clang_589",
+      "widget_id": "widget_clang_589",
+      "topic": "Memoria — Array automatici non inizializzati",
+      "q": "Cosa restituirà la funzione leggendo il primo elemento di un array locale non inizializzato `int arr[3]`?",
+      "hint": "Gli array locali automatici sullo stack vengono inizializzati di default?",
+      "options": [
+        "Un valore indefinito (\"spazzatura\") dalla memoria",
+        "0",
+        "NULL",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli array automatici locali sullo stack non vengono inizializzati automaticamente. Leggerne gli elementi prima di una scrittura esplicita porta a ottenere dati spazzatura arbitrari dalla memoria (o UB in caso di rappresentazioni di byte non valide).",
+        "Errato. L'azzeramento automatico funziona solo per gli array statici o parzialmente inizializzati.",
+        "Errato. NULL si usa per i puntatori, non per i normali numeri `int`.",
+        "Errato. Il codice verrà compilato senza errori."
+      ]
+    },
+    {
+      "id": "it_clang_590",
+      "widget_id": "widget_clang_590",
+      "topic": "Memoria — Disposizione sequenziale di array bidimensionali (Row-Major Order)",
+      "q": "A quanto equivale il valore di `*(p + 3)` convertendo il tipo `int arr[2][3]` in un puntatore singolo `int*`?",
+      "hint": "Calcola quale elemento si troverà allo scostamento 3 in un blocco di memoria continuo di 6 numeri.",
+      "options": [
+        "4",
+        "3",
+        "5",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C gli array bidimensionali sono disposti per riga (Row-Major Order). La memoria viene riempita in ordine: `arr[0][0]` (1), `arr[0][1]` (2), `arr[0][2]` (3), `arr[1][0]` (4), `arr[1][1]` (5), `arr[1][2]` (6). Lo scostamento `+ 3` punta al 4° elemento: il numero 4.",
+        "Errato. 3 è l'elemento `arr[0][2]` (scostamento `+ 2`).",
+        "Errato. 5 è l'elemento `arr[1][1]` (scostamento `+ 4`).",
+        "Errato. Scorrere la memoria continua dell'array usando un puntatore base è corretto."
+      ]
+    },
+    {
+      "id": "it_clang_591",
+      "widget_id": "widget_clang_591",
+      "topic": "Funzioni — Passaggio di array tramite puntatore e modifica dell'originale",
+      "q": "L'elemento `arr[0]` cambierà nella funzione `main` dopo la chiamata a `modify(arr)`?",
+      "hint": "Gli array vengono passati alle funzioni per valore o tramite puntatore al primo elemento?",
+      "options": [
+        "Cambierà: stamperà 99, poiché il nome dell'array decade in un puntatore e la funzione modifica l'array originale",
+        "Non cambierà: stamperà 1, poiché gli array vengono passati per copia",
+        "Errore di compilazione: è vietato modificare gli elementi di un parametro array",
+        "Stamperà 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C gli array non vengono mai passati alle funzioni per valore. Il nome dell'array `arr` viene convertito in un puntatore `int*` al suo primo elemento. Modificare `a[0] = 99` all'interno di `modify` modifica direttamente la memoria dell'array originale `arr[0]`, quindi verrà stampato 99.",
+        "Errato. Gli array non vengono copiati interamente quando passati alle funzioni.",
+        "Errato. Il parametro `int a[]` è equivalente a `int *a`, la modifica della memoria tramite puntatore è consentita.",
+        "Errato. È stato assegnato il valore esplicito 99."
+      ]
+    },
+    {
+      "id": "it_clang_592",
+      "widget_id": "widget_clang_592",
+      "topic": "Strutture — Copia byte per byte di array all'interno di strutture",
+      "q": "A quanto equivarrà `b1.arr[0]` dopo la copia della struttura `b2 = b1` e la successiva modifica `b2.arr[0] = 99`?",
+      "hint": "Gli array all'interno delle strutture vengono copiati durante l'assegnazione di una struttura a un'altra?",
+      "options": [
+        "10: le strutture vengono copiate per valore (inclusi gli array incorporati), quindi `b1` rimarrà invariata",
+        "99: le strutture copiano solo gli indirizzi degli array, quindi anche `b1` cambierà",
+        "Errore di compilazione: non è possibile copiare strutture contenenti array tramite `=`",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza degli array isolati, un array all'interno di una struttura è un suo campo a tutti gli effetti. L'operatore `=` esegue una copia di tutti i campi della struttura per valore (copia byte per byte). `b2` ottiene una propria copia dell'array, per cui modificare `b2.arr[0]` non influisce su `b1.arr[0]`, e verrà stampato 10.",
+        "Errato. Gli array all'interno delle strutture non si trasformano in puntatori quando viene copiata la struttura stessa.",
+        "Errato. L'assegnazione di strutture è pienamente supportata dallo standard C.",
+        "Errato. Il comportamento della copia delle strutture è rigorosamente disciplinato."
+      ]
+    },
+    {
+      "id": "it_clang_593",
+      "widget_id": "widget_clang_593",
+      "topic": "Stringhe — Indicizzazione bidimensionale di un array di puntatori a stringhe",
+      "q": "Cosa stamperà l'espressione `names[1][0]` per un array di puntatori a stringhe `char *names[]`?",
+      "hint": "Quale stringa si trova all'indice `names[1]` e qual è il suo primo carattere?",
+      "options": [
+        "B",
+        "A",
+        "C",
+        "Bob"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `names[1]` seleziona il secondo puntatore al letterale stringa: `\"Bob\"`. Il secondo indice `[0]` legge il primo carattere di questa stringa: il carattere `'B'`. Lo specificatore `%c` stamperà proprio quello.",
+        "Errato. 'A' è il carattere `names[0][0]` (dalla stringa \"Alice\").",
+        "Errato. 'C' è il carattere `names[2][0]` (dalla stringa \"Charlie\").",
+        "Errato. Per stampare l'intera stringa \"Bob\" sarebbe servito lo specificatore `%s` e l'espressione `names[1]`."
+      ]
+    },
+    {
+      "id": "it_clang_594",
+      "widget_id": "widget_clang_594",
+      "topic": "Aritmetica dei puntatori — Sottrazione di puntatori a sotto-array int(*)[2]",
+      "q": "A quanto equivale la differenza `(arr + 2) - arr` per un array bidimensionale `int arr[3][2]`?",
+      "hint": "In quali unità viene calcolata la differenza di puntatori di tipo `int (*)[2]`?",
+      "options": [
+        "2",
+        "4",
+        "12",
+        "6"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `arr` ha tipo `int (*)[2]` (puntatore a un array di 2 elementi `int`). La sottrazione di due puntatori dello stesso tipo restituisce il numero di elementi di quel tipo compresi tra essi: $(arr + 2) - arr = 2$.",
+        "Errato. 4 è la differenza nel numero di elementi semplici `int`, non di sotto-array.",
+        "Errato. 12 è la differenza in byte ($2 \\times 2 \\times 4$ con un `int` da 4 byte).",
+        "Errato. 6 è il numero totale di elementi nell'intero array."
+      ]
+    },
+    {
+      "id": "it_clang_595",
+      "widget_id": "widget_clang_595",
+      "topic": "Stringhe — Indicizzazione diretta di un letterale stringa",
+      "q": "L'espressione `\"Hello\"[1]` è valida in C e quale carattere restituirà?",
+      "hint": "Un letterale stringa ha tipo array `char[]`, che decade in `char*` durante l'indicizzazione.",
+      "options": [
+        "e",
+        "H",
+        "l",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il letterale stringa `\"Hello\"` è un array di caratteri. Durante l'indicizzazione si converte implicitamente nel puntatore `char*` al primo carattere. L'espressione `\"Hello\"[1]` è equivalente a `*(\"Hello\" + 1)`, che fornisce il secondo carattere: `'e'`. Il codice è assolutamente valido.",
+        "Errato. 'H' è il carattere con indice 0 (`\"Hello\"[0]`).",
+        "Errato. 'l' è il carattere con indice 2.",
+        "Errato. Indicizzare direttamente i letterali è consentito dalla sintassi C."
+      ]
+    },
+    {
+      "id": "it_clang_596",
+      "widget_id": "widget_clang_596",
+      "topic": "Limiti dell'array — Accesso fuori dai limiti dell'array (Buffer Overflow)",
+      "q": "Cosa succede accedendo ad `arr[3]` per un array di tre elementi `int arr[3] = {10, 20, 30}`?",
+      "hint": "Qual è l'intervallo degli indici validi per un array di dimensione 3?",
+      "options": [
+        "Comportamento indefinito (UB): viene eseguita una lettura oltre i limiti dell'array",
+        "Restituirà 30",
+        "Restituirà 0",
+        "Si verificherà un errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli indici validi per un array di 3 elementi sono 0, 1 e 2. L'elemento `arr[3]` si trova oltre la memoria dell'array. Il linguaggio C non controlla i limiti degli array a runtime, quindi questo accesso porta a un Comportamento Indefinito (UB).",
+        "Errato. 30 è l'ultimo elemento valido `arr[2]`.",
+        "Errato. La memoria oltre i limiti dell'array non garantisce il valore 0.",
+        "Errato. Il compilatore C di solito non genera un errore di compilazione per un semplice superamento dell'indice (anche se potrebbe mostrare un avviso)."
+      ]
+    },
+    {
+      "id": "it_clang_597",
+      "widget_id": "widget_clang_597",
+      "topic": "Array — Inizializzazione parziale con parentesi annidate",
+      "q": "A quanto equivalgono gli elementi `a[0][1]` e `a[1][0]` per la matrice `int a[2][2] = {{1}}`?",
+      "hint": "Come vengono azzerati gli elementi omessi nei sotto-array?",
+      "options": [
+        "0 0",
+        "1 1",
+        "1 0",
+        "Dati spazzatura dalla memoria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La prima riga inizializza esplicitamente solo il primo elemento `a[0][0] = 1`, il secondo elemento della riga `a[0][1]` viene automaticamente azzerato. La seconda riga non ha inizializzatori espliciti tra parentesi, quindi tutti i suoi elementi (`a[1][0]` e `a[1][1]`) vengono anch'essi azzerati. Output: `0 0`.",
+        "Errato. Con il valore 1 viene inizializzato solo il primo elemento `a[0][0]`.",
+        "Errato. `a[1][0]` non riceve 1, poiché il secondo sotto-array non è inizializzato esplicitamente.",
+        "Errato. Se è presente un inizializzatore per almeno un elemento, tutti gli altri vengono azzerati."
+      ]
+    },
+    {
+      "id": "it_clang_598",
+      "widget_id": "widget_clang_598",
+      "topic": "Qualificatori di tipo — Protezione degli elementi dell'array tramite const nei parametri",
+      "q": "Quale sarà il risultato del tentativo di scrittura `a[0] = 10` all'interno della funzione `void print_first(const int a[])`?",
+      "hint": "Cosa protegge il qualificatore `const` posto prima del tipo degli elementi nel parametro?",
+      "options": [
+        "Errore di compilazione: gli elementi dell'array sono dichiarati come costanti (`const int`)",
+        "Modificherà il valore del primo elemento in 10",
+        "Genererà un avviso, ma compillerà ed eseguirà",
+        "Trasformerà il puntatore `a` in NULL"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La scrittura `const int a[]` si espande in `const int *a` (puntatore a un intero costante). Questo vieta la modifica dei valori a cui punta `a`. Tentare di modificare `a[0]` causerà un errore di compilazione.",
+        "Errato. `const` protegge gli elementi dalla modifica.",
+        "Errato. La modifica dei dati tramite puntatore a costante è considerata un errore rigido sui tipi.",
+        "Errato. `const` non influisce sul valore del puntatore stesso, ma solo sull'accesso in lettura/scrittura."
+      ]
+    },
+    {
+      "id": "it_clang_599",
+      "widget_id": "widget_clang_599",
+      "topic": "Puntatori ad array — Dereferenziazione e doppia indicizzazione int (*p)[N]",
+      "q": "A quanto equivale il valore di `p[1][0]` per un puntatore a un array `int (*p)[2] = arr`, se `arr` è `{{5, 10}, {15, 20}}`?",
+      "hint": "L'espressione `p[1]` seleziona la seconda riga dell'array. Quale elemento selezionerà l'indice `[0]`?",
+      "options": [
+        "15",
+        "5",
+        "10",
+        "20"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `p` ha tipo `int (*)[2]` e punta ad `arr[0]`. L'indicizzazione `p[1]` sposta il puntatore avanti di una riga e dà accesso alla seconda riga `{15, 20}`. L'indice aggiuntivo `[0]` seleziona il primo elemento di questa riga, cioè 15.",
+        "Errato. 5 è l'elemento `p[0][0]` (`arr[0][0]`).",
+        "Errato. 10 è l'elemento `p[0][1]` (`arr[0][1]`).",
+        "Errato. 20 è l'elemento `p[1][1]` (`arr[1][1]`)."
+      ]
+    },
+    {
+      "id": "it_clang_600",
+      "widget_id": "widget_clang_600",
+      "topic": "Dimensione dei tipi — Inizializzazione di un array di caratteri con un letterale stringa",
+      "q": "A quanto equivale `sizeof(a)` per l'array `char a[] = \"AB\"`?",
+      "hint": "Ricorda di considerare il terminatore nullo finale del letterale stringa.",
+      "options": [
+        "3",
+        "2",
+        "8",
+        "4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il letterale stringa `\"AB\"` è composto dai caratteri `'A'`, `'B'` e dal terminatore nullo finale implicito `'\\0'`. Dichiarando `char a[] = \"AB\"` viene creato un array di esattamente 3 byte, per cui `sizeof(a)` restituisce 3.",
+        "Errato. 2 è il numero di caratteri stampabili (restituito da `strlen`), senza considerare `'\\0'`.",
+        "Errato. 8 è la dimensione del puntatore `char*`, ma `a` è dichiarato come array.",
+        "Errato. Vengono allocati esattamente 3 byte per tre caratteri."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,581 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_941",
+      "widget_id": null,
+      "topic": "Storia degli standard — Dichiarazione implicita delle funzioni (Implicit Declaration)",
+      "q": "Come è cambiato l'approccio alla chiamata di una funzione senza una previa dichiarazione/prototipo nel passaggio dallo standard C89 a C99?",
+      "hint": "Pensaci: il C99 consente al compilatore di 'indovinare' la firma della функция come se restituisse int?",
+      "options": [
+        "Il C89 consentiva la dichiarazione implicita (il compilatore assumeva che la funzione restituisse int), mentre il C99 l'ha rigorosamente vietata",
+        "Il C89 vietava le dichiarazioni implicite, mentre il C99 le ha consentite per semplificare il codice",
+        "Non c'è stato alcun cambiamento — le dichiarazioni implicite sono consentite in tutti gli standard",
+        "Nel C99 la dichiarazione implicita è consentita, ma solo se la funzione restituisce un float"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel C89 esisteva la regola dell'«implicit int»: se una funzione veniva chiamata senza prototipo, il compilatore assumeva `int func()`. A partire dallo standard C99, le dichiarazioni implicite sono vietate ed è obbligatorio il prototipo o la definizione della funzione prima della chiamata.",
+        "Errato. Al contrario, il C89 consentiva la chiamata implicita, mentre il C99 ha rimosso questa possibilità.",
+        "Errato. La modifica dello standard C99 è stata un passo importante verso il miglioramento della sicurezza dei tipi (type safety).",
+        "Errato. Per impostazione predefinita, la dichiarazione implicita assumeva sempre il tipo `int`, non `float`."
+      ]
+    },
+    {
+      "id": "it_clang_942",
+      "widget_id": null,
+      "topic": "Ottimizzazione — Funzioni inline",
+      "q": "Qual è lo scopo principale dell'utilizzo dello specificatore inline prima della dichiarazione di una функция nello standard C99?",
+      "hint": "Inline è un comando rigido per il compilatore o solo un suggerimento?",
+      "options": [
+        "È un suggerimento al compilatore di incorporare il corpo della funzione direttamente nel punto di chiamata per eliminare il sovraccarico (overhead), ma il compilatore può ignorarlo",
+        "È una direttiva rigida che garantisce l'inlining al 100% a livello assembly",
+        "La parola chiave inline forza la funzione a essere eseguita in un thread separato",
+        "Vieta il passaggio di parametri per valore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `inline` segnala al compilatore di preferire la sostituzione delle chiamate di funzione con il suo corpo. Tuttavia, il compilatore prende la decisione finale in autonomia basandosi su euristiche di ottimizzazione.",
+        "Errato. Il compilatore può ignorare `inline` se la funzione è troppo complessa o ricorsiva.",
+        "Errato. La parola chiave `inline` non ha nulla a che fare con il multithreading.",
+        "Errato. Il modo di passare i parametri non cambia con l'uso di `inline`."
+      ]
+    },
+    {
+      "id": "it_clang_943",
+      "widget_id": "widget_clang_943",
+      "topic": "Puntatori a funzioni — Sintassi di dichiarazione",
+      "q": "Che cosa dichiara l'espressione `int (*func_ptr)(int, int)`?",
+      "hint": "Fai attenzione alle parentesi attorno a *func_ptr.",
+      "options": [
+        "Una variabile func_ptr che è un puntatore a una funzione che accetta due int e restituisce un int",
+        "Una функция func_ptr che restituisce un puntatore a int",
+        "Un array di due puntatori a funzioni",
+        "Un errore di sintassi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le parentesi `(*func_ptr)` legano l'asterisco al nome della variabile, rendendo `func_ptr` un puntatore. Le seconde parentesi `(int, int)` indicano che si tratta di un puntatore a una функция che accetta due `int` e restituisce un `int`.",
+        "Errato. Senza parentesi `int *func_ptr(int, int)` sarebbe una funzione che restituisce `int*`.",
+        "Errato. Per un array di puntatori occorrerebbero le parentesi quadre: `int (*func_ptr[2])(int, int)`.",
+        "Errato. È una sintassi standard e corretta per un puntatore a funzione."
+      ]
+    },
+    {
+      "id": "it_clang_944",
+      "widget_id": null,
+      "topic": "Ricorsione — Overflow dello stack (Stack Overflow)",
+      "q": "Qual è la conseguenza di una ricorsione profonda o infinita senza un caso base di uscita?",
+      "hint": "Dove vengono memorizzate le variabili locali e gli indirizzi di ritorno a ogni chiamata di funzione?",
+      "options": [
+        "Esaurimento della memoria dello stack delle chiamate (Stack Overflow) e terminazione anomala del programma (Segmentation Fault)",
+        "Overflow della memoria dinamica (Heap Overflow)",
+        "Il programma entrerà in un ciclo infinito senza bloccarsi, occupando il 100% della CPU per sempre",
+        "Il compilatore interromperà automaticamente l'esecuzione della funzione dopo 1000 iterazioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Ogni chiamata ricorsiva crea un nuovo frame di stack (Stack Frame) per memorizzare argomenti e variabili locali. Nella ricorsione infinita la memoria dello stack si esaurisce, portando a uno Stack Overflow e all'arresto del programma.",
+        "Errato. I frame di stack sono allocati nello stack, non nell'heap.",
+        "Errato. Lo stack ha una dimensione limitata (di solito pochi megabyte), quindi il programma si bloccherà inevitabilmente anziché funzionare per sempre.",
+        "Errato. Durante l'esecuzione (Runtime), il compilatore non controlla il numero di iterazioni ricorsive."
+      ]
+    },
+    {
+      "id": "it_clang_945",
+      "widget_id": "widget_clang_945",
+      "topic": "Funzioni di callback — Funzione standard qsort",
+      "q": "Qual è lo scopo della функция compare passata come argomento a qsort?",
+      "hint": "Come fa qsort a sapere quale dei due elementi dell'array è maggiore dell'altro?",
+      "options": [
+        "È una функция di callback di comparazione (comparatore) che definisce l'ordine di ordinamento degli elementi",
+        "Una функция per l'allocazione dinamica della memoria per l'array",
+        "Una функция per contare il numero di elementi nell'array",
+        "Una функция per la ricerca binaria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `qsort` utilizza un puntatore a una funzione comparatore (Callback) per confrontare due elementi. Il valore restituito (negativo, zero, positivo) indica il loro ordine relativo.",
+        "Errato. `qsort` ordina l'array sul posto (in-place) e non alloca memoria.",
+        "Errato. Il numero di elementi viene passato a `qsort` con un parametro separato `size_t nmemb`.",
+        "Errato. Per la ricerca binaria si usa la функция `bsearch`."
+      ]
+    },
+    {
+      "id": "it_clang_946",
+      "widget_id": "widget_clang_946",
+      "topic": "Ottimizzazione — Ricorsione in coda (Tail Call Optimization)",
+      "q": "Qual è il principale vantaggio della ricorsione in coda (Tail Recursion) durante la compilazione con ottimizzazione abilitata?",
+      "hint": "Nota: la chiamata ricorsiva è l'ultima istruzione della функция e il suo risultato viene restituito immediatamente.",
+      "options": [
+        "Il compilatore può ottimizzare la ricorsione in un normale ciclo senza allocare nuovi frame di stack per ogni chiamata",
+        "La funzione viene automaticamente parallelizzata su tutti i core del processore",
+        "I risultati dei calcoli vengono memorizzati automaticamente in cache",
+        "La funzione smette di consumare tempo di CPU"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con la ricorsione in coda, il compilatore (TCO — Tail Call Optimization) riutilizza il frame di stack corrente, trasformando la chiamata ricorsiva in un semplice salto (jump/loop). Questo previene lo stack overflow.",
+        "Errato. L'ottimizzazione in coda non rende il codice multithread.",
+        "Errato. La memorizzazione nella cache dei risultati (memoizzazione) richiede una logica specifica e non avviene automaticamente.",
+        "Errato. Il codice continua a essere eseguito sulla CPU, ma in modo più efficiente."
+      ]
+    },
+    {
+      "id": "it_clang_947",
+      "widget_id": null,
+      "topic": "Standard C11 — Specificatore _Noreturn",
+      "q": "Cosa segnala al compilatore lo specificatore _Noreturn (o noreturn da <stdnoreturn.h>) indicato prima di una funzione?",
+      "hint": "Questa функция restituisce il controllo al punto in cui è stata chiamata?",
+      "options": [
+        "La funzione non restituisce mai il controllo al codice chiamante (ad esempio, termina il programma tramite exit() o entra in un ciclo infinito)",
+        "La функция restituisce void",
+        "È vietato chiamare la функция più di una volta",
+        "La функция non содержит variabili locali"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `_Noreturn` informa il compilatore che la funzione garantisce di non restituire il controllo alla функция chiamante (ad es. `exit()`, `abort()` o un ciclo infinito). Ciò aiuta l'ottimizzatore e previene falsi avvertimenti.",
+        "Errato. Restituire `void` significa che la funzione restituisce il controllo, ma senza un valore specifico. `_Noreturn` indica proprio la mancanza del ritorno del controllo.",
+        "Errato. Il numero di chiamate alla функция non è limitato dallo specificatore.",
+        "Errato. Non ha nulla a che fare con la presenza di variabili locali."
+      ]
+    },
+    {
+      "id": "it_clang_948",
+      "widget_id": null,
+      "topic": "Funzione main — return 0 implicito nel C99",
+      "q": "Cosa succede secondo lo standard C99/C11 se il punto di esecuzione della функция main() raggiunge la parentesi graffa di chiusura } senza un'istruzione return esplicita?",
+      "hint": "Il comportamento di main() differisce da quello delle normali funzioni che restituiscono int?",
+      "options": [
+        "Il compilatore inserirà automaticamente un return 0; implicito (esito positivo)",
+        "Verrà restituito un valore indefinito casuale dal registro (Undefined Behavior)",
+        "Si verificherà un errore di compilazione",
+        "Il programma entrerà in un ciclo infinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A partire dallo standard C99, la функция `main()` è un'eccezione: se l'esecuzione raggiunge la fine di `main()` senza un `return`, il compilatore genera automaticamente `return 0;`.",
+        "Errato. Per le normali funzioni con tipo di ritorno `int` questo sarebbe UB, ma per `main()` è fatta un'eccezione speciale.",
+        "Errato. È un comportamento valido secondo lo standard C99 e successivi.",
+        "Errato. Non si verifica alcun ciclo infinito."
+      ]
+    },
+    {
+      "id": "it_clang_949",
+      "widget_id": "widget_clang_949",
+      "topic": "Funzioni variadiche — Obbligatorietà di va_end",
+      "q": "Quale macro della libreria <stdarg.h> DEVE essere assolutamente chiamata alla fine del lavoro con un numero variabile di argomenti prima di uscire dalla funzione?",
+      "hint": "Questa macro esegue la pulizia delle risorse di va_list.",
+      "options": [
+        "va_end",
+        "va_start",
+        "va_arg",
+        "va_copy"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La macro `va_end(args)` è obbligatoria per ripulire l'oggetto `va_list`. Omettere la chiamata a `va_end` prima di uscire dalla функция porta a un comportamento indefinito (Undefined Behavior) su alcune architetture.",
+        "Errato. `va_start` inizializza l'elenco degli argomenti all'inizio della funzione.",
+        "Errato. `va_arg` viene usata per estrarre in sequenza gli argomenti.",
+        "Errato. `va_copy` viene usata per copiare lo stato di `va_list`."
+      ]
+    },
+    {
+      "id": "it_clang_950",
+      "widget_id": null,
+      "topic": "Terminazione del programma — Differenza tra exit() e return",
+      "q": "Qual è la differenza fondamentale tra la chiamata exit(0) e l'istruzione return 0 all'interno di una функция ausiliaria (non main)?",
+      "hint": "exit() restituisce il controllo alla функция chiamante?",
+      "options": [
+        "exit(0) termina immediatamente l'intero programma da qualsiasi punto, mentre return 0 termina solo la функция corrente",
+        "exit(0) restituisce un valore alla функция chiamante, mentre return 0 termina il programma",
+        "Non c'è differenza, funzionano in modo identico",
+        "exit(0) può essere usata solo in C++, ma non in C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La функция `exit()` da `<stdlib.h>` svuota i buffer di I/O, chiama i gestori `atexit` e termina immediatamente l'intero processo. L'istruzione `return` effettua semplicemente il ritorno dal frame della функция corrente di un livello verso l'alto.",
+        "Errato. `exit()` interrompe l'esecuzione del processo e non restituisce un valore alla функция chiamante.",
+        "Errato. La differenza è fondamentale per il controllo del flusso di esecuzione del programma.",
+        "Errato. La функция `exit()` appartiene alla libreria standard del C fin dalle sue prime версии."
+      ]
+    },
+    {
+      "id": "it_clang_951",
+      "widget_id": "widget_clang_951",
+      "topic": "Valori restituiti — Puntatore a una variabile locale",
+      "q": "Quale consecuencia avrà la chiamata alla funzione get_ptr() e il tentativo di dereferenziare il puntatore restituito?",
+      "hint": "Cosa succede alle variabili locali di una funzione dopo essere usciti da essa?",
+      "options": [
+        "Comportamento indefinito (Undefined Behavior) / Puntatore sospeso (Dangling Pointer)",
+        "Il programma stamperà garantito il numero 100",
+        "Errore di compilazione — il C vieta di restituire puntatori",
+        "La memoria della variabile val verrà automaticamente trasferita nell'heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `val` ha una durata di memorizzazione automatica (Auto storage duration) e viene distrutta all'uscita da `get_ptr()`. L'indirizzo restituito fa riferimento a un frame di stack non valido. Dereferenziare un tale «dangling pointer» porta a un Undefined Behavior.",
+        "Errato. Sebbene il numero 100 possa rimanere temporaneamente in memoria, non ci si può affidare a questo — la memoria dello stack viene riutilizzata.",
+        "Errato. Il compilatore potrebbe emettere un avvertimento (Warning), ma sintatticamente verrà compilato.",
+        "Errato. Il C non trasferisce automaticamente nell'heap le variabili dello stack."
+      ]
+    },
+    {
+      "id": "it_clang_952",
+      "widget_id": "widget_clang_952",
+      "topic": "Classi di memorizzazione — Variabili locali statiche (static)",
+      "q": "Cosa stamperà il programma dopo tre chiamate consecutive alla funzione counter()?",
+      "hint": "Quante volte viene inizializzata una variabile con il modificatore static e dove viene memorizzata?",
+      "options": [
+        "1 2 3 ",
+        "1 1 1 ",
+        "0 0 0 ",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Una variabile locale con il modificatore `static` conserva il proprio valore tra le chiamate di funzione e viene inizializzata esattamente una volta all'avvio del programma. Ogni chiamata a `counter()` incrementa lo stesso contatore.",
+        "Errato. Il valore di `c` non viene ripristinato a 0 al rientro nella funzione.",
+        "Errato. L'incremento `c++` si attiva a ogni chiamata.",
+        "Errato. Le variabili locali statiche sono una funzionalità standard del linguaggio C."
+      ]
+    },
+    {
+      "id": "it_clang_953",
+      "widget_id": null,
+      "topic": "Linkage — Qualificatore static per le funzioni",
+      "q": "Quale effetto ha lo specificatore static prima del nome di una функция (ad es. static void helper(void))?",
+      "hint": "Questa функция sarà visibile in altri file sorgente (.c) durante il linking?",
+      "options": [
+        "Limita l'ambito di visibilità della funzione al file / unità di traduzione corrente (Internal Linkage)",
+        "Fa eseguire la funzione 2 volte più velocemente",
+        "Vieta l'uso di variabili locali all'interno della funzione",
+        "Rende la funzione visibile in tutti gli oggetti della build (External Linkage)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La parola chiave `static` a livello di file imposta un collegamento interno (Internal Linkage). La функция `helper` diventa «privata» per il modulo `.c` corrente e non è accessibile da altri file del progetto.",
+        "Errato. Il modificatore `static` gestisce il collegamento (Linkage) e non garantisce una velocizzazione.",
+        "Errato. All'interno di una функция statica è possibile dichiarare qualsiasi variabile locale.",
+        "Errato. Per impostazione predefinita le funzioni hanno un collegamento esterno (External Linkage) senza `static`."
+      ]
+    },
+    {
+      "id": "it_clang_954",
+      "widget_id": null,
+      "topic": "Valori restituiti — Ritorno di una struttura per valore",
+      "q": "Vero o falso: In linguaggio C una funzione può restituire un'intera struttura per valore utilizzando l'istruzione return?",
+      "hint": "È possibile scrivere struct Point make_point(void) { struct Point p = {1, 2}; return p; }?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza degli array, le strutture in C sono valori completi: possono essere passate alle funzioni per valore e restituite dalle funzioni tramite `return` (con copia completa dei campi della struttura).",
+        "Errato. Lo standard C supporta pienamente il ritorno di strutture per valore."
+      ]
+    },
+    {
+      "id": "it_clang_955",
+      "widget_id": "widget_clang_955",
+      "topic": "Gestione della memoria — Funzione alloca()",
+      "q": "Qual è la caratteristica chiave della funzione alloca() nell'allocazione di memoria all'interno di una funzione rispetto a malloc()?",
+      "hint": "Dove viene allocata la memoria quando si usa alloca e occorre chiamare free()?",
+      "options": [
+        "La memoria viene allocata direttamente sullo stack di chiamata e viene liberata automaticamente all'uscita dalla функция",
+        "La memoria viene allocata nell'heap, ma è protetta dalla scrittura",
+        "La memoria viene liberata automaticamente dopo 10 secondi",
+        "alloca() è più lenta di malloc()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `alloca()` alloca memoria direttamente nel frame di stack della функция corrente. Non occorre chiamare `free()` — la memoria verrà pulita automaticamente al ritorno dalla функция.",
+        "Errato. `alloca()` usa lo stack, non l'heap.",
+        "Errato. La durata della memoria è strettamente legata al termine della функция.",
+        "Errato. L'allocazione di memoria sullo stack tramite lo spostamento del puntatore di stack è generalmente molto più veloce di una richiesta all'heap tramite `malloc()`."
+      ]
+    },
+    {
+      "id": "it_clang_956",
+      "widget_id": null,
+      "topic": "Linkage — Qualificatore extern predefinito",
+      "q": "Quale collegamento (Linkage) hanno le normali funzioni in C per impostazione predefinita se non è specificata la parola chiave static?",
+      "hint": "Il linker sarà in grado di trovare questa функция durante la build da un altro file .c?",
+      "options": [
+        "Collegamento esterno (External Linkage)",
+        "Collegamento interno (Internal Linkage)",
+        "Nessun collegamento (No Linkage)",
+        "Collegamento dinamico (Dynamic Linkage)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Tutte le funzioni in C hanno per impostazione predefinita `extern` (External Linkage) e могут быть вызваны из любого другого модуля проекта, если там объявлен их прототип.",
+        "Errato. Il collegamento interno è specificato esplicitamente tramite `static`.",
+        "Errato. Nessun collegamento appartiene alle variabili locali della funzione.",
+        "Errato. Il collegamento dinamico si riferisce a librerie DLL/SO, non al tipo di linkage delle funzioni nel linguaggio."
+      ]
+    },
+    {
+      "id": "it_clang_957",
+      "widget_id": null,
+      "topic": "Architettura — Frame di stack (Stack Frame)",
+      "q": "Quale informazione NON è memorizzata nel frame di stack (Stack Frame) di una funzione durante la sua chiamata?",
+      "hint": "Quale delle seguenti opzioni viene allocata separatamente tramite il gestore di memoria?",
+      "options": [
+        "Memoria dinamica allocata tramite malloc()",
+        "Variabili locali automatiche della функция",
+        "Indirizzo di ritorno (Return Address) alla функция chiamante",
+        "Argomenti passati alla функция"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La memoria dinamica (`malloc`, `calloc`) viene allocata nell'heap e non è in alcun modo collegata al frame di stack. Il frame di stack contiene parametri, indirizzo di ritorno e variabili locali.",
+        "Errato. Le variabili locali sono memorizzate proprio nel frame di stack.",
+        "Errato. L'indirizzo di ritorno è obbligatorio affinché il processore sappia dove proseguire l'esecuzione dopo il `return`.",
+        "Errato. I parametri della функция vengono inseriti nello stack (o nei registri) alla chiamata."
+      ]
+    },
+    {
+      "id": "it_clang_958",
+      "widget_id": "widget_clang_958",
+      "topic": "Puntatori a funzioni — Chiamata di un puntatore NULL",
+      "q": "Cosa succede durante l'esecuzione del programma se si tenta di chiamare una funzione tramite un puntatore pari a NULL?",
+      "hint": "A quale indirizzo il processore tenterà di effettuare il salto (Instruction Pointer)?",
+      "options": [
+        "Arresto anomalo del programma (Segmentation Fault / Access Violation)",
+        "La funzione semplicemente non farà nulla e restituirà 0",
+        "Il programma salterà questa chiamata e proseguirà dalla riga successiva",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiamata all'indirizzo nullo `ptr()` costringe il processore a saltare all'indirizzo `0x0`. Poiché questo indirizzo è protetto dal sistema operativo, si verificherà il blocco del programma (Segmentation Fault).",
+        "Errato. Nel C non vi è alcun controllo automatico di NULL durante la chiamata tramite un puntatore a funzione.",
+        "Errato. Il processore tenterà di eseguire istruzioni all'indirizzo NULL e si bloccherà.",
+        "Errato. Sintatticamente il codice è corretto, l'errore si manifesterà a Runtime."
+      ]
+    },
+    {
+      "id": "it_clang_959",
+      "widget_id": "widget_clang_959",
+      "topic": "Valori restituiti — Memoria dinamica e responsabilità per free()",
+      "q": "Cosa succede nel codice mostrato se il codice chiamante in main() non chiama free() per il puntatore restituito dalla функция create_array()?",
+      "hint": "La memoria allocata con malloc() viene liberata automaticamente al termine della функция create_array()?",
+      "options": [
+        "Si verificherà una perdita di memoria (Memory Leak)",
+        "La memoria verrà liberata automaticamente all'uscita da create_array()",
+        "La memoria verrà liberata автоматически all'uscita da main()",
+        "Si verificherà un errore di Segmentation Fault"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La memoria allocata tramite `malloc()` ha una durata dinamica e si conserva fino alla chiamata esplicita di `free()`. Se non si chiama `free()`, la memoria allocata rimane occupata fino alla fine del processo (leak di memoria).",
+        "Errato. All'uscita da `create_array()` viene distrutto solo il puntatore locale `arr`, ma non l'area allocata nell'heap.",
+        "Errato. Il SO pulirà la memoria del processo alla sua chiusura, ma all'interno del programma vi sarà una perdita fino al suo termine.",
+        "Errato. La mancata chiamata a `free` non porta a un arresto immediato."
+      ]
+    },
+    {
+      "id": "it_clang_960",
+      "widget_id": null,
+      "topic": "Convenzioni di chiamata — Calling Conventions",
+      "q": "Di cosa si occupa una convenzione di chiamata (Calling Convention, ad esempio cdecl, stdcall, fastcall)?",
+      "hint": "In che modo la функция e il codice chiamante si accordano sul passaggio dei parametri e sulla pulizia dello stack a livello di codice macchina?",
+      "options": [
+        "Definisce l'ordine di passaggio degli argomenti (tramite stack/registri) e chi ripulirà lo stack dopo la chiamata",
+        "Definisce il numero massimo di righe di codice nel corpo della функция",
+        "Determina se il codice verrà compilato per Windows o Linux",
+        "Formatta il codice sorgente della функция secondo PEP8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La Calling Convention regola dettagli di basso livello: in quale ordine gli argomenti vengono inseriti nello stack (da destra a sinistra o da sinistra a destra), quali registri vengono usati e quale parte (caller o callee) ripulisce lo stack.",
+        "Errato. Le convenzioni di chiamata non regolano la lunghezza delle funzioni.",
+        "Errato. Differenti ABI sono utilizzate su differenti SO, ma il concetto in sé regola il protocollo di trasferimento di basso livello.",
+        "Errato. PEP8 è una guida di stile per Python, non una convenzione di chiamata per il C."
+      ]
+    },
+    {
+      "id": "it_clang_961",
+      "widget_id": "widget_clang_961",
+      "topic": "Puntatori a funzioni — Tabelle di salto (Dispatch Tables)",
+      "q": "Come si dichiara correttamente un array `op` contenente 2 puntatori a funzioni che accettano due `int` e restituiscono `int`?",
+      "hint": "Fai attenzione alla sintassi di associazione tra parentesi quadre e asterisco del puntatore.",
+      "options": [
+        "int (*op[2])(int, int)",
+        "int *op[2](int, int)",
+        "int (op*)[2](int, int)",
+        "int (*op)(int, int)[2]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le parentesi `(*op[2])` definiscono `op` come un array di due elementi, ciascuno dei quali è un puntatore a una funzione con firma `(int, int) -> int`.",
+        "Errato. L'espressione `int *op[2](int, int)` dichiara un array di funzioni che restituiscono `int*`, il che non è valido in C.",
+        "Errato. Tale sintassi non è consentita nei linguaggi C/C++.",
+        "Errato. È una combinazione errata di puntatore ad array e funzione."
+      ]
+    },
+    {
+      "id": "it_clang_962",
+      "widget_id": "widget_clang_962",
+      "topic": "Controllo del flusso — Salti non locali (setjmp / longjmp)",
+      "q": "A cosa serve la coppia di funzioni/macro setjmp() e longjmp() della libreria standard <setjmp.h>?",
+      "hint": "Pensa ai modi per gestire errori profondi senza passare flag attraverso decine di return.",
+      "options": [
+        "Per eseguire salti non locali tra diverse funzioni ignorando il normale stack di ritorno",
+        "Per allocare memoria dinamica con ripristino al punto di salvataggio",
+        "Per l'esecuzione parallela di funzioni in thread separati del processore",
+        "Per l'ottimizzazione delle funzioni ricorsive in cicli"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `setjmp` salva il contesto di esecuzione (frame di stack e registri) nel buffer `jmp_buf`, mentre `longjmp` ripristina all'istante tale contesto, trasferendo il controllo da una funzione profondamente annidata di nuovo al punto di chiamata di `setjmp` (analogo alle eccezioni in C++).",
+        "Errato. `setjmp`/`longjmp` non hanno a che fare con l'allocazione di memoria.",
+        "Errato. È uno strumento di controllo del flusso all'interno di un singolo thread.",
+        "Errato. L'ottimizzazione della ricorsione viene gestita dal compilatore, non dalla libreria `<setjmp.h>`."
+      ]
+    },
+    {
+      "id": "it_clang_963",
+      "widget_id": null,
+      "topic": "Sicurezza e multithreading — Rientranza (Reentrancy)",
+      "q": "Quale funzione viene definita rientrante (Reentrant)?",
+      "hint": "Una tale функция può essere interrotta da un segnale ed essere richiamata all'interno dello stesso segnale senza effetti collaterali?",
+      "options": [
+        "Una функция la cui esecuzione può essere interrotta in qualsiasi momento e richiamata prima del termine della prima chiamata senza alterazione dei dati",
+        "Qualsiasi функция che chiama se stessa (funzione ricorsiva)",
+        "Una функция contenente solo uno stato locale statico",
+        "Una функция compilata con il livello massimo di ottimizzazione -O3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Una funzione rientrante lavora esclusivamente con variabili locali di stack o argomenti passati e non utilizza dati globali/statici modificabili.",
+        "Errato. La ricorsione è il fatto che una funzione chiami se stessa, ma non garantisce la sicurezza in caso di interruzioni.",
+        "Errato. La presenza di variabili statiche modificabili rende al contrario la funzione non rientrante.",
+        "Errato. Il flag di ottimizzazione `-O3` non rende il codice rientrante."
+      ]
+    },
+    {
+      "id": "it_clang_964",
+      "widget_id": null,
+      "topic": "Libreria standard — Thread-safety (strtok vs strtok_r)",
+      "q": "Perché la funzione standard strtok() non è thread-safe e quale funzione occorre usare al suo posto?",
+      "hint": "Dove salva strtok() la posizione intermedia tra le chiamate?",
+      "options": [
+        "strtok() usa un puntatore statico interno per salvare lo stato; occorre usare strtok_r() o strtok_s()",
+        "strtok() alloca memoria nell'heap in modo troppo intenso; occorre usare strtok_fast()",
+        "strtok() blocca il lavoro degli altri core del processore",
+        "strtok() funziona solo con stringhe ASCII fino a 256 caratteri"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strtok()` conserva l'indirizzo corrente all'interno di una variabile statica nascosta. Se due thread la chiamano contemporaneamente, lo stato viene corrotto. La versione rientrante `strtok_r()` accetta un puntatore al buffer di stato `char **saveptr` dall'esterno.",
+        "Errato. `strtok()` non alloca affatto memoria nell'heap.",
+        "Errato. La funzione non blocca i core del processore.",
+        "Errato. La lunghezza della stringa non è limitata a 256."
+      ]
+    },
+    {
+      "id": "it_clang_965",
+      "widget_id": null,
+      "topic": "Estensioni dei compilatori — Attributi __attribute__((const))",
+      "q": "Cosa garantisce al compilatore GCC/Clang l'attributo __attribute__((const)) durante la dichiarazione di una funzione?",
+      "hint": "I calcoli di tale функция dipendono da valori nella memoria globale o da puntatori?",
+      "options": [
+        "Il risultato della funzione dipende ESCLUSIVAMENTE dai suoi parametri ed essa non legge/modifica alcuna variabile globale o memoria tramite puntatori",
+        "La функция viene eseguita in tempo costante $O(1)$",
+        "La функция restituisce un valore costante di tipo const int",
+        "Tutti gli argomenti della функция sono automaticamente dichiarati costanti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'attributo `const` indica al compilatore che la funzione è matematicamente pura (non legge memoria globale e puntatori, non ha effetti collaterali). Ciò consente al compilatore di memorizzare completamente in cache il risultato della chiamata.",
+        "Errato. La valutazione della complessità algoritmica $O(1)$ non riguarda l'attributo.",
+        "Errato. L'attributo riguarda il comportamento della funzione, non solo il tipo di valore restituito.",
+        "Errato. L'attributo non applica automaticamente `const` ai parametri."
+      ]
+    },
+    {
+      "id": "it_clang_966",
+      "widget_id": null,
+      "topic": "Limitazioni del linguaggio — Ritorno di un array da una funzione",
+      "q": "In quale dei seguenti modi è POSSIBILE restituire un gruppo di valori (o un array) da una funzione in C?",
+      "hint": "Ricorda se il C è in grado di copiare le strutture per valore durante il return.",
+      "options": [
+        "Racchiudere l'array in una struttura (struct) e restituire la struttura per valore, oppure riempire un puntatore passato",
+        "Scrivere return int[3]{1, 2, 3};",
+        "Usare la sintassi return array[];",
+        "In C è impossibile restituire più di un valore in qualsiasi modo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Non è possibile restituire array grezzi per valore in C. Tuttavia, le strutture contenenti array sono tipi di dati completi e vengono copiate senza problemi tramite `return`.",
+        "Errato. La restituzione di un valore letterale di array `int[3]{...}` è una sintassi non valida in C.",
+        "Errato. La scrittura `return array[];` causerà un errore di compilazione.",
+        "Errato. Le strutture e i puntatori a buffer allocati risolvono con successo questo problema."
+      ]
+    },
+    {
+      "id": "it_clang_967",
+      "widget_id": "widget_clang_967",
+      "topic": "Linking — Simboli deboli (__attribute__((weak)))",
+      "q": "Perché nelle librerie C si usa l'attributo __attribute__((weak)) nella definizione di una funzione?",
+      "hint": "Cosa succede se l'utente crea una propria funzione con esattamente lo stesso nome?",
+      "options": [
+        "Consente di sovrascrivere tale funzione con una propria implementazione 'forte' durante la build senza generare errori di simbolo duplicato (Multiple Definition)",
+        "Disabilita il controllo dei tipi degli argomenti durante la chiamata alla функция",
+        "Riduce la priorità della функция nello scheduler del sistema operativo",
+        "Rende la функция in sola lettura"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un simbolo debole (weak symbol) funge da implementazione predefinita (default fallback). Se l'utente definisce nel proprio codice una funzione con lo stesso nome, il linker sostituirà silenziosamente la funzione debole con quella dell'utente.",
+        "Errato. Il controllo dei tipi in fase di compilazione viene mantenuto.",
+        "Errato. Gli attributi del linker non influenzano le priorità dello scheduler del SO.",
+        "Errato. Il codice delle funzioni viene comunque inserito solitamente nel segmento in sola lettura (.text)."
+      ]
+    },
+    {
+      "id": "it_clang_968",
+      "widget_id": null,
+      "topic": "Puntatori universali — Uso di void*",
+      "q": "Perché le funzioni generiche della libreria standard del C (ad esempio memcpy o qsort) usano il tipo void* per gli indirizzi di memoria?",
+      "hint": "È necessario un typecast esplicito quando si passa qualsiasi puntatore a void*?",
+      "options": [
+        "Un puntatore di tipo void* accetta automaticamente e senza typecast esplicito gli indirizzi di oggetti di qualsiasi tipo di dato",
+        "Il tipo void* funziona più velocemente dei normali puntatori",
+        "Il tipo void* disabilita l'allocazione di memoria sullo stack",
+        "È l'unico modo per lavorare con le stringhe in C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C `void*` è un puntatore universale. Qualsiasi puntatore a dati (`int*`, `struct Point*`, ecc.) viene convertito in modo implicito e sicuro a `void*` e viceversa.",
+        "Errato. A livello assembly tutti i puntatori sono uguali (un normale indirizzo), quindi non aggiunge velocità.",
+        "Errato. `void*` non ha a che fare con l'allocazione dello stack.",
+        "Errato. Per le stringhe si usa `char*`."
+      ]
+    },
+    {
+      "id": "it_clang_969",
+      "widget_id": "widget_clang_969",
+      "topic": "Preprocessore — Macro variadiche (__VA_ARGS__)",
+      "q": "Con quale sintassi nello standard C99 si dichiarano le macro che accettano un numero indefinito di argomenti da passare alle funzioni?",
+      "hint": "Usa i puntini di sospensione nei parametri della macro e un identificatore speciale nel corpo.",
+      "options": [
+        "#define LOG(fmt, ...) printf(fmt, __VA_ARGS__)",
+        "#define LOG(fmt, args) printf(fmt, args...)",
+        "#define LOG(fmt, ...) printf(fmt, ...)",
+        "#define LOG(fmt, args[]) printf(fmt, args)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A partire dallo standard C99, il preprocessore supporta le macro con un numero variabile di argomenti `...`, e la loro sostituzione nel corpo avviene tramite la parola chiave `__VA_ARGS__`.",
+        "Errato. La sintassi `args...` è tipica dei template C++, ma non del preprocessore C99.",
+        "Errato. Non è possibile usare `...` direttamente nel corpo della macro.",
+        "Errato. La sintassi `args[]` nelle macro non è consentita."
+      ]
+    }
+  ]
+}

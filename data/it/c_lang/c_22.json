@@ -1,0 +1,605 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_691",
+      "widget_id": "widget_clang_691",
+      "topic": "Aritmetica dei puntatori — Sottrazione di puntatori spostati p - (a + 1)",
+      "q": "A quanto equivale la differenza `p - (a + 1)` se `p = a + 3` per l'array `int a[4] = {10, 20, 30, 40}`?",
+      "hint": "Calcola gli indici degli elementi a cui fanno riferimento i puntatori `p` e `a + 1`.",
+      "options": [
+        "2",
+        "3",
+        "1",
+        "8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il puntatore `p` si riferisce all'elemento `a[3]`, mentre l'espressione `a + 1` si riferisce ad `a[1]`. La differenza tra puntatori viene calcolata in numero di elementi: $3 - 1 = 2$.",
+        "Non corretto. 3 è lo spostamento del puntatore `p` rispetto all'inizio dell'array `a`.",
+        "Non corretto. 1 è lo spostamento dell'espressione `a + 1`.",
+        "Non corretto. La differenza è misurata in elementi, non in byte."
+      ]
+    },
+    {
+      "id": "it_clang_692",
+      "widget_id": "widget_clang_692",
+      "topic": "Memoria dinamica — Accesso agli elementi tramite p + 1 dopo malloc",
+      "q": "Cosa stamperà `printf` durante il dereferenziamento `*(p + 1)` per un array allocato dinamicamente?",
+      "hint": "A quale elemento con indicizzazione tra parentesi quadre `p[i]` corrisponde la scrittura `*(p + 1)`?",
+      "options": [
+        "2",
+        "1",
+        "3",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il puntatore `p` restituito da `malloc` funziona in modo analogo al nome di un normale array. Il dereferenziamento `*(p + 1)` equivale a `p[1]`, in cui è memorizzato il valore 2.",
+        "Non corretto. 1 è l'elemento `p[0]` (`*p`).",
+        "Non corretto. 3 è l'elemento `p[2]` (`*(p + 2)`).",
+        "Non corretto. La memoria è stata inizializzata con i valori 1, 2 e 3."
+      ]
+    },
+    {
+      "id": "it_clang_693",
+      "widget_id": "widget_clang_693",
+      "topic": "Array di stringhe — Spostamento del puntatore al primo carattere *arr + 1",
+      "q": "Cosa stamperà `printf(\"%s\", *arr + 1)` per l'array di stringhe `char *arr[] = {\"Red\", \"Green\", \"Blue\"}`?",
+      "hint": "A quale stringa punta `*arr` e dove la sposta l'aggiunta di uno?",
+      "options": [
+        "ed",
+        "Red",
+        "Green",
+        "d"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `*arr` dereferenzia il primo elemento dell'array `arr[0]`, restituendo un puntatore alla stringa `\"Red\"`. Lo spostamento `+ 1` muove il puntatore al secondo carattere `'e'`. La funzione `printf` con lo specificatore `%s` stampa la sottostringa fino alla fine: `\"ed\"`.",
+        "Non corretto. \"Red\" verrebbe stampato senza lo spostamento `+ 1`.",
+        "Non corretto. \"Green\" verrebbe stampato chiamando `*(arr + 1)` o `arr[1]`.",
+        "Non corretto. Lo specificatore `%s` stampa l'intera stringa a partire dall'indirizzo specificato, non un singolo carattere."
+      ]
+    },
+    {
+      "id": "it_clang_694",
+      "widget_id": "widget_clang_694",
+      "topic": "Puntatori a funzione — Chiamata di funzione tramite fp(3, 4)",
+      "q": "Cosa stamperà il programma chiamando la funzione tramite il puntatore `fp(3, 4)`?",
+      "hint": "`fp` punta alla funzione `add` che restituisce la somma di due argomenti?",
+      "options": [
+        "7",
+        "12",
+        "0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `fp` memorizza l'indirizzo della funzione `add`. La sintassi `fp(3, 4)` invoca esplicitamente la funzione originale con gli argomenti 3 e 4, restituendo la loro somma: $3 + 4 = 7$.",
+        "Non corretto. 12 si otterrebbe moltiplicando i numeri.",
+        "Non corretto. La funzione restituisce il valore specifico della somma.",
+        "Non corretto. L'inizializzazione e la chiamata di un puntatore a funzione sono del tutto valide."
+      ]
+    },
+    {
+      "id": "it_clang_695",
+      "widget_id": "widget_clang_695",
+      "topic": "Preprocessore — Ordine di valutazione nelle macro senza parentesi",
+      "q": "A quanto equivale il risultato della macro `SQUARE(2 + 3)` con la definizione `#define SQUARE(x) x * x`?",
+      "hint": "Sostituisci letteralmente l'espressione `2 + 3` al posto di `x`, senza calcolarla preventivamente.",
+      "options": [
+        "11",
+        "25",
+        "10",
+        "13"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le macro del preprocessore vengono sostituite testualmente. L'espressione `SQUARE(2 + 3)` si espande in `2 + 3 * 2 + 3`. Rispettando la precedenza degli operatori, viene eseguita prima la moltiplicazione: $2 + (3 \\times 2) + 3 = 2 + 6 + 3 = 11$.",
+        "Non corretto. 25 ($(2+3)^2$) si otterrebbe se l'argomento della macro fosse racchiuso tra parentesi: `#define SQUARE(x) ((x) * (x))`.",
+        "Non corretto. Calcola attentamente la precedenza delle operazioni.",
+        "Non corretto. Le macro in C non valutano le espressioni prima della sostituzione."
+      ]
+    },
+    {
+      "id": "it_clang_696",
+      "widget_id": "widget_clang_696",
+      "topic": "Operazioni bit a bit — OR esclusivo bit a bit (XOR) sugli elementi",
+      "q": "A quanto equivale il risultato di `a[0] ^ a[1]` per l'array `int a[2] = {5, 12}`?",
+      "hint": "Converti i numeri 5 (`0101`) e 12 (`1100`) in formato binario ed applica l'operazione XOR.",
+      "options": [
+        "9",
+        "17",
+        "7",
+        "1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Convertiamo in binario: $5_{10} = 0101_2$, $12_{10} = 1100_2$. Applichiamo l'operazione XOR bit a bit: $0101 \\oplus 1100 = 1001_2$, che equivale a $9_{10}$.",
+        "Non corretto. 17 è la normale somma dei numeri $5 + 12$.",
+        "Non corretto. 7 si ottiene sottraendo $12 - 5$.",
+        "Non corretto. 1 si ottiene con l'AND bit a bit (`5 & 12`)."
+      ]
+    },
+    {
+      "id": "it_clang_697",
+      "widget_id": "widget_clang_697",
+      "topic": "Allineamento della memoria — Confronto della dimensione della struttura con la somma delle dimensioni dei campi",
+      "q": "Cosa restituirà il confronto `sizeof(struct Test) > sizeof(char) + sizeof(int)` in presenza di byte di allineamento (padding)?",
+      "hint": "Il compilatore aggiunge byte di riempimento aggiuntivi per l'allineamento dei campi in memoria?",
+      "options": [
+        "1 (True)",
+        "0 (False)",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A causa dei requisiti di allineamento dell'architettura, il campo `int` deve iniziare da un indirizzo multiplo di 4. Il compilatore inserisce 3 byte di padding dopo `char c`. Pertanto, `sizeof(struct Test)` è pari a 8 byte, che è strettamente maggiore di $1 + 4 = 5$ byte. Risultato del confronto: 1.",
+        "Non corretto. La dimensione di una struttura con allineamento supera solitamente la somma aritmetica dei suoi campi.",
+        "Non corretto. La sintassi per il calcolo delle dimensioni è del tutto corretta.",
+        "Non corretto. Le regole di allineamento sono fissate in modo rigido nell'ABI della piattaforma."
+      ]
+    },
+    {
+      "id": "it_clang_698",
+      "widget_id": "widget_clang_698",
+      "topic": "Alias di tipo — Operatore sizeof per tipo typedef di un array",
+      "q": "A quanto equivale `sizeof(a)` con `int` a 4 byte, se il tipo dell'array è definito come `typedef int IntArray[3]`?",
+      "hint": "Quanti byte occupa il tipo array `IntArray` di 3 elementi `int`?",
+      "options": [
+        "12",
+        "4",
+        "3",
+        "8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `typedef` crea un alias `IntArray` per il tipo «array di 3 int». L'oggetto `a` ha una dimensione pari a 3 elementi `int`. Il calcolo $3 \\times 4$ dà 12 byte.",
+        "Non corretto. 4 byte è la dimensione di un singolo elemento `int`.",
+        "Non corretto. 3 è il numero di elementi nell'array.",
+        "Non corretto. 8 è la dimensione di un normale puntatore."
+      ]
+    },
+    {
+      "id": "it_clang_699",
+      "widget_id": "widget_clang_699",
+      "topic": "Costanza — Puntatore a una costante const int *p",
+      "q": "Cosa stamperà `printf` reindirizzando il puntatore `const int *p = &x` a un altro indirizzo `&y`?",
+      "hint": "La dichiarazione `const int *p` consente di modificare L'INDIRIZZO STESSO nella variabile `p`?",
+      "options": [
+        "20",
+        "Errore di compilazione",
+        "10",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `const int *p` dichiara un puntatore a una costante. È vietato modificare il VALORE all'indirizzo (`*p = ...`), tuttavia l'indirizzo stesso PUÒ essere modificato. Il reindirizzamento `p = &y` è valido e `*p` stamperà 20.",
+        "Non corretto. Un errore di compilazione si verificherebbe scrivendo `int * const p` (puntatore costante).",
+        "Non corretto. 10 è il vecchio valore di `x` prima del cambio di indirizzo di `p`.",
+        "Non corretto. La modifica dell'indirizzo di un puntatore a costante è rigorosamente regolamentata."
+      ]
+    },
+    {
+      "id": "it_clang_700",
+      "widget_id": "widget_clang_700",
+      "topic": "Array bidimensionali — Calcolo automatico della prima dimensione int a[][2]",
+      "q": "Quante righe calcolerà l'espressione `sizeof(a) / sizeof(a[0])` per `int a[][2] = {1, 2, 3, 4, 5, 6}`?",
+      "hint": "Dividi il numero totale di elementi (6) per la dimensione del secondo asse (2).",
+      "options": [
+        "3",
+        "6",
+        "2",
+        "12"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il compilatore determina la prima dimensione automaticamente: $6 / 2 = 3$ righe. La dimensione dell'intera matrice `sizeof(a)` è pari a $3 \\times 2 \\times 4 = 24$ byte. La dimensione della prima riga `sizeof(a[0])` è pari a $2 \\times 4 = 8$ byte. Risultato: $24 / 8 = 3$.",
+        "Non corretto. 6 è il numero totale di elementi.",
+        "Non corretto. 2 è il numero di colonne in ciascuna riga.",
+        "Non corretto. 12 è la dimensione della matrice in elementi di tipo short."
+      ]
+    },
+    {
+      "id": "it_clang_701",
+      "widget_id": "widget_clang_701",
+      "topic": "Sintassi — Permutazione di indirizzo e offset *(3 + a)",
+      "q": "Quale carattere stamperà l'espressione `*(3 + a)` per `char a[] = \"Hello\"`?",
+      "hint": "Usa la proprietà commutativa dell'addizione: `*(3 + a)` equivale ad `*(a + 3)`.",
+      "options": [
+        "l",
+        "e",
+        "H",
+        "o"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per la legge commutativa dell'addizione `3 + a` è totalmente equivalente ad `a + 3`. Il dereferenziamento `*(a + 3)` dà `a[3]`. Nella stringa \"Hello\": `a[0]='H'`, `a[1]='e'`, `a[2]='l'`, `a[3]='l'`. Viene stampato il secondo carattere `'l'`.",
+        "Non corretto. 'e' si trova all'indice `a[1]`.",
+        "Non corretto. 'H' si trova all'indice `a[0]`.",
+        "Non corretto. 'o' si trova all'indice `a[4]`."
+      ]
+    },
+    {
+      "id": "it_clang_702",
+      "widget_id": "widget_clang_702",
+      "topic": "Tipo carattere — Sottrazione di caratteri c - 'A'",
+      "q": "A quanto equivale la differenza `c - 'A'` per `char c = 'D'` in codifica ASCII?",
+      "hint": "Qual è la distanza nell'alfabeto tra le lettere 'A' e 'D'?",
+      "options": [
+        "3",
+        "4",
+        "67",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I caratteri in C sono rappresentati da numeri interi (codici ASCII). Poiché le lettere latine sono disposte in ordine: 'A' (65), 'B' (66), 'C' (67), 'D' (68), la differenza è $68 - 65 = 3$.",
+        "Non corretto. 4 si otterrebbe se il conteggio delle lettere iniziasse da 1.",
+        "Non corretto. 67 è il codice ASCII del carattere 'C'.",
+        "Non corretto. L'aritmetica sui tipi `char` è pienamente supportata dal C."
+      ]
+    },
+    {
+      "id": "it_clang_703",
+      "widget_id": "widget_clang_703",
+      "topic": "Letterali stringa — Terminatore null incorporato all'interno dell'array",
+      "q": "Cosa stamperà `printf(\"%s\", str)` per l'array `char str[] = \"C\\0Programming\"`?",
+      "hint": "Dove si interrompe l'output della stringa quando incontra il carattere specifico '\\0'?",
+      "options": [
+        "C",
+        "C\\0Programming",
+        "CProgramming",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il carattere `'\\0'` è un terminatore null esplicito di fine stringa. La funzione `printf` con lo specificatore `%s` interrompe la stampa non appena incontra un byte con valore 0. Viene stampato solo il carattere `\"C\"`.",
+        "Non corretto. Il null con carattere di escape `'\\0'` non viene stampato come testo.",
+        "Non corretto. La funzione `printf` non ignora i terminatori null.",
+        "Non corretto. L'inserimento di terminatori null nei letterali stringa è consentito."
+      ]
+    },
+    {
+      "id": "it_clang_704",
+      "widget_id": "widget_clang_704",
+      "topic": "Operatore ternario — Selezione dell'array in base alla condizione",
+      "q": "A quanto equivale l'elemento `p[1]` se `p` è inizializzato come `(1 < 2) ? a : b`?",
+      "hint": "Quale dei due array verrà selezionato dall'operatore ternario con la condizione 1 < 2?",
+      "options": [
+        "20",
+        "10",
+        "40",
+        "30"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La condizione `1 < 2` è vera, quindi l'operatore ternario restituisce l'array `a`. Il puntatore `p` si riferisce ad `a`. L'espressione `p[1]` legge il secondo elemento `a[1]`, pari a 20.",
+        "Non corretto. 10 è il primo elemento `a[0]` (`p[0]`).",
+        "Non corretto. 40 è un elemento del secondo array `b[1]`, che non è stato selezionato.",
+        "Non corretto. 30 è il primo elemento dell'array `b[0]`."
+      ]
+    },
+    {
+      "id": "it_clang_705",
+      "widget_id": "widget_clang_705",
+      "topic": "Scorrimenti bit a bit — Shift a sinistra sugli elementi dell'array a[0] << a[1]",
+      "q": "A cosa equivale l'espressione `a[0] << a[1]` per l'array `int a[2] = {1, 8}`?",
+      "hint": "L'operazione `x << y` equivale alla moltiplicazione di `x` per $2^y$.",
+      "options": [
+        "256",
+        "8",
+        "16",
+        "512"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione si espande in `1 << 8`. Lo shift a sinistra dell'unità di 8 posizioni equivale al calcolo $1 \\times 2^8 = 256$.",
+        "Non corretto. 8 si ottiene con uno shift di 3 posizioni ($1 \\ll 3$).",
+        "Non corretto. 16 si ottiene con uno shift di 4 posizioni ($1 \\ll 4$).",
+        "Non corretto. 512 si ottiene con uno shift di 9 posizioni ($1 \\ll 9$)."
+      ]
+    },
+    {
+      "id": "it_clang_706",
+      "widget_id": "widget_clang_706",
+      "topic": "Unioni — Condivisione della memoria in una union",
+      "q": "A quanto sarà uguale `u.a` dopo l'assegnazione `u.b = 20` nell'unione `union U`?",
+      "hint": "I campi di un'unione (union) condividono la stessa area di memoria?",
+      "options": [
+        "20",
+        "10",
+        "0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza delle strutture, tutti i membri di una `union` occupano la stessa area di memoria. La sovrascrittura `u.b = 20` modifica la memoria condivisa con `u.a`, quindi anche `u.a` restituisce 20.",
+        "Non corretto. 10 era il valore iniziale, ma è stato sovrascritto modificando `u.b`.",
+        "Non corretto. La memoria dell'unione è stata sostituita dal numero 20.",
+        "Non corretto. Il lavoro con le unioni fa parte dello standard del linguaggio C."
+      ]
+    },
+    {
+      "id": "it_clang_707",
+      "widget_id": "widget_clang_707",
+      "topic": "C99 — Letterali composti (Compound Literals)",
+      "q": "A quanto equivale l'elemento `p[1]` durante l'inizializzazione del puntatore tramite letterale composto `(int[]){10, 20, 30}`?",
+      "hint": "Un letterale composto crea un array senza nome nell'ambito di visibilità corrente.",
+      "options": [
+        "20",
+        "10",
+        "30",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A partire dallo standard C99, la sintassi `(type[]){...}` crea un array temporaneo anonimo con la durata di vita corrente. L'elemento con indice 1 è pari a 20.",
+        "Non corretto. 10 è l'elemento `p[0]`.",
+        "Non corretto. 30 è l'elemento `p[2]`.",
+        "Non corretto. I letterali composti sono supportati in C99 e standard successivi."
+      ]
+    },
+    {
+      "id": "it_clang_708",
+      "widget_id": "widget_clang_708",
+      "topic": "Preprocessore — Operatore di concatenazione di token ## (Token Concatenation)",
+      "q": "Cosa stamperà `printf(\"%d\", CONCAT(x, y))` utilizzando la macro `#define CONCAT(a, b) a ## b`?",
+      "hint": "In cosa si trasforma l'espressione `x ## y` durante l'esecuzione del preprocessore?",
+      "options": [
+        "100",
+        "xy",
+        "x y",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `##` unisce due token in uno solo. L'espressione `CONCAT(x, y)` nella fase di preprocessing viene unita nel nome della variabile `xy`, il cui valore è 100.",
+        "Non corretto. Il preprocessore sostituisce il token `xy` con il suo valore durante l'esecuzione.",
+        "Non corretto. Non viene inserito uno spazio tra i token.",
+        "Non corretto. L'operatore di concatenazione è del tutto valido."
+      ]
+    },
+    {
+      "id": "it_clang_709",
+      "widget_id": "widget_clang_709",
+      "topic": "Preprocessore — Operatore di stringificazione # (Stringification)",
+      "q": "Cosa stamperà `printf(\"%s\", STR(123 + 456))` con `#define STR(x) #x`?",
+      "hint": "L'operatore `#` calcola le espressioni matematiche o trasforma il loro argomento in stringa così com'è?",
+      "options": [
+        "123 + 456",
+        "579",
+        "\"123 + 456\"",
+        "123456"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `#` racchiude l'argomento passato alla macro tra doppi apici durante la sostituzione testuale, senza valutarlo. Il risultato è la stringa `\"123 + 456\"`.",
+        "Non corretto. 579 si otterrebbe se il valore venisse prima calcolato da codice normale.",
+        "Non corretto. I doppi apici stessi fanno parte del letterale stringa in C, ma non vengono stampati con lo specificatore `%s`.",
+        "Non corretto. I segni di addizione non vengono scartati."
+      ]
+    },
+    {
+      "id": "it_clang_710",
+      "widget_id": "widget_clang_710",
+      "topic": "Operatore ternario — Effetti collaterali dell'incremento postfisso",
+      "q": "Cosa stamperà `printf(\"%d %d\", x, y)` dopo l'esecuzione di `y = (x > 0) ? x++ : x--` con `x = 5`?",
+      "hint": "Quale valore restituisce l'incremento postfisso `x++` nella variabile `y` e come cambia `x`?",
+      "options": [
+        "6 5",
+        "5 5",
+        "6 6",
+        "5 6"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `x > 0` è vero (5 > 0), viene eseguo il ramo `x++`. L'incremento postfisso restituisce il VECCHIO valore (5) nella variabile `y`, e poi incrementa `x` a 6.",
+        "Non corretto. `x` è stato incrementato dopo l'esecuzione dell'operazione.",
+        "Non corretto. `y` riceve il valore prima dell'incremento.",
+        "Non corretto. `x` è uguale a 6 e `y` è uguale a 5."
+      ]
+    },
+    {
+      "id": "it_clang_711",
+      "widget_id": "widget_clang_711",
+      "topic": "Enumerazioni — Numerazione degli elementi in enum",
+      "q": "Cosa stamperà `printf` per i valori `GREEN` e `YELLOW` nell'enumerazione `enum Color { RED = 3, GREEN, BLUE = 10, YELLOW }`?",
+      "hint": "Quale valore viene assegnato a un elemento `enum` se per esso non è specificato un numero esplicito?",
+      "options": [
+        "4 11",
+        "3 10",
+        "4 10",
+        "1 2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Ogni valore non inizializzato di una `enum` è maggiore di 1 rispetto al precedente. Dopo `RED = 3` segue `GREEN = 4`. Successivamente è impostato `BLUE = 10`, seguito da `YELLOW = 11`.",
+        "Non corretto. 3 e 10 sono i valori espliciti di `RED` e `BLUE`.",
+        "Non corretto. `YELLOW` viene dopo `BLUE` (10), quindi assume il valore 11.",
+        "Non corretto. Il conteggio predefinito parte da 0, ma i valori espliciti modificano l'ordine."
+      ]
+    },
+    {
+      "id": "it_clang_712",
+      "widget_id": "widget_clang_712",
+      "topic": "Espressioni condizionali — Cortocircuito (Short-circuit) dell'operatore AND (&&)",
+      "q": "A quanto sarà uguale la variabile `b` dopo la verifica della condizione `if (a && ++b)` con `a = 0` e `b = 5`?",
+      "hint": "La parte destra dell'operatore `&&` viene valutata se la parte sinistra è già falsa (0)?",
+      "options": [
+        "5",
+        "6",
+        "0",
+        "1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C l'operatore `&&` utilizza il cortocircuito: se l'operando sinistro è falso (`a == 0`), la parte destra (`++b`) NON viene valutata affatto. La variabile `b` rimane pari a 5.",
+        "Non corretto. Sarebbe 6 se `++b` venisse valutato.",
+        "Non corretto. 0 è il valore della variabile `a`.",
+        "Non corretto. La condizione restituisce 0, ma `b` non cambia."
+      ]
+    },
+    {
+      "id": "it_clang_713",
+      "widget_id": "widget_clang_713",
+      "topic": "Espressioni condizionali — Cortocircuito (Short-circuit) dell'operatore OR (||)",
+      "q": "A quanto sarà uguale la variabile `b` dopo la verifica della condizione `if (a || ++b)` con `a = 1` e `b = 5`?",
+      "hint": "La parte destra dell'operatore `||` viene valutata se la parte sinistra è già vera (1)?",
+      "options": [
+        "5",
+        "6",
+        "1",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `||` interrompe la valutazione se l'operando sinistro è vero (`a == 1`). La parte destra (`++b`) viene saltata e `b` rimane pari a 5.",
+        "Non corretto. L'incremento `++b` non viene eseguito a causa del cortocircuito.",
+        "Non corretto. 1 è il valore di verità dell'espressione.",
+        "Non corretto. La variabile `b` conserva il valore originale."
+      ]
+    },
+    {
+      "id": "it_clang_714",
+      "widget_id": "widget_clang_714",
+      "topic": "Cicli — Esecuzione singola garantita di do-while",
+      "q": "A quanto equivale il valore di `x` dopo il completamento del ciclo `do { x += 2; } while (x < 0)` con `x = 0` iniziale?",
+      "hint": "Quante volte viene eseguito il corpo del ciclo `do-while` prima del primo controllo della condizione?",
+      "options": [
+        "2",
+        "0",
+        "Ciclo infinito",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo `do-while` esegue prima il corpo e poi controlla la condizione. `x` viene incrementato di 2, diventando pari a 2. La condizione `2 < 0` è falsa, il ciclo termina. Output: 2.",
+        "Non corretto. 0 verrebbe stampato se il corpo del ciclo non venisse eseguito nemmeno una volta (come in `while`).",
+        "Non corretto. La condizione diventa rapidamente falsa.",
+        "Non corretto. La struttura del ciclo è corretta."
+      ]
+    },
+    {
+      "id": "it_clang_715",
+      "widget_id": "widget_clang_715",
+      "topic": "Operazioni bit a bit — Inversione bit a bit (NOT) ~",
+      "q": "A quanto equivale il risultato del cast `(unsigned char)~x` per `unsigned char x = 0`?",
+      "hint": "In quali bit si trasformano tutti gli zeri di un numero a 8 bit con l'inversione `~`?",
+      "options": [
+        "255",
+        "-1",
+        "0",
+        "127"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il numero 0 in formato a 8 bit ha la forma `00000000`. La negazione bit a bit `~` inverte tutti i bit in `11111111`, che per `unsigned char` equivale a 255.",
+        "Non corretto. -1 si ottiene per un `signed char` con segno.",
+        "Non corretto. 0 è il valore iniziale prima dell'inversione.",
+        "Non corretto. 127 ha la maschera di bit `01111111`."
+      ]
+    },
+    {
+      "id": "it_clang_716",
+      "widget_id": "widget_clang_716",
+      "topic": "Aritmetica — Resto della divisione di numeri negativi %",
+      "q": "A quanto equivale il risultato dell'espressione `-7 % 3` secondo lo standard C99+?",
+      "hint": "Il segno del resto della divisione in C99+ coincide sempre con il segno del dividendo (operando sinistro).",
+      "options": [
+        "-1",
+        "1",
+        "2",
+        "-2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C99+, l'operazione di divisione viene troncata verso lo zero e il segno del resto della divisione (`a % b`) coincide SEMPRE con il segno del dividendo (`a`). Poiché il dividendo -7 è negativo, il resto è pari a -1 ($ -7 = 3 \\times (-2) + (-1) $).",
+        "Non corretto. +1 si otterrebbe in alcune definizioni matematiche (in cui il resto è strettamente positivo), ma non in C99.",
+        "Non corretto. 2 non è un valore valido per il resto di 7 / 3.",
+        "Non corretto. -2 è il quoziente della divisione."
+      ]
+    },
+    {
+      "id": "it_clang_717",
+      "widget_id": "widget_clang_717",
+      "topic": "Aritmetica — Divisione intera di numeri negativi /",
+      "q": "A quanto equivale il risultato di `-7 / 3` secondo lo standard C99+?",
+      "hint": "In quale direzione viene arrotondato il risultato della divisione intera in C?",
+      "options": [
+        "-2",
+        "-3",
+        "2",
+        "3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard C99 richiede l'arrotondamento dei risultati della divisione intera VERSO LO ZERO (truncation towards zero). Il valore $-2.333...$ viene arrotondato verso lo zero, diventando -2.",
+        "Non corretto. -3 si otterrebbe arrotondando verso il basso (towards minus infinity).",
+        "Non corretto. Il risultato della divisione di un numero negativo per uno positivo deve essere negativo.",
+        "Non corretto. Il segno più non è possibile."
+      ]
+    },
+    {
+      "id": "it_clang_718",
+      "widget_id": "widget_clang_718",
+      "topic": "Stato — Mantenimento dei valori nelle variabili static delle funzioni",
+      "q": "Cosa stamperà `printf(\"%d\", counter())` se prima la funzione `counter()` è già stata chiamata una volta?",
+      "hint": "La variabile `static` all'interno di una funzione viene azzerata tra le sue chiamate?",
+      "options": [
+        "2",
+        "1",
+        "0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Una variabile contrassegnata come `static` viene inizializzata solo una volta all'avvio del programma e conserva il suo valore tra le chiamate alla funzione. La prima chiamata incrementa `count` a 1, la seconda chiamata a 2.",
+        "Non corretto. 1 verrebbe stampato alla prima chiamata di `counter()`.",
+        "Non corretto. 0 è il valore iniziale prima dell'incremento.",
+        "Non corretto. Le variabili locali `static` sono pienamente consentite dagli standard."
+      ]
+    },
+    {
+      "id": "it_clang_719",
+      "widget_id": "widget_clang_719",
+      "topic": "Puntatori — Cast di tipo durante lo spostamento dei puntatori *(int*)((char*)p + sizeof(int))",
+      "q": "A quanto equivale l'espressione `*(int*)((char*)p + sizeof(int))` per `int a[2] = {100, 200}` e `void *p = a`?",
+      "hint": "Di quanti byte viene traslato l'indirizzo durante il cast a `char*` e l'addizione di `sizeof(int)`?",
+      "options": [
+        "200",
+        "100",
+        "0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il cast a `char*` consente di eseguire l'aritmetica degli indirizzi byte per byte. Lo spostamento di `sizeof(int)` (4 byte) muove il puntatore esattamente sul secondo elemento `a[1]`. Il cast inverso ad `int*` e il dereferenziamento restituiscono 200.",
+        "Non corretto. 100 è il primo elemento `a[0]` prima dello spostamento.",
+        "Non corretto. I dati vengono letti correttamente dall'array.",
+        "Non corretto. Il cast di puntatori `void*` a `char*` per l'aritmetica è ampiamente utilizzato in C."
+      ]
+    },
+    {
+      "id": "it_clang_720",
+      "widget_id": "widget_clang_720",
+      "topic": "Memoria — Ritorno di un puntatore a un array static da una funzione",
+      "q": "È sicuro usare il valore `p[1]` dopo la chiamata a una funzione che restituisce un array `static`?",
+      "hint": "Un array locale con specificatore `static` viene distrutto all'uscita dalla funzione?",
+      "options": [
+        "20",
+        "10",
+        "Comportamento indefinito",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli array statici (`static`) risiedono nella memoria statica e non sullo stack, quindi la loro durata di vita coincide con l'intera esecuzione del programma. Il ritorno del puntatore è del tutto sicuro, `p[1]` è pari a 20.",
+        "Non corretto. 10 è l'elemento `p[0]`.",
+        "Non corretto. Un comportamento indefinito si verifica solo quando si restituisce un puntatore a un normale array automatico locale (sullo stack).",
+        "Non corretto. La funzione è sintatticamente corretta."
+      ]
+    }
+  ]
+}

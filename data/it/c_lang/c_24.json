@@ -1,0 +1,579 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_751",
+      "widget_id": "widget_clang_751",
+      "topic": "C89 — Regola del tipo int implicito (Implicit int)",
+      "q": "La funzione `add(a, b)` verrà compilata nello standard C89 e quale tipo di ritorno sceglierà il compilatore per impostazione predefinita?",
+      "hint": "Quale tipo inseriva il compilatore C89 se il tipo di funzione o di argomento non veniva specificato esplicitamente?",
+      "options": [
+        "Si compilerà, restituirà int (7)",
+        "Errore di compilazione — i parametri devono specificare il tipo",
+        "Si compilerà, ma restituirà void",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nello standard C89 valeva la regola dell'\"implicit int\": se il tipo di ritorno o di un argomento della funzione veniva omesso, il compilatore lo considerava `int` per impostazione predefinita. In C99 questa regola è stata abolita.",
+        "Errato. In C89 era consentito omettere `int` nella dichiarazione di funzioni e variabili.",
+        "Errato. Il tipo predefinito era sempre `int`, non `void`.",
+        "Errato. Il comportamento dei compilatori C89 regolamentava rigorosamente questo caso."
+      ]
+    },
+    {
+      "id": "it_clang_752",
+      "widget_id": "widget_clang_752",
+      "topic": "Puntatori — Precedenza degli operatori *p++",
+      "q": "Cosa stamperà `printf` dopo l'esecuzione dell'espressione `int val = *p++`?",
+      "hint": "Come si confrontano le precedenze della dereferenziazione `*` e dell'incremento postfisso `++`?",
+      "options": [
+        "10 20",
+        "10 10",
+        "11 20",
+        "20 20"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'incremento postfisso `++` ha una precedenza maggiore rispetto a `*`. L'espressione viene interpretata come `*(p++)`: l'indirizzo di `p` scorre all'elemento successivo, ma restituisce il VECCHIO puntatore ad `a[0]`. Di conseguenza, `val` riceve 10 e `*p` diventa uguale ad `a[1]` (20).",
+        "Errato. Il puntatore `p` si è spostato all'elemento successivo dell'array.",
+        "Errato. Il valore di `a[0]` non è stato incrementato, è aumentato il puntatore stesso.",
+        "Errato. La variabile `val` legge il valore prima dello spostamento del puntatore."
+      ]
+    },
+    {
+      "id": "it_clang_753",
+      "widget_id": "widget_clang_753",
+      "topic": "Aritmetica dei puntatori — Offsetting di void* tramite casting esplicito",
+      "q": "Cosa stamperà `printf(\"%d\", *(int *)p)` dopo l'esecuzione di `p = (char *)p + sizeof(int)`?",
+      "hint": "Di quanti byte si sposterà il puntatore `p` se viene convertito in `char *` e si aggiunge la dimensione `sizeof(int)`?",
+      "options": [
+        "20",
+        "10",
+        "30",
+        "40"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il cast `(char *)p` consente di spostarsi nella memoria a passi di 1 byte. L'aggiunta di `sizeof(int)` (4 byte) sposta l'indirizzo esattamente al secondo elemento dell'array `arr[1]`. Il cast inverso a `(int *)` e la dereferenziazione restituiscono 20.",
+        "Errato. 10 è l'elemento iniziale `arr[0]` prima dello spostamento.",
+        "Errato. 30 è il terzo elemento `arr[2]`.",
+        "Errato. 40 è il quarto elemento `arr[3]`."
+      ]
+    },
+    {
+      "id": "it_clang_754",
+      "widget_id": "widget_clang_754",
+      "topic": "Memoria — Allineamento e padding nelle strutture",
+      "q": "Perché l'espressione `sizeof(struct Data) > (sizeof(char) + sizeof(int))` restituirà 1 (true) sulla maggior parte delle architetture?",
+      "hint": "Cosa aggiunge il compilatore tra i campi di una struttura per l'allineamento ottimale dei dati in memoria?",
+      "options": [
+        "Il compilatore inserisce byte di allineamento (padding) dopo char",
+        "Il tipo struct aggiunge automaticamente 4 byte all'intestazione",
+        "La dimensione di char è pari a 4 byte all'interno delle strutture",
+        "L'operatore sizeof sbaglia per le strutture"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A causa dei requisiti di allineamento del processore (regole di allineamento), i campi di tipo `int` devono essere posizionati a indirizzi multipli di 4 byte. Il compilatore aggiunge 3 byte di padding dopo `char c`, rendendo la dimensione della struttura pari a 8 byte, che è strettamente maggiore di $1 + 4 = 5$ byte.",
+        "Errato. Non vengono aggiunte intestazioni nella memoria delle strutture C.",
+        "Errato. In C `sizeof(char)` è garantito essere 1.",
+        "Errato. `sizeof` tiene conto correttamente dei byte di allineamento."
+      ]
+    },
+    {
+      "id": "it_clang_755",
+      "widget_id": "widget_clang_755",
+      "topic": "Stringhe — Tentativo di scrittura in un letterale stringa (Read-only memory)",
+      "q": "Cosa succede se si tenta di decommentare ed eseguire la riga `str[0] = 'h'` per `char *str = \"Hello\"`?",
+      "hint": "In quale area di memoria sono memorizzati i letterali stringa in C?",
+      "options": [
+        "Errore di runtime (Segmentation Fault / Access Violation)",
+        "La stringa verrà modificata con successo in \"hello\"",
+        "Errore di compilazione",
+        "Non succederà nulla, l'operazione verrà ignorata"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C i letterali stringa si trovano in una sezione di memoria di sola lettura (`.rodata`). Il tentativo di modificare un letterale tramite un puntatore porta a un comportamento indefinito e, sui moderni SO, al crash del programma (Segmentation Fault).",
+        "Errato. La scrittura nella memoria di sola lettura è vietata a livello di SO.",
+        "Errato. Sintatticamente il codice è valido, quindi il compilatore non genera un errore (a meno che non si usi `const char*`).",
+        "Errato. La protezione della memoria si attiverà e interromperà il processo."
+      ]
+    },
+    {
+      "id": "it_clang_756",
+      "widget_id": "widget_clang_756",
+      "topic": "Memoria — Restituzione di un puntatore a una variabile automatica locale",
+      "q": "A cosa porterà la chiamata `*get_ptr()` se si restituisce `&x` da una funzione in cui `int x` è una variabile locale?",
+      "hint": "Cosa succede allo stack frame di una funzione al termine della sua esecuzione?",
+      "options": [
+        "A un comportamento indefinito (dangling pointer / puntatore sospeso)",
+        "Stamperà sempre e garantito 42",
+        "A un errore di compilazione in C89",
+        "La variabile x viene trasferita automaticamente nell'heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili automatiche locali vengono distrutte all'uscita dalla funzione. Restituire l'indirizzo di tale variabile crea un puntatore sospeso (dangling pointer). Accedervi porta a un comportamento indefinito.",
+        "Errato. Sebbene il valore 42 possa accidentalmente persistere nella memoria spazzatura dello stack, non vi è alcuna garanzia di funzionamento.",
+        "Errato. Il compilatore potrebbe generare un avviso (warning), ma non un errore.",
+        "Errato. La memoria dello stack non viene trasferita automaticamente nell'heap."
+      ]
+    },
+    {
+      "id": "it_clang_757",
+      "widget_id": "widget_clang_757",
+      "topic": "Operazioni sui bit — Scorrimento a destra bit a bit di numeri negativi",
+      "q": "Cosa stamperà `printf(\"%d\", x >> 1)` per `int x = -1` durante la compilazione in GCC (x86/x64)?",
+      "hint": "Quale scorrimento (aritmetico o logico) utilizza GCC per i numeri negativi con segno?",
+      "options": [
+        "-1",
+        "0",
+        "2147483647",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard C specifica che lo scorrimento a destra di un numero negativo con segno è definito dall'implementazione (implementation-defined). Quasi tutti i compilatori (incluso GCC) utilizzano lo scorrimento aritmetico, riempiendo il bit più significativo con 1. Per -1 (`1111...1111`), lo scorrimento a destra lascia tutti i bit uguali a 1, mantenendo il valore -1.",
+        "Errato. Si otterrebbe 0 con uno scorrimento logico (riempimento con zeri), ma GCC applica lo scorrimento aritmetico.",
+        "Errato. Questo è il valore massimo `INT_MAX`.",
+        "Errato. L'operazione di scorrimento bit a bit è del tutto corretta."
+      ]
+    },
+    {
+      "id": "it_clang_758",
+      "widget_id": "widget_clang_758",
+      "topic": "C89 — Dichiarazione extern locale all'interno di un blocco",
+      "q": "È ammissibile in C89 la dichiarazione `extern int g_var;` all'interno di una funzione se la variabile stessa è definita più in basso nel codice?",
+      "hint": "La parola chiave `extern` consente di informare il compilatore dell'esistenza di una variabile globale all'interno di un blocco locale?",
+      "options": [
+        "Sì, si compilerà e stamperà 100",
+        "No, extern può essere utilizzato solo nello scope globale",
+        "Errore di linking — le variabili globali devono essere definite prima della loro prima chiamata",
+        "Stamperà 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C89 la dichiarazione `extern` all'interno del blocco di una funzione informa il compilatore che la variabile `g_var` ha un collegamento esterno (external linkage). Il linker la collegherà alla definizione globale `int g_var = 100` e il codice stamperà 100.",
+        "Errato. Nello standard C89 è consentito scrivere `extern` all'interno delle funzioni.",
+        "Errato. L'ordine di definizione della variabile globale nel file non è importante per il linker se è presente una dichiarazione.",
+        "Errato. La variabile `g_var` ha un'inizializzazione esplicita con il valore 100."
+      ]
+    },
+    {
+      "id": "it_clang_759",
+      "widget_id": "widget_clang_759",
+      "topic": "Puntatori — Puntatori a funzioni e sintassi della loro chiamata",
+      "q": "La chiamata `f(2, 3)` è equivalente alla chiamata `(*f)(2, 3)` quando si lavora con un puntatore a funzione `int (*f)(int, int)`?",
+      "hint": "Lo standard C richiede la dereferenziazione esplicita `*` quando si chiama una funzione tramite un puntatore?",
+      "options": [
+        "Sì, entrambe le sintassi sono totalmente equivalenti e stamperanno 5",
+        "No, la sintassi f(2, 3) è vietata in C89",
+        "No, f(2, 3) provocherà un errore di compilazione",
+        "Entrambe le chiamate provocano un guasto alla memoria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C il nome di una funzione viene convertito automaticamente in un puntatore. La dereferenziazione del puntatore a funzione `(*f)` viene nuovamente convertita implicitamente in un puntatore. Le chiamate `f(2, 3)` e `(*f)(2, 3)` sono assolutamente identiche e restituiscono 5.",
+        "Errato. La chiamata abbreviata `f(2, 3)` è supportata in tutti gli standard C a partire da C89.",
+        "Errato. Non c'è alcun errore di compilazione.",
+        "Errato. Questo è un meccanismo standard per lavorare con i puntatori a funzione."
+      ]
+    },
+    {
+      "id": "it_clang_760",
+      "widget_id": "widget_clang_760",
+      "topic": "Memoria — Inizializzazione iniziale di variabili globali e automatiche",
+      "q": "Lo standard C89 garantisce che la variabile globale `g_a` sia pari a 0 all'avvio del programma?",
+      "hint": "Qual è la differenza tra le regole di inizializzazione iniziale per la memoria statica e automatica?",
+      "options": [
+        "Sì, le variabili con durata statica vengono sempre azzerate",
+        "No, le variabili globali contengono valori spazzatura",
+        "Sì, solo se sono dichiarate esplicitate con la parola chiave static",
+        "Dipende dalle impostazioni del compilatore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili con durata di memorizzazione static (incluse tutte le variabili globali) vengono garantite essere inizializzate a zero (0 per i numeri, NULL per i puntatori) prima dell'avvio del programma. Le variabili locali automatiche contengono valori spazzatura.",
+        "Errato. Solamente le variabili locali automatiche non inizializzate sullo stack contengono valori spazzatura.",
+        "Errato. La parola chiave `static` non è richiesta per l'azzeramento delle variabili globali.",
+        "Errato. Questo è un requisito rigoroso di tutti gli standard C."
+      ]
+    },
+    {
+      "id": "it_clang_761",
+      "widget_id": "widget_clang_761",
+      "topic": "Operatori — Assenza di valutazione all'interno di sizeof (Unevaluated operand)",
+      "q": "A quanto sarà uguale la variabile `x` dopo l'esecuzione della riga `sizeof(x++)`?",
+      "hint": "Le espressioni all'interno di `sizeof` vengono valutate durante l'esecuzione del programma per i tipi ordinari?",
+      "options": [
+        "5",
+        "6",
+        "4",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `sizeof` viene valutato in fase di compilazione (compile-time) e determina solo il tipo dell'espressione. L'espressione `x++` all'interno di `sizeof` non viene eseguita durante l'esecuzione del programma, quindi `x` rimane uguale a 5.",
+        "Errato. L'incremento `x++` non viene eseguito.",
+        "Errato. 4 è un possibile risultato del `sizeof(int)` stesso, ma il valore di `x` non cambia.",
+        "Errato. Il valore di `x` viene conservato."
+      ]
+    },
+    {
+      "id": "it_clang_762",
+      "widget_id": "widget_clang_762",
+      "topic": "C89 — Concatenazione automatica di letterali stringa adiacenti",
+      "q": "La scrittura `char str[] = \"Hello, \" \"World!\";` verrà compilata in C89 e cosa stamperà `printf`?",
+      "hint": "Come reagisce il compilatore C a due letterali stringa scritti di seguito separati da uno spazio?",
+      "options": [
+        "Si compilerà e stamperà: Hello, World!",
+        "Errore di compilazione — manca l'operatore +",
+        "Stamperà solo la prima parola: Hello,",
+        "Errore di compilazione — è necessaria una virgola"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C89 i letterali stringa adiacenti, separati solo da spazi o interruzioni di riga, vengono uniti automaticamente dal compilatore in un'unica stringa `\"Hello, World!\"`.",
+        "Errato. L'operatore `+` non viene utilizzato per la concatenazione di stringhe in C.",
+        "Errato. Entrambe le parti vengono unite in un unico array.",
+        "Errato. La struttura è pienamente conforme allo standard C89."
+      ]
+    },
+    {
+      "id": "it_clang_763",
+      "widget_id": "widget_clang_763",
+      "topic": "Preprocessore — Ordine di sostituzione delle macro e operatore #",
+      "q": "Cosa stamperà `printf` durante l'esecuzione di `TO_STR(VAL)` con `#define VAL 100` e `#define TO_STR(x) #x`?",
+      "hint": "La macro `VAL` viene espansa nel numero `100` se l'operatore `#` viene applicato direttamente al suo parametro?",
+      "options": [
+        "VAL",
+        "100",
+        "\"100\"",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando un parametro di una macro viene utilizzato con l'operatore `#`, il preprocessore NON espande l'argomento passato, ma trasforma il nome dell'argomento in una stringa così com'è. Pertanto `TO_STR(VAL)` diventa `\"VAL\"` (stampa `VAL`). Per espandere `VAL` in `100` è necessaria una macro a due livelli.",
+        "Errato. Si otterrebbe 100 utilizzando un livello aggiuntivo di sostituzione macro.",
+        "Errato. Le virgolette doppi non vengono stampate con lo specificatore `%s`.",
+        "Errato. Il preprocessing è corretto."
+      ]
+    },
+    {
+      "id": "it_clang_764",
+      "widget_id": "widget_clang_764",
+      "topic": "Funzioni — Copia classica delle stringhe tramite strcpy",
+      "q": "Cosa fa la funzione standard `strcpy(dst, src)` dalla libreria `<string.h>`?",
+      "hint": "`strcpy` copia il carattere nullo di terminazione `\\0` dalla stringa di origine?",
+      "options": [
+        "Copia i caratteri da src a dst, incluso il '\\0' finale",
+        "Copia i caratteri, ma NON scrive '\\0'",
+        "Verifica la dimensione di dst e tronca la stringa in caso di overflow",
+        "Restituisce il numero di byte copiati"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `strcpy` copia carattere per carattere la stringa da `src` a `dst` finché non incontra il carattere nullo `\\0`, che viene anch'esso copiato in `dst`. Non controlla la dimensione della destinazione `dst` (a differenza di `strncpy`).",
+        "Errato. Il carattere nullo di terminazione viene necessariamente copiato.",
+        "Errato. `strcpy` non conosce la dimensione dell'array `dst` e non protegge dall'overflow.",
+        "Errato. La funzione restituisce il puntatore `dst`, non il numero di byte."
+      ]
+    },
+    {
+      "id": "it_clang_765",
+      "widget_id": "widget_clang_765",
+      "topic": "Tipi di dati — Dichiarazione di sinonimi di tipo per array tramite typedef",
+      "q": "A quanto equivale l'elemento `arr[2]` con la dichiarazione `typedef int IntArray[3]; IntArray arr = {1, 2, 3};`?",
+      "hint": "Quale tipo diventa il nome `IntArray` con questa scrittura `typedef`?",
+      "options": [
+        "3",
+        "2",
+        "1",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `typedef int IntArray[3]` crea l'alias `IntArray` per il tipo 'array di 3 elementi di tipo int'. La dichiarazione `IntArray arr` è equivalente ad `int arr[3]`. Il terzo elemento `arr[2]` è pari a 3.",
+        "Errato. 2 è l'elemento `arr[1]`.",
+        "Errato. 1 è l'elemento `arr[0]`.",
+        "Errato. Questa sintassi `typedef` è assolutamente legale in C."
+      ]
+    },
+    {
+      "id": "it_clang_766",
+      "widget_id": "widget_clang_766",
+      "topic": "Preprocessore — Compilazione condizionale #if 0",
+      "q": "Vero o falso: il codice all'interno del blocco `#if 0 ... #endif` viene completamente escluso dal preprocessore e non entra nel codice macchina del programma?",
+      "hint": "L'analisi sintattica del C viene eseguita per le righe all'interno dei rami disattivati del preprocessore?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il preprocessore rimuove completamente il contenuto del blocco `#if 0` prima della fase di traduzione nel compilatore. Questo è un modo comune per disattivare rapidamente (\"commentare\") grandi blocchi di codice.",
+        "Errato. Il blocco viene del tutto rimosso nella fase di preprocessing."
+      ]
+    },
+    {
+      "id": "it_clang_767",
+      "widget_id": "widget_clang_767",
+      "topic": "Qualificatori — Scopo della parola chiave volatile",
+      "q": "Perché si usa il qualificatore `volatile` prima della dichiarazione della variabile `flag`?",
+      "hint": "Cosa fa il compilatore con le letture della variabile dalla memoria se ritiene che nessuno la modifichi nel ciclo?",
+      "options": [
+        "Impedisce al compilatore di ottimizzare (memorizzare nei registri) le letture ripetute della variabile dalla memoria",
+        "Rende la variabile costante, vietando l'operazione di scrittura",
+        "Costringe il compilatore a posizionare la variabile nella memoria flash (Flash/ROM)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il qualificatore `volatile` informa il compilatore che il valore della variabile può cambiare dall'esterno (tramite un'interruzione, hardware o un altro thread). Il compilatore disabilita l'ottimizzazione di caching nei registri del processore e rilegge ogni volta la cella dalla RAM.",
+        "Errato. È `const` a vietare la scrittura, non `volatile`.",
+        "Errato. La collocazione in ROM è gestita da sezioni e `const`."
+      ]
+    },
+    {
+      "id": "it_clang_768",
+      "widget_id": "widget_clang_768",
+      "topic": "Scope — Funzioni statiche (Internal Linkage)",
+      "q": "Vero o falso: una funzione con la parola chiave `static` ha un collegamento interno (Internal Linkage) ed è visibile solo all'interno del file `.c` corrente?",
+      "hint": "Il linker potrà collegare una chiamata da un file a una funzione static presente in un altro file?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Dichiarare una funzione come `static` limita il suo scope all'unità di traduzione corrente (file `.c`). Gli altri file non potranno chiamare questa funzione per nome.",
+        "Errato. Questo è uno degli scopi principali di `static` per le funzioni in C."
+      ]
+    },
+    {
+      "id": "it_clang_769",
+      "widget_id": "widget_clang_769",
+      "topic": "Operatori — Effetti collaterali e punti di sequenza (i = i++)",
+      "q": "Qual è il risultato dell'esecuzione dell'espressione `i = i++` in C?",
+      "hint": "La stessa variabile scalare viene modificata due volte tra punti di sequenza (sequence points) adiacenti?",
+      "options": [
+        "Comportamento indefinito (Undefined Behavior)",
+        "Valore garantito 5",
+        "Valore garantito 6",
+        "Errore di compilazione",
+        "Errore di runtime (Segmentation Fault)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La modifica della stessa variabile più di una volta senza un punto di sequenza (sequence point) intermedio è un classico esempio di Undefined Behavior in C. Il comportamento del programma non è garantito e dipende dal compilatore.",
+        "Errato. Il comportamento non è definito dallo standard.",
+        "Errato. Il risultato non può essere previsto dallo standard.",
+        "Errato. Il codice è sintatticamente valido per il compilatore.",
+        "Errato. L'istruzione non accede a indirizzi di memoria non validi."
+      ]
+    },
+    {
+      "id": "it_clang_770",
+      "widget_id": "widget_clang_770",
+      "topic": "Memoria dinamica — Passaggio di NULL alla funzione free()",
+      "q": "Vero o falso: il passaggio del puntatore `NULL` alla funzione `free(ptr)` è un'operazione assolutamente sicura secondo lo standard?",
+      "hint": "Cosa fa la funzione `free` quando riceve un puntatore nullo?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard del linguaggio C (a partire da C89), se a `free` viene passato `NULL`, la funzione semplicemente non fa nulla e restituisce immediatamente il controllo senza errori.",
+        "Errato. `free(NULL)` è un'operazione standard e garantita essere sicura."
+      ]
+    },
+    {
+      "id": "it_clang_771",
+      "widget_id": "widget_clang_771",
+      "topic": "C89 — Assenza di return nella funzione main()",
+      "q": "Cosa succede in C89 se il punto di uscita da `int main(void)` viene raggiunto senza un'istruzione `return` esplicita?",
+      "hint": "L'inserimento automatico di `return 0;` faceva parte dello standard C89 (a differenza di C99+)?",
+      "options": [
+        "La funzione terminerà, ma restituirà un valore indefinito (spazzatura) al sistema operativo",
+        "Il compilatore inserirà automaticamente return 0;",
+        "Errore di compilazione — main deve contenere return",
+        "Il programma entrerà in un ciclo infinito",
+        "Il programma terminerà con un crash (Segmentation Fault)",
+        "Il compilatore genererà un errore critico di linker"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nello standard C89, se il controllo raggiunge la fine di `main()` senza `return`, il codice di ritorno al processo chiamante (SO) è indefinito. L'inserimento automatico di `return 0;` è stato aggiunto solo a partire da C99.",
+        "Errato. L'inserimento automatico di `return 0;` è apparso solo in C99.",
+        "Errato. In C89 il compilatore genererà un avviso (warning), ma compilerà il codice.",
+        "Errato. Il programma termina correttamente l'esecuzione del processore.",
+        "Errato. Non si verifica alcun crash di memoria.",
+        "Errato. Il linker non verifica la presenza di `return` nel corpo."
+      ]
+    },
+    {
+      "id": "it_clang_772",
+      "widget_id": "widget_clang_772",
+      "topic": "Operazioni sui bit — Inversione bit a bit ~",
+      "q": "Cosa stamperà `printf(\"%d\", b)` con l'inversione di tutti i bit di un `unsigned char a = 0` a 8 bit?",
+      "hint": "Converti 0 nel sistema binario (`00000000`) e inverti ogni bit.",
+      "options": [
+        "255",
+        "-1",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il numero `0` in formato a 8 bit è `00000000`. Il NOT bit a bit (`~`) cambia tutti i bit in `11111111`, che per un tipo senza segno a 8 bit è pari a 255.",
+        "Errato. Per un tipo senza segno `unsigned char` il risultato non può essere negativo.",
+        "Errato. L'inversione ha cambiato tutti i bit zero in uno."
+      ]
+    },
+    {
+      "id": "it_clang_773",
+      "widget_id": "widget_clang_773",
+      "topic": "C89 — Dichiarazione di variabili rigorosamente all'inizio del blocco",
+      "q": "Vero o falso: la dichiarazione `int b = 10;` dopo una chiamata a `printf` provocherà un errore di compilazione se compilata con il flag `-std=c89` in GCC?",
+      "hint": "Dove gli standard C89/C90 consentono di dichiarare variabili locali all'interno di un blocco `{}`?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nello standard C89 tutte le dichiarazioni di variabili locali devono trovarsi rigorosamente all'inizio di un'istruzione composta (blocco `{}`) prima di qualsiasi istruzione eseguibile.",
+        "Errato. Mescolare istruzioni e dichiarazioni è vietato nello standard C89 rigoroso."
+      ]
+    },
+    {
+      "id": "it_clang_774",
+      "widget_id": "widget_clang_774",
+      "topic": "Aritmetica dei puntatori — Sottrazione di puntatori (Pointer difference)",
+      "q": "A quanto equivale la differenza di due puntatori `p2 - p1` per gli elementi dello stesso array?",
+      "hint": "La sottrazione di puntatori restituisce la differenza in BYTE o il numero di ELEMENTI tra di essi?",
+      "options": [
+        "3",
+        "12",
+        "4",
+        "16"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sottrazione di puntatori in C restituisce il numero di elementi (di tipo `ptrdiff_t`) presenti tra gli indirizzi, non i byte. `p2` punta all'indice 4, `p1` all'indice 1. Risultato: $4 - 1 = 3$.",
+        "Errato. 12 è la differenza in byte su un sistema a 32 bit ($3 \\times 4$), ma la sottrazione dei puntatori viene divisa per `sizeof(int)`.",
+        "Errato. Calcola la differenza tra gli indici 4 e 1.",
+        "Errato. Questa è la differenza in byte per 4 elementi."
+      ]
+    },
+    {
+      "id": "it_clang_775",
+      "widget_id": "widget_clang_775",
+      "topic": "Preprocessore — Sostituzione testuale degli argomenti di una macro senza parentesi",
+      "q": "Vero o falso: il valore dell'espressione `SQUARE(2 + 3)` con la macro `#define SQUARE(x) x * x` sarà pari a 25?",
+      "hint": "Espandi la sostituzione testuale senza parentesi: `2 + 3 * 2 + 3` e calcola in base alla precedenza.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. La macro esegue una sostituzione testuale diretta: `2 + 3 * 2 + 3`. Viene prima eseguita la moltiplicazione $3 \\times 2 = 6$, quindi l'addizione $2 + 6 + 3 = 11$, non 25.",
+        "Corretto! A causa dell'assenza di parentesi `(x)` nella definizione della macro, l'espressione si espande in `2 + 3 * 2 + 3`, che dà 11 anziché 25."
+      ]
+    },
+    {
+      "id": "it_clang_776",
+      "widget_id": "widget_clang_776",
+      "topic": "Memoria dinamica — Differenza tra calloc e malloc",
+      "q": "In cosa differisce fondamentalmente la funzione `calloc` da `malloc` durante l'allocazione della memoria?",
+      "hint": "La memoria allocata tramite `calloc` contiene valore spazzatura casuale?",
+      "options": [
+        "calloc riempie la memoria allocata con zeri (byte 0)",
+        "calloc alloca la memoria sullo stack anziché nell'heap",
+        "calloc non richiede la successiva liberazione tramite free()",
+        "calloc funziona 2 volte più velocemente di malloc",
+        "calloc accetta solo un parametro"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `calloc(num, size)` alloca la memoria per un array e garantisce l'azzeramento di tutti i suoi byte. A differenza di essa, `malloc` lascia la memoria con i valori spazzatura precedenti.",
+        "Errato. Entrambe le funzioni allocano la memoria nell'heap.",
+        "Errato. La memoria di `calloc` deve assolutamente essere liberata tramite `free()`.",
+        "Errato. A causa dell'azzeramento, `calloc` è leggermente più lenta di `malloc`.",
+        "Errato. `calloc` accetta 2 parametri: il numero di elementi e la loro dimensione."
+      ]
+    },
+    {
+      "id": "it_clang_777",
+      "widget_id": "widget_clang_777",
+      "topic": "C89 — Chiamata a realloc(p, 0)",
+      "q": "Vero o falso: la chiamata `realloc(p, 0)` con dimensione zero per un puntatore valido `p` è equivalente alla chiamata `free(p)` in C89/C99?",
+      "hint": "La memoria viene liberata quando si richiede una dimensione pari a zero nel riallocamento?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C89 la chiamata `realloc(p, 0)` libera la memoria associata al puntatore `p` e restituisce `NULL` (analogo a `free(p)`). Nota che in C11 questa chiamata è dichiarata come indefinita/deprecata.",
+        "Errato. In C89/C99 questo è un comportamento di liberazione della memoria ufficialmente regolamentato."
+      ]
+    },
+    {
+      "id": "it_clang_778",
+      "widget_id": "widget_clang_778",
+      "topic": "C89 — Espressioni costanti nei case dell'istruzione switch",
+      "q": "L'istruzione `switch` in C verrà compilata se nel `case` viene passata la variabile `const int val = 2`?",
+      "hint": "Una variabile `const int` è un'espressione costante in fase di compilazione (Compile-time constant) nel linguaggio C?",
+      "options": [
+        "Errore di compilazione — una variabile const in C NON è un'espressione costante",
+        "Si compilerà e stamperà 'Match'",
+        "Si compilerà, ma l'etichetta case verrà ignorata"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza del C++, in C il qualificatore `const` indica una 'variabile di sola lettura' (read-only variable), ma NON un'espressione costante in fase di compilazione. Le etichette `case` richiedono una costante pura (letterale o enum), quindi il codice genererà un errore di compilazione.",
+        "Errato. In C `const int` non può essere utilizzato nelle etichette `case` e nelle dimensioni degli array statici.",
+        "Errato. Il compilatore scarterà la sintassi nella fase di controllo dei tipi."
+      ]
+    },
+    {
+      "id": "it_clang_779",
+      "widget_id": "widget_clang_779",
+      "topic": "Enumerazioni — Numerazione degli elementi enum",
+      "q": "Vero o falso: l'elemento `BLUE` nella dichiarazione `enum Color { RED = 5, GREEN, BLUE };` è pari a 7?",
+      "hint": "Come vengono calcolati i valori successivi degli elementi enum se viene specificato esplicitamente solo il primo?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se per gli elementi di un'enumerazione non sono specificati valori espliciti, essi vengono automaticamente incrementati di +1 rispetto al precedente. `RED = 5`, di conseguenza `GREEN = 6` e `BLUE = 7`.",
+        "Errato. Ricalcola l'incremento automatico: $5 \\rightarrow 6 \\rightarrow 7$."
+      ]
+    },
+    {
+      "id": "it_clang_780",
+      "widget_id": "widget_clang_780",
+      "topic": "Preprocessore — Macro predefinita __LINE__",
+      "q": "Cosa stamperà la macro predefinita `__LINE__` chiamata alla quarta riga del file sorgente?",
+      "hint": "`__LINE__` restituisce la riga fisica corrente del codice sorgente?",
+      "options": [
+        "4",
+        "1",
+        "0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La macro predefinita `__LINE__` sostituisce il numero di riga corrente del file sorgente durante la fase di preprocessing. Poiché `printf` si trova alla quarta riga, verrà inserito il numero 4.",
+        "Errato. 1 è la prima riga del file.",
+        "Errato. La numerazione delle righe in `__LINE__` parte da 1.",
+        "Errato. La macro `__LINE__` è standardizzata in tutte le versioni di C."
+      ]
+    }
+  ]
+}

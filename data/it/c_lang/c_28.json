@@ -1,0 +1,603 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_871",
+      "widget_id": "widget_clang_871",
+      "topic": "Puntatori a funzione — Chiamata tramite puntatore",
+      "q": "Cosa stamperà il programma alla chiamata di `apply(multiply, 3, 4)`?",
+      "hint": "Un puntatore a funzione viene dereferenziato o chiamato direttamente passando gli argomenti.",
+      "options": [
+        "12",
+        "7",
+        "1",
+        "0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `apply` accetta un puntatore alla funzione `op`. Alla chiamata `apply(multiply, 3, 4)`, al suo interno viene eseguito `multiply(3, 4)`, che restituisce $3 \\times 4 = 12$.",
+        "Errato. La funzione `multiply` esegue una moltiplicazione, non una somma.",
+        "Errato. Vengono passati i valori 3 e 4.",
+        "Errato. Il risultato dell'operazione $3 \\times 4$ è 12.",
+        "Errato. Il passaggio del nome di una funzione come puntatore è sintatticamente corretto in C."
+      ]
+    },
+    {
+      "id": "it_clang_872",
+      "widget_id": "widget_clang_872",
+      "topic": "Puntatori — Passaggio per puntatore per modificare una variabile",
+      "q": "A quanto equivarrà la variabile `val` dopo l'esecuzione della funzione `increment(&val)`?",
+      "hint": "La dereferenziazione `(*p)++` incrementa il valore della variabile stessa all'indirizzo passato.",
+      "options": [
+        "11",
+        "10",
+        "12",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché alla funzione viene passato l'indirizzo `&val`, l'operatore `(*p)++` dereferenzia il puntatore e incrementa il valore originale di `val` da 10 a 11.",
+        "Errato. Il passaggio per indirizzo consente alla funzione di modificare la variabile originale.",
+        "Errato. L'incremento viene eseguito una sola volta.",
+        "Errato. Il valore della variabile non viene azzerato."
+      ]
+    },
+    {
+      "id": "it_clang_873",
+      "widget_id": null,
+      "topic": "Argomenti di main — argc e argv",
+      "q": "Cosa contiene il parametro `argc` nella firma `int main(int argc, char *argv[])`?",
+      "hint": "Il termine argc sta per Argument Count.",
+      "options": [
+        "Il numero di argomenti da riga di comando, incluso il nome del programma stesso",
+        "Il numero di argomenti da riga di comando, ESCLUSO il nome del programma",
+        "Un puntatore a un array di stringhe contenente gli argomenti",
+        "La dimensione della memoria allocata per il programma in kilobyte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `argc` (argument count) memorizza il numero totale di argomenti da riga di comando. Il primo argomento (`argv[0]`) è sempre il nome/percorso del programma eseguito.",
+        "Errato. Il nome del programma stesso è sempre incluso nel contatore `argc` come argomento zero.",
+        "Errato. Il puntatore all'array di stringhe è `argv` (argument vector).",
+        "Errato. `argc` indica il numero di argomenti, non la memoria."
+      ]
+    },
+    {
+      "id": "it_clang_874",
+      "widget_id": "widget_clang_874",
+      "topic": "Stringhe nelle funzioni — Modifica tramite puntatore char*",
+      "q": "Cosa stamperà `printf(\"%s\", str)` dopo la chiamata `to_uppercase(str)`?",
+      "hint": "In C le stringhe di caratteri vengono passate come puntatore al primo carattere `char*`, quindi i loro elementi possono essere modificati.",
+      "options": [
+        "HELLO",
+        "hello",
+        "H",
+        "Errore a tempo di esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'array di caratteri viene passato per indirizzo, quindi il ciclo converte ogni carattere dell'array originale `str` in maiuscolo. Verrà stampato `HELLO`.",
+        "Errato. La funzione ha convertito le lettere minuscole in maiuscole.",
+        "Errato. La funzione scansiona l'intera stringa fino al carattere `\\0`, senza fermarsi al primo carattere.",
+        "Errato. L'array `str` è allocato in memoria modificabile (stack), quindi la modifica è sicura."
+      ]
+    },
+    {
+      "id": "it_clang_875",
+      "widget_id": null,
+      "topic": "Specificatori — noreturn / _Noreturn",
+      "q": "Cosa segnala al compilatore lo specificatore `_Noreturn` (o `noreturn` da `<stdnoreturn.h>`) nell'intestazione di una funzione?",
+      "hint": "Una funzione di questo tipo restituirà il controllo al punto di chiamata?",
+      "options": [
+        "La funzione non restituisce mai il controllo al programma chiamante (ad esempio, chiama exit() o abort())",
+        "La funzione restituisce un valore di tipo void",
+        "La funzione non contiene istruzioni di ramificazione né cicli",
+        "La funzione non accetta alcun parametro",
+        "È vietato chiamare la funzione all'interno di main"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `_Noreturn` indica al compilatore che la funzione termina il programma o entra in un ciclo infinito e non restituirà mai il controllo al punto di chiamata (ad esempio, funzioni di terminazione come `exit()`).",
+        "Errato. `void` indica l'assenza di un valore restituito, ma una funzione di tipo `void` restituisce comunque il controllo.",
+        "Errato. La presenza di cicli e ramificazioni non ha alcuna relazione con `_Noreturn`.",
+        "Errato. Per indicare l'assenza di parametri si usa `(void)`.",
+        "Errato. Tali funzioni possono essere chiamate all'interno di `main`."
+      ]
+    },
+    {
+      "id": "it_clang_876",
+      "widget_id": null,
+      "topic": "Libreria standard — Funzione exit()",
+      "q": "Vero o Falso: la chiamata alla funzione `exit(0)` da qualsiasi funzione profondamente annidata termina immediatamente l'esecuzione dell'intero programma?",
+      "hint": "Qual è la differenza tra exit() e un normale return all'interno di una funzione ausiliaria?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza di `return`, che termina solo la funzione corrente, `exit()` dalla libreria `<stdlib.h>` interrompe immediatamente l'esecuzione dell'intero programma da qualsiasi punto.",
+        "Errato. La funzione `exit()` è progettata proprio per la terminazione immediata dell'intero programma."
+      ]
+    },
+    {
+      "id": "it_clang_877",
+      "widget_id": "widget_clang_877",
+      "topic": "Ricorsione — Passo base e calcolo del fattoriale",
+      "q": "Quale valore restituirà la chiamata `fact(4)`?",
+      "hint": "Il fattoriale del numero 4 è pari a $4! = 4 \\times 3 \\times 2 \\times 1$.",
+      "options": [
+        "24",
+        "12",
+        "10",
+        "4",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I calcoli avvengono in sequenza: $4 \\times \\text{fact}(3) = 4 \\times 3 \\times \\text{fact}(2) = 4 \\times 3 \\times 2 \\times \\text{fact}(1) = 4 \\times 3 \\times 2 \\times 1 = 24$.",
+        "Errato. $4! = 24$, non 12.",
+        "Errato. 10 è la somma dei numeri da 1 a 4, non il loro prodotto.",
+        "Errato. Questo è il valore dell'argomento n al primo passaggio.",
+        "Errato. Per $n \\le 1$ la funzione restituisce 1, quindi non si verifica alcun azzeramento."
+      ]
+    },
+    {
+      "id": "it_clang_878",
+      "widget_id": null,
+      "topic": "Tipi di dati — Conversione implicita del tipo di ritorno",
+      "q": "Cosa accadrà se una funzione dichiarata con tipo di ritorno `double` esegue l'istruzione `return 5;`?",
+      "hint": "Il compilatore converte automaticamente il numero intero 5 nel tipo double?",
+      "options": [
+        "Il valore intero 5 verrà convertito automaticamente nel numero a virgola mobile 5.0 di tipo double",
+        "Si verificherà un errore di compilazione a causa di un'incompatibilità di tipi",
+        "Il valore verrà troncato a 0",
+        "Il programma terminerà in modo anomalo durante la chiamata"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il C esegue una conversione implicita di tipo (implicit type conversion) del valore restituito nel tipo specificato nella firma della funzione (`int` $\\rightarrow$ `double` $= 5.0$).",
+        "Errato. La conversione implicita tra tipi numerici di base è consentita.",
+        "Errato. Il numero intero 5 viene rappresentato correttamente come `5.0`.",
+        "Errato. È un'operazione del tutto valida in fase di compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_879",
+      "widget_id": "widget_clang_879",
+      "topic": "Puntatori — Modifica dell'argomento tramite dereferenziazione",
+      "q": "Cosa stamperà `printf(\"%d %d\", a, b)` dopo l'esecuzione della chiamata `update(&a, b)`?",
+      "hint": "Fai attenzione a quale variabile viene passata per indirizzo (`&a`) e quale per valore (`b`).",
+      "options": [
+        "15 10",
+        "15 15",
+        "5 10",
+        "5 15"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `a` viene passata per indirizzo `&a`, quindi `*x += y` modifica `a` in $5 + 10 = 15$. La variabile `b` viene passata per valore, quindi l'operazione `y = 0` modifica solo la copia locale di `y`, lasciando `b` pari a 10.",
+        "Errato. La variabile `b` non è cambiata, in quanto è stata passata per valore.",
+        "Errato. Il valore di `a` è cambiato da 5 a 15.",
+        "Errato. Verifica quale variabile è cambiata e quale è rimasta inalterata."
+      ]
+    },
+    {
+      "id": "it_clang_880",
+      "widget_id": null,
+      "topic": "Argomenti di main — Elemento argv[0]",
+      "q": "Che cos'è secondo lo standard l'elemento zero dell'array degli argomenti da riga di comando `argv[0]`?",
+      "hint": "Cosa passa il SO come primo elemento dell'array argv?",
+      "options": [
+        "Una stringa contenente il nome o il percorso dell'eseguibile del programma",
+        "Una stringa contenente il primo argomento passato dall'utente",
+        "Un puntatore NULL",
+        "Un numero pari al numero di processi avviati",
+        "Il nome del sistema operativo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'elemento `argv[0]` contiene sempre un puntatore alla stringa con il nome o il percorso completo dell'eseguibile del programma avviato.",
+        "Errato. Il primo argomento inserito dall'utente si trova in `argv[1]`.",
+        "Errato. `argv[0]` contiene garantito il nome/percorso del programma, non NULL.",
+        "Errato. `argv` contiene stringhe di testo degli argomenti.",
+        "Errato. Il SO passa il percorso del programma attualmente in esecuzione."
+      ]
+    },
+    {
+      "id": "it_clang_881",
+      "widget_id": null,
+      "topic": "Puntatori — Tipo di ritorno generico void*",
+      "q": "Cosa significa se una funzione è dichiarata con tipo di ritorno `void*` (ad esempio `void* malloc(size_t size)`)?",
+      "hint": "Rifletti su come può essere utilizzato un puntatore privo di un tipo di dato specifico.",
+      "options": [
+        "Restituisce un puntatore generico (non tipizzato) a un'area di memoria, che può essere convertito in qualsiasi tipo di puntatore",
+        "Restituisce con garanzia un puntatore nullo NULL",
+        "Genererà un errore di compilazione, poiché void non può avere una dimensione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il tipo `void*` rappresenta un puntatore \"grezzo\" a un'area di memoria senza vincolo a un tipo specifico. In C viene convertito automaticamente in qualsiasi altro tipo di puntatore (`int*`, `char*`, ecc.).",
+        "Errato. La funzione restituisce l'indirizzo della memoria allocata o elaborata; NULL viene restituito solo in caso di errore.",
+        "Errato. Un puntatore a void (`void*`) è un tipo di dato del tutto valido in C."
+      ]
+    },
+    {
+      "id": "it_clang_882",
+      "widget_id": null,
+      "topic": "Ricorsione — Ricorsione in coda (Tail Recursion)",
+      "q": "Quale tipo di ricorsione viene definita «ricorsione in coda» (Tail Recursion)?",
+      "hint": "In quale punto della funzione si trova la chiamata ricorsiva e vi sono operazioni residue da eseguire dopo di essa?",
+      "options": [
+        "Tipo di ricorsione in cui la chiamata ricorsiva è l'ultima operazione eseguita prima del ritorno dalla funzione",
+        "Ricorsione che chiama se stessa esattamente due volte a ogni passaggio",
+        "Funzione ricorsiva che non presenta alcun caso base di arresto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella ricorsione in coda, la chiamata ricorsiva è l'ultima azione. I compilatori C sono in grado di ottimizzare tale ricorsione (Tail Call Optimization) trasformandola in un normale ciclo senza consumare lo stack.",
+        "Errato. Questa è la descrizione della ricorsione ad albero o doppia (ad esempio nel calcolo dei numeri di Fibonacci).",
+        "Errato. Una funzione priva di caso base porta a un overflow dello stack."
+      ]
+    },
+    {
+      "id": "it_clang_883",
+      "widget_id": "widget_clang_883",
+      "topic": "Parametri array — Modificatore const per la protezione dei dati",
+      "q": "Cosa accadrà se si tenta di compilare la funzione `process_elements`?",
+      "hint": "Fai attenzione alla parola chiave const nella dichiarazione del parametro array.",
+      "options": [
+        "Errore di compilazione — l'operazione di assegnazione è vietata per un array con qualificatore const",
+        "Il codice verrà compilato con successo e azzererà il primo elemento dell'array",
+        "Avviso del compilatore, ma il programma modificherà l'elemento in memoria",
+        "Errore a tempo di esecuzione (Segmentation Fault)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il qualificatore `const` prima del tipo dell'array indica al compilatore che gli elementi sono di sola lettura. Il tentativo di modificare `arr[0]` causerà un errore di compilazione.",
+        "Errato. Il modificatore `const` protegge rigorosamente i dati dalla scrittura.",
+        "Errato. Il tentativo di scrittura in dati `const` è un errore sintattico, non un semplice avviso.",
+        "Errato. L'errore viene rilevato già in fase di compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_884",
+      "widget_id": "widget_clang_884",
+      "topic": "Istruzione return — Punti di uscita multipli da una funzione",
+      "q": "Cosa stamperà `printf(\"%d\", check_sign(-5))`?",
+      "hint": "Segui l'ordine per verificare quale condizione di ramificazione si verificherà per prima.",
+      "options": [
+        "-1",
+        "1",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per il valore -5 la prima condizione `val > 0` è falsa. La seconda condizione `val < 0` è vera, viene eseguito `return -1;` e la funzione restituisce immediatamente il valore -1.",
+        "Errato. La prima condizione `val > 0` non è soddisfatta per il numero -5.",
+        "Errato. L'esecuzione non raggiungerà l'ultima istruzione `return 0;`."
+      ]
+    },
+    {
+      "id": "it_clang_885",
+      "widget_id": null,
+      "topic": "Concetti del C — Passaggio rigoroso per valore",
+      "q": "Vero o Falso: nel linguaggio C assolutamente tutti gli argomenti vengono passati alle funzioni esclusivamente per valore (Call by Value), e il «passaggio per riferimento» è solo un'emulazione ottenuta passando il valore del puntatore?",
+      "hint": "Rifletti: quando passiamo un puntatore `&x`, viene creata una copia dell'indirizzo stesso?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C non esiste il passaggio per riferimento nativo (a differenza del C++). Quando passiamo `&x`, la funzione riceve per valore una copia locale dell'indirizzo della variabile.",
+        "Errato. A livello concettuale, il C supporta unicamente il passaggio per valore."
+      ]
+    },
+    {
+      "id": "it_clang_886",
+      "widget_id": "widget_clang_886",
+      "topic": "Puntatori a funzione — Array di puntatori a funzione",
+      "q": "Cosa stamperà il comando `printf(\"%d\", actions[1](10, 2))`?",
+      "hint": "Quale funzione si trova all'indice 1 nell'array `actions`?",
+      "options": [
+        "8",
+        "12",
+        "20",
+        "5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! All'indice 0 si trova `add`, mentre all'indice 1 si trova `sub`. La chiamata `actions[1](10, 2)` esegue `sub(10, 2)`, che dà $10 - 2 = 8$.",
+        "Errato. 12 è il risultato della funzione `add` all'indice 0.",
+        "Errato. Nell'array non ci sono funzioni di moltiplicazione.",
+        "Errato. Nell'array non ci sono funzioni di divisione."
+      ]
+    },
+    {
+      "id": "it_clang_887",
+      "widget_id": null,
+      "topic": "Funzioni variadiche — Promozione automatica dei tipi (Default Argument Promotion)",
+      "q": "In quale tipo di dato viene convertito automaticamente un argomento di tipo `float` passato a una funzione con un numero indefinito di argomenti (tramite `...`)?",
+      "hint": "Ricorda le regole di Default Argument Promotion in C per i numeri in virgola mobile.",
+      "options": [
+        "double",
+        "float (il tipo rimane invariato)",
+        "int",
+        "void*"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, quando si passano parametri a funzioni variadiche (`...`), gli argomenti di tipo `float` vengono automaticamente promossi a `double`, mentre i tipi interi inferiori a `int` vengono promossi a `int`.",
+        "Errato. Nelle funzioni variadiche il tipo `float` non si conserva e viene sempre promosso a `double`.",
+        "Errato. I tipi in virgola mobile non vengono convertiti in numeri interi durante la promozione dei tipi.",
+        "Errato. I tipi numerici non si trasformano in puntatori."
+      ]
+    },
+    {
+      "id": "it_clang_888",
+      "widget_id": null,
+      "topic": "Standard del linguaggio — Tipo di ritorno implicito (Implicit int)",
+      "q": "Quale regola si applica nei moderni standard C (C99, C11, C17) per le funzioni dichiarate senza specificare un tipo di ritorno?",
+      "hint": "È consentito omettere il tipo di ritorno nel C moderno come si faceva in C89?",
+      "options": [
+        "Omettere il tipo di ritorno è vietato — il tipo deve essere specificato esplicitamente (ad esempio int o void)",
+        "Il tipo viene considerato automaticamente int (regola dell'Implicit int)",
+        "Il tipo viene considerato automaticamente void"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel vecchio standard C89 il tipo non specificato era considerato `int` per impostazione predefinita. A partire dallo standard C99, la regola dell'`Implicit int` è stata rimossa e l'indicazione esplicita del tipo è diventata obbligatoria.",
+        "Errato. Questa regola si applicava solo nel deprecato standard C89.",
+        "Errato. La conversione implicita a `void` non è mai stata uno standard in C."
+      ]
+    },
+    {
+      "id": "it_clang_889",
+      "widget_id": "widget_clang_889",
+      "topic": "Ambito di visibilità — Oscuramento dei nomi dei parametri (Shadowing)",
+      "q": "Cosa stamperà `printf(\"%d\", g_val)` dopo l'esecuzione delle funzioni?",
+      "hint": "Come viene definita la situazione in cui il nome di un parametro di funzione coincide con quello di una variabile globale?",
+      "options": [
+        "100",
+        "50",
+        "0",
+        "Errore di compilazione dovuto a una rideclarazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il parametro `g_val` oscura (shadowing) l'omonima variabile globale `g_val` all'interno della funzione. L'operazione `g_val = 50` modifica solo il parametro locale, mentre la variabile globale rimane pari a 100.",
+        "Errato. La variabile globale è stata oscurata dal parametro e non ha modificato il suo valore.",
+        "Errato. La variabile globale era stata inizializzata con il valore 100.",
+        "Errato. L'oscuramento dei nomi negli ambiti di visibilità interni è consentito dallo standard C."
+      ]
+    },
+    {
+      "id": "it_clang_890",
+      "widget_id": null,
+      "topic": "Ottimizzazione e header — Perche si usa static inline nei file .h",
+      "q": "Per quale scopo le funzioni nei file header (`.h`) vengono spesso dichiarate con la combinazione di specificatori `static inline`?",
+      "hint": "Rifletti su cosa accade quando si include (`#include`) lo stesso file header in più file sorgente (.c).",
+      "options": [
+        "Per suggerire l'inserimento in linea del codice della funzione ed evitare errori di duplicazione dei simboli (Multiple Definition) quando si include l'header in più file .c",
+        "Per vietare la chiamata della funzione dal file main.c",
+        "Per rendere la funzione accessibile solo ai programmi multithread",
+        "Per allocare forzatamente memoria per la funzione nello heap",
+        "Per rendere la funzione ricorsiva"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se si definisce una funzione normale in un file `.h`, includendolo in più file `.c` si verificherà un errore del linker (multiple definition). Lo specificatore `static` limita la visibilità della funzione al file corrente, mentre `inline` velocizza le funzioni di piccole dimensioni.",
+        "Errato. Le funzioni `static inline` possono essere chiamate da qualsiasi file che includa l'header.",
+        "Errato. Questo non ha alcuna relazione con il multithreading.",
+        "Errato. Il codice delle funzioni viene inserito nel segmento di codice (Text segment), non nello heap.",
+        "Errato. Gli specificatori non hanno alcuna relazione con la ricorsività."
+      ]
+    },
+    {
+      "id": "it_clang_891",
+      "widget_id": null,
+      "topic": "Libreria standard — Firma del comparatore per qsort",
+      "q": "Quale tipo di argomenti deve accettare secondo lo standard la funzione di comparazione per l'ordinamento tramite `qsort` da `<stdlib.h>`?",
+      "hint": "Il comparatore deve essere generico e in grado di operare con dati di qualsiasi tipo senza possibilità di modificarli accidentalmente.",
+      "options": [
+        "const void *, const void *",
+        "int, int",
+        "void *, void *",
+        "const int *, const int *",
+        "char *, char *"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `qsort` richiede un puntatore a un comparatore con firma `int (*compar)(const void *, const void *)`. L'uso di `const void*` consente di confrontare elementi di qualsiasi tipo senza modificarne i valori.",
+        "Errato. `qsort` lavora con puntatori agli elementi dell'array, non con valori `int`.",
+        "Errato. Senza il qualificatore `const` non viene garantita la protezione dei dati da ordinare contro scritture accidentali.",
+        "Errato. I puntatori `const int*` sono adatti solo per array di interi, mentre `qsort` è generica.",
+        "Errato. `char*` è limitato solo ai dati di tipo carattere."
+      ]
+    },
+    {
+      "id": "it_clang_892",
+      "widget_id": "widget_clang_892",
+      "topic": "Sintassi C99 — Letterali composti negli argomenti di funzione",
+      "q": "Cosa stamperà `printf(\"%d\", res)` quando si passa un array anonimo tramite un letterale composto (Compound Literal)?",
+      "hint": "C99 consente di creare oggetti temporanei direttamente nel punto di chiamata di una funzione utilizzando la sintassi `(type){initializer}`.",
+      "options": [
+        "60",
+        "30",
+        "Errore di compilazione — non è possibile passare letterali composti alle funzioni",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il letterale composto `(int[]){10, 20, 30}` crea un array temporaneo sullo stack. La funzione accetta il suo indirizzo e somma gli elementi: $10 + 20 + 30 = 60$.",
+        "Errato. La funzione somma tutti e 3 gli elementi dell'array, non solo l'ultimo.",
+        "Errato. I letterali composti sono una funzionalità ufficiale dallo standard C99 in poi.",
+        "Errato. Il ciclo di vita del letterale composto in questo caso è limitato al blocco in cui viene chiamata la funzione, quindi il passaggio è del tutto sicuro."
+      ]
+    },
+    {
+      "id": "it_clang_893",
+      "widget_id": null,
+      "topic": "Estensioni GNU C — Attributi delle funzioni (constructor)",
+      "q": "Cosa accade a una funzione dichiarata con l'attributo `__attribute__((constructor))` nei compilatori GCC/Clang?",
+      "hint": "Ricorda quando vengono chiamati i costruttori degli oggetti globali in C++ rispetto alla funzione principale.",
+      "options": [
+        "La funzione viene eseguita automaticamente prima dell'inizio di main()",
+        "La funzione viene chiamata solo durante l'allocazione di memoria tramite malloc()",
+        "La funzione viene convertita automaticamente in un metodo di classe C++",
+        "È vietato chiamare la funzione da altri file",
+        "Il compilatore genera un errore, poiché in C non esistono costruttori"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'attributo `__attribute__((constructor))` indica al compilatore e al linker di inserire l'indirizzo della funzione nella sezione di inizializzazione. Verrà eseguita automaticamente al caricamento del programma, prima ancora di entrare in `main()`.",
+        "Errato. Questo attributo non ha alcuna relazione con l'allocazione di memoria nello heap.",
+        "Errato. Il C rimane C; non vengono creati oggetti né classi.",
+        "Errato. L'attributo non influisce sull'ambito di visibilità della funzione.",
+        "Errato. Si tratta di un'estensione molto diffusa dei compilatori GCC e Clang per il linguaggio C."
+      ]
+    },
+    {
+      "id": "it_clang_894",
+      "widget_id": "widget_clang_894",
+      "topic": "Sicurezza delle funzioni — Rientranza (Reentrancy)",
+      "q": "Perché la funzione standard per l'analisi delle stringhe `strtok()` non è thread-safe né rientrante?",
+      "hint": "Come fa `strtok()` a «ricordare» quale stringa stava analizzando alla chiamata precedente quando le viene passato NULL?",
+      "options": [
+        "Salva lo stato dell'analisi della stringa in una variabile statica interna",
+        "Alloca memoria dinamica tramite malloc() senza liberarla",
+        "Blocca i mutex del sistema operativo durante l'esecuzione",
+        "Utilizza esclusivamente un registro globale del processore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strtok()` utilizza una variabile locale statica per salvare il puntatore alla posizione corrente nella stringa. Con chiamate simultanee da thread diversi o con chiamate annidate, lo stato viene corrotto. Per motivi di sicurezza si utilizzano `strtok_r()` (o `strtok_s()`).",
+        "Errato. `strtok()` non usa lo heap e lavora direttamente con la propria variabile statica e il buffer originale.",
+        "Errato. Se bloccasse i mutex, sarebbe thread-safe.",
+        "Errato. Il registro del processore viene sovrascritto a ogni cambio di contesto."
+      ]
+    },
+    {
+      "id": "it_clang_895",
+      "widget_id": "widget_clang_895",
+      "topic": "Funzioni variadiche — Errore di estrazione del tipo in va_arg",
+      "q": "Cosa accadrà alla chiamata `print_first_as_double(1, 42)` se si passa un `int` ma lo si estrae con la macro `va_arg(args, double)`?",
+      "hint": "La promozione automatica degli argomenti (promotion) converte int in int e float in double, ma non converte int in double per te.",
+      "options": [
+        "Comportamento indefinito (Undefined Behavior) a causa della mancata corrispondenza tra il tipo effettivamente passato e quello estratto",
+        "Il compilatore accetterà automaticamente l'intero 42 e lo convertirà in 42.0",
+        "Errore di compilazione sulla riga con va_arg",
+        "Il programma stamperà 0.000000"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La macro `va_arg` legge semplicemente dallo stack il numero specificato di byte e ne interpreta la rappresentazione. L'estrazione di un tipo (`double`) diverso da quello effettivamente passato (`int`) porta a un comportamento indefinito.",
+        "Errato. `va_arg` non conosce il tipo effettivo presente sullo stack e non può eseguire una conversione sicura a tempo di esecuzione.",
+        "Errato. Le funzioni variadiche eludono il controllo statico dei tipi del compilatore.",
+        "Errato. Potrebbe venire stampato un valore spazzatura, ma la cosa fondamentale è che si tratta di Undefined Behavior."
+      ]
+    },
+    {
+      "id": "it_clang_896",
+      "widget_id": "widget_clang_896",
+      "topic": "Controllo del flusso — Salti tra funzioni con longjmp",
+      "q": "Cosa stamperà `printf(\"%d\", val)` dopo l'esecuzione di `longjmp(buf, 42)` da una funzione profondamente annidata?",
+      "hint": "La funzione longjmp ripristina il contesto del processore salvato da setjmp, facendo sì che setjmp restituisca nuovamente il valore del secondo argomento di longjmp.",
+      "options": [
+        "42",
+        "0",
+        "1",
+        "Errore a tempo di esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiamata a `setjmp(buf)` al primo passaggio restituisce 0. La chiamata `longjmp(buf, 42)` ripristina lo stato dei registri ed esegue un \"salto\" al punto di `setjmp`, restituendo il secondo argomento passato: 42.",
+        "Errato. 0 viene restituito solo all'inizializzazione primaria di `setjmp`.",
+        "Errato. Il valore 1 viene restituito da `setjmp` solo se a `longjmp` è stato passato 0 (poiché 0 è riservato all'esecuzione primaria).",
+        "Errato. Il meccanismo `setjmp/longjmp` è uno strumento standard del C per la gestione delle eccezioni."
+      ]
+    },
+    {
+      "id": "it_clang_897",
+      "widget_id": null,
+      "topic": "Gestione della memoria — Allocazione dinamica sullo stack (alloca)",
+      "q": "Quando avviene il rilascio della memoria allocata all'interno di una funzione tramite `alloca()`?",
+      "hint": "In quale area di memoria — nello heap o sullo stack — alloca le risorse alloca()?",
+      "options": [
+        "Automaticamente al termine della funzione con il riavvolgimento dello stack",
+        "Dopo la chiamata esplicita alla funzione free()",
+        "All'uscita dal blocco di codice corrente racchiuso tra parentesi graffe {}",
+        "La memoria rimane allocata fino al termine del programma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `alloca()` alloca la memoria direttamente nello stack frame della funzione corrente. Tale memoria viene liberata automaticamente all'uscita dalla funzione, quando il relativo stack frame viene distrutto.",
+        "Errato. È tassativamente vietato chiamare `free()` su memoria allocata con `alloca()` — ciò causerà un crash del programma.",
+        "Errato. La memoria viene allocata a livello dello stack frame dell'intera funzione, non di un singolo blocco `{}`.",
+        "Errato. Questo è il comportamento della memoria nello heap in assenza di `free()`, non di `alloca()`."
+      ]
+    },
+    {
+      "id": "it_clang_898",
+      "widget_id": null,
+      "topic": "Passaggio di dati — Restituzione di strutture di grandi dimensioni per valore",
+      "q": "Come viene implementata più frequentemente a livello ABI sulle varie architetture (ad esempio x86-64) la restituzione per valore di strutture di grandi dimensioni da una funzione?",
+      "hint": "Le strutture con dimensioni di centinaia di byte possono entrare nei registri standard del processore?",
+      "options": [
+        "La funzione chiamante alloca memoria per la struttura e passa implicitamente un puntatore nascosto a essa alla funzione chiamata",
+        "La struttura viene copiata tramite una speciale memoria non volatile del processore",
+        "Il compilatore genera un errore, poiché in C è vietato restituire strutture di dimensione superiore a 8 byte",
+        "La struttura viene sempre inserita nella cache L1 e letta da lì"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se la struttura è troppo grande per essere restituita tramite i registri (RAX/RDX), il chiamante (caller) alloca spazio sullo stack e passa un puntatore nascosto come primo argomento. La funzione chiamata scrive il risultato a quell'indirizzo.",
+        "Errato. Non esiste alcuna memoria \"non volatile\" speciale dedicata a questo scopo.",
+        "Errato. La restituzione di strutture di qualsiasi dimensione per valore è consentita dallo standard C.",
+        "Errato. La cache L1 non è gestita a livello delle convenzioni di chiamata dell'ABI."
+      ]
+    },
+    {
+      "id": "it_clang_899",
+      "widget_id": "widget_clang_899",
+      "topic": "Ricorsione — Profondità di ricorsione e array locali",
+      "q": "Qual è il rischio principale nel creare buffer locali di grandi dimensioni (ad esempio `char buffer[1024*1024]`) all'interno di funzioni ricorsive?",
+      "hint": "Rifletti su cosa accade allo stack a ogni nuovo livello di ricorsione.",
+      "options": [
+        "Ogni chiamata ricorsiva crea una propria copia dell'array sullo stack, il che porta rapidamente a uno Stack Overflow",
+        "Gli array di grandi dimensioni rendono la funzione ricorsiva statica",
+        "La presenza di array nella ricorsione li trasforma in variabili globali",
+        "Il compilatore si rifiuterà di compilare funzioni ricorsive contenenti array"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili locali automatiche vengono create sullo stack per *ogni* chiamata. L'allocazione di 1 MB a ogni passaggio della ricorsione esaurirà il limite standard dello stack (solitamente da 1 a 8 MB) in pochissime chiamate.",
+        "Errato. Gli array rimangono variabili locali automatiche.",
+        "Errato. L'ambito di visibilità e la classe di memorizzazione non cambiano.",
+        "Errato. Dal punto di vista sintattico e semantico la compilazione avverrà con successo."
+      ]
+    },
+    {
+      "id": "it_clang_900",
+      "widget_id": null,
+      "topic": "Convenzioni di chiamata — cdecl vs stdcall",
+      "q": "Chi è responsabile della pulizia dei parametri dallo stack al termine della chiamata di funzione nella convenzione `cdecl` (standard del C)?",
+      "hint": "Rifletti: quale parte conosce il numero esatto degli argomenti passati nelle funzioni variadiche come printf?",
+      "options": [
+        "La funzione chiamante (Caller)",
+        "La funzione chiamata (Callee)",
+        "Il sistema operativo al momento del cambio di thread",
+        "Il Garbage Collector"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella convenzione `cdecl` la pulizia dello stack è a carico della funzione *chiamante* (Caller). È proprio grazie a questo che in C sono possibili funzioni con un numero variabile di argomenti (`printf`), dove solo il chiamante conosce con precisione quanti argomenti sono stati inseriti nello stack.",
+        "Errato. Nella convenzione `stdcall` lo stack viene pulito dalla funzione *chiamata* (Callee), motivo per cui `stdcall` non supporta le funzioni variadiche.",
+        "Errato. Il sistema operativo non interviene nella pulizia dello stack frame delle funzioni.",
+        "Errato. Nel linguaggio C non esiste un garbage collector integrato."
+      ]
+    }
+  ]
+}

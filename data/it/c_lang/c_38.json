@@ -1,0 +1,605 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_1181",
+      "widget_id": "widget_clang_1181",
+      "topic": "Memoria e durata — Stack vs Data/BSS",
+      "q": "In quali aree di memoria vengono allocate le variabili locali e globali e qual è la loro durata (Storage Duration)?",
+      "hint": "Pensa a cosa succede alle variabili all'uscita da una funzione e al termine dell'intero programma.",
+      "options": [
+        "Le variabili globali sono memorizzate nelle sezioni .data/.bss (durata statica — l'intero programma), quelle locali sullo stack (durata automatica — l'esecuzione del blocco)",
+        "Le variabili locali e globali sono memorizzate esclusivamente nella memoria dinamica (Heap)",
+        "Le variabili globali sono memorizzate sullo stack, mentre quelle locali nei registri del processore",
+        "Entrambe le categorie di variabili hanno la stessa durata e vengono allocate nella sezione .text"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili globali sono allocate nella memoria statica (.data o .bss) e vivono dall'avvio al termine del programma. Le variabili locali (automatiche) vengono create sullo stack di chiamata all'ingresso nel blocco `{}` e distrutte automaticamente all'uscita.",
+        "Errato. La memoria dinamica (Heap) viene utilizzata solo con chiamate esplicite a `malloc/calloc`.",
+        "Errato. Lo stack viene utilizzato per le variabili locali, non per quelle globali.",
+        "Errato. Nella sezione `.text` è memorizzato il codice macchina eseguibile, e la loro durata è fondamentalmente diversa."
+      ]
+    },
+    {
+      "id": "it_clang_1182",
+      "widget_id": "widget_clang_1182",
+      "topic": "Inizializzazione — Valori predefiniti",
+      "q": "Qual è la differenza tra il valore iniziale di una variabile globale non inizializzata int g_val; e una locale int l_val;?",
+      "hint": "L'OS/compilatore pulisce lo stack all'ingresso in una funzione?",
+      "options": [
+        "Le variabili globali sono automaticamente garantite a zero (0), mentre quelle locali contengono «spazzatura» (valore indefinito)",
+        "Le variabili locali vengono automaticamente inizializzate a zero (0), mentre quelle globali contengono «spazzatura»",
+        "Entrambe le variabili vengono sempre inizializzate automaticamente a zero",
+        "Entrambe le variabili contengono «spazzatura» casuale dalla RAM"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, le variabili globali e statiche vengono azzerate automaticamente prima dell'avvio di `main()` (le sezioni `.bss` vengono pulite). Le variabili locali sullo stack non vengono pulite per motivi di prestazioni e contengono dati residui («spazzatura»), la cui lettura prima della scrittura costituisce una Lettura Non Inizializzata (UB).",
+        "Errato. Le variabili locali non vengono inizializzate automaticamente.",
+        "Errato. Le variabili locali contengono dati indefiniti.",
+        "Errato. Per le variabili globali, lo standard garantisce rigorosamente l'inizializzazione a zero."
+      ]
+    },
+    {
+      "id": "it_clang_1183",
+      "widget_id": "widget_clang_1183",
+      "topic": "Modificatori — Variabile locale con la parola chiave static",
+      "q": "Come cambia il comportamento di una variabile locale se dichiarata come static int count = 0; all'interno di una funzione?",
+      "hint": "Il suo valore verrà conservato tra le chiamate successive a questa funzione?",
+      "options": [
+        "La variabile manterrà lo scope della funzione, ma si sposterà nella memoria statica e conserverà il suo valore tra le chiamate",
+        "La variabile diventerà globale e sarà accessibile da qualsiasi file del progetto",
+        "La variabile diventerà accessibile in sola lettura da un unico thread",
+        "Non cambierà nulla, static all'interno delle funzioni viene ignorato dal compilatore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La parola chiave `static` in una variabile locale ne modifica la *durata* (si sposta dallo stack a `.data/.bss` e viene inizializzata una sola volta), ma mantiene il suo *scope* limitato alla funzione corrente.",
+        "Errato. La variabile non diventa visibile all'esterno della funzione.",
+        "Errato. Al contrario, una variabile `static` diventa condivisa da tutti i thread che chiamano quella funzione (richiede sincronizzazione).",
+        "Errato. `static` modifica radicalmente la durata della variabile locale."
+      ]
+    },
+    {
+      "id": "it_clang_1184",
+      "widget_id": "widget_clang_1184",
+      "topic": "Linkage — Variabile globale static",
+      "q": "Cosa fa lo specificatore static quando applicato a una variabile globale fuori dalle funzioni: static int file_state = 0;?",
+      "hint": "Pensa alla limitazione dell'accesso da altri file .c (moduli).",
+      "options": [
+        "Limita lo scope della variabile al file corrente (Internal Linkage), vietando l'accesso da altri file .c",
+        "Rende la variabile costante (vieta la sovrascrittura)",
+        "Sposta la variabile dalla RAM ai registri del processore",
+        "Rimuove forzatamente la variabile dal file binario finale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La parola chiave `static` a livello globale imposta il collegamento interno (Internal Linkage). Questo nasconde il nome della variabile al linker, proteggendo da conflitti di nomi con altri moduli del progetto.",
+        "Errato. Il divieto di sovrascrittura è dato da `const`, non da `static`.",
+        "Errato. Il qualificatore `static` a livello globale non influisce sulla posizione in RAM (è già nella memoria statica).",
+        "Errato. La variabile rimane nel codice e funziona correttamente all'interno del proprio file."
+      ]
+    },
+    {
+      "id": "it_clang_1185",
+      "widget_id": "widget_clang_1185",
+      "topic": "Linkage — Collegamento esterno tramite extern",
+      "q": "Perché nei file header (.h) si scrive extern int global_counter;, mentre int global_counter = 0; si definisce in un solo file .c?",
+      "hint": "Qual è la differenza tra dichiarazione (declaration) e definizione (definition)?",
+      "options": [
+        "extern dichiara l'esistenza di una variabile senza allocare memoria, permettendo a diversi file .c di usare una singola variabile condivisa",
+        "extern protegge automaticamente la variabile globale dalle modifiche da parte di thread diversi",
+        "extern velocizza il processo di lettura della variabile dalla RAM di 2 volte",
+        "Senza extern, il compilatore vieta la creazione di qualsiasi variabile globale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La riga `extern int global_counter;` è una dichiarazione: dice al compilatore che \"questa variabile è creata altrove\". Se si scrivesse `int global_counter = 0;` direttamente nel file `.h`, si otterrebbe un errore di definizione multipla (Multiple Definition Error) includendo l'header in più moduli `.c`.",
+        "Errato. `extern` non garantisce la thread-safety.",
+        "Errato. La velocità di accesso alla memoria non cambia con `extern`.",
+        "Errato. Le variabili globali possono essere create in un file `.c` anche senza `extern`."
+      ]
+    },
+    {
+      "id": "it_clang_1186",
+      "widget_id": "widget_clang_1186",
+      "topic": "Ambito di visibilità (Scope) — Shadowing delle variabili",
+      "q": "Cosa succede all'esecuzione del codice se una variabile locale è dichiarata con lo stesso nome di una globale: int val = 100; void f() { int val = 5; printf(\"%d\", val); }?",
+      "hint": "Quale variabile ha la priorità nel blocco interno?",
+      "options": [
+        "La variabile locale nasconderà (farà shadowing) quella globale e stamperà 5",
+        "Il compilatore restituirà un errore di ridichiarazione della variabile val",
+        "Il programma stamperà la somma delle due variabili — 105",
+        "La variabile globale sovrascriverà il valore della locale e stamperà 100"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C, lo scope locale (inner scope) prevale su quello esterno (outer scope). Si verifica il fenomeno dello \"shadowing\": i riferimenti a `val` all'interno della funzione `f()` lavorano con la variabile locale (valore `5`), mentre quella globale rimane inalterata ma inaccessibile tramite il nome diretto.",
+        "Errato. In ambiti di visibilità diversi è consentito creare variabili con lo stesso nome.",
+        "Errato. Non avviene alcuna somma automatica.",
+        "Errato. La variabile locale ha la priorità nel blocco interno."
+      ]
+    },
+    {
+      "id": "it_clang_1187",
+      "widget_id": "widget_clang_1187",
+      "topic": "Architettura e thread — I pericoli dello stato globale",
+      "q": "Perché l'uso eccessivo di variabili globali riduce la rientranza (reentrancy) e causa problemi nel multithreading?",
+      "hint": "Cosa succede se due thread leggono e scrivono contemporaneamente nello stesso indirizzo di memoria?",
+      "options": [
+        "Più thread possono modificare contemporaneamente lo stato globale, provocando race condition (Race Condition)",
+        "Le variabili globali bloccano automaticamente il processore quando chiamate da un secondo thread",
+        "Le variabili globali vengono distrutte durante il cambio di contesto dei thread",
+        "Il sistema operativo vieta ai thread di leggere la sezione .data"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili globali rappresentano uno stato condiviso (Shared State). Senza una sincronizzazione esplicita (mutex, atomici), l'accesso concorrente in scrittura genera race condition (Race Conditions) e comportamento indefinito. Inoltre, le funzioni con stato globale cessano di essere rientranti.",
+        "Errato. Non si verifica alcun blocco automatico senza la chiamata a primitivi di sincronizzazione.",
+        "Errato. Le variabili globali vivono per tutta la durata del processo indipendentemente dai thread.",
+        "Errato. I thread dello stesso processo condividono l'accesso a tutta la memoria del processo."
+      ]
+    },
+    {
+      "id": "it_clang_1188",
+      "widget_id": "widget_clang_1188",
+      "topic": "Allocazione ELF — Sezioni .data e .bss",
+      "q": "Qual è la differenza principale tra il posizionamento di una variabile globale inizializzata int a = 42; e una non inizializzata int b; nel file binario del programma?",
+      "hint": "È necessario memorizzare migliaia di zeri all'interno del file su disco?",
+      "options": [
+        "Quella inizializzata (a) finisce nella sezione .data e aumenta le dimensioni del binario su disco, mentre quella non inizializzata (b) finisce in .bss e non occupa spazio su disco",
+        "Quella non inizializzata (b) occupa il doppio dello spazio nella memoria RAM",
+        "Quella inizializzata (a) viene collocata nella sezione .rodata, mentre quella non inizializzata nello stack",
+        "Non c'è alcuna differenza tra loro, entrambe vengono scritte direttamente nel file come byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `int a = 42;` è memorizzata in `.data` e occupa 4 byte nel file eseguibile su disco per salvare il numero `42`. La variabile `int b;` va in `.bss` — nel binario viene memorizzata solo un'intestazione con la dimensione totale della sezione, mentre la memoria vera e propria viene allocata e azzerata dall'OS al caricamento in RAM.",
+        "Errato. In RAM entrambe occuperanno esattamente i byte richiesti dal tipo `int`.",
+        "Errato. In `.rodata` vanno le costanti, e lo stack non viene usato per le variabili globali.",
+        "Errato. L'ottimizzazione del formato ELF/PE separa i dati inizializzati da quelli non inizializzati."
+      ]
+    },
+    {
+      "id": "it_clang_1189",
+      "widget_id": "widget_clang_1189",
+      "topic": "Specificatori — La parola chiave auto nel C classico",
+      "q": "Cosa significava la dicitura auto int x = 10; all'interno di una funzione negli standard C89/C99/C11?",
+      "hint": "Questa parola chiave è un mezzo di deduzione dei tipi come in C++11?",
+      "options": [
+        "Indicava esplicitamente che la variabile ha una durata automatica (sullo stack); poiché tutte le variabili locali lo sono di default, lo specificatore era quasi mai usato",
+        "Deduceva automaticamente il tipo della variabile dall'espressione di destra (come in C++)",
+        "Rendeva la variabile una costante automatica",
+        "Allocava automaticamente memoria per la variabile nell'heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel C classico (prima di C23), `auto` è uno specificatore di classe di memoria obsoleto per dichiarare esplicitamente una variabile *automatica* (locale). Poiché le variabili locali in C sono `auto` per impostazione predefinita, quasi nessuno lo usava. Solo in C23 `auto` ha acquisito il significato di deduzione automatica del tipo.",
+        "Errato. La deduzione dei tipi per `auto` è apparsa solo in C23 (e C++11).",
+        "Errato. `auto` non rende la variabile una costante.",
+        "Errato. `auto` si riferisce allo stack (memoria automatica), non all'heap."
+      ]
+    },
+    {
+      "id": "it_clang_1190",
+      "widget_id": "widget_clang_1190",
+      "topic": "Specificatori — La parola chiave register",
+      "q": "A quale rigida limitazione sintattica porta la dichiarazione di una variabile locale register int counter = 0;?",
+      "hint": "Un registro del processore può avere un indirizzo fisico in RAM?",
+      "options": [
+        "Per una variabile con il qualificatore register è severamente vietato prendere l'indirizzo tramite l'operatore &",
+        "La variabile non può essere modificata dopo l'inizializzazione",
+        "La variabile può essere utilizzata solo all'interno di cicli for",
+        "Una funzione con tale variabile non può contenere l'istruzione return"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La parola chiave `register` suggerisce al compilatore di conservare la variabile in un registro della CPU. Secondo lo standard C, per le variabili `register` è **vietato** prendere l'indirizzo (`&counter`), poiché i registri del processore non hanno indirizzi nella memoria RAM (anche se il compilatore decide di metterla sullo stack, il divieto dello standard rimane).",
+        "Errato. `register` non rende la variabile una costante.",
+        "Errato. Le variabili `register` possono essere utilizzate in qualsiasi parte della funzione.",
+        "Errato. Il qualificatore `register` non ha alcun effetto su `return`."
+      ]
+    },
+    {
+      "id": "it_clang_1191",
+      "widget_id": "widget_clang_1191",
+      "topic": "Gestione della memoria — Malloc/Free e azzeramento del puntatore",
+      "q": "Perché dopo la chiamata a free(ptr) si raccomanda di assegnare subito ptr = NULL?",
+      "hint": "Cosa succede se si tenta accidentalmente di accedere o liberare di nuovo lo stesso indirizzo?",
+      "options": [
+        "Per prevenire l'errore 'Dangling Pointer' (puntatore pendente) e bloccare una seconda free(ptr) accidentale, poiché free(NULL) è sicura",
+        "Affinché il sistema operativo restituisca più velocemente la memoria allocata alla RAM fisica",
+        "Senza questo, il valore della variabile ptr occuperà automaticamente lo stack fino alla fine del programma",
+        "È un requisito obbligatorio dello standard C, altrimenti il programma non compilerà"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiamata a `free(ptr)` libera la memoria, ma il puntatore `ptr` stesso continua a contenere il vecchio indirizzo (\"dangling pointer\"). Assegnare `ptr = NULL` garantisce che un accesso accidentale generi un errore immediato di memoria invece di un Undefined Behavior difficile da individuare, mentre una seconda `free(NULL)` per standard semplicemente non fa nulla.",
+        "Errato. Il sistema operativo riprende la memoria subito alla chiamata di `free()`, azzerare il puntatore non influisce sull'allocatore.",
+        "Errato. Il puntatore occupa 4/8 byte sullo stack indipendentemente dal suo valore.",
+        "Errato. Dal punto di vista del compilatore non è un errore, ma un pattern di sicurezza."
+      ]
+    },
+    {
+      "id": "it_clang_1192",
+      "widget_id": "widget_clang_1192",
+      "topic": "Gestione della memoria — Malloc vs Calloc",
+      "q": "Qual è la differenza fondamentale tra le chiamate malloc(count * sizeof(int)) e calloc(count, sizeof(int))?",
+      "hint": "Presta attenzione allo stato in cui viene restituita la memoria allocata.",
+      "options": [
+        "calloc azzera tutta la memoria allocata con zeri, mentre malloc vi lascia «spazzatura» non inizializzata",
+        "malloc alloca memoria nell'heap, mentre calloc nello stack delle chiamate",
+        "calloc funziona diverse volte più velocemente di malloc grazie ad ottimizzazioni hardware",
+        "malloc permette di ridimensionare la memoria, mentre calloc alloca solo blocchi costanti non modificabili"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `malloc` si limita a riservare la quantità specificata di byte nell'heap senza pulirli (la memoria contiene \"spazzatura\"). La funzione `calloc` garantisce inoltre che tutta l'area allocata sia completamente riempita con byte zero.",
+        "Errato. Entrambe le funzioni lavorano esclusivamente con la memoria dinamica (Heap).",
+        "Errato. Al contrario, `calloc` può essere leggermente più lenta a causa della fase aggiuntiva di azzeramento della memoria.",
+        "Errato. Il ridimensionamento di un blocco di memoria viene effettuato dalla funzione `realloc`."
+      ]
+    },
+    {
+      "id": "it_clang_1193",
+      "widget_id": "widget_clang_1193",
+      "topic": "Gestione della memoria — Pericoli di Realloc",
+      "q": "A quale errore critico (memory leak) può portare la dicitura ptr = realloc(ptr, new_size) senza l'uso di una variabile temporanea?",
+      "hint": "Cosa restituisce realloc se non c'è abbastanza spazio nell'heap per espandere l'array?",
+      "options": [
+        "Se realloc restituisce NULL in caso di errore, il puntatore originale ptr verrà sovrascritto con zero, lasciando il vecchio blocco di memoria come leak (Memory Leak)",
+        "realloc eliminerà automaticamente il vecchio blocco di memoria e azzererà l'intero programma",
+        "Una chiamata a realloc che causa un errore produrrà automaticamente un Segmentation Fault",
+        "La sintassi del C vieta di assegnare il risultato di realloc alla stessa variabile"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In caso di fallimento `realloc()` restituisce `NULL`, ma il vecchio blocco di memoria **non viene liberato**. Se si scrive `ptr = realloc(ptr, new_size);`, in caso di errore il puntatore `ptr` diventerà `NULL`, l'indirizzo del vecchio blocco andrà perso e liberarlo con `free()` diventerà impossibile, causando un memory leak.",
+        "Errato. In caso di errore `realloc` lascia intatto il vecchio blocco di memoria.",
+        "Errato. La funzione restituisce `NULL`; il crash del programma in seguito dipende dal fatto che il codice verifichi o meno il risultato.",
+        "Errato. Sintatticamente è valido, ma è considerata una nota anti-pattern."
+      ]
+    },
+    {
+      "id": "it_clang_1194",
+      "widget_id": "widget_clang_1194",
+      "topic": "Tipi di dati — Membri con array flessibili (Flexible Array Members)",
+      "q": "Perché in C (a partire da C99) alla fine di una struttura viene dichiarato un array senza specificarne la dimensione: struct Packet { int len; char data[]; };?",
+      "hint": "In che modo questo aiuta ad allocare la struttura e i dati come un unico blocco continuo di memoria?",
+      "options": [
+        "È un membro di tipo array flessibile (Flexible Array Member), che consente di allocare un buffer dinamico di dimensione arbitraria con una singola chiamata a malloc()",
+        "È uno zucchero sintattico per trasformare automaticamente l'array in una variabile globale",
+        "Costringe il compilatore a memorizzare il campo data nella memoria Flash non volatile",
+        "Tale array viene utilizzato solo per memorizzare stringhe che terminano con '\\0'"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'elemento `data[]` alla fine della struttura è chiamato Flexible Array Member. Allocando la memoria tramite `malloc(sizeof(struct Packet) + payload_len)`, l'intera struttura e i suoi dati di payload vengono allocati in un unico blocco, velocizzando il lavoro con la memoria e semplificandone il rilascio con una sola chiamata a `free()`.",
+        "Errato. È un campo di una struttura, non ha alcun legame con le variabili globali.",
+        "Errato. Il tipo di allocazione dipende esclusivamente da dove è collocata la struttura (stack, heap, .data).",
+        "Errato. In questo array è possibile memorizzare dati binari arbitrari di qualsiasi tipo."
+      ]
+    },
+    {
+      "id": "it_clang_1195",
+      "widget_id": "widget_clang_1195",
+      "topic": "Allineamento — L'operatore sizeof e il Padding",
+      "q": "Perché la dimensione della struttura struct Bad { char a; int b; char c; }; è pari a 12 byte su sistemi a 32/64 bit, anche se la somma dei byte dei tipi è 1 + 4 + 1 = 6?",
+      "hint": "Perché il processore inserisce byte fittizi (padding) tra i campi della struttura?",
+      "options": [
+        "Il compilatore allinea i campi (Alignment Padding) per consentire una lettura dei dati ottimale e veloce da parte del processore a indirizzi multipli della loro dimensione",
+        "Ogni campo di una struttura in C viene sempre arrotondato automaticamente a 4 byte indipendentemente dall'architettura",
+        "La dimensione della struttura raddoppia se al suo interno vengono utilizzati tipi di carattere char",
+        "La dimensione della struttura aumenta sempre a causa del posizionamento di un puntatore nascosto VTable"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per i processori è più efficiente (e su alcune architetture persino obbligatorio) leggere interi a 4 byte a indirizzi multipli di 4. Il compilatore inserisce byte vuoti di riempimento (padding) tra `a` e `b`, oltre che alla fine della struttura, motivo per cui la dimensione finale sale a 12 byte.",
+        "Errato. I campi non vengono arrotondati cieca, tutto dipende dal loro ordine e dai requisiti di allineamento.",
+        "Errato. Il tipo `char` occupa 1 byte e non causa un raddoppio delle dimensioni da solo.",
+        "Errato. Le tabelle dei metodi virtuali (VTable) esistono in C++, ma non in C."
+      ]
+    },
+    {
+      "id": "it_clang_1196",
+      "widget_id": "widget_clang_1196",
+      "topic": "Memory leak — Perdita di indirizzi al riassegnamento",
+      "q": "Dove si trova esattamente l'errore di memory leak nel seguente frammento di codice: char *p = malloc(100); p = \"Hello World\"; free(p);?",
+      "hint": "Dove punta p dopo la seconda riga e cosa cercherà esattamente di liberare free(p)?",
+      "options": [
+        "La variabile p viene sovrascritta con l'indirizzo di una stringa letterale, perdendo il blocco originale di 100 byte, e free(p) tenta di liberare memoria in .rodata (UB)",
+        "L'errore sta solo nel fatto che la stringa letterale \"Hello World\" supera i 100 byte",
+        "La funzione free() restituirà automaticamente il vecchio indirizzo e libererà con successo la memoria",
+        "Il codice è assolutamente corretto e libera completamente la memoria concessa"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La riga `p = \"Hello World\"` modifica l'indirizzo nel puntatore `p`, che inizia a puntare a una stringa costante in `.rodata`. Di conseguenza: 1) I 100 byte allocati tramite `malloc` vanno persi (memory leak); 2) La chiamata a `free(p)` passa all'allocatore un indirizzo di memoria costante, causando il crash del programma (Crash/UB).",
+        "Errato. La lunghezza della stringa \"Hello World\" è di soli 12 byte con il terminatore nullo, il problema non è la lunghezza.",
+        "Errato. Un puntatore è solo una variabile, memorizza un solo indirizzo; il vecchio indirizzo viene sovrascritto.",
+        "Errato. Questo codice contiene due errori fatali nella gestione della memoria."
+      ]
+    },
+    {
+      "id": "it_clang_1197",
+      "widget_id": "widget_clang_1197",
+      "topic": "Gestione della memoria — Allocazione sullo stack (Alloca)",
+      "q": "Qual è la differenza principale e il rischio nell'usare la funzione alloca() rispetto a un normale malloc()?",
+      "hint": "In quale tipo di memoria alloca riserva i byte richiesti?",
+      "options": [
+        "alloca riserva memoria sullo stack della funzione corrente (la memoria viene liberata automaticamente all'uscita), ma se la dimensione viene superata causa uno Stack Overflow",
+        "alloca riserva memoria nell'heap, ma richiede una chiamata manuale a free_alloca()",
+        "alloca funziona solo con dati stringa ed è vietata nei programmi multithread",
+        "alloca riserva memoria nel settore globale .bss"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `alloca()` sposta dinamicamente lo stack pointer (Stack Pointer). Vantaggio: la memoria non deve essere liberata tramite `free()` (verrà distrutta da sola al `return`). Pericolo: c'è pochissimo spazio sullo stack (di solito 1-8 MB), e tentare di allocare un grande volume causerà immediatamente un crash per Stack Overflow.",
+        "Errato. `alloca` lavora esclusivamente sullo stack, non nell'heap.",
+        "Errato. La funzione alloca qualsiasi byte grezzo.",
+        "Errato. La sezione `.bss` viene preparata nella fase di caricamento del programma, non durante l'esecuzione delle funzioni."
+      ]
+    },
+    {
+      "id": "it_clang_1198",
+      "widget_id": "widget_clang_1198",
+      "topic": "Array e puntatori — Errore nel calcolo delle dimensioni di un array in una funzione",
+      "q": "Perché l'operazione sizeof(arr) / sizeof(arr[0]) smette di calcolare correttamente il numero di elementi quando si passa un array dinamico o normale a una funzione?",
+      "hint": "In cosa si trasforma un array quando viene passato a una funzione come argomento?",
+      "options": [
+        "All'interno della funzione l'array decade (decay) a un semplice puntatore, quindi sizeof(arr) restituisce la dimensione del puntatore (4 o 8 byte)",
+        "La funzione crea una copia locale dell'array contenente solo il primo elemento",
+        "Il compilatore C azzera le dimensioni di tutti i parametri in ingresso per proteggere lo stack",
+        "È vietato chiamare sizeof all'interno di qualsiasi funzione definita dall'utente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C, quando si passa un array a una funzione si verifica l'\"Array Decay\": il tipo dell'array si riduce a un puntatore `type*`. All'interno della funzione `sizeof(arr)` restituirà la dimensione del puntatore stesso (8 byte su sistemi a 64 bit), non la dimensione di memoria dell'array originale. Pertanto la dimensione dell'array deve essere sempre passata con un parametro separato `size_t len`.",
+        "Errato. Non viene creata alcuna copia degli elementi dell'array al passaggio.",
+        "Errato. `sizeof` calcola onestamente la dimensione del tipo accettato dalla funzione (che è diventato un puntatore).",
+        "Errato. `sizeof` può essere chiamato ovunque, è un operatore in tempo di compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_1199",
+      "widget_id": "widget_clang_1199",
+      "topic": "Gestione della memoria — Rilascio doppio (Double Free)",
+      "q": "Quale minaccia alla sicurezza delle applicazioni rappresenta la vulnerabilità «Double Free» (chiamata ripetuta a free() per uno stesso puntatore)?",
+      "hint": "A cosa porta il danneggiamento delle strutture dati interne dell'allocatore di memoria?",
+      "options": [
+        "Danneggia i metadati interni dell'allocatore dell'heap, il che potrebbe consentire a un malintenzionato di eseguire codice arbitrario (Exploit/Use-After-Free)",
+        "Riavvia automaticamente il sistema operativo",
+        "Causa la cancellazione del codice sorgente del file del programma su disco",
+        "Provoca il surriscaldamento fisico dei moduli di memoria RAM"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il rilascio ripetuto `Double Free` corrompe le liste interne dei blocchi liberi (freelist) dell'allocatore dell'heap. Si tratta di una vulnerabilità critica che consente di dirottare il flusso di esecuzione del programma o effettuare attacchi di tipo Heap Exploitation.",
+        "Errato. Va in crash solo il processo corrente, l'OS continua a funzionare.",
+        "Errato. I file su disco non vengono cancellati dagli errori nell'heap.",
+        "Errato. L'errore è puramente software e logico."
+      ]
+    },
+    {
+      "id": "it_clang_1200",
+      "widget_id": "widget_clang_1200",
+      "topic": "Standard C23 — Azzeramento dei puntatori con nullptr",
+      "q": "Quale costante per il puntatore nullo è stata ufficialmente introdotta in C (C23) per sostituire la macro NULL?",
+      "hint": "Come si chiama la parola chiave per il puntatore nullo con un proprio tipo rigido in C++ e ora in C23?",
+      "options": [
+        "nullptr — possiede un proprio tipo nullptr_t e risolve i problemi di conversione implicita dei numeri interi",
+        "nil — costante integrata per lavorare con oggetti dinamici",
+        "null_ptr_t — funzione per azzerare i puntatori",
+        "void_null — specificatore dell'indirizzo zero"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nello standard C23 è stata ereditata dal C++ la parola chiave `nullptr`. La vecchia macro `NULL` era spesso definita semplicemente come `(void*)0` o `0`, creando confusione tra numeri e indirizzi. `nullptr` ha il tipo `nullptr_t` e garantisce un controllo di tipo rigoroso.",
+        "Errato. `nil` è usato in Pascal e Objective-C, non in C.",
+        "Errato. `nullptr_t` è il tipo, mentre la costante stessa si chiama `nullptr`.",
+        "Errato. Tale specificatore non esiste nello standard C."
+      ]
+    },
+    {
+      "id": "it_clang_1201",
+      "widget_id": "widget_clang_1201",
+      "topic": "Macro NULL — Definizione e natura",
+      "q": "Che cos'è concettualmente la macro NULL nei file header standard del C (ad esempio, <stddef.h> o <stdlib.h>)?",
+      "hint": "Come viene espansa la macro dal preprocessore prima della compilazione?",
+      "options": [
+        "Una macro che si espande in un'espressione costante di puntatore nullo (solitamente ((void *)0) o semplicemente 0)",
+        "Un tipo di dati speciale integrato direttamente nel compilatore",
+        "Una funzione di sistema che restituisce l'indirizzo della prima pagina di RAM",
+        "Una variabile globale non modificabile con valore -1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel linguaggio C la macro `NULL` viene definita nei file header come un'espressione costante nulla per i puntatori, solitamente `((void *)0)` o semplicemente lo zero intero `0`. Nella fase di preelaborazione viene sostituita da questa espressione.",
+        "Errato. `NULL` non è un tipo di dati, ma una macro di testo.",
+        "Errato. `NULL` non è una funzione.",
+        "Errato. `NULL` non è mai uguale a -1."
+      ]
+    },
+    {
+      "id": "it_clang_1202",
+      "widget_id": "widget_clang_1202",
+      "topic": "Sicurezza — Dereferenziazione di un puntatore nullo (Dereferencing NULL)",
+      "q": "Cosa succede in C quando si tenta di leggere o scrivere dati tramite un puntatore nullo: int *p = NULL; *p = 42;?",
+      "hint": "Quale comportamento dello standard provocherà l'accesso all'indirizzo non valido 0x0?",
+      "options": [
+        "Si verifica un Comportamento Indefinito (UB), che all'atto pratico porta al crash del programma (Segmentation Fault / Access Violation)",
+        "Il compilatore reindirizzerà automaticamente la scrittura a una speciale variabile temporanea sullo stack",
+        "Al puntatore p verrà assegnato automaticamente il successivo indirizzo disponibile nell'heap",
+        "L'operazione verrà silenziosamente ignorata dal processore senza alcun errore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La dereferenziazione di `NULL` è un classico Comportamento Indefinito (Undefined Behavior). Sulla maggior parte dei sistemi operativi moderni (Linux, Windows, macOS) la pagina di memoria zero è protetta da lettura/scrittura, pertanto l'OS termina immediatamente il processo con un segnale di errore (Segmentation Fault).",
+        "Errato. Non si verifica alcun reindirizzamento automatico sullo stack.",
+        "Errato. La memoria non viene allocata automaticamente al momento dell'accesso.",
+        "Errato. Il processore solleva un'eccezione hardware di modalità protetta (Page Fault)."
+      ]
+    },
+    {
+      "id": "it_clang_1203",
+      "widget_id": "widget_clang_1203",
+      "topic": "Funzione free() — Passaggio di NULL",
+      "q": "Come si comporta la funzione standard free(NULL) quando le viene passato un puntatore nullo?",
+      "hint": "È necessario scrivere 'if (p != NULL) free(p);'?",
+      "options": [
+        "La funzione non fa nulla in tutta sicurezza e restituisce subito il controllo (secondo lo standard ISO C)",
+        "Provoca un crash del programma (Segmentation Fault)",
+        "Porta a una vulnerabilità critica di tipo Double Free",
+        "Restituisce un codice di errore -1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard ISO C, la chiamata `free(NULL)` è assolutamente sicura e non esegue alcuna azione. Un controllo del tipo `if (p != NULL) free(p);` è un ridondante \"code smell\".",
+        "Errato. Non si verifica alcun errore passando `NULL` a `free()`.",
+        "Errato. I `Double Free` si verificano rilasciando due volte un indirizzo reale, non `NULL`.",
+        "Errato. `free()` non restituisce alcun valore (`void`)."
+      ]
+    },
+    {
+      "id": "it_clang_1204",
+      "widget_id": "widget_clang_1204",
+      "topic": "Differenza tipi/valori — NULL vs '\\0'",
+      "q": "Qual è la differenza fondamentale tra la macro NULL e il terminatore nullo '\\0'?",
+      "hint": "Quale di questi è un indirizzo di memoria e quale un byte di carattere?",
+      "options": [
+        "NULL è un puntatore nullo (punta 'a nulla'), mentre '\\0' è un carattere nullo di tipo char (byte con codice 0) per terminare le stringhe",
+        "NULL viene utilizzato in C, mentre '\\0' è una sintassi utilizzata esclusivamente in C++",
+        "NULL occupa sempre 8 byte, mentre '\\0' occupa sempre 4 byte nell'heap",
+        "Non c'è alcuna differenza tra loro, sono concetti completamente intercambiabili"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `NULL` rappresenta un valore di indirizzo (puntatore `(void*)0`), utilizzato per indicare l'assenza di un oggetto. Il carattere `'\\0'` (ASCII NUL) è un singolo byte con valore `0` di tipo `char`, che indica la fine di una stringa C.",
+        "Errato. Entrambi i termini sono attivamente usati sia in C che in C++.",
+        "Errato. La dimensione di `'\\0'` è pari a 1 byte (`sizeof(char)`).",
+        "Errato. Confondere un puntatore nullo con un carattere nullo viola la tipizzazione del codice."
+      ]
+    },
+    {
+      "id": "it_clang_1205",
+      "widget_id": "widget_clang_1205",
+      "topic": "Programmazione difensiva — Controllo delle chiamate a malloc",
+      "q": "Perché il controllo 'if (ptr == NULL)' è assolutamente obbligatorio dopo ogni chiamata a malloc() o calloc()?",
+      "hint": "Cosa restituisce la funzione di sistema per l'allocazione della memoria se la RAM disponibile è esaurita?",
+      "options": [
+        "Se al sistema manca memoria, l'allocatore restituirà NULL e il tentativo di scrittura a tale indirizzo farà crollare immediatamente il programma",
+        "Senza questo controllo, la funzione malloc non avvierà l'allocazione fisica delle pagine di memoria",
+        "Il controllo su NULL azzera automaticamente il blocco di memoria allocato",
+        "Questo controllo è richiesto dallo standard solo per i vecchi processori a 32 bit"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se la memoria virtuale o la RAM fisica sono esaurite, `malloc()` restituisce `NULL`. Se il programma tenta di scrivere dati all'indirizzo restituito senza verificare, si verificherà il crash dell'applicazione (Segmentation Fault).",
+        "Errato. `malloc` alloca la memoria al momento della chiamata indipendentemente dai successivi `if`.",
+        "Errato. Il controllo `if` non modifica il contenuto della memoria.",
+        "Errato. Il controllo dei risultati di `malloc` è obbligatorio su qualsiasi piattaforma."
+      ]
+    },
+    {
+      "id": "it_clang_1206",
+      "widget_id": "widget_clang_1206",
+      "topic": "Standard — Zero logico e rappresentazione fisica",
+      "q": "Lo standard C garantisce che il puntatore nullo NULL su assolutamente tutte le architetture hardware sia binariamente composto solo da bit zero (0x00000000)?",
+      "hint": "Lo standard C distingue tra il valore logico del puntatore nullo nel codice e il suo pattern fisico interno di byte?",
+      "options": [
+        "No, logicamente NULL è sempre uguale a 0 nel codice sorgente C, ma su alcune rare architetture la sua rappresentazione in bit nella memoria può essere diversa da zero",
+        "Sì, ISO C impone rigorosamente che NULL su tutte le CPU debba essere una sequenza di bit composta da soli zeri",
+        "Sì, poiché l'indirizzo 0x0 è hardcoded nel microcodice di tutti i microcontrollori esistenti",
+        "No, nei sistemi a 64 bit NULL è composto esclusivamente da uno (0xFFFFFFFFFFFFFFFF)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard garantisce che l'assegnazione di `0` o `(void*)0` nel codice C crei un puntatore nullo. Tuttavia, su alcune rare o obsolete architetture (ad esempio Honeywell o alcuni DSP), un \"indirizzo non valido\" hardware poteva avere un pattern di bit diverso da tutti zeri (`0x00...00`). Il compilatore stesso traduce `0` nell'indirizzo hardware corretto.",
+        "Errato. Lo standard regola il comportamento logico, non una specifica rappresentazione hardware.",
+        "Errato. Non su tutte le architetture l'indirizzo `0x0` è l'unico indirizzo non valido.",
+        "Errato. Nei sistemi a 64 bit `NULL` viene comunque espresso logicamente con zero."
+      ]
+    },
+    {
+      "id": "it_clang_1207",
+      "widget_id": "widget_clang_1207",
+      "topic": "Puntatori a funzione — Chiamata all'indirizzo NULL",
+      "q": "Cosa succede quando si tenta di chiamare una funzione tramite un puntatore nullo: void (*func)(void) = NULL; func();?",
+      "hint": "Dove cercherà di saltare il processore (Instruction Pointer)?",
+      "options": [
+        "Il processore tenterà di saltare all'indirizzo 0x0 per eseguire le istruzioni, il che causerà un'interruzione anomala (Segmentation Fault / UB)",
+        "Il compilatore sostituisce automaticamente la chiamata a un puntatore nullo con un'istruzione NOP vuota",
+        "La chiamata verrà ignorata e l'esecuzione proseguirà dalla riga di codice successiva",
+        "Si verificherà un riavvio automatico della funzione main()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando si tenta di trasferire il controllo a un indirizzo nullo, il registro delle istruzioni del processore (`EIP`/`RIP`) riceve l'indirizzo `0x0`. Poiché la pagina `0x0` non contiene codice eseguibile ed è protetta dall'esecuzione, l'OS arresta immediatamente il processo con un segnale SIGSEGV / Access Violation.",
+        "Errato. Il compilatore non inserisce istruzioni NOP per le chiamate tramite puntatori.",
+        "Errato. La chiamata non viene ignorata: il processore deve trasferire il flusso di esecuzione.",
+        "Errato. Non si verifica alcun riavvio di `main()`."
+      ]
+    },
+    {
+      "id": "it_clang_1208",
+      "widget_id": "widget_clang_1208",
+      "topic": "Attributi del compilatore — __attribute__((nonnull))",
+      "q": "Perché nei compilatori GCC e Clang viene utilizzata l'estensione void print_str(const char *s) __attribute__((nonnull(1)))?",
+      "hint": "In che modo questo attributo aiuta a rilevare il passaggio di NULL in fase di compilazione?",
+      "options": [
+        "Per costringere il compilatore a generare avvisi (warnings) se viene passato NULL come argomento",
+        "Per azzerare automaticamente il valore del parametro all'ingresso della funzione",
+        "Per vietare il passaggio alla funzione di stringhe più lunghe di 255 caratteri",
+        "Affinché la funzione venga eseguita esclusivamente in modalità single-thread"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'attributo `nonnull` comunica all'analizzatore statico e al compilatore che il parametro specificato (o tutti i parametri) non devono essere `NULL`. Se il compilatore rileva il passaggio di `NULL` a tale funzione, genera un avviso (warning) in fase di compilazione.",
+        "Errato. L'attributo non modifica i valori dei parametri in runtime.",
+        "Errato. L'attributo controlla i puntatori nulli, non la lunghezza delle stringhe.",
+        "Errato. Questo attributo non ha alcun effetto sul multithreading."
+      ]
+    },
+    {
+      "id": "it_clang_1209",
+      "widget_id": "widget_clang_1209",
+      "topic": "Idiomi di codice — Confronto tra if (!ptr) e if (ptr == NULL)",
+      "q": "Esiste una differenza nel codice macchina compilato tra i controlli 'if (ptr == NULL)' e 'if (!ptr)'?",
+      "hint": "In che modo il compilatore C valuta la verità dei puntatori nelle condizioni logiche?",
+      "options": [
+        "Non c'è alcuna differenza, entrambe le diciture sono completamente equivalenti per lo standard e generano lo stesso codice macchina",
+        "if (!ptr) funziona più velocemente poiché non esegue l'operazione di confronto",
+        "if (ptr == NULL) è consentito scriverlo solo per il tipo void*",
+        "if (!ptr) è vietato dagli standard C99 e C11"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C, un puntatore in un contesto logico viene convertito a `true` (se non è uguale a `NULL`) e `false` (se è uguale a `NULL`). Le forme sintattiche `if (ptr == NULL)`, `if (!ptr)` e `if (ptr == 0)` generano esattamente lo stesso codice dopo l'ottimizzazione.",
+        "Errato. I compilatori moderni generano per esse le stesse istruzioni (ad esempio `test reg, reg`).",
+        "Errato. Il confronto con `NULL` è consentito per qualsiasi tipo di puntatore.",
+        "Errato. L'espressione `!ptr` è assolutamente legale in tutti gli standard C."
+      ]
+    },
+    {
+      "id": "it_clang_1210",
+      "widget_id": "widget_clang_1210",
+      "topic": "Funzione realloc — Comportamento con il passaggio di NULL",
+      "q": "Come si comporta la funzione standard realloc(NULL, new_size) quando le viene passato un puntatore nullo come primo argomento?",
+      "hint": "Quale altra funzione standard di allocazione memoria sostituisce completamente in questo caso?",
+      "options": [
+        "Funziona esattamente come malloc(new_size) — alloca un nuovo blocco di memoria",
+        "Provoca un errore sintattico di compilazione",
+        "Restituisce sempre NULL senza allocare memoria",
+        "Provoca il crash del programma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard ISO C, se come primo argomento in `realloc(ptr, size)` viene passato `NULL`, la funzione si comporta in modo del tutto analogo a una chiamata a `malloc(size)`.",
+        "Errato. È una chiamata del tutto valida per lo standard.",
+        "Errato. La funzione tenterà di allocare memoria.",
+        "Errato. Non si verifica alcun crash."
+      ]
+    }
+  ]
+}

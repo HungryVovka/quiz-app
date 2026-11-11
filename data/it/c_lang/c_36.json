@@ -1,0 +1,605 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_1121",
+      "widget_id": "widget_clang_1121",
+      "topic": "Preprocessore — Parentesi negli argomenti delle macro",
+      "q": "Perché quando si crea una macro con parametri `#define MULTIPLY(a, b) a * b` è fondamentale racchiudere ogni parametro e l'intera espressione tra parentesi `((a) * (b))`?",
+      "hint": "Pensa a come verrà espansa la macro passando espressioni con operazioni di addizione, ad esempio `MULTIPLY(1 + 2, 3 + 4)`.",
+      "options": [
+        "Per evitare di violare la precedenza degli operatori quando si passano espressioni complesse come argomenti",
+        "Per allocare memoria dinamica per il risultato del calcolo",
+        "Per costringere il compilatore a trasformare la macro in una funzione inline",
+        "È un requisito sintattico dello standard C, senza parentesi il codice non compila"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A causa della sostituzione testuale diretta, l'espressione `MULTIPLY(1 + 2, 3 + 4)` verrà espansa in `1 + 2 * 3 + 4 = 11` anziché `(1 + 2) * (3 + 4) = 21`. Racchiudere tra parentesi garantisce il corretto ordine delle operazioni matematiche.",
+        "Errato. Il preprocessore esegue solo una sostituzione testuale e non alloca memoria.",
+        "Errato. Le parentesi non trasformano la macro in una funzione.",
+        "Errato. Il codice senza parentesi compilerà, ma porterà ad errori logici a causa della precedenza degli operatori."
+      ]
+    },
+    {
+      "id": "it_clang_1122",
+      "widget_id": "widget_clang_1122",
+      "topic": "Preprocessore — Ambito di visibilità (Scope) delle macro",
+      "q": "Qual è l'ambito di visibilità (Scope) di una macro dichiarata con `#define BUFFER_SIZE 1024` all'interno del corpo di una funzione?",
+      "hint": "Il preprocessore è a conoscenza delle parentesi graffe `{}` e dei blocchi di funzione in C?",
+      "options": [
+        "Dal punto di dichiarazione fino alla fine del file dell'unità di traduzione (o fino alla direttiva #undef) — il preprocessore ignora i confini delle funzioni",
+        "Limitato al blocco `{}` della funzione in cui la macro è stata dichiarata",
+        "La stessa di una normale variabile locale sullo stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il preprocessore lavora PRIMA della fase di compilazione e considera il codice come semplice testo. Non sa nulla di funzioni o blocchi `{}`. La macro è accessibile ovunque dal punto di dichiarazione fino alla fine del file (o fino a `#undef`).",
+        "Errato. Il preprocessore non rispetta i confini dei blocchi di codice C.",
+        "Errato. Le macro non hanno il concetto di ambito di visibilità delle variabili locali."
+      ]
+    },
+    {
+      "id": "it_clang_1123",
+      "widget_id": null,
+      "topic": "Preprocessore — Direttiva #undef",
+      "q": "Quale direttiva del preprocessore viene utilizzata per annullare (rimuovere) una macro creata in precedenza?",
+      "hint": "Il nome della direttiva si ottiene aggiungendo il prefisso un- alla parola define.",
+      "options": [
+        "#undef",
+        "#delete",
+        "#remove",
+        "#clear"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La direttiva `#undef NOME_MACRO` rimuove la definizione della macro. Dopo di essa, il nome smette di essere sostituito dal preprocessore.",
+        "Errato. La direttiva `#delete` non esiste in C.",
+        "Errato. La direttiva `#remove` non esiste.",
+        "Errato. La direttiva `#clear` non fa parte dello standard C."
+      ]
+    },
+    {
+      "id": "it_clang_1124",
+      "widget_id": "widget_clang_1124",
+      "topic": "Macro predefinite — Numero di riga __LINE__",
+      "q": "Quale macrovariabile standard contiene il numero di riga corrente del file sorgente C durante la compilazione?",
+      "hint": "Il nome contiene la parola LINE racchiusa tra doppi trattini bassi.",
+      "options": [
+        "__LINE__",
+        "__FILE__",
+        "__ROW__",
+        "__LINE_NUM__",
+        "__STDC_LINE__"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La macro `__LINE__` viene sostituita automaticamente dal compilatore con il numero di riga corrente nel file sorgente (un intero). Viene spesso utilizzata insieme a `__FILE__` per la registrazione degli errori.",
+        "Errato. `__FILE__` contiene il nome del file corrente come stringa.",
+        "Errato. La macro `__ROW__` non esiste.",
+        "Errato. Il nome `__LINE_NUM__` non è standard.",
+        "Errato. Nome di macro inventato."
+      ]
+    },
+    {
+      "id": "it_clang_1125",
+      "widget_id": "widget_clang_1125",
+      "topic": "Preprocessore — Macro variadiche (__VA_ARGS__)",
+      "q": "Quale nome viene utilizzato in una macro con un numero variabile di argomenti (ad esempio, `#define LOG(fmt, ...)` ) per inserire l'elenco dei parametri passati?",
+      "hint": "Il nome inizia con un doppio trattino basso e contiene le parole VA_ARGS.",
+      "options": [
+        "__VA_ARGS__",
+        "__ARGS__",
+        "__VAR_ARGS__",
+        "..."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A partire da C99, se una macro è dichiarata con i punti di sospensione `...`, tutti gli argomenti aggiuntivi passati vengono sostituiti tramite l'identificatore speciale `__VA_ARGS__`.",
+        "Errato. Il nome `__ARGS__` non esiste.",
+        "Errato. Il nome corretto è `__VA_ARGS__`.",
+        "Errato. I punti di sospensione `...` vengono utilizzati nella dichiarazione, ma non nel corpo della macro."
+      ]
+    },
+    {
+      "id": "it_clang_1126",
+      "widget_id": "widget_clang_1126",
+      "topic": "Sintassi — Continuazione di macro multilinea",
+      "q": "Quale simbolo a fine riga viene utilizzato per continuare la definizione di una macro multilinea #define sulla riga successiva?",
+      "hint": "Lo stesso simbolo viene utilizzato per l'escape dei caratteri speciali.",
+      "options": [
+        "Backslash (barra rovesciata) \\",
+        "Slash (barra) /",
+        "Doppia e commerciale &&",
+        "Punto e virgola ;"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché una macro `#define` termina con un carattere di nuova riga, la continuazione sulla riga successiva si effettua tramite il carattere backslash `\\` alla fine della riga.",
+        "Errato. Lo slash viene utilizzato per i commenti e la divisione.",
+        "Errato. `&&` è l'operatore logico AND.",
+        "Errato. Il punto e virgola nel preprocessore diventerebbe parte del testo sostituito."
+      ]
+    },
+    {
+      "id": "it_clang_1127",
+      "widget_id": null,
+      "topic": "Confronto — #define vs variabili const",
+      "q": "Qual è la differenza principale tra la costante `#define LIMIT 10` e `const int limit = 10;`?",
+      "hint": "La direttiva `#define` partecipa al controllo dei tipi di dati da parte del compilatore?",
+      "options": [
+        "#define esegue una sostituzione testuale senza controllo dei tipi, mentre const crea una vera variabile tipizzata in memoria",
+        "#define alloca memoria nello heap, mentre const nello stack",
+        "La variabile const non può essere usata nelle espressioni, mentre #define sì",
+        "Non c'è assolutamente alcuna differenza tra le due"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `#define` lavora durante la fase di preprocessamento e non ha un tipo di dato (il compilatore vede semplicemente il numero `10`). La variabile `const int` viene controllata dal compilatore per tipo e possiede un indirizzo reale in memoria.",
+        "Errato. `#define` non alloca affatto memoria.",
+        "Errato. Le costanti `const` possono essere utilizzate tranquillamente in qualsiasi espressione.",
+        "Errato. La differenza è fondamentale nelle fasi di preprocessamento e compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_1128",
+      "widget_id": "widget_clang_1128",
+      "topic": "Sintassi — Spazio nella dichiarazione delle macro con parametri",
+      "q": "Cosa succede se si inserisce uno spazio tra il nome di una macro con parametri e la parentesi aperta durante la dichiarazione: `#define FOO (x) ((x) + 1)`?",
+      "hint": "La macro si trasformerà in una normale costante anziché in una funzione con un parametro?",
+      "options": [
+        "Il preprocessore creerà una macro oggetto FOO con valore \"(x) ((x) + 1)\" anziché una macro-funzione",
+        "Lo spazio verrà ignorato automaticamente dal preprocessore",
+        "Si verificherà un errore di compilazione",
+        "La macro verrà automaticamente convertita in una funzione inline"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel preprocessore C, la sintassi di una macro-funzione richiede che la parentesi segua STRETTAMENTE il nome: `#define FOO(x)`. Se si inserisce uno spazio, `FOO` diventa una normale macro-costante che sostituisce il testo con `(x) ((x) + 1)`.",
+        "Errato. Lo spazio qui cambia radicalmente il tipo di macro.",
+        "Errato. È codice C valido, quindi il preprocessore non genererà errori.",
+        "Errato. La funzione non verrà creata."
+      ]
+    },
+    {
+      "id": "it_clang_1129",
+      "widget_id": null,
+      "topic": "Compilazione condizionale — Direttive #ifdef e #if defined",
+      "q": "Quale direttiva del preprocessore permette di verificare se una macro con un determinato nome è stata dichiarata in precedenza?",
+      "hint": "Il nome della direttiva unisce le parole if e defined.",
+      "options": [
+        "#ifdef (o #if defined(...))",
+        "#ifexist",
+        "#isdefined",
+        "#check"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le direttive `#ifdef MACRO` o `#if defined(MACRO)` verificano l'esistenza della macro, indipendentemente dal valore assegnato.",
+        "Errato. La direttiva `#ifexist` non esiste nello standard C.",
+        "Errato. La direttiva `#isdefined` non esiste.",
+        "Errato. `#check` non è una direttiva del preprocessore C."
+      ]
+    },
+    {
+      "id": "it_clang_1130",
+      "widget_id": "widget_clang_1130",
+      "topic": "Preprocessore — Ridefinizione di una macro senza #undef",
+      "q": "Cosa succede se si tenta di ridefinire una macro con un altro valore `#define VAL 100` e sotto `#define VAL 200` senza un preventivo `#undef VAL`?",
+      "hint": "Il compilatore interromperà la build o mostrerà un avviso (warning)?",
+      "options": [
+        "Il compilatore emetterà un avviso (Warning) di redefinition e la macro otterrà il nuovo valore 200",
+        "Il programma non compilerà a causa di un errore fatale",
+        "Il nuovo valore verrà ignorato e rimarrà VAL == 100",
+        "Entrambi i valori verranno uniti in un array"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La ridefinizione di una macro con contenuti diversi non è severamente vietata, ma il compilatore emetterà un avviso di `macro redefinition` e sovrascriverà la macro con il nuovo valore `200`.",
+        "Errato. Si tratta di un avviso (warning), non di un errore critico (error).",
+        "Errato. Viene data priorità all'ultima dichiarazione.",
+        "Errato. Gli array nelle macro del preprocessore non si creano in questo modo."
+      ]
+    },
+    {
+      "id": "it_clang_1131",
+      "widget_id": "widget_clang_1131",
+      "topic": "Preprocessore vs Typedef — Sostituzione dei tipi tramite #define",
+      "q": "Qual è l'insidia nell'usare la macro `#define INT_PTR int*` quando si dichiarano più variabili separate da virgole `INT_PTR a, b;`?",
+      "hint": "In che modo la sostituzione del testo 'int*' influenzerà l'asterisco davanti al nome della seconda variabile?",
+      "options": [
+        "La variabile a diventerà un puntatore int*, mentre la variabile b sarà un normale int",
+        "Entrambe le variabili a e b diventeranno puntatori int*",
+        "Si verificherà un errore di sintassi in compilazione",
+        "La variabile a diventerà int, mentre b sarà un puntatore int*"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché il preprocessore esegue semplicemente una sostituzione testuale, il codice si espanderà in `int* a, b;`. In C l'asterisco si riferisce solo al nome della singola variabile, quindi `a` sarà di tipo `int*` e `b` di tipo `int`. Per una corretta dichiarazione dei tipi bisognerebbe usare `typedef int* INT_PTR;`.",
+        "Errato. La sostituzione testuale non estende `*` alla variabile `b`.",
+        "Errato. Il codice compilerà perfettamente, ma il tipo della variabile `b` sarà inaspettato.",
+        "Errato. L'asterisco si legherà alla variabile `a`."
+      ]
+    },
+    {
+      "id": "it_clang_1132",
+      "widget_id": "widget_clang_1132",
+      "topic": "Preprocessore — Doppia valutazione nell'operatore ternario",
+      "q": "Quali saranno i valori della variabile res e della variabile a dopo l'esecuzione del codice `int a = 5, b = 2; int res = MAX(a++, b);` con la macro `#define MAX(x, y) ((x) > (y) ? (x) : (y))`?",
+      "hint": "Quante volte la variabile a verrà inserita nell'operatore ternario e dove verrà eseguito l'incremento?",
+      "options": [
+        "res == 6, mentre la variabile a diventerà uguale a 7 (a causa di due incrementi)",
+        "res == 5, mentre la variabile a diventerà uguale a 6",
+        "res == 5, mentre la variabile a diventerà uguale a 7",
+        "res == 6, mentre la variabile a diventerà uguale a 6"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione si espanderà in `((a++) > (b) ? (a++) : (b))`. Prima viene valutata la condizione `5 > 2` (vera, `a` diventa 6). Poi viene eseguito il ramo vero `a++` (restituisce il valore corrente 6 e incrementa `a` a 7). Alla fine `res == 6` e `a == 7`.",
+        "Errato. La condizione è vera, quindi il ramo `(a++)` verrà eseguito una seconda volta.",
+        "Errato. La seconda valutazione restituisce il valore di `a` prima del secondo incremento (cioè 6).",
+        "Errato. La seconda valutazione eseguirà l'incremento un'altra volta."
+      ]
+    },
+    {
+      "id": "it_clang_1133",
+      "widget_id": "widget_clang_1133",
+      "topic": "Preprocessore — Stringificazione a due livelli",
+      "q": "Perché per convertire il valore di un'altra macro in stringa si usa un wrapper a due livelli (ad esempio `#define STR_HELPER(x) #x` e `#define STR(x) STR_HELPER(x)`)?",
+      "hint": "Le macro all'interno dell'operatore # vengono espanse direttamente?",
+      "options": [
+        "Affinché la macro argomento venga prima espansa nel suo valore e solo dopo convertita in stringa",
+        "Per rimuovere automaticamente gli spazi dalla stringa creata",
+        "Per costringere il preprocessore ad allocare memoria nello heap",
+        "È un requisito specifico per lavorare con Unicode"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `#` impedisce l'espansione delle macro passate come argomento. Chiamando `STR_HELPER(VERSION)` si otterrà la stringa `\"VERSION\"`. La macro intermedia `STR(VERSION)` espande prima `VERSION` nel suo valore (ad esempio `1.0`) e poi lo passa a `STR_HELPER`, ottenendo `\"1.0\"`.",
+        "Errato. Il preprocessore non rimuove gli spazi dalle stringhe.",
+        "Errato. Il preprocessore lavora solo con il testo durante la fase di build.",
+        "Errato. Questa è una regola generale per l'espansione delle macro in ANSI C."
+      ]
+    },
+    {
+      "id": "it_clang_1134",
+      "widget_id": null,
+      "topic": "Macro predefinite — __DATE__ e __TIME__",
+      "q": "Cosa contengono le macro predefinite standard `__DATE__` e `__TIME__`?",
+      "hint": "In quale momento vengono fissati i valori di queste macro?",
+      "options": [
+        "Stringhe letterali contenenti la data e l'ora di compilazione del file",
+        "La data e l'ora correnti al momento della chiamata del programma in secondi (time_t)",
+        "Il tempo di esecuzione del processo corrente dal suo avvio",
+        "L'ora dell'ultima modifica del file su disco"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le macro `__DATE__` (formato `\"Mmm dd yyyy\"`) e `__TIME__` (formato `\"hh:mm:ss\"`) vengono inserite dal compilatore come stringhe letterali che fissano il momento esatto della build del modulo.",
+        "Errato. Durante il runtime questi valori non cambiano e non si aggiornano.",
+        "Errato. Per misurare il tempo di esecuzione si usano le funzioni di `<time.h>`.",
+        "Errato. L'ora di modifica del file è gestita dal sistema di build (Make/CMake), non da queste macro."
+      ]
+    },
+    {
+      "id": "it_clang_1135",
+      "widget_id": "widget_clang_1135",
+      "topic": "Preprocessore — Macro auto-riferite (Self-Referential Macros)",
+      "q": "Cosa succede se una macro fa riferimento al proprio nome all'interno della propria definizione (ad esempio `#define A (A + 1)`)?",
+      "hint": "Il preprocessore entrerà in un ciclo infinito di espansione?",
+      "options": [
+        "Il preprocessore sostituisce A con (A + 1) e ferma la ri-espansione di A, prevenendo un ciclo infinito",
+        "Il preprocessore si bloccherà a causa di una ricorsione infinita",
+        "Si verificherà un errore fatale di compilazione 'Recursive macro detected'",
+        "L'identificatore A verrà automaticamente azzerato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard C proibisce l'espansione ricorsiva delle macro: durante la ri-scansione del testo sostituito, il nome della macro `A` viene disabilitato, evitando una sostituzione infinita.",
+        "Errato. Non si verifica un ciclo infinito grazie alle regole di ri-scansione dello standard C.",
+        "Errato. Non si verifica alcun errore di compilazione.",
+        "Errato. Il nome `A` rimane nel testo così com'è."
+      ]
+    },
+    {
+      "id": "it_clang_1136",
+      "widget_id": "widget_clang_1136",
+      "topic": "Preprocessore — Direttiva #line",
+      "q": "A cosa serve la direttiva del preprocessore `#line 100 \"custom.c\"`?",
+      "hint": "In che modo questo influisce sull'output degli errori di compilazione e sulle macro __LINE__ / __FILE__?",
+      "options": [
+        "Per modificare forzatamente i valori delle macro __LINE__ e __FILE__ per le righe di codice successive",
+        "Per saltare alla riga 100 del file durante l'esecuzione del programma",
+        "Per limitare il numero massimo di righe nel file",
+        "Per includere un file esterno a partire dalla riga 100"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La direttiva `#line` modifica i contatori interni del compilatore: la riga corrente diventa 100 e il nome del file diventa `\"custom.c\"`. Questo viene spesso utilizzato dai generatori di codice (yacc/bison) affinché gli errori del compilatore facciano riferimento al file DSL sorgente.",
+        "Errato. La direttiva funziona durante la compilazione, non a runtime.",
+        "Errato. I limiti di lunghezza del file non vengono impostati da questa direttiva.",
+        "Errato. Per includere file si usa `#include`."
+      ]
+    },
+    {
+      "id": "it_clang_1137",
+      "widget_id": null,
+      "topic": "Sintassi — Concatenazione di stringhe letterali",
+      "q": "Come gestirà il compilatore C due stringhe letterali scritte separate da uno spazio, ad esempio `#define MSG \"Hello, \" \"World!\"`?",
+      "hint": "È necessario l'operatore di addizione tra stringhe in C?",
+      "options": [
+        "Le unirà automaticamente in un'unica stringa letterale \"Hello, World!\"",
+        "Genererà un errore di compilazione poiché manca l'operatore +",
+        "Creerà un array composto da due stringhe separate",
+        "Ignorerà la seconda stringa letterale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C, stringhe letterali adiacenti separate solo da spazi o a capo vengono unite automaticamente in un'unica stringa durante la fase di analisi del testo.",
+        "Errato. In C non esiste l'operatore `+` per le stringhe.",
+        "Errato. Viene creata un'unica stringa letterale.",
+        "Errato. Entrambe le parti della stringa verranno conservate."
+      ]
+    },
+    {
+      "id": "it_clang_1138",
+      "widget_id": "widget_clang_1138",
+      "topic": "Standard C99 — L'identificatore __func__",
+      "q": "`__func__` (C99) è una macro del preprocessore?",
+      "hint": "È possibile verificare la presenza di `__func__` tramite `#ifdef __func__`?",
+      "options": [
+        "No, __func__ è una variabile locale statica implicita creata dal compilatore all'interno di ciascuna funzione",
+        "Sì, è una normale macro del preprocessore, analoga a __LINE__",
+        "Sì, è una macro integrata disponibile solo nei file header",
+        "No, è una parola chiave per la dichiarazione delle funzioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C99, `__func__` non è una macro del preprocessore, ma un array dichiarato implicitamente `static const char __func__[] = \"nome_funzione\";` all'inizio del corpo della funzione. Pertanto `#ifdef __func__` non funzionerà.",
+        "Errato. A differenza di `__FILE__` e `__LINE__`, il preprocessore non sa nulla di `__func__`.",
+        "Errato. Viene dichiarato dal compilatore durante la fase di analisi sintattica delle funzioni.",
+        "Errato. È il nome di un array locale integrato."
+      ]
+    },
+    {
+      "id": "it_clang_1139",
+      "widget_id": "widget_clang_1139",
+      "topic": "Standard C23 / GNU — Rimozione della virgola finale (__VA_OPT__)",
+      "q": "Quale problema risolve la macro `__VA_OPT__(,)` nello standard C23 (o l'estensione GNU `, ## __VA_ARGS__`)?",
+      "hint": "Cosa succede alla virgola prima di __VA_ARGS__ se l'utente chiama una macro variadica senza argomenti aggiuntivi?",
+      "options": [
+        "Rimuove in modo sicuro la virgola in sospeso se l'elenco degli argomenti aggiuntivi __VA_ARGS__ è vuoto",
+        "Converte automaticamente gli argomenti al tipo const char*",
+        "Conta il numero di argomenti passati",
+        "Crea un array variadico nello heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Chiamando la macro `#define LOG(fmt, ...)` senza argomenti, la scrittura `printf(fmt, __VA_ARGS__)` si espandeva in `printf(\"test\", )` con una virgola di troppo. Il costrutto `__VA_OPT__(,)` inserisce la virgola solo se `__VA_ARGS__` non è vuoto.",
+        "Errato. La macro non si occupa della conversione dei tipi.",
+        "Errato. Per contare gli argomenti si utilizzano altri trucchi di macro.",
+        "Errato. Non viene effettuata alcuna gestione della memoria heap."
+      ]
+    },
+    {
+      "id": "it_clang_1140",
+      "widget_id": "widget_clang_1140",
+      "topic": "Compilazione condizionale — Macro non dichiarate in #if",
+      "q": "A cosa equivarrà il valore della macro `UNKNOWN_MACRO` nella direttiva condizionale `#if UNKNOWN_MACRO == 0`, se non è stata precedentemente dichiarata con `#define`?",
+      "hint": "In che modo il preprocessore gestisce gli identificatori sconosciuti all'interno di un'espressione #if?",
+      "options": [
+        "Il preprocessore sostituirà l'identificatore sconosciuto con 0 e la condizione diventerà vera",
+        "Si verificherà un errore fatale del preprocessore 'Undefined macro'",
+        "La condizione verrà automaticamente considerata falsa",
+        "Il preprocessore lo sostituirà con il valore -1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nelle espressioni delle direttive `#if` e `#elif`, qualsiasi identificatore non sostituito (tranne `defined`) viene sostituito automaticamente dal preprocessore con l'intero `0`.",
+        "Errato. Le macro non dichiarate in `#if` non causano un'interruzione critica della build.",
+        "Errato. Poiché diventa uguale a 0, l'espressione `0 == 0` restituisce 1 (vero).",
+        "Errato. Il valore predefinito è sempre 0."
+      ]
+    },
+    {
+      "id": "it_clang_1141",
+      "widget_id": "widget_clang_1141",
+      "topic": "Macro-funzioni — Confronto con le funzioni inline",
+      "q": "Qual è il vantaggio principale di una funzione static inline rispetto a una macro-funzione #define nell'implementazione della logica all'interno delle funzioni?",
+      "hint": "Il preprocessore controlla i tipi degli argomenti, a differenza del compilatore?",
+      "options": [
+        "Le funzioni inline offrono un rigoroso controllo dei tipi degli argomenti e sono comode per il debugging (gdb), mantenendo la velocità dell'inlining diretto",
+        "Le funzioni inline non aumentano mai la dimensione del file eseguibile finale",
+        "Le funzioni inline possono essere chiamate prima dell'esecuzione della funzione main",
+        "Le funzioni inline vengono automaticamente compilate per la scheda video (GPU)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Una funzione `static inline` combina la velocità dell'inlining del corpo (senza overhead di chiamata) con un rigoroso controllo dei tipi degli argomenti da parte del compilatore e un'adeguata rappresentazione nel debugger.",
+        "Errato. Come per le macro, l'inlining eccessivo di funzioni di grandi dimensioni aumenta la dimensione del binario.",
+        "Errato. La chiamata di funzioni inline segue le regole standard del flusso di esecuzione.",
+        "Errato. Non ha alcuna relazione con i sottosistemi GPU."
+      ]
+    },
+    {
+      "id": "it_clang_1142",
+      "widget_id": "widget_clang_1142",
+      "topic": "Pericoli — L'istruzione return all'interno di una macro",
+      "q": "Cosa succede se una macro invocata all'interno di una funzione si espande nell'istruzione return -1;?",
+      "hint": "A cosa si riferisce esattamente l'istruzione return durante la sostituzione testuale della macro?",
+      "options": [
+        "Si verificherà un ritorno immediato dalla funzione nel cui corpo è stata invocata la macro",
+        "L'istruzione return restituirà il valore dalla macro stessa, senza terminare la funzione chiamante",
+        "Si verificherà un errore di compilazione 'illegal return in macro'",
+        "Il valore -1 verrà scritto nella variabile globale errno"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il preprocessore inserisce `return -1;` direttamente nel codice della funzione esterna. Durante l'esecuzione di questa riga, la funzione esterna terminerà il suo lavoro e restituirà `-1`.",
+        "Errato. Le macro non creano uno stack frame proprio né un confine di funzione.",
+        "Errato. Sintatticamente si tratta di codice C perfettamente valido.",
+        "Errato. L'istruzione `return` termina la funzione e non imposta `errno`."
+      ]
+    },
+    {
+      "id": "it_clang_1143",
+      "widget_id": "widget_clang_1143",
+      "topic": "Ottimizzazione — Disabilitazione delle funzioni in Release tramite #define",
+      "q": "Come disabilitare completamente tramite #define una funzione di debug log_debug(...) nella build di Release in modo che il compilatore non generi il codice di chiamata?",
+      "hint": "Con cosa si sostituisce l'invocazione di una macro variadica in C per farla diventare un'espressione vuota?",
+      "options": [
+        "#define log_debug(...) ((void)0)",
+        "#define log_debug(...) NULL",
+        "#define log_debug(...) return 0",
+        "#define log_debug(...) break"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La scrittura `((void)0)` rappresenta un'espressione vuota e sicura (no-op). È sintatticamente corretta con il punto e virgola `;` in qualsiasi punto della funzione e viene completamente rimossa dall'ottimizzatore.",
+        "Errato. L'uso di `NULL` senza assegnazione genererà un avviso del compilatore.",
+        "Errato. Questo causerà la fine della funzione chiamante al tentativo di effettuare il log.",
+        "Errato. `break` fuori da un ciclo o da uno `switch` causerà un errore di compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_1144",
+      "widget_id": "widget_clang_1144",
+      "topic": "Debugging — Wrapper di funzioni con passaggio di metadati",
+      "q": "Perché la funzione void* custom_malloc(size_t sz, const char* file, int line) viene spesso racchiusa in una macro #define malloc(sz) custom_malloc(sz, __FILE__, __LINE__)?",
+      "hint": "Come fa la funzione di debug a sapere esattamente dove nel codice utente è stata allocata la memoria?",
+      "options": [
+        "Per passare implicitamente alla funzione di debug il nome del file e il numero di riga della chiamata al fine di tracciare le perdite di memoria (memory leak)",
+        "Per velocizzare l'allocazione di memoria tramite precompilazione",
+        "Per rendere la chiamata della funzione thread-safe",
+        "Per allocare forzatamente la memoria nello stack anziché nello heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel punto di chiamata `malloc(100)`, la macro inserisce `__FILE__` e `__LINE__`, consentendo al profiler di memoria di registrare esattamente quale riga di quale file ha richiesto la memoria.",
+        "Errato. La velocità di allocazione della memoria è determinata dall'algoritmo di `malloc`.",
+        "Errato. La thread-safety è garantita da mutex/operazioni atomiche, non dalle macro.",
+        "Errato. La funzione continua ad allocare memoria nello heap."
+      ]
+    },
+    {
+      "id": "it_clang_1145",
+      "widget_id": "widget_clang_1145",
+      "topic": "Estensioni GNU C — Espressioni-blocco ({ ... }) nelle macro",
+      "q": "Perché nelle estensioni GCC/Clang per creare macro-funzioni sicure si utilizza la struttura ({ ... }) (Statement Expression)?",
+      "hint": "Come dichiarare una variabile locale temporanea e contemporaneamente far 'restituire' un risultato alla macro?",
+      "options": [
+        "Per dichiarare variabili locali all'interno della macro e restituire il valore dell'ultima espressione, evitando la doppia valutazione degli argomenti",
+        "Per eseguire il codice della macro in un thread separato in background",
+        "Per trasformare automaticamente la macro in un'istruzione assembly",
+        "Per chiamare un metodo della classe base"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il costrutto `({ ... })` permette di inserire all'interno della macro un blocco composto con variabili locali, e il valore dell'ultima espressione nel blocco diventa il 'valore restituito' dall'intera macro.",
+        "Errato. Questo costrutto non crea alcuna multithreading.",
+        "Errato. Per le istruzioni assembly si usa `__asm__`.",
+        "Errato. In C non ci sono classi ed ereditaria."
+      ]
+    },
+    {
+      "id": "it_clang_1146",
+      "widget_id": "widget_clang_1146",
+      "topic": "Design Pattern — Il pattern X-Macros",
+      "q": "Qual è l'idea alla base dell'utilizzo dell'idioma X-Macros per la generazione di funzioni o tabelle dati in C?",
+      "hint": "Come evitare la duplicazione di elenchi (enum, stringhe, funzioni gestore) in diverse parti del programma?",
+      "options": [
+        "L'elenco degli elementi è memorizzato in un'unica macro, che viene ridefinita ed espansa più volte per generare enum, array di stringhe e funzioni",
+        "Il codice delle funzioni viene automaticamente parallelizzato su tutti i core del processore",
+        "Tutte le funzioni del progetto vengono unite in un unico enorme file tramite il preprocessore",
+        "Viene utilizzato per proteggere il codice sorgente dalla decompilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il pattern X-Macros consente di descrivere i dati una sola volta (come un elenco di elenchi) per poi applicare diverse definizioni della macro `X(...)` per generare automaticamente enum, corrispondenze di stringhe e casi switch per le funzioni.",
+        "Errato. È un pattern di generazione di codice del preprocessore, non di parallelizzazione.",
+        "Errato. La struttura dei file del progetto non cambia.",
+        "Errato. X-Macros non costituisce offuscamento o protezione dall'hackeraggio."
+      ]
+    },
+    {
+      "id": "it_clang_1147",
+      "widget_id": "widget_clang_1147",
+      "topic": "Programmazione generica — La parola chiave typeof nelle macro",
+      "q": "Perché nelle macro-funzioni sicure (ad esempio per il calcolo del minimo MIN(a, b)) si usa la parola chiave typeof (o __typeof__)?",
+      "hint": "Come preservare il tipo dell'argomento quando si creano variabili locali temporanee all'interno della macro?",
+      "options": [
+        "Per determinare il tipo dell'argomento passato e creare variabili locali dello stesso tipo, prevenendo la ri-valutazione degli effetti collaterali (side effect)",
+        "Per conoscere la dimensione esatta in byte del tipo di dato durante il runtime",
+        "Per effettuare un cast forzato dell'argomento al tipo void*",
+        "Per verificare se una variabile è una struttura o un puntatore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La scrittura `typeof(a) _a = (a);` crea una variabile locale `_a` dello stesso tipo del parametro `a`. Ciò valuta `a` esattamente una volta, evitando problemi con `MIN(i++, j++)`.",
+        "Errato. Per ottenere la dimensione della memoria si usa `sizeof`.",
+        "Errato. Il cast a `void*` si effettua con la sintassi `(void*)`.",
+        "Errato. `typeof` non si occupa di verificare le strutture."
+      ]
+    },
+    {
+      "id": "it_clang_1148",
+      "widget_id": "widget_clang_1148",
+      "topic": "Lavoro con le strutture — La macro offsetof da <stddef.h>",
+      "q": "Cosa calcola la macro standard offsetof(type, member) durante la manipolazione dei campi delle strutture all'interno delle funzioni?",
+      "hint": "Come scoprire quanti byte dall'inizio della struttura dista un determinato campo?",
+      "options": [
+        "L'offset del campo member in byte rispetto all'inizio della struttura type",
+        "La dimensione totale della struttura type in byte",
+        "Un puntatore al primo campo della struttura",
+        "Il numero di campi contenuti nella struttura type"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La macro `offsetof` restituisce un valore di tipo `size_t`: l'offset in byte del campo `member` dall'inizio della struttura `type`. Viene usata spesso nella serializzazione a basso livello o in container_of.",
+        "Errato. La dimensione totale della struttura viene calcolata da `sizeof(type)`.",
+        "Errato. Questo farebbe un cast dell'indirizzo della struttura.",
+        "Errato. `offsetof` non conta il numero di campi."
+      ]
+    },
+    {
+      "id": "it_clang_1149",
+      "widget_id": "widget_clang_1149",
+      "topic": "Compatibilità — Sostituzione dei nomi delle funzioni tramite #define",
+      "q": "Perché nel codice multipiattaforma si trova spesso la sostituzione di funzioni di sistema nella forma #define strdup _strdup?",
+      "hint": "I nomi di alcune funzioni standard differiscono nei compilatori MSVC (Windows) e GCC (POSIX)?",
+      "options": [
+        "Per garantire una build multipiattaforma adattando i nomi delle funzioni alle specifiche del singolo compilatore/OS",
+        "Per velocizzare notevolmente la chiamata alla funzione strdup",
+        "Per impedire l'allocazione di memoria nello heap",
+        "Per rendere le chiamate di funzione completamente nascoste al debugger di sistema"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il compilatore MSVC richiede l'uso di funzioni POSIX con un trattino basso (ad esempio `_strdup` invece di `strdup`). Usando `#define`, gli sviluppatori mantengono una sintassi uniforme per tutti i sistemi operativi.",
+        "Errato. La macro cambia solo il nome del simbolo chiamato, senza modificarne l'implementazione.",
+        "Errato. La memoria continuerà a essere allocata nello heap.",
+        "Errato. Il debugger vede il simbolo finale `_strdup`."
+      ]
+    },
+    {
+      "id": "it_clang_1150",
+      "widget_id": "widget_clang_1150",
+      "topic": "Pericoli — Conflitto di nomi (Shadowing) nelle macro",
+      "q": "Quale problema può verificarsi se una macro dichiara all'interno del blocco do { int tmp = ...; } while(0) una variabile tmp e nella funzione esiste già una variabile con lo stesso nome?",
+      "hint": "Quale variabile verrà nascosta (shadowed) nel blocco di visibilità interno?",
+      "options": [
+        "La variabile locale della macro oscurerà (shadow) la variabile esterna tmp all'interno del blocco della macro, il che può portare a un errore logico durante la loro interazione",
+        "Si verificherà un errore di compilazione 'Duplicate symbol error'",
+        "La variabile esterna tmp della funzione chiamante verrà automaticamente azzerata",
+        "Il programma andrà in crash con un errore di segmentazione (Segmentation Fault)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un nuovo blocco `{}` crea il proprio ambito di visibilità. La variabile interna `int tmp` nasconderà quella esterna `tmp`. Se la macro tenta di leggere la `tmp` esterna (ad esempio `a = tmp`), leggerà la variabile appena creata da essa stessa!",
+        "Errato. Dichiarare una variabile in un blocco interno con lo stesso nome è sintatticamente consentito in C.",
+        "Errato. La variabile esterna manterrà il proprio valore, ma diventerà inaccessibile all'interno del blocco della macro.",
+        "Errato. Qui non si verificano errori di accesso alla memoria."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,821 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_310",
+      "widget_id": "widget_clang_310",
+      "topic": "Diramazioni — Ambito di visibilità delle variabili nei blocchi {}",
+      "q": "Cosa succederà tentando di compilare ed eseguire il frammento di codice del widget?",
+      "hint": "Rifletti su dove termina l'ambito di visibilità di una variabile dichiarata all'interno delle parentesi graffe di un blocco if.",
+      "options": [
+        "Errore di compilazione: la variabile temp non esiste all'esterno del suo blocco {}",
+        "Il codice verrà compilato e stamperà 42",
+        "Il codice verrà compilato e stamperà 0",
+        "Il programma terminerà con un errore di Segmentation Fault"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili dichiarate all'interno di un'istruzione composta (blocco `{}`) hanno un ambito locale e vengono distrutte all'uscita da esso. Tentare di accedere a `temp` all'esterno dell'`if` causerà un errore di compilazione.",
+        "Non corretto. All'esterno del blocco `{}` la variabile `temp` non è accessibile al compilatore.",
+        "Non corretto. La variabile `temp` cessa di esistere all'uscita dal blocco `{}` e non viene reinizializzata a zero.",
+        "Non corretto. L'errore si verificherà in fase di compilazione, quindi il programma non raggiungerà la fase di esecuzione."
+      ]
+    },
+    {
+      "id": "it_clang_311",
+      "widget_id": "widget_clang_311",
+      "topic": "Diramazioni — Precedenza degli operatori logici (&& e ||)",
+      "q": "Cosa stamperà il frammento di codice nel widget, considerando la precedenza delle operazioni logiche?",
+      "hint": "Ricorda quale operazione — AND logico (&&) o OR logico (||) — ha una precedenza più alta.",
+      "options": [
+        "\"Yes\"",
+        "\"No\"",
+        "Non stamperà nulla",
+        "Errore di compilazione dovuto all'assenza di parentesi esplicite"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `&&` ha una precedenza maggiore rispetto a `||`. Viene valutato prima `b && c` (0 && 0 -> 0) e poi `a || 0` (1 || 0 -> 1). Poiché il risultato è 1 (vero), viene stampato \"Yes\".",
+        "Non corretto. Gli operatori non vengono valutati strettamente da sinistra a destra: `&&` ha una precedenza maggiore rispetto a `||`.",
+        "Non corretto. Poiché l'espressione finale dà vero (1), il ramo `if` viene eseguito e stampa \"Yes\".",
+        "Non corretto. Le parentesi esplicite per gli operatori logici non sono necessarie, la loro precedenza è chiaramente definita nello standard C."
+      ]
+    },
+    {
+      "id": "it_clang_312",
+      "widget_id": "widget_clang_312",
+      "topic": "Istruzione switch — Effetto di esecuzione a cascata (Fall-through)",
+      "q": "Cosa stamperà il programma nel widget in assenza di istruzioni break nei rami dell'istruzione switch?",
+      "hint": "Segui dove viene trasferito il controllo e cosa succede dopo l'esecuzione del ramo case corrispondente in assenza di break.",
+      "options": [
+        "\"23D\"",
+        "\"2\"",
+        "\"123D\"",
+        "\"D\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `x = 2` il controllo viene trasferito a `case 2:`. In assenza dell'operatore `break`, l'esecuzione prosegue in sequenza attraverso `case 3:` e `default:`, stampando \"23D\".",
+        "Non corretto. Senza `break`, l'istruzione `switch` non termina automaticamente dopo l'esecuzione di un'etichetta.",
+        "Non corretto. Il ramo `case 1:` viene saltato poiché il valore di `x` è pari a 2.",
+        "Non corretto. Il ramo `default:` verrebbe eseguito da solo unicamente se il valore di `x` non corrispondesse a nessun `case`."
+      ]
+    },
+    {
+      "id": "it_clang_313",
+      "widget_id": null,
+      "topic": "Istruzione switch — Tipi di selettore consentiti",
+      "q": "Espressioni di quali tipi è consentito passare come selettore tra parentesi nell'istruzione switch(espressione) in C?",
+      "hint": "Rifletti su quali tipi di dati consentono al compilatore di costruire una tabella di salto (jump table) efficiente.",
+      "options": [
+        "Solo tipi interi (char, int, short, long, enum)",
+        "Qualsiasi tipo, inclusi float, double e numeri reali",
+        "Tipi stringa (char*) e array arbitrari",
+        "Esclusivamente il tipo unsigned int"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In linguaggio C, il selettore dello `switch` e le etichette `case` devono avere un tipo intero (inclusi i caratteri `char` e le enumerazioni `enum`). L'uso di numeri reali (`float`, `double`) o stringhe è vietato.",
+        "Non corretto. I tipi reali e le stringhe non sono consentiti come condizioni dell'istruzione `switch`.",
+        "Non corretto. In C le stringhe non sono un tipo intero incorporato, quindi non possono essere passate a uno `switch`.",
+        "Non corretto. È consentito qualsiasi tipo intero (`char`, `short`, `int`, `long`), non solo `unsigned int`."
+      ]
+    },
+    {
+      "id": "it_clang_314",
+      "widget_id": "widget_clang_314",
+      "topic": "Diramazioni — AND bit a bit (&) vs AND logico (&&)",
+      "q": "Cosa stamperà il codice nel widget utilizzando l'operatore bit a bit & all'interno di una condizione if?",
+      "hint": "Converti i numeri 2 e 4 in sistema binario ed esegui la moltiplicazione bit a bit.",
+      "options": [
+        "\"False\"",
+        "\"True\"",
+        "Errore di compilazione",
+        "\"TrueFalse\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operazione bit a bit `2 & 4` (binario `0010 & 0100`) dà `0000` (cioè 0). Secondo le regole del C, 0 è interpretato come falso, quindi viene eseguito il ramo `else` e viene stampato \"False\".",
+        "Non corretto. Anche se entrambe le variabili sono diverse da zero, la loro intersezione bit a bit dà 0.",
+        "Non corretto. L'uso dell'operatore bit a bit `&` all'interno di una condizione è sintatticamente corretto.",
+        "Non corretto. Il ramo `if` non verrà eseguito, poiché il risultato di `2 & 4` è 0."
+      ]
+    },
+    {
+      "id": "it_clang_315",
+      "widget_id": "widget_clang_315",
+      "topic": "Diramazioni — Tipo di dati booleano nello standard C99",
+      "q": "È vero che a partire dallo standard C99 nel file di intestazione <stdbool.h> sono definiti il tipo bool e le costanti true (1) e false (0)?",
+      "hint": "Ricorda come vengono gestiti i valori logici nello standard C99 e successivi.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'intestazione `<stdbool.h>` in C99 introduce l'alias `bool` per il tipo incorporato `_Bool`, oltre alle macro `true` (che si espande in 1) e `false` (che si espande in 0).",
+        "Non corretto. In C99 è stato effettivamente introdotto il supporto ufficiale a `stdbool.h`."
+      ]
+    },
+    {
+      "id": "it_clang_316",
+      "widget_id": "widget_clang_316",
+      "topic": "Diramazioni — Cortocircuito nella chiamata di funzioni",
+      "q": "Cosa stamperà il programma nel widget considerando la valutazione pigra (short-circuit) per l'OR logico (||)?",
+      "hint": "Rifletti se il compilatore chiamerà la funzione check() se l'operando di sinistra di OR è già pari a 1 (vero).",
+      "options": [
+        "\"A\"",
+        "\"CA\"",
+        "\"AC\"",
+        "\"C\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A causa del cortocircuito del `||` logico, se l'operando di sinistra è vero (`1`), l'operando di destra non viene affatto valutato. La funzione `check()` non verrà chiamata, viene stampato solo \"A\".",
+        "Non corretto. La parte destra della condizione viene ignorata, poiché la parte sinistra è sufficiente per stabilire la veridicità dell'intera espressione.",
+        "Non corretto. La chiamata a `check()` non avviene affatto, quindi il carattere \"C\" non verrà stampato.",
+        "Non corretto. L'operando di sinistra è vero, quindi verrà eseguito solo il ramo `if` (stampa di \"A\")."
+      ]
+    },
+    {
+      "id": "it_clang_317",
+      "widget_id": "widget_clang_317",
+      "topic": "Diramazioni — Operatore ternario annidato",
+      "q": "Cosa stamperà il frammento di codice nel widget che utilizza un operatore ternario annidato?",
+      "hint": "Calcola l'operatore ternario da sinistra a destra: prima la condizione x < 5, poi il ramo alternativo.",
+      "options": [
+        "2",
+        "1",
+        "3",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La prima condizione `10 < 5` è falsa. L'esecuzione passa all'alternativa `(x > 8) ? 2 : 3`. La condizione `10 > 8` è vera, quindi l'operatore ternario restituisce 2.",
+        "Non corretto. Il primo ramo restituisce 1 solo se `x < 5`.",
+        "Non corretto. Il valore alternativo 3 viene restituito solo se `x` è minore o uguale a 8.",
+        "Non corretto. L'annidamento degli operatori ternari è sintatticamente consentito."
+      ]
+    },
+    {
+      "id": "it_clang_318",
+      "widget_id": null,
+      "topic": "Istruzione switch — Posizione dell'etichetta default",
+      "q": "È obbligatorio posizionare il ramo default rigorosamente alla fine del costrutto switch?",
+      "hint": "Rifletti sulle regole sintattiche per il posizionamento delle etichette all'interno di un blocco switch.",
+      "options": [
+        "No, l'etichetta default può trovarsi in qualsiasi punto del blocco switch, ma di solito viene inserita alla fine per leggibilità",
+        "Sì, posizionare default all'inizio o al centro del costrutto costituisce un errore sintattico",
+        "Sì, altrimenti default verrebbe eseguito prima della verifica delle altre etichette case",
+        "L'etichetta default non è affatto prevista dallo standard C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'etichetta `default` può essere scritta in qualsiasi posizione all'interno dello `switch` (anche all'inizio). Il compilatore vi passerà solo nel caso in cui nessun `case` corrisponda al selettore.",
+        "Non corretto. L'ordine di scrittura delle etichette `case` e `default` non è limitato sintatticamente.",
+        "Non corretto. Il passaggio a `default` avviene solo in assenza di corrispondenze con i `case`, indipendentemente dalla sua posizione nel codice.",
+        "Non corretto. L'etichetta `default` fa parte dello standard del linguaggio C."
+      ]
+    },
+    {
+      "id": "it_clang_319",
+      "widget_id": "widget_clang_319",
+      "topic": "Diramazioni — Salto incondizionato goto",
+      "q": "Cosa stamperà il codice nel widget all'esecuzione dell'istruzione di salto incondizionato goto?",
+      "hint": "Segui quale istruzione verrà saltata dal programma al passaggio all'etichetta skip.",
+      "options": [
+        "\"2\"",
+        "\"12\"",
+        "\"1\"",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `x > 0` (5 > 0) è vero, viene eseguito `goto skip;`. L'esecuzione passa istantaneamente all'etichetta `skip:`, saltando la chiamata a `printf(\"1\");`. Di conseguenza viene stampato solo \"2\".",
+        "Non corretto. L'operatore `goto` trasferisce completamente il flusso di controllo all'etichetta, saltando il codice intermedio.",
+        "Non corretto. La riga `printf(\"1\");` viene saltata a causa del salto `goto`.",
+        "Non corretto. L'operatore `goto` è un operatore incorporato del C e non causa errori se l'etichetta è specificata correttamente."
+      ]
+    },
+    {
+      "id": "it_clang_320",
+      "widget_id": "widget_clang_320",
+      "topic": "Diramazioni — Precisione del confronto di numeri a virgola mobile",
+      "q": "Cosa stamperà il frammento di codice nel widget nel confronto diretto dei risultati dei calcoli in virgola mobile (double) tramite l'operatore ==?",
+      "hint": "Ricorda le particolarità della rappresentazione dei numeri frazionari nel formato binario IEEE 754.",
+      "options": [
+        "\"NO\", a causa dell'errore di approssimazione nella rappresentazione dei numeri reali nel sistema binario",
+        "\"YES\", poiché 0.1 + 0.2 è matematicamente e rigorosamente pari a 0.3",
+        "Errore di compilazione: l'operatore == è vietato per double",
+        "Il risultato è casuale a ogni esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A causa delle particolarità della codifica binaria secondo lo standard IEEE 754, l'espressione `0.1 + 0.2` dà il valore `0.30000000000000004`, che non coincide con `0.3`. Il confronto diretto tramite `==` restituisce falso.",
+        "Non corretto. In programmazione i numeri a virgola mobile si confrontano considerando una tolleranza d'errore (epsilon `fabs(a - b) < EPS`), non tramite `==`.",
+        "Non corretto. L'operatore `==` è consentito per i numeri a virgola mobile, sebbene il confronto diretto sia logicamente non sicuro.",
+        "Non corretto. I calcoli dello standard IEEE 754 sono deterministici e restituiranno lo stesso risultato falso a ogni esecuzione."
+      ]
+    },
+    {
+      "id": "it_clang_321",
+      "widget_id": "widget_clang_321",
+      "topic": "Istruzione switch — Etichette carattere",
+      "q": "Cosa stamperà il frammento di codice nel widget passando un valore di tipo carattere all'istruzione switch?",
+      "hint": "Fai attenzione all'assenza dell'istruzione break nel ramo case 'B' corrispondente.",
+      "options": [
+        "\"23\"",
+        "\"2\"",
+        "\"123\"",
+        "\"234\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il selettore corrisponde a `case 'B':` e stampa \"2\". A causa dell'assenza di `break`, l'esecuzione prosegue (fall-through) in `case 'C':`, viene stampato \"3\", dopodiché il `break` incontrato interrompe lo switch.",
+        "Non corretto. Lasciando che l'esecuzione prosegua in cascata in assenza di `break`, il programma coinvolgerà anche il ramo successivo `case 'C:'`.",
+        "Non corretto. Il ramo `case 'A':` viene saltato, poiché il selettore di caratteri è pari a `'B'`.",
+        "Non corretto. L'esecuzione si arresterà all'etichetta `case 'C':`, poiché lì è presente l'operatore `break`."
+      ]
+    },
+    {
+      "id": "it_clang_322",
+      "widget_id": "widget_clang_322",
+      "topic": "Diramazioni — Precedenza dell'operatore NOT (!)",
+      "q": "Cosa stamperà il codice nel widget considerando la precedenza dell'operatore unario di negazione !?",
+      "hint": "Ricorda che l'operatore unario ! ha una precedenza maggiore rispetto all'operatore di confronto >.",
+      "options": [
+        "\"No\"",
+        "\"Yes\"",
+        "Errore di compilazione",
+        "Non stamperà nulla"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore unario `!` viene eseguito prima di `>`. L'espressione `!5` diventa `0` (poiché 5 è vero). Successivamente viene verificato `0 > 0`, che dà falso (0). Pertanto viene eseguito il ramo `else` e stampato \"No\".",
+        "Non corretto. Viene prima calcolato `!x` (!5 -> 0), e solo dopo viene verificata la condizione `0 > 0`.",
+        "Non corretto. L'espressione `!x > 0` è sintatticamente corretta.",
+        "Non corretto. Il ramo `else` verrà eseguito e stamperà \"No\"."
+      ]
+    },
+    {
+      "id": "it_clang_323",
+      "widget_id": "widget_clang_323",
+      "topic": "Istruzione switch — Raggruppamento delle etichette case",
+      "q": "Cosa stamperà il frammento di codice nel widget in presenza di più etichette case consecutive senza operatori tra di esse?",
+      "hint": "Rifletti su come funziona l'esecuzione a cascata (fall-through) con blocchi case vuoti.",
+      "options": [
+        "\"Group 1\"",
+        "\"Group 2\"",
+        "Errore di compilazione dovuto a etichette case vuote",
+        "Non stamperà nulla"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Questo raggruppamento di etichette `case` è assolutamente legale in C. Se `val` è pari a 1, 2 o 3, il controllo passerà al blocco di istruzioni comune e stamperà \"Group 1\".",
+        "Non corretto. Il ramo `Group 2` verrà eseguito solo in caso di corrispondenza con altre etichette.",
+        "Non corretto. Le etichette `case` vuote vengono spesso utilizzate proprio per unire logicamente più opzioni di valori.",
+        "Non corretto. Poiché il valore del selettore corrisponde a una delle etichette raggruppate, verrà stampato \"Group 1\"."
+      ]
+    },
+    {
+      "id": "it_clang_324",
+      "widget_id": "widget_clang_324",
+      "topic": "Diramazioni — Incremento all'interno dell'operatore ternario",
+      "q": "A cosa saranno uguali le variabili a e b dopo l'esecuzione dell'espressione con l'operatore ternario nel widget?",
+      "hint": "Ricorda che nell'operatore ternario viene valutato solo il ramo corrispondente al risultato della condizione.",
+      "options": [
+        "a=11, b=20",
+        "a=11, b=21",
+        "a=10, b=20",
+        "a=10, b=21"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché la condizione `x > 0` (1 > 0) è vera, viene valutata solo la prima espressione `a++`. L'espressione `b++` viene completamente ignorata. Di conseguenza `a` diventerà 11, mentre `b` rimarrà 20.",
+        "Non corretto. L'operatore ternario non valuta il ramo inattivo, quindi `b++` non viene eseguito.",
+        "Non corretto. Il primo ramo `a++` è stato eseguito, quindi `a` è cambiato da 10 a 11.",
+        "Non corretto. La verità seleziona l'espressione di sinistra (`a++`), non quella di destra (`b++`)."
+      ]
+    },
+    {
+      "id": "it_clang_325",
+      "widget_id": "widget_clang_325",
+      "topic": "Diramazioni — Assegnazione dello zero nella condizione if (x = 0)",
+      "q": "Cosa stamperà il codice nel widget in caso di errore accidentale di assegnazione dello zero nella condizione?",
+      "hint": "Calcola il valore dell'espressione x = 0 e la sua interpretazione logica in C.",
+      "options": [
+        "\"False\"",
+        "\"True\"",
+        "Errore di compilazione",
+        "Non stamperà nulla"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `x = 0` assegna 0 alla variabile `x` e restituisce 0. Il numero 0 in C è falso, quindi il ramo `if` viene saltato e viene stampato \"False\".",
+        "Non corretto. Poiché il valore dell'espressione di assegnazione è diventato 0, la condizione viene interpretata come falsa.",
+        "Non corretto. L'assegnazione all'interno di `if` è sintatticamente consentita dalle regole standard del C.",
+        "Non corretto. Il ramo `else` verrà eseguito e stamperà \"False\"."
+      ]
+    },
+    {
+      "id": "it_clang_326",
+      "widget_id": "widget_clang_326",
+      "topic": "Diramazioni — Operatore virgola (comma operator) nella condizione",
+      "q": "Cosa stamperà il frammento di codice nel widget utilizzando l'operatore virgola all'interno delle parentesi dell'if?",
+      "hint": "Ricorda quale tra le espressioni separate da virgola determina il valore finale dell'intera catena.",
+      "options": [
+        "\"NO\"",
+        "\"YES\"",
+        "Errore di compilazione",
+        "Risultato non definito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore «virgola» valuta sequenzialmente tutte le espressioni da sinistra a destra e restituisce il risultato dell'**ultima**. L'ultima a essere valutata è `y = 0`, il cui risultato è 0 (falso), pertanto si verificherà il ramo `else` (\"NO\").",
+        "Non corretto. La prima parte `x = 1` verrà eseguita, ma il risultato finale dell'intera espressione sarà il valore di `y = 0`.",
+        "Non corretto. L'uso dell'operatore «virgola» nelle condizioni è completamente valido nella sintassi del C.",
+        "Non corretto. L'ordine di calcolo con la virgola è rigorosamente definito: da sinistra a destra."
+      ]
+    },
+    {
+      "id": "it_clang_327",
+      "widget_id": null,
+      "topic": "Istruzione switch — Espressioni costanti in case",
+      "q": "È possibile in C utilizzare variabili come valori dopo la parola chiave case (ad esempio, case x:)?",
+      "hint": "Rifletti se i valori delle etichette case debbano essere noti in fase di compilazione.",
+      "options": [
+        "No, le etichette case devono essere rigorosamente espressioni costanti note in fase di compilazione",
+        "Sì, a partire dallo standard C99 è possibile utilizzare qualsiasi variabile",
+        "Sì, ma solo se la variabile è dichiarata con il modificatore volatile",
+        "No, dopo case sono consentiti solo numeri interi, mentre i caratteri sono vietati"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C i valori delle etichette `case` devono essere espressioni costanti in fase di compilazione (letterali numerici, caratteri o costanti di enumerazione `enum`). È vietato utilizzare variabili.",
+        "Non corretto. L'uso di variabili nelle etichette `case` porta a un errore di compilazione.",
+        "Non corretto. Il modificatore `volatile` non rende una variabile una costante in fase di compilazione.",
+        "Non corretto. I letterali carattere (ad esempio `'A'`) sono numeri interi in C e sono consentiti in `case`."
+      ]
+    },
+    {
+      "id": "it_clang_328",
+      "widget_id": "widget_clang_328",
+      "topic": "Diramazioni — Valore numerico dei risultati di confronto",
+      "q": "Cosa stamperà il programma nel widget salvando il risultato di un'operazione logica (x > y) in una variabile intera?",
+      "hint": "Ricorda quale numero intero restituiscono gli operatori di confronto quando sono veri in C.",
+      "options": [
+        "1",
+        "true",
+        "10",
+        "5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C i risultati degli operatori di confronto e delle operazioni logiche danno sempre e garantito il numero intero `1` (se vero) o `0` (se falso).",
+        "Non corretto. Stampando una variabile intera tramite `%d` verrà stampato il numero `1`, non la parola `true`.",
+        "Non corretto. Gli operatori di confronto restituiscono un risultato booleano (0 o 1), non il valore dell'operando.",
+        "Non corretto. L'operatore restituisce il risultato del confronto (1), non il valore originale della variabile."
+      ]
+    },
+    {
+      "id": "it_clang_329",
+      "widget_id": "widget_clang_329",
+      "topic": "Diramazioni — Costrutti switch annidati",
+      "q": "Cosa stamperà il frammento di codice con un'istruzione switch annidata presente nel widget?",
+      "hint": "Segui l'esecuzione dei blocchi switch esterno ed interno.",
+      "options": [
+        "\"XY\"",
+        "\"X\"",
+        "\"Y\"",
+        "\"XYZ\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo switch esterno entra in `case 1:`. Lì viene avviato lo switch interno su `b` (2), che esegue `case 2:`, stampando \"X\" e interrompendo lo switch interno. Successivamente il ramo esterno prosegue l'esecuzione e stampa \"Y\".",
+        "Non corretto. Il `break` interno interrompe solo lo switch interno, dopodiché il ramo esterno finisce di stampare \"Y\".",
+        "Non corretto. Prima della stampa di \"Y\" viene eseguito lo `switch` interno, che stampa \"X\".",
+        "Non corretto. Il carattere \"Z\" non verrà stampato, poiché scatterà il `break` del ramo esterno."
+      ]
+    },
+    {
+      "id": "it_clang_330",
+      "widget_id": "widget_clang_330",
+      "topic": "Diramazioni — Decremento prefisso nella condizione",
+      "q": "Cosa stamperà il codice nel widget con il decremento prefisso --x nella condizione?",
+      "hint": "Calcola il valore della variabile x immediatamente prima della verifica della condizione.",
+      "options": [
+        "\"B\"",
+        "\"A\"",
+        "Non stamperà nulla",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il decremento prefisso `--x` prima riduce `x` da 1 a 0, e poi restituisce lo 0 ottenuto. Poiché 0 è falso, si attiva il ramo `else` e stampa \"B\".",
+        "Non corretto. Poiché si applica il `--` prefisso, il valore di `x` diminuisce prima della valutazione della veridicità della condizione.",
+        "Non corretto. Verrà eseguito il ramo `else` e stamperà \"B\".",
+        "Non corretto. Il decremento prefisso nella condizione è sintatticamente corretto."
+      ]
+    },
+    {
+      "id": "it_clang_331",
+      "widget_id": "widget_clang_331",
+      "topic": "Diramazioni — Cortocircuito dell'operatore &&",
+      "q": "Cosa stamperà il frammento di codice nel widget considerando le regole dell'incremento postfisso e del cortocircuito?",
+      "hint": "Rifletti se la parte destra di && verrà valutata se la parte sinistra x++ nello stato iniziale dà 0 (falso).",
+      "options": [
+        "\"1 1\"",
+        "\"1 2\"",
+        "\"0 1\"",
+        "\"0 2\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `x++` restituisce il valore corrente 0 (falso) e poi incrementa `x` a 1. A causa del cortocircuito, la parte destra `y++` non viene nemmeno valutata (`y` rimane 1). Poiché la condizione è falsa, viene eseguito il ramo `else` e stampa \"1 1\".",
+        "Non corretto. Poiché la parte sinistra è risultata falsa (0), la parte destra `y++` non viene eseguita a causa del cortocircuito.",
+        "Non corretto. La variabile `x` fa in tempo ad aumentare fino a 1 durante il calcolo dell'incremento postfisso.",
+        "Non corretto. Né `x` rimane pari a 0, né `y` viene incrementato."
+      ]
+    },
+    {
+      "id": "it_clang_332",
+      "widget_id": "widget_clang_332",
+      "topic": "Istruzione switch — Dichiarazione di variabili dopo un'etichetta case",
+      "q": "Cosa succederà tentando di compilare ed eseguire il codice del widget?",
+      "hint": "Ricorda le regole dello standard C relative alla dichiarazione di variabili subito dopo le etichette case senza un blocco {}.",
+      "options": [
+        "Errore di compilazione: un'etichetta case non può trovarsi direttamente prima della dichiarazione di una variabile",
+        "Il codice verrà compilato e stamperà 10",
+        "Il codice verrà compilato e stamperà D",
+        "Comportamento non definito (Undefined Behavior)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C un'etichetta (`case`) può precedere solo un'**istruzione** (statement) e non la dichiarazione di una variabile (declaration). Dichiarare una variabile subito dopo `case:` senza parentesi graffe `{}` causerà un errore di compilazione.",
+        "Non corretto. Lo standard C richiede che dopo l'etichetta `case` ci sia un'istruzione. La dichiarazione `int a = 10;` non è un'istruzione.",
+        "Non corretto. Il codice non supererà la fase di compilazione.",
+        "Non corretto. L'errore viene rilevato dal compilatore, non si arriverà all'avvio del programma."
+      ]
+    },
+    {
+      "id": "it_clang_333",
+      "widget_id": "widget_clang_333",
+      "topic": "Diramazioni — Problema dell'«else sospeso» (Dangling else)",
+      "q": "Cosa stamperà il codice nel widget con istruzioni if annidate senza parentesi graffe?",
+      "hint": "Ricorda la regola per cui, in assenza di parentesi graffe, a quale istruzione if appartiene il ramo else.",
+      "options": [
+        "\"2\"",
+        "\"1\"",
+        "Non stamperà nulla",
+        "Errore di compilazione dovuto ad ambiguità"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo le regole del linguaggio C, `else` si associa sempre al **più vicino** `if` precedente che non ha ancora un ramo `else`. Ciò significa che `else` appartiene a `if (y > 0)`. Poiché `x > 0` è vero (5 > 0), ma `y > 0` è falso (0 > 0), viene eseguito il ramo `else` e viene stampato \"2\".",
+        "Non corretto. Le rientranze in C non influiscono sulla sintassi. `else` appartiene all'`if (y > 0)` interno.",
+        "Non corretto. Poiché l'`if (x > 0)` esterno è vero, il programma passa all'`if` interno dove scatta l'`else`.",
+        "Non corretto. In C non ci sono ambiguità sintattiche: la regola di associazione all'`if` più vicino è rigorosamente definita."
+      ]
+    },
+    {
+      "id": "it_clang_334",
+      "widget_id": "widget_clang_334",
+      "topic": "Diramazioni — Numeri negativi nella condizione",
+      "q": "Cosa stamperà il programma nel widget passando un numero intero negativo nella condizione if?",
+      "hint": "Ricorda quali valori numerici vengono interpretati in C come «vero» e quali come «falso».",
+      "options": [
+        "\"True\"",
+        "\"False\"",
+        "Errore di compilazione",
+        "Non stamperà nulla"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C **qualsiasi** valore diverso da zero (inclusi i numeri negativi come -5) viene interpretato come «vero» (true). Solo lo 0 puro è «falso». Pertanto verrà stampato \"True\".",
+        "Non corretto. I numeri negativi non sono falsi. In C solo 0 è pari a false.",
+        "Non corretto. Il passaggio di numeri negativi agli operatori condizionali è del tutto lecito.",
+        "Non corretto. Scatterà il primo ramo `if` e stamperà \"True\"."
+      ]
+    },
+    {
+      "id": "it_clang_335",
+      "widget_id": "widget_clang_335",
+      "topic": "Diramazioni — Incremento postfisso nell'operatore ternario",
+      "q": "Cosa stamperà il frammento di codice nel widget che salva il risultato dell'operatore ternario con un incremento postfisso?",
+      "hint": "Determina quale espressione verrà eseguita e ricorda che l'incremento postfisso restituisce il vecchio valore.",
+      "options": [
+        "\"1 3 2\"",
+        "\"2 3 2\"",
+        "\"1 3 3\"",
+        "\"2 2 1\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La condizione `x > y` (1 > 2) è falsa. Viene valutata l'alternativa `y++`. L'incremento postfisso restituisce il valore iniziale di `y` (2) per l'assegnazione a `z`, poi incrementa `y` a 3. La variabile `x` non cambia. Viene stampato \"1 3 2\".",
+        "Non corretto. L'incremento postfisso restituisce il valore prima dell'aumento, quindi `z` riceve 2 e `y` diventa pari a 3.",
+        "Non corretto. L'assegnazione a `z` avviene prima del completamento dell'incremento di `y`, quindi `z` riceve 2.",
+        "Non corretto. La variabile `x` ha valore 1 e non cambia."
+      ]
+    },
+    {
+      "id": "it_clang_336",
+      "widget_id": null,
+      "topic": "Istruzione switch — Espressioni costanti in case",
+      "q": "È ammissibile in C specificare come valore dell'etichetta case un'espressione aritmetica, ad esempio case 2 + 3:?",
+      "hint": "Rifletti se il compilatore possa calcolare il valore di tale espressione prima dell'avvio del programma.",
+      "options": [
+        "Sì, se l'espressione è composta da costanti e può essere calcolata durante la compilazione",
+        "No, sono consentiti rigorosamente letterali singoli numerici o di carattere",
+        "Sì, ma solo in presenza di parentesi attorno all'espressione",
+        "No, le espressioni con operatori aritmetici portano a un errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Come valori per `case` è consentito utilizzare qualsiasi espressione costante (ad esempio, `2 + 3` o `'A' + 1`), a condizione che il risultato finale sia noto in fase di compilazione.",
+        "Non corretto. Il requisito principale del compilatore è che il valore dell'etichetta possa essere calcolato al momento della compilazione.",
+        "Non corretto. Le parentesi non sono obbligatorie per le espressioni aritmetiche in `case`.",
+        "Non corretto. Gli operatori aritmetici con costanti sono consentiti nelle etichette `case`."
+      ]
+    },
+    {
+      "id": "it_clang_337",
+      "widget_id": "widget_clang_337",
+      "topic": "Diramazioni — Istruzione vuota dopo if",
+      "q": "Cosa stamperà il codice nel widget in presenza di un punto e virgola subito dopo la condizione if?",
+      "hint": "Fai attenzione al punto e virgola dopo if(x = 1); e comprendi cosa fa.",
+      "options": [
+        "\"A\"",
+        "Non stamperà nulla",
+        "Errore di compilazione",
+        "\"A\" verrà stampato solo se x è inizialmente pari a 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il punto e virgola dopo `if(...)` forma un'istruzione vuota, ossia l'`if` termina senza fare nulla. Il blocco successivo `{ printf(\"A\"); }` diventa un normale blocco isolato e viene eseguito sempre, stampando \"A\".",
+        "Non corretto. Il punto e virgola «taglia» il corpo dell'`if`, trasformandolo in un'istruzione vuota, mentre il blocco tra parentesi graffe verrà eseguito indipendentemente dalla condizione.",
+        "Non corretto. Il punto e virgola forma un'istruzione vuota valida in C.",
+        "Non corretto. A causa del punto e virgola, la condizione dell'`if` non influisce su nulla; il blocco verrà eseguito con qualsiasi valore di `x`."
+      ]
+    },
+    {
+      "id": "it_clang_338",
+      "widget_id": "widget_clang_338",
+      "topic": "Diramazioni — Confronto a catena (a < b < c)",
+      "q": "Cosa stamperà il frammento di codice nel widget al tentativo di un confronto a catena tra tre numeri?",
+      "hint": "Calcola l'espressione a < b < c rigorosamente da sinistra a destra secondo le regole di associatività degli operatori di confronto.",
+      "options": [
+        "\"True\"",
+        "\"False\"",
+        "Errore di compilazione",
+        "Comportamento non definito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C non esiste un confronto matematico a catena integrato. L'espressione viene valutata da sinistra a destra: `(a < b) < c` -> `(5 < 2) < 10` -> `0 < 10`, il che dà 1 (vero). Viene stampato \"True\". Il modo corretto di scriverlo è: `a < b && b < c`.",
+        "Non corretto. In C `a < b < c` non verifica l'appartenenza di `b` all'intervallo. Prima `5 < 2` dà 0, e poi `0 < 10` dà 1 (vero).",
+        "Non corretto. Questa sintassi viene compilata senza errori, poiché gli operatori di confronto sono associativi a sinistra.",
+        "Non corretto. Il comportamento è rigorosamente definito dallo standard di associatività degli operatori."
+      ]
+    },
+    {
+      "id": "it_clang_339",
+      "widget_id": "widget_clang_339",
+      "topic": "Diramazioni — Negazione logica dello zero",
+      "q": "Cosa stamperà il programma nel widget applicando l'operatore ! allo zero?",
+      "hint": "Ricorda in cosa trasforma l'operatore di negazione ! il valore 0.",
+      "options": [
+        "\"Zero\"",
+        "\"Non-zero\"",
+        "Errore di compilazione",
+        "Non stamperà nulla"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `x = 0` (falso). L'operatore `!x` inverte 0 in 1 (vero). Poiché la condizione è vera, viene eseguito il primo ramo e stampa \"Zero\".",
+        "Non corretto. La negazione dello zero (`!0`) dà 1 (vero), quindi scatterà il ramo `if`.",
+        "Non corretto. L'operazione `!x` sugli interi è del tutto corretta in C.",
+        "Non corretto. Poiché la condizione è vera, verrà eseguito il primo ramo `printf`."
+      ]
+    },
+    {
+      "id": "it_clang_340",
+      "widget_id": "widget_clang_340",
+      "topic": "Istruzione switch — Codice irraggiungibile prima della prima etichetta",
+      "q": "Cosa stamperà il programma nel widget che contiene un'istruzione di output prima della prima etichetta case?",
+      "hint": "Rifletti se il controllo venga trasferito alle istruzioni all'interno di switch scritte prima di qualsiasi etichetta case.",
+      "options": [
+        "\"World\"",
+        "\"Hello World\"",
+        "\"Hello \"",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! All'ingresso nello `switch`, il controllo effettua immediatamente un salto (jump) all'etichetta corrispondente `case 1:`. Le istruzioni posizionate prima della prima etichetta `case` o `default` vengono semplicemente saltate e non eseguite mai. Viene stampato solo \"World\".",
+        "Non corretto. Il codice prima della prima etichetta `case` all'interno del blocco `switch` è irraggiungibile, poiché il commutatore effettua un salto diretto all'etichetta.",
+        "Non corretto. La stampa di \"Hello \" si trova prima delle etichette e verrà saltata, mentre scatterà proprio `case 1:`.",
+        "Non corretto. Posizionare codice prima della prima etichetta `case` può generare avvisi del compilatore, ma è sintatticamente consentito."
+      ]
+    },
+    {
+      "id": "it_clang_341",
+      "widget_id": "widget_clang_341",
+      "topic": "Diramazioni — Incremento prefisso nella condizione",
+      "q": "Cosa stamperà il frammento di codice nel widget verificando la condizione con l'incremento prefisso ++x?",
+      "hint": "Ricorda la differenza tra incremento prefisso (++x) e postfisso (x++) nella valutazione di un'espressione logica.",
+      "options": [
+        "\"A 1\"",
+        "\"B 1\"",
+        "\"A 0\"",
+        "\"B 0\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'incremento prefisso `++x` prima aumenta il valore di `x` da 0 a 1, e poi restituisce l'1 ottenuto (vero). Viene eseguito il ramo `if`, che stampa \"A\" e il nuovo valore di `x` (1).",
+        "Non corretto. Poiché l'incremento è prefisso, il valore aumenta PRIMA della verifica della condizione, quindi nell'`if` entra l'unità.",
+        "Non corretto. Il valore di `x` fa in tempo ad aumentare a 1 prima del momento della stampa.",
+        "Non corretto. Il ramo `else` non viene eseguito, poiché `++x` ha restituito 1 (vero)."
+      ]
+    },
+    {
+      "id": "it_clang_342",
+      "widget_id": "widget_clang_342",
+      "topic": "Diramazioni — Negazione logica dell'espressione tra parentesi",
+      "q": "Cosa stamperà il codice nel widget se la negazione logica viene applicata all'intera espressione tra parentesi !(x > y)?",
+      "hint": "Calcola prima il risultato dell'espressione (x > y) e poi applica l'operatore di negazione !.",
+      "options": [
+        "\"No\"",
+        "\"Yes\"",
+        "Errore di compilazione",
+        "Non stamperà nulla"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `x > y` (10 > 5) dà 1 (vero). L'operatore di negazione `!(1)` lo trasforma in 0 (falso). Di conseguenza il controllo viene trasferito al ramo `else`, che stampa \"No\".",
+        "Non corretto. Le parentesi cambiano l'ordine di calcolo: prima si confrontano i numeri (10 > 5 -> true) e poi si inverte il risultato (!true -> false).",
+        "Non corretto. L'uso delle parentesi con la negazione è del tutto corretto.",
+        "Non corretto. Verrà eseguito il ramo `else` e stamperà \"No\"."
+      ]
+    },
+    {
+      "id": "it_clang_343",
+      "widget_id": "widget_clang_343",
+      "topic": "Istruzione switch — Uso di enum come selettore",
+      "q": "Cosa stamperà il programma nel widget utilizzando gli elementi dell'enumerazione enum all'interno dello switch?",
+      "hint": "Rifletti se i valori degli elementi dell'enum corrispondano a costanti intere.",
+      "options": [
+        "\"GREEN\"",
+        "\"RED\"",
+        "\"BLUE\"",
+        "Errore di compilazione: enum vietato nello switch"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli elementi di un `enum` in C sono essenzialmente costanti intere (`RED` = 0, `GREEN` = 1, `BLUE` = 2). Poiché la variabile `signal` è pari a `GREEN`, scatterà `case GREEN:` e stamperà \"GREEN\".",
+        "Non corretto. L'elemento `RED` ha un identificatore numerico diverso (0), non coincidente con `GREEN` (1).",
+        "Non corretto. `BLUE` è pari a 2, mentre `signal` è pari a `GREEN` (1).",
+        "Non corretto. Gli elementi dell'enumerazione `enum` sono perfetti come etichette `case`, poiché sono costanti intere."
+      ]
+    },
+    {
+      "id": "it_clang_344",
+      "widget_id": "widget_clang_344",
+      "topic": "Diramazioni — Assegnazione multipla nella condizione",
+      "q": "Cosa stamperà il frammento di codice nel widget assegnando il risultato del confronto nelle variabili?",
+      "hint": "Calcola la condizione a == b, comprendi quale numero restituisce e segui la catena di assegnazioni.",
+      "options": [
+        "\"1 1\"",
+        "\"0 0\"",
+        "\"5 5\"",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operazione `a == b` (5 == 5) restituisce 1 (vero). Questo valore viene scritto in `y` e poi in `x` (`x = (y = 1)`). Poiché `x = 1` non è pari a zero, vengono eseguite le condizioni dell'`if` e viene stampato \"1 1\".",
+        "Non corretto. La condizione `5 == 5` è vera e restituisce 1, non 0.",
+        "Non corretto. Il risultato dell'operatore di uguaglianza `==` è pari a 1 o 0, non al valore delle variabili confrontate.",
+        "Non corretto. L'assegnazione a catena in C è una sintassi valida."
+      ]
+    },
+    {
+      "id": "it_clang_345",
+      "widget_id": "widget_clang_345",
+      "topic": "Diramazioni — AND logico (&&) con risultato nullo",
+      "q": "A cosa saranno uguali le variabili x e y dopo l'esecuzione della verifica delle condizioni nel widget?",
+      "hint": "Ricorda la regola del cortocircuito per l'operatore && in caso di falsità del primo operando.",
+      "options": [
+        "x=0, y=10",
+        "x=1, y=11",
+        "x=0, y=11",
+        "x=1, y=10"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La parte sinistra `x != 0` (0 != 0) è falsa. Per la regola del cortocircuito, la parte destra `++y` non inizia nemmeno a essere valutata. La variabile `x` rimane 0 e `y` rimane 10.",
+        "Non corretto. Né `x` cambia, né la parte destra `++y` viene valutata a causa del cortocircuito.",
+        "Non corretto. La parte destra `++y` viene saltata, quindi `y` non diventa 11.",
+        "Non corretto. L'espressione non modifica la variabile `x`."
+      ]
+    },
+    {
+      "id": "it_clang_346",
+      "widget_id": "widget_clang_346",
+      "topic": "Istruzione switch — Duplicazione delle etichette case",
+      "q": "Cosa succederà tentando di compilare il codice nel widget con due etichette case identiche?",
+      "hint": "Rifletti se il compilatore consenta ambiguità di scelta all'interno di un singolo blocco switch.",
+      "options": [
+        "Errore di compilazione: rilevato un valore case duplicato (duplicate case value)",
+        "Il codice verrà compilato ed eseguirà il primo case 1 corrispondente",
+        "Il codice verrà compilato ed eseguirà il secondo case 1 corrispondente",
+        "Comportamento non definito al momento dell'esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Tutti i valori delle etichette `case` all'interno di un singolo operatore `switch` devono essere unici. Tentare di duplicare un'etichetta causerà un errore di compilazione.",
+        "Non corretto. Il compilatore non potrà scegliere dove effettuare il salto, pertanto restituirà un errore sintattico.",
+        "Non corretto. I duplicati di etichette sono rigorosamente vietati in fase di compilazione.",
+        "Non corretto. L'errore viene rilevato prima della fase di esecuzione del programma."
+      ]
+    },
+    {
+      "id": "it_clang_347",
+      "widget_id": "widget_clang_347",
+      "topic": "Diramazioni — Inversione bit a bit (~) come condizione",
+      "q": "Cosa stamperà il frammento di codice nel widget passando il risultato dell'inversione bit a bit ~0 alla condizione if?",
+      "hint": "Ricorda in cosa si trasforma lo 0 nell'inversione bit a bit e se questo risultato sia diverso da zero.",
+      "options": [
+        "\"Non-zero\"",
+        "\"Zero\"",
+        "Errore di compilazione",
+        "Non stamperà nulla"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'inversione bit a bit `~0` inverte tutti i bit zero in uno, dando il valore `-1` (o `0xFFFFFFFF`). Poiché questo valore non è pari a zero, il C lo tratta come «vero» e stampa \"Non-zero\".",
+        "Non corretto. L'inversione bit a bit `~0` non è pari a 0, e qualsiasi valore diverso da zero in C è vero.",
+        "Non corretto. L'operatore `~` nel blocco condizionale è sintatticamente corretto.",
+        "Non corretto. Verrà eseguito il primo ramo `if` e stamperà \"Non-zero\"."
+      ]
+    },
+    {
+      "id": "it_clang_348",
+      "widget_id": "widget_clang_348",
+      "topic": "Diramazioni — Precedenza di assegnazione e confronto",
+      "q": "Cosa stamperà il programma nel widget in assenza di parentesi attorno all'operazione di assegnazione all'interno della condizione?",
+      "hint": "Tieni conto del fatto che l'operatore di confronto != ha una precedenza maggiore rispetto all'operatore di assegnazione =.",
+      "options": [
+        "\"1\"",
+        "\"5\"",
+        "\"0\"",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A causa delle precedenze, viene prima valutato il confronto `5 != 0` (vero, cioè 1). Successivamente il risultato `1` viene assegnato alla variabile `x`. La condizione `if (1)` è vera e viene stampato il valore di `x`, pari a 1.",
+        "Non corretto. Non c'è raggruppamento tra parentesi qui `(x = 5)`, quindi l'operatore `!=` viene valutato prima di `=`, e in `x` finisce `1`.",
+        "Non corretto. Il risultato del confronto `5 != 0` è pari a 1, non a 0.",
+        "Non corretto. L'espressione è sintatticamente corretta dal punto di vista degli standard C."
+      ]
+    },
+    {
+      "id": "it_clang_349",
+      "widget_id": "widget_clang_349",
+      "topic": "Diramazioni — OR logico (||) e valutazione pigra",
+      "q": "Cosa stamperà il frammento di codice nel widget utilizzando l'OR logico (||) con variabili variabili?",
+      "hint": "Ricorda come funziona il cortocircuito per l'operatore || se l'operando di sinistra è pari a vero (diverso da zero).",
+      "options": [
+        "\"1 0\"",
+        "\"1 1\"",
+        "\"0 0\"",
+        "\"0 1\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operando di sinistra `a++` restituisce il valore corrente di `a` (1), che è vero, e poi incrementa `a` a 2 (non più usato nell'espressione). A causa del cortocircuito, la parte destra `b++` non viene eseguita affatto (`b` rimane 0). Output: \"1 0\".",
+        "Non corretto. Nel caso di `||`, se la parte sinistra è vera, la parte destra viene completamente saltata.",
+        "Non corretto. Viene stampato `1` per il primo campo di output, poiché mostra il valore della prima variabile prima dell'incremento o lo stato.",
+        "Non corretto. La parte sinistra è vera, quindi `b++` non viene valutato."
+      ]
+    },
+    {
+      "id": "it_clang_350",
+      "widget_id": "widget_clang_350",
+      "topic": "Istruzione switch — Esecuzione del ramo default al centro del blocco",
+      "q": "Cosa stamperà il codice nel widget se il ramo default si trova all'inizio dello switch e non contiene break?",
+      "hint": "Segui se l'espressione corrisponde a qualche etichetta case e come viene trasferito il controllo.",
+      "options": [
+        "\"DEF12\"",
+        "\"DEF\"",
+        "\"12\"",
+        "\"2\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il valore `val = 5` non corrisponde né a `case 1:` né a `case 2:`. Il passaggio va a `default:`, viene stampato \"DEF\". Poiché Manca `break`, si verifica l'esecuzione a cascata (fall-through) in `case 1:` e `case 2:`, stampando \"12\". Risultato: \"DEF12\".",
+        "Non corretto. A causa dell'assenza di `break` dopo `default:`, il programma continuerà a eseguire il codice dei rami `case` successivi.",
+        "Non corretto. Il ramo `default` scatterà e stamperà \"DEF\" prima di passare a `case 1:`.",
+        "Non corretto. Il controllo viene trasferito a `default:`, non direttamente a `case 2:`."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,785 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_01",
+      "widget_id": "widget_clang_01",
+      "topic": "Linguaggio C — Puntatori e memoria",
+      "q": "Cosa stamperà questo frammento di codice in linguaggio C?",
+      "hint": "Ricorda la differenza tra un'operazione sul puntatore stesso e l'operazione di dereferenziazione tramite `*`.",
+      "options": [
+        "10",
+        "20",
+        "L'indirizzo della variabile x",
+        "Errore di compilazione"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Inizialmente `x` era pari a 10, tuttavia l'operazione `*p = 20` dereferenzia il puntatore e sovrascrive il contenuto della cella di memoria originale con un nuovo valore.",
+        "Corretto! Il puntatore `p` memorizza l'indirizzo della variabile `x`. L'operatore `*` fornisce un accesso diretto al contenuto di quella cella di memoria, quindi l'assegnazione `*p = 20` modifica il valore di `x` in 20.",
+        "Errato. Per stampare l'indirizzo di memoria è necessario utilizzare lo specificatore `%p` e passare il puntatore `p` stesso, non il valore della variabile `x` tramite `%d`.",
+        "Errato. Il codice è assolutamente valido: il puntatore è inizializzato con l'indirizzo di una variabile `int` esistente tramite l'operatore `&` e la dereferenziazione viene eseguita senza errori."
+      ]
+    },
+    {
+      "id": "it_clang_02",
+      "widget_id": "widget_clang_02",
+      "topic": "Linguaggio C — Fasi di compilazione",
+      "q": "Qual è la sequenza corretta delle fasi di build di un programma C (dal codice sorgente all'eseguibile)?",
+      "hint": "Ricorda quale strumento gestisce le direttive #include e #define prima della traduzione in codice macchina.",
+      "options": [
+        "Preelaborazione -> Compilazione -> Assemblaggio -> Linking",
+        "Linking -> Preelaborazione -> Compilazione -> Assemblaggio",
+        "Compilazione -> Preelaborazione -> Linking -> Esecuzione",
+        "Assemblaggio -> Compilazione -> Preelaborazione -> Linking"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il preprocessore inserisce file e macro, il compilatore crea un file assembler, l'assembler lo traduce in codice oggetto e il linker unisce i file oggetto in un binario eseguibile.",
+        "Errato. Il linking (collegamento) è l'ultima fase della build, in cui i file oggetto pronti vengono collegati tra loro.",
+        "Errato. La preelaborazione viene sempre eseguita PRIMA della compilazione del testo del programma.",
+        "Errato. L'assemblaggio viene eseguito dopo il compilatore, che genera il codice assembler."
+      ]
+    },
+    {
+      "id": "it_clang_03",
+      "widget_id": null,
+      "topic": "Linguaggio C — Diagrammi di flusso",
+      "q": "Quale simbolo viene utilizzato nei diagrammi di flusso (flowchart) per rappresentare la verifica di una condizione e la presa di decisioni (diramazione)?",
+      "hint": "Ricorda la figura geometrica con due uscite («Sì» e «No»).",
+      "options": [
+        "Rettangolo",
+        "Ovale (rettangolo arrotondato)",
+        "Rombo",
+        "Parallelogramma"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Errato. Il rettangolo indica il blocco \"Processo\" (calcoli, assegnazioni e operazioni).",
+        "Errato. L'ovale viene utilizzato per indicare l'inizio e la fine dell'algoritmo (Inizio/Fine).",
+        "Corretto! Il rombo nei diagrammi di flusso è responsabile della verifica delle condizioni e della diramazione dell'algoritmo.",
+        "Errato. Il parallelogramma viene utilizzato per rappresentare le operazioni di input e output dei dati."
+      ]
+    },
+    {
+      "id": "it_clang_04",
+      "widget_id": "widget_clang_04",
+      "topic": "Linguaggio C — Tipi di dati e sizeof",
+      "q": "Cosa stamperà questo frammento di codice su un'architettura standard a 64 bit (x86-64 / GCC)?",
+      "hint": "L'operatore sizeof restituisce la dimensione di un tipo o di una variabile in byte.",
+      "options": [
+        "2, 4",
+        "4, 8",
+        "4, 4",
+        "8, 8"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Sui sistemi moderni a 64 bit, il tipo int occupa 4 byte, non 2.",
+        "Corretto! Sulle architetture a 64 bit la dimensione di int è pari a 4 byte, mentre double è di 8 byte.",
+        "Errato. Il tipo in virgola mobile double occupa 8 byte in memoria.",
+        "Errato. Il tipo int occupa 4 byte, non 8."
+      ]
+    },
+    {
+      "id": "it_clang_05",
+      "widget_id": "widget_clang_05",
+      "topic": "Linguaggio C — Incremento e Undefined Behavior",
+      "q": "Cosa succederà provando a compilare ed eseguire il seguente frammento di codice?",
+      "hint": "Fai attenzione a quante volte la variabile x viene modificata all'interno della stessa espressione.",
+      "options": [
+        "Stamperà: x = 7, y = 12",
+        "Stamperà: x = 7, y = 11",
+        "Il risultato non è garantito (Comportamento indefinito / Undefined Behavior)",
+        "Stamperà: x = 6, y = 11"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Errato. Una versione specifica del compilatore potrebbe produrre questo valore, ma si tratta di una coincidenza.",
+        "Errato. Il comportamento non è definito dallo standard, quindi il risultato non è garantito.",
+        "Corretto! Modificare una variabile più di una volta all'interno della stessa espressione causa un Comportamento Indefinito (Undefined Behavior).",
+        "Errato. Il comportamento del programma non è definito, non ci si può affidare a un output specifico."
+      ]
+    },
+    {
+      "id": "it_clang_06",
+      "widget_id": null,
+      "topic": "Linguaggio C — Output formattato",
+      "q": "Quale specificatore di formato deve essere utilizzato nella funzione printf per stampare un numero intero in formato esadecimale in lettere minuscole?",
+      "hint": "Il nome dello specificatore coincide con la prima lettera della parola 'hexadecimal'.",
+      "options": [
+        "%d",
+        "%x",
+        "%o",
+        "%p"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Lo specificatore %d stampa un numero intero in sistema decimale.",
+        "Corretto! Lo specificatore %x stampa un numero in sistema esadecimale con le lettere a-f in minuscolo.",
+        "Errato. Lo specificatore %o è destinato alla stampa di un numero in sistema ottale.",
+        "Errato. Lo specificatore %p viene utilizzato per stampare l'indirizzo di un puntatore."
+      ]
+    },
+    {
+      "id": "it_clang_07",
+      "widget_id": "widget_clang_07",
+      "topic": "Linguaggio C — Operatore ternario",
+      "q": "Quale valore verrà assegnato alla variabile z come risultato dell'esecuzione di questo codice?",
+      "hint": "Calcola le espressioni passo dopo passo: prima la condizione principale (a > b), poi l'operatore ternario interno.",
+      "options": [
+        "15",
+        "20",
+        "25",
+        "10"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Errato. La condizione (15 > 20) è falsa, quindi il ramo a non viene scelto.",
+        "Errato. L'operatore valuta ulteriormente l'espressione (b % 3 == 2) e non restituisce direttamente b.",
+        "Corretto! Poiché 15 > 20 è falso, viene valutata l'espressione (20 % 3 == 2). Il resto della divisione di 20 per 3 è 2 (vero), quindi il risultato diventa b + 5 (20 + 5 = 25).",
+        "Errato. Il ramo b - 5 viene eseguito solo se la seconda condizione è falsa."
+      ]
+    },
+    {
+      "id": "it_clang_08",
+      "widget_id": "widget_clang_08",
+      "topic": "Linguaggio C — Istruzione switch",
+      "q": "Cosa stamperà a schermo il seguente programma?",
+      "hint": "Verifica se sono presenti le istruzioni break nei blocchi case.",
+      "options": [
+        "Two ",
+        "Two Three ",
+        "Two Three End",
+        "One Two Three End"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Errato. A causa dell'assenza del break dopo case 2, l'esecuzione \"cade\" nel case successivo.",
+        "Errato. L'esecuzione non si fermerà al case 3 e coinvolgerà anche il ramo default.",
+        "Corretto! Il programma entra in case 2:, stampa 'Two ', e poi per mancanza di break prosegue in case 3: e default:, stampando 'Three End'.",
+        "Errato. Il blocco case 1: viene ignorato poiché val è pari a 2."
+      ]
+    },
+    {
+      "id": "it_clang_09",
+      "widget_id": "widget_clang_09",
+      "topic": "Linguaggio C — Operatori logici",
+      "q": "Quale sarà il risultato dell'esecuzione di questo programma?",
+      "hint": "Ricorda la valutazione a corto circuito (short-circuit evaluation) dell'operatore &&.",
+      "options": [
+        "True a=0, b=6",
+        "a=0, b=5",
+        "a=0, b=6",
+        "Errore di compilazione"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. La condizione a != 0 dà 0 (falso), quindi il corpo dell'if non viene eseguito.",
+        "Corretto! Poiché il primo operando (a != 0) è falso, il secondo operando (++b > 5) non viene valutato grazie alla valutazione a corto circuito. La variabile b rimane pari a 5.",
+        "Errato. L'incremento ++b non è stato eseguito a causa dell'ottimizzazione dell'AND logico.",
+        "Errato. Il codice è completamente valido dal punto di vista sintattico del C."
+      ]
+    },
+    {
+      "id": "it_clang_10",
+      "widget_id": null,
+      "topic": "Linguaggio C — Identificatori e variabili",
+      "q": "Quale tra i seguenti nomi di variabili è CORRETTO e valido secondo lo standard del linguaggio C?",
+      "hint": "Un identificatore non può iniziare con una cifra, contenere trattini o essere una parola riservata.",
+      "options": [
+        "2nd_value",
+        "_user_score",
+        "default",
+        "total-sum"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. I nomi di variabile in C non possono iniziare con una cifra.",
+        "Corretto! Un identificatore in C può iniziare con un carattere di sottolineatura _ e contenere caratteri alfanumerici.",
+        "Errato. default è una parola chiave riservata del linguaggio C.",
+        "Errato. Il simbolo di trattino - viene interpretato dal compilatore come segno di sottrazione."
+      ]
+    },
+    {
+      "id": "it_clang_11",
+      "widget_id": "widget_clang_11",
+      "topic": "Linguaggio C — Ciclo do-while",
+      "q": "Quante volte verrà eseguito il corpo del ciclo do-while in questo frammento di codice?",
+      "hint": "A differenza del normale while, il ciclo do-while esegue la prima iterazione prima di verificare la condizione.",
+      "options": [
+        "0 volte",
+        "1 volta",
+        "5 volte",
+        "All'infinito"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Il ciclo do-while è un ciclo con post-condizione, quindi il corpo viene eseguito garantitamente almeno una volta.",
+        "Corretto! Il corpo del ciclo viene eseguito una volta, incrementando count a 11. Poi viene verificata la condizione (11 < 5), che risulta falsa, e il ciclo termina.",
+        "Errato. La condizione (count < 5) viene verificata già dopo la prima iterazione e termina immediatamente il ciclo.",
+        "Errato. La condizione diventerà rapidamente falsa, non ci sarà un ciclo infinito."
+      ]
+    },
+    {
+      "id": "it_clang_12",
+      "widget_id": "widget_clang_12",
+      "topic": "Linguaggio C — Ciclo for",
+      "q": "Quale delle seguenti strutture creerà un ciclo infinito in linguaggio C?",
+      "hint": "Nel ciclo for tutte e tre le sezioni (inizializzazione, condizione di controllo, incremento) sono opzionali.",
+      "options": [
+        "for (int i = 0; i < 0; i++)",
+        "for (;;)",
+        "for (while(1))",
+        "for (null; null; null)"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. La condizione (0 < 0) è inizialmente falsa, questo ciclo non eseguirà alcuna iterazione.",
+        "Corretto! La sintassi for (;;) omette la condizione di continuazione, il che per lo standard C viene interpretato come «sempre vero» (ciclo infinito).",
+        "Errato. Sintassi non valida nel linguaggio C — non è possibile inserire un ciclo while all'interno dell'intestazione di un for.",
+        "Errato. null non è un costrutto valido in C per l'intestazione di un ciclo (in C si usa NULL in maiuscolo, ma genererebbe comunque un errore sintattico)."
+      ]
+    },
+    {
+      "id": "it_clang_13",
+      "widget_id": "widget_clang_13",
+      "topic": "Linguaggio C — Controllo dei cicli (break / continue)",
+      "q": "Cosa stamperà questo frammento di codice sullo schermo?",
+      "hint": "L'operatore continue salta il resto dell'iterazione corrente, mentre break interrompe completamente il ciclo.",
+      "options": [
+        "1 2 3 4 5",
+        "1 2 4",
+        "1 2 4 5",
+        "1 2"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Il numero 3 viene saltato dall'operatore continue, e a 5 il ciclo si interrompe.",
+        "Corretto! Con i=3 scatta il continue (3 non viene stampato). Con i=4 viene stampato '4'. Con i=5 scatta il break, interrompendo il ciclo prima della chiamata a printf.",
+        "Errato. All'iterazione i=5 viene eseguito break, quindi 5 non verrà stampato.",
+        "Errato. Dopo aver saltato i=3 il ciclo prosegue per i=4."
+      ]
+    },
+    {
+      "id": "it_clang_14",
+      "widget_id": "widget_clang_14",
+      "topic": "Linguaggio C — Inizializzazione degli array",
+      "q": "Quale valore conterrà l'elemento arr[3] dopo l'esecuzione della seguente riga di codice?",
+      "hint": "Se durante l'inizializzazione vengono specificati meno valori rispetto alla dimensione dell'array, gli elementi rimanenti vengono riempiti di default.",
+      "options": [
+        "Spazzatura (dati casuali dalla memoria)",
+        "0",
+        "2",
+        "Errore di compilazione"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. La \"spazzatura\" casuale rimane nell'array solo in caso di totale assenza di inizializzazione (`int arr[5];`).",
+        "Corretto! In caso di inizializzazione parziale con l'elenco `{1, 2}`, i primi elementi ricevono i valori specificati, mentre tutti gli elementi non forniti (incluso `arr[3]`) vengono automaticamente azzerati.",
+        "Errato. Il valore 2 verrà scritto nell'elemento `arr[1]`.",
+        "Errato. La sintassi di inizializzazione parziale è assolutamente corretta in C."
+      ]
+    },
+    {
+      "id": "it_clang_15",
+      "widget_id": "widget_clang_15",
+      "topic": "Linguaggio C — Divisione intera",
+      "q": "Cosa stamperà a schermo questo frammento di codice?",
+      "hint": "Il risultato dell'operazione di divisione tra due numeri interi (`int / int`) in C è sempre un numero intero.",
+      "options": [
+        "2.5",
+        "2.0",
+        "2",
+        "Errore di compilazione"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Per ottenere 2.5 uno degli operandi dovrebbe essere convertito in un tipo a virgola mobile (ad es. `(double)a / b`).",
+        "Corretto! L'espressione `a / b` esegue una divisione intera 5 / 2 = 2. Successivamente 2 viene implicitamente convertito in double (2.0) e stampato con una cifra decimale.",
+        "Errato. Lo specificatore `%f` si aspetta un numero reale, quindi verrà stampata la parte decimale (`2.0`).",
+        "Errato. L'assegnazione e la stampa dei tipi sono completamente valide."
+      ]
+    },
+    {
+      "id": "it_clang_16",
+      "widget_id": "widget_clang_16",
+      "topic": "Linguaggio C — Operazioni bit a bit",
+      "q": "Quale sarà il risultato dell'esecuzione dell'AND bit a bit (`&`) in questo codice?",
+      "hint": "Converti i numeri 6 e 3 in sistema binario e applica l'AND logico per ciascun bit.",
+      "options": [
+        "7",
+        "2",
+        "9",
+        "0"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. 7 (0111) si otterrebbe usando l'OR bit a bit (`a | b`).",
+        "Corretto! In forma binaria: 6 = 0110₂, 3 = 0011₂. L'operazione 0110 & 0011 dà 0010₂, che nel sistema decimale equivale a 2.",
+        "Errato. 9 supera la dimensione in bit degli operandi.",
+        "Errato. Entrambi i numeri hanno lo stesso secondo bit da destra (valore 1)."
+      ]
+    },
+    {
+      "id": "it_clang_17",
+      "widget_id": "widget_clang_17",
+      "topic": "Linguaggio C — Ambito di visibilità (Scope)",
+      "q": "Cosa stamperà il programma eseguendo questo codice?",
+      "hint": "Dichiarare una variabile con lo stesso nome all'interno di un blocco interno `{}` \"oscura\" la variabile esterna.",
+      "options": [
+        "20 20",
+        "20 10",
+        "10 10",
+        "Errore di ridichiarazione"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Le modifiche nel blocco interno non influenzano il valore di `x` esterno al di fuori del blocco.",
+        "Corretto! Nel blocco interno `{}` viene creata una nuova variabile `x = 20`, che viene stampata per prima. Dopo essere usciti dal blocco essa viene distrutta, e il `printf` esterno stampa `x = 10`.",
+        "Errato. All'interno dei blocchi viene data priorità alla variabile interna.",
+        "Errato. In C è consentito creare variabili con lo stesso nome in ambiti di visibilità distinti (annidati)."
+      ]
+    },
+    {
+      "id": "it_clang_18",
+      "widget_id": "widget_clang_18",
+      "topic": "Linguaggio C — Condizioni logiche",
+      "q": "Cosa stamperà a schermo questo programma?",
+      "hint": "In C non esiste un tipo bool integrato (fino a C99). Quale valore diverso da zero viene considerato vero?",
+      "options": [
+        "True",
+        "False",
+        "Non stamperà nulla",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C viene considerato FALSO (false) solo il numero `0`. Qualsiasi valore diverso da zero (compresi i numeri negativi come `-5`) viene interpretato come VERO (true).",
+        "Errato. I numeri negativi non sono uguali a zero, quindi la condizione del ramo `if` si verificherà.",
+        "Errato. Il programma passerà necessariamente in uno dei rami `if-else`.",
+        "Errato. L'uso di numeri interi come condizioni degli operatori `if` è una caratteristica fondamentale del C."
+      ]
+    },
+    {
+      "id": "it_clang_19",
+      "widget_id": "widget_clang_19",
+      "topic": "Linguaggio C — Scorrimento bit a bit",
+      "q": "A quanto equivarrà il valore della variabile result dopo lo scorrimento dei bit a sinistra?",
+      "hint": "Lo scorrimento a sinistra `x << n` equivale a moltiplicare il numero `x` per `2` alla potenza `n` ($x \\cdot 2^n$).",
+      "options": [
+        "10",
+        "20",
+        "1",
+        "25"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. 10 si otterrebbe con uno scorrimento di 1 bit a sinistra (`5 << 1`).",
+        "Corretto! La rappresentazione binaria di 5 è 00000101₂. Lo scorrimento di 2 bit a sinistra dà 00010100₂, che equivale a 20 in decimale (5 * 2² = 20).",
+        "Errato. Lo scorrimento a destra (`5 >> 2`) darebbe 1 (divisione intera per 4).",
+        "Errato. Lo scorrimento bit a bit esegue una moltiplicazione per potenze di due, non un'elevazione al quadrato."
+      ]
+    },
+    {
+      "id": "it_clang_20",
+      "widget_id": null,
+      "topic": "Programmazione 1 — Crediti e ore",
+      "q": "Quanti crediti formativi (CFU) e quante ore accademiche di lezione prevede il corso «Programmazione 1»?",
+      "hint": "Ricorda il numero standard di ore di lezione e laboratorio per questo corso.",
+      "options": [
+        "9 CFU e 72 ore",
+        "6 CFU e 48 ore",
+        "12 CFU e 100 ore",
+        "9 CFU e 60 ore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il corso comprende lezioni e attività di laboratorio per una durata totale di 72 ore, corrispondenti a 9 crediti (CFU).",
+        "Errato. 6 CFU (48 ore) è il carico di insegnamenti più brevi.",
+        "Errato. 12 CFU di solito corrispondono a insegnamenti annuali su due semestri.",
+        "Errato. Il numero di ore per 9 CFU in questo corso è di 72, non 60."
+      ]
+    },
+    {
+      "id": "it_clang_21",
+      "widget_id": null,
+      "topic": "Diagrammi di flusso — Operazioni di input/output",
+      "q": "Quale simbolo grafico nei diagrammi di flusso degli algoritmi indica un'operazione di input/output (I/O)?",
+      "hint": "Ricorda la figura geometrica con due lati obliqui paralleli.",
+      "options": [
+        "Parallelogramma",
+        "Rettangolo",
+        "Rombo",
+        "Cerchio"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il parallelogramma viene utilizzato per indicare le operazioni di input e output dei dati.",
+        "Errato. Il rettangolo indica le operazioni di elaborazione dati o assegnazione.",
+        "Errato. Il rombo viene applicato per il controllo delle condizioni e la diramazione dell'algoritmo.",
+        "Errato. Il cerchio o l'ovale vengono usati per indicare l'inizio e la fine dell'algoritmo."
+      ]
+    },
+    {
+      "id": "it_clang_22",
+      "widget_id": null,
+      "topic": "Paradigmi di programmazione",
+      "q": "Quale tra i seguenti linguaggi appartiene al paradigma di programmazione funzionale?",
+      "hint": "Questo linguaggio è un famoso dialetto del Lisp.",
+      "options": [
+        "Scheme",
+        "Prolog",
+        "Java",
+        "C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Scheme è un rappresentante del paradigma di programmazione funzionale.",
+        "Errato. Prolog appartiene alla programmazione logica.",
+        "Errato. Java appartiene alla programmazione orientata agli oggetti.",
+        "Errato. Il linguaggio C appartiene al paradigma procedurale (imperativo)."
+      ]
+    },
+    {
+      "id": "it_clang_23",
+      "widget_id": null,
+      "topic": "Traduzione del codice — Interpretazione",
+      "q": "Qual è il vantaggio principale dell'interpretazione rispetto alla compilazione?",
+      "hint": "Pensa alla possibilità di eseguire lo stesso codice su diverse piattaforme hardware.",
+      "options": [
+        "Portabilità e indipendenza dalla piattaforma",
+        "Maggiore velocità ed efficienza di esecuzione",
+        "Ottimizzazione automatica del codice macchina",
+        "Nessuna necessità di software aggiuntivo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'interpretazione consente di eseguire il codice sorgente su qualsiasi architettura in presenza del relativo interprete.",
+        "Errato. Al contrario, i programmi interpretati di solito funzionano più lentamente di quelli compilati.",
+        "Errato. L'ottimizzazione del codice macchina viene eseguita dal compilatore.",
+        "Errato. Per l'interpretazione è necessario un interprete (software aggiuntivo)."
+      ]
+    },
+    {
+      "id": "it_clang_24",
+      "widget_id": null,
+      "topic": "Compilazione Java — Bytecode",
+      "q": "Come si chiama il codice intermedio generato durante la compilazione di un programma in linguaggio Java?",
+      "hint": "Questo codice viene eseguito dalla Java Virtual Machine (JVM).",
+      "options": [
+        "Bytecode",
+        "Codice macchina",
+        "Pseudocodice",
+        "Codice sorgente (Source code)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il compilatore Java traduce il codice sorgente in bytecode intermedio, che viene poi eseguito dalla JVM.",
+        "Errato. Il codice macchina viene eseguito direttamente dal processore, mentre il bytecode da una macchina virtuale.",
+        "Errato. Il pseudocodice è una descrizione testuale non eseguibile dell'algoritmo.",
+        "Errato. Il codice sorgente è il testo del programma prima della compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_25",
+      "widget_id": null,
+      "topic": "Esame — Pratica di laboratorio",
+      "q": "Qual è la durata dell'esame pratico di laboratorio per l'insegnamento di «Programmazione 1»?",
+      "hint": "Il tempo concesso per scrivere, compilare e fare il debugging di un programma in laboratorio.",
+      "options": [
+        "2 ore",
+        "1,5 ore",
+        "3 ore",
+        "4 ore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'esame pratico dura 2 ore e comprende la scrittura e il debugging di un programma in C.",
+        "Errato. 1,5 ore non sono sufficienti per il completamento totale della prova di laboratorio.",
+        "Errato. 3 ore supera la durata stabilita dal regolamento d'esame.",
+        "Errato. 4 ore è un tempo troppo lungo per una singola prova."
+      ]
+    },
+    {
+      "id": "it_clang_26",
+      "widget_id": "widget_clang_26",
+      "topic": "Compilatore GCC — Nome del file di default",
+      "q": "Quale nome di default riceve il file eseguibile durante la compilazione con GCC se non viene specificato il flag `-o`?",
+      "hint": "Il nome deriva storicamente da 'assembler output'.",
+      "options": [
+        "a.out (o a.exe)",
+        "primo.out",
+        "main.exe",
+        "primo.exe"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Senza specificare il flag `-o`, il compilatore GCC crea un file eseguibile con nome `a.out` (in Windows — `a.exe`).",
+        "Errato. GCC non prende il nome della prima funzione o del file sorgente senza il flag `-o`.",
+        "Errato. Il nome `main.exe` non viene assegnato automaticamente.",
+        "Errato. Il nome del file sorgente non viene utilizzato di default per il file binario."
+      ]
+    },
+    {
+      "id": "it_clang_27",
+      "widget_id": "widget_clang_27",
+      "topic": "Compilatore GCC — Flag -o",
+      "q": "Quale comando GCC permette di compilare `primo.c` e impostare il nome del file eseguibile su `primo`?",
+      "hint": "Il flag `-o` sta per output (file di uscita).",
+      "options": [
+        "gcc primo.c -o primo",
+        "gcc -compile primo.c primo",
+        "gcc primo.c -out primo.exe",
+        "gcc -make primo.c"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per impostare il nome del file di output si usa l'opzione `-o <nome_file>`.",
+        "Errato. Il flag `-compile` non esiste in GCC.",
+        "Errato. L'opzione `-out` non viene usata in GCC per impostare il file di output.",
+        "Errato. `-make` non è un flag del compilatore GCC."
+      ]
+    },
+    {
+      "id": "it_clang_28",
+      "widget_id": null,
+      "topic": "Linguaggio C — Tipi di dati primitivi",
+      "q": "Quali sono i tre principali tipi di dati primitivi del C trattati in questo corso base?",
+      "hint": "Tipi per caratteri, numeri interi e numeri in virgola mobile.",
+      "options": [
+        "char, int, float",
+        "string, int, boolean",
+        "integer, real, char",
+        "byte, int, double"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I tipi primitivi di base in C sono `char` (caratteri), `int` (interi) e `float` (reali).",
+        "Errato. I tipi `string` e `boolean` non esistono nel C standard di base.",
+        "Errato. Le parole chiave `integer` e `real` vengono utilizzate nel linguaggio Pascal, non in C.",
+        "Errato. `byte` non è una parola chiave integrata del C."
+      ]
+    },
+    {
+      "id": "it_clang_29",
+      "widget_id": "widget_clang_29",
+      "topic": "Linguaggio C — Specificatori di formato printf",
+      "q": "Quale specificatore di formato viene utilizzato nella funzione printf per stampare una variabile di tipo `float`?",
+      "hint": "Lo specificatore coincide con la prima lettera della parola 'float'.",
+      "options": [
+        "%f",
+        "%d",
+        "%c",
+        "%s"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per l'output formattato dei numeri di tipo `float` si usa lo specificatore `%f`.",
+        "Errato. Lo specificatore `%d` viene utilizzato per i numeri interi di tipo `int`.",
+        "Errato. Lo specificatore `%c` è destinato ai singoli caratteri `char`.",
+        "Errato. Lo specificatore `%s` viene utilizzato per stampare le stringhe."
+      ]
+    },
+    {
+      "id": "it_clang_30",
+      "widget_id": "widget_clang_30",
+      "topic": "Linguaggio C — Input di dati tramite scanf",
+      "q": "Qual è la sintassi corretta per leggere un numero intero da tastiera nella variabile `var` tramite `scanf`?",
+      "hint": "Non dimenticare di passare l'indirizzo della variabile usando l'operatore `&`.",
+      "options": [
+        "scanf(\"%d\", &var);",
+        "scanf(\"%d\", var);",
+        "scanf(\"%f\", &var);",
+        "scanf(var, \"%d\");"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `scanf` accetta una stringa di formato `\"%d\"` e l'indirizzo della variabile `&var`.",
+        "Errato. Senza l'operatore `&` viene passato il valore della variabile e non il suo indirizzo, provocando un errore.",
+        "Errato. Lo specificatore `%f` è destinato alla lettura di numeri di tipo `float`.",
+        "Errato. L'ordine degli argomenti è invertito."
+      ]
+    },
+    {
+      "id": "it_clang_31",
+      "widget_id": null,
+      "topic": "Linguaggio C — Caratteri di controllo (Escape sequence)",
+      "q": "Quale sequenza di escape viene utilizzata per la tabulazione (carattere Tab) nel linguaggio C?",
+      "hint": "La prima lettera della parola 'tab'.",
+      "options": [
+        "\\t",
+        "\\n",
+        "\\b",
+        "\\\\"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il carattere `\\t` inserisce una tabulazione orizzontale.",
+        "Errato. `\\n` viene utilizzato per andare a capo.",
+        "Errato. `\\b` significa backspace (ritorno indietro di un carattere).",
+        "Errato. `\\\\` serve per stampare il carattere backslash stesso."
+      ]
+    },
+    {
+      "id": "it_clang_32",
+      "widget_id": "widget_clang_32",
+      "topic": "Linguaggio C — Commenti",
+      "q": "Quale sintassi si usa in C per creare un commento multilinea?",
+      "hint": "I caratteri di slash e asterisco racchiudono il testo del commento.",
+      "options": [
+        "/* commento */",
+        "// commento",
+        "<!-- commento -->",
+        "# commento"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il costrutto `/* ... */` permette di formattare commenti su una o più righe.",
+        "Errato. `//` si applica ai commenti su riga singola.",
+        "Errato. `<!-- -->` è la sintassi dei commenti in HTML.",
+        "Errato. `#` viene utilizzato in Python e negli script Bash, non per i commenti in C."
+      ]
+    },
+    {
+      "id": "it_clang_33",
+      "widget_id": "widget_clang_33",
+      "topic": "Linguaggio C — Costanti (const)",
+      "q": "Come si dichiara correttamente una costante di tipo `float` denominata `PIGRECO` con valore `3.1415`?",
+      "hint": "Usa la parola chiave `const` prima del tipo della variabile.",
+      "options": [
+        "const float PIGRECO = 3.1415;",
+        "float const PIGRECO : 3.1415;",
+        "constant PIGRECO = 3.1415;",
+        "define float PIGRECO = 3.1415;"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi formale per la dichiarazione di una costante è: `const <tipo> <nome> = <valore>;`.",
+        "Errato. I due punti non si usano per l'assegnazione in C.",
+        "Errato. La parola chiave `constant` non esiste in C.",
+        "Errato. Il preprocessore usa la direttiva `#define`, non `define float`."
+      ]
+    },
+    {
+      "id": "it_clang_34",
+      "widget_id": "widget_clang_34",
+      "topic": "Linguaggio C — Direttive del preprocessore (#define)",
+      "q": "Qual è la sintassi corretta per definire una macrocostante simbolica tramite il preprocessore?",
+      "hint": "La direttiva del preprocessore non richiede il segno uguale `=` né il punto e virgola `;`.",
+      "options": [
+        "#define PIGR 3.1415",
+        "#define PIGR = 3.1415;",
+        "const #define PIGR 3.1415",
+        "#define float PIGR 3.1415;"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La direttiva del preprocessore si scrive nel formato `#define <nome> <valore>` senza il segno `=` e senza `;`.",
+        "Errato. Il segno `=` e il `;` non si mettono in `#define`, altrimenti verrebbero sostituiti direttamente nel codice.",
+        "Errato. `const` e `#define` sono meccanismi distinti del linguaggio.",
+        "Errato. Il tipo di dati non viene specificato nella macro `#define`."
+      ]
+    },
+    {
+      "id": "it_clang_35",
+      "widget_id": null,
+      "topic": "Linguaggio C — Sensibilità al maiuscolo/minuscolo (Case sensitivity)",
+      "q": "Perché i nomi `pippo` e `Pippo` indicano due entità completamente diverse in linguaggio C?",
+      "hint": "Le lettere maiuscole e minuscole vengono percepite in modo diverso dal compilatore.",
+      "options": [
+        "Perché il C è un linguaggio sensibile al maiuscolo/minuscolo (case-sensitive)",
+        "Perché il C non supporta le lettere maiuscole nei nomi",
+        "Perché uno dei due nomi è una parola riservata",
+        "Perché hanno tipi di memoria diversi di default"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il linguaggio C è case-sensitive e distingue rigorosamente tra lettere maiuscole e minuscole.",
+        "Errato. Il C supporta le lettere maiuscole nei nomi degli identificatori.",
+        "Errato. Né `pippo` né `Pippo` sono parole chiave riservate.",
+        "Errato. La combinazione di maiuscole/minuscole nel nome non influisce sul tipo di memoria."
+      ]
+    },
+    {
+      "id": "it_clang_36",
+      "widget_id": null,
+      "topic": "Linguaggio C — Regole di denominazione degli identificatori",
+      "q": "Quale tra le seguenti regole è OBBLIGATORIA per la dichiarazione del nome di un identificatore in C?",
+      "hint": "Con cosa deve iniziare qualsiasi identificatore in C?",
+      "options": [
+        "Il nome deve iniziare con una lettera o con un carattere di sottolineatura (_)",
+        "Il nome può iniziare con un carattere numerico",
+        "Il nome può coincidere con una parola chiave del linguaggio, come int o main",
+        "La lunghezza del nome non può superare i 5 caratteri"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'identificatore deve iniziare con una lettera o `_` e non deve coincidere con le parole chiave.",
+        "Errato. Un identificatore non può iniziare con una cifra.",
+        "Errato. Le parole chiave del C sono riservate e non possono essere usate come nomi di variabili.",
+        "Errato. La lunghezza del nome può superare i 5 caratteri."
+      ]
+    },
+    {
+      "id": "it_clang_37",
+      "widget_id": "widget_clang_37",
+      "topic": "Linguaggio C — Operazione di assegnazione",
+      "q": "Cosa esegue esattamente l'istruzione di assegnazione `x = x + 3;`?",
+      "hint": "Prima viene valutata la parte destra, poi il risultato viene memorizzato in quella sinistra.",
+      "options": [
+        "Calcola il valore di x + 3 e memorizza il risultato nella variabile x",
+        "Dichiara un'uguaglianza algebrica provocando un errore",
+        "Aumenta la dimensione della memoria allocata per x",
+        "Verifica l'uguaglianza tra x e x + 3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `=` calcola prima l'espressione a destra (`x + 3`) e poi salva il risultato nella variabile a sinistra (`x`).",
+        "Errato. In programmazione `=` indica un'assegnazione, non un'uguaglianza algebrica.",
+        "Errato. La dimensione della memoria allocata è determinata dal tipo della variabile e non cambia.",
+        "Errato. La verifica dell'uguaglianza viene eseguita con l'operatore `==`."
+      ]
+    },
+    {
+      "id": "it_clang_38",
+      "widget_id": "widget_clang_38",
+      "topic": "Linguaggio C — Output del backslash",
+      "q": "Quale sequenza di escape si usa all'interno di una stringa printf per stampare il carattere backslash stesso (`\\`)?",
+      "hint": "Il carattere speciale deve essere preceduto da un altro backslash (escape).",
+      "options": [
+        "\\\\",
+        "\\b",
+        "\\n",
+        "\\\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per stampare un singolo carattere `\\` è necessario raddoppiarlo: `\\\\`.",
+        "Errato. `\\b` esegue un ritorno indietro di un carattere.",
+        "Errato. `\\n` va a capo riga.",
+        "Errato. `\\\"` serve a stampare le virgolette doppie all'interno di una stringa."
+      ]
+    },
+    {
+      "id": "it_clang_39",
+      "widget_id": "widget_clang_39",
+      "topic": "Linguaggio C — Libreria stdio.h",
+      "q": "Quale libreria (file header) deve essere inclusa per utilizzare le funzioni `printf` e `scanf`?",
+      "hint": "Il nome della libreria sta per Standard Input/Output.",
+      "options": [
+        "stdio.h",
+        "stdlib.h",
+        "math.h",
+        "conio.h"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le funzioni di input-output `printf` e `scanf` sono dichiarate nel file header `stdio.h`.",
+        "Errato. `stdlib.h` contiene funzioni di gestione della memoria e generazione di numeri casuali.",
+        "Errato. `math.h` contiene funzioni matematiche (`sqrt`, `pow`, ecc.).",
+        "Errato. `conio.h` non fa parte dello standard C."
+      ]
+    }
+  ]
+}

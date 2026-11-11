@@ -1,0 +1,805 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_390",
+      "widget_id": "widget_clang_390",
+      "topic": "Istruzione switch — Assenza del ramo default con etichette non corrispondenti",
+      "q": "Cosa stamperà il programma nel widget se il valore passato x non corrisponde ad alcuna etichetta case e non è presente il default?",
+      "hint": "Pensa a cosa succede all'istruzione switch se nessuna etichetta corrisponde e manca il blocco default.",
+      "options": [
+        "\"Done\"",
+        "\"OneDone\"",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se nessun valore `case` corrisponde e il blocco `default` è assente, la struttura `switch` viene completamente saltata e l'esecuzione prosegue dalla prima istruzione successiva. Viene stampato \"Done\".",
+        "Errato. In assenza di un `case` corrispondente e del blocco `default`, l'intero `switch` viene semplicemente ignorato, quindi \"OneDone\" non verrà stampato.",
+        "Errato. L'assenza del blocco `default` nell'istruzione `switch` è sintatticamente valida e non causa un errore di compilazione.",
+        "Errato. Il comportamento dello standard C è rigorosamente definito: in assenza di corrispondenze e di `default`, l'esecuzione prosegue oltre lo `switch`."
+      ]
+    },
+    {
+      "id": "it_clang_391",
+      "widget_id": "widget_clang_391",
+      "topic": "Ciclo for — Punto e virgola dopo l'intestazione",
+      "q": "Cosa stamperà il frammento di codice nel widget in presenza di un punto e virgola subito dopo l'intestazione del ciclo for?",
+      "hint": "Pensa a cosa diventa il corpo del ciclo se è seguito immediatamente da un punto e virgola.",
+      "options": [
+        "\"5\"",
+        "\"01234\"",
+        "\"4\"",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il punto e virgola chiude l'intestazione di `for`, trasformando il corpo del ciclo in un'istruzione vuota. Il ciclo esegue 5 iterazioni, incrementando `i` da 0 a 5, dopodiché la chiamata a `printf` stampa il valore finale `5`.",
+        "Errato. Il punto e virgola separa la chiamata a `printf` dal ciclo, quindi la funzione viene chiamata una sola volta al termine del ciclo e non ad ogni iterazione.",
+        "Errato. Il ciclo viene eseguito finché `i < 5` non diventa falso, cioè fino a `i = 5`, e non 4.",
+        "Errato. Il punto e virgola dopo l'intestazione di `for` è sintatticamente corretto e crea un corpo del ciclo vuoto (empty statement)."
+      ]
+    },
+    {
+      "id": "it_clang_392",
+      "widget_id": "widget_clang_392",
+      "topic": "Operazioni logiche — Valutazione cortocircuitata dell'operatore ||",
+      "q": "Cosa stamperà il programma nel widget considerando il principio di valutazione cortocircuitata (short-circuit evaluation)?",
+      "hint": "Ricorda se l'operando destro dell'operatore || viene valutato qualora l'operando sinistro sia già vero (1).",
+      "options": [
+        "\"1 0\"",
+        "\"1 1\"",
+        "\"0 0\"",
+        "\"1 2\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché la variabile `a` è pari a 1 (vero), l'operando sinistro dell'operatore `||` è vero. In C, l'operando destro `++b` non viene affatto valutato e `b` rimane 0. Output: \"1 0\".",
+        "Errato. A causa della valutazione cortocircuitata delle espressioni con l'operatore `||`, l'incremento `++b` non viene eseguito, quindi `b` rimane 0 e non 1.",
+        "Errato. Il valore di `a` è 1, quindi il primo elemento dell'output è 1, non 0.",
+        "Errato. L'incremento `++b` non viene valutato e il valore di `b` non può diventare 2."
+      ]
+    },
+    {
+      "id": "it_clang_393",
+      "widget_id": "widget_clang_393",
+      "topic": "Operatore condizionale — Operatore ternario (?:)",
+      "q": "Cosa stamperà il frammento di codice che utilizza l'operatore ternario dal widget?",
+      "hint": "Calcola la condizione (x > y) e determina quale delle espressioni verrà restituita.",
+      "options": [
+        "\"20\"",
+        "\"10\"",
+        "\"1\"",
+        "\"0\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La condizione `10 > 20` è falsa, quindi l'operatore ternario `(x > y) ? x : y` restituisce la seconda opzione (`y`), ovvero 20.",
+        "Errato. Se la condizione è falsa, viene restituito il valore dopo i due punti (`y`) e non quello prima (`x`).",
+        "Errato. L'operatore ternario restituisce il valore delle variabili `x` o `y`, non il risultato logico 1.",
+        "Errato. L'operatore restituisce il valore di `y` (20), non lo 0 logico."
+      ]
+    },
+    {
+      "id": "it_clang_394",
+      "widget_id": "widget_clang_394",
+      "topic": "Ciclo while — Istruzione continue",
+      "q": "Cosa stamperà il codice nel widget quando la stampa di un numero viene saltata usando continue?",
+      "hint": "Segui la modifica della variabile i e il momento in cui scatta la condizione i == 2.",
+      "options": [
+        "\"13\"",
+        "\"123\"",
+        "\"12\"",
+        "\"23\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto!\\n- `i=0`: `i` incrementa a 1, viene stampato `1`.\\n- `i=1`: `i` incrementa a 2, scatta `continue` (la stampa viene saltata).\\n- `i=2`: `i` incrementa a 3, viene stampato `3`.\\nOutput: \"13\".",
+        "Errato. Quando `i` diventa pari a 2, `continue` passa immediatamente all'iterazione successiva ignorando `printf`, quindi il numero 2 non viene stampato.",
+        "Errato. Dopo aver saltato il `2`, il ciclo continua ed esegue la stampa di `3`.",
+        "Errato. Il numero `1` viene stampato alla prima iterazione, mentre il `2` viene saltato."
+      ]
+    },
+    {
+      "id": "it_clang_395",
+      "widget_id": "widget_clang_395",
+      "topic": "Istruzione switch — Raggruppamento di più case",
+      "q": "Cosa stamperà il programma nel widget con l'uso di più etichette case senza break tra di esse?",
+      "hint": "Fai attenzione a dove viene trasferito il controllo quando val = 2.",
+      "options": [
+        "\"Group 1\"",
+        "\"Group 2\"",
+        "\"Group 1Group 2\"",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il valore `val = 2` passa all'etichetta `case 2:`. Poiché non c'è codice né istruzioni `break` dopo di essa, l'esecuzione passa al `case 3:`, dove viene stampato \"Group 1\" e poi eseguito il `break`.",
+        "Errato. L'etichetta `case 2:` passa a `case 3:` (\"Group 1\"), l'esecuzione non raggiunge \"Group 2\" a causa del `break`.",
+        "Errato. L'istruzione `break` dopo \"Group 1\" interrompe il passaggio alle etichette successive.",
+        "Errato. Raggruppare più etichette `case` consecutive è una tecnica standard e valida nei linguaggi C/C++."
+      ]
+    },
+    {
+      "id": "it_clang_396",
+      "widget_id": "widget_clang_396",
+      "topic": "Ciclo do...while — Contatore negativo",
+      "q": "Cosa stamperà il frammento di codice nel widget lavorando con un valore iniziale negativo?",
+      "hint": "Segui le modifiche di x: -3, -2, -1, 0.",
+      "options": [
+        "\"-3-2-1\"",
+        "\"-3-2-10\"",
+        "Non stamperà nulla",
+        "\"-3\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto!\\n- 1ª iterazione: stampa `-3`, `x` diventa -2. `while(-2 < 0)` è vero.\\n- 2ª iterazione: stampa `-2`, `x` diventa -1. `while(-1 < 0)` è vero.\\n- 3ª iterazione: stampa `-1`, `x` diventa 0. `while(0 < 0)` è falso. Uscita.\\nOutput: \"-3-2-1\".",
+        "Errato. Con `x = 0` la condizione `0 < 0` restituisce falso, quindi 0 non viene stampato.",
+        "Errato. Il ciclo `do...while` esegue garantitamente il corpo almeno una volta.",
+        "Errato. La condizione continua per `-2` e `-1`, quindi non viene stampato solo `-3`."
+      ]
+    },
+    {
+      "id": "it_clang_397",
+      "widget_id": "widget_clang_397",
+      "topic": "Array e cicli — Indicizzazione degli elementi",
+      "q": "Cosa stamperà il ciclo for mostrato nel widget attraversando gli elementi dell'array?",
+      "hint": "Ricorda che l'indicizzazione degli elementi dell'array in C inizia da 0.",
+      "options": [
+        "\"10 20 30 \"",
+        "\"0 1 2 \"",
+        "\"30 20 10 \"",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo accede a `arr[0]` (10), `arr[1]` (20) e `arr[2]` (30), stampando i loro valori separati da spazi.",
+        "Errato. L'espressione `arr[i]` restituisce l'elemento dell'array all'indice `i`, non l'indice `i` stesso.",
+        "Errato. Il ciclo itera da `i = 0` a `i = 2`, quindi gli elementi vengono stampati in ordine crescente e non inverso.",
+        "Errato. Il codice è scritto correttamente e compila con successo."
+      ]
+    },
+    {
+      "id": "it_clang_398",
+      "widget_id": "widget_clang_398",
+      "topic": "Ciclo while — Uscita da while(1) tramite break",
+      "q": "Quale sarà il valore della variabile count al termine del ciclo while(1) nel widget?",
+      "hint": "Conta quante volte verrà eseguito count++ prima di raggiungere la condizione count == 3.",
+      "options": [
+        "3",
+        "4",
+        "2",
+        "Ciclo infinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `count` incrementa da 0 a 1, poi a 2 e infine a 3. All'iterazione in cui `count == 3`, viene eseguito `break`, che termina il ciclo. Il valore della variabile è 3.",
+        "Errato. Il controllo `count == 3` interrompe il ciclo prima che `count` abbia il tempo di incrementare a 4.",
+        "Errato. Con `count = 2` la condizione `count == 3` è falsa, quindi viene effettuato un altro incremento.",
+        "Errato. La presenza dell'istruzione `break` sotto la condizione `count == 3` garantisce l'uscita dal ciclo."
+      ]
+    },
+    {
+      "id": "it_clang_399",
+      "widget_id": "widget_clang_399",
+      "topic": "Operazioni logiche — Valutazione cortocircuitata dell'operatore &&",
+      "q": "Il valore della variabile b cambierà durante la valutazione della condizione con l'operatore && dal widget?",
+      "hint": "La parte destra dell'operatore && viene valutata se la parte sinistra è uguale a 0 (falso)?",
+      "options": [
+        "5",
+        "6",
+        "0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `a` è pari a 0 (falso). Nell'operatore `&&`, se il primo operando è falso, l'intero risultato è garantito essere falso, quindi il secondo operando `++b` non viene valutato. La variabile `b` rimane pari a 5.",
+        "Errato. Con `a = 0` l'espressione con l'operatore `&&` interrompe ulteriori valutazioni, evitando la chiamata a `++b`.",
+        "Errato. Il valore iniziale di `b` era 5, non viene azzerato.",
+        "Errato. L'uso della valutazione cortocircuitata è un comportamento standard del linguaggio C."
+      ]
+    },
+    {
+      "id": "it_clang_400",
+      "widget_id": "widget_clang_400",
+      "topic": "Cicli annidati — Filtro degli elementi diagonali (i == j)",
+      "q": "Quale sarà il valore della variabile count dopo l'esecuzione dei cicli annidati nel widget?",
+      "hint": "Conta quante volte gli indici i e j coincideranno con dimensioni 3x3.",
+      "options": [
+        "3",
+        "9",
+        "6",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La condizione `i == j` viene soddisfatta esattamente 3 volte: per le coppie di indici (0,0), (1,1) e (2,2). Di conseguenza, `count` incrementerà fino a 3.",
+        "Errato. La variabile `count` non incrementa ad ognuna delle 9 iterazioni, ma solo quando `i == j` coincide.",
+        "Errato. Per una matrice 3x3 la coincidenza `i == j` si verifica 3 volte, non 6.",
+        "Errato. La condizione `i == j` scatta fin dalla prima iterazione (0,0), quindi `count` non rimarrà zero."
+      ]
+    },
+    {
+      "id": "it_clang_401",
+      "widget_id": "widget_clang_401",
+      "topic": "Ciclo while — Operatore di negazione logica (!)",
+      "q": "Cosa stamperà il codice nel widget quando si usa la negazione logica nella condizione while (!x)?",
+      "hint": "Ricorda come vengono interpretati 0 e 1 applicando l'operatore logico NOT (!).",
+      "options": [
+        "\"0\"",
+        "\"1\"",
+        "Non stamperà nulla",
+        "Ciclo infinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `x = 0` l'espressione `!x` equivale a `!0` (vero). Viene eseguito il corpo del ciclo: viene stampato `0`, poi `x` incrementa a 1. Alla seconda iterazione `!1` dà `0` (falso) e il ciclo termina. Output: \"0\".",
+        "Errato. La stampa avviene prima dell'incremento di `x`, quindi viene stampato il valore corrente `x = 0`, non 1.",
+        "Errato. Poiché `x = 0`, l'operatore di negazione `!0` restituisce vero e il corpo del ciclo viene eseguito almeno una volta.",
+        "Errato. All'interno del ciclo la variabile `x` incrementa, rendendo `!x` falso alla seconda iterazione."
+      ]
+    },
+    {
+      "id": "it_clang_402",
+      "widget_id": "widget_clang_402",
+      "topic": "Ciclo for — Operatore virgola nella sezione condizione",
+      "q": "Cosa stamperà il frammento di codice nel widget usando l'operatore virgola nella sezione della condizione del ciclo for?",
+      "hint": "Ricorda quale delle espressioni restituisce l'operatore virgola durante la valutazione sequenziale.",
+      "options": [
+        "\"00 11 22 \"",
+        "\"00 11 \"",
+        "\"00 \"",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore virgola valuta entrambe le espressioni da sinistra a destra e restituisce il risultato dell'**ultima** (`j < 3`). Di conseguenza, il ciclo termina solo quando `j` diventa pari a 3, eseguendo 3 iterazioni (`j` = 0, 1, 2). Output: \"00 11 22 \".",
+        "Errato. La condizione `i < 2` viene scartata dall'operatore virgola; il ciclo dipende unicamente da `j < 3`, eseguendo quindi 3 iterazioni e non 2.",
+        "Errato. Il ciclo esegue più di un'iterazione poiché la parte destra `j < 3` è vera per j=0, 1, 2.",
+        "Errato. L'uso dell'operatore virgola nella condizione del ciclo è sintatticamente corretto."
+      ]
+    },
+    {
+      "id": "it_clang_403",
+      "widget_id": "widget_clang_403",
+      "topic": "Ciclo do...while — Interruzione alla prima iterazione tramite break",
+      "q": "Cosa stamperà il seguente programma con un ciclo do...while e una condizione con chiamata a break?",
+      "hint": "Segui in quale passaggio scatterà il ramo if (i == 0).",
+      "options": [
+        "\"0\"",
+        "\"01234\"",
+        "\"01\"",
+        "Non stamperà nulla"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Alla prima iterazione con `i = 0` viene stampato `0`. Successivamente viene verificata la condizione `if (i == 0)`, che risulta vera, e l'istruzione `break` termina immediatamente il ciclo do...while.",
+        "Errato. L'istruzione `break` interrompe istantaneamente l'esecuzione del ciclo prima di passare alle iterazioni successive.",
+        "Errato. L'interruzione `break` avviene già alla prima iterazione (`i == 0`), quindi '1' non verrà stampato.",
+        "Errato. L'istruzione `printf` si trova prima del controllo `if`, quindi '0' farà in tempo ad essere stampato."
+      ]
+    },
+    {
+      "id": "it_clang_404",
+      "widget_id": "widget_clang_404",
+      "topic": "Array e cicli — Scorrimento dell'array in ordine inverso",
+      "q": "Cosa stamperà il ciclo for del widget iterando su un array con un decremento del contatore?",
+      "hint": "Fai attenzione all'indice iniziale i = 2 e alla condizione di completamento i >= 0.",
+      "options": [
+        "\"15 10 5 \"",
+        "\"5 10 15 \"",
+        "\"10 5 \"",
+        "Errore di accesso fuori dai limiti dell'array"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo inizia l'esecuzione dall'ultimo elemento dell'array `a[2]` (15), poi accede ad `a[1]` (10) e termina su `a[0]` (5). Output: \"15 10 5 \".",
+        "Errato. Il contatore `i` decrementa da 2 a 0, valutando gli elementi dell'array dalla fine all'inizio e non viceversa.",
+        "Errato. L'indice iniziale `i = 2` corrisponde al terzo elemento (15), quindi vengono stampati 3 elementi.",
+        "Errato. Gli indici 2, 1, 0 rientrano nei limiti di un array di 3 elementi."
+      ]
+    },
+    {
+      "id": "it_clang_405",
+      "widget_id": "widget_clang_405",
+      "topic": "Ciclo for — Operatore resto della divisione (%) e continue",
+      "q": "Cosa stamperà il frammento di codice nel widget saltando le iterazioni tramite continue?",
+      "hint": "Scopri per quale valore di i la condizione i % 3 == 0 restituirà vero.",
+      "options": [
+        "\"1245\"",
+        "\"12345\"",
+        "\"3\"",
+        "\"124\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per `i = 3` l'espressione `3 % 3 == 0` è vera, scatta `continue` e la stampa del tre viene saltata. Gli altri numeri (1, 2, 4, 5) vengono stampati regolarmente.",
+        "Errato. Con `i = 3` viene eseguito `continue`, passando al passaggio successivo del ciclo senza eseguire `printf`, quindi il 3 non viene stampato.",
+        "Errato. Viene saltato solo il numero 3, non tutti gli altri.",
+        "Errato. Il ciclo viene eseguito fino a `i = 5` incluso, quindi anche il numero 5 fa in tempo ad essere stampato."
+      ]
+    },
+    {
+      "id": "it_clang_406",
+      "widget_id": "widget_clang_406",
+      "topic": "Istruzione switch — Posizionamento dell'etichetta default all'inizio del blocco",
+      "q": "Cosa stamperà il programma nel widget se l'etichetta default è posizionata prima delle etichette case?",
+      "hint": "Ricorda se l'ordine di scrittura di default influisce sulla scelta del case corrispondente.",
+      "options": [
+        "\"2\"",
+        "\"D12\"",
+        "\"D\"",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La posizione di `default` all'inizio del blocco è sintatticamente consentita. Se viene trovata una corrispondenza (come `case 2:` quando `x = 2`), il controllo passa direttamente al `case` corrispondente, saltando `default`. Output: \"2\".",
+        "Errato. Poiché `x = 2` corrisponde a `case 2:`, il blocco `default` all'inizio non viene eseguito affatto.",
+        "Errato. Il blocco `default` viene eseguito solo se nessuna delle etichette `case` corrisponde al valore del selettore.",
+        "Errato. Posizionare `default` in qualsiasi punto all'interno del blocco `switch` è sintatticamente valido."
+      ]
+    },
+    {
+      "id": "it_clang_407",
+      "widget_id": "widget_clang_407",
+      "topic": "Ciclo while — Incremento postfisso nella condizione e nel corpo",
+      "q": "Cosa stamperà il frammento di codice nel widget con l'incremento della variabile i sia nella condizione che nel corpo del ciclo?",
+      "hint": "Segui il valore della variabile i nella condizione, durante la stampa e dopo l'incremento nel corpo.",
+      "options": [
+        "\"1\"",
+        "\"12\"",
+        "\"01\"",
+        "\"0\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto!\\n1. `i = 0`: viene verificato `0 < 2` (true), `i` diventa subito 1. Viene stampato `1`, poi `i++` rende `i = 2`.\\n2. `i = 2`: viene verificato `2 < 2` (false), `i` diventa 3, il ciclo termina.\\nOutput: \"1\".",
+        "Errato. A causa del doppio incremento (nella condizione e nel corpo), la variabile `i` aumenta di +2 per iterazione, quindi il ciclo eseguirà solo 1 iterazione.",
+        "Errato. L'incremento postfisso nella condizione `i++ < 2` aumenta `i` da 0 a 1 prima dell'esecuzione di `printf`, quindi 0 non viene stampato.",
+        "Errato. La stampa `printf` mostra il valore aggiornato `i = 1`."
+      ]
+    },
+    {
+      "id": "it_clang_408",
+      "widget_id": "widget_clang_408",
+      "topic": "Ciclo for — Operatore ternario all'interno del corpo",
+      "q": "Cosa stamperà il ciclo for nel widget valutando la parità del contatore con l'operatore ternario?",
+      "hint": "Calcola il risultato dell'espressione (i % 2 == 0) per i = 0, 1, 2.",
+      "options": [
+        "\"A B A \"",
+        "\"A B C \"",
+        "\"B A B \"",
+        "\"A A A \""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto!\\n- `i = 0`: `0 % 2 == 0` (true) -> \"A\"\\n- `i = 1`: `1 % 2 == 0` (false) -> \"B\"\\n- `i = 2`: `2 % 2 == 0` (true) -> \"A\"\\nOutput: \"A B A \".",
+        "Errato. L'operatore ternario ha solo due esiti possibili (\"A\" o \"B\"), l'opzione \"C\" non è presente nel codice.",
+        "Errato. Con `i = 0` il resto della divisione per 2 è 0 (vero), quindi viene stampato \"A\" e non \"B\".",
+        "Errato. Per `i = 1` la condizione di parità `1 % 2 == 0` è falsa, quindi viene stampato \"B\"."
+      ]
+    },
+    {
+      "id": "it_clang_409",
+      "widget_id": "widget_clang_409",
+      "topic": "OR logico (||) — Valutazione dell'operando destro con operando sinistro falso",
+      "q": "A cosa sarà uguale la variabile y dopo l'esecuzione della condizione if nel widget?",
+      "hint": "L'operando destro dell'operatore || viene valutato se l'operando sinistro è uguale a 0 (falso)?",
+      "options": [
+        "11",
+        "10",
+        "0",
+        "1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché la parte sinistra `x` è uguale a 0 (falso), l'operatore `||` è **obbligato** a valutare la parte destra `y++` per determinare il risultato finale. La variabile `y` incrementa da 10 a 11.",
+        "Errato. La valutazione cortocircuitata per `||` scatta solo se il primo operando è *vero*. Se l'operando sinistro è falso (0), l'operando destro `y++` viene valutato.",
+        "Errato. La variabile `y` era pari a 10 ed è aumentata di 1, non è stata azzerata.",
+        "Errato. La variabile `y` assume il valore 11, mentre 1 è il risultato dell'intera espressione logica."
+      ]
+    },
+    {
+      "id": "it_clang_410",
+      "widget_id": "widget_clang_410",
+      "topic": "Cicli annidati — Modifica del contatore del ciclo esterno all'interno di quello interno",
+      "q": "Quante iterazioni eseguirà il ciclo for esterno nel frammento di codice mostrato?",
+      "hint": "Segui come il valore di i aumenta nel ciclo interno j.",
+      "options": [
+        "2",
+        "5",
+        "10",
+        "1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto!\\n- 1ª iterazione del ciclo esterno (`i = 0`): il ciclo interno viene eseguito 2 volte, aumentando `i` a 2. Il passo del ciclo esterno `i++` rende `i = 3`.\\n- 2ª iterazione del ciclo esterno (`i = 3`): il ciclo interno viene eseguito 2 volte, aumentando `i` a 5. Il passo del ciclo esterno `i++` rende `i = 6`.\\n- Il controllo `6 < 5` è falso -> fine. Il ciclo esterno ha eseguito 2 iterazioni.",
+        "Errato. Il valore 5 è il limite della condizione `i < 5`, non il numero di iterazioni eseguite dal ciclo esterno.",
+        "Errato. La variabile `i` viene modificata nel ciclo interno, accelerando il completamento di quello esterno.",
+        "Errato. Dopo la prima iterazione `i` diventa pari a 3, che è ancora minore di 5, quindi viene eseguita la seconda iterazione."
+      ]
+    },
+    {
+      "id": "it_clang_411",
+      "widget_id": "widget_clang_411",
+      "topic": "Operatore sizeof — Mancata esecuzione dell'espressione a run-time",
+      "q": "A cosa sarà uguale la variabile i dopo l'esecuzione del codice dal widget?",
+      "hint": "Pensa se le espressioni all'interno di sizeof() vengono valutate durante l'esecuzione del programma.",
+      "options": [
+        "10",
+        "11",
+        "Comportamento indefinito",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione all'interno di `sizeof(...)` viene valutata dal compilatore in fase di compilazione (per tipi a dimensione fissa) e non viene eseguita a run-time. L'incremento `i++` verrà ignorato, quindi `i` rimarrà pari a 10.",
+        "Errato. L'operatore `sizeof` non valuta l'espressione passata durante l'esecuzione del programma, quindi l'incremento `i++` non viene eseguito.",
+        "Errato. Le espressioni con effetti collaterali all'interno di `sizeof` non causano UB, semplicemente non vengono eseguite.",
+        "Errato. Passare espressioni con incremento a `sizeof` è assolutamente legale dal punto di vista sintattico."
+      ]
+    },
+    {
+      "id": "it_clang_412",
+      "widget_id": "widget_clang_412",
+      "topic": "Macro del preprocessore — Effetti collaterali e precedenza degli operatori",
+      "q": "Cosa stamperà il programma nel widget a causa dell'assenza di parentesi nella macro SQUARE(x)?",
+      "hint": "Sostituisci l'espressione a + 1 direttamente al posto di x nella macro x * x.",
+      "options": [
+        "7",
+        "16",
+        "12",
+        "9"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le macro eseguono una sostituzione testuale. `SQUARE(a + 1)` si espande in `(a + 1 * a + 1)`. Con `a = 3` otteniamo `3 + 1 * 3 + 1 = 3 + 3 + 1 = 7`.",
+        "Errato. Senza parentesi `(x) * (x)`, la sostituzione dà `a + 1 * a + 1`. A causa della precedenza della moltiplicazione, il risultato è 7, non 16.",
+        "Errato. L'ordine delle operazioni dà `3 + (1 * 3) + 1 = 7`, non 12.",
+        "Errato. Non è possibile calcolare `(3 + 1)^2` senza le opportune parentesi nella definizione della macro."
+      ]
+    },
+    {
+      "id": "it_clang_413",
+      "widget_id": "widget_clang_413",
+      "topic": "Puntatori — Puntatore a un array int (*p)[3]",
+      "q": "Cosa stamperà il frammento di codice dereferenziando un puntatore a un array?",
+      "hint": "Comprendi la differenza tra un puntatore a un array int (*p)[3] e un array di puntatori int *p[3].",
+      "options": [
+        "20",
+        "10",
+        "Indirizzo dell'array",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `p` è un puntatore all'intero array di 3 elementi. L'espressione `*p` dà l'array stesso (che decade a puntatore al primo elemento `arr[0]`), e `*p + 1` punta ad `arr[1]`. La dereferenziazione `*(*p + 1)` restituisce `20`.",
+        "Errato. Il primo elemento `arr[0]` è 10, ma l'offset `+ 1` punta al secondo elemento.",
+        "Errato. La doppia dereferenziazione/indicizzazione porta a ottenere il valore dell'elemento `int`, non l'indirizzo.",
+        "Errato. La sintassi di dichiarazione e uso del puntatore all'array `int (*p)[3]` è scritta correttamente."
+      ]
+    },
+    {
+      "id": "it_clang_414",
+      "widget_id": "widget_clang_414",
+      "topic": "Ricorsione — Variabili statiche (static) nelle funzioni ricorsive",
+      "q": "Cosa stamperà il codice nel widget durante una chiamata ricorsiva a una funzione con variabile statica?",
+      "hint": "Ricorda che una variabile statica conserva il suo valore tra le chiamate di funzione.",
+      "options": [
+        "\"666\"",
+        "\"321\"",
+        "\"123\"",
+        "\"654\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile statica `x` è una sola per tutte le chiamate:\\n- `func(3)`: `x += 3` (`x = 3`)\\n- `func(2)`: `x += 2` (`x = 5`)\\n- `func(1)`: `x += 1` (`x = 6`)\\n- `func(0)`: uscita.\\nDurante lo srotolamento dello stack di ricorsione, il valore corrente di `x` viene stampato tre volte, ovvero \"666\".",
+        "Errato. La variabile `x` è statica e unica per tutte le chiamate ricorsive, quindi al momento della stampa nello srotolamento dello stack è già pari a 6.",
+        "Errato. La stampa avviene dopo le chiamate ricorsive (nel percorso di ritorno) e il valore di `x` è condiviso da tutte le chiamate.",
+        "Errato. La variabile statica conserva il totale cumulativo di 6 al momento di tutte e tre le chiamate a `printf`."
+      ]
+    },
+    {
+      "id": "it_clang_415",
+      "widget_id": "widget_clang_415",
+      "topic": "Qualificatori di tipo — Puntatore costante vs Puntatore a costante",
+      "q": "Quale comportamento mostrerà il codice con il qualificatore const int *ptr?",
+      "hint": "Determina cosa è protetto da modifiche: il valore all'indirizzo (*ptr) o il puntatore stesso (ptr).",
+      "options": [
+        "Compilerà con successo e stamperà \"20\"",
+        "Errore di compilazione: è vietato modificare il valore di ptr",
+        "Errore di compilazione: impossibile modificare l'indirizzo in const ptr",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La scrittura `const int *ptr` crea un puntatore a un intero costante. Non è possibile modificare il valore `*ptr = ...`, ma il puntatore stesso `ptr` può essere riassegnato a un altro indirizzo (`ptr = &b`). Output: \"20\".",
+        "Errato. La struttura `const int *ptr` consente di reindirizzare il puntatore stesso `ptr = &b`, vietando solo la scrittura tramite esso (*ptr = ...).",
+        "Errato. Il puntatore stesso diventerebbe costante con la sintassi `int * const ptr`.",
+        "Errato. Reindirizzare `ptr` all'indirizzo della variabile esistente `b` è completamente sicuro."
+      ]
+    },
+    {
+      "id": "it_clang_416",
+      "widget_id": "widget_clang_416",
+      "topic": "Aritmetica dei puntatori — Shift byte per byte tramite char*",
+      "q": "Cosa stamperà il frammento di codice quando il puntatore char* viene spostato di sizeof(int) byte?",
+      "hint": "Calcola di quanti elementi dell'array arr si sposterà char* p aggiungendo la dimensione di int.",
+      "options": [
+        "200",
+        "100",
+        "300",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il puntatore `p` ha tipo `char*`, quindi il passo del suo spostamento aritmetico è di 1 byte. L'aggiunta di `sizeof(int)` (solitamente 4 byte) sposta il puntatore in avanti esattamente di un elemento `int` — verso `arr[1]`. Il casting di ritorno a `int*` stampa 200.",
+        "Errato. Lo spostamento di `sizeof(int)` byte tramite `char*` sposta l'indirizzo dal primo elemento `arr[0]` (100) al successivo `arr[1]` (200).",
+        "Errato. L'elemento 300 si trova a un offset di 2 * sizeof(int) byte.",
+        "Errato. Lo spostamento byte per byte lungo un confine allineato `sizeof(int)` fornisce l'indirizzo corretto di `arr[1]`."
+      ]
+    },
+    {
+      "id": "it_clang_417",
+      "widget_id": "widget_clang_417",
+      "topic": "Stringhe — Tentativo di scrittura in un letterale stringa",
+      "q": "A cosa porterà il tentativo di modificare un carattere in un letterale stringa tramite char *str = \"Hello\"?",
+      "hint": "Ricorda in quale area di memoria sono memorizzati i letterali stringa nel linguaggio C.",
+      "options": [
+        "Comportamento indefinito / Errore di segmentazione (Segmentation Fault)",
+        "Modificherà con successo la stringa e stamperà \"hello\"",
+        "Errore di compilazione durante la fase di build",
+        "Trasformerà la stringa in un array vuoto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I letterali stringa (ad esempio `\"Hello\"`) sono allocati in una sezione di memoria di sola lettura (read-only data segment). Tentare di scrivere tramite `str[0] = 'h'` provoca un errore di accesso alla memoria (SIGSEGV).",
+        "Errato. A differenza dell'array `char str[] = \"Hello\";`, la scrittura tramite puntatore `char *str = \"Hello\";` porta alla protezione della memoria e a Segmentation Fault.",
+        "Errato. Il compilatore non genera sempre un errore in fase di build quando si scrive tramite un puntatore `char*`, il crash si verifica durante l'esecuzione.",
+        "Errato. La scrittura in memoria di sola lettura termina in modo anomalo il processo, non modifica l'array."
+      ]
+    },
+    {
+      "id": "it_clang_418",
+      "widget_id": "widget_clang_418",
+      "topic": "Puntatori — Passaggio di un puntatore per riferimento tramite doppio puntatore (int **)",
+      "q": "Cosa stamperà il programma nel widget dopo la chiamata alla funzione modify(&ptr, &b)?",
+      "hint": "Segui come la funzione modify cambia l'indirizzo a cui punta ptr.",
+      "options": [
+        "10",
+        "5",
+        "Indirizzo della variabile a",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `modify` accetta un puntatore a puntatore `int **pp` e reindirizza `ptr` all'indirizzo di `&b`. Dereferenziando `*ptr`, viene stampato il valore di `b`, pari a 10.",
+        "Errato. Il valore iniziale `a = 5` non viene più letto, poiché il puntatore `ptr` è stato reindirizzato a `b`.",
+        "Errato. L'operazione `*ptr` esegue la dereferenziazione e restituisce un valore di tipo `int`, non un indirizzo.",
+        "Errato. Il passaggio di `&ptr` al parametro `int **` è assolutamente corretto dal punto di vista sintattico."
+      ]
+    },
+    {
+      "id": "it_clang_419",
+      "widget_id": "widget_clang_419",
+      "topic": "Operazioni bit a bit — Precedenza degli operatori di confronto rispetto all'AND bit a bit (&)",
+      "q": "Cosa stamperà il programma nel widget considerando la precedenza degli operatori & e ==?",
+      "hint": "Quale operatore verrà eseguito per primo: x & y oppure y == 0?",
+      "options": [
+        "\"B\"",
+        "\"A\"",
+        "Errore di compilazione",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore di uguaglianza `==` ha una precedenza maggiore rispetto all'AND bit a bit `&`. L'espressione `x & y == 0` viene valutata come `x & (y == 0)`. Poiché `y = 1`, `1 == 0` dà `0`. Poi `4 & 0` dà `0` (falso). Viene eseguito il ramo `else` (\"B\").",
+        "Errato. A causa della precedenza di `==`, viene prima verificato `y == 0` (0) e poi eseguito l'AND bit a bit: `4 & 0` (0), indirizzando il flusso al ramo `else`.",
+        "Errato. L'espressione è sintatticamente corretta, ma la precedenza degli operatori differisce da quella prevista.",
+        "Errato. La condizione `if` valuta 0 come falso ed esegue il comando in `else`, che stampa il letterale stringa \"B\"."
+      ]
+    },
+    {
+      "id": "it_clang_420",
+      "widget_id": "widget_clang_420",
+      "topic": "Strutture — Allineamento dei dati (Structure Padding)",
+      "q": "Perché sizeof(struct Data) del widget su architettura a 64 bit è solitamente pari a 12 byte anziché 6 (1 + 4 + 1)?",
+      "hint": "Pensa ai requisiti del processore per l'allineamento degli indirizzi a confini multipli.",
+      "options": [
+        "A causa dell'allineamento dei dati (padding) per ottimizzare l'accesso del processore alla memoria",
+        "Perché i tipi char occupano sempre 4 byte all'interno delle strutture",
+        "Questo è un errore del compilatore C99",
+        "La dimensione di qualsiasi struttura in C è sempre pari a 16 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il compilatore aggiunge byte di riempimento (padding) in modo che l'intero da 4 byte `int b` si trovi a un indirizzo multiplo di 4 byte. Questo è necessario al processore per leggere i dati dalla memoria in modo efficiente.",
+        "Errato. Il tipo `char` ha sempre una dimensione di 1 byte, mentre i byte aggiuntivi vengono inseriti dal compilatore come riempimento non utilizzato (padding).",
+        "Errato. L'allineamento è una funzionalità standard delle specifiche del C, non un errore del compilatore.",
+        "Errato. La dimensione di una struttura dipende dai suoi campi e dall'allineamento dell'architettura di destinazione."
+      ]
+    },
+    {
+      "id": "it_clang_421",
+      "widget_id": "widget_clang_421",
+      "topic": "Undefined Behavior — Ordine di valutazione e Sequence Points",
+      "q": "Cosa accadrà durante la valutazione dell'espressione nel widget in cui una variabile viene modificata più volte senza punti di sequenza?",
+      "hint": "Ricorda le regole degli standard C99/C11 riguardanti la modifica di una variabile più di una volta all'interno di una singola espressione.",
+      "options": [
+        "Comportamento indefinito (Undefined Behavior)",
+        "Garantitamente stamperà \"12\"",
+        "Garantitamente stamperà \"13\"",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Modificare un oggetto scalare più di una volta tra punti di sequenza (sequence points) è un classico Comportamento Indefinito (Undefined Behavior). Il risultato dell'esecuzione di tale codice non è garantito da alcuno standard.",
+        "Errato. Il risultato non può essere garantito poiché compilatori di versioni diverse e con opzioni di ottimizzazione differenti generano codice diverso.",
+        "Errato. In assenza di Sequence Points tra gli incrementi, l'ordine di valutazione non è definito.",
+        "Errato. Questa espressione è sintatticamente valida, quindi la compilazione avviene con successo."
+      ]
+    },
+    {
+      "id": "it_clang_422",
+      "widget_id": "widget_clang_422",
+      "topic": "Puntatori a funzione — Array di puntatori a funzione",
+      "q": "Cosa stamperà il frammento di codice nel widget quando viene chiamata una funzione tramite un array di puntatori a funzione?",
+      "hint": "Analizza la sintassi `ops[1]` e determina quale funzione verrà chiamata esattamente.",
+      "options": [
+        "6",
+        "14",
+        "Errore di compilazione",
+        "Indirizzo della funzione sub"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'elemento `ops[1]` contiene un puntatore alla funzione `sub`. La chiamata `ops[1](10, 4)` equivale a `sub(10, 4)`, fornendo `10 - 4 = 6`.",
+        "Errato. Il risultato 14 si otterrebbe chiamando `add(10, 4)`, che si trova all'indice `ops[0]`.",
+        "Errato. Gli array di puntatori a funzione sono dichiarati e chiamati secondo lo standard C.",
+        "Errato. Le parentesi tonde `ops[1](...)` eseguono la chiamata alla funzione, restituendo un risultato numerico `int` e non un indirizzo."
+      ]
+    },
+    {
+      "id": "it_clang_423",
+      "widget_id": "widget_clang_423",
+      "topic": "Strict Aliasing Rule — Violazione delle regole di aliasing dei tipi",
+      "q": "A cosa porterà la scrittura tramite puntatore int* ottenuto effettuando il casting dell'indirizzo di una variabile di tipo float?",
+      "hint": "Pensa alla regola di Strict Aliasing nel linguaggio C e alle ottimizzazioni del compilatore.",
+      "options": [
+        "Comportamento indefinito (Undefined Behavior) a causa della violazione della Strict Aliasing Rule",
+        "Trasformerà il numero f in 0.000000",
+        "Errore di compilazione durante la fase di casting dei tipi",
+        "Modificherà solo i bit del segno di float"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard C proibisce di accedere a un oggetto di un determinato tipo tramite la dereferenziazione di un puntatore di tipo non corretto (ad eccezione di `char*`). La violazione della Strict Aliasing Rule porta a un comportamento indefinito in presenza di ottimizzazioni del compilatore.",
+        "Errato. La scrittura tramite un puntatore incompatibile distorce la rappresentazione bit a bit e può essere scartata dall'ottimizzatore.",
+        "Errato. Il casting esplicito dei puntatori `(int*)&f` compila senza errori.",
+        "Errato. La modifica interessa l'intero pattern di bit, portando a UB."
+      ]
+    },
+    {
+      "id": "it_clang_424",
+      "widget_id": "widget_clang_424",
+      "topic": "Preprocessore — Operatore di concatenazione di token (##)",
+      "q": "Cosa stamperà il codice nel widget usando l'operatore di concatenazione di token (##) in una macro?",
+      "hint": "Segui in cosa si espanderà la sostituzione `CONCAT(x, 5)` nella fase di preprocessamento.",
+      "options": [
+        "100",
+        "x5",
+        "Errore di compilazione",
+        "5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `##` unisce i due token `x` e `5` in un unico identificatore `x5`. Nel codice si espanderà nell'accesso alla variabile `x5`, il cui valore è 100.",
+        "Errato. Il token unito `x5` viene interpretato dal compilatore come nome di variabile, valutandone il valore (100) anziché stampare il testo stesso.",
+        "Errato. L'operatore di concatenazione di token `##` è un operatore integrato del preprocessore C.",
+        "Errato. Il token `x` non viene scartato, ma unito a `5`."
+      ]
+    },
+    {
+      "id": "it_clang_425",
+      "widget_id": null,
+      "topic": "Qualificatori di tipo — Scopo della parola chiave volatile",
+      "q": "Qual è il compito principale risolto dalla dichiarazione di una variabile con il qualificatore volatile in C?",
+      "hint": "Pensa al lavoro con dispositivi periferici, interruzioni o multithreading.",
+      "options": [
+        "Impedisce al compilatore di memorizzare il valore della variabile nei registri e di ottimizzarne le letture/scritture",
+        "Rende la variabile thread-safe (atomica) a livello hardware",
+        "Alloca la variabile in memoria non volatile (Flash)",
+        "Proibisce la modifica della variabile dopo l'inizializzazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il qualificatore `volatile` indica al compilatore che il valore della variabile può cambiare al di fuori del flusso di controllo corrente (ad esempio tramite un'interruzione o dall'hardware), pertanto ogni accesso deve avvenire direttamente dalla memoria.",
+        "Errato. `volatile` non garantisce l'atomicità né la sincronizzazione tra thread nello standard C (a questo scopo si usa `_Atomic`).",
+        "Errato. L'allocazione in memoria è gestita dalle sezioni del linker e dagli attributi del compilatore, non dal qualificatore `volatile`.",
+        "Errato. Il divieto di modifica di una variabile è imposto dal qualificatore `const`, non da `volatile`."
+      ]
+    },
+    {
+      "id": "it_clang_426",
+      "widget_id": "widget_clang_426",
+      "topic": "Campi di bit — Segno del tipo int nei campi di bit",
+      "q": "A cosa sarà uguale il valore della variabile s.a dopo l'assegnazione di 1 considerando il segno di un campo di 1 bit?",
+      "hint": "Ricorda la rappresentazione dei numeri con segno in complemento a due (Two's complement) per 1 bit.",
+      "options": [
+        "-1 (o 1, se il tipo del campo di bit è definito in modo dipendente dall'implementazione come unsigned)",
+        "Sempre 1",
+        "Errore di compilazione: 1 bit non può memorizzare il valore 1",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In un campo con segno da 1 bit (`signed int a : 1`), l'unico bit è quello del segno. La combinazione di bit `1` indica `-1`. Se invece il compilatore tratta per impostazione predefinita `int` nel campo di bit come `unsigned`, il valore sarà `1`. Pertanto il comportamento dipende dall'implementazione della gestione del segno.",
+        "Errato. Se `int` nel campo di bit è con segno per impostazione predefinita, il bit più significativo e unico viene interpretato come segno, dando -1.",
+        "Errato. Un campo da 1 bit può perfettamente memorizzare una combinazione di 1 bit.",
+        "Errato. Il valore 1 scrive 1 nel bit del campo, non viene azzerato."
+      ]
+    },
+    {
+      "id": "it_clang_427",
+      "widget_id": "widget_clang_427",
+      "topic": "Letterali composti (Compound Literals) — Spostamento del puntatore",
+      "q": "Cosa stamperà il frammento di codice nel widget creando un array anonimo tramite un letterale composto?",
+      "hint": "Determina a quale elemento punterà `(int[]){10, 20, 30} + 1`.",
+      "options": [
+        "20",
+        "10",
+        "Indirizzo dell'array",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `(int[]){10, 20, 30}` crea un array senza nome nell'ambito di visibilità corrente. L'aggiunta di `+ 1` sposta il puntatore al secondo elemento dell'array, la cui dereferenziazione dà `20`.",
+        "Errato. Il valore 10 si trova all'indice 0, mentre l'offset `+ 1` passa all'indice 1.",
+        "Errato. La dereferenziazione `*` legge il valore dell'elemento `int` al puntatore.",
+        "Errato. I letterali composti (Compound Literals) sono stati introdotti ufficialmente dallo standard C99."
+      ]
+    },
+    {
+      "id": "it_clang_428",
+      "widget_id": "widget_clang_428",
+      "topic": "Aritmetica dei puntatori — Indicizzazione continua di un array bidimensionale",
+      "q": "Cosa stamperà il frammento di codice nel widget accedendo a un array contiguo tramite un unico puntatore int*?",
+      "hint": "Ricorda come gli elementi di un array bidimensionale sono disposti in un blocco di memoria continuo.",
+      "options": [
+        "5",
+        "4",
+        "6",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'array bidimensionale è disposto in memoria in modo continuo: `arr[0][0]` (1), `arr[0][1]` (2), `arr[0][2]` (3), `arr[1][0]` (4), `arr[1][1]` (5), `arr[1][2]` (6). L'offset `*(p + 4)` corrisponde all'elemento `arr[1][1]`, cioè 5.",
+        "Errato. L'offset `+ 3` cade sull'elemento `arr[1][0]` (4).",
+        "Errato. L'elemento 6 si trova all'offset `+ 5` (`arr[1][2]`).",
+        "Errato. La memoria per un array bidimensionale è continua, accedere tramite un puntatore lineare entro la lunghezza totale è corretto."
+      ]
+    },
+    {
+      "id": "it_clang_429",
+      "widget_id": "widget_clang_429",
+      "topic": "Operazioni bit a bit — Shift a sinistra di numeri negativi (Left shift of negative int)",
+      "q": "A cosa porta lo shift bit a bit a sinistra (<<) di un numero con segno negativo in C?",
+      "hint": "Ricorda le regole dello standard C riguardo agli shift di valori negativi.",
+      "options": [
+        "Comportamento indefinito (Undefined Behavior)",
+        "Moltiplicazione del numero per 2 (-2)",
+        "Shift aritmetico dipendente dall'architettura",
+        "Trasformazione in un numero positivo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo gli standard C (fino a C23), lo shift bit a bit a sinistra di un intero con segno negativo è un Comportamento Indefinito (Undefined Behavior).",
+        "Errato. Sebbene su molte piattaforme dia `-2`, lo standard classifica rigorosamente lo shift a sinistra di numeri negativi come comportamento indefinito.",
+        "Errato. Nello standard non è classificato come Implementation-Defined, ma proprio come Undefined Behavior.",
+        "Errato. Il bit del segno non viene azzerato in modo garantito, in quanto l'operazione non è definita."
+      ]
+    }
+  ]
+}

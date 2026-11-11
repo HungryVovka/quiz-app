@@ -1,0 +1,781 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_40",
+      "widget_id": "widget_clang_40",
+      "topic": "Linguaggio C — Indicizzazione degli array",
+      "q": "Cosa stamperà questo codice in C?",
+      "hint": "Ricorda come la sintassi a[i] viene tradotta tramite gli operatori di puntatore.",
+      "options": [
+        "30",
+        "Errore di compilazione",
+        "20",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C l'espressione `a[i]` è equivalente a `*(a + i)`. A causa della proprietà commutativa dell'addizione, `*(2 + a)` è completamente equivalente a `2[a]`, ossia all'elemento con indice 2 (valore 30).",
+        "Sbagliato. È una sintassi assolutamente valida in C.",
+        "Sbagliato. `2[a]` si riferisce all'elemento con indice 2, non 1.",
+        "Sbagliato. Il codice è rigorosamente definito dallo standard del linguaggio C."
+      ]
+    },
+    {
+      "id": "it_clang_41",
+      "widget_id": "widget_clang_41",
+      "topic": "Linguaggio C — Precedenza degli operatori e puntatori",
+      "q": "Quali saranno i valori di y ed x dopo l'esecuzione di questo codice?",
+      "hint": "L'incremento postfisso ++ ha una precedenza maggiore rispetto alla dereferenziazione *.",
+      "options": [
+        "y=10, x=10",
+        "y=11, x=11",
+        "y=11, x=10",
+        "y=10, x=11"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `*p++` legge il valore all'indirizzo `p` (10) per l'assegnazione a `y`, dopodiché incrementa il puntatore `p` stesso (l'indirizzo) e non il valore di `x`. Pertanto `x` rimane uguale a 10.",
+        "Sbagliato. `*p++` non incrementa il valore della variabile `x`. Per farlo sarebbe necessario `(*p)++`.",
+        "Sbagliato. La variabile `y` riceve il vecchio valore dereferenziato (10).",
+        "Sbagliato. La variabile `x` non aumenta — viene incrementato l'indirizzo nel puntatore `p`."
+      ]
+    },
+    {
+      "id": "it_clang_42",
+      "widget_id": "widget_clang_42",
+      "topic": "Linguaggio C — Macro del preprocessore",
+      "q": "Cosa stamperà il programma come risultato della macro SQUARE(2 + 3)?",
+      "hint": "Il preprocessore esegue una semplice sostituzione testuale senza valutare preventivamente le espressioni.",
+      "options": [
+        "11",
+        "25",
+        "13",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il preprocessore sostituisce il testo così com'è: `2 + 3 * 2 + 3`. Prima viene eseguita la moltiplicazione (3 * 2 = 6), dando come risultato `2 + 6 + 3 = 11`.",
+        "Sbagliato. Si otterrebbe 25 con le parentesi nella macro: `#define SQUARE(x) ((x) * (x))`.",
+        "Sbagliato. Verifica la sostituzione testuale e la precedenza matematica delle operazioni.",
+        "Sbagliato. La macro e la sostituzione sono assolutamente corrette."
+      ]
+    },
+    {
+      "id": "it_clang_43",
+      "widget_id": "widget_clang_43",
+      "topic": "Linguaggio C — Confronto tra numeri in virgola mobile",
+      "q": "Cosa stamperà questo codice durante l'esecuzione?",
+      "hint": "La costante 0.1 senza il suffisso f ha tipo double, non float.",
+      "options": [
+        "Not equal",
+        "Equal",
+        "Errore di compilazione",
+        "Comportamento non definito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il letterale `0.1` è di tipo `double` (64 bit), mentre `f` è di tipo `float` (32 bit). A causa dell'imprecisione della rappresentazione binaria dei numeri decimali, i loro pattern di bit non coincideranno dopo la conversione di tipo.",
+        "Sbagliato. A causa delle differenze di precisione tra `float` e `double`, le loro rappresentazioni binarie differiscono.",
+        "Sbagliato. Il confronto tra i tipi `float` e `double` è sintatticamente consentito.",
+        "Sbagliato. Il risultato è rigorosamente determinato dallo standard IEEE 754."
+      ]
+    },
+    {
+      "id": "it_clang_44",
+      "widget_id": "widget_clang_44",
+      "topic": "Linguaggio C — Array come argomenti di funzioni",
+      "q": "Cosa stamperà la funzione print_size su un sistema a 64 bit?",
+      "hint": "Quando vengono passati a una funzione, gli array 'decadono' (decay) in semplici puntatori.",
+      "options": [
+        "8",
+        "40",
+        "10",
+        "4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando si passa un array a una funzione, il parametro `int arr[]` viene convertito implicitamente in un puntatore `int *arr`. La chiamata `sizeof(arr)` restituisce la dimensione del puntatore (8 byte su un sistema a 64 bit).",
+        "Sbagliato. La dimensione dell'intero array (10 * 4 = 40 byte) è nota solo dove viene dichiarato (in `main`).",
+        "Sbagliato. `sizeof` restituisce la dimensione in byte, non il numero di elementi.",
+        "Sbagliato. Sui sistemi a 64 bit la dimensione di un puntatore è di 8 byte."
+      ]
+    },
+    {
+      "id": "it_clang_45",
+      "widget_id": "widget_clang_45",
+      "topic": "Linguaggio C — Assegnazione all'interno di una condizione",
+      "q": "Cosa succederà durante l'esecuzione di questo frammento di codice?",
+      "hint": "Fai attenzione a quale operatore viene utilizzato: = oppure ==.",
+      "options": [
+        "True: 5",
+        "False",
+        "Errore di compilazione",
+        "True: 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il singolo operatore `=` esegue un'assegnazione: alla variabile `x` viene assegnato 5. Il risultato dell'espressione è 5, che in C equivale a VERO, quindi viene eseguito il ramo `if`.",
+        "Sbagliato. Il ramo `else` verrebbe eseguito solo se il risultato dell'assegnazione fosse uguale a 0.",
+        "Sbagliato. L'assegnazione all'interno della condizione è consentita dalla sintassi C (sebbene i compilatori generino un avviso).",
+        "Sbagliato. La variabile `x` ha cambiato il suo valore in 5."
+      ]
+    },
+    {
+      "id": "it_clang_46",
+      "widget_id": "widget_clang_46",
+      "topic": "Linguaggio C — Operatore virgola (Comma Operator)",
+      "q": "Quale valore verrà stampato a schermo?",
+      "hint": "L'operatore 'virgola' valuta le espressioni da sinistra a destra e restituisce il risultato dell'ultima.",
+      "options": [
+        "3",
+        "1",
+        "Errore di compilazione",
+        "6"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore virgola valuta sequenzialmente gli operandi da sinistra a destra e restituisce il risultato dell'espressione più a destra — in questo caso `3`.",
+        "Sbagliato. I valori 1 e 2 vengono valutati ma scartati.",
+        "Sbagliato. È una struttura completamente valida in C.",
+        "Sbagliato. La virgola non somma i valori."
+      ]
+    },
+    {
+      "id": "it_clang_47",
+      "widget_id": "widget_clang_47",
+      "topic": "Linguaggio C — Punto e virgola dopo il ciclo",
+      "q": "Cosa stamperà questo programma?",
+      "hint": "Guarda attentamente i caratteri alla fine della riga di intestazione del ciclo for.",
+      "options": [
+        "1",
+        "5",
+        "6",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il punto e virgola `;` subito dopo il `for` termina il corpo del ciclo, rendendolo vuoto. Dopo 5 iterazioni 'vuote', il blocco separato `{ count++; }` viene eseguito esattamente UNA volta.",
+        "Sbagliato. Le parentesi graffe non appartengono al ciclo `for` a causa del punto e virgola alla fine della sua intestazione.",
+        "Sbagliato. L'incremento viene eseguito una sola volta dopo il completamento del ciclo.",
+        "Sbagliato. Il blocco dopo il ciclo verrà eseguito, modificando il valore di `count`."
+      ]
+    },
+    {
+      "id": "it_clang_48",
+      "widget_id": "widget_clang_48",
+      "topic": "Linguaggio C — Stringhe e terminatore nullo",
+      "q": "Cosa stamperà questo codice sullo schermo?",
+      "hint": "strlen conta i caratteri fino al primo \\0, mentre sizeof determina la dimensione dell'array allocata in memoria.",
+      "options": [
+        "3, 7",
+        "5, 6",
+        "3, 6",
+        "5, 7"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strlen` conta i caratteri fino al primo `\\0` ('H','e','l' = 3). `sizeof` determina la dimensione totale dell'array in memoria, inclusi lo `\\0` esplicito, i caratteri 'l','o' e il terminatore nullo implicito alla fine della stringa (7 byte).",
+        "Sbagliato. La funzione `strlen` interrompe il conteggio quando incontra il primo `\\0`.",
+        "Sbagliato. L'array occupa 7 byte di memoria.",
+        "Sbagliato. `strlen` non conta i caratteri dopo `\\0`."
+      ]
+    },
+    {
+      "id": "it_clang_49",
+      "widget_id": "widget_clang_49",
+      "topic": "Linguaggio C — Valore di ritorno di printf",
+      "q": "Cosa stamperà esattamente questo programma?",
+      "hint": "La funzione printf restituisce un numero. Pensa a cosa significa.",
+      "options": [
+        "C-Lang 6",
+        "C-Lang 1",
+        "C-Lang 0",
+        "C-Lang C-Lang"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `printf` restituisce il numero di caratteri stampati con successo. Nella stringa \"C-Lang\" ci sono esattamente 6 caratteri, quindi `res` riceve il valore 6.",
+        "Sbagliato. `printf` restituisce il numero di caratteri stampati, non `1` (true).",
+        "Sbagliato. Viene restituito 0 solo quando si stampa una stringa vuota.",
+        "Sbagliato. La variabile `res` contiene un numero intero, non una stringa."
+      ]
+    },
+    {
+      "id": "it_clang_50",
+      "widget_id": "widget_clang_50",
+      "topic": "Linguaggio C — Variabili locali statiche (static)",
+      "q": "Cosa stamperà il programma con due chiamate consecutive a counter()?",
+      "hint": "Il modificatore static conserva il valore della variabile tra le chiamate di funzione.",
+      "options": [
+        "1 2 ",
+        "1 1 ",
+        "0 1 ",
+        "2 2 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Una variabile con il modificatore `static` viene inizializzata a 0 una sola volta all'avvio del programma e conserva il valore tra le chiamate. La prima chiamata stamperà 1, la seconda 2.",
+        "Sbagliato. Una successiva chiamata alla funzione non ripristina la variabile `static`.",
+        "Sbagliato. L'incremento viene eseguito prima della stampa, quindi il primo valore è 1.",
+        "Sbagliato. La prima chiamata incrementerà il valore da 0 a 1."
+      ]
+    },
+    {
+      "id": "it_clang_51",
+      "widget_id": "widget_clang_51",
+      "topic": "Linguaggio C — Valutazione cortocircuitata dell'operatore OR (||)",
+      "q": "Quali saranno i valori di a e b dopo l'esecuzione di questo codice?",
+      "hint": "Se il primo operando di || è vero, il secondo operando viene valutato?",
+      "options": [
+        "a=1, b=0",
+        "a=1, b=1",
+        "a=0, b=0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `||` utilizza la valutazione cortocircuitata (short-circuit). Poiché `a` è uguale a 1 (vero), l'espressione a destra `++b` non viene affatto valutata. La variabile `b` rimane uguale a 0.",
+        "Sbagliato. L'espressione `++b` viene saltata dal compilatore a causa della valutazione cortocircuitata.",
+        "Sbagliato. La variabile `a` non ha cambiato il suo valore.",
+        "Sbagliato. La sintassi della condizione è completamente corretta."
+      ]
+    },
+    {
+      "id": "it_clang_52",
+      "widget_id": null,
+      "topic": "Linguaggio C — Specificatori di memorizzazione (extern)",
+      "q": "Cosa fa la dichiarazione extern int x; all'interno di un modulo di un programma C?",
+      "hint": "Rifletti se questa dichiarazione alloca memoria per la variabile.",
+      "options": [
+        "Dichiara la variabile x allocata in un altro file, senza allocare nuovamente memoria per essa",
+        "Alloca memoria per una nuova variabile globale x",
+        "Crea una variabile x accessibile solo nel file corrente",
+        "Azzera automaticamente il valore della variabile x"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La parola chiave `extern` informa il compilatore che la variabile `x` è definita in un altro modulo e vi fa riferimento senza allocare nuovamente la memoria.",
+        "Sbagliato. `extern` indica una dichiarazione senza allocazione di memoria.",
+        "Sbagliato. Per limitare la visibilità al file corrente si usa `static`.",
+        "Sbagliato. `extern` non esegue alcuna inizializzazione."
+      ]
+    },
+    {
+      "id": "it_clang_53",
+      "widget_id": "widget_clang_53",
+      "topic": "Linguaggio C — Conversione di tipo nelle operazioni miste",
+      "q": "Cosa stamperà questo frammento di codice?",
+      "hint": "Sommando unsigned int e int, il tipo con segno viene convertito in un tipo senza segno.",
+      "options": [
+        "Greater",
+        "Less",
+        "Errore di compilazione",
+        "Comportamento non definito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il valore di `b` (`int`) viene convertito implicitamente in `unsigned int`. Il numero negativo `-5` diventa un numero positivo molto grande, quindi il risultato della somma `a + b` risulta maggiore di 0!",
+        "Sbagliato. Nella matematica ordinaria 1 + (-5) = -4, ma le regole del C convertono i numeri negativi in grandi valori senza segno quando i tipi vengono combinati.",
+        "Sbagliato. L'operazione tra `int` e `unsigned int` è assolutamente legale.",
+        "Sbagliato. La conversione dei tipi è rigorosamente regolamentata dallo standard."
+      ]
+    },
+    {
+      "id": "it_clang_54",
+      "widget_id": "widget_clang_54",
+      "topic": "Linguaggio C — Switch senza default",
+      "q": "Cosa stamperà questo codice se il valore di val non corrisponde a nessun case e non c'è default?",
+      "hint": "Pensa a cosa succede al flusso di esecuzione dello switch quando non ci sono rami corrispondenti.",
+      "options": [
+        "Done",
+        "Errore di compilazione",
+        "Errore di runtime",
+        "One Done"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se nessun `case` corrisponde e il ramo `default` è assente, l'istruzione `switch` viene saltata e il controllo passa all'istruzione successiva (`printf(\"Done\")`).",
+        "Sbagliato. Il ramo `default` è opzionale.",
+        "Sbagliato. Il codice verrà eseguito normalmente.",
+        "Sbagliato. Il ramo `case 1` non viene attivato."
+      ]
+    },
+    {
+      "id": "it_clang_55",
+      "widget_id": "widget_clang_55",
+      "topic": "Linguaggio C — Aritmetica degli indirizzi con le stringhe",
+      "q": "Quale carattere verrà stampato a schermo?",
+      "hint": "L'indicizzazione degli elementi della stringa inizia da zero.",
+      "options": [
+        "o",
+        "l",
+        "H",
+        "\\0 (byte nullo)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `p + 4` sposta il puntatore in avanti di 4 byte: str[0]='H', str[1]='e', str[2]='l', str[3]='l', str[4]='o'. La dereferenziazione `*(p + 4)` restituisce `'o'`.",
+        "Sbagliato. Il carattere `'l'` si trova agli indirizzi `p + 2` e `p + 3`.",
+        "Sbagliato. Il carattere `'H'` si trova all'indirizzo `*p`.",
+        "Sbagliato. Il terminatore nullo si trova all'indirizzo `p + 5`."
+      ]
+    },
+    {
+      "id": "it_clang_56",
+      "widget_id": "widget_clang_56",
+      "topic": "Linguaggio C — Incremento postfisso del puntatore",
+      "q": "Cosa stamperà l'espressione *ptr++?",
+      "hint": "Rifletti se viene restituito il valore corrente prima dello spostamento del puntatore all'elemento successivo.",
+      "options": [
+        "10",
+        "20",
+        "11",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'incremento postfisso `ptr++` restituisce prima il vecchio indirizzo `ptr`. L'operatore `*` lo dereferenzia (10). Solo dopo `ptr` viene spostato su `arr[1]`.",
+        "Sbagliato. Si otterrebbe 20 solo alla successiva dereferenziazione di `*ptr`.",
+        "Sbagliato. Viene incrementato il puntatore stesso (l'indirizzo), non l'elemento dell'array.",
+        "Sbagliato. È una costruzione standard del C per scorrere gli elementi di un array."
+      ]
+    },
+    {
+      "id": "it_clang_57",
+      "widget_id": null,
+      "topic": "Linguaggio C — Costanza dei puntatori",
+      "q": "Qual è la differenza tra const int *p e int * const p?",
+      "hint": "Fai attenzione da quale lato dell'asterisco si trova const.",
+      "options": [
+        "const int *p vieta di modificare il valore all'indirizzo, mentre int * const p vieta di modificare l'indirizzo stesso",
+        "const int *p vieta di modificare l'indirizzo, mentre int * const p vieta di modificare il valore all'indirizzo",
+        "Sono completamente identici",
+        "int * const p non può essere passato alle funzioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se `const` si trova a sinistra di `*` (`const int`), non è possibile modificare il valore. Se `const` si trova a destra di `*` (`* const p`), non è possibile modificare l'indirizzo stesso contenuto nel puntatore.",
+        "Sbagliato. Le affermazioni sono invertite.",
+        "Sbagliato. Si tratta di restrizioni fondamentalmente diverse sulla modifica della memoria.",
+        "Sbagliato. Entrambi i tipi di puntatori possono essere passati alle funzioni."
+      ]
+    },
+    {
+      "id": "it_clang_58",
+      "widget_id": "widget_clang_58",
+      "topic": "Linguaggio C — Conversione di tipo (Typecasting)",
+      "q": "Quale valore stamperà questo codice?",
+      "hint": "Fai attenzione alle parentesi: quando viene eseguita esattamente la conversione di tipo (float)?",
+      "options": [
+        "2.0",
+        "2.5",
+        "2",
+        "2.50"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le parentesi definiscono l'ordine: prima viene eseguita la divisione intera `(a / b)` = 5 / 2 = 2. Successivamente il risultato `2` viene convertito esplicitamente in `float` (`2.0`).",
+        "Sbagliato. Per ottenere 2.5 è necessario convertire l'operando prima della divisione: `(float)a / b`.",
+        "Sbagliato. Lo specificatore `%.1f` stampa il numero in formato a virgola mobile (`2.0`).",
+        "Sbagliato. Lo specificatore `%.1f` stampa una sola cifra dopo la virgola."
+      ]
+    },
+    {
+      "id": "it_clang_59",
+      "widget_id": "widget_clang_59",
+      "topic": "Linguaggio C — Bit di segno e scorrimento bit a bit",
+      "q": "Cosa restituirà l'espressione x < 0 su un sistema a 32 bit dopo uno scorrimento a sinistra di 1 di 31 bit?",
+      "hint": "Il bit più significativo nel tipo con segno signed int determina il segno del numero.",
+      "options": [
+        "1 (Vero, poiché il numero è diventato negativo)",
+        "0 (Falso)",
+        "Errore di compilazione",
+        "Il risultato è sempre positivo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo scorrimento di 1 a sinistra di 31 posizioni lo colloca nel bit più significativo (di segno) di un `int` a 32 bit, trasformando il numero in negativo (`INT_MIN`). L'espressione `x < 0` restituirà 1 (true).",
+        "Sbagliato. Il bit più significativo è riservato al segno del numero nel complemento a due.",
+        "Sbagliato. Gli scorrimenti bit a bit su variabili di tipo `int` sono consentiti.",
+        "Sbagliato. L'impostazione del bit più significativo a 1 rende negativo un numero con segno."
+      ]
+    },
+    {
+      "id": "it_clang_60",
+      "widget_id": "widget_clang_60",
+      "topic": "Linguaggio C — Tipo del letterale carattere",
+      "q": "Qual è il risultato dell'espressione sizeof('a') nello standard C (C99/C11)?",
+      "hint": "In C (a differenza del C++) i letterali carattere hanno un tipo inaspettato.",
+      "options": [
+        "sizeof(char) — esattamente 1 byte",
+        "sizeof(int) — di solito 4 byte",
+        "Errore di compilazione",
+        "0 byte"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Sbagliato. In C++ l'espressione `sizeof('a')` è uguale a `sizeof(char)` (1), ma in C i letterali carattere sono di tipo `int`!",
+        "Corretto! Nel linguaggio C i letterali carattere (ad esempio `'a'`) sono di tipo `int`, quindi `sizeof('a')` è equivalente a `sizeof(int)` (di solito 4 byte).",
+        "Sbagliato. Il codice è completamente valido.",
+        "Sbagliato. I tipi di dati in C non hanno mai dimensione pari a 0 byte."
+      ]
+    },
+    {
+      "id": "it_clang_61",
+      "widget_id": "widget_clang_61",
+      "topic": "Linguaggio C — Valutazione di sizeof per i VLA",
+      "q": "Il valore della variabile n cambierà dopo l'esecuzione dell'operatore sizeof per un array a lunghezza variabile (VLA)?",
+      "hint": "Di solito sizeof non valuta la sua espressione a runtime, ma per i VLA c'è un'eccezione.",
+      "options": [
+        "Cambierà (n diventerà uguale a 6)",
+        "Non cambierà (n rimarrà uguale a 5)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `sizeof` ordinario non valuta l'espressione al suo interno. Ma per gli array a lunghezza variabile (VLA) la dimensione viene calcolata a runtime, quindi l'espressione `n++` viene effettivamente eseguita!",
+        "Sbagliato. Per gli array VLA, `sizeof` è costretto a valutare l'espressione tra parentesi in fase di esecuzione."
+      ]
+    },
+    {
+      "id": "it_clang_62",
+      "widget_id": "widget_clang_62",
+      "topic": "Linguaggio C — Segno dei campi di bit da 1 bit",
+      "q": "Cosa stamperà questo codice se compilato con la maggior parte dei compilatori (GCC/Clang)?",
+      "hint": "Per impostazione predefinita il tipo int in un campo di bit può essere considerato signed.",
+      "options": [
+        "Yes",
+        "No",
+        "Errore di compilazione"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Sbagliato. Poiché il campo di bit da 1 bit è con segno, la scrittura del valore 1 causerà un overflow.",
+        "Corretto! In C, `int` in un campo di bit è per impostazione predefinita con segno (`signed`). Un numero con segno da 1 bit può memorizzare solo i valori 0 e -1. La scrittura di 1 provoca un overflow in `-1`, e `-1 == 1` è falso!",
+        "Sbagliato. La sintassi dei campi di bit è completamente corretta."
+      ]
+    },
+    {
+      "id": "it_clang_63",
+      "widget_id": null,
+      "topic": "Linguaggio C — Dispositivo di Duff (Duff's Device)",
+      "q": "È consentito dallo standard C intrecciare le strutture switch-case e il ciclo do-while (annidare i case all'interno del corpo del ciclo)?",
+      "hint": "Questa famosa tecnica viene utilizzata per lo srotolamento dei cicli (loop unrolling).",
+      "options": [
+        "Vero (Sì, è una sintassi assolutamente legale)",
+        "Falso (No, provocherà un errore sintattico)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C le etichette `case` possono essere collocate all'interno di qualsiasi blocco o ciclo annidato (`Duff's Device`). Il compilatore gestisce lo `switch` come un'etichetta `goto`.",
+        "Sbagliato. La sintassi del linguaggio C consente il posizionamento delle etichette `case` all'interno di strutture annidate."
+      ]
+    },
+    {
+      "id": "it_clang_64",
+      "widget_id": "widget_clang_64",
+      "topic": "Linguaggio C — Indici negativi dei puntatori",
+      "q": "Cosa stamperà questo codice utilizzando un indice negativo con un puntatore?",
+      "hint": "La sintassi p[i] si espande in *(p + i).",
+      "options": [
+        "20",
+        "40",
+        "10",
+        "Errore di compilazione (gli indici negativi sono vietati)",
+        "Comportamento indefinito (Segmentation Fault)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `p[-2]` è equivalente a `*(p - 2)`. Poiché `p` punta ad `arr[3]` (valore 40), lo spostamento all'indietro di 2 elementi dà `arr[1]`, ovvero 20.",
+        "Sbagliato. `p[0]` restituirà 40, mentre `p[-2]` sposterà il puntatore all'indietro.",
+        "Sbagliato. L'elemento 10 si trova all'indirizzo `p[-3]`.",
+        "Sbagliato. In C l'aritmetica dei puntatori con indici negativi è completamente legale se punta a un elemento valido dell'array.",
+        "Sbagliato. Non si verifica alcun sconfinamento oltre i limiti dell'array."
+      ]
+    },
+    {
+      "id": "it_clang_65",
+      "widget_id": "widget_clang_65",
+      "topic": "Linguaggio C — Modifica dei letterali stringa",
+      "q": "Cosa succederà quando si tenta di modificare un carattere in un letterale stringa tramite un puntatore `char *`?",
+      "hint": "Dove colloca esattamente il compilatore i letterali stringa?",
+      "options": [
+        "Comportamento indefinito / Terminazione anomala (Segmentation Fault)",
+        "Il primo carattere verrà modificato con successo in 'h'",
+        "Errore di compilazione",
+        "La stringa verrà copiata nello stack e modificata"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I letterali stringa sono memorizzati in una sezione di memoria di sola lettura (read-only). Il tentativo di scrittura tramite `char *` provoca un Segmentation Fault.",
+        "Sbagliato. La memoria del letterale è protetta dalla scrittura.",
+        "Sbagliato. Il compilatore consente di assegnare un letterale a un puntatore `char *` (in C11 senza const), quindi non ci sarà un errore di compilazione.",
+        "Sbagliato. Per copiare nello stack è necessaria la dichiarazione di un array: `char s[] = \"Hello\";`."
+      ]
+    },
+    {
+      "id": "it_clang_66",
+      "widget_id": "widget_clang_66",
+      "topic": "Linguaggio C — Firma delle funzioni senza parametri",
+      "q": "Cosa significa il prototipo void foo(); negli standard C precedenti a C23?",
+      "hint": "Confrontalo con il prototipo `void foo(void);`.",
+      "options": [
+        "La funzione accetta un numero sconosciuto (arbitrario) di argomenti",
+        "La funzione non accetta tassativamente alcun argomento",
+        "La funzione restituisce un tipo sconosciuto",
+        "Errore di sintassi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Prima di C23 le parentesi vuote `void foo()` significavano che la funzione accettava un numero sconosciuto di argomenti. Per vietare gli argomenti era necessario scrivere esplicitamente `void foo(void)`.",
+        "Sbagliato. Il divieto di passare argomenti in C si indica con `(void)`.",
+        "Sbagliato. Il tipo di ritorno è indicato esplicitamente come `void`.",
+        "Sbagliato. È la sintassi classica del C."
+      ]
+    },
+    {
+      "id": "it_clang_67",
+      "widget_id": "widget_clang_67",
+      "topic": "Linguaggio C — Dichiarazioni provvisorie (Tentative Definitions)",
+      "q": "È consentito dichiarare più volte la stessa variabile globale senza inizializzatore in C?",
+      "hint": "Studia il meccanismo delle Tentative Definitions per lo scope globale.",
+      "options": [
+        "Vero (Sì, vengono unificate in un'unica definizione)",
+        "Falso (No, si verificherà un errore di ridefinizione)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A livello superiore (file scope), le dichiarazioni ripetute senza inizializzazione si chiamano tentative definitions. Il compilatore le unisce in un'unica variabile.",
+        "Sbagliato. Nello scope globale le dichiarazioni ripetute senza `extern` e senza reinizializzazione sono consentite."
+      ]
+    },
+    {
+      "id": "it_clang_68",
+      "widget_id": "widget_clang_68",
+      "topic": "Linguaggio C — Inclusione di file di qualsiasi tipo",
+      "q": "È possibile in C includere tramite la direttiva #include file con qualsiasi estensione (ad esempio .txt o .dat)?",
+      "hint": "In che modo esattamente il preprocessore gestisce il comando #include?",
+      "options": [
+        "Vero (Sì, il preprocessore inserisce semplicemente il contenuto del file)",
+        "Falso (No, si possono includere solo file .h e .c)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Al preprocessore C non importa affatto l'estensione del file. Inserisce semplicemente tutto il testo del file specificato nel punto di chiamata di `#include`.",
+        "Sbagliato. L'estensione `.h` è solo una convenzione per i programmatori, non una limitazione del preprocessore."
+      ]
+    },
+    {
+      "id": "it_clang_69",
+      "widget_id": "widget_clang_69",
+      "topic": "Linguaggio C — Allineamento delle strutture (Padding)",
+      "q": "A quanto equivale sizeof(struct Test) su un'architettura a 64 bit a causa dell'allineamento dei campi?",
+      "hint": "I campi vengono allineati al limite della propria dimensione.",
+      "options": [
+        "12 byte",
+        "6 byte",
+        "8 byte",
+        "16 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `a` (1 byte) + 3 byte di padding + `b` (4 byte) + `c` (1 byte) + 3 byte di padding per l'allineamento dell'intera struttura = 12 byte.",
+        "Sbagliato. La somma delle dimensioni dei tipi senza allineamento è uguale a 6, ma il compilatore aggiunge byte di riempimento (padding).",
+        "Sbagliato. La dimensione di 8 byte non è sufficiente per ospitare un `int` allineato tra due `char`.",
+        "Sbagliato. L'allineamento ottimizza la dimensione a 12 byte."
+      ]
+    },
+    {
+      "id": "it_clang_70",
+      "widget_id": "widget_clang_70",
+      "topic": "Linguaggio C — Costanti multicarattere",
+      "q": "Il codice con il valore `int val = 'AB';` verrà compilato?",
+      "hint": "Ricorda i letterali multicarattere (multicharacter literal).",
+      "options": [
+        "Verrà compilato (il valore dipende dall'implementazione/endianness)",
+        "Errore di compilazione (tra virgolette singole può esserci solo 1 carattere)",
+        "Il valore di val diventerà uguale a 0",
+        "Verrà compilato, ma val conserverà solo il carattere 'A'"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le costanti multicarattere (multicharacter literals) sono consentite in C. Hanno tipo `int` e il loro valore è definito dall'implementazione (impacchettamento dei byte in un numero intero).",
+        "Sbagliato. Le virgolette singole possono contenere più di un carattere in C.",
+        "Sbagliato. La variabile riceverà un codice numerico impacchettato dai byte 'A' e 'B'.",
+        "Sbagliato. Vengono presi in considerazione entrambi i caratteri."
+      ]
+    },
+    {
+      "id": "it_clang_71",
+      "widget_id": null,
+      "topic": "Linguaggio C — La parola chiave auto prima di C23",
+      "q": "Cosa significava la parola chiave auto nel linguaggio C prima dello standard C23?",
+      "hint": "È uno specificatore di classe di memorizzazione (storage class) applicato per impostazione predefinita.",
+      "options": [
+        "Durata di memorizzazione automatica per una variabile locale (Automatic storage duration)",
+        "Deduzione automatica del tipo di variabile (come in C++11)",
+        "Inizializzazione automatica a zero",
+        "Esportazione automatica della variabile"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Prima di C23 `auto` indicava una durata automatica della variabile locale (memoria nello stack). Di fatto era ridondante, poiché le variabili locali sono già `auto` per impostazione predefinita.",
+        "Sbagliato. La deduzione dei tipi per `auto` è apparsa solo in C++11 e C23.",
+        "Sbagliato. Le variabili `auto` contengono valori casuali se non inizializzate.",
+        "Sbagliato. Dell'esportazione si occupano altri meccanismi."
+      ]
+    },
+    {
+      "id": "it_clang_72",
+      "widget_id": "widget_clang_72",
+      "topic": "Linguaggio C — Risultato delle operazioni di confronto",
+      "q": "Quale valore stamperà l'espressione (5 > 2) + (10 == 10)?",
+      "hint": "In C i risultati degli operatori di confronto sono di tipo int.",
+      "options": [
+        "2",
+        "1",
+        "0",
+        "Errore di tipo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C gli operatori di confronto restituiscono garantito il valore `1` di tipo `int` per il vero e `0` per il falso. Pertanto `1 + 1 = 2`.",
+        "Sbagliato. Ciascuna delle condizioni restituisce 1.",
+        "Sbagliato. Entrambe le condizioni sono vere.",
+        "Sbagliato. In C non esiste un tipo bool separato per i risultati dei confronti (viene restituito `int`)."
+      ]
+    },
+    {
+      "id": "it_clang_73",
+      "widget_id": "widget_clang_73",
+      "topic": "Linguaggio C — Operatore di stringificazione #",
+      "q": "Cosa stamperà questa macro con l'operatore #?",
+      "hint": "L'operatore # converte l'argomento della macro in un letterale stringa.",
+      "options": [
+        "10 + 20",
+        "30",
+        "\"30\"",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `#` trasforma il testo passato in un letterale stringa *senza valutare* l'espressione. La chiamata `TO_STR(10 + 20)` produrrà la stringa `\"10 + 20\"`.",
+        "Sbagliato. L'espressione non viene valutata prima di essere trasformata in stringa.",
+        "Sbagliato. Le virgolette non vengono stampate dallo specificatore `%s`.",
+        "Sbagliato. L'operatore `#` è completamente valido nelle macro C."
+      ]
+    },
+    {
+      "id": "it_clang_74",
+      "widget_id": "widget_clang_74",
+      "topic": "Linguaggio C — const in C89 vs C++",
+      "q": "È vero che nello standard C89 questo codice provocava un errore di compilazione?",
+      "hint": "Una variabile const in C è una vera costante a tempo di compilazione?",
+      "options": [
+        "Vero (Sì, const in C non crea un'espressione costante per la dimensione di un array)",
+        "Falso (No, le variabili const si possono sempre usare per la dimensione di un array)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C una variabile con il modificatore `const` è semplicemente una variabile di sola lettura, ma NON una costante a tempo di compilazione (a differenza del C++). Prima di C99 gli array richiedevano costanti valutabili a tempo di compilazione.",
+        "Sbagliato. In C89 solo le enumerazioni `enum` e le macro `#define` definivano vere costanti per le dimensioni degli array."
+      ]
+    },
+    {
+      "id": "it_clang_75",
+      "widget_id": "widget_clang_75",
+      "topic": "Linguaggio C — Trigrammi (Trigraphs)",
+      "q": "Cosa indicano le sequenze ??( e ??) nei vecchi standard del linguaggio C?",
+      "hint": "I trigrammi venivano usati per le tastiere prive di alcuni caratteri speciali.",
+      "options": [
+        "Parentesi quadre [ e ]",
+        "Parentesi graffe { e }",
+        "Un errore sintattico",
+        "Puntatori"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I trigrammi sono stati creati per le tastiere in cui mancavano alcuni caratteri ASCII. `??(` viene sostituito da `[`, e `??)` da `]`.",
+        "Sbagliato. Le parentesi graffe `{` e `}` sono definite dai trigrammi `??<` e `??>`.",
+        "Sbagliato. È una funzionalità standard del linguaggio C (rimossa solo in C23).",
+        "Sbagliato. I trigrammi non hanno alcuna relazione con i puntatori."
+      ]
+    },
+    {
+      "id": "it_clang_76",
+      "widget_id": "widget_clang_76",
+      "topic": "Linguaggio C — Espressione i = i++",
+      "q": "Qual è il risultato dell'esecuzione dell'espressione i = i++ secondo lo standard C?",
+      "hint": "Pensa ai punti di sequenza (sequence points) e alla modifica multipla.",
+      "options": [
+        "Comportamento indefinito (Undefined Behavior)",
+        "La variabile i diventerà uguale a 1",
+        "La variabile i diventerà uguale a 2",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La modifica di un oggetto scalare più di una volta tra punti di sequenza successivi (unsequenced modification) porta a Undefined Behavior.",
+        "Sbagliato. Non è possibile fare affidamento su un risultato concreto a causa dell'UB.",
+        "Sbagliato. Il comportamento del programma non è garantito dallo standard.",
+        "Sbagliato. Il compilatore compila il codice, ma genera un avviso."
+      ]
+    },
+    {
+      "id": "it_clang_77",
+      "widget_id": "widget_clang_77",
+      "topic": "Linguaggio C — Aritmetica dei puntatori void*",
+      "q": "L'aritmetica con i puntatori di tipo void* è consentita secondo lo standard rigoroso ISO C (senza estensioni GCC)?",
+      "hint": "La dimensione del tipo void è nota?",
+      "options": [
+        "Falso (No, la dimensione di void non è definita, l'aritmetica è vietata)",
+        "Vero (Sì, void* avanzerà sempre di 1 byte)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard ISO C, il tipo `void` è un tipo incompleto (incomplete type) e la sua dimensione non è definita, pertanto l'aritmetica con `void*` è vietata (GCC lo consente solo come estensione non standard).",
+        "Sbagliato. L'addizione a `void*` è un'estensione di GCC, ma non appartiene allo standard ISO C."
+      ]
+    },
+    {
+      "id": "it_clang_78",
+      "widget_id": null,
+      "topic": "Linguaggio C — Uso della parola chiave restrict",
+      "q": "A cosa serve la parola chiave restrict introdotta in C99?",
+      "hint": "Fornisce al compilatore un suggerimento relativo ai puntatori per l'ottimizzazione.",
+      "options": [
+        "Indica al compilatore che a questa area di memoria fa riferimento SOLO questo puntatore (per l'ottimizzazione)",
+        "Vieta di modificare il valore della variabile tramite il puntatore",
+        "Vieta la chiamata del puntatore da altri thread",
+        "Limita lo scope del puntatore al blocco corrente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `restrict` è una promessa al compilatore che, durante la vita del puntatore, nessun altro puntatore verrà utilizzato per accedere alla stessa memoria. Ciò consente al compilatore di ottimizzare in modo aggressivo i caricamenti dalla memoria.",
+        "Sbagliato. Per proteggere dalla modifica si usa `const`.",
+        "Sbagliato. `restrict` non ha alcuna relazione con i thread.",
+        "Sbagliato. Dello scope si occupano i blocchi `{}`."
+      ]
+    },
+    {
+      "id": "it_clang_79",
+      "widget_id": "widget_clang_79",
+      "topic": "Linguaggio C — Operatore di concatenazione dei token ##",
+      "q": "Cosa stamperà questo codice utilizzando l'operatore ## del preprocessore?",
+      "hint": "L'operatore ## unisce due token in uno solo.",
+      "options": [
+        "100",
+        "xy",
+        "Errore di compilazione",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `##` unisce i token `x` e `y` in un singolo token lessicale `xy`. Il programma fa riferimento alla variabile `int xy = 100;` e stampa `100`.",
+        "Sbagliato. Il token `xy` si espande nel valore della variabile.",
+        "Sbagliato. L'operazione di concatenazione dei token è completamente standard.",
+        "Sbagliato. La variabile `xy` è stata esplicitamente inizializzata con il numero 100."
+      ]
+    }
+  ]
+}

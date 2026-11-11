@@ -1,0 +1,575 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_781",
+      "widget_id": "widget_clang_781",
+      "topic": "Preprocessore — L'idioma do { ... } while(0) nelle macro",
+      "q": "Vero o Falso: la struttura `do { ... } while(0)` viene utilizzata nelle macro multilinea per consentirne l'uso sicuro all'interno dei rami `if / else` terminati da un punto e virgola?",
+      "hint": "Pensate a cosa succederebbe alla sintassi di `if (cond) MACRO(); else ...` se la macro venisse espansa in un semplice blocco `{ ... }`.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se la macro viene avvolta in un semplice blocco `{ ... }`, il punto e virgola dopo la chiamata `SWAP(x, y);` viene interpretato dal compilatore come un’istruzione vuota separata, causando l'errore `syntax error before 'else'`. L'involucro `do { ... } while(0)` richiede il punto e virgola ed evita questo errore.",
+        "Errato. È un pattern standard del linguaggio C per creare macro multilinea sicure."
+      ]
+    },
+    {
+      "id": "it_clang_782",
+      "widget_id": "widget_clang_782",
+      "topic": "Puntatori — Differenza tra const int* e int* const",
+      "q": "Cosa accadrà durante la compilazione e l'esecuzione di questo codice?",
+      "hint": "A cosa si riferisce il `const` nella dichiarazione `const int *p`: al puntatore stesso o al valore a cui punta?",
+      "options": [
+        "Compilerà e stamperà 20",
+        "Errore di compilazione — non è possibile modificare l'indirizzo p = &y",
+        "Compilerà e stamperà 10",
+        "Comportamento indefinito (Undefined behavior)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `const int *p` crea un puntatore a un intero costante. È vietato modificare il valore dereferenziato `*p = 30`, ma il puntatore `p` in sé può essere modificato (riassegnato a `&y`). Il codice stamperà 20.",
+        "Errato. Il puntatore in sé non è costante, solo i dati all'indirizzo lo sono.",
+        "Errato. `p` è stato riassegnato con successo a `y` (20).",
+        "Errato. L'operazione di riassegnazione del puntatore è assolutamente valida."
+      ]
+    },
+    {
+      "id": "it_clang_783",
+      "widget_id": "widget_clang_783",
+      "topic": "Tipi di dati — Il segno del tipo base char",
+      "q": "Lo standard C89 garantisce che il tipo `char` sia sempre con segno (`signed`) per impostazione predefinita?",
+      "hint": "La presenza o assenza del segno di un `char` ordinario dipende dall'architettura del processore e dai flag del compilatore GCC (ad esempio `-funsigned-char`)?",
+      "options": [
+        "Dipende dall'implementazione del compilatore e dalla piattaforma (Implementation-defined)",
+        "Sì, char è sempre signed in C89",
+        "No, char è sempre unsigned in C89"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, la presenza del segno nel tipo base `char` è definita dagli sviluppatori del compilatore per la specifica piattaforma target (Implementation-defined). In GCC su x86 `char` è `signed` per default, mentre su ARM è `unsigned` (se non ridefinito da flag).",
+        "Errato. Lo standard lascia esplicitamente questo dettaglio alla discrezione dell'implementazione.",
+        "Errato. Su alcune piattaforme è signed per default, su altre unsigned."
+      ]
+    },
+    {
+      "id": "it_clang_784",
+      "widget_id": "widget_clang_784",
+      "topic": "Preprocessore — Operatore di concatenazione di token ## (Token Pasting)",
+      "q": "Cosa stamperà la `printf` all'esecuzione di `CONCAT(x, y)`?",
+      "hint": "In che modo l'operatore `##` unisce due token nella fase di preprocessamento?",
+      "options": [
+        "100",
+        "xy",
+        "x y",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `##` unisce i token `x` e `y` in un unico nome di identificatore `xy`. Poiché la variabile `int xy = 100` è stata dichiarata in precedenza, `printf` stamperà il suo valore — 100.",
+        "Errato. `xy` è il nome della variabile, ma `%d` stampa il suo valore intero.",
+        "Errato. L'operatore `##` unisce i caratteri senza spazi.",
+        "Errato. La concatenazione di token è una funzionalità standard di C89."
+      ]
+    },
+    {
+      "id": "it_clang_785",
+      "widget_id": "widget_clang_785",
+      "topic": "Memoria — Variabili statiche locali nelle funzioni",
+      "q": "Cosa stamperanno tre chiamate successive alla funzione `count()`?",
+      "hint": "Quante volte viene inizializzata la variabile `static int c = 0` durante l'intera esecuzione del programma?",
+      "options": [
+        "1 2 3 ",
+        "1 1 1 ",
+        "0 0 0 ",
+        "0 1 2 ",
+        "3 3 3 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Una variabile `static` locale conserva il suo valore tra le chiamate di funzione e viene inizializzata esattamente una volta all'avvio del programma. Le chiamate successive incrementano `c`: 1, poi 2, poi 3.",
+        "Errato. La variabile non viene reimpostata a 0 ad ogni nuova entrata nella funzione.",
+        "Errato. L'operatore `c++` viene eseguito prima della stampa.",
+        "Errato. Calcola i valori dopo l'esecuzione di `c++`.",
+        "Errato. Il valore cresce ad ogni chiamata."
+      ]
+    },
+    {
+      "id": "it_clang_786",
+      "widget_id": "widget_clang_786",
+      "topic": "I/O — Buffering dello stream standard stdout",
+      "q": "Vero o Falso: l'output della funzione `printf(\"Hello World\")` senza il carattere di nuova riga `\\n` potrebbe non apparire immediatamente nella console a causa del buffering a righe di `stdout`?",
+      "hint": "Quando viene svuotato (flushed) esattamente il buffer di `stdout` nel terminale per impostazione predefinita?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo stream standard `stdout` quando invia l'output a un terminale interattivo ha per default un buffering a righe. I dati vengono inviati sullo schermo solo quando si incontra `\\n`, quando il buffer si riempie o con una chiamata esplicita a `fflush(stdout)`.",
+        "Errato. Il carattere `\\n` è fondamentale per forzare lo svuotamento del buffer di riga."
+      ]
+    },
+    {
+      "id": "it_clang_787",
+      "widget_id": "widget_clang_787",
+      "topic": "Espressioni — Promozione intera automatica (Integer Promotion)",
+      "q": "A quanto equivale `sizeof(a + b)` se `a` e `b` sono di tipo `unsigned char` e la dimensione di `int` è 4 byte?",
+      "hint": "A quale tipo vengono convertiti automaticamente gli argomenti di dimensione inferiore a `int` nelle operazioni aritmetiche?",
+      "options": [
+        "4",
+        "1",
+        "2",
+        "8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo le regole dell'Integer Promotion in C, qualsiasi tipo di dimensione inferiore a `int` (`char`, `short`), prima di eseguire operazioni aritmetiche (come l'addizione `+`), viene automaticamente convertito nel tipo `int`. Il risultato dell'espressione `a + b` ha tipo `int` (dimensione 4 byte).",
+        "Errato. 1 è la dimensione di un singolo `unsigned char`, ma l'operatore `+` ha promosso i tipi a `int`.",
+        "Errato. Il tipo del risultato non diventa `short`.",
+        "Errato. Su questa piattaforma la dimensione di `int` è pari a 4 byte."
+      ]
+    },
+    {
+      "id": "it_clang_788",
+      "widget_id": "widget_clang_788",
+      "topic": "Operatori — Differenza tra AND a bit (&) e AND logico (&&)",
+      "q": "Cosa stamperà la condizione `if (x & y)` con `x = 1` (`01` in binario) e `y = 2` (`10` in binario)?",
+      "hint": "Calcola il risultato dell'operazione a bit `1 & 2` in formato binario.",
+      "options": [
+        "No",
+        "Yes",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `&` è l'AND a bit. $1_{10} = 01_2$ e $2_{10} = 10_2$. La moltiplicazione a bit dà $00_2 = 0$. La condizione `if (0)` è falsa, quindi viene eseguito il ramo `else` e viene stampato `No`. (L'AND logico `1 && 2` avrebbe dato 1).",
+        "Errato. Hai confuso l'operatore a bit `&` con l'operatore logico `&&`.",
+        "Errato. L'operazione a bit su variabili intere è assolutamente corretta."
+      ]
+    },
+    {
+      "id": "it_clang_789",
+      "widget_id": "widget_clang_789",
+      "topic": "Memoria — Valori predefiniti degli array statici locali",
+      "q": "Quale valore è garantito negli elementi di un array locale `static int s_arr[3]` dichiarato senza inizializzatore?",
+      "hint": "In quale sezione della memoria si trovano le variabili static locali?",
+      "options": [
+        "0 (tutti gli elementi sono garantiti essere azzerati)",
+        "Valori spazzatura dallo stack",
+        "Comportamento indefinito all'accesso",
+        "Errore di compilazione — è richiesta un'inizializzazione esplicita",
+        "-1",
+        "Puntatori NULL"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli array statici (anche se dichiarati all'interno di una funzione) sono collocati nella sezione BSS/Data e hanno la garanzia di essere inizializzati a zero prima dell'esecuzione di `main()`. A differenza di questi, un normale `local_arr` non statico sullo stack conterrebbe dati indefiniti/spazzatura.",
+        "Errato. Solo gli array locali non statici contengono valori spazzatura.",
+        "Errato. La lettura dell'elemento è assolutamente sicura.",
+        "Errato. In C non è obbligatorio inizializzare manualmente le variabili statiche.",
+        "Errato. Per impostazione predefinita la memoria viene riempita di zeri, non di uno.",
+        "Errato. I dati sono di tipo intero `int`, non di tipo puntatore."
+      ]
+    },
+    {
+      "id": "it_clang_790",
+      "widget_id": "widget_clang_790",
+      "topic": "Libreria standard — Tipo atomico sig_atomic_t per i segnali",
+      "q": "Vero o Falso: il tipo `sig_atomic_t` della libreria `<signal.h>` garantisce l'atomicità di lettura e scrittura di una variabile anche in presenza di segnali asincroni del sistema operativo?",
+      "hint": "Questo tipo viene utilizzato per lo scambio sicuro di flag tra il gestore del segnale (signal handler) e il ciclo principale del programma?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `sig_atomic_t` è l'unico tipo di dati nello standard C89 la cui scrittura e lettura sono garantite essere atomiche (all'interno di una singola istruzione del processore) e sicure da usare all'interno dei gestori di segnale.",
+        "Errato. È lo scopo primario del tipo `sig_atomic_t` secondo le specifiche ANSI C."
+      ]
+    },
+    {
+      "id": "it_clang_791",
+      "widget_id": "widget_clang_781",
+      "topic": "Array e puntatori — Decadimento dell'array a puntatore (Array Decay)",
+      "q": "Cosa stamperà `sizeof(arr)` all'interno della funzione `print_size` se su un sistema a 64 bit le viene passato l'array `int data[10]`?",
+      "hint": "In cosa si trasforma il parametro array `int arr[]` nella firma della funzione?",
+      "options": [
+        "8 (dimensione di un puntatore su architettura a 64 bit)",
+        "40 (10 elementi * 4 byte)",
+        "10 (numero di elementi)",
+        "4 (dimensione del tipo int)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando si passa un array a una funzione, esso decade implicitamente (decay) a un puntatore al suo primo elemento. La sintassi `int arr[]` nei parametri della funzione è totalmente equivalente a `int *arr`. La dimensione di un puntatore su un sistema a 64 bit è di 8 byte.",
+        "Errato. 40 sarebbe stato il risultato di `sizeof(data)` nel punto della sua dichiarazione, ma all'interno della funzione è un normale puntatore.",
+        "Errato. Il passaggio della lunghezza dell'array in C non viene conservato automaticamente.",
+        "Errato. 4 byte è la dimensione di `int`, non di un puntatore su un sistema a 64 bit."
+      ]
+    },
+    {
+      "id": "it_clang_792",
+      "widget_id": "widget_clang_792",
+      "topic": "Controllo di flusso — Meccanismo setjmp e longjmp",
+      "q": "Cosa stamperà il programma dopo l'esecuzione di `longjmp(buf, 42)`?",
+      "hint": "Quale valore restituisce la funzione `setjmp(buf)` quando vi si rientra tramite `longjmp`?",
+      "options": [
+        "Restored",
+        "0",
+        "Non stamperà nulla, il programma terminerà con un errore",
+        "Ciclo ricorsivo infinito",
+        "42"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Alla prima chiamata, `setjmp` salva il contesto e restituisce 0 (viene eseguito `foo()`). All'interno di `foo()`, la chiamata `longjmp(buf, 42)` ripristina lo stack e fa sì che `setjmp` restituisca il secondo valore (42). Poiché $42 \\neq 0$, viene eseguito il ramo `else` e viene stampato `Restored`.",
+        "Errato. 0 viene restituito solo al primo salvataggio del contesto.",
+        "Errato. `longjmp` è un meccanismo di salto standard in C89.",
+        "Errato. Non si verifica un ciclo infinito poiché la seconda chiamata di `setjmp` restituisce 42.",
+        "Errato. 42 viene restituito da `setjmp`, causando l'esecuzione del ramo `else`."
+      ]
+    },
+    {
+      "id": "it_clang_793",
+      "widget_id": "widget_clang_793",
+      "topic": "Strutture — Assegnazione diretta di strutture per valore",
+      "q": "Vero o Falso: l'operatore di assegnazione diretta `p2 = p1` per le strutture è supportato in C89 ed effettua una copia completa byte per byte di tutti i campi?",
+      "hint": "È obbligatorio usare `memcpy` per copiare una struttura in un'altra?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza degli array, le strutture in C sono tipi di dati scalari a tutti gli effetti. L'assegnazione `p2 = p1` è consentita dallo standard C89 ed effettua la copia di tutti i campi.",
+        "Errato. L'assegnazione diretta delle strutture è completamente valida a partire dallo standard C89."
+      ]
+    },
+    {
+      "id": "it_clang_794",
+      "widget_id": "widget_clang_794",
+      "topic": "Tipi di dati — Cast esplicito dei tipi nella divisione (Type Casting)",
+      "q": "Cosa stamperà `printf(\"%.1f\", res)` all'esecuzione di `double res = (double)x / y` con `x = 5`, `y = 2`?",
+      "hint": "Quale tipo assume il secondo operando `y` nella divisione `(double)x / y`?",
+      "options": [
+        "2.5",
+        "2.0",
+        "2",
+        "0.0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il cast `(double)x` converte il numero 5 in `5.0`. Per le regole di conversione dei tipi, se uno degli operandi è `double`, anche il secondo (`y = 2`) viene temporaneamente convertito a `2.0`. La divisione in virgola mobile `5.0 / 2.0` dà `2.5`.",
+        "Errato. Il risultato `2.0` si otterrebbe con la divisione intera `(double)(x / y)`.",
+        "Errato. Lo specificatore `%.1f` stampa sempre la parte decimale.",
+        "Errato. Il numero 5 si divide con successo per 2."
+      ]
+    },
+    {
+      "id": "it_clang_795",
+      "widget_id": "widget_clang_795",
+      "topic": "Controllo di flusso — Etichette e l'istruzione goto",
+      "q": "A quanto sarà uguale la variabile `i` dopo l'uscita dal ciclo tramite l'istruzione `goto cleanup;` quando `i == 3`?",
+      "hint": "La variabile `i` cambia nel momento del salto all'etichetta?",
+      "options": [
+        "3",
+        "4",
+        "5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando `i` raggiunge il valore 3, la condizione `i == 3` diventa vera e l'istruzione `goto` trasferisce immediatamente il controllo all'etichetta `cleanup:`. L'incremento `i++` non viene più eseguito, quindi `i` rimane uguale a 3.",
+        "Errato. Il ciclo è stato interrotto prima del passaggio di incremento successivo.",
+        "Errato. L'esecuzione non è arrivata alla fine del ciclo (valore 5)."
+      ]
+    },
+    {
+      "id": "it_clang_796",
+      "widget_id": "widget_clang_796",
+      "topic": "Prototipi di funzione — Omissione dei nomi dei parametri",
+      "q": "Vero o Falso: Nella dichiarazione del prototipo di una funzione (firma), i nomi dei parametri formali sono opzionali ed è sufficiente che il compilatore conosca solo i loro tipi?",
+      "hint": "Il compilatore richiede nomi di variabili specifici prima della definizione del corpo della funzione?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel prototipo di funzione, per il compilatore è importante solo il tipo di ritorno e la firma dei tipi degli argomenti (ad esempio `float areaTriangolo(float, float);`). Non è obbligatorio specificare i nomi dei parametri, anche se migliorano la leggibilità del codice.",
+        "Errato. Non è obbligatorio specificare i nomi dei parametri nei prototipi."
+      ]
+    },
+    {
+      "id": "it_clang_797",
+      "widget_id": "widget_clang_797",
+      "topic": "Istruzione return — Conclusione dell'esecuzione di una funzione",
+      "q": "Cosa restituirà la funzione `max(10, 20)` e verrà eseguita l'istruzione `y = y - x;`?",
+      "hint": "Cosa succede al flusso di esecuzione di una funzione quando viene chiamata l'istruzione return?",
+      "options": [
+        "Restituirà 20, l'istruzione y = y - x non verrà eseguita",
+        "Restituirà 10, l'istruzione verrà eseguita",
+        "Errore di compilazione dovuto a codice irraggiungibile",
+        "Restituirà 10, l'istruzione non verrà eseguita"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'istruzione `return` interrompe immediatamente l'esecuzione della funzione e restituisce il controllo al programma chiamante. Il codice `y = y - x;` non verrà mai eseguito (codice irraggiungibile). Nella chiamata `max(10, 20)` la condizione `10 > 20` è falsa, viene eseguito il ramo `else` e viene restituito 20.",
+        "Errato. Il ramo `else` restituisce `y`, cioè 20.",
+        "Errato. Il codice irraggiungibile genera un avviso (warning) del compilatore, ma non un errore di build.",
+        "Errato. Il risultato dell'espressione `10 > 20` è false, quindi viene restituito `y` (20)."
+      ]
+    },
+    {
+      "id": "it_clang_798",
+      "widget_id": "widget_clang_798",
+      "topic": "Funzioni void — Divieto di restituire espressioni",
+      "q": "Cosa accadrà se si tenta di compilare una funzione di tipo `void` che contiene l'istruzione `return a + b;`?",
+      "hint": "Una funzione con tipo di ritorno `void` può restituire il risultato del calcolo di un'espressione?",
+      "options": [
+        "Errore di compilazione",
+        "La funzione compilerà e ignorerà il valore restituito",
+        "La funzione cambierà automaticamente il suo tipo in int"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il tipo `void` indica che la funzione non restituisce alcun valore. Il tentativo di restituire un'espressione in un'istruzione `return` all'interno di una funzione `void` è un errore sintattico.",
+        "Errato. Il compilatore C controlla rigorosamente la corrispondenza del tipo di ritorno con la firma.",
+        "Errato. I tipi delle funzioni non cambiano automaticamente durante la compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_799",
+      "widget_id": "widget_clang_799",
+      "topic": "Parametri — Passaggio per valore (Call by Value)",
+      "q": "Cosa stamperà `printf(\"%d\", a)` dopo l'esecuzione di `modify(a)`?",
+      "hint": "I tipi di dati base (`int`, `float`) vengono passati alle funzioni per valore o per riferimento in linguaggio C?",
+      "options": [
+        "5",
+        "100",
+        "0",
+        "Errore di runtime"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C tutti gli argomenti di tipo base vengono passati alle funzioni rigorosamente per valore (Call by Value). La funzione `modify` riceve una copia della variabile `a`. La modifica di questa copia all'interno della funzione non influisce in alcun modo sulla variabile originale `a` in `main()`.",
+        "Errato. Le modifiche avvengono solo all'interno della copia locale `x`.",
+        "Errato. Il valore iniziale della variabile `a` è 5.",
+        "Errato. Il passaggio per valore è assolutamente sicuro e corretto."
+      ]
+    },
+    {
+      "id": "it_clang_800",
+      "widget_id": "widget_clang_800",
+      "topic": "Array e funzioni — Passaggio di array come parametri",
+      "q": "A quanto sarà uguale l'elemento `arr[0]` dopo la chiamata alla funzione `incAll(arr, 3)`?",
+      "hint": "Cosa viene passato esattamente alla funzione quando si passa un array tramite il suo nome?",
+      "options": [
+        "2 (gli elementi dell'array originale cambieranno)",
+        "1 (l'array originale rimarrà invariato)",
+        "0",
+        "Errore di compilazione",
+        "Comportamento indefinito (Undefined behavior)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il nome dell'array quando viene passato a una funzione decade automaticamente a un puntatore al suo primo elemento (`int *`). La funzione lavora direttamente con gli elementi originali dell'array in memoria, quindi `a[0] = a[0] + 1` modificherà il valore di `arr[0]` da 1 a 2.",
+        "Errato. Gli array vengono passati per indirizzo, quindi le modifiche si conservano.",
+        "Errato. Ricalcola il valore iniziale: $1 + 1 = 2$.",
+        "Errato. La sintassi `int a[]` nei parametri di funzione è completamente valida.",
+        "Errato. Il passaggio degli array è rigorosamente regolamentato dallo standard."
+      ]
+    },
+    {
+      "id": "it_clang_801",
+      "widget_id": "widget_clang_801",
+      "topic": "Cast dei tipi — Cast implicito degli argomenti nella chiamata",
+      "q": "Cosa accadrà se si passa l'argomento intero `3` alla funzione `square(float x)`?",
+      "hint": "Il compilatore può convertire implicitamente un tipo intero in un tipo a virgola mobile durante la chiamata di una funzione?",
+      "options": [
+        "Il valore 3 verrà convertito implicitamente in 3.0f, la funzione restituirà 9.0",
+        "Errore di compilazione — incompatibilità dei tipi di argomento",
+        "Il valore verrà troncato a 0.0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se prima della chiamata della funzione è disponibile il suo prototipo o la sua definizione, il compilatore C esegue automaticamente la conversione implicita del tipo dell'argomento passato (`int` 3 diventa `float` 3.0f). Risultato: $3.0 \\times 3.0 = 9.0$.",
+        "Errato. In C la conversione implicita dei tipi numerici base è consentita.",
+        "Errato. L'intero 3 si converte correttamente in float 3.0 senza perdita di informazioni."
+      ]
+    },
+    {
+      "id": "it_clang_802",
+      "widget_id": "widget_clang_802",
+      "topic": "Scope (Ambito di visibilità) — Variabili automatiche nelle chiamate ripetute",
+      "q": "La variabile automatica `temp` conserva il suo valore tra chiamate indipendenti alla funzione `process()`?",
+      "hint": "Cosa succede alla memoria di una variabile automatica locale al termine della funzione?",
+      "options": [
+        "No, stamperà \"5 10 \", poiché temp viene ricreata da capo a ogni chiamata",
+        "Sì, stamperà \"5 15 \", conservando i risultati precedenti",
+        "Stamperà \"0 0 \", poiché temp viene sempre azzerata",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili locali senza la parola chiave `static` sono automatiche (`auto`). Vengono create sullo stack all'ingresso della funzione e distrutte all'uscita. A ogni chiamata `temp` viene reinizializzata a zero. La prima chiamata stamperà 5, la seconda 10.",
+        "Errato. La conservazione del valore tra le chiamate avviene solo per le variabili `static`.",
+        "Errato. L'operazione `temp += x` aggiunge a 0 il valore di `x` prima della stampa.",
+        "Errato. La sintassi è completamente corretta."
+      ]
+    },
+    {
+      "id": "it_clang_803",
+      "widget_id": "widget_clang_803",
+      "topic": "C89 — Dichiarazione implicita di funzioni (Implicit Function Declaration)",
+      "q": "Come gestirà il compilatore C89 la chiamata `calc(5)` prima della sua dichiarazione o definizione?",
+      "hint": "Quale tipo di ritorno attribuiva per impostazione predefinita il compilatore C89 a una funzione sconosciuta?",
+      "options": [
+        "Compilerà (con un avviso), assumendo implicitamente la firma int calc()",
+        "Errore critico di compilazione — la chiamata a una funzione non dichiarata è vietata",
+        "Errore di linking — main non vede le funzioni dichiarate più in basso",
+        "Creerà automaticamente il prototipo void calc()",
+        "Il programma crollerà durante l'esecuzione (Segmentation Fault)",
+        "Compilerà senza alcun avviso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nello standard C89 vigeva la regla della dichiarazione implicita: se una funzione veniva chiamata senza prototipo, il compilatore emetteva un avviso e assumeva che la funzione avesse firma `int func()`. In C99 questa regola è stata abolita.",
+        "Errato. C89 consente la dichiarazione implicita delle funzioni.",
+        "Errato. Il linker troverà la definizione di `calc` più in basso nello stesso file.",
+        "Errato. Il compilatore attribuisce il tipo di ritorno `int`, non `void`.",
+        "Errato. Il codice si eseguirà correttamente a runtime.",
+        "Errato. I compilatori moderni e C89 emetteranno un avviso (warning)."
+      ]
+    },
+    {
+      "id": "it_clang_804",
+      "widget_id": "widget_clang_804",
+      "topic": "C89 — Differenza tra void func(void) e void func()",
+      "q": "Vero o Falso: In C la dichiarazione `void func()` significa che la funzione accetta un numero qualsiasi (non specificato) di argomenti, mentre `void func(void)` vieta rigorosamente il passaggio di argomenti?",
+      "hint": "Qual è la differenza principale tra un elenco di parametri vuoto `()` e `(void)` nello standard C a differenza del C++?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C (a differenza del C++) le parentesi vuote `void func()` indicano che il controllo del numero e dei tipi di argomenti è disattivato. La dichiarazione `void func(void)` con `void` esplicitato indica al compilatore che la funzione non accetta argomenti.",
+        "Errato. È una differenza fondamentale nelle dichiarazioni di funzione in linguaggio C."
+      ]
+    },
+    {
+      "id": "it_clang_805",
+      "widget_id": "widget_clang_805",
+      "topic": "Ricorsione — Caso base e calcolo del fattoriale",
+      "q": "A quanto equivale il valore di `factorial(4)`?",
+      "hint": "Sviluppa la sequenza di chiamate ricorsive: $4 \\times 3 \\times 2 \\times 1$.",
+      "options": [
+        "24",
+        "12",
+        "6",
+        "120"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le chiamate ricorsive si sviluppano come $4 \\times \\text{factorial}(3) = 4 \\times 3 \\times \\text{factorial}(2) = 4 \\times 3 \\times 2 \\times 1 = 24$.",
+        "Errato. $4 \\times 3 = 12$, ma manca il passaggio successivo di moltiplicazione per 2.",
+        "Errato. 6 è il risultato di `factorial(3)`.",
+        "Errato. 120 è il risultato di `factorial(5)`."
+      ]
+    },
+    {
+      "id": "it_clang_806",
+      "widget_id": "widget_clang_806",
+      "topic": "Memoria — Pericolo di restituire l'indirizzo di una variabile locale",
+      "q": "Vero o Falso: Restituire l'indirizzo di una variabile locale `&num` da una funzione è sicuro, poiché la memoria allocata si conserva per tutta la durata del programma?",
+      "hint": "Dove vengono create le variabili locali non statiche di una funzione e cosa succede a questa memoria al momento del ritorno?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Le variabili locali si trovano nello stack frame della funzione. Al termine della chiamata, lo stack frame viene distrutto e il puntatore diventa non valido (Dangling Pointer).",
+        "Corretto! Le variabili locali vengono distrutte subito all'uscita dalla funzione. Restituire i loro indirizzi porta a puntatori pendenti (dangling pointers) e comportamento indefinito."
+      ]
+    },
+    {
+      "id": "it_clang_807",
+      "widget_id": "widget_clang_807",
+      "topic": "Espressioni — Chiamate di funzione annidate",
+      "q": "A quanto equivale il valore di `val` dopo l'esecuzione di `add(add(2, 3), add(4, 5))`?",
+      "hint": "Calcola prima le chiamate interne `add(2, 3)` e `add(4, 5)`, poi quella esterna.",
+      "options": [
+        "14",
+        "9",
+        "5",
+        "20"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le chiamate interne vengono calcolate per prime: `add(2, 3)` dà 5, `add(4, 5)` dà 9. La chiamata esterna diventa `add(5, 9)`, che dà come risultato 14.",
+        "Errato. 9 è il risultato di una sola delle chiamate interne `add(4, 5)`.",
+        "Errato. 5 è il risultato di una sola prima chiamata interna `add(2, 3)`.",
+        "Errato. Calcola correttamente le somme: $2+3=5$, $4+5=9$, $5+9=14$."
+      ]
+    },
+    {
+      "id": "it_clang_808",
+      "widget_id": "widget_clang_808",
+      "topic": "Architettura in C — Funzioni pure ed astrazione dall'I/O",
+      "q": "Perché si raccomanda di scrivere le funzioni di calcolo (ad es. il calcolo dell'area) senza istruzioni `scanf` e `printf` al loro interno?",
+      "hint": "Pensa alla possibilità di riutilizzare il codice in applicazioni console, interfacce grafiche o server web.",
+      "options": [
+        "Affinché la funzione sia indipendente, riutilizzabile e non legata all'I/O da console",
+        "Perché l'uso di printf all'interno delle funzioni è vietato dallo standard C89",
+        "Per velocizzare il lavoro del processore di 100 volte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Evitare l'input/output (I/O) diretto all'interno delle funzioni logiche/matematiche le rende riutilizzabili in qualsiasi parte del sistema — ad esempio da un'interfaccia grafica (GUI), da un file o da un'altra funzione.",
+        "Errato. La chiamata a `printf` è del tutto legale all'interno di qualsiasi funzione.",
+        "Errato. La ragione principale riguarda l'architettura, la modularità e la pulizia del codice."
+      ]
+    },
+    {
+      "id": "it_clang_809",
+      "widget_id": "widget_clang_809",
+      "topic": "Strutture — Restituzione di strutture da funzioni per valore",
+      "q": "È consentito in C restituire un'intera struttura da una funzione tramite l'istruzione `return` per valore e cosa stamperà `pt.y`?",
+      "hint": "La struttura in C è un valore copiabile al ritorno da una funzione?",
+      "options": [
+        "Consentito, stamperà 20",
+        "Vietato — le strutture possono essere passate solo tramite puntatori",
+        "Consentito, ma stamperà 10",
+        "Errore di runtime (Segmentation Fault)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C89 le funzioni possono restituire strutture per valore. Il contenuto della struttura `p` viene completamente copiato nella variabile `pt`. Il campo `pt.y` è pari a 20.",
+        "Errato. In C è consentito restituire strutture per valore direttamente dalle funzioni.",
+        "Errato. Il campo `x` è pari a 10, mentre il campo `y` è pari a 20.",
+        "Errato. La copia della struttura al ritorno dalla funzione è assolutamente standard."
+      ]
+    },
+    {
+      "id": "it_clang_810",
+      "widget_id": "widget_clang_810",
+      "topic": "Funzioni void — Istruzione return vuota per l'uscita anticipata",
+      "q": "Vero o Falso: L'istruzione `return;` (senza espressioni) può essere usata nelle funzioni `void` per interrompere anticipatamente l'esecuzione della funzione?",
+      "hint": "Si può scrivere `return;` all'interno di un ramo `if` per uscire da una funzione che non restituisce valori?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nelle funzioni `void`, l'istruzione `return;` senza argomenti viene utilizzata come mezzo di controllo del flusso per uscire immediatamente ed anticipatamente dalla funzione (ad esempio durante la convalida degli errori).",
+        "Errato. È il modo standard per uscire anticipatamente dalle funzioni `void`."
+      ]
+    }
+  ]
+}

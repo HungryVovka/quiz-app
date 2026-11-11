@@ -1,0 +1,605 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_601",
+      "widget_id": "widget_clang_601",
+      "topic": "Indicizzazione — Commutatività della sintassi a[i] e i[a]",
+      "q": "Cosa stamperà l'espressione `2[a]` per l'array `int a[] = {10, 20, 30}`?",
+      "hint": "Ricorda come lo zucchero sintattico `x[y]` viene espanso dal compilatore tramite i puntatori.",
+      "options": [
+        "30",
+        "20",
+        "10",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C l'espressione `a[i]` viene trasformata dal compilatore in `*(a + i)`. Poiché l'addizione è commutativa, `*(a + i)` è equivalente a `*(i + a)`, e quindi a `i[a]`. La scrittura `2[a]` restituisce il terzo elemento `a[2]`, cioè 30.",
+        "Errato. 20 è l'elemento `1[a]` (`a[1]`).",
+        "Errato. 10 è l'elemento `0[a]` (`a[0]`).",
+        "Errato. La sintassi `i[a]` è perfettamente valida secondo lo standard C."
+      ]
+    },
+    {
+      "id": "it_clang_602",
+      "widget_id": "widget_clang_602",
+      "topic": "Aritmetica dei puntatori — Scostamento del puntatore all'intero array &a + 1",
+      "q": "A quanto equivale la differenza in byte tra `&a + 1` e `a` per un array `int a[5]` con un `int` da 4 byte?",
+      "hint": "Qual è il tipo di `&a` e di quanti byte sposta il puntatore l'operatore `+ 1` per questo tipo?",
+      "options": [
+        "20",
+        "4",
+        "5",
+        "8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `&a` ha tipo «puntatore a un intero array di 5 elementi» (`int(*)[5]`). Lo scostamento `+ 1` sposta questo puntatore della dimensione dell'INTERO array: $5 \\times 4 = 20$ byte.",
+        "Errato. 4 byte è la differenza per la normale decadimento dell'array `a + 1` (scostamento di un singolo `int`).",
+        "Errato. 5 è il numero di elementi, mentre la differenza tra puntatori `char*` restituisce i byte.",
+        "Errato. 8 byte si otterrebbero spostando puntatori a tipi a 64 bit."
+      ]
+    },
+    {
+      "id": "it_clang_603",
+      "widget_id": "widget_clang_603",
+      "topic": "Puntatori a funzioni — Array di puntatori a funzioni",
+      "q": "Cosa stamperà la chiamata `ops[1](10, 4)` per un array di puntatori a funzioni `ops`?",
+      "hint": "Quale funzione si trova all'indice `ops[1]`?",
+      "options": [
+        "6",
+        "14",
+        "10",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `ops[1]` seleziona il secondo elemento dell'array, ovvero il puntatore alla funzione `sub`. La chiamata `sub(10, 4)` esegue la sottrazione $10 - 4 = 6$.",
+        "Errato. 14 verrebbe restituito dalla funzione `add`, situata all'indice `ops[0]`.",
+        "Errato. Viene invocata esattamente la funzione bersaglio dell'array.",
+        "Errato. La dichiarazione e l'invocazione tramite un array di puntatori a funzioni sono sintatticamente corrette."
+      ]
+    },
+    {
+      "id": "it_clang_604",
+      "widget_id": "widget_clang_604",
+      "topic": "Memoria — Mutabilità di un array di caratteri vs Letterale stringa",
+      "q": "Cosa stamperà `printf` dopo l'esecuzione di `s[0] = 'J'` per l'array `char s[] = \"Hello\"`?",
+      "hint": "Viene creato un buffer mutabile separato nello stack o viene usata la memoria immutabile del letterale?",
+      "options": [
+        "Jello",
+        "Hello",
+        "Terminazione anomala del programma (Segmentation Fault)",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La dichiarazione `char s[] = \"Hello\"` crea un array locale sullo stack e vi COPIA i caratteri del letterale. La memoria dello stack è scrivibile, quindi `s[0] = 'J'` modifica con successo il primo carattere in `'J'`, e viene stampato \"Jello\".",
+        "Errato. L'assegnazione `s[0] = 'J'` modifica i dati dell'array.",
+        "Errato. Un Segfault si verifica quando si tenta di modificare un letterale stringa tramite puntatore `char *p = \"Hello\"`, ma non per un array di caratteri `char s[]`.",
+        "Errato. L'array di caratteri è completamente mutabile."
+      ]
+    },
+    {
+      "id": "it_clang_605",
+      "widget_id": "widget_clang_605",
+      "topic": "typedef — Applicazione di sizeof ad alias di tipi array",
+      "q": "A quanto equivale `sizeof(a)` se `a` è dichiarato tramite `typedef int IntArray[4]` con un `int` da 4 byte?",
+      "hint": "L'alias typedef conserva le informazioni complete sul tipo e sulla dimensione dell'array?",
+      "options": [
+        "16",
+        "4",
+        "8",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `IntArray` è un alias a tutti gli effetti del tipo `int[4]`. L'operatore `sizeof(a)` calcola la dimensione totale dell'array: $4 \\times 4 = 16$ byte.",
+        "Errato. 4 è la dimensione di un singolo elemento `int`.",
+        "Errato. 8 è la dimensione di un puntatore, ma `a` ha tipo array `int[4]`, non puntatore.",
+        "Errato. Il `typedef` per i tipi di array è assolutamente corretto."
+      ]
+    },
+    {
+      "id": "it_clang_606",
+      "widget_id": "widget_clang_606",
+      "topic": "Array bidimensionali — Equivalenza tra dereferenziazione di puntatori e indicizzazione",
+      "q": "Quale elemento della matrice seleziona l'espressione `*(*(a + 1) + 1)` per `int a[2][2] = {{10, 20}, {30, 40}}`?",
+      "hint": "Risolvi le parentesi: a cosa equivale l'espressione `*(*(a + i) + j)` nella normale notazione con indici?",
+      "options": [
+        "40",
+        "30",
+        "20",
+        "10"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `*(*(a + i) + j)` è la rappresentazione fondamentale tramite puntatori dell'elemento `a[i][j]`. Con `i = 1` e `j = 1` otteniamo l'elemento `a[1][1]`, pari a 40.",
+        "Errato. 30 è l'elemento `a[1][0]` (`*(*(a + 1) + 0)`).",
+        "Errato. 20 è l'elemento `a[0][1]` (`*(*(a + 0) + 1)`).",
+        "Errato. 10 è il primo elemento `a[0][0]`."
+      ]
+    },
+    {
+      "id": "it_clang_607",
+      "widget_id": "widget_clang_607",
+      "topic": "Operatori — Decadimento degli array in puntatori nelle espressioni ternarie",
+      "q": "Cosa stamperà l'espressione `p[1]` se `p` è inizializzato con l'operatore ternario `1 ? a : b`?",
+      "hint": "In cosa si convertono implicitamente gli operandi array `a` e `b` all'interno dell'operazione ternaria `?:`?",
+      "options": [
+        "2",
+        "5",
+        "1",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nell'operatore ternario gli array `a` e `b` decadono in puntatori ai loro primi elementi `int*`. Poiché la condizione `1` è vera, viene restituito il puntatore ad `a[0]`. Di conseguenza, `p[1]` è uguale ad `a[1]`, cioè 2.",
+        "Errato. 5 è l'elemento `b[1]`, che non viene selezionato poiché la condizione è vera.",
+        "Errato. 1 è l'elemento `p[0]` (`a[0]`).",
+        "Errato. L'uso di array nell'operatore ternario è perfettamente consentito."
+      ]
+    },
+    {
+      "id": "it_clang_608",
+      "widget_id": "widget_clang_608",
+      "topic": "Puntatori — Indicizzazione negativa dei puntatori",
+      "q": "A quanto equivale l'espressione `p[-1]` se il puntatore `p` è inizializzato come `arr + 1`?",
+      "hint": "Come si espande l'indice negativo `p[-1]` secondo l'aritmetica dei puntatori?",
+      "options": [
+        "10",
+        "20",
+        "30",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `p[-1]` si espande in `*(p - 1)`. Poiché `p` puntava ad `arr[1]` (con valore 20), un passo indietro `p - 1` restituisce il puntatore ad `arr[0]`. La sua dereferenziazione dà 10.",
+        "Errato. 20 è l'elemento `p[0]` (`arr[1]`).",
+        "Errato. 30 è l'elemento `p[1]` (`arr[2]`).",
+        "Errato. L'indirizzo risultante si trova entro i limiti della memoria valida dell'array `arr`, quindi non c'è UB."
+      ]
+    },
+    {
+      "id": "it_clang_609",
+      "widget_id": "widget_clang_609",
+      "topic": "Inizializzazione — Azzeramento automatico degli elementi non specificati",
+      "q": "Cosa stamperà `printf` per gli elementi `a[0]` e `a[4]` con la dichiarazione `int a[5] = {0}`?",
+      "hint": "Cosa succede a tutti i successivi elementi dell'array se almeno uno è inizializzato esplicitamente?",
+      "options": [
+        "0 0",
+        "0 e spazzatura dalla memoria",
+        "1 1",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, se l'elenco di inizializzazione contiene almeno un elemento (in questo caso `{0}` per `a[0]`), tutti i restanti elementi non specificati vengono automaticamente riempiti con zeri. Output: `0 0`.",
+        "Errato. Non ci sarà spazzatura, poiché la presenza di un inizializzatore costringe il compilatore ad azzerare l'intero array.",
+        "Errato. Non ci sono uni nell'array.",
+        "Errato. L'inizializzatore `{0}` è il modo classico per azzerare un array in C."
+      ]
+    },
+    {
+      "id": "it_clang_610",
+      "widget_id": "widget_clang_610",
+      "topic": "Precedenza degli operatori — Combinazione di incremento postfisso e dereferenziazione (*p++)",
+      "q": "A quanto equivarranno `val` e `*p` dopo l'esecuzione di `int val = *p++` per l'array `int arr[] = {5, 10, 15}`?",
+      "hint": "Quale operatore ha precedenza maggiore — `*` o `++` postfisso, e quale valore restituisce l'incremento postfisso?",
+      "options": [
+        "5 10",
+        "6 10",
+        "5 5",
+        "10 10"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il `++` postfisso ha una precedenza maggiore rispetto a `*` e si lega al puntatore `p`. Tuttavia, l'incremento postfisso restituisce il VECCHIO valore del puntatore. Pertanto `*` dereferenzia l'indirizzo non ancora spostato (`arr[0]`), assegnando `val = 5`. Dopodiché `p` si sposta su `arr[1]`, quindi `*p` diventa pari a 10.",
+        "Errato. Il valore all'indirizzo non viene incrementato, cambia l'indirizzo del puntatore `p` stesso.",
+        "Errato. Il puntatore `p` si sposta garantitamente all'elemento successivo.",
+        "Errato. In `val` finisce il valore `arr[0]` (5), poiché l'incremento è postfisso."
+      ]
+    },
+    {
+      "id": "it_clang_611",
+      "widget_id": "widget_clang_611",
+      "topic": "Parametri di funzione — Decadimento di array multidimensionali nei parametri",
+      "q": "Cosa stamperà `sizeof(a)` all'interno di `void print_size(int a[5][5])` su un sistema a 64 bit?",
+      "hint": "In cosa si trasforma il parametro della prima dimensione di qualsiasi array multidimensionale nell'intestazione della funzione?",
+      "options": [
+        "8",
+        "100",
+        "20",
+        "25"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nei parametri di funzione la dimensione più alta dell'array decade sempre in un puntatore. Il tipo `int a[5][5]` si trasforma implicitamente in `int (*a)[5]` (puntatore a un array di 5 elementi `int`). La dimensione di qualsiasi puntatore su un'architettura a 64 bit è pari a 8 byte.",
+        "Errato. 100 byte ($5 \\times 5 \\times 4$) si otterrebbero solo per un array locale al di fuori dei parametri di funzione.",
+        "Errato. 20 byte è la dimensione di una singola riga `int[5]`.",
+        "Errato. 25 è il numero di elementi, non la dimensione in byte."
+      ]
+    },
+    {
+      "id": "it_clang_612",
+      "widget_id": "widget_clang_612",
+      "topic": "Operatore virgola — Decadimento forzato dell'array nell'operatore virgola all'interno di sizeof",
+      "q": "Cosa stamperà `sizeof(1, arr)` su un sistema a 64 bit per l'array `int arr[5]`?",
+      "hint": "L'espressione `(1, arr)` è un semplice nome di array o un'espressione valutata?",
+      "options": [
+        "8",
+        "20",
+        "4",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore virgola `(1, arr)` valuta l'operando di sinistra, lo scarta e restituisce il valore dell'operando di destra. Tuttavia, l'espressione risultante `(1, arr)` NON è più un semplice nome di array! Di conseguenza `arr` decade istantaneamente nel puntatore `int*`. `sizeof(int*)` su un sistema a 64 bit è pari a 8 byte.",
+        "Errato. 20 byte verrebbero stampati per un puro `sizeof(arr)` senza l'operatore virgola.",
+        "Errato. 4 è la dimensione dell'unità o dell'elemento `int`.",
+        "Errato. L'espressione `(1, arr)` è completamente valida."
+      ]
+    },
+    {
+      "id": "it_clang_613",
+      "widget_id": "widget_clang_613",
+      "topic": "Precedenza degli operatori — Parentesi e incremento del valore dereferenziato (*p)++",
+      "q": "A quanto equivarranno `x` e `arr[0]` dopo l'esecuzione di `int x = (*p)++` per `int arr[3] = {10, 20, 30}`?",
+      "hint": "Cosa viene incrementato esattamente grazie alle parentesi `(*p)` — l'indirizzo del puntatore o il valore nell'array?",
+      "options": [
+        "10 11",
+        "10 10",
+        "11 11",
+        "10 20"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le parentesi `(*p)` impongono esplicitamente l'ordine: prima viene dereferenziato l'indirizzo `arr[0]`, ottenendo il valore 10. Il `++` postfisso incrementa il valore in memoria `arr[0]` fino a 11, ma restituisce il VECCHIO valore (10) per l'assegnazione ad `x`. Risultato: `x = 10`, `arr[0] = 11`.",
+        "Errato. L'incremento `++` modifica il valore nell'array `arr[0]`.",
+        "Errato. `x` riceve il valore prima dell'incremento, poiché l'operatore è postfisso.",
+        "Errato. Il puntatore `p` non si sposta ad `arr[1]` (20), perché `++` è applicato al valore e non all'indirizzo."
+      ]
+    },
+    {
+      "id": "it_clang_614",
+      "widget_id": "widget_clang_614",
+      "topic": "Array di caratteri — Inizializzazione di una stringa senza spazio per il terminatore nullo",
+      "q": "Quale carattere verrà scritto in `a[4]` con la dichiarazione `char a[5] = \"Hello\"`?",
+      "hint": "Il terminatore nullo `'\\0'` entra in un array di 5 elementi con una lunghezza di stringa di 5 lettere?",
+      "options": [
+        "o",
+        "\\0 (terminatore nullo)",
+        "Valore indefinito",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, se la dimensione di un array di caratteri è esattamente pari alla lunghezza del letterale stringa senza terminatore nullo (in questo caso 5 lettere), il compilatore copia solo questi 5 caratteri. Il carattere `a[4]` è uguale ad `'o'`. Attenzione: un tale array `a` non sarà una stringa null-terminated valida!",
+        "Errato. Il terminatore nullo viene scartato, poiché non c'è spazio per esso in un array da 5 byte.",
+        "Errato. Il quinto elemento viene inizializzato esplicitamente con la lettera `'o'`.",
+        "Errato. Nel C classico questa sintassi è consentita dagli standard."
+      ]
+    },
+    {
+      "id": "it_clang_615",
+      "widget_id": "widget_clang_615",
+      "topic": "Operatore sizeof — Confronto tra sizeof(arr) e sizeof(&arr[0])",
+      "q": "Cosa stamperà l'espressione `sizeof(arr) == sizeof(&arr[0])` per `int arr[3]` su un sistema a 64 bit con un `int` da 4 byte?",
+      "hint": "A quanto equivalgono le dimensioni dell'intero array `arr` e del puntatore al suo primo elemento `&arr[0]`?",
+      "options": [
+        "0 (Falso)",
+        "1 (Vero)",
+        "Errore di compilazione",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `sizeof(arr)` restituisce la dimensione di memoria dell'intero array: $3 \\times 4 = 12$ byte. L'espressione `&arr[0]` è un puntatore esplicito `int*`, e il suo `sizeof` è pari a 8 byte. $12 == 8$ è falso, quindi il risultato è 0.",
+        "Errato. Le dimensioni dell'array (12 byte) e del puntatore (8 byte) sono diverse.",
+        "Errato. Il confronto dei risultati di due operatori `sizeof` è completamente corretto.",
+        "Errato. Il comportamento dell'operatore logico di uguaglianza è rigorosamente definito."
+      ]
+    },
+    {
+      "id": "it_clang_616",
+      "widget_id": "widget_clang_616",
+      "topic": "Array bidimensionali — Accesso tramite puntatore a un array int (*p)[N]",
+      "q": "A quanto equivale l'espressione `*(*(p + 2) + 1)` per l'array bidimensionale `int a[3][2]`?",
+      "hint": "Quale riga seleziona `p + 2` e quale colonna seleziona il passo successivo `+ 1`?",
+      "options": [
+        "6",
+        "5",
+        "4",
+        "3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `*(*(p + 2) + 1)` è equivalente ad `a[2][1]`. L'array `a[3][2]` viene riempito a coppie: `a[0] = {1, 2}`, `a[1] = {3, 4}`, `a[2] = {5, 6}`. La terza riga e la seconda colonna danno il valore 6.",
+        "Errato. 5 è l'elemento `a[2][0]` (`*(*(p + 2) + 0)`).",
+        "Errato. 4 è l'elemento `a[1][1]` (`*(*(p + 1) + 1)`).",
+        "Errato. 3 è l'elemento `a[1][0]`."
+      ]
+    },
+    {
+      "id": "it_clang_617",
+      "widget_id": "widget_clang_617",
+      "topic": "Stringhe — Terminatori nulli espliciti all'interno dei letterali stringa",
+      "q": "A quanto equivalgono `sizeof(a)` e `strlen(a)` per l'array `char a[] = \"Hello\\0World\"`?",
+      "hint": "sizeof tiene conto dei byte dopo lo '\\0' esplicito e dove si arresta la funzione strlen?",
+      "options": [
+        "12 5",
+        "12 11",
+        "11 5",
+        "6 5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il letterale stringa contiene: `'H','e','l','l','o'`, `'\\0'`, `'W','o','r','l','d'` più un `'\\0'` finale implicito. In totale nell'array ci sono 12 byte (`sizeof` è pari a 12). La funzione `strlen` conta i byte solo fino al primo terminatore nullo, cioè 5 caratteri (\"Hello\"). Output: `12 5`.",
+        "Errato. `strlen` interrompe il conteggio al primo `'\\0'` trovato, quindi restituirà 5 e non 11.",
+        "Errato. È stato dimenticato il terminatore nullo finale implicito del letterale stringa.",
+        "Errato. `sizeof` calcola la dimensione dell'intero array in memoria, non solo fino al primo `'\\0'`."
+      ]
+    },
+    {
+      "id": "it_clang_618",
+      "widget_id": "widget_clang_618",
+      "topic": "Precedenza degli operatori — Differenza tra *a + 3 e *(a + 3)",
+      "q": "A quanto equivale l'espressione `*a + 3` per l'array `int a[5] = {10, 20, 30, 40, 50}`?",
+      "hint": "Lo scostamento `+ 3` si applica all'indirizzo del puntatore o al valore dereferenziato?",
+      "options": [
+        "13",
+        "40",
+        "30",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore di dereferenziazione `*` ha precedenza maggiore rispetto al più `+`. Pertanto `*a` prende prima il valore del primo elemento `a[0]` (10), dopo di che vi aggiunge 3: $10 + 3 = 13$. (Per ottenere 40 sarebbero servite le parentesi: `*(a + 3)`).",
+        "Errato. 40 si otterrebbe con `*(a + 3)` (valore dell'elemento `a[3]`).",
+        "Errato. 30 è il valore di `a[2]`.",
+        "Errato. L'espressione è assolutamente corretta."
+      ]
+    },
+    {
+      "id": "it_clang_619",
+      "widget_id": "widget_clang_619",
+      "topic": "Precedenza degli operatori — Incremento postfisso del puntatore durante la dereferenziazione *p++",
+      "q": "Cosa stamperà `printf(\"%d\", *p++)` per `int a[3] = {1, 2, 3}` e `int *p = a`?",
+      "hint": "Quale valore restituisce l'incremento postfisso al momento della valutazione dell'espressione?",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il `++` postfisso ha una precedenza maggiore rispetto a `*`, ma restituisce il VECCHIO valore del puntatore `p`. La dereferenziazione viene eseguita per il vecchio indirizzo (`a[0]`), stampando 1. Soltanto dopo il puntatore `p` si sposta su `a[1]`.",
+        "Errato. 2 verrebbe stampato con l'incremento prefisso `*++p`.",
+        "Errato. 3 è l'ultimo elemento `a[2]`.",
+        "Errato. L'idioma `*p++` è ampiamente utilizzato in C."
+      ]
+    },
+    {
+      "id": "it_clang_620",
+      "widget_id": "widget_clang_620",
+      "topic": "Aritmetica dei puntatori — Sottrazione di puntatori char*",
+      "q": "A quanto equivale la differenza `(char*)&arr[3] - (char*)&arr[1]` con un `int` da 4 byte?",
+      "hint": "In quali unità viene calcolata la differenza tra due puntatori di tipo `char*`?",
+      "options": [
+        "8",
+        "2",
+        "4",
+        "16"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella normale aritmetica dei puntatori `&arr[3] - &arr[1]` restituirebbe 2 (elementi). Tuttavia, il cast a `char*` costringe a sottrarre puntatori di tipo byte. Tra gli indici 1 e 3 ci sono 2 elementi `int` di 4 byte ciascuno: $2 \\times 4 = 8$ byte.",
+        "Errato. 2 si otterrebbe senza il cast esplicito a `char*`.",
+        "Errato. 4 è la dimensione di un singolo `int`.",
+        "Errato. 16 è la dimensione dell'intero array `arr`."
+      ]
+    },
+    {
+      "id": "it_clang_621",
+      "widget_id": "widget_clang_621",
+      "topic": "Puntatori — Indicizzazione negativa di sotto-array a[1][-1]",
+      "q": "A quanto equivale l'elemento `a[1][-1]` per la matrice `int a[2][3] = {1, 2, 3, 4, 5, 6}`?",
+      "hint": "Indica a quale elemento del blocco di memoria continuo si riferisce un passo indietro dall'inizio della seconda riga.",
+      "options": [
+        "3",
+        "4",
+        "2",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `a[1]` fornisce un puntatore al primo elemento della seconda riga (`&a[1][0]`, valore 4). L'indice `[-1]` arretra di un elemento di tipo `int` nella memoria continua della matrice, passando all'ultimo elemento della prima riga: `a[0][2]` con valore 3.",
+        "Errato. 4 è l'elemento `a[1][0]`.",
+        "Errato. 2 è l'elemento `a[0][1]`.",
+        "Errato. Poiché l'array bidimensionale è disposto in memoria in modo continuo, lo scostamento all'interno dell'array allocato è corretto."
+      ]
+    },
+    {
+      "id": "it_clang_622",
+      "widget_id": "widget_clang_622",
+      "topic": "Operatore sizeof — Perdita dello stato di array nelle espressioni a + 0",
+      "q": "Cosa stamperà `sizeof(a + 0)` su un sistema a 64 bit per l'array `int a[3]`?",
+      "hint": "L'espressione `a + 0` è un semplice nome di array o un indirizzo di puntatore valutato?",
+      "options": [
+        "8",
+        "12",
+        "4",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `sizeof(a)` restituisce la dimensione dell'intero array (12 byte). Ma nell'espressione `a + 0` il nome dell'array decade implicitamente nel puntatore `int*`. Alla fine `sizeof` calcola la dimensione del tipo `int*`, che su un'architettura a 64 bit è pari a 8 byte.",
+        "Errato. 12 verrebbe stampato solo per `sizeof(a)` senza la somma `+ 0`.",
+        "Errato. 4 è la dimensione del tipo `int`.",
+        "Errato. L'espressione `a + 0` è sintatticamente corretta."
+      ]
+    },
+    {
+      "id": "it_clang_623",
+      "widget_id": "widget_clang_623",
+      "topic": "Puntatori — Indice positivo con scostamento p[1]",
+      "q": "A quanto equivale il valore di `p[1]` se `p = &a[1]` per l'array `int a[3] = {1, 2, 3}`?",
+      "hint": "A quale elemento dell'array originale punta `p + 1`?",
+      "options": [
+        "3",
+        "2",
+        "1",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `p` puntava ad `a[1]` (valore 2). L'espressione `p[1]` è equivalente a `*(p + 1)`, il che sposta il puntatore alla cella successiva — `a[2]`, dove è memorizzato il numero 3.",
+        "Errato. 2 è l'elemento `p[0]` (`a[1]`).",
+        "Errato. 1 è l'elemento `p[-1]` (`a[0]`).",
+        "Errato. L'elemento `a[2]` si trova entro i limiti dell'array."
+      ]
+    },
+    {
+      "id": "it_clang_624",
+      "widget_id": "widget_clang_624",
+      "topic": "Memoria — Tentativo di scrittura in un letterale stringa tramite char*",
+      "q": "Cosa succede tentando la scrittura `p[0] = 'h'` nel codice `char *p = \"Hello\";`?",
+      "hint": "In quale area di memoria (read-only o read-write) il compilatore colloca i letterali stringa?",
+      "options": [
+        "Terminazione anomala del programma durante l'esecuzione (Segmentation Fault / Bus Error)",
+        "Il primo carattere cambierà con successo in 'h'",
+        "Errore di compilazione",
+        "Il carattere cambierà in tutti i letterali stringa del programma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C i letterali stringa sono memorizzati in un segmento di memoria in sola lettura (read-only data segment). Tentare di scrivere tramite il puntatore `char *p = \"Hello\"` provoca un comportamento indefinito, che in pratica porta al crash del programma (Segmentation Fault).",
+        "Errato. La modifica dei letterali stringa è vietata a livello di protezione della memoria del sistema operativo.",
+        "Errato. Il tipo del letterale è `char[]`, l'assegnazione a `char*` senza `const` è consentita in C per ragioni di retrocompatibilità, per cui il compilatore accetterà il codice.",
+        "Errato. La memoria è protetta dalla scrittura, l'esecuzione verrà interrotta."
+      ]
+    },
+    {
+      "id": "it_clang_625",
+      "widget_id": "widget_clang_625",
+      "topic": "Indicizzazione — Commutatività dell'indicizzazione bidimensionale 1[a][0]",
+      "q": "A quanto equivale l'elemento `1[a][0]` per la matrice `int a[2][2] = {1, 2, 3, 4}`?",
+      "hint": "In cosa si trasforma l'espressione `1[a]` secondo le regole di commutatività dell'array?",
+      "options": [
+        "3",
+        "1",
+        "2",
+        "4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `1[a]` viene espansa come `*(1 + a)`, che è completamente equivalente ad `a[1]` (seconda riga). Viene quindi selezionato l'elemento con indice zero di questa riga — `a[1][0]`. Secondo l'ordine di riempimento `{1, 2, 3, 4}`, l'elemento `a[1][0]` è pari a 3.",
+        "Errato. 1 è l'elemento `a[0][0]` (`0[a][0]`).",
+        "Errato. 2 è l'elemento `a[0][1]`.",
+        "Errato. 4 è l'elemento `a[1][1]` (`1[a][1]`)."
+      ]
+    },
+    {
+      "id": "it_clang_626",
+      "widget_id": "widget_clang_626",
+      "topic": "Aritmetica dei puntatori — Trucco classico con &a + 1 e scostamento a runtime all'indietro",
+      "q": "A quanto equivale l'espressione `*(p - 1)` se `p` è creato come `(int*)(&a + 1)` per `int a[] = {1, 2, 3, 4, 5}`?",
+      "hint": "Dove punta `&a + 1` e su quale elemento finiamo con un passo `- 1`?",
+      "options": [
+        "5",
+        "1",
+        "4",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `&a + 1` sposta il puntatore della dimensione dell'INTERO array, puntando alla cella immediatamente successiva all'ultimo elemento `a[4]`. Il cast ad `(int*)` e la sottrazione di 1 (`p - 1`) spostano il puntatore all'indietro di un `int`, restituendo l'indirizzo dell'elemento `a[4]`. La sua dereferenziazione restituirà 5.",
+        "Errato. 1 è il primo elemento dell'array `a[0]`.",
+        "Errato. 4 è l'elemento `a[3]`.",
+        "Errato. Il passaggio all'elemento oltre la fine dell'array («one past the end») è consentito dallo standard C, e la successiva sottrazione restituisce un indirizzo valido."
+      ]
+    },
+    {
+      "id": "it_clang_627",
+      "widget_id": "widget_clang_627",
+      "topic": "Operatore sizeof — Mantenimento della dimensione totale durante l'inizializzazione parziale",
+      "q": "A quanto equivale l'espressione `sizeof(a) / sizeof(a[0])` con la dichiarazione `int a[5] = {1, 2}`?",
+      "hint": "L'inizializzazione parziale riduce la memoria allocata per l'array?",
+      "options": [
+        "5",
+        "2",
+        "0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La dimensione dell'array è specificata esplicitamente tra parentesi quadre `[5]`. L'inizializzazione parziale riempirà di zeri le celle non specificate, ma non modificherà la dimensione della memoria dell'array. Risultato della divisione: $20 / 4 = 5$.",
+        "Errato. 2 è il numero di inizializzatori espliciti, ma la dimensione dell'array è pari a 5.",
+        "Errato. La dimensione dell'array viene calcolata staticamente e non è pari a zero.",
+        "Errato. L'inizializzazione parziale è completamente conforme allo standard."
+      ]
+    },
+    {
+      "id": "it_clang_628",
+      "widget_id": "widget_clang_628",
+      "topic": "Aritmetica dei puntatori — Sottrazione degli indirizzi delle celle di una matrice",
+      "q": "A quanto equivale la differenza di puntatori `&a[2][0] - &a[0][1]` per l'array bidimensionale `int a[3][3]`?",
+      "hint": "Calcola gli indici contigui (lineari) degli elementi `a[2][0]` e `a[0][1]` in memoria.",
+      "options": [
+        "5",
+        "6",
+        "2",
+        "20"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella memoria contigua della matrice $3 \\times 3$ l'elemento `a[0][1]` si trova nella posizione con indice $0 \\times 3 + 1 = 1$. L'elemento `a[2][0]` si trova nella posizione $2 \\times 3 + 0 = 6$. La differenza di due puntatori di tipo `int*` è pari alla differenza dei loro indici contigui: $6 - 1 = 5$ elementi.",
+        "Errato. 6 è l'indice contiguo dell'elemento `a[2][0]` dall'inizio dell'array.",
+        "Errato. 2 è la differenza solo tra gli indici di riga.",
+        "Errato. 20 è la differenza in byte ($5 \\times 4$), mentre l'operatore di sottrazione restituisce il numero di elementi."
+      ]
+    },
+    {
+      "id": "it_clang_629",
+      "widget_id": "widget_clang_629",
+      "topic": "Precedenza degli operatori — Incremento prefisso del puntatore durante la dereferenziazione *++p",
+      "q": "Cosa stamperà `printf(\"%d\", *++p)` per `int a[4] = {1, 2, 3, 4}` e `int *p = a`?",
+      "hint": "Quando avviene esattamente lo spostamento del puntatore `p` nella forma prefissa dell'incremento?",
+      "options": [
+        "2",
+        "1",
+        "3",
+        "4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il `++` prefisso viene eseguito PRIMA della dereferenziazione. Il puntatore `p` si sposta immediatamente da `a[0]` ad `a[1]`. L'operatore `*` dereferenzia il nuovo indirizzo, restituendo il valore 2.",
+        "Errato. 1 verrebbe stampato con la forma postfissa `*p++`.",
+        "Errato. 3 verrebbe stampato con il doppio spostamento `*++(++p)`.",
+        "Errato. 4 è l'elemento `a[3]`."
+      ]
+    },
+    {
+      "id": "it_clang_630",
+      "widget_id": "widget_clang_630",
+      "topic": "Inizializzazione — Elementi omessi in un'inizializzazione multidimensionale complessa",
+      "q": "A quanto equivalgono gli elementi `a[0][2]` e `a[1][1]` per la matrice `int a[2][3] = {{1, 2}, {4}}`?",
+      "hint": "Come vengono completate le celle non specificate in ciascuna riga?",
+      "options": [
+        "0 0",
+        "2 4",
+        "0 4",
+        "1 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La prima riga `{1, 2}` ha dimensione 3, quindi il 3° elemento omesso `a[0][2]` viene azzerato (`0`). La seconda riga `{4}` inizializza solo `a[1][0] = 4`, mentre i restanti elementi `a[1][1]` e `a[1][2]` vengono anch'essi riempiti con zeri. Output: `0 0`.",
+        "Errato. 2 è `a[0][1]`, e 4 è `a[1][0]`.",
+        "Errato. L'elemento `a[1][1]` è azzerato, poiché nella seconda riga è specificato un solo elemento.",
+        "Errato. `1` è l'elemento `a[0][0]`."
+      ]
+    }
+  ]
+}

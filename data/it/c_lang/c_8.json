@@ -1,0 +1,693 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_240",
+      "widget_id": null,
+      "topic": "Fondamenti di C — Regola dello Strict Aliasing",
+      "q": "È vero che, secondo la regola dello Strict Aliasing, l'accesso alla memoria di un oggetto di tipo int tramite un puntatore di tipo float* causa un comportamento indefinito (UB), mentre l'accesso tramite char* o unsigned char* è esplicitamente consentito dallo standard C?",
+      "hint": "Rifletti sul fatto se lo standard C faccia un'eccezione per i tipi carattere quando si accede alla rappresentazione in byte di qualsiasi oggetto.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard fa un'eccezione diretta per i tipi `char*`, `signed char*` e `unsigned char*`, consentendo loro di fare riferimento alla memoria di oggetti di qualsiasi altro tipo per ispezionarne la rappresentazione in byte.",
+        "Errato. L'accesso alla memoria tramite `char*` è un'eccezione fondamentale alla regola dello Strict Aliasing in C."
+      ]
+    },
+    {
+      "id": "it_clang_241",
+      "widget_id": null,
+      "topic": "Fondamenti di C — Qualificatore restrict",
+      "q": "È vero che la parola chiave restrict obbliga il compilatore a generare automaticamente controlli dinamici sulla sovrapposizione dei puntatori durante l'esecuzione (runtime)?",
+      "hint": "Ricorda se restrict è una promessa del programmatore al compilatore per l'ottimizzatore o un meccanismo di protezione a tempo di esecuzione.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. `restrict` è una promessa del *programmatore* al compilatore indicante che i puntatori non fanno riferimento a regioni di memoria sovrapposte. Il compilatore non genera alcun controllo, ma usa semplicemente questa promessa per ottimizzazioni aggressive.",
+        "Corretto! Il qualificatore `restrict` non crea alcun codice di controllo in runtime. La violazione del contratto `restrict` porta a un comportamento indefinito."
+      ]
+    },
+    {
+      "id": "it_clang_242",
+      "widget_id": "widget_clang_242",
+      "topic": "Fondamenti di C — Promozione di interi (Integer Promotion)",
+      "q": "Cosa stamperà il frammento di codice presentato nel widget se una variabile di tipo uint8_t viene sottoposta a negazione bit a bit (~)?",
+      "hint": "Presta attenzione alla regola di promozione automatica dei tipi interi più piccoli al tipo int prima di eseguire operazioni bit a bit.",
+      "options": [
+        "-1",
+        "255",
+        "0",
+        "4294967295"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A causa della promozione degli interi (Integer Promotion), il valore di `a` (0) viene prima esteso al tipo con segno `int` (0x00000000). L'inversione bit a bit `~` lo trasforma in -1 (0xFFFFFFFF in complemento a due).",
+        "Errato. Se `~a` venisse calcolato nel tipo `uint8_t`, il risultato sarebbe 255. Tuttavia, gli operandi vengono automaticamente promossi a `int`.",
+        "Errato. La negazione bit a bit dello zero produce un numero con tutti i bit impostati a 1.",
+        "Errato. Il risultato della promozione ha il tipo con segno `int`, pertanto viene stampato -1."
+      ]
+    },
+    {
+      "id": "it_clang_243",
+      "widget_id": null,
+      "topic": "Fondamenti di C — Sottrazione di puntatori",
+      "q": "È vero che il risultato della differenza tra due puntatori (ptr2 - ptr1) che puntano a elementi dello stesso array è sempre un numero senza segno di tipo size_t?",
+      "hint": "Pensa se il risultato della sottrazione di puntatori possa essere negativo se il secondo puntatore punta a un elemento precedente rispetto al primo.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Il risultato della sottrazione tra puntatori ha uno speciale tipo intero con segno `ptrdiff_t`, poiché l'offset può essere sia positivo che negativo.",
+        "Corretto! La sottrazione tra puntatori restituisce un valore di tipo intero con segno `ptrdiff_t` (da `<stddef.h>`), non il tipo senza segno `size_t`."
+      ]
+    },
+    {
+      "id": "it_clang_244",
+      "widget_id": "widget_clang_244",
+      "topic": "Fondamenti di C — Ottimizzazioni del compilatore e UB",
+      "q": "È vero che il compilatore con l'ottimizzazione abilitata ha il diritto di rimuovere completamente il controllo if (ptr == NULL) se immediatamente prima di esso viene eseguita la dereferenziazione *ptr = 10;?",
+      "hint": "Pensa a come il fatto di dereferenziare un puntatore influenzi l'assunto del compilatore sul fatto che tale puntatore possa essere nullo in un programma corretto.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La dereferenziazione di un puntatore nullo è un UB. Il compilatore parte dal presupposto che l'UB non si verifichi. Di conseguenza, se `*ptr = 10` è stato eseguito, `ptr` non è garantito essere `NULL` e il controllo successivo viene rimosso dall'ottimizzatore come ridondante (Dead Code Elimination).",
+        "Errato. In C gli ottimizzatori eliminano attivamente i controlli su NULL se prima di essi c'è stata una dereferenziazione, basandosi sull'assenza di UB."
+      ]
+    },
+    {
+      "id": "it_clang_245",
+      "widget_id": "widget_clang_245",
+      "topic": "Fondamenti di C — Rimozione di const e modificabilità della memoria",
+      "q": "È vero che la rimozione del qualificatore const tramite un casting esplicito (int*)&c rende la successiva modifica del valore della variabile const int c = 5; completamente corretta dal punto di vista dello standard?",
+      "hint": "Distingui tra la modifica di oggetti ordinari tramite puntatori const e la modifica di oggetti originariamente dichiarati come costanti.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Il tentativo di modificare un oggetto che è stato *originariamente dichiarato* come `const` porta a un comportamento indefinito, anche se il qualificatore viene rimosso tramite un cast (il compilatore potrebbe posizionarlo in memoria di sola lettura, rdata).",
+        "Corretto! Rimuovere `const` tramite un cast non causa UB solo quando si accede a un oggetto che originariamente *non* era stato dichiarato come `const`."
+      ]
+    },
+    {
+      "id": "it_clang_246",
+      "widget_id": null,
+      "topic": "Fondamenti di C — Confronto di strutture tramite memcmp",
+      "q": "È vero che la funzione memcmp garantisce sempre un confronto corretto di due istanze della stessa struttura per l'uguaglianza byte per byte di tutti i loro campi?",
+      "hint": "Ricorda la presenza di byte di allineamento (padding bytes) non inizializzati tra i campi all'interno di una struttura.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. A causa dei byte di allineamento (padding), che contengono dati spazzatura e non garantiscono l'identità nell'assegnazione dei singoli campi, `memcmp` può restituire un falso negativo per strutture con valori di campi identici.",
+        "Corretto! A causa del padding non inizializzato, `memcmp` è inadatto al confronto affidabile di strutture. È necessario confrontare i campi della struttura elemento per elemento."
+      ]
+    },
+    {
+      "id": "it_clang_247",
+      "widget_id": null,
+      "topic": "Fondamenti di C — Ordine di valutazione degli argomenti di una funzione",
+      "q": "È vero che durante la chiamata alla funzione func(a(), b(), c()) lo standard C garantisce rigorosamente la valutazione delle funzioni-argomento da sinistra a destra?",
+      "hint": "Pensa se l'ordine di valutazione degli operandi e degli argomenti di una chiamata di funzione sia fissato dallo standard.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. L'ordine di valutazione degli argomenti di una funzione non è specificato (unspecified). Il compilatore può chiamare `c()`, poi `a()`, e infine `b()`.",
+        "Corretto! A differenza di linguaggi come Java o C#, in C l'ordine di valutazione degli argomenti delle funzioni non è fissato dallo standard."
+      ]
+    },
+    {
+      "id": "it_clang_248",
+      "widget_id": null,
+      "topic": "Fondamenti di C — Overflow con segno (Signed Overflow)",
+      "q": "È vero che l'overflow di un intero con segno (signed int) nel linguaggio C è rigorosamente definito come avvolgimento modulo $2^N$, analogamente ai tipi senza segno?",
+      "hint": "Confronta le rigide garanzie dell'aritmetica senza segno con la classificazione dell'overflow con segno nelle specifiche C.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. L'overflow dei numeri *con segno* in C è un comportamento indefinito (UB). L'avvolgimento modulo $2^N$ è garantito dallo standard esclusivamente per i tipi *senza segno* (unsigned).",
+        "Corretto! L'overflow con segno è un UB. I compilatori usano questo fatto per effettuare ottimizzazioni (ad esempio sostituendo `x + 1 > x` con `1`)."
+      ]
+    },
+    {
+      "id": "it_clang_249",
+      "widget_id": "widget_clang_249",
+      "topic": "Fondamenti di C — Stringificazione nelle macro (#)",
+      "q": "Cosa restituirà la macro con l'operatore di stringificazione STR(10 + 20) mostrata nel codice?",
+      "hint": "Pensa se il preprocessore valuti le espressioni aritmetiche prima di convertire i token in un letterale stringa.",
+      "options": [
+        "La stringa \"10 + 20\"",
+        "La stringa \"30\"",
+        "L'intero 30",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore del preprocessore `#` trasforma i token ricevuti in un letterale stringa così come sono, senza valutazioni aritmetiche. Di conseguenza si ottiene `\"10 + 20\"`.",
+        "Errato. Il preprocessore lavora con testo e token, non esegue operazioni matematiche di calcolo.",
+        "Errato. L'operatore `#` crea sempre un letterale stringa, mai un valore numerico.",
+        "Errato. La stringificazione di un'espressione corretta è un'operazione standard e valida del preprocessore."
+      ]
+    },
+    {
+      "id": "it_clang_250",
+      "widget_id": null,
+      "topic": "Fondamenti di C — Chiamata tramite puntatore a funzione non compatibile",
+      "q": "È vero che il cast di un puntatore a funzione da void(*)() al tipo int(*)(int) e la successiva chiamata della funzione tramite questo puntatore convertito è un comportamento definito se il numero di argomenti coincide?",
+      "hint": "Confronta le regole di conversione delle firme delle funzioni con le restrizioni dello standard al momento della loro chiamata diretta.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. È possibile convertire puntatori a funzione, ma chiamare una funzione tramite un puntatore di tipo non compatibile porta a un Comportamento Indefinito.",
+        "Corretto! La chiamata di una funzione tramite un puntatore con una firma non corrispondente è un comportamento indefinito."
+      ]
+    },
+    {
+      "id": "it_clang_251",
+      "widget_id": null,
+      "topic": "Fondamenti di C — Stato dei VLA nello standard C11",
+      "q": "È vero che a partire dallo standard C11 il supporto agli array a lunghezza variabile (VLA) rimane assolutamente obbligatorio da implementare in ogni compilatore C?",
+      "hint": "Ricorda i cambiamenti nello stato di obbligatorietà dei VLA tra gli standard C99 e C11.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. In C99 gli array VLA erano obbligatori, ma in C11 sono stati resi una funzionalità opzionale (la presenza della macro `__STDC_NO_VLA__` segnala l'assenza di supporto VLA nel compilatore).",
+        "Corretto! Lo standard C11 ha spostato i VLA nella categoria delle funzionalità opzionali."
+      ]
+    },
+    {
+      "id": "it_clang_252",
+      "widget_id": null,
+      "topic": "Fondamenti di C — Variabili e setjmp/longjmp",
+      "q": "È vero che al ritorno da longjmp il valore di una variabile locale automatica è garantito che sia conservato solo se è stata dichiarata con il qualificatore volatile?",
+      "hint": "Pensa a come l'ottimizzazione della conservazione delle variabili locali nei registri del processore influenzi il loro valore dopo il ripristino del contesto tramite longjmp.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard, se una variabile automatica locale viene modificata tra le chiamate a `setjmp` e `longjmp`, il suo valore dopo `longjmp` diventa indefinito se non è contrassegnata come `volatile`.",
+        "Errato. Senza `volatile`, il valore della variabile modificato dopo `setjmp` non è garantito a causa di possibili ottimizzazioni e memorizzazione nei registri della CPU."
+      ]
+    },
+    {
+      "id": "it_clang_253",
+      "widget_id": null,
+      "topic": "Fondamenti di C — Funzioni static inline nei file header (.h)",
+      "q": "È vero che se un file di intestazione contiene la definizione di una funzione static inline, l'inclusione di questo file in più file sorgente (.c) causerà un errore di linkage dovuto a simboli duplicati?",
+      "hint": "Presta attenzione all'ambito di visibilità dei simboli (linkage) impostato dallo specificatore static.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Lo specificatore `static` attribuisce alla funzione un collegamento interno (internal linkage). Ogni unità di traslazione riceve la propria copia locale della funzione, pertanto non si verificano conflitti di nomi (duplicate symbol) in fase di linking.",
+        "Corretto! La dichiarazione `static inline` nei file header è una pratica standard e sicura in C."
+      ]
+    },
+    {
+      "id": "it_clang_254",
+      "widget_id": null,
+      "topic": "Fondamenti di C — Specifica di fflush e stdin",
+      "q": "È vero che la chiamata fflush(stdin) è garantita dallo standard ISO C per svuotare e ripulire il buffer di input della tastiera?",
+      "hint": "Rifletti sul fatto se secondo l'ISO C l'applicazione della funzione fflush ai flussi di dati in ingresso (input streams) sia definita.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Secondo lo standard ISO C, la chiamata di `fflush` su un flusso di *input* è un comportamento indefinito. Anche se alcuni compilatori (come MSVC) lo supportano come estensione, in C puro non dovrebbe essere presente.",
+        "Corretto! Per l'ISO C la funzione `fflush` è definita solo per i flussi di output o flussi di aggiornamento in cui l'ultima operazione è stata una scrittura."
+      ]
+    },
+    {
+      "id": "it_clang_255",
+      "widget_id": null,
+      "topic": "Fondamenti di C — Compatibilità dei tipi di funzione e qualificatori",
+      "q": "È vero che i tipi di funzione void f(int) e void f(const int) sono assolutamente compatibili dal punto di vista del compilatore C, poiché il qualificatore const di livello superiore per i parametri passati per valore viene ignorato?",
+      "hint": "Pensa se la costanza locale della copia dell'argomento sia parte dell'interfaccia esterna della funzione.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I qualificatori di tipo di livello superiore (`const`, `volatile`) sui parametri passati per valore vengono ignorati nel determinare il tipo della funzione stessa. Le firme `void f(int)` e `void f(const int)` sono considerate completamente compatibili.",
+        "Errato. Lo standard C indica chiaramente che i qualificatori di livello superiore dei parametri per valore non influenzano il tipo di funzione."
+      ]
+    },
+    {
+      "id": "it_clang_256",
+      "widget_id": null,
+      "topic": "Fondamenti di C — Type Punning tramite Union",
+      "q": "È vero che il type punning tramite unioni (union) è un modo ufficialmente consentito dallo standard C (C99+) per leggere un membro non attivo di una union, a differenza del C++?",
+      "hint": "Ricorda la differenza tra lo standard ISO C e le specifiche C++ riguardo all'accesso a diversi campi di una union.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard C (a partire da C99, nota a piè di pagina 6.5.2.3) consente esplicitamente di scrivere un valore in un campo di una `union` e leggerlo da un altro (type punning) per reinterpretare i byte. In C++ questo è UB.",
+        "Errato. In C, a differenza del C++, la lettura di un campo non attivo di una `union` è ufficialmente legalizzata dallo standard."
+      ]
+    },
+    {
+      "id": "it_clang_257",
+      "widget_id": "widget_clang_257",
+      "topic": "Fondamenti di C — Operatore di indirizzo e campi di bit",
+      "q": "È vero che l'operatore di indirizzo (&) può essere applicato a un campo di bit di una struttura (ad esempio &s.flags) per ottenere un puntatore al bit corrispondente?",
+      "hint": "Pensa se la più piccola unità di memoria indirizzabile (byte) possa fare riferimento a un singolo bit all'interno di un campo.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. In C è vietato prendere l'indirizzo di un campo di bit (`&s.flags`), poiché i puntatori in C indirizzano i byte e non i singoli bit.",
+        "Corretto! L'operatore unario `&` non può essere applicato ai campi di bit di una struttura. Il tentativo di farlo causerà un errore di compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_258",
+      "widget_id": null,
+      "topic": "Fondamenti di C — Aritmetica dello scorrimento con segno",
+      "q": "È vero che lo scorrimento a destra di un numero intero negativo con segno (ad esempio -8 >> 1) è rigorosamente garantito dallo standard C come scorrimento aritmetico (che conserva il bit di segno)?",
+      "hint": "Confronta le garanzie dello standard ISO C per lo scorrimento di numeri negativi con il comportamento dipendente dall'implementazione (implementation-defined).",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Lo scorrimento a destra di un numero intero negativo con segno è un comportamento definito dall'implementazione (implementation-defined). Sebbene la maggior parte dei sistemi utilizzi lo scorrimento aritmetico, lo standard C non lo garantisce.",
+        "Corretto! Il risultato dello scorrimento a destra per numeri negativi con segno non è fissato dallo standard e dipende dalla specifica piattaforma."
+      ]
+    },
+    {
+      "id": "it_clang_259",
+      "widget_id": "widget_clang_259",
+      "topic": "Fondamenti di C — Durata di memorizzazione dei letterali composti (Compound Literals)",
+      "q": "È vero che un letterale composto (compound literal) creato all'interno di un blocco di funzione ha una durata di memorizzazione automatica (automatic storage duration) e diventa non valido all'uscita da tale blocco?",
+      "hint": "Presta attenzione al tempo di vita di un letterale composto a seconda che sia dichiarato all'interno di una funzione o a livello globale.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I letterali composti all'interno delle funzioni sono legati al blocco in cui vengono creati. Restituire un puntatore a tale letterale da una funzione porterà a un puntatore sospeso (dangling pointer).",
+        "Errato. A differenza dei letterali stringa, i letterali composti all'interno di una funzione hanno la durata di vita del blocco locale."
+      ]
+    },
+    {
+      "id": "it_clang_260",
+      "widget_id": null,
+      "topic": "Fondamenti di C — Promozione automatica degli argomenti (Default Argument Promotions)",
+      "q": "È vero che quando si chiama una funzione con un numero variabile di argomenti (ad esempio printf), i parametri di tipo float vengono automaticamente convertiti nel tipo double?",
+      "hint": "Ricorda le regole di promozione predefinita degli argomenti (Default Argument Promotions).",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per le funzioni con un numero variabile di argomenti (`...`) si applicano le regole di Default Argument Promotions: `float` viene esteso a `double`, e i tipi interi inferiori a `int` vengono promossi a `int`/`unsigned int`.",
+        "Errato. Il passaggio di un `float` alla parte variabile dei parametri di una funzione porta sempre alla sua promozione automatica a `double`."
+      ]
+    },
+    {
+      "id": "it_clang_261",
+      "widget_id": null,
+      "topic": "Fondamenti di C — Specificatore _Noreturn",
+      "q": "È vero che se una funzione è dichiarata con lo specificatore _Noreturn, ma termina il suo lavoro con un normale ritorno del controllo (return), ciò provoca un comportamento indefinito (UB)?",
+      "hint": "Pensa se lo specificatore _Noreturn garantisca al compilatore che il punto di ritorno dalla funzione non verrà mai raggiunto.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Una funzione con lo specificatore `_Noreturn` promette al compilatore che il controllo non tornerà mai al codice chiamante (ad esempio tramite `exit()` o un ciclo infinito). Il ritorno da tale funzione è un Undefined Behavior.",
+        "Errato. Il compilatore applica ottimizzazioni contando sul fatto che il ritorno da una funzione `_Noreturn` sia impossibile, quindi la violazione del contratto porta a UB."
+      ]
+    },
+    {
+      "id": "it_clang_262",
+      "widget_id": null,
+      "topic": "Fondamenti di C — Preprocessore e macro autorecorsive",
+      "q": "È vero che se una macro del preprocessore fa riferimento a se stessa (ad esempio #define FOO (1 + FOO)), il preprocessore C entrerà in una ricorsione infinita e andrà in loop?",
+      "hint": "Rifletti su come il preprocessore si protegga dall'ulteriore espansione di un token con nome all'interno della propria definizione di macro.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Il preprocessore C blocca la riespansione di una macro se il suo nome viene incontrato all'interno del proprio corpo durante la sostituzione, prevenendo la ricorsione infinita.",
+        "Corretto! Il preprocessore disabilita l'espansione ricorsiva della macro per evitare cicli infiniti. Di conseguenza, `FOO` rimarrà un token non espanso nell'espressione interna."
+      ]
+    },
+    {
+      "id": "it_clang_263",
+      "widget_id": "widget_clang_263",
+      "topic": "Fondamenti di C — Commutatività dell'indicizzazione degli array",
+      "q": "È vero che la sintassi 5[arr] è assolutamente corretta in C ed è completamente equivalente alla scrittura arr[5]?",
+      "hint": "Ricorda la definizione matematica dell'operatore di indicizzazione degli array tramite l'aritmetica dei puntatori.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard, `arr[i]` è definito come `*(arr + i)`. Poiché l'addizione è commutativa (`arr + 5` è uguale a `5 + arr`), la sintassi `5[arr]` calcola `*(5 + arr)`, che è sintatticamente legale e identica ad `arr[5]`.",
+        "Errato. È una sintassi valida in C, che deriva dalla commutatività della somma tra un puntatore e un numero intero."
+      ]
+    },
+    {
+      "id": "it_clang_264",
+      "widget_id": null,
+      "topic": "Fondamenti di C — Deallocazione di puntatori sfalsati con free()",
+      "q": "È vero che la chiamata free(ptr + 1) è sicura e libererà la memoria dinamica a partire dal secondo elemento se ptr è stato ottenuto da malloc?",
+      "hint": "Pensa a quali requisiti impone il gestore di memoria sull'indirizzo passato alla funzione free().",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. La funzione `free()` accetta solo l'indirizzo esatto precedentemente restituito da `malloc`/`calloc`/`realloc` (o `NULL`). Il passaggio di un puntatore sfalsato provocherà la corruzione dell'heap e UB.",
+        "Corretto! La deallocazione della memoria tramite un qualsiasi puntatore sfalsato è tassativamente vietata e causa il crash del programma."
+      ]
+    },
+    {
+      "id": "it_clang_265",
+      "widget_id": null,
+      "topic": "Fondamenti di C — Inizializzazione predefinita della memoria statica",
+      "q": "È vero che tutte le variabili globali e statiche senza inizializzazione esplicita sono garantite dallo standard C per essere azzerate prima dell'avvio della funzione main()?",
+      "hint": "Ricorda le regole di inizializzazione predefinita per gli oggetti con durata di memorizzazione statica (static storage duration).",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili con durata di memorizzazione statica in assenza di un inizializzatore esplicito vengono automaticamente riempite di zeri (0 per i numeri, `NULL` per i puntatori) nella sezione `.bss`.",
+        "Errato. A differenza delle variabili locali (automatiche), che contengono dati spazzatura, le variabili statiche e globali sono sempre garantite azzerate."
+      ]
+    },
+    {
+      "id": "it_clang_266",
+      "widget_id": "widget_clang_266",
+      "topic": "Fondamenti di C — Macro _Generic in C11",
+      "q": "È vero che la struttura _Generic in C11 valuta e seleziona il ramo appropriato dell'espressione durante l'esecuzione del programma (runtime) in base al contenuto corrente della variabile?",
+      "hint": "Pensa in quale fase (compilazione o esecuzione) sia noto al compilatore il tipo dell'espressione di controllo _Generic.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. `_Generic` in C11 è una corrispondenza sul *tipo* dell'espressione, che viene completamente risolta dal compilatore in fase di compilazione (compile-time). Nessuna valutazione del tipo avviene in runtime.",
+        "Corretto! La macro `_Generic` funziona rigorosamente a tempo di compilazione, basandosi sul tipo statico dell'espressione."
+      ]
+    },
+    {
+      "id": "it_clang_267",
+      "widget_id": null,
+      "topic": "Fondamenti di C — Return implicito nella funzione main",
+      "q": "È vero che negli standard C99 e C11 raggiungere la parentesi graffa di chiusura della funzione main() senza un'istruzione return è un comportamento indefinito?",
+      "hint": "Ricorda la speciale eccezione fatta dagli standard C99+ appositamente per la funzione principale del programma.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. A partire da C99 è stata fatta un'eccezione per la funzione `main()`: se il controllo raggiunge la fine di `main()` senza `return`, il compilatore genera automaticamente `return 0;`.",
+        "Corretto! In C99 e C11 un `return 0;` esplicito alla fine di `main()` è opzionale e la sua assenza non causa UB."
+      ]
+    },
+    {
+      "id": "it_clang_268",
+      "widget_id": null,
+      "topic": "Fondamenti di C — Garanzie di inlining delle funzioni inline",
+      "q": "È vero che la parola chiave inline in C (a partire da C99) garantisce che il compilatore sia obbligato a incorporare il corpo della funzione in tutti i punti in cui viene chiamata?",
+      "hint": "Rifletti se inline sia una direttiva rigida per il compilatore o solo un suggerimento per l'ottimizzatore.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. `inline` in C è solo un suggerimento per l'ottimizzatore del compilatore. Il compilatore ha pieno diritto di ignorarlo e generare una normale chiamata di funzione.",
+        "Corretto! La parola chiave `inline` non obbliga il compilatore a incorporare rigorosamente la funzione."
+      ]
+    },
+    {
+      "id": "it_clang_269",
+      "widget_id": "widget_clang_269",
+      "topic": "Fondamenti di C — Tipo del letterale carattere",
+      "q": "È vero che il tipo del letterale carattere 'a' in C è char, e quindi sizeof('a') è sempre rigorosamente uguale a 1?",
+      "hint": "Ricorda a quale tipo vengono convertiti i letterali carattere in C a differenza del C++.",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. In C un singolo letterale carattere `'a'` ha tipo `int` (non `char`!), quindi `sizeof('a')` è uguale a `sizeof(int)` (di solito 4 byte). In C++ il tipo del letterale `'a'` è effettivamente `char`.",
+        "Corretto! In C il tipo di un letterale carattere è `int`, perciò la sua dimensione `sizeof` è pari a `sizeof(int)`."
+      ]
+    },
+    {
+      "id": "it_clang_270",
+      "widget_id": null,
+      "topic": "Selezione — Scopo delle strutture di selezione",
+      "q": "Per quale motivo negli algoritmi e nei programmi vengono utilizzate le strutture di controllo di selezione (ramificazione)?",
+      "hint": "Pensa a come un algoritmo prende decisioni quando il flusso di esecuzione del programma dipende dai dati verificati.",
+      "options": [
+        "Per eseguire diversi blocchi di istruzioni a seconda della veridicità di determinate condizioni",
+        "Per ripetere più volte lo stesso gruppo di istruzioni in un ciclo",
+        "Per allocare automaticamente memoria dinamica nell'heap",
+        "Per includere librerie di sistema nella fase di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le strutture di selezione consentono di indirizzare il flusso di esecuzione del programma verso rami diversi a seconda che la condizione verificata sia soddisfatta o meno.",
+        "Errato. Della ripetizione delle istruzioni si occupano le strutture cicliche (iterazioni).",
+        "Errato. Dell'allocazione di memoria si occupano le funzioni di gestione della memoria (ad esempio `malloc`).",
+        "Errato. Dell'inclusione delle librerie si occupano le direttive del preprocessore (`#include`)."
+      ]
+    },
+    {
+      "id": "it_clang_271",
+      "widget_id": null,
+      "topic": "Diagrammi di flusso — Rappresentazione delle condizioni (Flowchart)",
+      "q": "Quale blocco grafico nei diagrammi di flusso (flowchart) indica la verifica di una condizione di ramificazione?",
+      "hint": "Ricorda la forma della figura da cui escono due rami: «vero» (true) e «falso» (false).",
+      "options": [
+        "Rombo (Diamond)",
+        "Parallelogramma",
+        "Ovale",
+        "Rettangolo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nei diagrammi di flusso la verifica di una condizione (ad esempio `x > y`) viene indicata con un rombo, dal quale escono due direzioni: `vero` e `falso`.",
+        "Errato. Il parallelogramma si usa per le operazioni di input/output dei dati (Input/Output).",
+        "Errato. Gli ovali vengono utilizzati per indicare l'inizio e la fine dell'algoritmo (`BEGIN`/`END`).",
+        "Errato. I rettangoli vengono utilizzati per semplici operazioni esecutive e assegnazioni."
+      ]
+    },
+    {
+      "id": "it_clang_272",
+      "widget_id": null,
+      "topic": "Diagrammi di flusso — Rappresentazione di input e output dei dati",
+      "q": "Quale blocco grafico in un diagramma di flusso indica le operazioni di lettura dell'input (I) o di stampa del risultato (O)?",
+      "hint": "Presta attenzione al tipo grafico dei blocchi con le lettere I (Input) e O (Output) nei materiali di presentazione.",
+      "options": [
+        "Parallelogramma",
+        "Ovale",
+        "Rombo",
+        "Rettangolo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le operazioni di input-output (ad esempio la lettura di `x`, `y` o la stampa del massimo) vengono indicate con parallelogrammi contenenti le etichette `I` e `O`.",
+        "Errato. Gli ovali indicano l'inizio e la fine (`BEGIN`/`END`).",
+        "Errato. Il rombo viene utilizzato per la verifica di una condizione logica.",
+        "Errato. Il rettangolo serve per le operazioni di calcolo."
+      ]
+    },
+    {
+      "id": "it_clang_273",
+      "widget_id": null,
+      "topic": "Sintassi if...else — Opzionalità del ramo else",
+      "q": "La presenza del ramo else è obbligatoria nella struttura di ramificazione if nel linguaggio C?",
+      "hint": "Rifletti se il programma debba eseguire azioni nel caso in cui la condizione risulti falsa e la gestione di questo caso non sia richiesta.",
+      "options": [
+        "No, il ramo else è opzionale e può essere omesso",
+        "Sì, l'assenza di else porta sempre a un errore di compilazione",
+        "Sì, ma solo se all'interno dell'if è presente una chiamata a printf",
+        "No, ma solo a condizione che l'istruzione if sia inserita all'interno della funzione main"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ramo `else` non è obbligatorio. Se non è richiesta un'azione alternativa in caso di condizione falsa, si utilizza la forma semplificata `if (condizione)`.",
+        "Errato. La sintassi C consente perfettamente una struttura `if` singola senza `else`.",
+        "Errato. Le chiamate a funzioni all'interno del ramo `if` non influiscono sull'opzionalità sintattica del ramo `else`.",
+        "Errato. La struttura `if` singola senza `else` è consentita in qualsiasi punto del programma, non solo in `main`."
+      ]
+    },
+    {
+      "id": "it_clang_274",
+      "widget_id": null,
+      "topic": "Sintassi C — Parentesi graffe nei blocchi di ramificazione",
+      "q": "In quale caso le istruzioni all'interno dei rami if o else devono OBBLIGATORIAMENTE essere racchiuse tra parentesi graffe {}?",
+      "hint": "Pensa a come il compilatore determina i confini del gruppo di comandi appartenenti a una singola ramificazione.",
+      "options": [
+        "Quando il ramo corrispondente contiene un blocco composto da più istruzioni",
+        "Le parentesi graffe sono sempre obbligatorie, anche per una singola istruzione",
+        "Solo se nella condizione vengono utilizzate operazioni di confronto > o <",
+        "Solo se all'interno del ramo viene eseguito un input tramite scanf"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se il ramo `if` o `else` contiene più di un'istruzione, è necessario raggrupparle in un'istruzione composta (blocco) utilizzando le parentesi graffe `{}`.",
+        "Errato. Per una singola istruzione le parentesi sono opzionali (sebbene consigliate per la leggibilità).",
+        "Errato. Il tipo di operazione nella condizione non influisce sulla necessità delle parentesi graffe.",
+        "Errato. La presenza della funzione `scanf` all'interno del ramo non richiede l'uso obbligatorio delle parentesi graffe se l'istruzione è una sola."
+      ]
+    },
+    {
+      "id": "it_clang_275",
+      "widget_id": null,
+      "topic": "Logica dell'algoritmo — Ricerca del massimo tra due numeri",
+      "q": "Nell'algoritmo di ricerca del massimo tra due numeri x e y viene verificata la condizione x > y. Cosa verrà stampato nel ramo else (quando la condizione è falsa)?",
+      "hint": "Confronta la negazione della condizione «x è maggiore di y» con il numero che risulta essere il massimo in questo caso.",
+      "options": [
+        "Il valore di y, poiché è maggiore o uguale a x",
+        "Il valore di x, poiché supera sempre y",
+        "Zero, poiché i numeri vengono considerati uguali",
+        "Un errore di esecuzione del programma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se la condizione `x > y` è falsa, significa che `y >= x`. Di conseguenza, il valore massimo è `y`.",
+        "Errato. Se `x > y` è falsa, `x` non può essere strettamente maggiore di `y`.",
+        "Errato. La falsità della condizione `x > y` indica che `y >= x`, ma questo non azzera il risultato.",
+        "Errato. Una condizione di ramificazione falsa rappresenta il normale flusso di esecuzione del programma, non un errore."
+      ]
+    },
+    {
+      "id": "it_clang_276",
+      "widget_id": null,
+      "topic": "Sintassi C — Parentesi tonde nell'istruzione if",
+      "q": "Cosa succederà quando si tenta di compilare il codice if x > y printf(...); senza parentesi tonde attorno alla condizione?",
+      "hint": "Ricorda l'elemento sintattico obbligatorio che racchiude l'espressione della condizione nell'istruzione if del linguaggio C.",
+      "options": [
+        "Il compilatore restituirà un errore di sintassi",
+        "Il programma verrà compilato, ma la condizione sarà sempre falsa",
+        "Verrà eseguito solo il ramo else",
+        "Il preprocessore inserirà automaticamente le parentesi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella sintassi del linguaggio C la condizione dell'istruzione `if` deve essere tassativamente racchiusa tra parentesi tonde: `if (condizione)`. L'assenza delle parentesi provocherà un errore di compilazione.",
+        "Errato. Non si tratta di un errore logico in runtime, ma di una rigida violazione sintattica che impedisce la compilazione.",
+        "Errato. Senza parentesi tonde il codice non verrà compilato, quindi nessun ramo verrà eseguito.",
+        "Errato. Il preprocessore non si occupa di correggere la sintassi delle istruzioni del linguaggio C."
+      ]
+    },
+    {
+      "id": "it_clang_277",
+      "widget_id": "widget_clang_277",
+      "topic": "Sintassi C — Esecuzione di una singola istruzione senza graffe",
+      "q": "Cosa stamperà il frammento di codice presente nel widget se x = 3 e y = 5?",
+      "hint": "Presta attenzione all'assenza di parentesi graffe dopo if(x > y) e determina quale istruzione si riferisce esattamente alla condizione.",
+      "options": [
+        "Solo \"B\"",
+        "\"A\" e \"B\"",
+        "Solo \"A\"",
+        "Non stamperà nulla"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché le parentesi graffe sono assenti, all'istruzione `if(x > y)` appartiene solo la prima istruzione `printf(\"A\");`. Poiché `3 > 5` è falso, la stampa di \"A\" non avverrà. L'istruzione `printf(\"B\");` non appartiene alla ramificazione e viene eseguita sempre.",
+        "Errato. La condizione `3 > 5` è falsa, quindi la prima istruzione `printf(\"A\");` non verrà eseguita.",
+        "Errato. L'istruzione `printf(\"A\");` viene saltata a causa della condizione falsa `3 > 5`, mentre `printf(\"B\");` viene eseguita sempre.",
+        "Errato. L'istruzione `printf(\"B\");` si trova fuori dal blocco `if` e stamperà garantito \"B\"."
+      ]
+    },
+    {
+      "id": "it_clang_278",
+      "widget_id": null,
+      "topic": "Concetti — Pseudocodice (Pseudo-codice)",
+      "q": "Qual è lo scopo principale della stesura dello pseudocodice prima dell'implementazione di un algoritmo in C?",
+      "hint": "Rifletti sulla rappresentazione degli algoritmi in una forma formalizzata e comprensibile per l'uomo prima di tradurli in uno specifico linguaggio di programmazione.",
+      "options": [
+        "Descrivere la logica dell'algoritmo in un linguaggio di alto livello comprensibile, indipendente dalla sintassi di uno specifico linguaggio di programmazione",
+        "Compilare automaticamente un file binario senza l'intervento del compilatore GCC",
+        "Verificare la velocità del processore e allocare la memoria RAM",
+        "Sostituire i diagrammi di flusso in tutti gli standard di sviluppo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo pseudocodice consente di progettare e analizzare i passaggi di un algoritmo in un linguaggio comprensibile dall'uomo (ad esempio: `se x>y allora stampa x`), senza farsi distrarre dalle peculiarità sintattiche di uno specifico linguaggio di programmazione.",
+        "Errato. Lo pseudocodice non viene eseguito né compilato dalla macchina.",
+        "Errato. Lo pseudocodice è una notazione concettuale testuale di un algoritmo e non interagisce con l'hardware.",
+        "Errato. Lo pseudocodice e i diagrammi di flusso sono strumenti di progettazione complementari; l'uno non sostituisce completamente l'altro."
+      ]
+    },
+    {
+      "id": "it_clang_279",
+      "widget_id": null,
+      "topic": "Sintassi C — Ambito di visibilità in un blocco di ramificazione",
+      "q": "Cosa succederà se si dichiara una variabile int max; all'interno delle parentesi graffe del ramo if (if (...) { int max = x; }) e si tenta di accedervi dopo la chiusura delle parentesi }?",
+      "hint": "Ricorda le regole dell'ambito di visibilità locale (block scope) per le variabili dichiarate all'interno di un blocco {}.",
+      "options": [
+        "Si verificherà un errore di compilazione poiché l'ambito di visibilità della variabile è limitato al blocco {}",
+        "La variabile verrà conservata e sarà accessibile in tutta la funzione main()",
+        "Il valore della variabile verrà automaticamente azzerato",
+        "La variabile diventerà accessibile solo all'interno del ramo else"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili dichiarate all'interno di un blocco composto `{}` hanno un ambito di visibilità locale (block scope) e vengono distrutte all'uscita da tale blocco. L'accesso a esse dall'esterno provoca un errore di tipo `undeclared identifier`.",
+        "Errato. La variabile all'esterno del proprio blocco `{}` non è accessibile.",
+        "Errato. La variabile cessa di esistere nel punto di chiusura del blocco, non viene semplicemente azzerata.",
+        "Errato. Il ramo `else` ha il proprio blocco o ambito di visibilità e non ha accesso alle variabili locali del ramo `if`."
+      ]
+    }
+  ]
+}

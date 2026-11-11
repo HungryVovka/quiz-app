@@ -1,0 +1,799 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_901",
+      "widget_id": null,
+      "topic": "Standard del linguaggio — Funzioni annidate in ISO C",
+      "q": "Le funzioni annidate (Nested Functions) sono supportate dagli standard ufficiali del linguaggio C (C89, C99, C11, C17, C23)?",
+      "hint": "Rifletti se lo standard C consenta di dichiarare il corpo di una funzione all'interno del corpo di un'altra.",
+      "options": [
+        "No, secondo lo standard C tutte le funzioni devono essere dichiarate esclusivamente a livello globale",
+        "Sì, a partire dallo standard C99",
+        "Sì, in tutti gli standard C senza restrizioni",
+        "Sì, ma solo se la funzione annidata restituisce void"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nessuno standard ISO ufficiale del linguaggio C supporta le funzioni annidate. Tutte le funzioni nel C standard devono trovarsi a livello principale (scope del file).",
+        "Errato. Lo standard C99 ha introdotto i letterali composti e i commenti //, ma non le funzioni annidate.",
+        "Errato. Il C standard non ha mai supportato le функции annidate.",
+        "Errato. Il tipo di ritorno non influisce in alcun modo sul divieto dello standard."
+      ]
+    },
+    {
+      "id": "it_clang_902",
+      "widget_id": null,
+      "topic": "Estensioni dei compilatori — Supporto in GCC",
+      "q": "Quale tra i compilatori più diffusi offre il supporto per le funzioni annidate come estensione proprietaria del linguaggio (GNU C Extension)?",
+      "hint": "Questo compilatore è ampiamente utilizzato nel mondo Linux e contiene molte estensioni non standard del C.",
+      "options": [
+        "GCC (GNU Compiler Collection)",
+        "MSVC (Microsoft Visual C++)",
+        "Compilatore C89 standard",
+        "SDCC (Small Device C Compiler) in modalità rigorosa"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! GCC supporta le funzioni annidate come estensione del linguaggio GNU C. Altri compilatori (MSVC, Clang) in modalità standard non supportano questa funzionalità.",
+        "Errato. MSVC vieta rigorosamente l'uso delle funzioni annidate in C.",
+        "Errato. Nello standard C89 le функции annidate non sono presenti.",
+        "Errato. La modalità rigorosa dei compilatori disabilita tali estensioni."
+      ]
+    },
+    {
+      "id": "it_clang_903",
+      "widget_id": "widget_clang_903",
+      "topic": "Estensioni GCC — Accesso alle variabili della funzione esterna",
+      "q": "Cosa stamperà il programma se compilato con GCC?",
+      "hint": "Una funzione annidata in GCC ha accesso alle variabili locali della funzione che la contiene?",
+      "options": [
+        "15",
+        "10",
+        "5",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Una функция annidata in GCC ha accesso all'ambiente lessicale (scope lessicale) e può leggere e modificare le variabili locali della funzione esterna. Il valore di $x$ diventerà $5 + 10 = 15$.",
+        "Errato. La funzione annidata ha modificato il valore di $x$, non l'ha semplicemente letto.",
+        "Errato. La chiamata `add_to_x(10)` è stata sommata al valore iniziale di 5.",
+        "Errato. Con il compilatore GCC questo codice verrà compilato correttamente."
+      ]
+    },
+    {
+      "id": "it_clang_904",
+      "widget_id": "widget_clang_904",
+      "topic": "Tempo di vita e puntatori — Pericolo di chiamata tramite puntatore",
+      "q": "Quali conseguenze avrà la chiamata `fn()` in main se la funzione `get_nested()` restituisce un puntatore alla sua функция annidata?",
+      "hint": "Cosa succede allo stack frame della функция get_nested() dopo il completamento della sua esecuzione?",
+      "options": [
+        "Comportamento non definito (Undefined Behavior) o arresto anomalo (Crash)",
+        "Il programma stamperà il numero 42 correttamente e senza errori",
+        "Errore di compilazione in fase di build",
+        "La memoria della функция verrà automaticamente trasferita nell'heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione annidata accede alla variabile locale `secret` che risiede sullo stack di `get_nested()`. Quando `get_nested()` termina, il suo stack viene distrutto. La chiamata tramite puntatore dopo questo momento causa un crash o la lettura di dati spazzatura (Dangling Pointer / Undefined Behavior).",
+        "Errato. La variabile `secret` non esiste più sullo stack.",
+        "Errato. Sintatticamente GCC consentirà di ottenere un puntatore alla funzione annidata, quindi l'errore si manifesterà a tempo di esecuzione.",
+        "Errato. In C non avviene alcun trasferimento automatico di variabili dallo stack all'heap."
+      ]
+    },
+    {
+      "id": "it_clang_905",
+      "widget_id": null,
+      "topic": "Sicurezza e architettura — Trampolini (Trampolines) e stack eseguibile",
+      "q": "Perché la generazione di puntatori a funzioni annidate in GCC è considerata un rischio per la sicurezza (Security Risk)?",
+      "hint": "In che modo GCC passa il contesto della funzione padre alla funzione annidata durante una chiamata tramite un puntatore ordinario?",
+      "options": [
+        "GCC genera un piccolo frammento di codice eseguibile («trampolino» / trampoline) direttamente sullo stack, il che richiede uno stack eseguibile e viola la protezione NX/DEP",
+        "Le funzioni annidate intasano la tabella di importazione del sistema operativo",
+        "I puntatori a funzioni annidate occupano sempre più di 1024 byte in memoria",
+        "Provocano la decifratura automatica delle chiavi private"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per passare il contesto della функция padre, GCC crea dinamicamente sullo stack un'istruzione adapter («trampolino»). A questo scopo, lo stack deve avere i permessi di esecuzione (Executable Stack), disabilitando la protezione hardware NX/DEP e creando una vulnerabilità per attacchi di tipo Buffer Overflow.",
+        "Errato. Le funzioni annidate non hanno alcuna relazione con la tabella di importazione del SO.",
+        "Errato. Un puntatore a funzione ha una dimensione standard (ad esempio, 8 byte su sistemi a 64 bit).",
+        "Errato. È una visione errata delle problematiche di sicurezza."
+      ]
+    },
+    {
+      "id": "it_clang_906",
+      "widget_id": null,
+      "topic": "Sintassi GCC — Dichiarazione preventiva (Forward Declaration)",
+      "q": "Con quale parola chiave nell'estensione GCC è possibile effettuare una dichiarazione preventiva (Forward Declaration) di una функция annidata prima della sua definizione completa?",
+      "hint": "Questa parola chiave nel C standard viene utilizzata per specificare la classe di memorizzazione automatica delle variabili locali.",
+      "options": [
+        "auto",
+        "static",
+        "extern",
+        "inline",
+        "typedef"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In GCC la dichiarazione preventiva di una funzione annidata si effettua con la parola chiave `auto`, ad esempio: `auto void nested_func(int);`.",
+        "Errato. `static` definisce il linkage interno per le entità globali.",
+        "Errato. `extern` segnala al compilatore che la функция è dichiarata in un altro file/modulo.",
+        "Errato. `inline` viene utilizzato per l'inline del codice della funzione.",
+        "Errato. `typedef` crea un alias per un tipo di dato."
+      ]
+    },
+    {
+      "id": "it_clang_907",
+      "widget_id": "widget_clang_907",
+      "topic": "Estensioni Clang/Apple — Blocchi (Blocks)",
+      "q": "Quale tecnologia/estensione nei compilatori Clang/Apple è un'alternativa alle funzioni annidate e utilizza una sintassi con il simbolo dell'accento circonflesso `^`?",
+      "hint": "Presta attenzione alla sintassi di dichiarazione del tipo `int (^my_block)(int)`.",
+      "options": [
+        "Blocchi (Blocks / Apple Blocks)",
+        "Lambda annidate (Nested Lambdas)",
+        "Funzioni composte (Compound Functions)",
+        "Macro C99"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In Clang e Apple C viene utilizzata l'estensione «Blocks» (`^`), che aggiunge il supporto alle chiusure (closure) con la possibilità di copiare il contesto nell'heap (`Block_copy`).",
+        "Errato. Il termine «lambda» è usato in C++, C# e altri linguaggi, ma in Clang C prende il nome di Blocks.",
+        "Errato. I letterali могут essere composti, non le funzioni.",
+        "Errato. Si tratta di un'estensione completa della sintassi del compilatore, non di un macro-preprocessore."
+      ]
+    },
+    {
+      "id": "it_clang_908",
+      "widget_id": null,
+      "topic": "Ambito di visibilità — Scope del nome della funzione annidata",
+      "q": "Qual è lo scope del nome di una функция annidata dichiarata all'interno della функция `process()`?",
+      "hint": "Il nome della функция annidata è visibile all'esterno della функция in cui è stata creata?",
+      "options": [
+        "Il nome è limitato solo al blocco di codice / corpo della funzione process()",
+        "Il nome diventa accessibile nell'intero file .c",
+        "Il nome è accessibile da qualsiasi altro file del progetto (External Linkage)",
+        "Il nome è accessibile solo all'interno delle istruzioni switch"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Una funzione annidata ha uno scope locale (Block Scope) ed è visibile solo all'interno della функция (o del blocco `{}`) in cui è stata dichiarata.",
+        "Errato. Il nome non si estende allo scope globale del file.",
+        "Errato. Le funzioni annidate non hanno linkage esterno.",
+        "Errato. Lo scope è limitato al blocco di dichiarazione, non solo allo switch."
+      ]
+    },
+    {
+      "id": "it_clang_909",
+      "widget_id": null,
+      "topic": "Confronto tra C e C++ — Chiusure ed espressioni Lambda",
+      "q": "Vero o Falso: A differenza del C standard, in C++ (a partire dallo standard C++11) sono ufficialmente supportate le funzioni annidate anonime — le espressioni Lambda (Lambda Expressions)?",
+      "hint": "Ricorda la sintassi della capture-list in C++: [=]() { ... }",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il C++11 ha aggiunto il supporto ufficiale per le espressioni lambda (funzioni annidate anonime con cattura del contesto). Nel C standard questa funzionalità è tuttora assente.",
+        "Errato. Le lambda sono effettivamente una parte standardizzata del C++11 e delle versioni successive."
+      ]
+    },
+    {
+      "id": "it_clang_910",
+      "widget_id": "widget_clang_910",
+      "topic": "Ambito di visibilità — Mascheramento dei nomi (Variable Shadowing)",
+      "q": "Cosa stamperà il programma all'esecuzione?",
+      "hint": "In che modo il mascheramento dei nomi delle variabili locali influisce sulla variabile nel contesto esterno?",
+      "options": [
+        "100 50",
+        "50 50",
+        "100 100",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La dichiarazione `int val = 100` all'interno di `inner()` crea una nuova variabile locale che maschera (shadows) la `val` esterna. La prima stamperà `100`, e dopo l'uscita da `inner()` la `val` esterna rimarrà pari a `50`.",
+        "Errato. La variabile all'interno di `inner()` ha mascherato la `val` esterna e ha stampato 100.",
+        "Errato. La `val` esterna non è cambiata all'interno di `inner()` perché è stata mascherata.",
+        "Errato. La ridichiarazione di una variabile in un blocco interno è sintatticamente valida."
+      ]
+    },
+    {
+      "id": "it_clang_911",
+      "widget_id": "widget_clang_911",
+      "topic": "Istruzioni annidate — Comportamento di break in uno switch all'interno di un ciclo",
+      "q": "Cosa succede all'esecuzione dell'istruzione break situata all'interno di uno switch che è annidato in un ciclo for?",
+      "hint": "L'istruzione break interrompe sia lo switch sia il ciclo esterno contemporaneamente?",
+      "options": [
+        "L'istruzione break interrompe solo l'esecuzione dello switch, mentre il ciclo proseguirà con l'iterazione successiva",
+        "L'istruzione break interrompe sia lo switch sia il ciclo for esterno",
+        "Si verificherà un errore di compilazione a causa dell'ambiguità del contesto",
+        "Il programma entrerà in un ciclo infinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C `break` interrompe solo lo `switch` più interno o il ciclo in cui si trova direttamente. Il ciclo `for` esterno continuerà la sua esecuzione.",
+        "Errato. Per uscire dal ciclo esterno sarebbe necessario un altro `break`, un flag di uscita o `goto`/`return`.",
+        "Errato. Questo è il comportamento sintattico standard in C.",
+        "Errato. Il ciclo eseguirà tutte le sue iterazioni."
+      ]
+    },
+    {
+      "id": "it_clang_912",
+      "widget_id": "widget_clang_912",
+      "topic": "Controllo del flusso — Return anticipato da cicli annidati",
+      "q": "Qual è il principale vantaggio dell'uso dell'istruzione return durante la ricerca di un elemento in un array multidimensionale all'interno di una funzione?",
+      "hint": "Quanti cicli può interrompere una singola istruzione break rispetto a return?",
+      "options": [
+        "return termina immediatamente la функция ed esce da tutti i livelli di annidamento dei cicli contemporaneamente",
+        "return è più veloce perché non utilizza lo stack",
+        "break non può essere affatto utilizzato nei cicli annidati",
+        "return garantisce l'azzeramento automatico dell'array"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Una singola istruzione `break` esce solo dal ciclo più interno, richiedendo controlli aggiuntivi per uscire dai rimanenti. L'istruzione `return` interrompe immediatamente l'esecuzione della функция a prescindere dal livello di annidamento dei cicli.",
+        "Errato. Il vantaggio risiede nella logica del controllo di flusso, non in un'astratta velocità di gestione dello stack.",
+        "Errato. `break` può essere utilizzato a qualsiasi livello di annidamento.",
+        "Errato. `return` non influisce in alcun modo sul contenuto dell'array."
+      ]
+    },
+    {
+      "id": "it_clang_913",
+      "widget_id": "widget_clang_913",
+      "topic": "Ramificazione — Il problema dell'else ambiguo (Dangling else)",
+      "q": "A quale istruzione if si riferisce il ramo else nel codice fornito in assenza di parentesi graffe?",
+      "hint": "Ricorda la regola di associazione dell'else nelle ramificazioni annidate.",
+      "options": [
+        "All'if precedente più vicino privo di un proprio else (all'if interno (b > 0))",
+        "Al primo if esterno (a > 0)",
+        "Errore di compilazione — le parentesi graffe sono obbligatorie negli if annidati",
+        "Il ramo else viene ignorato dal compilatore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C vale la regola: `else` si associa sempre al precedente `if` *più vicino* che non possiede un proprio `else` (in questo caso a `if (b > 0)`). Per modificare questo ordine sono necessarie le parentesi graffe `{}`.",
+        "Errato. Senza parentesi graffe `else` non si riferisce mai all' `if` esterno se ne esiste uno interno.",
+        "Errato. Le graffe sono consigliate per la leggibilità, ma la sintassi ne consente l'omissione.",
+        "Errato. Il ramo `else` verrà compilato a tutti gli effetti."
+      ]
+    },
+    {
+      "id": "it_clang_914",
+      "widget_id": "widget_clang_914",
+      "topic": "Ambito di visibilità — Mascheramento delle variabili nei blocchi annidati {}",
+      "q": "Cosa stamperà printf(\"%d\", x) al termine dell'esecuzione della функция?",
+      "hint": "Quale valore ha la variabile x nello scope in cui viene chiamata printf?",
+      "options": [
+        "20",
+        "30",
+        "10",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il blocco più interno con `x = 30` termina e la sua variabile `x` viene distrutta. Al livello di `printf` è visibile la variabile `x = 20`, dichiarata nel blocco del ciclo `for`. La `x = 10` esterna è ancora mascherata.",
+        "Errato. La variabile con valore 30 esisteva solo all'interno del blocco `{}` più profondo.",
+        "Errato. La variabile `x = 10` è mascherata dalla variabile `x = 20` del blocco del ciclo.",
+        "Errato. La dichiarazione di variabili con lo stesso nome in blocchi interni è assolutamente valida."
+      ]
+    },
+    {
+      "id": "it_clang_915",
+      "widget_id": null,
+      "topic": "Istruzione goto — Uscita da strutture profondamente annidate",
+      "q": "In quali situazioni l'uso dell'istruzione goto all'interno delle funzioni C è considerato una pratica comune e giustificata (ad esempio nel kernel Linux)?",
+      "hint": "Pensa alla gestione degli errori nelle funzioni che allocano diverse risorse in sequenza.",
+      "options": [
+        "Per un'uscita centralizzata da cicli/condizioni profondamente annidati verso un unico blocco di pulizia delle risorse in caso di errori",
+        "Per sostituire tutti i cicli while e for a scopo di ottimizzazione",
+        "Per trasferire il controllo da una функция all'interno di un'altra funzione",
+        "Per l'allocazione automatica di memoria nell'heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il pattern `goto cleanup;` è ampiamente utilizzato nella programmazione di sistema in C. Permette di evitare la duplicazione del codice di rilascio delle risorse (free, fclose) all'uscita da controlli profondamente annidati.",
+        "Errato. L'uso di `goto` al posto dei cicli standard peggiora la leggibilità e non offre vantaggi.",
+        "Errato. L'istruzione `goto` può effettuare un salto solo all'interno della *stessa* funzione.",
+        "Errato. `goto` non gestisce in alcun modo la memoria dinamica."
+      ]
+    },
+    {
+      "id": "it_clang_916",
+      "widget_id": "widget_clang_916",
+      "topic": "Cicli annidati — Istruzione continue",
+      "q": "Cosa stamperà il программа durante l'esecuzione di cicli annidati con l'istruzione continue?",
+      "hint": "Quale iterazione e di quale specifico ciclo viene saltata da continue?",
+      "options": [
+        "01 11 ",
+        "00 01 10 11 ",
+        "00 10 ",
+        "01 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando `j == 0`, scatta `continue`. Esso salta il resto del corpo del ciclo *interno* `j` e passa a `j++`. Di conseguenza vengono stampate solo le coppie con `j == 1`: `01` e `11`.",
+        "Errato. Con `j == 0` la chiamata a `printf` viene saltata, quindi `00` e `10` non vengono stampati.",
+        "Errato. Viene saltata l'iterazione con `j == 0`, non con `j == 1`.",
+        "Errato. Il ciclo esterno `i` eseguirà due iterazioni (i=0 e i=1)."
+      ]
+    },
+    {
+      "id": "it_clang_917",
+      "widget_id": "widget_clang_917",
+      "topic": "Switch — Fallthrough nello switch all'interno di un ciclo",
+      "q": "Cosa stamperà il frammento di codice a causa dell'assenza dell'istruzione break nel case 0?",
+      "hint": "Segui l'esecuzione del case 0 e il fallthrough nel case 1.",
+      "options": [
+        "ABB",
+        "AB",
+        "AB B",
+        "B"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! All'iterazione `i = 0`: si entra nel `case 0` (viene stampata `A`), poi si esegue il fallthrough nel `case 1` (viene stampata `B`) e scatta il `break`. All'iterazione `i = 1`: si entra nel `case 1` (viene stampata `B`) e scatta il `break`. Risultato: `ABB`.",
+        "Errato. Alla seconda iterazione con `i = 1` viene stampata un'ulteriore lettera `B`.",
+        "Errato. Non ci sono spazi nell'output.",
+        "Errato. Alla prima iterazione verranno eseguiti sia `case 0` sia `case 1`."
+      ]
+    },
+    {
+      "id": "it_clang_918",
+      "widget_id": "widget_clang_918",
+      "topic": "Sintassi switch — Dichiarazione e inizializzazione di variabili prima del primo case",
+      "q": "Cosa succede se si dichiara e inizializza una variabile int a = 5; subito dopo switch(...) {, ma PRIMA del primo case?",
+      "hint": "Il controllo passerà alla riga di inizializzazione quando si salta all'etichetta case?",
+      "options": [
+        "La variabile verrà dichiarata nello scope dello switch, ma la sua inizializzazione a = 5 verrà saltata (a conterrà un valore casuale/spazzatura)",
+        "Il codice inizializzerà con successo a = 5 a ogni ingresso nello switch",
+        "Si verificherà un errore di compilazione",
+        "La variabile a diventerà statica"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo `switch` effettua un salto (simile a un `goto`) direttamente all'etichetta `case` corrispondente, scavalcando qualsiasi istruzione di inizializzazione all'inizio del blocco. La variabile viene allocata sullo stack, ma il valore di `a` rimarrà non inizializzato.",
+        "Errato. La riga di inizializzazione viene fisicamente bypassata durante il salto al `case`.",
+        "Errato. In C questo è sintatticamente consentito (a differenza del C++, dove causerebbe un errore).",
+        "Errato. Il qualificatore `static` non viene aggiunto automaticamente."
+      ]
+    },
+    {
+      "id": "it_clang_919",
+      "widget_id": "widget_clang_919",
+      "topic": "Cicli infiniti — Uscita da while(1) annidati tramite return",
+      "q": "Cosa restituirà la chiamata alla функция process(3)?",
+      "hint": "La condizione interna riuscirà a fermare entrambi i cicli infiniti?",
+      "options": [
+        "3",
+        "Il programma si bloccherà in un ciclo infinito",
+        "0",
+        "Errore a tempo di esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nonostante i due cicli infiniti `while(1)` annidati, l'istruzione `return count;` scatterà quando `count` raggiungerà 3, restituendo immediatamente il controllo dalla функция con il valore 3.",
+        "Errato. L'istruzione `return` interrompe all'istante entrambi i cicli.",
+        "Errato. La funzione restituirà il valore della variabile `count`, ovvero 3.",
+        "Errato. Il codice è assolutamente corretto."
+      ]
+    },
+    {
+      "id": "it_clang_920",
+      "widget_id": "widget_clang_920",
+      "topic": "Standard C99 — Dichiarazione di contatori nei cicli for annidati",
+      "q": "Il codice verrà compilato nello standard C99 e cosa stamperà in caso di ridichiarazione for (int i = 0; ...)?",
+      "hint": "Il contatore di un ciclo for ha il proprio scope in C99?",
+      "options": [
+        "Il codice verrà compilato con successo e stamperà: 0 1 0 1 ",
+        "Errore di compilazione — ridichiarazione della variabile i nella stessa функция",
+        "Il codice stamperà: 0 0 1 1 ",
+        "Il ciclo diventerà infinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A partire dallo standard C99, una variabile dichiarata nell'intestazione `for (int i...)` ha uno scope limitato a quel ciclo. La `i` interna maschera la `i` esterna, quindi il codice verrà compilato e stamperà `0 1 0 1 `.",
+        "Errato. Nel ciclo interno viene creato uno scope separato, quindi non vi è alcun errore.",
+        "Errato. Ad ogni passo del ciclo esterno, il ciclo interno viene eseguito completamente da 0 a 1.",
+        "Errato. Il ciclo interno non altera il valore del contatore del ciclo esterno."
+      ]
+    },
+    {
+      "id": "it_clang_921",
+      "widget_id": "widget_clang_921",
+      "topic": "Passaggio di parametri — Copia dei tipi base (Pass-by-Value)",
+      "q": "Cosa succederà alla variabile `num` in `main` dopo l'esecuzione della funzione `add_five(num)`?",
+      "hint": "La функция modifica una copia locale della variabile o l'originale?",
+      "options": [
+        "Il valore di num rimarrà pari a 10",
+        "Il valore di num diventerà pari a 15",
+        "Si verificherà un errore di compilazione",
+        "Il valore di num diventerà pari a 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C gli argomenti vengono passati per valore. Alla funzione `add_five` viene passata una copia della variabile `num`, pertanto l'incremento `a += 5` avviene solo all'interno del contesto locale della funzione. In `main` la variabile rimarrà pari a 10.",
+        "Errato. Ciò si verificherebbe solo passando un puntatore `&num`.",
+        "Errato. Il codice non presenta errori sintattici.",
+        "Errato. Il valore di `num` in `main` non viene azzerato."
+      ]
+    },
+    {
+      "id": "it_clang_922",
+      "widget_id": null,
+      "topic": "Passaggio di array — Assenza di copia degli elementi",
+      "q": "Quando si dichiara `void process(int arr[])`, l'array viene passato alla функция con una copia completa di tutti i suoi elementi?",
+      "hint": "In cosa si trasforma il nome dell'array quando viene passato come parametro a una funzione?",
+      "options": [
+        "No, l'array viene passato come puntatore al suo primo elemento, quindi le modifiche agli elementi sono visibili nella funzione chiamante",
+        "Sì, il C copia sempre interamente l'array sullo stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando si passa un array a una функция avviene la conversione a puntatore (Array Decay) — viene passato solo l'indirizzo del suo primo elemento (`int *`). Non viene copiato l'intero array e le modifiche apportate agli elementi all'interno della функция sono visibili all'esterno.",
+        "Errato. In C gli array non vengono mai copiati automaticamente quando passati alle funzioni."
+      ]
+    },
+    {
+      "id": "it_clang_923",
+      "widget_id": "widget_clang_923",
+      "topic": "Ordine di valutazione degli argomenti — Comportamento non definido (UB)",
+      "q": "Quale effetto produrrà la chiamata `print_two(x++, x++)`?",
+      "hint": "Lo standard C definisce l'ordine di valutazione degli argomenti di una funzione (da sinistra a destra o da destra a sinistra)?",
+      "options": [
+        "Comportamento non definito (Undefined Behavior) — l'ordine di valutazione degli argomenti della функция e i sequence point tra di essi non sono stabiliti in C",
+        "Stamperà garantito '5 6'",
+        "Stamperà garantito '6 5'",
+        "Errore di compilazione — è vietato passare operatori di incremento tra gli argomenti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard C non definisce l'ordine di valutazione degli argomenti durante la chiamata di una funzione. La modifica della stessa variabile `x` più volte senza un sequence point intermedio porta a un comportamento non definito.",
+        "Errato. L'ordine di valutazione da sinistra a destra non è garantito.",
+        "Errato. Anche l'ordine da destra a sinistra non è garantito dallo standard.",
+        "Errato. Le espressioni con incremento sono sintatticamente valide nei parametri, ma generano UB."
+      ]
+    },
+    {
+      "id": "it_clang_924",
+      "widget_id": null,
+      "topic": "Passaggio di strutture — Copia dei campi (Pass-by-value)",
+      "q": "Cosa succede quando si passa una struttura per valore alla функция `void process(struct Point p)`?",
+      "hint": "A differenza degli array, le strutture si comportano come i tipi base durante il passaggio?",
+      "options": [
+        "Viene creata una copia completa di tutti i campi della struttura sullo stack; qualsiasi modifica ai campi all'interno della функция non influirà sull'originale",
+        "Viene passato solo un puntatore alla struttura, quindi i campi dell'originale verranno modificati",
+        "Errore di compilazione — in C è vietato passare le strutture senza asterisco (*)",
+        "Vengono passati solo i primi 8 byte della struttura",
+        "La struttura viene automaticamente salvata su file"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza degli array, in C le strutture vengono passate interamente per valore. Il compilatore copia il contenuto di tutti i campi della struttura sullo stack.",
+        "Errato. Per passare un puntatore la dichiarazione dovrebbe essere `struct Point *p`.",
+        "Errato. Il passaggio di strutture per valore è pienamente supportato dal linguaggio C.",
+        "Errato. Viene copiata l'intera struttura, indipendentemente dalla sua dimensione.",
+        "Errato. Il passaggio dei parametri non ha nulla a che fare con le operazioni di I/O."
+      ]
+    },
+    {
+      "id": "it_clang_925",
+      "widget_id": null,
+      "topic": "Array multidimensionali — Obbligatorietà di specificare le dimensioni",
+      "q": "Perché nella dichiarazione della функция `void print_matrix(int m[][4], int rows)` è obbligatorio specificare la dimensione `[4]` per la seconda dimensione?",
+      "hint": "In che modo il compilatore calcola l'indirizzo dell'elemento $m[i][j]$ nella memoria RAM monodimensionale?",
+      "options": [
+        "Affinché il compilatore possa calcolare correttamente l'indirizzo dell'elemento tramite la formula dell'offset di memoria",
+        "È un requisito del preprocessore per l'allocazione della memoria",
+        "La dimensione `[4]` indica il numero totale di elementi nella matrice",
+        "Non è obbligatorio — le parentesi `[][]` possono essere lasciate vuote"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un array bidimensionale è memorizzato come una sequenza contigua di elementi. Per trovare l'indirizzo dell'elemento $m[i][j]$, il compilatore usa la formula: $\\text{base\\_address} + (i \\times \\text{cols} + j) \\times \\text{sizeof(type)}$. Senza conoscere il numero di colonne (`cols = 4`), non è possibile compilare l'accesso tramite indici.",
+        "Errato. Il calcolo dell'indirizzo viene eseguito dal compilatore stesso, non dal preprocessore.",
+        "Errato. Il numero 4 indica soltanto il numero di colonne in una riga.",
+        "Errato. Omettere tutte le dimensioni per gli array multidimensionali causerà un errore di compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_926",
+      "widget_id": null,
+      "topic": "Qualificatore const — Protezione dei dati puntati",
+      "q": "Quale dichiarazione del parametro garantisce che la функция non possa modificare il *valore* a cui punta questo puntatore?",
+      "hint": "Da quale lato dell'asterisco deve trovarsi const per proteggere i dati indirizzati?",
+      "options": [
+        "const int *ptr",
+        "int * const ptr",
+        "int *ptr",
+        "void *ptr"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La scrittura `const int *ptr` (o `int const *ptr`) indica che il valore di tipo `int` situato all'indirizzo `ptr` è di sola lettura.",
+        "Errato. La scrittura `int * const ptr` crea un puntatore costante: non si può modificare l'indirizzo stesso, ma è consentito modificare il valore all'indirizzo `*ptr = ...`.",
+        "Errato. Un normale puntatore `int *ptr` consente di modificare i dati all'indirizzo.",
+        "Errato. `void *ptr` è semplicemente un puntatore non tipizzato."
+      ]
+    },
+    {
+      "id": "it_clang_927",
+      "widget_id": "widget_clang_927",
+      "topic": "Letterali stringa — Memoria immutabile",
+      "q": "Quale conseguenza avrà la chiamata alla функция `zero_first(\"hello\")`?",
+      "hint": "In quale area di memoria (.rodata) vengono allocati i letterali stringa racchiusi tra doppi apici?",
+      "options": [
+        "Errore a tempo di esecuzione (Segmentation fault) — i letterali stringa sono situati in memoria di sola lettura",
+        "Il primo carattere della stringa verrà sostituito con successo dal byte nullo '\\0'",
+        "Errore di compilazione — non è possibile passare un letterale stringa a un parametro char*",
+        "La stringa 'hello' diventerà vuota nell'intero programma",
+        "Si verificherà un'allocazione automatica di memoria nell'heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il letterale stringa `\"hello\"` viene collocato dal compilatore in una sezione di memoria protetta da scrittura (`.rodata`). Il tentativo di scrittura `s[0] = '\\0'` genererà un segnale di Segmentation Fault sulla maggior parte dei SO.",
+        "Errato. La memoria dei letterali stringa è protetta a livello di SO.",
+        "Errato. Secondo gli standard C, il passaggio di un letterale a `char*` verrà compilato (sebbene in C++ sia vietato o generi un warning).",
+        "Errato. La modifica non verrà eseguita in quanto il programma andrà in crash alla chiamata.",
+        "Errato. Non si verifica alcuna allocazione dinamica di memoria."
+      ]
+    },
+    {
+      "id": "it_clang_928",
+      "widget_id": null,
+      "topic": "Puntatori a funzione — Conversione implicita del nome della функция",
+      "q": "Vero o Falso: Quando si passa il nome di una функция come argomento (ad esempio `apply(my_func)`), il nome della функция viene automaticamente convertito in un puntatore a essa?",
+      "hint": "È obbligatorio scrivere la presa in carico dell'indirizzo `apply(&my_func)`?",
+      "options": [
+        "Vero",
+        "Falso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Come per gli array, il nome di una функция nelle espressioni e negli argomenti viene convertito automaticamente (decay) in un puntatore a tale funzione. Le forme `apply(my_func)` e `apply(&my_func)` sono assolutamente equivalenti.",
+        "Errato. In C l'operatore `&` prima del nome della функция nel passaggio degli argomenti è opzionale."
+      ]
+    },
+    {
+      "id": "it_clang_929",
+      "widget_id": null,
+      "topic": "Argomenti di main — Tipo dell'array argv",
+      "q": "Quale tipo di dato ha il parametro `argv` nella firma `int main(int argc, char *argv[])`?",
+      "hint": "In C un array di stringhe è rappresentato come un array di puntatori a char.",
+      "options": [
+        "Array di puntatori a stringhe di caratteri (char **)",
+        "Un singolo array di caratteri (char *)",
+        "Puntatore a un array di interi (int *)",
+        "Array di strutture struct Argument",
+        "File descriptor"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il parametro `char *argv[]` viene convertito in un puntatore a puntatore `char **argv`, ossia un array in cui ogni elemento contiene l'indirizzo di una stringa argomento terminata da zero.",
+        "Errato. `char *` rappresenta soltanto una singola stringa, mentre `argv` contiene multipli argomenti.",
+        "Errato. Gli argomenti della riga di comando vengono sempre passati sotto forma di testo (stringhe).",
+        "Errato. In C gli argomenti vengono passati come array di stringhe, non come strutture.",
+        "Errato. I file descriptor sono numeri interi per le operazioni di I/O."
+      ]
+    },
+    {
+      "id": "it_clang_930",
+      "widget_id": null,
+      "topic": "Ottimizzazione del passaggio — const Struct * al posto della copia",
+      "q": "Perché quando si lavora con strutture di grandi dimensioni è consigliabile passare il parametro come `const StructType *s` invece del passaggio per valore `StructType s`?",
+      "hint": "Rifletti sul numero di byte copiati sullo stack a ogni chiamata.",
+      "options": [
+        "Viene passato solo un puntatore (8 byte), evitando l'oneroso inserimento di tutta la struttura nello stack, mentre const protegge dalle modifiche",
+        "Il C vieta il passaggio per valore di strutture superiori a 16 byte",
+        "Il passaggio per valore rimuove automaticamente la struttura dalla memoria",
+        "È l'unico modo per passare strutture contenenti numeri a virgola mobile"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il passaggio di una struttura per valore copia ogni suo byte sullo stack. Per strutture di grandi dimensioni questo riduce le prestazioni. Il passaggio `const StructType *` copia solo l'indirizzo (8 byte su sistemi a 64 bit), mantenendo l'immutabilità dei dati grazie a `const`.",
+        "Errato. Il linguaggio C consente di passare per valore strutture di qualsiasi dimensione.",
+        "Errato. Il passaggio per valore crea una copia locale, ma non elimina l'originale.",
+        "Errato. I campi in virgola mobile vengono copiati perfettamente durante il passaggio per valore."
+      ]
+    },
+    {
+      "id": "it_clang_931",
+      "widget_id": "widget_clang_931",
+      "topic": "Puntatori a puntatori — Modifica dell'indirizzo all'interno di una funzione",
+      "q": "Affinché una функция possa modificare l'indirizzo stesso contenuto in un puntatore (ad esempio per allocare memoria dinamica per esso), il suo parametro deve accettare:",
+      "hint": "Rifletti su quale livello di indirezione sia necessario per modificare una variabile di tipo int*.",
+      "options": [
+        "Un puntatore a puntatore (int **ptr)",
+        "Un normale puntatore (int *ptr)",
+        "Un valore di tipo int",
+        "Un array int arr[]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per modificare il valore di una variabile di tipo `int*` (ossia per scrivervi un nuovo indirizzo), è necessario passare alla funzione un puntatore a tale variabile, ovvero `int **ptr`.",
+        "Errato. Un normale puntatore `int *ptr` viene passato per valore (copiato), quindi la modifica dell'indirizzo all'interno della функция non si rifletterà in main.",
+        "Errato. Il tipo `int` memorizza un numero intero, non un puntatore.",
+        "Errato. L'array `int arr[]` viene convertito in `int *`, il che non consente di modificare il puntatore originale."
+      ]
+    },
+    {
+      "id": "it_clang_932",
+      "widget_id": "widget_clang_932",
+      "topic": "Standard C99 — La parola chiave static nelle dimensioni degli array-parametri",
+      "q": "Cosa significa la notazione `int arr[static 5]` nel parametro di una функция a partire dallo standard C99?",
+      "hint": "È un suggerimento al compilatore sul numero minimo garantito di elementi.",
+      "options": [
+        "L'argomento è garantito essere un puntatore a un array contenente almeno 5 elementi",
+        "L'array conserva i suoi elementi tra le chiamate della функция nella memoria statica",
+        "La funzione genererà un errore di compilazione — questa sintassi è vietata",
+        "L'array passato deve contenere esattamente 5 elementi, è vietato passarne una dimensione maggiore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La struttura `static N` nella dichiarazione di un parametro array offre al compilatore la garanzia che il puntatore passato non sia NULL e punti ad almeno `N` elementi, consentendo ottimizzazioni aggiuntive.",
+        "Errato. Il modificatore `static` all'interno delle parentesi quadre del parametro non modifica la classe di memorizzazione dell'array.",
+        "Errato. Questa sintassi è ufficiale a partire dallo standard C99.",
+        "Errato. L'array può contenere *più* di 5 elementi, ma non di meno."
+      ]
+    },
+    {
+      "id": "it_clang_933",
+      "widget_id": "widget_clang_933",
+      "topic": "Funzioni variadiche — Promozione automatica dei tipi (Integer Promotions)",
+      "q": "In quale tipo di dato vengono promossi automaticamente gli argomenti di tipo `char` e `short` quando passati a una функция variadica (`...`)?",
+      "hint": "Ricorda le regole di Default Argument Promotions per i tipi interi inferiori ad int.",
+      "options": [
+        "int (o unsigned int)",
+        "I tipi char e short vengono passati senza modifiche",
+        "long",
+        "double"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel passaggio di argomenti a funzioni variadiche, i tipi interi inferiori a `int` (come `char` e `short`) vengono automaticamente promossi a `int` (o `unsigned int`). Devono essere estratti tramite `va_arg(args, int)`.",
+        "Errato. La promozione dei tipi avviene sempre quando si chiamano funzioni variadiche.",
+        "Errato. I tipi `char` e `short` non vengono promossi a `long` per impostazione predefinita.",
+        "Errato. Il tipo `float` viene promosso a `double`, ma non i tipi interi."
+      ]
+    },
+    {
+      "id": "it_clang_934",
+      "widget_id": "widget_clang_934",
+      "topic": "Puntatori ad array — Differenza tra int* e int(*)[10]",
+      "q": "Cosa accetta il parametro `int (*arr)[10]` nell'intestazione della funzione?",
+      "hint": "Fai attenzione alle parentesi attorno a (*arr). Si tratta di un puntatore a un intero array.",
+      "options": [
+        "Un puntatore all'intero array di 10 elementi di tipo int",
+        "Un array di 10 puntatori a int (int *arr[10])",
+        "Un puntatore a una функция che restituisce un array",
+        "Un errore sintattico"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le parentesi `(*arr)` definiscono la precedenza: `arr` è un puntatore a un array fisso di 10 elementi di tipo `int`. L'incremento del puntatore `arr + 1` sarà pari a $10 \\times \\text{sizeof(int)}$ byte.",
+        "Errato. La notazione senza parentesi `int *arr[10]` dichiara un array di 10 puntatori.",
+        "Errato. Un puntatore a функция ha una sintassi con le parentesi tonde per gli argomenti: `int (*func)(int)`.",
+        "Errato. È una sintassi C completamente valida."
+      ]
+    },
+    {
+      "id": "it_clang_935",
+      "widget_id": null,
+      "topic": "Prototipi di funzione — Omissione dei nomi dei parametri",
+      "q": "È consentito nel prototipo (dichiarazione) di una функция in C specificare solo i tipi dei parametri, omettendo i loro nomi (ad esempio `void log_msg(int, const char *);`)?",
+      "hint": "Il compilatore ha bisogno dei nomi dei parametri per verificare la firma della chiamata?",
+      "options": [
+        "Sì, nei prototipi di funzione i nomi dei parametri sono opzionali",
+        "No, i nomi di tutti i parametri devono быть obbligatoriamente specificati nel prototipo",
+        "È consentito omettere il nome solo per l'ultimo parametro"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per il compilatore nel prototipo di funzione contano solo i tipi di dati e il loro ordine. I nomi dei parametri nella dichiarazione servono soltanto per la leggibilità e possono essere omessi.",
+        "Errato. Il requisito di specificare i nomi dei parametri esiste solo nella definizione del corpo della funzione.",
+        "Errato. La regola si applica a qualsiasi parametro nel prototipo."
+      ]
+    },
+    {
+      "id": "it_clang_936",
+      "widget_id": "widget_clang_936",
+      "topic": "Tipi di dati — Passaggio di enumerazioni (enum)",
+      "q": "In che modo vengono passati i valori di tipo `enum` nelle funzioni del linguaggio C?",
+      "hint": "Quale tipo base rappresenta le costanti enum in memoria?",
+      "options": [
+        "Per valore come valori interi",
+        "Esclusivamente tramite puntatore",
+        "Come stringhe di testo con i nomi delle costanti",
+        "È vietato passare gli enum alle funzioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C gli elementi `enum` rappresentano costanti intere (di solito di tipo `int`). Il passaggio avviene per valore tramite la normale copia del numero.",
+        "Errato. Le enumerazioni sono tipi scalari e non richiedono il passaggio per puntatore.",
+        "Errato. I nomi delle costanti enum esistono solo in fase di compilazione e non vengono conservati come stringhe.",
+        "Errato. Le enumerazioni sono un tipo di dato C completo a tutti gli effetti."
+      ]
+    },
+    {
+      "id": "it_clang_937",
+      "widget_id": "widget_clang_937",
+      "topic": "Qualificatore restrict (C99) — Puntatori senza sovrapposizione di memoria",
+      "q": "Cosa comunicano al compilatore i qualificatori `restrict` nei parametri puntatore della функция `copy_data(int * restrict dst, const int * restrict src, int n)`?",
+      "hint": "I puntatori dst e src possono puntare alla stessa memoria o a memorie sovrapposte?",
+      "options": [
+        "Le aree di memoria puntate non si sovrappongono, consentendo al compilatore di eseguire ottimizzazioni vettoriali aggressive",
+        "I puntatori sono costanti e i loro indirizzi non possono essere modificati all'interno della funzione",
+        "La funzione deve essere eseguita rigorosamente in modalità a thread singolo",
+        "I puntatori sono garantiti per non essere NULL"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il qualificatore `restrict` di C99 garantisce al compilatore che l'accesso all'oggetto durante la vita del puntatore avverrà *solo* tramite quel specifico puntatore. Ciò previene l'aliasing (sovrapposizione della memoria) e offre all'ottimizzatore piena libertà d'azione.",
+        "Errato. La costanza del puntatore stesso è definita da `int * const`.",
+        "Errato. Il parallelismo dei thread non è direttamente correlato al qualificatore `restrict`.",
+        "Errato. Il qualificatore `restrict` non esegue controlli su NULL."
+      ]
+    },
+    {
+      "id": "it_clang_938",
+      "widget_id": "widget_clang_938",
+      "topic": "Passaggio di parametri — Modifica della copia del puntatore",
+      "q": "Cosa stamperà `printf(\"%d\", *ptr)` dopo la chiamata `shift(ptr)`?",
+      "hint": "Il puntatore stesso (la variabile ptr) viene passato per valore alla функция shift?",
+      "options": [
+        "10",
+        "20",
+        "0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il puntatore `ptr` viene passato a `shift` per valore. All'interno della функция viene incrementata la copia locale del puntatore `p++`. Il puntatore originale `ptr` in `main` non modifica il suo valore e continua a puntare a 10.",
+        "Errato. Per spostare il puntatore `ptr` stesso in `main` sarebbe stato necessario passare `shift(&ptr)`.",
+        "Errato. La memoria non è stata azzerata.",
+        "Errato. Il codice non contiene errori."
+      ]
+    },
+    {
+      "id": "it_clang_939",
+      "widget_id": "widget_clang_939",
+      "topic": "Sintassi C99 — Array a lunghezza variabile (VLA) nei parametri",
+      "q": "Quale regola disciplina rigorosamente l'ordine dei parametri quando si passa un array a lunghezza variabile (VLA) a una функция?",
+      "hint": "Il parametro n può essere utilizzato nelle parentesi [n] se il compilatore non lo ha ancora incontrato nell'elenco degli argomenti?",
+      "options": [
+        "Il parametro n, che specifica la dimensione dell'array, deve trovarsi nell'elenco dei parametri RIGOROSAMENTE PRIMA del parametro array arr[n]",
+        "L'ordine dei parametri non ha importanza",
+        "Il parametro n deve essere specificato rigorosamente dopo l'array arr[n]",
+        "È vietato passare array VLA alle funzioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il compilatore legge l'intestazione della функция da sinistra a destra. Affinché l'espressione `arr[n]` sia compilata, la variabile `n` deve essere dichiarata prima (a sinistra) nell'elenco dei parametri.",
+        "Errato. L'ordine è rigorosamente fisso da sinistra a destra.",
+        "Errato. In tal caso si verificherà un errore `n undeclared` durante l'analisi delle parentesi `arr[n]`.",
+        "Errato. Il passaggio di array VLA è pienamente supportato dallo standard C99."
+      ]
+    },
+    {
+      "id": "it_clang_940",
+      "widget_id": "widget_clang_940",
+      "topic": "Passaggio di strutture — Divieto di indirizzamento dei campi di bit (Bit-fields)",
+      "q": "Cosa succederà quando si tenta di passare tramite puntatore un singolo campo di bit di una struttura (chiamata `check(&h.flag)`)?",
+      "hint": "Un singolo campo di bit (ad esempio della dimensione di 1 bit) possiede un proprio indirizzo univoco in memoria?",
+      "options": [
+        "Errore di compilazione — l'estrazione dell'indirizzo da un campo di bit è direttamente vietata dallo standard C",
+        "Il codice verrà compilato con successo e passerà l'indirizzo del byte contenente il campo",
+        "Verrà passato unicamente un puntatore nullo NULL",
+        "Il campo di bit verrà automaticamente copiato nell'heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'indirizzamento in C opera a livello di byte. I campi di bit possono condividere uno stesso byte e non hanno un indirizzo univoco proprio, pertanto l'operatore `&` applicato a un campo di bit è vietato e causa un errore di compilazione.",
+        "Errato. I puntatori si riferiscono all'indirizzo di un byte, non a un singolo bit, pertanto tale chiamata non verrà compilata.",
+        "Errato. L'errore si verifica in fase di compilazione.",
+        "Errato. Non si verifica alcuna allocazione di memoria nell'heap."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,523 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_150",
+      "widget_id": null,
+      "topic": "CLI Linux — Sospensione del processo (Job Control)",
+      "q": "Quale combinazione di tasti invia il segnale SIGTSTP a un programma C in esecuzione nel terminale, sospendendolo temporaneamente e restituendo il controllo alla shell?",
+      "hint": "Per riportare il processo in primo piano da questo stato, si usa il comando fg nel terminale.",
+      "options": [
+        "Ctrl + Z",
+        "Ctrl + C",
+        "Ctrl + D"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La combinazione `Ctrl + Z` invia il segnale `SIGTSTP`, portando il processo nello stato Stopped. Il comando `fg` lo riporta in primo piano.",
+        "Errato. `Ctrl + C` invia `SIGINT`, che interrompe il processo in esecuzione.",
+        "Errato. `Ctrl + D` invia l'indicatore di fine file (EOF / End-Of-File) allo stream stdin."
+      ]
+    },
+    {
+      "id": "it_clang_151",
+      "widget_id": "widget_clang_151",
+      "topic": "CLI GDB — Debug passo-passo: step vs next",
+      "q": "Qual è la differenza principale tra il comando step (s) e il comando next (n) durante il debug di un programma C in GDB?",
+      "hint": "Pensa a cosa succede se la riga di codice contiene una chiamata a una funzione personalizzata.",
+      "options": [
+        "step entra ALL'INTERNO della funzione chiamata nella riga corrente, mentre next la scavalca (esegue la funzione per intero)",
+        "step scavalca la chiamata di funzione, mentre next entra all'interno",
+        "step esegue una singola istruzione assembly, mentre next esegue una riga di codice C",
+        "Questi comandi sono completi sinonimi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `step` entra nel corpo della funzione chiamata. Il comando `next` esegue l'intera funzione e si arresta alla riga successiva del contesto corrente.",
+        "Errato. Il comportamento dei due comandi è invertito.",
+        "Errato. L'esecuzione passo-passo delle istruzioni assembly si effettua con i comandi `stepi` (si) e `nexti` (ni).",
+        "Errato. I comandi eseguono scenari di debug fondamentalmente diversi."
+      ]
+    },
+    {
+      "id": "it_clang_152",
+      "widget_id": null,
+      "topic": "GCC — Disattivazione di tutti i warning (-w)",
+      "q": "È vero che passare l'opzione gcc -w (w minuscola) disabilita completamente la visualizzazione di TUTTI i warning (avvertimenti)?",
+      "hint": "Non confondere `-w` minuscolo (inhibit warnings) con `-W` maiuscolo.",
+      "options": [
+        "Vero (-w disabilita qualsiasi avviso del compilatore)",
+        "Falso (Questo flag al contrario abilita il livello massimo di avvisi)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-w` disabilita completamente tutti i warning di GCC. Sebbene non sia raccomandato in produzione, questo flag esiste.",
+        "Errato. L'attivazione di tutti gli avvisi di base si imposta con il flag `-Wall`."
+      ]
+    },
+    {
+      "id": "it_clang_153",
+      "widget_id": "widget_clang_153",
+      "topic": "CLI Linux — Limiti dei file aperti (ulimit)",
+      "q": "Quale comando mostra il numero massimo consentito di file descriptor aperti contemporaneamente (open files) per i processi dell'utente corrente?",
+      "hint": "Il comando ulimit gestisce le risorse della shell e il flag -n sta per 'number of open files'.",
+      "options": [
+        "ulimit -n",
+        "sysctl -a",
+        "lsof -max",
+        "free -m",
+        "df -h"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `ulimit -n` mostra il numero massimo di file descriptor aperti. Se un programma C tenta di aprire più file, la chiamata `open()` / `socket()` restituirà `-1` con errore `EMFILE`.",
+        "Errato. `sysctl -a` mostra i parametri del kernel Linux.",
+        "Errato. Il flag `-max` per `lsof` non esiste.",
+        "Errato. `free -m` mostra lo stato di utilizzo della memoria RAM in megabyte.",
+        "Errato. `df -h` mostra lo spazio libero sulle partizioni di disco montate."
+      ]
+    },
+    {
+      "id": "it_clang_154",
+      "widget_id": null,
+      "topic": "GCC — Estensioni dei file nelle fasi di compilazione",
+      "q": "Quale tipo di file viene indicato dall'estensione standard .o dopo l'esecuzione del comando gcc -c main.c?",
+      "hint": "La fase di traduzione del codice C in codice macchina senza l'intervento del linker.",
+      "options": [
+        "File oggetto (Object File) con istruzioni macchina e simboli non risolti",
+        "File sorgente con codice C",
+        "File di preprocessamento con gli header inclusi",
+        "Listing assembly in formato testo",
+        "Archivio statico di librerie",
+        "Libreria dinamica condivisa"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il file `.o` è un modulo oggetto binario non collegato (Object File), contenente il codice macchina del file C compilato.",
+        "Errato. Il codice sorgente C ha estensione `.c`.",
+        "Errato. L'output del preprocessore ha solitamente estensione `.i`.",
+        "Errato. Il listing assembly in testo ha estensione `.s`.",
+        "Errato. Gli archivi statici hanno estensione `.a`.",
+        "Errato. Le librerie dinamiche condivise hanno estensione `.so`."
+      ]
+    },
+    {
+      "id": "it_clang_155",
+      "widget_id": "widget_clang_155",
+      "topic": "GCC / Linux — Opzione rpath e hardcoding dei percorsi delle librerie",
+      "q": "A cosa serve il parametro del linker -rpath (o -Wl,-rpath=...) durante la build dell'applicazione?",
+      "hint": "Pensa a come il programma possa trovare una libreria .so non standard all'avvio senza dover impostare continuamente la variabile LD_LIBRARY_PATH.",
+      "options": [
+        "Inserisce il percorso di ricerca delle librerie dinamiche (.so) direttamente nell'header del file ELF per il caricatore runtime",
+        "Indica il percorso dei file header (.h) durante la compilazione",
+        "Crea una copia statica della libreria all'interno dell'eseguibile",
+        "Reindirizza lo standard error di esecuzione nella cartella specificata"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'opzione `rpath` (Runpath) inserisce la directory specificata nell'header del file `ELF` (nella sezione `.dynamic`). All'avvio dell'applicazione, il loader `ld.so` cerca prima di tutto le librerie condivise in questo percorso integrato.",
+        "Errato. I percorsi dei file header sono gestiti dal flag del compilatore `-I`.",
+        "Errato. La creazione di archivi statici è svolta da `ar`, mentre l'inclusione statica è gestita da `-static`.",
+        "Errato. Questa opzione non ha nulla a che fare con i file di log o gli stream di output."
+      ]
+    },
+    {
+      "id": "it_clang_156",
+      "widget_id": "widget_clang_156",
+      "topic": "CLI GDB — Debug di programmi multiprocesso (fork)",
+      "q": "Cosa succede in GDB dopo la chiamata alla funzione fork() nel codice C se si imposta (gdb) set follow-fork-mode child?",
+      "hint": "Fai attenzione al valore 'child': dove deve spostare l'attenzione il debugger durante il branching?",
+      "options": [
+        "Il debugger continuerà automaticamente a eseguire il debug del processo figlio, smettendo di tracciare il genitore",
+        "GDB bloccherà entrambi i processi contemporaneamente e terminerà l'esecuzione",
+        "Il debugger ignorerà la creazione del processo figlio e rimarrà nel genitore (parent)",
+        "GDB chiuderà il processo figlio e genererà un core dump"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per impostazione predefinita GDB rimane nel processo genitore alla chiamata di `fork()`. Il comando `set follow-fork-mode child` sposta il debugger sul tracciamento del processo figlio appena creato.",
+        "Errato. Per bloccare entrambi i processi si utilizzano altre impostazioni della modalità `detach-on-fork`.",
+        "Errato. Rimanere nel genitore è il comportamento predefinito (`set follow-fork-mode parent`).",
+        "Errato. Il debugger non termina il processo creato e non genera dump."
+      ]
+    },
+    {
+      "id": "it_clang_157",
+      "widget_id": "widget_clang_157",
+      "topic": "CLI Linux — Lettura della dynamic symbol table con l'utility objdump",
+      "q": "Quale utility con il flag -T mostra solo la tabella dei simboli dinamici di una libreria/binario (funzioni export/import ELF)?",
+      "hint": "Il comando svolge un compito simile a 'nm -D', ma appartiene alla famiglia GNU Binutils per il dump delle strutture ELF.",
+      "options": [
+        "objdump -T",
+        "gcc -T",
+        "readelf -h",
+        "ldd -v",
+        "strip -T"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `objdump -T` (o `--dynamic-syms`) mostra i simboli esportati e importati dalla tabella dinamica ELF, permettendo di sapere quali funzioni offre la libreria.",
+        "Errato. Il flag `-T` in GCC specifica un linker script.",
+        "Errato. `readelf -h` mostra solo l'header ELF e non l'elenco dei simboli dinamici.",
+        "Errato. `ldd` mostra l'elenco dei file di dipendenza, non i singoli simboli delle funzioni.",
+        "Errato. `strip` rimuove i simboli anziché mostrarli."
+      ]
+    },
+    {
+      "id": "it_clang_158",
+      "widget_id": "widget_clang_158",
+      "topic": "GCC — Generazione delle regole di dipendenza per Makefile (-M)",
+      "q": "A cosa serve il flag di compilazione gcc -M main.c?",
+      "hint": "Pensa a come automatizzare la creazione delle regole di build nel Makefile quando un file C include molti file header.",
+      "options": [
+        "Genera una regola per il Makefile con l'elenco completo dei file header (.h) da cui dipende il file .c",
+        "Definisce la macro -DMAIN nel codice",
+        "Esegue la build del progetto in modalità multithread",
+        "Mostra a schermo il codice assembly ottimizzato per processori MIPS"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-M` analizza il file sorgente e genera la riga di dipendenza nel formato `main.o: main.c header1.h header2.h`, che può essere inserita direttamente in un `Makefile`.",
+        "Errato. L'impostazione di una macro si effettua tramite `-D`.",
+        "Errato. La build multithread è gestita da `make -j`.",
+        "Errato. La generazione del codice assembly si esegue con il flag `-S`."
+      ]
+    },
+    {
+      "id": "it_clang_159",
+      "widget_id": "widget_clang_159",
+      "topic": "CLI GDB — Breakpoint sulle chiamate di sistema (Catchpoints)",
+      "q": "Cosa succede durante l'esecuzione se in GDB si inserisce il comando (gdb) catch syscall open?",
+      "hint": "La parola catch significa 'intercettazione', e syscall indica una chiamata di sistema a basso livello.",
+      "options": [
+        "GDB sospenderà l'esecuzione del programma ogni volta che il processo effettua la chiamata di sistema open()",
+        "GDB impedirà al programma di aprire qualsiasi file su disco",
+        "GDB genererà un avviso quando si tenta di aprire un file inesistente",
+        "Il programma terminerà immediatamente con errore di Segmentation Fault"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Impostare un `catchpoint` su `syscall` fa sì che il debugger si attivi esattamente all'entrata o all'uscita dal syscall specificato del kernel (in questo caso `open` o `openat`).",
+        "Errato. GDB si limita a monitorare la chiamata, ma non ne blocca l'esecuzione a livello di kernel.",
+        "Errato. La reazione all'assenza di un file fa parte della logica del programma, non dei breakpoint di GDB.",
+        "Errato. Il comando è sicuro ed è uno strumento di tracciamento."
+      ]
+    },
+    {
+      "id": "it_clang_160",
+      "widget_id": "widget_clang_160",
+      "topic": "GCC — Salvataggio dei file intermedi di build (-save-temps)",
+      "q": "Quali file intermedi salverà il compilatore nella cartella corrente se si esegue gcc -save-temps main.c -o app?",
+      "hint": "Ricorda tutte le fasi di build in C: preprocessamento, traduzione in assembly e generazione del codice oggetto.",
+      "options": [
+        "main.i (risultato del preprocessamento), main.s (codice assembly) e main.o (file oggetto)",
+        "Solo main.o",
+        "main.log e main.err",
+        "main.c.bak"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-save-temps` impedisce a GCC di eliminare i file temporanei delle fasi intermedie. Sul disco rimarranno `.i` (codice C espanso), `.s` (assembly) e `.o` (oggetto).",
+        "Errato. Questo è solo uno dei tre passaggi intermedi.",
+        "Errato. Il compilatore non genera automaticamente file di log.",
+        "Errato. Non vengono create copie di backup dei file sorgente."
+      ]
+    },
+    {
+      "id": "it_clang_161",
+      "widget_id": "widget_clang_161",
+      "topic": "CLI Linux — Estrazione di stringhe stampabili con strings",
+      "q": "A cosa serve il comando da console strings durante l'analisi dei file binari C?",
+      "hint": "I file ELF contengono vari testi: percorsi, messaggi di errore, letterali di stringa per printf.",
+      "options": [
+        "Cerca e mostra in console tutte le sequenze di caratteri stampabili (stringhe) incorporate nel binario",
+        "Converte il file binario in un documento di testo",
+        "Verifica la correttezza dei tipi di dati string nel codice C",
+        "Rimuove i letterali di stringa dal binario"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'utility `strings` scansiona i file binari e trova le stringhe ASCII/UTF-8 più lunghe di 4 caratteri (ottimo per cercare rapidamente costanti di stringa, URL o chiavi).",
+        "Errato. Mostra solo i letterali di stringa trovati, non tutto il codice.",
+        "Errato. L'utility non effettua verifiche sui tipi di dati.",
+        "Errato. `strings` legge il file, ma non ne estrae né modifica il contenuto originale."
+      ]
+    },
+    {
+      "id": "it_clang_162",
+      "widget_id": "widget_clang_162",
+      "topic": "Kernel Linux — Comandi per la build dei moduli del kernel",
+      "q": "Con quale utility si esegue la build dei driver e dei moduli del kernel Linux (file .ko)?",
+      "hint": "La compilazione dei moduli del kernel si basa su un'infrastruttura di build specifica (kbuild).",
+      "options": [
+        "make (invocato utilizzando il Makefile del kernel e Kbuild)",
+        "cmake -DKERNEL=ON",
+        "gcc -kernel",
+        "ld --kernel-module"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I moduli del kernel si compilano con l'utility `make`, che invoca uno speciale Makefile dal tree dei sorgenti/header del kernel corrente (sistema Kbuild).",
+        "Errato. CMake di base non contiene regole specifiche per la compilazione di LKM (Linux Kernel Modules).",
+        "Errato. Il flag `-kernel` non esiste nel driver GCC.",
+        "Errato. Una semplice invocazione di `ld` senza il sottosistema Kbuild non compila un oggetto `.ko`."
+      ]
+    },
+    {
+      "id": "it_clang_163",
+      "widget_id": "widget_clang_163",
+      "topic": "GCC — Inlining delle funzioni",
+      "q": "In cosa consiste l'ottimizzazione dell'inlining delle funzioni, attivata dai flag -O2/-O3 o -finline-functions?",
+      "hint": "Pensa a come eliminare il costo delle istruzioni call e push/pop durante la chiamata a funzioni di piccole dimensioni.",
+      "options": [
+        "Sostituisce la chiamata di funzione (call) direttamente con il suo codice macchina nel punto di chiamata, rimuovendo il sovraccarico sullo stack",
+        "Sposta l'esecuzione della funzione in un thread parallelo separato",
+        "Salva la funzione in una libreria esterna .so",
+        "Trasforma il codice C della funzione in una macro del preprocessore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'inlining inserisce il corpo della funzione direttamente nel punto di chiamata, eliminando prologo/epilogo della funzione e la chiamata `call`, anche se ciò può aumentare leggermente le dimensioni del binario finale.",
+        "Errato. L'inlining non crea thread.",
+        "Errato. L'inlining al contrario integra il codice all'interno della chiamata anziché spostarlo in moduli esterni.",
+        "Errato. La traduzione avviene a livello AST/GIMPLE del compilatore, non tramite il preprocessore."
+      ]
+    },
+    {
+      "id": "it_clang_164",
+      "widget_id": "widget_clang_164",
+      "topic": "CLI Linux — Ricerca delle cause di terminazione del processo tramite OOM-Killer",
+      "q": "Come scoprire tramite CLI se un programma C è stato terminato in modo anomalo dal sottosistema del kernel OOM-Killer (Out-Of-Memory)?",
+      "hint": "Il sottosistema del kernel scrive i messaggi di carenza critica di RAM nel buffer circolare di sistema (dmesg).",
+      "options": [
+        "Controllare il buffer circolare dei messaggi del kernel usando dmesg (ad esempio, dmesg | grep -i oom)",
+        "Eseguire il comando valgrind --oom",
+        "Verificare la dimensione del file main.c",
+        "Leggere il contenuto di /etc/hosts"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se un programma alloca troppa memoria, il kernel lo termina inviando il segnale `SIGKILL` (Out Of Memory Killer) e registra il motivo dettagliato nel log del kernel, accessibile tramite `dmesg` o `journalctl -k`.",
+        "Errato. Il flag `--oom` non esiste in valgrind.",
+        "Errato. La dimensione del sorgente non ha alcuna relazione con il consumo di memoria in runtime.",
+        "Errato. Il file `/etc/hosts` contiene le associazioni tra domini e indirizzi IP."
+      ]
+    },
+    {
+      "id": "it_clang_165",
+      "widget_id": "widget_clang_165",
+      "topic": "CLI Linux — Ricerca di socket e file aperti (lsof)",
+      "q": "Il tuo programma C di rete è crashato, ma al riavvio restituisce l'errore «Address already in use» (EADDRINUSE). Con quale utility è possibile identificare rapidamente il PID del processo che occupa la porta di rete?",
+      "hint": "L'utility prende il nome da 'list open files' ed è in grado di filtrare per connessioni di rete.",
+      "options": [
+        "lsof -i :<port>",
+        "ls -l /proc/net",
+        "last -n 10",
+        "logname",
+        "lsusb"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'utility `lsof` (list open files) con il flag `-i :8080` mostrerà il processo e il suo `PID` che occupa una specifica porta TCP/UDP.",
+        "Errato. La consultazione di `/proc/net` fornisce informazioni grezze del kernel, ma non un risultato mappato e di rapida lettura.",
+        "Errato. `last` mostra la cronologia degli accessi degli utenti al sistema.",
+        "Errato. `logname` mostra il nome dell'utente connesso alla sessione corrente.",
+        "Errato. `lsusb` mostra l'elenco dei dispositivi USB collegati."
+      ]
+    },
+    {
+      "id": "it_clang_166",
+      "widget_id": "widget_clang_166",
+      "topic": "CLI Linux — Tracciamento delle chiamate di sistema (strace)",
+      "q": "Un programma C si blocca all'avvio. Sospetti che stia tentando di leggere un file inesistente. Quale strumento permette di visualizzare TUTTE le chiamate di sistema (read, write, openat) effettuate dal processo in tempo reale?",
+      "hint": "Il nome dell'utility sta per System Trace.",
+      "options": [
+        "strace",
+        "sysctl",
+        "stat",
+        "systemctl",
+        "size",
+        "sync"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strace` intercetta e registra le chiamate di sistema eseguite da un processo, oltre ai segnali ricevuti. È lo strumento principale per il debug di sistema in Linux.",
+        "Errato. `sysctl` legge e modifica i parametri del kernel Linux durante l'esecuzione.",
+        "Errato. `stat` mostra lo stato di un file o del file system.",
+        "Errato. `systemctl` gestisce i servizi e il gestore di sistema systemd.",
+        "Errato. `size` mostra le dimensioni delle sezioni di un file ELF.",
+        "Errato. `sync` forza la scrittura dei dati in buffer sul disco."
+      ]
+    },
+    {
+      "id": "it_clang_167",
+      "widget_id": "widget_clang_167",
+      "topic": "CLI Linux — Tracciamento delle chiamate alle librerie dinamiche (ltrace)",
+      "q": "Qual è la differenza fondamentale tra ltrace e strace durante l'analisi dell'esecuzione di un binario C?",
+      "hint": "Pensa alla differenza tra chiamare una funzione di libc (ad esempio malloc) e accedere direttamente al kernel (ad esempio brk/mmap).",
+      "options": [
+        "ltrace intercetta le chiamate alle funzioni delle librerie dinamiche (Library calls), mentre strace intercetta le chiamate di sistema del kernel (Syscalls)",
+        "ltrace funziona solo con codice assembly, mentre strace con codice C",
+        "ltrace traccia l'esecuzione dei thread, mentre strace solo dei processi",
+        "Nessuna, ltrace è un alias obsoleto del comando strace"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `ltrace` (Library Trace) traccia le chiamate di funzione dalle librerie dinamiche (ad esempio `strcpy`, `printf`, `malloc`), mentre `strace` registra le richieste al kernel del sistema operativo.",
+        "Errato. Entrambe le utility funzionano a livello di file binari eseguibili senza richiedere il codice sorgente.",
+        "Errato. Sia `strace` che `ltrace` sono in grado di tracciare applicazioni multithread.",
+        "Errato. Sono utility completamente diverse del toolkit di debug."
+      ]
+    },
+    {
+      "id": "it_clang_168",
+      "widget_id": "widget_clang_168",
+      "topic": "CLI Linux — Analisi dei namespace dei processi (lsns)",
+      "q": "Quale utility della famiglia 'ls' consente di visualizzare i namespace attivi in Linux, utilizzati nello sviluppo e nell'isolamento dei container?",
+      "hint": "Il nome dell'utility è formato dallo schema ls + namespaces.",
+      "options": [
+        "lsns",
+        "lscpu",
+        "lspci",
+        "lslocks",
+        "lsmod"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `lsns` (list namespaces) mostra informazioni su tutti i namespace disponibili (PID, net, mnt, ipc, user, uts) e sui processi ad essi associati.",
+        "Errato. `lscpu` mostra informazioni dettagliate sull'architettura del processore.",
+        "Errato. `lspci` mostra l'elenco dei dispositivi PCI.",
+        "Errato. `lslocks` mostra l'elenco dei lock sui file locali.",
+        "Errato. `lsmod` mostra lo stato dei moduli del kernel Linux caricati."
+      ]
+    },
+    {
+      "id": "it_clang_169",
+      "widget_id": "widget_clang_169",
+      "topic": "GCC / Linux — Analisi delle dimensioni delle sezioni ELF (.text, .data, .bss)",
+      "q": "Quale comando mostra le dimensioni delle sezioni di codice macchina (.text), dati inizializzati (.data) e dati non inizializzati (.bss) di un programma C compilato?",
+      "hint": "Una breve utility di 4 lettere che significa 'dimensione'.",
+      "options": [
+        "size ./app",
+        "stat ./app",
+        "du -h ./app",
+        "strings ./app",
+        "split ./app"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'utility `size` del pacchetto GNU Binutils stampa le dimensioni delle sezioni `.text` (codice), `.data` (variabili globali con valore) e `.bss` (variabili azzerate).",
+        "Errato. `stat` mostra i metadati di un file dal file system (inode, timestamp).",
+        "Errato. `du -h` mostra solo lo spazio occupato dal file sul disco.",
+        "Errato. `strings` trova e mostra le stringhe di testo all'interno di un file.",
+        "Errato. `split` suddivide un file in frammenti di dimensione specificata."
+      ]
+    },
+    {
+      "id": "it_clang_170",
+      "widget_id": "widget_clang_170",
+      "topic": "CLI Linux — Riduzione delle dimensioni del binario (strip)",
+      "q": "Quale utility rimuove la tabella dei simboli e le informazioni di debug da un binario C compilato, riducendone significativamente le dimensioni prima del rilascio in produzione?",
+      "hint": "Il nome del comando si traduce come 'spogliare' o 'rimuovere'.",
+      "options": [
+        "strip",
+        "shred",
+        "split",
+        "sed",
+        "sstep"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'utility `strip` rimuove i simboli di debug non utilizzati dai file ELF. Ciò rende il binario più piccolo e ne complica il reverse engineering.",
+        "Errato. `shred` sovrascrive in modo sicuro un file sul disco per impedirne il recupero.",
+        "Errato. `split` divide un file in più parti.",
+        "Errato. `sed` è un editor di testo in streaming.",
+        "Errato. Il comando `sstep` non esiste nel set base di utility POSIX/GNU."
+      ]
+    },
+    {
+      "id": "it_clang_171",
+      "widget_id": "widget_clang_171",
+      "topic": "CLI Linux — Informazioni sui dispositivi a blocchi esistenti (lsblk)",
+      "q": "Devi scoprire su quale disco e partizione è montata la cartella /var/log dove il tuo programma C scrive i log. Quale comando della famiglia 'ls' mostra una struttura ad albero chiara dei dischi e delle relative partizioni?",
+      "hint": "Le lettere alla fine del nome dell'utility stanno per 'block devices'.",
+      "options": [
+        "lsblk",
+        "lsof",
+        "lsscsi",
+        "lsipc"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `lsblk` (list block devices) mostra un albero dettagliato di tutti i dispositivi a blocchi (HDD, SSD, NVMe, loop) con i relativi punti di mount e file system.",
+        "Errato. `lsof` cerca i file aperti dai processi.",
+        "Errato. `lsscsi` mostra solo i dispositivi del bus SCSI/SATA.",
+        "Errato. `lsipc` mostra informazioni sugli oggetti di comunicazione tra processi (IPC)."
+      ]
+    },
+    {
+      "id": "it_clang_172",
+      "widget_id": "widget_clang_172",
+      "topic": "CLI Linux — Configurazione dinamica dei parametri del kernel (sysctl)",
+      "q": "Quale comando permette a uno sviluppatore di modificare al volo i parametri del kernel Linux in esecuzione (ad esempio per aumentare la dimensione max dei buffer dei socket rmem_max/wmem_max) senza riavviare?",
+      "hint": "Il nome del comando sta per system control.",
+      "options": [
+        "sysctl",
+        "systemctl",
+        "systemd",
+        "service",
+        "setenv",
+        "sudoers"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `sysctl` viene utilizzato per leggere e modificare le impostazioni del kernel Linux durante l'esecuzione (visualizzabili nella directory `/proc/sys/`).",
+        "Errato. `systemctl` gestisce i servizi in background di systemd.",
+        "Errato. `systemd` è l'init system e gestore dei processi di sistema.",
+        "Errato. `service` è uno script obsoleto per avviare servizi Init.",
+        "Errato. `setenv` è una funzione integrata della C-shell per impostare le variabili d'ambiente.",
+        "Errato. `sudoers` è il file di configurazione dei permessi per sudo."
+      ]
+    },
+    {
+      "id": "it_clang_173",
+      "widget_id": "widget_clang_173",
+      "topic": "CLI Linux — Analisi dei tempi di avvio dei servizi di sistema (systemd-analyze)",
+      "q": "Un demone C deve avviarsi il prima possibile all'avvio del sistema. Quale utility aiuta a identificare quali servizi systemd rallentano maggiormente l'avvio del sistema operativo?",
+      "hint": "Un'utility del pacchetto systemd con il sotto-comando 'blame'.",
+      "options": [
+        "systemd-analyze blame",
+        "stat --boot",
+        "service time",
+        "syslog-time"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `systemd-analyze blame` mostra l'elenco di tutti i servizi avviati, ordinato in base al tempo richiesto da ciascuno di essi per l'avvio.",
+        "Errato. Il comando `stat --boot` non esiste.",
+        "Errato. `service` non è in grado di misurare i tempi di inizializzazione.",
+        "Errato. L'utility `syslog-time` non esiste nelle distribuzioni standard."
+      ]
+    },
+    {
+      "id": "it_clang_174",
+      "widget_id": "widget_clang_174",
+      "topic": "CLI Linux — Eliminazione sicura dei file tramite sovrascrittura (shred)",
+      "q": "Qual è la differenza nell'operato del comando shred su un file dati di un programma C rispetto al normale comando rm?",
+      "hint": "Il comando rm si limita a rimuovere il collegamento al file nel file system (unlink), lasciando i byte sul disco.",
+      "options": [
+        "shred sovrascrive ripetutamente il contenuto del file con dati casuali prima dell'eliminazione, rendendo impossibile il recupero",
+        "shred comprime il file in un archivio tar.gz prima dell'eliminazione",
+        "shred sposta il file nel cestino dell'utente anziché eliminarlo direttamente",
+        "shred carica il contenuto del file in un RAM disk"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `shred` sovrascrive il file specificato con pattern di dati casuali per rendere difficile o impossibile il suo recupero con strumenti hardware/software.",
+        "Errato. `shred` non archivia nulla.",
+        "Errato. `shred` distrugge i dati anziché spostarli.",
+        "Errato. La sovrascrittura avviene direttamente sul dispositivo di memorizzazione."
+      ]
+    }
+  ]
+}

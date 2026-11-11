@@ -1,0 +1,563 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_1061",
+      "widget_id": "widget_clang_1061",
+      "topic": "Standard C — Firme della funzione main()",
+      "q": "Quali due firme della funzione main() sono rigorosamente standard per un ambiente hosted nel linguaggio C?",
+      "hint": "Pensa alle opzioni senza argomenti e con argomenti della riga di comando.",
+      "options": [
+        "int main(void) e int main(int argc, char *argv[])",
+        "void main() e int main()",
+        "int main(int argc, char **argv, char **envp) — l'unica opzione",
+        "double main(void) e void main(int argc)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard ISO C garantisce la compatibilità di due forme: senza parametri `int main(void)` e con argomenti della riga di comando `int main(int argc, char *argv[])` (o `char **argv`).",
+        "Errato. La forma `void main()` non è conforme allo standard ISO C per i sistemi hosted.",
+        "Errato. La firma con `envp` è un'estensione POSIX comune, ma non fa parte dello standard base del C.",
+        "Errato. La funzione `main` deve obbligatoriamente restituire il tipo `int`."
+      ]
+    },
+    {
+      "id": "it_clang_1062",
+      "widget_id": null,
+      "topic": "Standard C99 — Return 0 implicito",
+      "q": "Cosa succede se nello standard C99 (e successivi) la funzione main() viene eseguita fino alla fine raggiungendo la parentesi graffa di chiusura }, senza un'istruzione return esplicita?",
+      "hint": "Per la funzione main() si applica un'eccezione speciale dello standard?",
+      "options": [
+        "Il compilatore inserirà automaticamente un return 0; implicito",
+        "Si verificherà un comportamento indefinito (UB) con la restituzione di un valore spazzatura",
+        "Il programma terminerà in modo anomalo con un errore di Segmentation Fault"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A partire dallo standard C99, per la funzione `main()` è prevista un'eccezione: se il controllo raggiunge la fine del corpo della funzione senza una chiamata a `return`, viene automaticamente restituito `0` (terminazione con successo).",
+        "Errato. Per le funzioni normali si tratta effettivamente di UB, ma per `main()`, a partire da C99, è garantito `return 0`.",
+        "Errato. Non si verificherà alcun errore di esecuzione."
+      ]
+    },
+    {
+      "id": "it_clang_1063",
+      "widget_id": null,
+      "topic": "Specifiche del C — Chiamata ricorsiva a main()",
+      "q": "In linguaggio C è consentito chiamare la funzione main() ricorsivamente da se stessa o da altre funzioni?",
+      "hint": "Ricorda se il C differisce dal C++ su questo punto.",
+      "options": [
+        "Sì, in C la chiamata ricorsiva a main() è completamente consentita dallo standard",
+        "No, la chiamata a main() dal codice del programma è severamente vietata"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel linguaggio C la funzione `main()` è una normale funzione e può essere chiamata ricorsivamente. (Nota: in C++ e in C23/alcune modalità rigide la chiamata a `main` è vietata).",
+        "Errato. Nel C classico questa è un'operazione del tutto consentita."
+      ]
+    },
+    {
+      "id": "it_clang_1064",
+      "widget_id": "widget_clang_1064",
+      "topic": "Estensioni POSIX — Variabili d'ambiente in envp",
+      "q": "Che cosa rappresenta il terzo parametro opzionale `char *envp[]` nella firma `int main(int argc, char *argv[], char *envp[])`?",
+      "hint": "Quali informazioni vengono trasmesse dal sistema operativo all'avvio del processo?",
+      "options": [
+        "Un array di stringhe contenente le variabili d'ambiente (Environment variables) del sistema operativo",
+        "Un array di percorsi delle librerie dinamiche collegate (.so/.dll)",
+        "Un puntatore ai parametri di configurazione del compilatore",
+        "Un elenco dei descrittori di file aperti del processo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il parametro `envp` (Environment Pointer) è un'estensione POSIX contenente un array di stringhe della forma `CHIAVE=VALORE` che rappresentano le variabili d'ambiente del sistema operativo. L'array termina con un puntatore `NULL`.",
+        "Errato. Le librerie dinamiche vengono caricate dal linker dinamico del sistema operativo (ld.so) e non vengono passate in `envp`.",
+        "Errato. I flag del compilatore vengono applicati nella fase di compilazione e sono assenti a runtime.",
+        "Errato. Per i file vengono utilizzati i descrittori di sistema (STDIN, STDOUT, STDERR)."
+      ]
+    },
+    {
+      "id": "it_clang_1065",
+      "widget_id": null,
+      "topic": "Standard C — Uso di void main()",
+      "q": "La firma `void main()` è valida secondo lo standard ISO C per i normali programmi applicativi (Hosted Environment)?",
+      "hint": "Un programma applicativo viene eseguito sotto il controllo di un sistema operativo.",
+      "options": [
+        "No, lo standard ISO C richiede che main() restituisca int in un ambiente hosted",
+        "Sì, void main() è l'unico standard corretto",
+        "Sì, a partire dallo standard C11 le firme void main() e int main() sono del tutto equivalenti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard ISO C negli ambienti hosted (sotto il controllo di un SO) il tipo di ritorno di `main()` deve essere `int`. La variante `void main()` è consentita solo in ambienti freestanding (ad esempio, per microcontrollori senza SO) se ciò è esplicitamente documentato dall'implementazione.",
+        "Errato. L'unico tipo di ritorno standard è `int`.",
+        "Errato. Lo standard C11 non ha reso `void main()` equivalente in un ambiente hosted."
+      ]
+    },
+    {
+      "id": "it_clang_1066",
+      "widget_id": null,
+      "topic": "Libreria standard — Codici di terminazione EXIT_SUCCESS",
+      "q": "In quale file di intestazione sono definite le macro standard EXIT_SUCCESS e EXIT_FAILURE usate per il ritorno da main()?",
+      "hint": "Questo file di intestazione contiene funzioni di uso generale (malloc, exit, free).",
+      "options": [
+        "<stdlib.h>",
+        "<stdio.h>",
+        "<string.h>",
+        "<stddef.h>",
+        "<limits.h>"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le macro `EXIT_SUCCESS` (di norma 0) e `EXIT_FAILURE` (di norma un valore diverso da zero) sono definite in `<stdlib.h>` per la restituzione multipiattaforma dello stato del programma.",
+        "Errato. In `<stdio.h>` si trovano le funzioni di input/output.",
+        "Errato. In `<string.h>` si trovano le funzioni per la manipolazione delle stringhe.",
+        "Errato. In `<stddef.h>` sono definiti i tipi di base (`size_t`, `NULL`, `ptrdiff_t`).",
+        "Errato. In `<limits.h>` sono definiti gli intervalli dei tipi interi."
+      ]
+    },
+    {
+      "id": "it_clang_1067",
+      "widget_id": null,
+      "topic": "Parametri di main — Garanzie per argc",
+      "q": "A cosa equivale il parametro `argc` durante l'avvio normale di un programma da console?",
+      "hint": "Il nome del file eseguibile stesso viene conteggiato?",
+      "options": [
+        "Di norma `argc >= 1`, poiché il primo elemento è il nome o il percorso del programma stesso",
+        "Sempre `argc == 0` se il programma viene avviato senza argomenti",
+        "Sempre `argc >= 2`",
+        "Il parametro `argc` è negativo in caso di errori"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard, se il sistema passa degli argomenti, `argc` deve essere non negativo. All'atto pratico, all'avvio da shell, `argc` è almeno pari a 1, dato che `argv[0]` contiene il nome di chiamata o il percorso del file.",
+        "Errato. Anche senza argomenti aggiuntivi, il nome del file viene passato in `argv[0]`, quindi `argc == 1`.",
+        "Errato. Senza argomenti `argc` è pari a 1, non a 2.",
+        "Errato. `argc` è un contatore (quantità) e non può essere negativo."
+      ]
+    },
+    {
+      "id": "it_clang_1068",
+      "widget_id": null,
+      "topic": "Modificatori — Lo specificatore inline per main()",
+      "q": "È possibile dichiarare la funzione main() con lo specificatore inline (ad esempio, inline int main(void))?",
+      "hint": "L'entry point del programma può essere incorporato direttamente altrove?",
+      "options": [
+        "No, lo specificatore inline è vietato per la funzione main() dallo standard C",
+        "Sì, è un modo standard per velocizzare l'avvio del programma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard ISO C, la funzione `main()` non può essere dichiarata con il qualificatore `inline` (poiché è un entry point globale e non può essere incorporata dal codice chiamante).",
+        "Errato. L'uso di `inline` con `main()` provocherà un errore di compilazione o genererà codice non valido."
+      ]
+    },
+    {
+      "id": "it_clang_1069",
+      "widget_id": "widget_clang_1069",
+      "topic": "Array argv — Elemento finale",
+      "q": "Cosa contiene garantito l'elemento `argv[argc]` dell'array degli argomenti della funzione main()?",
+      "hint": "In che modo il programma o un ciclo può determinare la fine dell'array argv senza usare argc?",
+      "options": [
+        "L'elemento `argv[argc]` è sempre pari a `NULL`",
+        "L'elemento `argv[argc]` contiene una stringa con il codice di errore",
+        "L'elemento `argv[argc]` punta all'inizio delle variabili d'ambiente",
+        "L'accesso a `argv[argc]` porta sempre a un accesso fuori dai limiti dell'array"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard C garantisce che `argv[argc]` sia un puntatore nullo (`NULL`). Ciò consente di scorrere l'array `argv` in un ciclo `while (argv[i] != NULL)` senza utilizzare direttamente `argc`.",
+        "Errato. Lì si trova proprio il puntatore `NULL`, non una stringa.",
+        "Errato. Le variabili d'ambiente si trovano in `envp`, non in `argv[argc]`.",
+        "Errato. La lettura di `argv[argc]` è del tutto lecita e sicura grazie alle garanzie dello standard."
+      ]
+    },
+    {
+      "id": "it_clang_1070",
+      "widget_id": "widget_clang_1070",
+      "topic": "Terminazione dell'esecuzione — La funzione atexit()",
+      "q": "In quale momento vengono eseguite le funzioni di pulizia delle risorse registrate tramite `atexit()`?",
+      "hint": "Vengono chiamate al termine di main()?",
+      "options": [
+        "Automaticamente alla normale conclusione di main() o alla chiamata di exit()",
+        "Solo alla chiamata della funzione abort()",
+        "Immediatamente prima dell'inizio dell'esecuzione di main()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le funzioni registrate con `atexit()` vengono eseguite nell'ordine inverso rispetto alla loro registrazione al momento della normale conclusione del programma (ritorno da `main()` o chiamata a `exit()`).",
+        "Errato. In caso di chiusura anomala tramite `abort()`, le funzioni `atexit()` non vengono chiamate.",
+        "Errato. Prima di `main()` vengono eseguiti i costruttori (CRT startup / `__attribute__((constructor))`)."
+      ]
+    },
+    {
+      "id": "it_clang_1071",
+      "widget_id": null,
+      "topic": "Ambiente di esecuzione — Freestanding (Sistemi embedded)",
+      "q": "Un programma in un ambiente freestanding (ad esempio su un microcontrollore) è obbligato ad avere proprio la funzione main() come entry point?",
+      "hint": "Pensa se esiste un sistema operativo nello sviluppo bare-metal.",
+      "options": [
+        "No, il nome e il tipo dell'entry point in un ambiente freestanding sono definiti dall'implementazione o dallo sviluppatore (ad esempio, reset_handler)",
+        "Sì, il nome main() è rigorosamente obbligatorio in tutti gli standard C senza eccezioni",
+        "Sì, ma solo se il codice è scritto in C puro senza inserti assembly"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard ISO C suddivide gli ambienti in Hosted e Freestanding. Nei sistemi embedded (Freestanding), l'entry point può avere qualsiasi nome e firma definiti dal produttore del compilatore o dallo sviluppatore (ad esempio `Reset_Handler`).",
+        "Errato. Il requisito di chiamare l'entry point `main()` si applica solo all'ambiente Hosted (programmi sotto SO).",
+        "Errato. Gli inserti nel linguaggio non influiscono su questa regola dello standard."
+      ]
+    },
+    {
+      "id": "it_clang_1072",
+      "widget_id": "widget_clang_1072",
+      "topic": "Valore di ritorno — Mascheramento del codice di risposta in POSIX",
+      "q": "Cosa restituirà il comando echo $? in una shell Linux/POSIX se la funzione main() esegue return 256;?",
+      "hint": "Quanti bit vengono riservati dal sistema operativo POSIX per trasmettere il codice di uscita del processo al processo padre?",
+      "options": [
+        "0 (poiché il codice di risposta viene troncato con una maschera a 8 bit 0xFF)",
+        "256 (viene conservato l'intero valore di tipo int)",
+        "-1 (si verificherà un errore di out of bounds)",
+        "1 (valore predefinito per gli errori)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nei sistemi POSIX il codice di uscita del processo viene salvato negli 8 bit meno significativi (valori da 0 a 255). Il valore 256 in forma binaria `100000000`, se mascherato con `0xFF`, diventa `0`.",
+        "Errato. POSIX non conserva tutti i 32 bit di `int` per il codice di uscita del processo.",
+        "Errato. I valori negativi non vengono generati automaticamente.",
+        "Errato. Il mascheramento viene eseguito a livello di sistema/hardware tramite l'operazione `status & 0xFF`."
+      ]
+    },
+    {
+      "id": "it_clang_1073",
+      "widget_id": null,
+      "topic": "Standard C23 — Parentesi vuote nella dichiarazione di main()",
+      "q": "Come viene interpretata la scrittura int main() (con parentesi vuote) a partire dallo standard C23?",
+      "hint": "Ricorda come C23 ha unificato la sintassi dei parametri vuoti con il C++.",
+      "options": [
+        "Equivalente a int main(void) — la funzione accetta esattamente 0 argomenti",
+        "Come una funzione che accetta un numero indefinito di parametri di qualsiasi tipo",
+        "Tale sintassi è dichiarata deprecata e causa un errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A partire dallo standard C23, le parentesi vuote `()` nelle dichiarazioni delle funzioni non significano più «numero sconosciuto di parametri» in stile K&R. Ora `int main()` è ufficialmente equivalente a `int main(void)`.",
+        "Errato. La vecchia sintassi K&R senza parametri è stata definitivamente rimossa in C23.",
+        "Errato. La sintassi `int main()` è del tutto valida in C23."
+      ]
+    },
+    {
+      "id": "it_clang_1074",
+      "widget_id": null,
+      "topic": "Sintassi — Overloading della funzione main()",
+      "q": "Nel linguaggio C è consentito l'overloading della funzione main(), ovvero la creazione di più funzioni main con parametri diversi nello stesso file?",
+      "hint": "Il linguaggio C supporta in linea di principio l'overloading delle funzioni?",
+      "options": [
+        "No, nel C non esiste l'overloading delle funzioni, il nome della funzione in un modulo deve essere unico",
+        "Sì, se una funzione main() è senza parametri e la seconda è con argc/argv",
+        "Sì, ma solo se le funzioni si trovano in namespace differenti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel linguaggio C (a differenza del C++) l'overloading delle funzioni non esiste. Il tentativo di dichiarare due funzioni con il nome `main` porterà a un errore di ridefinizione del simbolo (redefinition error).",
+        "Errato. Il compilatore C non supporta la differenziazione delle funzioni in base ai loro parametri.",
+        "Errato. Nel linguaggio C non esistono i namespace."
+      ]
+    },
+    {
+      "id": "it_clang_1075",
+      "widget_id": "widget_clang_1075",
+      "topic": "Tipi di dati — Uso di typedef per il tipo di ritorno di main()",
+      "q": "Verrà compilato con successo il codice in cui il tipo del valore restituito da main() è definito tramite typedef (ad esempio, typedef int status_t; status_t main(void))?",
+      "hint": "Typedef modifica il tipo di dati sottostante?",
+      "options": [
+        "Sì, è codice C del tutto corretto, poiché status_t è un sinonimo del tipo int",
+        "No, il tipo restituito deve essere scritto esplicitamente con la parola chiave int",
+        "No, questo causerà un errore di linking (Linker Error)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La parola chiave `typedef` non crea un nuovo tipo, ma soltanto un alias. Il compilatore vede `status_t` come un normale `int`, quindi tale intestazione di `main()` è del tutto valida.",
+        "Errato. L'uso di alias per i tipi integrati non è vietato dallo standard.",
+        "Errato. Per il linker il nome del tipo non ha importanza, rileva solo la firma del simbolo e la dimensione del tipo restituito."
+      ]
+    },
+    {
+      "id": "it_clang_1076",
+      "widget_id": "widget_clang_1076",
+      "topic": "Standard C11 — Attributo _Noreturn per main()",
+      "q": "Cosa succede se la funzione main() è dichiarata con l'attributo _Noreturn (C11) o [[noreturn]] (C23), ma al suo interno viene eseguito un normale return 0;?",
+      "hint": "Cosa promette lo specificatore noreturn al compilatore?",
+      "options": [
+        "Si verificherà un comportamento indefinito (Undefined Behavior)",
+        "Il programma verrà compilato e funzionerà più velocemente",
+        "Il compilatore sostituirà automaticamente return 0 con exit(0)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `_Noreturn` comunica al compilatore che la funzione non restituisce mai il controllo all'ambiente chiamante (ad esempio, termina tramite `exit()` o un ciclo infinito). Se tale funzione esegue un `return`, si verifica un Undefined Behavior.",
+        "Errato. La violazione del contratto di `_Noreturn` porta a UB, non a una velocizzazione sicura.",
+        "Errato. Il compilatore non inserisce automaticamente `exit()` al posto di `return`."
+      ]
+    },
+    {
+      "id": "it_clang_1077",
+      "widget_id": "widget_clang_1077",
+      "topic": "Linkage — Dichiarazione di main() come static",
+      "q": "A quale risultato porterà la dichiarazione static int main(void) in un programma C hosted?",
+      "hint": "Quale linkage deve avere l'entry point globale?",
+      "options": [
+        "A un errore di compilazione o di linking (Linker Error), poiché l'entry point deve avere linkage esterno (External Linkage)",
+        "Il programma verrà compilato e diventerà protetto da chiamate esterne",
+        "La funzione main() potrà essere chiamata solo una volta"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard C richiede che la funzione `main()` abbia linkage esterno (External linkage). La dichiarazione `static` limita la visibilità di `main()` al file corrente (Internal linkage), motivo per cui il codice di startup CRT (`_start`) non riuscirà a trovare il simbolo `main`.",
+        "Errato. Questo non fornisce alcuna protezione al programma, ma interrompe soltanto il processo di linking dei componenti.",
+        "Errato. Il modificatore `static` prima di una funzione gestisce il linkage, non il numero di chiamate."
+      ]
+    },
+    {
+      "id": "it_clang_1078",
+      "widget_id": "widget_clang_1078",
+      "topic": "Parametri di main — Modifica del contenuto delle stringhe in argv",
+      "q": "Lo standard C consente di modificare i caratteri all'interno delle stringhe dell'array argv (ad esempio, argv[1][0] = 'A')?",
+      "hint": "Dove si trovano le stringhe di argv — in memoria di sola lettura o in un array modificabile?",
+      "options": [
+        "Sì, lo standard garantisce che gli elementi di argv puntino ad array di caratteri modificabili",
+        "No, le stringhe di argv sono memorizzate in memoria di sola lettura (.rodata) e causeranno un Segmentation Fault",
+        "È possibile modificare i caratteri solo in argv[0]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard ISO C (sezione 5.1.2.2.1), i parametri `argc` e `argv`, così come le stringhe a cui puntano gli elementi di `argv`, devono essere modificabili dal programma.",
+        "Errato. A differenza dei letterali stringa (come `\"hello\"`), gli array di argomenti `argv` vengono allocati in un'area di memoria modificabile dello stack del processo.",
+        "Errato. Questa regola si applica a tutti i `argv[0] ... argv[argc-1]`."
+      ]
+    },
+    {
+      "id": "it_clang_1079",
+      "widget_id": null,
+      "topic": "Terminazione dell'esecuzione — La funzione exit() da main()",
+      "q": "Vengono chiamate le funzioni registrate tramite atexit() se al posto dell'istruzione return 0; si chiama exit(0) dalla funzione main()?",
+      "hint": "Esiste una differenza nelle procedure di pulizia CRT tra exit() e return da main()?",
+      "options": [
+        "Sì, la chiamata a exit(0) e l'esecuzione di return 0; da main() sono completamente equivalenti in termini di chiamata degli handler atexit() e pulizia dei buffer stdio",
+        "No, exit(0) termina il processo immediatamente senza eseguire gli handler atexit()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, il ritorno del valore `N` dalla funzione `main()` è equivalente alla chiamata della funzione `exit(N)`. In entrambi i casi vengono eseguite le funzioni registrate tramite `atexit()` e vengono svuotati i buffer dei file.",
+        "Errato. La chiusura immediata senza `atexit()` viene eseguita dalla funzione `_Exit()` o `abort()`, ma non da `exit()`."
+      ]
+    },
+    {
+      "id": "it_clang_1080",
+      "widget_id": "widget_clang_1080",
+      "topic": "Memoria — Array a lunghezza variabile (VLA) all'interno di main()",
+      "q": "A quale rischio porta la dichiarazione di un array a lunghezza variabile int arr[n] all'interno di main() se n viene letto dagli argomenti della riga di comando?",
+      "hint": "Dove viene allocata la memoria per i VLA all'ingresso del blocco?",
+      "options": [
+        "Al rischio di overflow dello stack (Stack Overflow) se l'utente passa un valore di n troppo grande",
+        "La memoria verrà automaticamente reindirizzata nell'heap (Heap), quindi non vi è alcun rischio",
+        "I VLA sono vietati dallo standard all'interno della funzione main()",
+        "La dimensione dei VLA viene calcolata in fase di compilazione, quindi l'utente non influirà sullo stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I VLA (Variable Length Arrays) allocano la memoria direttamente nel frame dello stack corrente durante l'esecuzione. Se l'argomento `n` risulta troppo grande, l'allocazione oltre il limite dello stack provocherà un crash del programma.",
+        "Errato. Nel C standard non si verifica alcun trasferimento dei VLA nell'heap.",
+        "Errato. I VLA possono essere dichiarati all'interno di qualsiasi funzione, inclusa `main()`.",
+        "Errato. La dimensione dei VLA viene calcolata rigorosamente a runtime."
+      ]
+    },
+    {
+      "id": "it_clang_1081",
+      "widget_id": "widget_clang_1081",
+      "topic": "Sintassi — Equivalenza delle dichiarazioni di argv",
+      "q": "Le forme int main(int argc, char *argv[]) e int main(int argc, char **argv) sono equivalenti secondo lo standard C?",
+      "hint": "Ricorda le regole di conversione dei parametri array quando vengono passati alle funzioni.",
+      "options": [
+        "Sì, nei parametri delle funzioni la notazione array char *argv[] decade (decays) automaticamente a puntatore a puntatore char **argv",
+        "No, char *argv[] passa l'array per valore, mentre char **argv per puntatore",
+        "No, char **argv è una sintassi K&R C obsoleta ed è vietata negli standard moderni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nelle intestazioni di funzione la sintassi `T arr[]` è sempre regolata dalla regola del decadimento del tipo (Type decay) ed è completamente identica a `T *arr`. Pertanto `char *argv[]` e `char **argv` sono del tutto intercambiabili.",
+        "Errato. In C gli array non vengono mai passati per valore nei parametri di funzione.",
+        "Errato. La sintassi `char **argv` è assolutamente standard e ampiamente usata nel codice moderno."
+      ]
+    },
+    {
+      "id": "it_clang_1082",
+      "widget_id": null,
+      "topic": "Compilazione — Modifica dell'entry point del linker",
+      "q": "Durante il build di un eseguibile con GCC/Clang è possibile cambiare il nome dell'entry point affinché la funzione di avvio non sia main(), ma un'altra funzione?",
+      "hint": "Pensa ai flag del linker.",
+      "options": [
+        "Sì, utilizzando il flag del linker -e (o -Wl,-e,nome_funzione) è possibile specificare qualsiasi altro entry point",
+        "No, il nome main è cablato nell'architettura dei processori x86/ARM e non può essere modificato",
+        "Sì, ma solo se il file sorgente viene rinominato in entry.c"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `main` è l'entry point predefinito solo per via della convenzione del codice di startup CRT. Passando al linker il flag `-e mia_entry`, è possibile fare in modo che il linker utilizzi qualsiasi altra funzione come avvio.",
+        "Errato. Il nome `main` è solo una convenzione delle librerie di sistema del linguaggio C, non dell'hardware.",
+        "Errato. Il nome del file sorgente non influisce in alcun modo sul nome del simbolo dell'entry point."
+      ]
+    },
+    {
+      "id": "it_clang_1083",
+      "widget_id": "widget_clang_1083",
+      "topic": "Parametri di main — Passaggio di argomenti modificati durante la ricorsione",
+      "q": "È consentito il passaggio di valori modificati di argc/argv durante la chiamata ricorsiva a main(argc - 1, argv + 1)?",
+      "hint": "I parametri di main sono normali variabili nel contesto dello stack di chiamata?",
+      "options": [
+        "Sì, sono normali parametri locali e possono essere liberamente modificati e passati nella ricorsione",
+        "No, a main() possono essere passati solo i puntatori originali del sistema operativo",
+        "Questo porta a un errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché in C `main()` è una funzione standard, il passaggio di parametri modificati `main(argc - 1, argv + 1)` è sintatticamente e semanticamente corretto.",
+        "Errato. I parametri `argc` e `argv` sono memorizzati sullo stack del frame di `main()` come normali variabili.",
+        "Errato. Il compilatore tratta `main()` come qualsiasi altra funzione."
+      ]
+    },
+    {
+      "id": "it_clang_1084",
+      "widget_id": "widget_clang_1084",
+      "topic": "Libreria standard — Terminazione anomala tramite abort()",
+      "q": "Qual è la differenza principale tra l'azione della funzione abort() e quella di exit() se chiamate all'interno di main()?",
+      "hint": "Abort() genera un segnale di chiusura anomala del processo e svuota i buffer?",
+      "options": [
+        "abort() termina il programma in modo anomalo (generando il segnale SIGABRT) senza eseguire le funzioni atexit() e senza svuotare i buffer stdio",
+        "abort() è più lenta di exit() poiché comprime i dump di memoria RAM",
+        "abort() può essere utilizzata solo nel sistema operativo Windows",
+        "abort() restituisce garantito lo stato 0 al sistema operativo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `abort()` provoca un'immediata terminazione anomala del processo tramite il segnale `SIGABRT`. In questo caso gli handler registrati tramite `atexit()` NON vengono eseguiti e non è garantito lo svuotamento dei buffer `stdio` su disco.",
+        "Errato. La funzione non esegue alcuna compressione della memoria.",
+        "Errato. `abort()` fa parte della libreria standard ISO C ed è disponibile su tutte le piattaforme.",
+        "Errato. `abort()` segnala al SO la terminazione anomala del programma (errore)."
+      ]
+    },
+    {
+      "id": "it_clang_1085",
+      "widget_id": null,
+      "topic": "Gestione dei segnali — La funzione signal()",
+      "q": "Quale funzione della libreria standard C consente di intercettare i segnali critici del SO (ad esempio SIGINT con Ctrl+C), impedendo a main() di terminare?",
+      "hint": "Questa funzione registra un handler (callback) per uno specifico numero di segnale.",
+      "options": [
+        "signal()",
+        "catch_signal()",
+        "try_catch()",
+        "atexit()",
+        "setjmp()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `signal()` di `<signal.h>` consente di impostare una funzione handler personalizzata per intercettare i segnali asincroni del sistema operativo.",
+        "Errato. La funzione `catch_signal()` non esiste in C.",
+        "Errato. I costrutti `try/catch` appartengono al C++ e ad altri linguaggi, non al C.",
+        "Errato. `atexit()` esegue codice alla conclusione del programma, ma non intercetta i segnali durante la sua esecuzione.",
+        "Errato. `setjmp()` è responsabile dei salti non locali (goto), non dell'impostazione degli handler di segnale."
+      ]
+    },
+    {
+      "id": "it_clang_1086",
+      "widget_id": "widget_clang_1086",
+      "topic": "Classi di memorizzazione — Lo specificatore auto in C",
+      "q": "Cosa significa l'indicazione esplicita dello specificatore auto nella dichiarazione della variabile auto int x = 10; all'interno di main() nel C tradizionale?",
+      "hint": "Non confondere con il significato di auto nel C++11 moderno!",
+      "options": [
+        "Indica che la variabile ha una durata di memorizzazione automatica (memorizzata sullo stack) — in C questo è il comportamento predefinito per le variabili locali",
+        "Determina automaticamente il tipo di variabile in base al valore assegnato (come in C++11)",
+        "Alloca memoria per la variabile nell'heap (heap)",
+        "Forza il compilatore a ottimizzare la variabile in un registro del processore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel C puro la parola chiave `auto` indica una classe di memorizzazione automatica (Automatic storage duration). Tutte le variabili locali all'interno delle funzioni sono per impostazione predefinita `auto`, quindi non è necessario scriverlo esplicitamente.",
+        "Errato. La deduzione automatica dei tipi tramite `auto` è una funzionalità di C++11 (in C23 è stata aggiunta `auto` per l'inferenza di tipo, ma storicamente in C indica una classe di memorizzazione).",
+        "Errato. Le variabili `auto` risiedono sullo stack.",
+        "Errato. Per i registri si utilizzava storicamente la parola chiave `register`."
+      ]
+    },
+    {
+      "id": "it_clang_1087",
+      "widget_id": "widget_clang_1087",
+      "topic": "Preprocessore — Sostituzione del nome main() tramite #define",
+      "q": "Cosa succede se prima della dichiarazione di main() viene scritta la macro #define main my_main?",
+      "hint": "In quale fase lavora il preprocessore e cosa cercherà il linker in seguito?",
+      "options": [
+        "Il preprocessore sostituirà il nome con my_main, motivo per cui il linker non troverà il simbolo obbligatorio main e restituirà un errore",
+        "Il preprocessore restituirà un errore, poiché alle macro è vietato modificare il nome main",
+        "Il linker indovinerà automaticamente la rinominazione ed eseguirà my_main"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il preprocessore sostituirà semplicemente il testo `main` con `my_main` prima della fase di compilazione. Di conseguenza, nel file oggetto comparirà la funzione `my_main`, e il codice di startup CRT che cerca il simbolo `main` restituirà l'errore `undefined reference to main` nella fase di linking.",
+        "Errato. Il preprocessore lavora sul testo e non sa nulla delle regole del linker.",
+        "Errato. Il linker cerca un nome di simbolo ben preciso."
+      ]
+    },
+    {
+      "id": "it_clang_1088",
+      "widget_id": null,
+      "topic": "Valore di ritorno — Codici di ritorno negativi",
+      "q": "Lo standard C consente il ritorno di un numero negativo da main() (ad esempio, return -1;)?",
+      "hint": "Quale tipo di dati restituisce la funzione main()?",
+      "options": [
+        "Sì, poiché main() restituisce un tipo con segno int, tuttavia l'interpretazione effettiva di un codice negativo dipende dal SO",
+        "No, lo standard C vieta rigorosamente di restituire valori negativi",
+        "No, questo causa un errore sintattico di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché il tipo di ritorno è `int` con segno, l'istruzione `return -1;` è del tutto lecita dal punto di vista del linguaggio. Tuttavia, il modo in cui viene interpretato un codice negativo (ad esempio la conversione in 255 in POSIX) dipende dal sistema operativo.",
+        "Errato. Lo standard C non vieta i valori negativi di tipo `int` in `return`.",
+        "Errato. Il codice viene compilato con successo."
+      ]
+    },
+    {
+      "id": "it_clang_1089",
+      "widget_id": "widget_clang_1089",
+      "topic": "Estensioni dei compilatori — Attributo constructor",
+      "q": "In quale ordine verranno eseguite la funzione setup() con attributo __attribute__((constructor)) e la funzione main()?",
+      "hint": "A cosa serve l'attributo constructor?",
+      "options": [
+        "Prima verrà eseguita setup(), e solo al suo termine il controllo passerà a main()",
+        "Prima verrà eseguita main(), e setup() verrà avviata prima dell'uscita",
+        "Entrambe le funzioni verranno eseguite contemporaneamente in thread diversi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le funzioni con l'attributo `constructor` vengono collocate nella sezione `.init_array` e chiamate dal codice di startup a runtime prima di passare il controllo alla funzione `main()`.",
+        "Errato. Per eseguire codice dopo `main()` si utilizza l'attributo `destructor`.",
+        "Errato. Vengono eseguite in modo sequenziale in un unico thread principale."
+      ]
+    },
+    {
+      "id": "it_clang_1090",
+      "widget_id": "widget_clang_1090",
+      "topic": "Qualificatori di tipo — Parametri volatile in main()",
+      "q": "È sintatticamente ammissibile dichiarare i parametri di main con il qualificatore volatile (ad esempio, int main(volatile int argc, char *argv[]))?",
+      "hint": "Il C limita l'applicazione del qualificatore volatile ai parametri di funzione?",
+      "options": [
+        "Sì, è codice C sintatticamente ammissibile, anche se in pratica tale qualificatore per argc viene applicato molto raramente",
+        "No, lo specificatore volatile è rigorosamente vietato per la funzione main()",
+        "Questo porta a un errore di segmentazione all'avvio"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il qualificatore `volatile` può essere applicato a qualsiasi variabile e parametro di funzione. Il codice si compilerà correttamente, indicando al compilatore di non ottimizzare le letture di `argc` dalla memoria.",
+        "Errato. Lo standard non vieta il qualificatore `volatile` nella firma di `main`.",
+        "Errato. Questo non porta a crash a runtime."
+      ]
+    }
+  ]
+}

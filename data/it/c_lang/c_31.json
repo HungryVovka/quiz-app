@@ -1,0 +1,625 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_970",
+      "widget_id": null,
+      "topic": "Architettura x86-64 — Allineamento dello stack alla chiamata (Stack Alignment)",
+      "q": "Qual è il requisito di allineamento del puntatore allo stack (RSP) imposto dalla specifica System V AMD64 ABI immediatamente prima dell'esecuzione dell'istruzione call?",
+      "hint": "Rifletti su quanti byte deve essere multiplo l'indirizzo dello stack per l'esecuzione di istruzioni SSE/SIMD.",
+      "options": [
+        "Lo stack deve essere allineato a un limite di 16 byte",
+        "Lo stack deve essere allineato a un limite di 4 byte",
+        "L'allineamento dello stack non è richiesto",
+        "Lo stack deve essere allineato a un limite di 64 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard ABI per i sistemi Linux/macOS a 64 bit (System V) richiede che prima della chiamata all'istruzione `call` l'indirizzo nel registro `RSP` sia multiplo di 16 byte. Ciò è necessario per il corretto funzionamento delle istruzioni vettoriali (SSE/AVX).",
+        "Errato. L'allineamento a 4 byte veniva utilizzato nelle vecchie architetture a 32 bit.",
+        "Errato. Il mancato allineamento dello stack causerà un arresto anomalo (General Protection Fault) durante l'esecuzione di codice vettorizzato.",
+        "Errato. L'allineamento a 64 byte è richiesto solo per alcune linee di cache, ma non per l'ABI delle chiamate di funzione."
+      ]
+    },
+    {
+      "id": "it_clang_971",
+      "widget_id": "widget_clang_971",
+      "topic": "Costrutti sintattici complessi — La funzione signal()",
+      "q": "Cosa rappresentano il tipo del valore restituito e il secondo parametro della funzione signal dalla libreria <signal.h>?",
+      "hint": "Analizza la sintassi: void (*signal(int sig, void (*func)(int)))(int).",
+      "options": [
+        "La funzione signal accetta un numero di segnale e un puntatore a un gestore, e restituisce un puntatore al vecchio gestore del segnale",
+        "La funzione signal accetta 2 numeri interi e restituisce NULL",
+        "È un errore di sintassi, poiché una funzione non può restituire un puntatore a un'altra funzione",
+        "È una dichiarazione di un array di 2 funzioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `signal` accetta un numero di segnale `int` e un puntatore a una funzione gestore `void (*func)(int)`. Restituisce un puntatore al precedente gestore dello stesso tipo `void (*)(int)`.",
+        "Errato. Il secondo parametro e il valore restituito sono puntatori a funzioni, non semplici numeri.",
+        "Errato. In C le funzioni possono restituire puntatori ad altre funzioni.",
+        "Errato. Qui non sono presenti le parentesi quadre degli array."
+      ]
+    },
+    {
+      "id": "it_clang_972",
+      "widget_id": "widget_clang_972",
+      "topic": "Passaggio di array — Comportamento di sizeof all'interno delle funzioni",
+      "q": "Cosa stamperà printf(\"%zu\", sizeof(arr)) all'interno della funzione process(int arr[100]) su un sistema a 64 bit?",
+      "hint": "In cosa si trasforma un parametro array quando viene passato a una funzione?",
+      "options": [
+        "8 (dimensione del puntatore int*, poiché l'array degrada a un puntatore)",
+        "400 (dimensione di 100 elementi di tipo int da 4 byte ciascuno)",
+        "100 (numero di elementi)",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando si passa un array a una funzione, l'indicazione della dimensione `[100]` viene ignorata dal compilatore. Il parametro `int arr[100]` si trasforma in un normale puntatore `int *arr`. L'operatore `sizeof(arr)` restituirà la dimensione del puntatore (8 byte su architettura a 64 bit).",
+        "Errato. La dimensione originale dell'array va persa (Array decay) quando viene passato a una funzione.",
+        "Errato. `sizeof` restituisce la dimensione in byte, non il numero di elementi, e lavora solo con il tipo puntatore.",
+        "Errato. Il codice è completamente valido in C."
+      ]
+    },
+    {
+      "id": "it_clang_973",
+      "widget_id": "widget_clang_973",
+      "topic": "Ordine di valutazione — Unspecified Behavior negli argomenti",
+      "q": "In quale ordine, secondo lo standard C, verranno chiamate le funzioni a(), b() e c() nell'espressione foo(a(), b(), c())?",
+      "hint": "Lo standard C garantisce l'ordine di valutazione degli argomenti di una funzione da sinistra a destra?",
+      "options": [
+        "L'ordine non è specificato (Unspecified Behavior) — il compilatore può chiamarle in qualsiasi ordine",
+        "Rigorosamente da sinistra a destra: a(), poi b(), poi c()",
+        "Rigorosamente da destra a sinistra: c(), poi b(), poi a()",
+        "Tutte e tre le funzioni vengono chiamate esattamente nello stesso momento"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard C non definisce l'ordine di valutazione degli argomenti di una funzione. Il compilatore può chiamare `a()`, `b()`, `c()` in qualsiasi ordine. Non bisogna fare affidamento sull'ordine di chiamata degli argomenti.",
+        "Errato. In C (a differenza di C++17 in alcuni contesti) non esiste una regola di valutazione degli argomenti da sinistra a destra.",
+        "Errato. La chiamata da destra a sinistra si verifica spesso a causa delle convenzioni di chiamata (cdecl), ma lo standard non lo garantisce.",
+        "Errato. In C le chiamate di funzione avvengono in modo sequenziale."
+      ]
+    },
+    {
+      "id": "it_clang_974",
+      "widget_id": "widget_clang_974",
+      "topic": "Funzioni variadiche — Promozione del tipo float (Default Argument Promotion)",
+      "q": "Quale tipo di dati occorre specificare nella macro va_arg() per estrarre un argomento passato come float a una funzione variadica (...)?",
+      "hint": "Ricorda le regole di promozione automatica dei tipi durante la chiamata di funzioni variadiche.",
+      "options": [
+        "double (poiché float viene promosso automaticamente a double)",
+        "float",
+        "float*",
+        "long double"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo le regole delle Default Argument Promotions, qualsiasi argomento di tipo `float` passato alla parte non definita `...` viene automaticamente promosso a `double`. È necessario estrarlo tramite `va_arg(args, double)`.",
+        "Errato. Il tentativo di estrarre un `float` tramite `va_arg(args, float)` causerà un comportamento indefinito (UB).",
+        "Errato. I puntatori non venivano passati se l'argomento era un semplice `float`.",
+        "Errato. Nulla viene promosso automaticamente a `long double`."
+      ]
+    },
+    {
+      "id": "it_clang_975",
+      "widget_id": null,
+      "topic": "File di intestazione — Qualificatore static inline",
+      "q": "Perché le funzioni inline definite nei file di intestazione (.h) sono quasi sempre dichiarate come static inline?",
+      "hint": "Cosa succede se più file .c includono lo stesso file .h con una normale funzione inline senza static?",
+      "options": [
+        "Per evitare errori del linker sulla duplicazione dei simboli (Multiple Definition) quando si include il file .h in più unità di traduzione",
+        "Per far sì che la funzione venga eseguita più velocemente",
+        "Perché senza static la parola chiave inline è vietata dallo standard C99",
+        "Per rendere statiche tutte le variabili locali all'interno della funzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C99 una normale funzione `inline` richiede una definizione esterna. Se non la si rende `static`, includendo il file di intestazione in più file `.c`, il linker restituirà l'errore `multiple definition`. Il modificatore `static` fornisce a ciascuna unità di traduzione la propria copia locale.",
+        "Errato. `static` influisce sull'ambito di visibilità e sul collegamento, non sulla velocità di esecuzione.",
+        "Errato. `inline` senza `static` è consentito in C99, ma ha regole di collegamento specifiche.",
+        "Errato. `static` prima di una funzione non rende statiche le sue variabili interne."
+      ]
+    },
+    {
+      "id": "it_clang_976",
+      "widget_id": null,
+      "topic": "Ottimizzazione del compilatore — Differenza tra __attribute__((pure)) e ((const))",
+      "q": "In cosa differisce l'attributo __attribute__((pure)) da __attribute__((const)) nei compilatori GCC/Clang?",
+      "hint": "Una funzione pure può leggere la memoria tramite puntatori o da variabili globali?",
+      "options": [
+        "Una funzione pure può leggere la memoria globale e i dati tramite puntatori, ma non può modificarli; una funzione const non può nemmeno leggere la memoria globale",
+        "Una funzione pure non può accettare alcun parametro",
+        "Una funzione const può lavorare solo con tipi di dati const int",
+        "Non c'è alcuna differenza tra questi attributi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `__attribute__((pure))` indica che la funzione non ha effetti collaterali, ma il suo risultato può dipendere da variabili globali o dalla memoria tramite puntatori. `__attribute__((const))` è ancora più restrittivo: la funzione dipende ESCLUSIVAMENTE dai suoi argomenti e non legge affatto la memoria.",
+        "Errato. Entrambe le funzioni possono e devono accettare parametri.",
+        "Errato. `const` si riferisce al comportamento dell'intera funzione (funzione matematica pura), non a tipi specifici.",
+        "Errato. Sono due livelli differenti di restrizioni per l'ottimizzatore del compilatore."
+      ]
+    },
+    {
+      "id": "it_clang_977",
+      "widget_id": "widget_clang_977",
+      "topic": "Standard C23 — Attributo [[nodiscard]]",
+      "q": "Come reagirà il compilatore C23 se si chiama una funzione con l'attributo [[nodiscard]] e non si utilizza il valore restituito?",
+      "hint": "Pensa allo scopo degli attributi di avviso quando si ignorano risultati importanti (ad esempio codici di errore o puntatori di memoria).",
+      "options": [
+        "Genererà un avviso (Warning) indicando che il valore restituito è stato ignorato",
+        "Genererà un errore di compilazione (Error) e interromperà la build",
+        "Il programma si bloccherà durante l'esecuzione (Runtime Error)",
+        "Libererà automaticamente la risorsa restituita dalla memoria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'attributo `[[nodiscard]]` informa il compilatore che il risultato della funzione non deve essere ignorato. Tentando di chiamare tale funzione come `func();`, il compilatore emetterà un avviso (Warning).",
+        "Errato. Per impostazione predefinita è un avviso, non un errore di compilazione (a meno che non sia attivo il flag `-Werror`).",
+        "Errato. Gli attributi funzionano in fase di compilazione e non causano crash a runtime direttamente.",
+        "Errato. Il linguaggio C non esegue alcuna pulizia automatica delle risorse."
+      ]
+    },
+    {
+      "id": "it_clang_978",
+      "widget_id": "widget_clang_978",
+      "topic": "Sicurezza dei tipi — Parametri const char *",
+      "q": "Cosa garantisce il qualificatore const nel parametro di funzione void print_msg(const char *str)?",
+      "hint": "Il const protegge la variabile str (il puntatore) o i dati a cui punta?",
+      "options": [
+        "La funzione promette di non modificare i dati (i caratteri della stringa) all'indirizzo passato",
+        "È vietato riassegnare il puntatore str a un altro indirizzo all'interno del corpo della funzione",
+        "La funzione può essere chiamata solo con letterali stringa costanti",
+        "La funzione viene eseguita in modalità thread-safe"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `const char *str` significa che i dati in memoria sono in sola lettura. Un tentativo di modificare `str[0] = 'A'` all'interno della funzione causerà un errore di compilazione.",
+        "Errato. Il puntatore `str` stesso può essere modificato (ad esempio `str++`). Per vietare la modifica del puntatore stesso occorrerebbe `char * const str`.",
+        "Errato. Alla funzione possono essere passati anche normali array `char[]` non costanti.",
+        "Errato. Il qualificatore `const` non garantisce la thread-safety automatica."
+      ]
+    },
+    {
+      "id": "it_clang_979",
+      "widget_id": "widget_clang_979",
+      "topic": "Puntatori a funzioni — Semplificazione della sintassi tramite typedef",
+      "q": "Qual è il vantaggio principale dell'uso di typedef quando si lavora con i puntatori a funzioni?",
+      "hint": "Confronta void (*func)(int) e l'alias HandlerFunc.",
+      "options": [
+        "Crea un comodo alias di tipo, semplificando la lettura del codice e la dichiarazione di variabili o parametri",
+        "Alloca automaticamente memoria nell'heap per il codice della funzione",
+        "Trasforma la funzione chiamata in una funzione incorporata (inline)",
+        "Consente di passare a una funzione un numero qualsiasi di argomenti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi dei puntatori a funzione in C è complessa da leggere. `typedef void (*Action)(int);` crea un tipo leggibile `Action`, che può essere facilmente usato come `Action cb` al posto di una scrittura ingombrante.",
+        "Errato. `typedef` funziona solo in fase di compilazione e non alloca memoria.",
+        "Errato. `typedef` non influisce in alcun modo sull'inlining delle funzioni.",
+        "Errato. La firma della funzione e il numero di parametri rimangono strettamente fissi."
+      ]
+    },
+    {
+      "id": "it_clang_980",
+      "widget_id": "widget_clang_980",
+      "topic": "Algoritmi — Ricorsione indiretta (mutua)",
+      "q": "In cosa consiste la ricorsione indiretta (mutua)?",
+      "hint": "La funzione chiama direttamente se stessa nell'ultima riga?",
+      "options": [
+        "Una situazione in cui la funzione A chiama la funzione B, e la funzione B a sua volta chiama la funzione A",
+        "La chiamata di una funzione tramite un puntatore a funzione",
+        "La chiamata di una funzione all'interno di un ciclo infinito while(1)",
+        "Una ricorsione che salva i propri dati su disco"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La ricorsione indiretta si verifica quando la catena di chiamate è ad anello attraverso altre funzioni: `A() -> B() -> A()`. Ciò richiede l'uso obbligatorio dei prototipi di funzione prima della loro definizione.",
+        "Errato. La chiamata tramite un puntatore è semplicemente una chiamata per indirizzo.",
+        "Errato. Un ciclo infinito non è una ricorsione.",
+        "Errato. La ricorsione utilizza lo stack di chiamate standard nella RAM."
+      ]
+    },
+    {
+      "id": "it_clang_981",
+      "widget_id": "widget_clang_981",
+      "topic": "Parametri di funzione — Comportamento dell'array VLA nel parametro",
+      "q": "Cosa succede se si passa una dimensione dinamica $n$ al parametro della funzione `void foo(int n, int arr[n])` e si misura `sizeof(arr)` all'interno di tale funzione?",
+      "hint": "Ricorda in cosa si convertono sempre i parametri array quando vengono passati a una funzione.",
+      "options": [
+        "Verrà restituita la dimensione del puntatore (sizeof(int*)), poiché gli array nei parametri degradano sempre a puntatori",
+        "Verrà restituita la dimensione reale dell'array $n \\times \\text{sizeof(int)}$",
+        "Si verificherà un errore di compilazione",
+        "Verrà restituito 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Anche se l'array è dichiarato come VLA nell'intestazione della funzione `int arr[n]`, nel contesto dei parametri di funzione degrada (decays) comunque a un normale puntatore `int *arr`. L'operatore `sizeof(arr)` restituirà la dimensione del puntatore.",
+        "Errato. La dimensione di un array VLA viene calcolata tramite `sizeof` a runtime solo quando l'array è dichiarato come variabile locale, non come parametro di funzione.",
+        "Errato. Tale sintassi è completamente valida a partire da C99.",
+        "Errato. `sizeof` per un puntatore restituirà 4 o 8 byte a seconda dell'architettura del sistema."
+      ]
+    },
+    {
+      "id": "it_clang_982",
+      "widget_id": "widget_clang_982",
+      "topic": "Preprocessore — Macro simili a funzioni ed effetti collaterali",
+      "q": "Qual è il pericolo di chiamare la macro `#define MAX(a, b) ((a) > (b) ? (a) : (b))` nella forma `MAX(x++, y)`?",
+      "hint": "Quante volte l'argomento `a` compare nel corpo della macro?",
+      "options": [
+        "L'argomento x++ potrebbe essere valutato due volte a causa della sostituzione del testo della macro, causando un doppio incremento",
+        "Si verificherà un errore di compilazione a causa dell'incremento all'interno dell'operatore ternario",
+        "La macro non verrà compilata con l'operatore ++",
+        "x++ verrà eseguito prima della chiamata della macro senza effetti collaterali"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le macro simili a funzioni funzionano tramite semplice sostituzione testuale. La chiamata si espanderà in `((x++) > (y) ? (x++) : (y))`. Se `x > y`, la variabile `x` incrementerà due volte, un errore comune.",
+        "Errato. Il codice si compilerà senza errori.",
+        "Errato. L'operatore di incremento è assolutamente legale nelle espressioni delle macro.",
+        "Errato. Le macro non creano un frame di funzione, quindi la valutazione degli argomenti avviene man mano che viene eseguita l'espressione espansa."
+      ]
+    },
+    {
+      "id": "it_clang_983",
+      "widget_id": "widget_clang_983",
+      "topic": "Standard C11 — Overloading delle funzioni tramite _Generic",
+      "q": "Quale costrutto, introdotto nello standard C11, permette di implementare un analogo dell'overloading delle funzioni in base al tipo di argomento passato?",
+      "hint": "Questo costrutto seleziona l'espressione in fase di compilazione in base al tipo di argomento.",
+      "options": [
+        "_Generic",
+        "overload",
+        "_Match",
+        "typeof"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La parola chiave `_Generic` associa il tipo di un'espressione a un insieme di tipi e seleziona la funzione o espressione corrispondente in fase di compilazione (ad esempio per creare le macro di `tgmath.h`).",
+        "Errato. La parola chiave `overload` non esiste nel linguaggio C.",
+        "Errato. Il costrutto `_Match` non è presente nello standard C.",
+        "Errato. `typeof` restituisce il tipo dell'espressione (estensione C23/GCC), ma non effettua da solo la selezione dell'overload."
+      ]
+    },
+    {
+      "id": "it_clang_984",
+      "widget_id": "widget_clang_984",
+      "topic": "Attributi del compilatore — __attribute__((always_inline))",
+      "q": "Cosa garantisce l'estensione del compilatore `__attribute__((always_inline))` rispetto alla normale parola chiave `inline`?",
+      "hint": "La normale `inline` può essere ignorata dal compilatore?",
+      "options": [
+        "Forza il compilatore a incorporare il corpo della funzione invece di generare la chiamata, ignorando le euristiche di ottimizzazione standard",
+        "Forza l'esecuzione della funzione una sola volta durante l'intera durata del programma",
+        "Converte automaticamente la funzione in una macro del preprocessore",
+        "Alloca un registro specifico del processore per il risultato della funzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La normale `inline` è solo un suggerimento per l'ottimizzatore. L'attributo `__attribute__((always_inline))` impone al compilatore di incorporare la funzione (se possibile), anche con le ottimizzazioni disattivate.",
+        "Errato. Il numero di chiamate alla funzione non cambia a causa di questo attributo.",
+        "Errato. La funzione rimane una funzione C completa con controllo dei tipi, non una macro di testo.",
+        "Errato. L'attributo non è legato all'allocazione dei registri."
+      ]
+    },
+    {
+      "id": "it_clang_985",
+      "widget_id": "widget_clang_985",
+      "topic": "Sintassi — Passaggio di un puntatore a funzione come parametro",
+      "q": "Come si dichiara correttamente il parametro di una funzione che accetta un puntatore a una funzione con firma `int func(double)`?",
+      "hint": "Ricorda la precedenza degli operatori e le parentesi tonde attorno al nome del parametro con l'asterisco.",
+      "options": [
+        "void process(int (*f)(double))",
+        "void process(int *f(double))",
+        "void process(function<int(double)> f)",
+        "void process(int f(double)*)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `int (*f)(double)` dichiara `f` come puntatore a una funzione che accetta `double` e restituisce `int`.",
+        "Errato. `int *f(double)` dichiara una funzione `f` che restituisce un puntatore a `int`.",
+        "Errato. `std::function` è un template del linguaggio C++, non esiste in C.",
+        "Errato. La sintassi `int f(double)*` non è valida."
+      ]
+    },
+    {
+      "id": "it_clang_986",
+      "widget_id": null,
+      "topic": "Standard C23 — Dichiarazione di funzioni con parentesi vuote",
+      "q": "Come è cambiata l'interpretazione della dichiarazione di una funzione con parentesi vuote `void func()` nel passaggio allo standard C23?",
+      "hint": "Cosa significava in precedenza l'assenza di void nei parametri della funzione?",
+      "options": [
+        "In C23 la sintassi func() è diventata strettamente equivalente a func(void) (accetta 0 argomenti), mentre prima indicava un numero non specificato di argomenti",
+        "In C23 le parentesi vuote sono state completamente vietate dal compilatore",
+        "La sintassi func() in C23 è passata a indicare una funzione variadica (...)",
+        "Non c'è stato alcun cambiamento — func() ha sempre significato esattamente 0 argomenti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Prima di C23, la dichiarazione `void func()` indicava che la funzione accettava un numero *sconosciuto* di argomenti nello stile legacy K&R. In C23 le parentesi vuote `()` sono ufficialmente diventate equivalenti a `(void)`.",
+        "Errato. Al contrario, le parentesi vuote sono diventate lo standard moderno per le funzioni senza argomenti.",
+        "Errato. Per le funzioni variadiche si usano i tre punti di sospensione `...`.",
+        "Errato. Prima di C23 esisteva un'importante differenza sintattica tra `func()` e `func(void)`."
+      ]
+    },
+    {
+      "id": "it_clang_987",
+      "widget_id": "widget_clang_987",
+      "topic": "Durata di memorizzazione degli oggetti — Restituzione di letterali stringa",
+      "q": "È sicuro restituire un puntatore a un letterale stringa da una funzione (ad esempio `return \"Hello\";`)?",
+      "hint": "Dove vengono memorizzati i letterali stringa e qual è la loro durata di vita?",
+      "options": [
+        "Sì, è completamente sicuro, poiché i letterali stringa hanno durata di memorizzazione statica (Static storage duration) e rimangono attivi per l'intera durata del programma",
+        "No, causerà un comportamento indefinito, poiché la stringa risiede nello stack della funzione",
+        "No, la stringa verrà distrutta immediatamente dopo l'uscita dalla funzione",
+        "È sicuro solo se si compila con il flag -O3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I letterali stringa vengono inseriti nel segmento dati in sola lettura (`.rodata`) e hanno durata di memorizzazione statica. Il puntatore al letterale rimarrà valido per l'intera esecuzione del programma.",
+        "Errato. I letterali stringa non sono allocati sullo stack (a differenza di array come `char str[] = \"Hello\";`).",
+        "Errato. I letterali non vengono distrutti all'uscita dalla funzione.",
+        "Errato. L'ottimizzazione del compilatore non influisce sulla durata dei letterali."
+      ]
+    },
+    {
+      "id": "it_clang_988",
+      "widget_id": "widget_clang_988",
+      "topic": "Libreria standard — Ordine di chiamata di atexit()",
+      "q": "In quale ordine vengono chiamate le funzioni registrate tramite `atexit()` al termine normale del programma?",
+      "hint": "Ricorda il principio di funzionamento dello stack di chiamate (LIFO / FIFO).",
+      "options": [
+        "Nell'ordine inverso rispetto alla loro registrazione (LIFO — Last In, First Out)",
+        "Nell'ordine diretto di registrazione (FIFO — First In, First Out)",
+        "In ordine casuale",
+        "In ordine alfabetico per nome della funzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, le funzioni registrate tramite `atexit()` vengono chiamate nell'ordine inverso rispetto a quello di registrazione (ordine LIFO). L'ultima funzione registrata verrà eseguita per prima.",
+        "Errato. L'ordine FIFO non viene utilizzato per `atexit`.",
+        "Errato. L'ordine è deterministico e stabilito dallo standard.",
+        "Errato. I nomi delle funzioni a runtime non sono disponibili per questo ordinamento."
+      ]
+    },
+    {
+      "id": "it_clang_989",
+      "widget_id": null,
+      "topic": "Puntatori a funzioni — Mancata corrispondenza dei tipi di firma",
+      "q": "Cosa succede se si converte un puntatore a funzione a un altro tipo di puntatore a funzione con una firma non corrispondente e lo si invoca?",
+      "hint": "La corrispondenza degli argomenti nei registri e l'allineamento dello stack coincideranno?",
+      "options": [
+        "Comportamento indefinito (Undefined Behavior) durante l'esecuzione",
+        "Il compilatore eseguirà automaticamente il typecast degli argomenti e dei risultati",
+        "La funzione verrà eseguita correttamente senza alcun rischio",
+        "Lo stack delle chiamate si bilancerà automaticamente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il cast esplicito dei tipi di puntatore a funzione è consentito, ma la *chiamata* vera e propria tramite un puntatore con firma non corrispondente porta a Undefined Behavior a causa della violazione della convenzione di chiamata (Calling Convention).",
+        "Errato. Non viene effettuata alcuna conversione automatica degli argomenti a runtime attraverso un puntatore non corrispondente.",
+        "Errato. Ciò può portare alla corruzione dello stack o alla lettura di dati spazzatura dai registri.",
+        "Errato. Non esiste un bilanciamento automatico dello stack in caso di UB."
+      ]
+    },
+    {
+      "id": "it_clang_990",
+      "widget_id": "widget_clang_990",
+      "topic": "Ottimizzazione — Suggerimenti di diramazione __builtin_expect",
+      "q": "A cosa serve la macro `__builtin_expect(exp, c)` (o le popolari macro `likely/unlikely`) durante la chiamata di funzioni e la diramazione del codice?",
+      "hint": "Come fa il processore a sapere in anticipo quale ramo di codice caricare nella cache delle istruzioni?",
+      "options": [
+        "Per fornire un suggerimento al predittore di diramazioni (Branch Predictor) del compilatore sull'esito più probabile della condizione",
+        "Per misurare il tempo di esecuzione della funzione con precisione al ciclo di clock",
+        "Per proteggere la funzione da attacchi di buffer overflow",
+        "Per generare automaticamente un profilo di prestazioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `__builtin_expect` passa al compilatore informazioni sulla probabilità di un ramo `if`. Ciò consente di disporre in modo ottimale il codice macchina in memoria, riducendo al minimo gli svuotamenti della pipeline del processore (Branch Misprediction).",
+        "Errato. Per la misurazione del tempo si usano funzioni tipo `clock()` o l'istruzione assembly `rdtsc`.",
+        "Errato. Questa macro built-in non ha a che fare con la protezione da buffer overflow.",
+        "Errato. Il profiling si effettua con strumenti quali gprof/perf o tramite i flag `-pg`."
+      ]
+    },
+    {
+      "id": "it_clang_991",
+      "widget_id": "widget_clang_991",
+      "topic": "Sintassi — L'istruzione return nelle funzioni void",
+      "q": "Nel linguaggio C è consentito utilizzare un'espressione nell'istruzione return all'interno di una funzione void (ad esempio `return void_func();`)?",
+      "hint": "Confronta le regole del C con quelle del C++, dove tale espressione è ammessa.",
+      "options": [
+        "No, in C l'istruzione return nelle funzioni void non deve contenere alcuna espressione",
+        "Sì, se anche la funzione chiamata ha tipo di ritorno void",
+        "Sì, il compilatore C ignorerà semplicemente il risultato dell'espressione",
+        "È consentito solo quando è abilitato il flag di compilazione -O2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza del C++, lo standard C (C99–C23) vieta di utilizzare espressioni nell'istruzione `return` all'interno di funzioni con tipo `void`. La sintassi `return expression;` causerà un errore di compilazione.",
+        "Errato. Anche se l'espressione è di tipo `void`, in C questa sintassi non è ammissibile.",
+        "Errato. Il compilatore segnalerà una violazione dei vincoli (constraint violation).",
+        "Errato. I flag di ottimizzazione non modificano le regole sintattiche del linguaggio."
+      ]
+    },
+    {
+      "id": "it_clang_992",
+      "widget_id": "widget_clang_992",
+      "topic": "Parametri di funzione — const int *p vs int * const p",
+      "q": "Qual è la differenza tra i parametri `const int *p` e `int * const p` nell'intestazione di una funzione?",
+      "hint": "Fai attenzione da quale lato dell'asterisco si trova la parola chiave const.",
+      "options": [
+        "const int *p vieta di modificare il valore all'indirizzo, mentre int * const p vieta di modificare l'indirizzo stesso nella variabile p",
+        "Queste due sintassi sono assolutamente identiche",
+        "const int *p viene allocato sullo stack, mentre int * const p nell'heap",
+        "int * const p rende la funzione privata per il modulo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In `const int *p` sono costanti i dati (non si può fare `*p = 10`). In `int * const p` è costante il puntatore stesso (non si può fare `p++` o assegnargli un nuovo indirizzo all'interno della funzione).",
+        "Errato. La posizione di `const` rispetto a `*` cambia radicalmente l'oggetto della costanza.",
+        "Errato. Entrambi i parametri sono variabili locali del frame di stack.",
+        "Errato. Il collegamento delle funzioni è regolato dalla parola chiave `static`, non da `const`."
+      ]
+    },
+    {
+      "id": "it_clang_993",
+      "widget_id": "widget_clang_993",
+      "topic": "Standard del linguaggio — Chiamata ricorsiva di main()",
+      "q": "Secondo lo standard C, è consentito effettuare una chiamata ricorsiva alla funzione main() da se stessa o da altre funzioni?",
+      "hint": "Lo stato di main() in C differisce dagli standard C++?",
+      "options": [
+        "Sì, in C la chiamata ricorsiva a main() è consentita dallo standard (a differenza del C++)",
+        "No, la chiamata a main() dal codice è vietata in tutti gli standard C e C++",
+        "È consentito solo in C89, ma vietato a partire da C99",
+        "La chiamata a main() è consentita solo tramite un puntatore a funzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel linguaggio C la funzione `main()` è una normale funzione, e la sua chiamata esplicita o ricorsiva è completamente legale secondo lo standard. In C++ la chiamata ricorsiva a `main()` è vietata.",
+        "Errato. Il divieto di chiamare `main()` esiste solo nello standard C++, ma non in C.",
+        "Errato. Tutti gli standard C (inclusi C99, C11, C23) ammettono la chiamata ricorsiva a `main()`.",
+        "Errato. La funzione `main()` può essere chiamata direttamente per nome."
+      ]
+    },
+    {
+      "id": "it_clang_994",
+      "widget_id": "widget_clang_994",
+      "topic": "Tipi di dati — Passaggio di unioni (union) alle funzioni",
+      "q": "Come vengono passati per impostazione predefinita gli oggetti di tipo union nei parametri delle funzioni?",
+      "hint": "Il passaggio di un'unione per valore differisce da quello di una struct?",
+      "options": [
+        "Per valore tramite copia completa dei byte di memoria dell'unione",
+        "Sempre e solo tramite puntatore",
+        "Viene passato solo il campo che è stato inizializzato per ultimo",
+        "È vietato passare le unioni alle funzioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C una `union`, così come una `struct`, è un valore composto. Quando viene passata a una funzione senza puntatore, l'intera area di memoria dell'unione viene copiata per valore.",
+        "Errato. Per il passaggio tramite puntatore occorre scrivere esplicitamente `union Data *p`.",
+        "Errato. La funzione riceve l'intera memoria dell'unione, indipendentemente dal campo 'attivo'.",
+        "Errato. Il passaggio di `union` è pienamente supportato dal linguaggio."
+      ]
+    },
+    {
+      "id": "it_clang_995",
+      "widget_id": "widget_clang_995",
+      "topic": "Funzioni variadiche — La macro va_copy (C99)",
+      "q": "A cosa serve la macro va_copy(dest, src) dalla libreria <stdarg.h>?",
+      "hint": "Pensa a come scorrere nuovamente gli argomenti variabili all'interno della stessa funzione.",
+      "options": [
+        "Per duplicare lo stato di scorrimento degli argomenti variadici, consentendo di riattraversarli una seconda volta",
+        "Per allocare memoria nell'heap per i nuovi argomenti",
+        "Per convertire va_list in un formato stringa",
+        "Per passare va_list a un altro thread di esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `va_copy` crea una copia esatta dello stato di `va_list`. Questo è necessario se occorre leggere l'elenco degli argomenti variadici più volte (ad esempio, prima per calcolarne la dimensione e poi per formattarli).",
+        "Errato. `va_copy` non si occupa di allocare memoria dinamica.",
+        "Errato. Della formattazione si occupano le funzioni della famiglia `vprintf`.",
+        "Errato. Il passaggio dello stato di traversata tra thread tramite `va_copy` non è il suo scopo."
+      ]
+    },
+    {
+      "id": "it_clang_996",
+      "widget_id": "widget_clang_996",
+      "topic": "Nomi di funzioni — L'identificatore __func__ (C99)",
+      "q": "Cosa rappresenta l'identificatore __func__ all'interno del corpo di una funzione a partire dallo standard C99?",
+      "hint": "Di quale tipo è questa variabile e cosa contiene?",
+      "options": [
+        "Un array statico di caratteri implicito (const char[]), contenente il nome della funzione corrente",
+        "Un puntatore alla funzione corrente stessa",
+        "Un ID numerico della funzione generato dal compilatore",
+        "Una macro del preprocessore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C99, il compilatore dichiara implicitamente all'inizio di ogni funzione la variabile `static const char __func__[] = \"nome_funzione\";`, che memorizza il nome della funzione sotto forma di stringa.",
+        "Errato. `__func__` è un array di caratteri contenente la stringa del nome, non un puntatore a funzione.",
+        "Errato. È un array di stringhe, non un identificatore numerico.",
+        "Errato. `__func__` è proprio una variabile locale (un identificatore predefinito), non una macro del preprocessore (a differenza di `__FILE__` e `__LINE__`)."
+      ]
+    },
+    {
+      "id": "it_clang_997",
+      "widget_id": "widget_clang_997",
+      "topic": "Estensioni dei compilatori — L'attributo cleanup (GCC/Clang)",
+      "q": "Quale azione esegue l'attributo `__attribute__((cleanup(func)))` applicato a una variabile locale di una funzione?",
+      "hint": "A quale concetto del C++ (RAII / distruttore) equivale questo attributo?",
+      "options": [
+        "Chiama automaticamente func(&var) quando la variabile var esce dal suo ambito di visibilità (scope)",
+        "Azzera la memoria della variabile all'ingresso nella funzione",
+        "Rimuove la variabile dalla memoria subito dopo la prima scrittura",
+        "Vieta la modifica del valore della variabile"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'estensione `cleanup` in GCC/Clang registra una funzione di pulizia che viene chiamata automaticamente e riceve l'indirizzo della variabile all'uscita dal blocco corrente (analogo dei distruttori in C++ / RAII).",
+        "Errato. Questo attributo non si occupa di azzerare la memoria.",
+        "Errato. La variabile esiste durante tutto il suo ambito di visibilità.",
+        "Errato. Per vietare le modifiche si usa `const`."
+      ]
+    },
+    {
+      "id": "it_clang_998",
+      "widget_id": null,
+      "topic": "Puntatori a funzioni — Confronto tra puntatori",
+      "q": "Come si comporta l'operatore di uguaglianza == nel confronto tra due puntatori a funzioni in C?",
+      "hint": "Vengono confrontati gli indirizzi dei punti di ingresso delle funzioni in memoria?",
+      "options": [
+        "Restituisce 1 (true) se entrambi i puntatori puntano alla stessa funzione (stesso indirizzo in memoria)",
+        "Provoca un errore di compilazione — i puntatori a funzioni non si possono confrontare",
+        "Il confronto restituisce sempre 0 (false)",
+        "Il confronto porta a Undefined Behavior durante l'esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I puntatori a funzione in C memorizzano gli indirizzi delle istruzioni nel segmento di codice. Il loro confronto con l'operatore `==` verifica se puntano allo stesso punto di ingresso in memoria.",
+        "Errato. Il confronto tra puntatori a funzione è assolutamente legale.",
+        "Errato. Se i puntatori si riferiscono alla stessa funzione o sono entrambi `NULL`, il confronto restituirà 1.",
+        "Errato. Il confronto tra puntatori dello stesso tipo è rigorosamente definito dallo standard."
+      ]
+    },
+    {
+      "id": "it_clang_999",
+      "widget_id": "widget_clang_999",
+      "topic": "Gestione della memoria — alloca() vs VLA nei cicli",
+      "q": "Qual è la differenza fondamentale nel comportamento dei VLA (array a lunghezza variabile) rispetto ad alloca() nell'allocazione della memoria all'interno di un ciclo?",
+      "hint": "Quando viene liberata la memoria dello stack: all'uscita dal blocco del ciclo {} o all'uscita dall'intera funzione?",
+      "options": [
+        "La memoria del VLA viene liberata all'uscita dal blocco di ciclo {} corrente, mentre alloca() libera lo stack solo al termine dell'intera funzione",
+        "La memoria di alloca() viene liberata a ogni iterazione, mentre il VLA si conserva fino alla fine della funzione",
+        "Il VLA alloca memoria nell'heap, mentre alloca() sullo stack",
+        "Il comportamento è identico, la differenza è solo sintattica"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La durata di vita di un VLA è limitata al blocco `{}` (scope) in cui è dichiarato — la memoria dello stack viene liberata a ogni ciclo. La funzione `alloca()` invece sposta il puntatore di stack fino alla fine della funzione, il che in un ciclo causerà uno Stack Overflow.",
+        "Errato. Al contrario: il VLA viene liberato all'uscita dal blocco, mentre `alloca()` si accumula fino all'uscita dalla funzione.",
+        "Errato. Sia i VLA che `alloca()` utilizzano lo stack di chiamate.",
+        "Errato. La chiamata ad `alloca()` in un ciclo infinito causerà un crash, mentre un VLA nello stesso ciclo no."
+      ]
+    },
+    {
+      "id": "it_clang_1000",
+      "widget_id": "widget_clang_1000",
+      "topic": "Parametri di funzione — Il qualificatore restrict in C99",
+      "q": "In quale caso l'uso del qualificatore restrict nel parametro `void process(int * restrict ptr)` porta a Undefined Behavior?",
+      "hint": "Quale promessa fa il programmatore al compilatore specificando restrict?",
+      "options": [
+        "Se durante l'esecuzione si accede alla stessa area di memoria tramite un altro puntatore",
+        "Se si passa NULL alla funzione",
+        "Se il valore all'indirizzo ptr cambia all'interno della funzione",
+        "Se la funzione viene chiamata ricorsivamente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il qualificatore `restrict` è una garanzia del programmatore al compilatore che all'oggetto puntato da `ptr` non sono associati altri puntatori (no aliasing). La violazione di questa promessa porta a Undefined Behavior durante le ottimizzazioni.",
+        "Errato. Il passaggio di `NULL` a un puntatore `restrict` non è vietato di per sé.",
+        "Errato. La modifica dei dati tramite `ptr` è un uso normale.",
+        "Errato. La chiamata ricorsiva non viola `restrict` di per sé, a meno che i puntatori non facciano riferimento alle stesse aree di memoria."
+      ]
+    }
+  ]
+}

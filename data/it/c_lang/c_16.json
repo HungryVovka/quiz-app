@@ -1,0 +1,601 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_511",
+      "widget_id": "widget_clang_511",
+      "topic": "Ottimizzazione — Qualificatore restrict e aliasing dei puntatori",
+      "q": "Cosa garantisce al compilatore la parola chiave `restrict` durante l'ottimizzazione di questo ciclo?",
+      "hint": "Pensate se la scrittura all'indirizzo `a[i]` possa modificare il valore letto da `b[i]`.",
+      "options": [
+        "I puntatori `a` e `b` si riferiscono ad aree di memoria non sovrapposte, il che consente l'ottimizzazione vettoriale senza ricaricamenti superflui dalla RAM",
+        "Gli array `a` e `b` hanno rigorosamente la stessa dimensione fisica `n`",
+        "È vietato modificare gli elementi degli array `a` e `b` all'interno del ciclo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il qualificatore `restrict` (C99) informa il compilatore che l'accesso all'oggetto in questo ambito avviene esclusivamente tramite questo puntatore. Ciò garantisce l'assenza di sovrapposizione della memoria (aliasing) e dà diritto all'ottimizzazione vettoriale SIMD.",
+        "Errato. La dimensione degli array viene passata da una variabile separata `n`, `restrict` non controlla le dimensioni.",
+        "Errato. Il divieto di modifica è specificato dalla parola chiave `const`, non da `restrict`."
+      ]
+    },
+    {
+      "id": "it_clang_512",
+      "widget_id": "widget_clang_512",
+      "topic": "Standard C99 — Letterali composti (Compound Literals) nei cicli",
+      "q": "Quale valore stamperà `printf` quando si utilizza il letterale composto `((int[]){10, 20, 30})[i]` all'interno del ciclo?",
+      "hint": "Quale durata di memorizzazione (storage duration) possiede un letterale composto dichiarato all'interno del corpo di un ciclo?",
+      "options": [
+        "10",
+        "30",
+        "60",
+        "0",
+        "Comportamento Indefinito (UB)"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Errato. Il ciclo sommerà tutti e 3 gli elementi del letterale composto.",
+        "Errato. Questo è il valore del solo ultimo elemento `[2]`.",
+        "Corretto! In C99 un letterale composto all'interno di un blocco ha la durata di memorizzazione automatica (automatic storage duration) del blocco corrente. Ad ogni iterazione viene creato l'array `{10, 20, 30}`, viene letto `[i]` e avviene la somma: 10 + 20 + 30 = 60.",
+        "Errato. Gli elementi dell'array sono inizializzati con i valori 10, 20 e 30.",
+        "Errato. La memoria per il letterale è valida durante l'intera iterazione corrente del blocco."
+      ]
+    },
+    {
+      "id": "it_clang_513",
+      "widget_id": "widget_clang_513",
+      "topic": "Standard C — Tentativo di modifica di un oggetto originariamente const",
+      "q": "Qual è lo stato di esecuzione del codice quando si rimuove il qualificatore `const` tramite un cast esplicito `(int *)&val`?",
+      "hint": "Distinguete tra un puntatore a una costante e un oggetto ORIGINARIAMENTE dichiarato come `const`.",
+      "options": [
+        "Stamperà 20",
+        "Stamperà 10",
+        "Comportamento Indefinito (Undefined Behavior)",
+        "Errore di compilazione"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Errato. Sebbene il cast dei tipi rimuova l'avviso del compilatore, l'esecuzione di tale operazione è vietata dallo standard.",
+        "Errato. Il compilatore può collocare una variabile `const` in una sezione di memoria di sola lettura (read-only memory, ad esempio `.rodata`).",
+        "Corretto! Secondo lo standard ISO C, il tentativo di modificare un oggetto originariamente dichiarato con il qualificatore `const` tramite un puntatore non-const porta a un Comportamento Indefinito (UB). Il codice potrebbe andare in crash con un Segmentation Fault.",
+        "Errato. Il cast esplicito dei tipi `(int *)&val` fa sì che il compilatore accetti il codice senza errori."
+      ]
+    },
+    {
+      "id": "it_clang_514",
+      "widget_id": "widget_clang_514",
+      "topic": "Conversioni di tipo — Promozione degli interi (Integer Promotions)",
+      "q": "Si verificherà un overflow senza segno nella somma `(a + b)` per il tipo `unsigned short`?",
+      "hint": "Ricordate a quale tipo vengono convertiti automaticamente i tipi più piccoli di `int` quando partecipano a operazioni aritmetiche.",
+      "options": [
+        "La promozione a `signed int` farà sì che l'espressione `(65535 + 1)` diventi pari a 65536, la condizione è vera (`65536 > 0`), `count` diventerà 1",
+        "La somma `a + b` andrà in overflow modulo $2^{16}$ in `unsigned short` (valore 0), la condizione è falsa (`0 > 0`), `count` rimarrà 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo la regola Integer Promotions, se il tipo `int` può contenere tutti i valori del tipo originale (e un `int` a 32 bit contiene 65535 di tipo `unsigned short`), gli operandi vengono automaticamente promossi a `signed int`. Il risultato $65535 + 1 = 65536 > 0$ (vero).",
+        "Errato. La somma NON avviene nel tipo `unsigned short`, poiché viene prima promossa a `int`."
+      ]
+    },
+    {
+      "id": "it_clang_515",
+      "widget_id": "widget_clang_515",
+      "topic": "Salti a basso livello — setjmp/longjmp e variabili volatile",
+      "q": "Perché la variabile `count` è dichiarata con lo specificatore `volatile` quando si lavora con `setjmp` e `longjmp`?",
+      "hint": "Cosa succede alle variabili locali nei registri del processore quando viene chiamata `longjmp`?",
+      "options": [
+        "Per preservare le modifiche della variabile: i valori delle variabili locali non-volatile modificate tra `setjmp` e `longjmp` diventano indeterminati (indeterminate)",
+        "Per garantire l'atomicità delle operazioni su `count` durante il salto",
+        "Per consentire la chiamata a `longjmp` da altri thread di esecuzione",
+        "È facoltativo, la variabile si conserverà anche senza `volatile`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard ISO C indica esplicitamente che se una variabile locale automatica viene modificata tra `setjmp` e `longjmp` e NON è dichiarata come `volatile`, il suo valore dopo `longjmp` è indeterminato (poiché il compilatore potrebbe averla conservata in un registro ripristinato dal buffer `jmp_buf`).",
+        "Errato. `volatile` non ha alcuna relazione con l'atomicità delle operazioni.",
+        "Errato. `setjmp/longjmp` in C non sono stati progettati per la sincronizzazione multithread.",
+        "Errato. Senza `volatile`, un compilatore ottimizzante ripristinerà il valore di `count` a 0."
+      ]
+    },
+    {
+      "id": "it_clang_516",
+      "widget_id": "widget_clang_516",
+      "topic": "Strutture — Campi di bit con segno e i loro limiti",
+      "q": "Quale valore assumerà un campo di bit con segno `signed int x : 2` di larghezza 2 bit dopo le iterazioni?",
+      "hint": "L'intervallo di un campo di bit con segno a 2 bit nel complemento a due va da -2 a +1.",
+      "options": [
+        "L'intervallo del campo di bit con segno a 2 bit va da -2 a 1; il risultato dell'overflow con segno del campo di bit dipende dall'implementazione (Implementation-defined) / UB",
+        "Il campo va in overflow lungo la sequenza di valori 0, 1, 2, 3, 4",
+        "Il campo conserverà il valore 5",
+        "Errore di compilazione a causa dell'uso dell'operatore `++` su un campo di bit",
+        "Il campo sarà pari a 1 e `count` pari a 5",
+        "Il campo sarà pari a 0 e `count` pari a 5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il campo di bit `signed int x : 2` memorizza valori con segno [-2, 1]. Con `0 + 1` si ottiene 1. Alla successiva incrementazione, l'overflow con segno che si verifica nel campo di bit in C è definito dall'implementazione (Implementation-defined) o è UB. Di solito avviene il ripristino a -2.",
+        "Errato. Con due bit con segno è impossibile rappresentare i numeri positivi 2, 3 o 4.",
+        "Errato. Il valore 5 richiede minimo 4 bit (per la rappresentazione con segno).",
+        "Errato. Gli operatori di incremento `++` sono sintatticamente consentiti per i campi di bit in C.",
+        "Errato. Il valore non si fermerà a 1 a causa del ciclo che prosegue.",
+        "Errato. A seconda della piattaforma, il valore varierà ciclicamente nell'intervallo dei 2 bit."
+      ]
+    },
+    {
+      "id": "it_clang_517",
+      "widget_id": "widget_clang_517",
+      "topic": "Ambito di visibilità — Triplo oscuramento delle variabili (Shadowing)",
+      "q": "Cosa stamperà `printf(\"%d\", i)` dopo il completamento di questo ciclo `for`?",
+      "hint": "In C99 l'intestazione `for(int i...)` crea un blocco di visibilità separato, mentre il corpo `{ int i... }` ne crea uno proprio annidato.",
+      "options": [
+        "100",
+        "3",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Qui ci sono 3 variabili `i` distinte: 1) L'esterna `i = 100`. 2) La variabile del ciclo `for (int i = 0)`. 3) L'interna `int i = 10` nel blocco del corpo del ciclo. L'interna cambia a 11 e viene distrutta. Il contatore del ciclo arriva a 3 e viene distrutto. L'esterna `i = 100` rimane intatta.",
+        "Errato. La variabile del ciclo `i`, diventata 3, cessa di esistere all'uscita dal ciclo.",
+        "Errato. La ridichiarazione di una variabile con lo stesso nome in un blocco INTERNO è del tutto valida."
+      ]
+    },
+    {
+      "id": "it_clang_518",
+      "widget_id": "widget_clang_518",
+      "topic": "Tipi di puntatori — Divieto di aritmetica su void* in ISO C",
+      "q": "Perché per lo spostamento di `ptr` nello standard ISO C rigido è necessario un cast esplicito `(char *)ptr + 1`?",
+      "hint": "A quanto equivale `sizeof(void)` nello standard C puro?",
+      "options": [
+        "In ISO C l'aritmetica su `void*` è vietata, poiché `void` è un tipo incompleto privo di dimensione (`sizeof(void)` non è definito)",
+        "Il tipo `void*` viene convertito automaticamente solo durante la sottrazione di puntatori",
+        "Senza il cast `(char*)`, lo spostamento di `void*` avanzerebbe automaticamente di 4 byte",
+        "Il tipo `void*` in C è un puntatore costante per impostazione predefinita"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard ISO C, il tipo `void` è un tipo incompleto (incomplete type) e `sizeof(void)` non ha valore. Di conseguenza `ptr + 1` è sintatticamente non valido in C puro (sebbene il compilatore GCC abbia un'estensione in cui `sizeof(void) == 1`).",
+        "Errato. L'aritmetica è vietata allo stesso modo per tutte le operazioni di addizione e sottrazione con `void*`.",
+        "Errato. Lo standard non equipara `void*` a `int*` (4 byte).",
+        "Errato. La modificabilità del puntatore è determinata dal qualificatore `const`, non dal tipo `void`."
+      ]
+    },
+    {
+      "id": "it_clang_519",
+      "widget_id": "widget_clang_519",
+      "topic": "Operatore sizeof — Eccezioni di valutazione delle espressioni (valutazione VLA)",
+      "q": "Verrà calcolato l'effetto collaterale `i++` all'interno di `sizeof(int[i++])`?",
+      "hint": "Le espressioni all'interno di `sizeof` vengono valutate se l'operando è un VLA (array a lunghezza variabile)?",
+      "options": [
+        "Sì! A partire da C99, se l'operando di `sizeof` è un VLA, l'espressione viene valutata a tempo di esecuzione (Runtime)",
+        "No, l'operando di `sizeof` è sempre un'espressione non valutata (unevaluated operand) a tempo di compilazione",
+        "Errore di compilazione",
+        "Comportamento Indefinito (UB)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Questa è un'eccezione unica degli standard C99+: se il tipo dell'operando di `sizeof` è un VLA (Variable Length Array), la dimensione dell'array non è nota in fase di compilazione, quindi l'espressione ALL'INTERNO di `sizeof` viene valutata a tempo di esecuzione e l'incremento `i++` si attiva!",
+        "Errato. Questa regola è valida per tutti i tipi ordinari, ma NON per i tipi VLA.",
+        "Errato. La sintassi VLA all'interno di `sizeof` è del tutto corretta in C99.",
+        "Errato. Il comportamento è rigorosamente definito dallo standard."
+      ]
+    },
+    {
+      "id": "it_clang_520",
+      "widget_id": "widget_clang_520",
+      "topic": "Standard C99 — Membro flessibile di un array (Flexible Array Member)",
+      "q": "Quale regola dello standard C99 descrive il membro flessibile di un array `int data[]` in una struttura?",
+      "hint": "Dove esattamente all'interno della struttura deve trovarsi il membro flessibile dell'array e fa parte del `sizeof` della struttura?",
+      "options": [
+        "Il membro flessibile dell'array deve essere l'ULTIMO elemento della struttura e `sizeof(struct Buffer)` NON include la memoria per gli elementi `data[]`",
+        "La dimensione `sizeof(struct Buffer)` include automaticamente la dimensione predefinita di 1 elemento",
+        "Gli elementi di `data[]` vengono allocati automaticamente sullo stack alla dichiarazione della struttura"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C99 il Flexible Array Member (`tipo nome[]`) deve essere posizionato tassativamente come ultimo campo della struttura. Nel calcolo di `sizeof(struct)` la memoria per questo array non viene presa in considerazione; essa viene allocata dinamicamente tramite `malloc(sizeof(struct) + N * sizeof(elem))`.",
+        "Errato. A differenza del vecchio trucco con `data[1]`, `data[]` non aggiunge byte alla dimensione della struttura.",
+        "Errato. La memoria per il membro flessibile deve essere allocata esplicitamente nella memoria dinamica (heap)."
+      ]
+    },
+    {
+      "id": "it_clang_521",
+      "widget_id": "widget_clang_521",
+      "topic": "VLA multidimensionali — Array bidimensionali a lunghezza variabile nei cicli",
+      "q": "A quanto equivarrà la somma di tutti gli elementi dell'array VLA bidimensionale `arr[2][3]`?",
+      "hint": "Le iterazioni $i=0, j \\in [0..2]$ aggiungeranno $(0+0)+(0+1)+(0+2) = 3$. Calcolate $i=1$.",
+      "options": [
+        "9",
+        "6",
+        "12",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `i=0`: elementi 0, 1, 2 (somma 3). Con `i=1`: elementi 1, 2, 3 (somma 6). La somma totale di tutti gli elementi dell'array VLA è pari a $3 + 6 = 9$.",
+        "Errato. Sono stati dimenticati gli elementi della riga `i=0`.",
+        "Errato. Ricontrollate le somme degli indici per l'ultima riga.",
+        "Errato. La variabile `sum` accumula i risultati nel ciclo."
+      ]
+    },
+    {
+      "id": "it_clang_522",
+      "widget_id": "widget_clang_522",
+      "topic": "Standard C11 — Allineamento di memoria tramite aligned_alloc",
+      "q": "Quale requisito severo impone la funzione `aligned_alloc(alignment, size)` dello standard C11 al parametro di dimensione `size`?",
+      "hint": "`size` può essere inferiore o non multiplo del valore di allineamento `alignment`?",
+      "options": [
+        "Il parametro `size` deve essere strettamente un multiplo (multiple of) del valore di allineamento `alignment`",
+        "L'allineamento `alignment` deve obbligatoriamente essere un numero dispari",
+        "La dimensione `size` deve essere esattamente pari a 1024 byte",
+        "La funzione `aligned_alloc` alloca memoria esclusivamente nello stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nello standard C11 per `aligned_alloc(alignment, size)` il parametro `size` DEVE essere un multiplo di `alignment` (nell'esempio `64` è multiplo di `64`). In caso contrario la funzione restituisce `NULL` o causa UB.",
+        "Errato. L'allineamento (alignment) in C deve essere sempre una potenza di due.",
+        "Errato. Non esiste alcun limite fisso a 1024 byte.",
+        "Errato. La funzione `aligned_alloc` alloca memoria nell'heap, in modo analogo a `malloc`."
+      ]
+    },
+    {
+      "id": "it_clang_523",
+      "widget_id": "widget_clang_523",
+      "topic": "Standard C — Regola del rigido aliasing (Strict Aliasing Rule)",
+      "q": "Quale regola fondamentale del linguaggio C viene violata quando si scrive nella memoria di una variabile float tramite `int *p = (int *)&f`?",
+      "hint": "Lo standard consente di leggere e scrivere la memoria di un tipo tramite un puntatore a un tipo incompatibile?",
+      "options": [
+        "Regola del rigido aliasing (Strict Aliasing Rule) — l'accesso a un oggetto di tipo `float` tramite un puntatore `int*` causa UB",
+        "Regola dell'allineamento dei tipi (Alignment Rule)",
+        "Regola del tempo di vita delle variabili globali",
+        "Regola del cast dei tipi `const`",
+        "Errore di sintassi C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La Strict Aliasing Rule vieta di accedere alla memoria di un tipo tramite un puntatore a un altro tipo incompatibile (eccetto `char*`). Il compilatore assumerà che `f` e `*p` siano oggetti diversi e potrebbe rimuovere le scritture dal ciclo durante l'ottimizzazione.",
+        "Errato. Di norma `int` e `float` hanno lo stesso allineamento (4 byte).",
+        "Errato. La variabile si trova nello stack, il suo tempo di vita è corretto.",
+        "Errato. Il qualificatore `const` non viene usato qui.",
+        "Errato. Il codice si compila con successo, ma contiene un UB logico dello standard."
+      ]
+    },
+    {
+      "id": "it_clang_524",
+      "widget_id": "widget_clang_524",
+      "topic": "Memoria dinamica — Array bidimensionali tramite puntatore a puntatore",
+      "q": "A quanto sarà uguale l'elemento `matrix[1][0]` dopo l'inizializzazione della matrice dinamica nel ciclo?",
+      "hint": "Sostituite gli indici `i = 1` e `j = 0` nella formula `i + j + 1`.",
+      "options": [
+        "2",
+        "1",
+        "3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `i = 1` e `j = 0` il calcolo della formula dà: $1 + 0 + 1 = 2$. Il valore di `matrix[1][0]` diventerà pari a 2.",
+        "Errato. 1 si otterrebbe per l'elemento `matrix[0][0]`.",
+        "Errato. 3 si otterrebbe per l'elemento `matrix[1][1]`."
+      ]
+    },
+    {
+      "id": "it_clang_525",
+      "widget_id": "widget_clang_525",
+      "topic": "Eccezioni di aliasing — Ispezione della memoria tramite char* / unsigned char*",
+      "q": "Perché questo codice per la determinazione dell'ordine dei byte (Endianness) tramite `unsigned char*` NON viola lo Strict Aliasing?",
+      "hint": "A quali tipi di dati nello standard C è ufficialmente consentito fare l'aliasing (sovrapposizione) della memoria di assolutamente QUALSIASI oggetto?",
+      "options": [
+        "I tipi di caratteri (`char`, `unsigned char`, `signed char`) costituiscono un'eccezione ufficiale degli standard C per l'analisi byte per byte di qualsiasi memoria",
+        "Perché il tipo `unsigned int` viene convertito automaticamente in un array durante la lettura",
+        "Viola la regola, questo codice causa un Comportamento Indefinito (UB)",
+        "A causa della scrittura dei numeri in sistema esadecimale `0x`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard ISO C fa esplicitamente un'eccezione dalle regole di Strict Aliasing per i tipi `char`, `signed char` e `unsigned char`. I puntatori ai tipi carattere hanno il diritto di leggere e ispezionare la rappresentazione in memoria di qualsiasi altro oggetto.",
+        "Errato. Non avviene alcuna conversione automatica in array.",
+        "Errato. Il codice è standardizzato ed è un modo classico per verificare Little/Big Endian.",
+        "Errato. Il formato di scrittura dei numeri (`0x`) non influisce in alcun modo sulle regole di aliasing del compilatore."
+      ]
+    },
+    {
+      "id": "it_clang_526",
+      "widget_id": "widget_clang_526",
+      "topic": "Array e puntatori — Simmetria dell'operatore di indicizzazione",
+      "q": "La sintassi `2[arr]` è valida nel linguaggio C e cosa stamperà questa riga?",
+      "hint": "Ricordate in cosa si espande l'espressione `a[b]` a livello di puntatori.",
+      "options": [
+        "30",
+        "Errore di compilazione",
+        "10",
+        "Comportamento Indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel linguaggio C l'espressione `a[b]` per definizione è equivalente a `*(a + b)`. Per la proprietà commutativa dell'addizione, `*(a + b)` è uguale a `*(b + a)`. Di conseguenza `2[arr]` è del tutto equivalente a `arr[2]` e restituirà il terzo elemento (30).",
+        "Errato. Questa sintassi è pienamente conforme allo standard ANSI/ISO C.",
+        "Errato. 10 è `arr[0]` o `0[arr]`.",
+        "Errato. L'operazione è rigorosamente definita dallo standard."
+      ]
+    },
+    {
+      "id": "it_clang_527",
+      "widget_id": "widget_clang_527",
+      "topic": "Array — Eccezioni alla regola di decadimento (Decay) in puntatore",
+      "q": "Cosa stamperà `printf(\"%zu %zu\", sizeof(arr), sizeof(arr + 0))` su un'architettura a 64 bit?",
+      "hint": "L'operatore `sizeof` è una delle rare eccezioni in cui il nome di un array NON viene convertito automaticamente in un puntatore.",
+      "options": [
+        "20 8",
+        "20 20",
+        "8 8",
+        "5 8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `sizeof(arr)` prende l'array stesso come operando e restituisce la sua dimensione totale in byte ($5 \\times 4 = 20$). Nell'espressione `arr + 0` avviene un'addizione esplicita di puntatori, per cui `arr` decade a `int*`. La dimensione di un puntatore su un sistema a 64 bit è pari a 8 byte. Output: 20 8.",
+        "Errato. In `sizeof(arr + 0)` l'operando è il risultato dell'addizione tra puntatori, non l'array stesso.",
+        "Errato. `sizeof(arr)` restituisce il volume di memoria dell'intero array, non la dimensione del puntatore.",
+        "Errato. `sizeof` restituisce la dimensione in byte, non il numero di elementi."
+      ]
+    },
+    {
+      "id": "it_clang_528",
+      "widget_id": "widget_clang_528",
+      "topic": "Stringhe — Modifica dei letterali stringa (String Literals)",
+      "q": "A quale effetto porterà il tentativo di scrittura `s[0] = 'h'` in un puntatore a un letterale stringa?",
+      "hint": "In quale area di memoria il compilatore colloca solitamente i letterali stringa?",
+      "options": [
+        "Comportamento Indefinito (UB) / Errore di segmentazione (Segmentation Fault)",
+        "Modificherà con successo la stringa in \"hello\"",
+        "Errore di compilazione",
+        "La stringa diventerà vuota"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard ISO C i letterali stringa sono immutabili (read-only) e vengono spesso collocati in sezioni protette di memoria (ad esempio `.rodata`). Il tentativo di scrittura in `s[0]` causa un Comportamento Indefinito (UB), portando a un Segmentation Fault.",
+        "Errato. È possibile modificare solo array di caratteri (`char s[] = \"Hello\"`), ma non letterali tramite `char*`.",
+        "Errato. In C (a differenza del C++) il tipo di un letterale stringa è `char[]` e non `const char[]`, quindi il codice viene compilato senza errori.",
+        "Errato. La modifica provoca un arresto anomalo del programma, non uno svuotamento."
+      ]
+    },
+    {
+      "id": "it_clang_529",
+      "widget_id": "widget_clang_529",
+      "topic": "Puntatori — Aritmetica dei puntatori ad array int (*p)[N]",
+      "q": "A quanto equivale `(*p)[0]` dopo l'incremento del puntatore `p` a un array di 3 elementi?",
+      "hint": "Il puntatore `p` ha tipo `int (*)[3]`. Di quanti byte si sposterà `p` durante l'esecuzione di `p++`?",
+      "options": [
+        "4",
+        "2",
+        "1",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `p` è un puntatore a un ARRAY di 3 elementi `int` (`sizeof(int[3]) = 12` byte). L'incremento `p++` sposta il puntatore direttamente di un'intera riga da 3 elementi in avanti. `*p` ora si riferisce alla seconda riga `{4, 5, 6}`, e `(*p)[0]` restituisce il primo elemento di questa riga — 4.",
+        "Errato. 2 è il secondo elemento della prima riga `arr[0][1]`.",
+        "Errato. 1 è il primo elemento della prima riga prima dell'incremento.",
+        "Errato. La dichiarazione di un puntatore a un array `int (*p)[3]` è sintatticamente corretta."
+      ]
+    },
+    {
+      "id": "it_clang_530",
+      "widget_id": "widget_clang_530",
+      "topic": "Standard C99 — Inizializzatori designati (Designated Initializers)",
+      "q": "A quanto equivarrà la somma degli elementi dell'array `int arr[5] = {[1] = 10, [3] = 20}`?",
+      "hint": "Cosa succede agli elementi dell'array i cui indici non sono specificati durante l'inizializzazione esplicita?",
+      "options": [
+        "30",
+        "10",
+        "20",
+        "Valore indeterminato (spazzatura dalla memoria)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C99 gli inizializzatori designati consentono di impostare esplicitamente i valori degli elementi `arr[1] = 10` e `arr[3] = 20`. Secondo lo standard C, se un array è inizializzato anche solo parzialmente, tutti gli elementi non attivati vengono automaticamente riempiti con zeri. L'array ha la forma `{0, 10, 0, 20, 0}`. Somma: 30.",
+        "Errato. Non dimenticate il valore considerato `arr[3] = 20`.",
+        "Errato. Non dimenticate il valore considerato `arr[1] = 10`.",
+        "Errato. La spazzatura rimane solo se gli inizializzatori mancano COMPLETAMENTE (`int arr[5];`)."
+      ]
+    },
+    {
+      "id": "it_clang_531",
+      "widget_id": null,
+      "topic": "Tipi di dati — Incompatibilità tra int** e array bidimensionale int[][N]",
+      "q": "Perché il passaggio di un array bidimensionale `int arr[2][2]` a una funzione con parametro `int **p` senza cast dei tipi causa UB all'accesso `p[0][0]`?",
+      "hint": "Un array bidimensionale è un array di puntatori o una matrice continua di numeri?",
+      "options": [
+        "Un array bidimensionale è un blocco continuo di dati. L'espressione `p[0]` leggerà i primi 4/8 byte dell'array e interpreterà il valore numerico stesso dell'elemento come un INDIRIZZO in memoria",
+        "Perché gli array bidimensionali vengono passati per valore e non per riferimento",
+        "Perché `int**` alloca memoria nello stack, mentre `arr[2][2]` nell'heap",
+        "È un'operazione del tutto sicura in C11"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In memoria `arr[2][2]` contiene semplicemente 4 numeri `int` consecutivi. Il parametro `int **p` si aspetta che all'indirizzo `p` si trovi un PUNTATORE `int*`. Il tentativo di dereferenziare `p[0]` costringerà il processore a prendere il valore numerico `arr[0][0]` (ad esempio 1) e ad accedere alla memoria all'indirizzo `0x1`, causando un crash.",
+        "Errato. Gli array in C non vengono mai passati per valore.",
+        "Errato. Gli array locali sono dichiarati sullo stack.",
+        "Errato. Si tratta di un grave errore di gestione dei tipi di puntatori."
+      ]
+    },
+    {
+      "id": "it_clang_532",
+      "widget_id": "widget_clang_532",
+      "topic": "Stringhe — Terminatori nulli incorporati e funzioni di string.h",
+      "q": "Cosa stamperà `printf` per la stringa con terminatori nulli incorporati `\"A\\0B\\0C\"`?",
+      "hint": "Pensate a come `sizeof` determina la dimensione di un letterale stringa e come `strlen` cerca la fine della stringa.",
+      "options": [
+        "6 1",
+        "6 5",
+        "5 1",
+        "3 1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `sizeof(str)` calcola la memoria totale dell'array considerando il `\\0` finale del letterale: 'A', '\\0', 'B', '\\0', 'C', '\\0' = 6 byte. La funzione `strlen(str)` cerca il primo byte nullo `\\0` incontrato, che si trova subito dopo 'A', quindi la lunghezza è 1. Output: 6 1.",
+        "Errato. `strlen` non conta i caratteri dopo il primo `\\0` incontrato.",
+        "Errato. È stato dimenticato il terminatore nullo finale automatico del letterale stesso.",
+        "Errato. Vengono ignorati i byte nulli a metà dell'array."
+      ]
+    },
+    {
+      "id": "it_clang_533",
+      "widget_id": "widget_clang_533",
+      "topic": "Stringhe — Assenza del terminatore nullo (Null Terminator)",
+      "q": "Cosa succederà quando si passa l'array `char str[3] = {'a', 'b', 'c'}` allo specificatore `%s` della funzione `printf`?",
+      "hint": "In che modo `printf` comprende dove termina la stringa da stampare?",
+      "options": [
+        "Si verificherà una lettura fuori dai limiti dell'array (Out-of-bounds read) e un Comportamento Indefinito (UB)",
+        "Stamperà \"abc\"",
+        "Errore di compilazione",
+        "Stamperà \"abc\\0\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'array di 3 elementi è riempito di caratteri senza il byte `\\0`. Lo specificatore `%s` richiede una stringa terminata da zero. `printf` leggerà la memoria oltre i limiti dell'array finché non incontra uno 0 casuale in memoria (UB).",
+        "Errato. Senza `\\0` l'output proseguirà garantito con spazzatura dalla memoria.",
+        "Errato. L'inizializzazione di un array di caratteri senza `\\0` è sintatticamente legale.",
+        "Errato. Il carattere `\\0` in sé non viene stampato."
+      ]
+    },
+    {
+      "id": "it_clang_534",
+      "widget_id": "widget_clang_534",
+      "topic": "Puntatori e array — Indicizzazione lineare piatta di un array multidimensionale",
+      "q": "A quanto equivarrà `*p` se si converte l'array bidimensionale `a[3][3]` in `int*` e si aggiunge 4?",
+      "hint": "Gli elementi dell'array si trovano in memoria in modo consecutivo. Quale elemento per conteggio si troverà allo scostamento 4?",
+      "options": [
+        "5",
+        "4",
+        "6",
+        "Comportamento Indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un array bidimensionale è memorizzato in memoria in sequenza (Row-Major Order): 1, 2, 3, 4, 5, 6, 7, 8, 9. Il cast a `(int*)a` dà l'indirizzo del primo elemento (1). Lo scostamento `+ 4` punta al 5° elemento (indice 4), che è pari a 5.",
+        "Errato. 4 è l'elemento con indice 3.",
+        "Errato. 6 è l'elemento con indice 5.",
+        "Errato. L'attraversamento di un array continuo tramite puntatore base è standardizzato."
+      ]
+    },
+    {
+      "id": "it_clang_535",
+      "widget_id": null,
+      "topic": "Standard C99 — Tempo di vita dell'array VLA all'interno dei cicli",
+      "q": "Cosa succede alla memoria dell'array VLA (Variable Length Array) creato all'interno del corpo del ciclo `for` a ogni iterazione?",
+      "hint": "In che modo l'ambito di visibilità (scope) del blocco influisce sull'allocazione e liberazione della memoria del VLA sullo stack?",
+      "options": [
+        "La memoria per il VLA viene allocata sullo stack all'ingresso nel blocco del ciclo e liberata automaticamente a ogni uscita dal blocco di iterazione",
+        "La memoria viene allocata nell'heap e si accumula fino alla fine della funzione, creando una perdita di memoria",
+        "La memoria viene allocata una sola volta prima dell'inizio del ciclo e viene riutilizzata",
+        "È vietato creare VLA all'interno dei cicli"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C99 il tempo di vita del VLA è legato al suo ambito di visibilità (block scope). Ad ogni iterazione del ciclo, all'ingresso nel blocco viene allocato uno stack frame per il VLA, mentre all'uscita dal blocco (raggiungimento di `}` o `continue`) la memoria del VLA automatico viene immediatamente liberata.",
+        "Errato. Gli array VLA sono allocati sullo stack, non nell'heap.",
+        "Errato. Poiché la dimensione può cambiare ad ogni iterazione, l'allocazione avviene nuovamente.",
+        "Errato. La dichiarazione di VLA all'interno di blocchi di cicli è completamente consentita."
+      ]
+    },
+    {
+      "id": "it_clang_536",
+      "widget_id": "widget_clang_536",
+      "topic": "Puntatori — Indici negativi nei puntatori",
+      "q": "L'espressione `p[-1]` è legale in C se `p` punta a `&arr[2]`?",
+      "hint": "In cosa si espande `p[-1]` secondo le regole dell'aritmetica dei puntatori?",
+      "options": [
+        "Sì, è del tutto legale, stamperà 20",
+        "No, gli indici negativi sono vietati dalla sintassi del C",
+        "Causerà un Comportamento Indefinito (UB)",
+        "Stamperà 10"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `p[-1]` diventa `*(p - 1)`. Poiché `p` punta a `arr[2]` (valore 30), `p - 1` punta a `arr[1]` (valore 20). Poiché questo elemento si trova entro i limiti dell'array originale, l'operazione è del tutto legale.",
+        "Errato. A differenza di altri linguaggi, il C consente l'uso di indici negativi per i puntatori.",
+        "Errato. L'UB si verifica solo se l'indirizzo dereferenziato esce dai limiti dell'array.",
+        "Errato. 10 è `arr[0]` o `p[-2]`."
+      ]
+    },
+    {
+      "id": "it_clang_537",
+      "widget_id": "widget_clang_537",
+      "topic": "Preprocessore / Lessico — Concatenazione automatica di letterali stringa",
+      "q": "A quanto equivale `sizeof(str)` per l'espressione `\"Hello \" \"World\"`?",
+      "hint": "Pensate a cosa fa il traslatore C con i letterali stringa posizionati in sequenza.",
+      "options": [
+        "12",
+        "11",
+        "2",
+        "Errore di sintassi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella fase di traduzione (Translation Phase 6) i letterali stringa adiacenti vengono uniti dal compilatore in uno solo: `\"Hello World\"`. La lunghezza della stringa è di 11 caratteri + 1 terminatore nullo `\\0` = 12 byte.",
+        "Errato. 11 è il numero di caratteri stampabili senza considerare `\\0`.",
+        "Errato. Il compilatore unisce i letterali e non crea un array di due puntatori.",
+        "Errato. La separazione delle stringhe tramite spazi o a capo è del tutto conforme agli standard C."
+      ]
+    },
+    {
+      "id": "it_clang_538",
+      "widget_id": "widget_clang_538",
+      "topic": "Funzioni — Zucchero sintattico dei parametri-array",
+      "q": "Cosa stamperà `sizeof(a)` all'interno della funzione `void print_size(int a[5][10])` su un sistema a 64 bit?",
+      "hint": "In cosa si trasforma QUALSIASI parametro-array di livello superiore nell'intestazione di una funzione C?",
+      "options": [
+        "8",
+        "200",
+        "40",
+        "5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nei parametri delle funzioni C i tipi-array non esistono. La dichiarazione `int a[5][10]` viene convertita implicitamente dal compilatore in un puntatore al suo primo elemento: `int (*a)[10]`. L'operatore `sizeof(a)` restituisce la dimensione del puntatore stesso (8 byte su sistemi a 64 bit).",
+        "Errato. $5 \\times 10 \\times 4 = 200$ byte sarebbe stata la dimensione dell'array originale al di fuori dei parametri della funzione.",
+        "Errato. 40 è la dimensione di una sola riga `int[10]`.",
+        "Errato. La dimensione dell'array non viene passata implicitamente all'interno del tipo."
+      ]
+    },
+    {
+      "id": "it_clang_539",
+      "widget_id": "widget_clang_539",
+      "topic": "Standard C99 — Ambito di visibilità e tempo di vita dei letterali composti",
+      "q": "È sicuro l'accesso `p[0]` a un letterale composto al di fuori del suo blocco `{}`?",
+      "hint": "Quale durata di memorizzazione (storage duration) possiede un letterale composto creato all'interno di un blocco?",
+      "options": [
+        "Non sicuro (Undefined Behavior): un letterale composto in un blocco ha durata di memorizzazione automatica e viene distrutto all'uscita da `{}`",
+        "Sicuro: un letterale composto ha sempre durata di memorizzazione statica (static duration)",
+        "Errore di compilazione: è vietato assegnare un letterale a un puntatore",
+        "Sicuro: stamperà 1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C99 un letterale composto dichiarato all'interno di un blocco `{}` ha durata di memorizzazione automatica (automatic storage duration) legata a quel blocco. All'uscita dal blocco la memoria viene liberata e `p` diventa un puntatore pendente (dangling pointer). La lettura di `p[0]` è UB.",
+        "Errato. Hanno durata di memorizzazione statica solo i letterali dichiarati AL DI FUORI di tutte le funzioni (a livello di file).",
+        "Errato. L'assegnazione dell'indirizzo di un letterale composto a un puntatore è del tutto valida all'interno del suo blocco.",
+        "Errato. Sebbene si possa casualmente ottenere 1, il codice contiene un bug di gestione della memoria."
+      ]
+    },
+    {
+      "id": "it_clang_540",
+      "widget_id": "widget_clang_540",
+      "topic": "Array — Confronto tra nomi di array tramite l'operatore ==",
+      "q": "Cosa stamperà la condizione `if (a == b)` confrontando due array locali con lo stesso contenuto?",
+      "hint": "Cosa rappresentano i nomi `a` e `b` quando partecipano a operazioni binarie di confronto?",
+      "options": [
+        "Stamperà \"Not Equal\"",
+        "Stamperà \"Equal\"",
+        "Errore di compilazione",
+        "Comportamento Indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C l'operatore `==` NON confronta il contenuto degli array elemento per elemento. I nomi `a` e `b` decadono in puntatori ai loro primi elementi (`&a[0]` e `&b[0]`). Poiché si tratta di due array distinti sullo stack, i loro indirizzi in memoria differiscono. Il confronto restituirà 0 (falso) e verrà stampato \"Not Equal\".",
+        "Errato. Il confronto elemento per elemento degli array in C non è previsto dall'operatore `==` (per le stringhe usate `memcmp` o `strcmp`).",
+        "Errato. Il confronto tra puntatori è consentito dalla sintassi del linguaggio.",
+        "Errato. Il risultato del confronto tra due puntatori ad indirizzi è chiaramente definito."
+      ]
+    }
+  ]
+}
