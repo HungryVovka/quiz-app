@@ -1,0 +1,625 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_970",
+      "widget_id": null,
+      "topic": "x86-64 Architecture — Stack Alignment on Call (Stack Alignment)",
+      "q": "What requirement for stack pointer (RSP) alignment does the System V AMD64 ABI specification impose immediately before executing the call instruction?",
+      "hint": "Think about how many bytes the stack address must be a multiple of to execute SSE/SIMD instructions.",
+      "options": [
+        "Stack must be aligned on a 16-byte boundary",
+        "Stack must be aligned on a 4-byte boundary",
+        "Stack alignment is not required",
+        "Stack must be aligned on a 64-byte boundary"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The ABI standard for 64-bit Linux/macOS systems (System V) requires that before calling the `call` instruction, the address in the `RSP` register must be a multiple of 16 bytes. This is necessary for vector instructions (SSE/AVX) to work correctly.",
+        "Incorrect. 4-byte alignment was used on older 32-bit architectures.",
+        "Incorrect. Stack mis-alignment will cause a crash (General Protection Fault) when executing vectorized code.",
+        "Incorrect. 64-byte alignment is required only for some cache lines, but not for function call ABI."
+      ]
+    },
+    {
+      "id": "it_clang_971",
+      "widget_id": "widget_clang_971",
+      "topic": "Complex Syntax Constructs — signal() Function",
+      "q": "What does the return type and second parameter type of function signal from <signal.h> mean?",
+      "hint": "Analyze the syntax: void (*signal(int sig, void (*func)(int)))(int).",
+      "options": [
+        "Function signal accepts a signal number and a handler pointer, and returns a pointer to the old signal handler",
+        "Function signal accepts 2 integers and returns NULL",
+        "This is a syntax error because a function cannot return a pointer to another function",
+        "This is a declaration of an array of 2 functions"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Function `signal` accepts signal number `int` and pointer to handler function `void (*func)(int)`. It returns a pointer to the previous handler function of the same type `void (*)(int)`.",
+        "Incorrect. The second parameter and return value are function pointers, not simple numbers.",
+        "Incorrect. In C, functions can return pointers to other functions.",
+        "Incorrect. Array square brackets are absent here."
+      ]
+    },
+    {
+      "id": "it_clang_972",
+      "widget_id": "widget_clang_972",
+      "topic": "Passing Arrays — Behavior of sizeof Inside Functions",
+      "q": "What will printf(\"%zu\", sizeof(arr)) output inside function process(int arr[100]) on a 64-bit system?",
+      "hint": "What does an array parameter turn into when passed to a function?",
+      "options": [
+        "8 (pointer size int*, because array decays into pointer)",
+        "400 (size of 100 elements of int type at 4 bytes each)",
+        "100 (number of elements)",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! When passing an array to a function, size specification `[100]` is ignored by the compiler. Parameter `int arr[100]` turns into a regular pointer `int *arr`. Operator `sizeof(arr)` will return pointer size (8 bytes on 64-bit architecture).",
+        "Incorrect. Original array size is lost (Array decay) when passed to function.",
+        "Incorrect. `sizeof` returns size in bytes, not element count, and works only with pointer type.",
+        "Incorrect. Code is completely valid C."
+      ]
+    },
+    {
+      "id": "it_clang_973",
+      "widget_id": "widget_clang_973",
+      "topic": "Evaluation Order — Unspecified Behavior in Arguments",
+      "q": "In what order by the C standard will functions a(), b(), and c() be called in expression foo(a(), b(), c())?",
+      "hint": "Does the C standard guarantee evaluation order of function arguments from left to right?",
+      "options": [
+        "Order is unspecified (Unspecified Behavior) — compiler can call them in any order",
+        "Strictly left-to-right: a(), then b(), then c()",
+        "Strictly right-to-left: c(), then b(), then a()",
+        "All three functions are called strictly simultaneously"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The C standard does not specify evaluation order of function arguments. The compiler can call `a()`, `b()`, `c()` in any order whatsoever. Relying on argument call order is unsafe.",
+        "Incorrect. In C (unlike C++17 in some contexts) there is no rule for evaluating arguments left-to-right.",
+        "Incorrect. Right-to-left evaluation often occurs due to calling conventions (cdecl), but the standard does not guarantee it.",
+        "Incorrect. In C, function calls happen sequentially."
+      ]
+    },
+    {
+      "id": "it_clang_974",
+      "widget_id": "widget_clang_974",
+      "topic": "Variadic Functions — float Type Promotion (Default Argument Promotion)",
+      "q": "Which data type must be specified in va_arg() macro to extract an argument passed as float to a variadic function (...)?",
+      "hint": "Recall automatic type promotion rules when calling variadic functions.",
+      "options": [
+        "double (since float is automatically promoted to double)",
+        "float",
+        "float*",
+        "long double"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! According to Default Argument Promotion rules, any `float` arguments passed to variadic part `...` are automatically promoted to `double`. They must be extracted via `va_arg(args, double)`.",
+        "Incorrect. Attempting to extract `float` via `va_arg(args, float)` leads to undefined behavior (UB).",
+        "Incorrect. Pointers were not passed if argument was a simple `float`.",
+        "Incorrect. Nothing is automatically promoted to `long double`."
+      ]
+    },
+    {
+      "id": "it_clang_975",
+      "widget_id": null,
+      "topic": "Header Files — static inline Qualifier",
+      "q": "Why are inline functions defined in header files (.h) almost always declared as static inline?",
+      "hint": "What will happen if multiple .c files include one .h file with a regular inline function without static?",
+      "options": [
+        "To avoid linker errors about symbol duplication (Multiple Definition) when including .h file in multiple translation units",
+        "To force function to run several times faster",
+        "Because without static the inline keyword is forbidden by C99 standard",
+        "To make all local variables inside function static"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C99, a regular `inline` function requires an external definition. If not made `static`, including the header file in multiple `.c` files will cause the Linker to report a `multiple definition` error. Specifier `static` gives each translation unit its own local copy.",
+        "Incorrect. `static` affects scope and linkage, not execution speed.",
+        "Incorrect. `inline` without `static` is allowed in C99, but has specific linkage rules.",
+        "Incorrect. `static` before function does not make its internal variables static."
+      ]
+    },
+    {
+      "id": "it_clang_976",
+      "widget_id": null,
+      "topic": "Compiler Optimization — Difference Between __attribute__((pure)) and ((const))",
+      "q": "How does __attribute__((pure)) differ from __attribute__((const)) in GCC/Clang compilers?",
+      "hint": "Can a pure function read memory via pointers or from global variables?",
+      "options": [
+        "Pure function can read global memory and data via pointers, but cannot modify them; Const function cannot even read global memory",
+        "Pure function cannot accept any parameters",
+        "Const function can work only with const int data types",
+        "There is no difference between these attributes"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `__attribute__((pure))` indicates that function has no side effects, but its result may depend on global variables or pointer memory. `__attribute__((const))` is even stricter — function depends ONLY on its arguments and does not read memory at all.",
+        "Incorrect. Both functions can and should accept parameters.",
+        "Incorrect. `const` applies to entire function behavior (pure mathematical function), not specific types.",
+        "Incorrect. These are two different levels of restrictions for compiler optimizer."
+      ]
+    },
+    {
+      "id": "it_clang_977",
+      "widget_id": "widget_clang_977",
+      "topic": "C23 Standard — [[nodiscard]] Attribute",
+      "q": "How will a C23 compiler react if a function with [[nodiscard]] attribute is called and the returned value is not used?",
+      "hint": "Think about the purpose of warning attributes regarding ignoring important results (e.g. error codes or memory pointers).",
+      "options": [
+        "Will generate a Warning that returned value was ignored",
+        "Will cause a compilation Error and stop build",
+        "Program will crash at runtime (Runtime Error)",
+        "Will automatically free returned resource from memory"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Attribute `[[nodiscard]]` informs compiler that function result cannot be simply discarded. Attempting to call such function as `func();` will cause compiler to issue a Warning.",
+        "Incorrect. By default this is a warning, not a compilation error (unless `-Werror` flag is enabled).",
+        "Incorrect. Attributes work at compile stage and do not cause runtime crashes directly.",
+        "Incorrect. C language does not perform automatic resource cleanup."
+      ]
+    },
+    {
+      "id": "it_clang_978",
+      "widget_id": "widget_clang_978",
+      "topic": "Type Safety — const char * Parameters",
+      "q": "What does const qualifier in parameter void print_msg(const char *str) guarantee?",
+      "hint": "Does const protect str variable itself (pointer) or data it points to?",
+      "options": [
+        "Function promises not to modify data (string characters) at passed address",
+        "Pointer str is forbidden to redirect to another address inside function body",
+        "Function can be called only with constant string literals",
+        "Function executes in thread-safe mode"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Entry `const char *str` means data in memory is read-only. Attempting to modify `str[0] = 'A'` inside function will cause compilation error.",
+        "Incorrect. Pointer `str` itself can be changed (e.g. `str++`). To forbid modifying pointer itself, `char * const str` would be required.",
+        "Incorrect. Regular non-const `char[]` arrays can also be passed into function.",
+        "Incorrect. Qualifier `const` does not provide automatic thread-safety."
+      ]
+    },
+    {
+      "id": "it_clang_979",
+      "widget_id": "widget_clang_979",
+      "topic": "Function Pointers — Syntax Simplification via typedef",
+      "q": "What is main advantage of using typedef when working with function pointers?",
+      "hint": "Compare void (*func)(int) and alias HandlerFunc.",
+      "options": [
+        "Creates convenient type alias, simplifying code readability and variable or parameter declaration",
+        "Automatically allocates memory for function code on heap",
+        "Turns called function into inline",
+        "Allows passing any number of arguments to function"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Function pointer syntax in C is complex to read. `typedef void (*Action)(int);` creates readable type `Action`, which can easily be used as `Action cb` instead of cumbersome notation.",
+        "Incorrect. `typedef` works only at compile stage and does not allocate memory.",
+        "Incorrect. `typedef` has no effect on function inlining.",
+        "Incorrect. Function signature and number of parameters remain strictly fixed."
+      ]
+    },
+    {
+      "id": "it_clang_980",
+      "widget_id": "widget_clang_980",
+      "topic": "Algorithms — Indirect (Mutual) Recursion",
+      "q": "What is indirect (mutual) recursion?",
+      "hint": "Does function call itself directly in its last line?",
+      "options": [
+        "Situation where function A calls function B, and function B in turn calls function A",
+        "Calling function via function pointer",
+        "Calling function inside infinite loop while(1)",
+        "Recursion that saves its data on disk"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Indirect recursion occurs when call chain is cycled through other functions: `A() -> B() -> A()`. This strictly requires function prototypes before their definition.",
+        "Incorrect. Calling via pointer is just calling by address.",
+        "Incorrect. Infinite loop is not recursion.",
+        "Incorrect. Recursion uses standard call stack in RAM."
+      ]
+    },
+    {
+      "id": "it_clang_981",
+      "widget_id": "widget_clang_981",
+      "topic": "Function Parameters — Behavior of VLA Array in Parameter",
+      "q": "What will happen if dynamic size $n$ is passed to parameter of function `void foo(int n, int arr[n])` and `sizeof(arr)` is measured inside that function?",
+      "hint": "Recall what array parameters always decay into when passed to function.",
+      "options": [
+        "Pointer size (sizeof(int*)) will be returned, since array parameters always decay to pointers",
+        "Real array size $n \\times \\text{sizeof(int)}$ will be returned",
+        "Compilation error will occur",
+        "0 will be returned"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Even if array is declared as VLA in function header `int arr[n]`, in context of function parameters it still decays to regular pointer `int *arr`. Operator `sizeof(arr)` will return pointer size.",
+        "Incorrect. Size of VLA array is calculated via `sizeof` at runtime only when array is declared as local variable, not function parameter.",
+        "Incorrect. Such syntax is fully valid starting from C99.",
+        "Incorrect. `sizeof` for pointer will return 4 or 8 bytes depending on system architecture."
+      ]
+    },
+    {
+      "id": "it_clang_982",
+      "widget_id": "widget_clang_982",
+      "topic": "Preprocessor — Function-like Macros and Side Effects",
+      "q": "What is danger of calling macro `#define MAX(a, b) ((a) > (b) ? (a) : (b))` as `MAX(x++, y)`?",
+      "hint": "How many times does argument `a` appear in macro body?",
+      "options": [
+        "Argument x++ may be evaluated twice due to macro text substitution, leading to double increment",
+        "Compilation error will occur due to increment inside ternary operator",
+        "Macro will not compile with ++ operator",
+        "x++ will execute before macro call without side effects"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Function-like macros work via simple text substitution. Call will expand to `((x++) > (y) ? (x++) : (y))`. If `x > y`, variable `x` will be incremented twice, which is a common mistake.",
+        "Incorrect. Code will compile without errors.",
+        "Incorrect. Increment operator is completely legal in macro expressions.",
+        "Incorrect. Macros do not create a function frame, so argument evaluation occurs as expanded expression executes."
+      ]
+    },
+    {
+      "id": "it_clang_983",
+      "widget_id": "widget_clang_983",
+      "topic": "C11 Standard — Function Overloading via _Generic",
+      "q": "With which construct introduced in C11 standard can one implement analogue of function overloading depending on passed argument type?",
+      "hint": "This construct selects an expression at compile time based on argument type.",
+      "options": [
+        "_Generic",
+        "overload",
+        "_Match",
+        "typeof"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Keyword `_Generic` matches expression type against a set of types and selects corresponding function or expression at compile stage (e.g. for creating `tgmath.h` macros).",
+        "Incorrect. There is no `overload` keyword in C.",
+        "Incorrect. Construct `_Match` is absent in C standard.",
+        "Incorrect. `typeof` returns expression type (C23/GCC extension), but does not perform overload selection by itself."
+      ]
+    },
+    {
+      "id": "it_clang_984",
+      "widget_id": "widget_clang_984",
+      "topic": "Compiler Attributes — __attribute__((always_inline))",
+      "q": "What does compiler extension `__attribute__((always_inline))` guarantee compared to regular `inline` keyword?",
+      "hint": "Can regular `inline` be ignored by compiler?",
+      "options": [
+        "Forces compiler to inline function body instead of generating call, ignoring standard optimization heuristics",
+        "Forces function to execute only once during entire program execution",
+        "Automatically converts function into preprocessor macro",
+        "Allocates special processor register for function result"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Regular `inline` is merely a recommendation to optimizer. Attribute `__attribute__((always_inline))` strictly commands compiler to inline function (if possible), even with optimizations disabled.",
+        "Incorrect. Function call count does not change due to this attribute.",
+        "Incorrect. Function remains full-fledged C function with type checking, not text macro.",
+        "Incorrect. Attribute is not related to register allocation."
+      ]
+    },
+    {
+      "id": "it_clang_985",
+      "widget_id": "widget_clang_985",
+      "topic": "Syntax — Passing Function Pointer as Parameter",
+      "q": "How to correctly declare a function parameter accepting function pointer with signature `int func(double)`?",
+      "hint": "Remember operator precedence and parentheses around parameter name with asterisk.",
+      "options": [
+        "void process(int (*f)(double))",
+        "void process(int *f(double))",
+        "void process(function<int(double)> f)",
+        "void process(int f(double)*)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Entry `int (*f)(double)` declares `f` as pointer to function accepting `double` and returning `int`.",
+        "Incorrect. `int *f(double)` declares function `f` returning pointer to `int`.",
+        "Incorrect. `std::function` is a template in C++, it does not exist in C.",
+        "Incorrect. Syntax `int f(double)*` is invalid."
+      ]
+    },
+    {
+      "id": "it_clang_986",
+      "widget_id": null,
+      "topic": "C23 Standard — Declaring Functions with Empty Parentheses",
+      "q": "How did interpretation of function declaration with empty parentheses `void func()` change when transitioning to C23 standard?",
+      "hint": "What did absence of void in function parameters mean previously?",
+      "options": [
+        "In C23 notation func() became strictly equivalent to func(void) (accepts 0 arguments), whereas previously it meant unspecified number of arguments",
+        "In C23 empty parentheses were completely forbidden by compiler",
+        "Notation func() in C23 came to denote variadic function (...)",
+        "No changes occurred — func() always meant exactly 0 arguments"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Prior to C23, declaration `void func()` meant that function accepted *unspecified* number of arguments in legacy K&R style. In C23 empty parentheses `()` officially became equivalent to `(void)`.",
+        "Incorrect. On the contrary, empty parentheses became modern standard for functions without arguments.",
+        "Incorrect. Ellipsis `...` is used for variadic functions.",
+        "Incorrect. Prior to C23 an important syntactic difference existed between `func()` and `func(void)`."
+      ]
+    },
+    {
+      "id": "it_clang_987",
+      "widget_id": "widget_clang_987",
+      "topic": "Object Lifetime — Returning String Literals",
+      "q": "Is returning pointer to string literal from function safe (e.g. `return \"Hello\";`)?",
+      "hint": "Where are string literals stored and what is their lifetime?",
+      "options": [
+        "Yes, this is completely safe, because string literals have static storage duration and live for entire program",
+        "No, this will cause undefined behavior, because string resides on function stack",
+        "No, string will be destroyed immediately upon exiting function",
+        "Safe only when called with -O3 flag"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! String literals are placed in read-only data segment (`.rodata`) and have static storage duration. Pointer to literal will remain valid throughout entire program execution.",
+        "Incorrect. String literals are not allocated on stack (unlike arrays `char str[] = \"Hello\";`).",
+        "Incorrect. Literals are not destroyed upon returning from function.",
+        "Incorrect. Compiler optimization does not affect literal lifetime."
+      ]
+    },
+    {
+      "id": "it_clang_988",
+      "widget_id": "widget_clang_988",
+      "topic": "Standard Library — Call Order of atexit()",
+      "q": "In what order are functions registered via `atexit()` function called upon normal program completion?",
+      "hint": "Recall principle of call stack operation (LIFO / FIFO).",
+      "options": [
+        "In reverse order of their registration (LIFO — Last In, First Out)",
+        "In direct order of their registration (FIFO — First In, First Out)",
+        "In random order",
+        "In alphabetical order of function names"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! By C standard, functions registered via `atexit()` are called in reverse order of their registration (LIFO stack order). Last registered function will execute first.",
+        "Incorrect. FIFO order is not used for `atexit`.",
+        "Incorrect. Order is deterministic and strictly specified in standard.",
+        "Incorrect. Function names in runtime are unavailable for such sorting."
+      ]
+    },
+    {
+      "id": "it_clang_989",
+      "widget_id": null,
+      "topic": "Function Pointers — Signature Type Mismatch",
+      "q": "What will happen if function pointer is cast to another function pointer type with mismatching signature and called?",
+      "hint": "Will arguments in registers and stack alignment match?",
+      "options": [
+        "Undefined Behavior at runtime",
+        "Compiler will automatically perform type casting of arguments and results",
+        "Function will execute correctly without any risks",
+        "Call stack will automatically balance itself"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Explicit function pointer casting is allowed, but *calling* function through pointer with mismatching signature leads to Undefined Behavior due to violation of Calling Convention.",
+        "Incorrect. No automatic runtime argument conversion occurs through mismatched pointer.",
+        "Incorrect. This can lead to stack corruption or reading garbage from registers.",
+        "Incorrect. Automatic stack balancing does not exist under UB."
+      ]
+    },
+    {
+      "id": "it_clang_990",
+      "widget_id": "widget_clang_990",
+      "topic": "Optimization — Branch Hints __builtin_expect",
+      "q": "What is macro `__builtin_expect(exp, c)` (or popular `likely/unlikely` macros) used for in function calling and branching?",
+      "hint": "How does CPU know which code branch to load into instruction cache in advance?",
+      "options": [
+        "To hint compiler Branch Predictor about most likely condition outcome",
+        "To measure function execution time down to clock cycles",
+        "To protect function from buffer overflow attacks",
+        "To automatically generate performance profile"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `__builtin_expect` passes information about `if` branch probability to compiler. This allows optimal machine code placement in memory, minimizing CPU pipeline flushes (Branch Misprediction).",
+        "Incorrect. Functions like `clock()` or assembly instruction `rdtsc` are used for timing.",
+        "Incorrect. This built-in macro is unrelated to overflow protection.",
+        "Incorrect. Profiling is performed by gprof/perf tools or using `-pg` flags."
+      ]
+    },
+    {
+      "id": "it_clang_991",
+      "widget_id": "widget_clang_991",
+      "topic": "Syntax — return Statement in void Functions",
+      "q": "Is using an expression in return statement inside void function allowed in C (e.g. `return void_func();`)?",
+      "hint": "Compare C rules with C++ rules where such expression is allowed.",
+      "options": [
+        "No, in C return statement in void functions strictly must not contain any expressions",
+        "Yes, if called function also has void return type",
+        "Yes, C compiler will simply ignore expression result",
+        "Allowed only when -O2 compilation flag is enabled"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Unlike C++, C standard (C99–C23) strictly forbids using expressions in `return` statement inside functions with `void` type. Entry `return expression;` will cause compilation error.",
+        "Incorrect. Even if expression has type `void`, in C such syntax is impermissible.",
+        "Incorrect. Compiler will report constraint violation.",
+        "Incorrect. Optimization flags do not alter syntactic language rules."
+      ]
+    },
+    {
+      "id": "it_clang_992",
+      "widget_id": "widget_clang_992",
+      "topic": "Function Parameters — const int *p vs int * const p",
+      "q": "What is difference between parameters `const int *p` and `int * const p` in function header?",
+      "hint": "Note which side of asterisk keyword const is located on.",
+      "options": [
+        "const int *p forbids modifying value at address, while int * const p forbids modifying address itself in variable p",
+        "These entries are completely identical",
+        "const int *p is allocated on stack, while int * const p — on heap",
+        "int * const p makes function private to module"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In `const int *p` data is constant (cannot do `*p = 10`). In `int * const p` pointer itself is constant (cannot do `p++` or assign new address to it inside function).",
+        "Incorrect. Position of `const` relative to `*` fundamentally changes object of constness.",
+        "Incorrect. Both parameters are local variables of stack frame.",
+        "Incorrect. Function linkage is regulated by `static` keyword, not `const`."
+      ]
+    },
+    {
+      "id": "it_clang_993",
+      "widget_id": "widget_clang_993",
+      "topic": "Language Standard — Recursive main() Call",
+      "q": "Is recursive call of main() function from itself or other functions allowed by C standard?",
+      "hint": "Recall if status of main() in C differs from C++ standards.",
+      "options": [
+        "Yes, in C recursive main() call is allowed by standard (unlike C++)",
+        "No, calling main() from code is strictly forbidden in all C and C++ standards",
+        "Allowed only in C89, but forbidden starting from C99",
+        "Calling main() is allowed only via function pointer"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, `main()` function is a regular function, and its explicit or recursive call is completely legal by standard. In C++, recursive `main()` call is strictly forbidden.",
+        "Incorrect. Prohibition on calling `main()` exists only in C++ standard, not C.",
+        "Incorrect. All C standards (including C99, C11, C23) permit recursive `main()` call.",
+        "Incorrect. Function `main()` can be called directly by name."
+      ]
+    },
+    {
+      "id": "it_clang_994",
+      "widget_id": "widget_clang_994",
+      "topic": "Data Types — Passing Unions into Functions",
+      "q": "How are union type objects passed into function parameters by default?",
+      "hint": "Does passing union by value differ from passing struct?",
+      "options": [
+        "By value via complete copying of union memory bytes",
+        "Always by pointer only",
+        "Only field initialized last is passed",
+        "Unions are forbidden to pass into functions"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C `union`, like `struct`, is a composite value. When passed into function without pointer, entire union memory region is copied by value.",
+        "Incorrect. To pass by pointer, `union Data *p` must be written explicitly.",
+        "Incorrect. Function receives entire union memory whole, regardless of active field.",
+        "Incorrect. Passing `union` is fully supported by language."
+      ]
+    },
+    {
+      "id": "it_clang_995",
+      "widget_id": "widget_clang_995",
+      "topic": "Variadic Functions — va_copy Macro (C99)",
+      "q": "What is macro va_copy(dest, src) from <stdarg.h> library used for?",
+      "hint": "Think how to repeatedly iterate over variadic arguments inside single function.",
+      "options": [
+        "For duplicating variadic argument traversal state, allowing to iterate over them again",
+        "For allocating memory for new arguments on heap",
+        "For converting va_list into string format",
+        "For passing va_list into another execution thread"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `va_copy` creates exact copy of `va_list` state. This is necessary if variadic argument list needs to be read multiple times (e.g. first calculate size, then format).",
+        "Incorrect. `va_copy` does not deal with dynamic memory allocation.",
+        "Incorrect. Formatting is handled by functions of `vprintf` family.",
+        "Incorrect. Passing traversal state between threads via `va_copy` is not its purpose."
+      ]
+    },
+    {
+      "id": "it_clang_996",
+      "widget_id": "widget_clang_996",
+      "topic": "Function Names — __func__ Identifier (C99)",
+      "q": "What does __func__ identifier represent inside function body starting from C99 standard?",
+      "hint": "What type is this variable and what does it contain?",
+      "options": [
+        "Implicit static character array (const char[]) containing name of current function",
+        "Pointer to current function itself",
+        "Numeric function ID generated by compiler",
+        "Preprocessor macro"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! By C99 standard compiler implicitly declares variable `static const char __func__[] = \"function_name\";` at start of each function, storing function name as string.",
+        "Incorrect. `__func__` is character array with name string, not function pointer.",
+        "Incorrect. This is string array, not numeric identifier.",
+        "Incorrect. `__func__` is a local variable (predefined identifier), not preprocessor macro (unlike `__FILE__` and `__LINE__`)."
+      ]
+    },
+    {
+      "id": "it_clang_997",
+      "widget_id": "widget_clang_997",
+      "topic": "Compiler Extensions — cleanup Attribute (GCC/Clang)",
+      "q": "What action does `__attribute__((cleanup(func)))` attribute perform when applied to function local variable?",
+      "hint": "Analogue of which C++ concept (RAII / destructor) is this attribute?",
+      "options": [
+        "Automatically calls func(&var) when variable var goes out of scope",
+        "Zeroes out variable memory upon entering function",
+        "Deletes variable from memory immediately after first write",
+        "Forbids modifying variable value"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `cleanup` extension in GCC/Clang registers cleanup function that is automatically called and receives variable address upon exiting current block (analogue of C++ destructors / RAII).",
+        "Incorrect. This attribute does not handle memory zeroing.",
+        "Incorrect. Variable exists throughout its scope.",
+        "Incorrect. `const` is used to forbid modifications."
+      ]
+    },
+    {
+      "id": "it_clang_998",
+      "widget_id": null,
+      "topic": "Function Pointers — Pointer Comparison",
+      "q": "How does equality operator == behave when comparing two function pointers in C?",
+      "hint": "Are function entry point addresses in memory compared?",
+      "options": [
+        "Returns 1 (true) if both pointers point to same function (same memory address)",
+        "Causes compilation error — function pointers cannot be compared",
+        "Comparison always returns 0 (false)",
+        "Comparison leads to Undefined Behavior at runtime"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Function pointers in C store instruction addresses in code segment. Comparing them with `==` operator checks if they point to same memory entry point.",
+        "Incorrect. Comparing function pointers is completely legal.",
+        "Incorrect. If pointers refer to same function or both are `NULL`, comparison returns 1.",
+        "Incorrect. Comparing pointers of same type is strictly defined by standard."
+      ]
+    },
+    {
+      "id": "it_clang_999",
+      "widget_id": "widget_clang_999",
+      "topic": "Memory Management — alloca() vs VLA in Loops",
+      "q": "What is fundamental difference between behavior of VLA (variable length arrays) and alloca() when allocating memory inside loop?",
+      "hint": "When exactly is stack memory freed: upon exiting loop block {} or upon exiting entire function?",
+      "options": [
+        "VLA memory is freed upon exiting current loop block {}, while alloca() frees stack only upon completing entire function",
+        "alloca() memory is freed on each iteration, while VLA persists until end of function",
+        "VLA allocates memory on heap, while alloca() — on stack",
+        "Behavior is identical, difference is only in syntax"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! VLA lifetime is limited to block `{}` (scope) in which it is declared — stack memory is freed at each loop step. Function `alloca()` advances stack pointer until completion of entire function, which inside loop will cause stack overflow (Stack Overflow).",
+        "Incorrect. On the contrary: VLA is freed upon block exit, while `alloca()` accumulates until function exit.",
+        "Incorrect. Both VLA and `alloca()` use call stack.",
+        "Incorrect. Calling `alloca()` in infinite loop will lead to crash, while VLA in same loop will not."
+      ]
+    },
+    {
+      "id": "it_clang_1000",
+      "widget_id": "widget_clang_1000",
+      "topic": "Function Parameters — restrict Qualifier in C99",
+      "q": "In what case does using restrict qualifier in parameter `void process(int * restrict ptr)` lead to Undefined Behavior?",
+      "hint": "What promise to compiler does programmer make when specifying restrict?",
+      "options": [
+        "If at runtime same memory region is accessed via another pointer",
+        "If NULL is passed into function",
+        "If value at address ptr changes inside function",
+        "If function is called recursively"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Qualifier `restrict` is programmer's promise to compiler that object pointed to by `ptr` has no other associated pointers (no aliasing). Violating this promise leads to Undefined Behavior during optimizations.",
+        "Incorrect. Passing `NULL` into `restrict` pointer is not forbidden by itself.",
+        "Incorrect. Modifying data via `ptr` is standard usage.",
+        "Incorrect. Recursive call by itself does not violate `restrict` if pointers refer to different memory regions."
+      ]
+    }
+  ]
+}

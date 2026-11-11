@@ -1,0 +1,601 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_1091",
+      "widget_id": "widget_clang_1091",
+      "topic": "Dynamic Memory — Type Casting for malloc()",
+      "q": "Is it necessary to explicitly cast the return value of the malloc() function in pure C (e.g., int *p = (int*)malloc(...);)?",
+      "hint": "How does type casting from a void* pointer to other pointer types work in C?",
+      "options": [
+        "No, in C the void* type is automatically and safely converted to any other pointer type",
+        "Yes, in C this is strictly required, otherwise the code will not compile",
+        "Yes, without explicit casting the compiler always allocates exactly 1 byte of memory"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, a `void*` pointer is implicitly converted to any object pointer type. Explicit casting is not required (and not recommended, as it can hide the absence of `#include <stdlib.h>`).",
+        "Incorrect. Explicit casting is mandatory only in C++, but not in pure C.",
+        "Incorrect. The `malloc()` function allocates as many bytes as passed in its argument, regardless of type casting."
+      ]
+    },
+    {
+      "id": "it_clang_1092",
+      "widget_id": null,
+      "topic": "Dynamic Memory — Difference between calloc() and malloc()",
+      "q": "What is the key difference between calloc() and malloc()?",
+      "hint": "Think about the state of the allocated memory immediately after the call.",
+      "options": [
+        "calloc() zero-initializes allocated memory (fills bytes with zeros), while malloc() leaves garbage data in memory",
+        "calloc() allocates memory on the stack, while malloc() allocates on the heap",
+        "calloc() can only allocate memory for structures, while malloc() only for basic types",
+        "calloc() automatically frees memory upon exiting the function"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Function `calloc(num, size)` additionally initializes the entire allocated memory block with zeros, whereas `malloc(bytes)` leaves old uninitialized content ('garbage') there.",
+        "Incorrect. Both functions allocate dynamic memory on the Heap.",
+        "Incorrect. Both functions are universal and work with any data types.",
+        "Incorrect. Memory allocated by `calloc()` must be manually freed using `free()`."
+      ]
+    },
+    {
+      "id": "it_clang_1093",
+      "widget_id": "widget_clang_1093",
+      "topic": "Dynamic Memory — Behavior of realloc(NULL, size)",
+      "q": "How will the realloc(NULL, size) function behave if NULL is passed as its first argument?",
+      "hint": "Will the function act like allocating a new memory block?",
+      "options": [
+        "Equivalent to calling malloc(size)",
+        "A Segmentation Fault will occur",
+        "Returns NULL without allocating memory",
+        "Causes abnormal program termination via abort()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! According to the ISO C standard, if the first argument of `realloc()` is a `NULL` pointer, the function behaves exactly like `malloc(size)`.",
+        "Incorrect. Passing `NULL` is handled by the standard and does not cause crashes.",
+        "Incorrect. Memory will be successfully allocated if system resources are sufficient.",
+        "Incorrect. Abnormal termination does not occur."
+      ]
+    },
+    {
+      "id": "it_clang_1094",
+      "widget_id": "widget_clang_1094",
+      "topic": "Structures — Alignment (Padding) and sizeof Size",
+      "q": "Why is sizeof(struct Data) for struct Data { char a; int b; }; usually equal to 8 bytes instead of 5 on a 64-bit system?",
+      "hint": "How does the processor optimize reading data from memory?",
+      "options": [
+        "The compiler adds padding bytes to align fields along memory address boundaries",
+        "The char type in structures always takes 4 bytes",
+        "The size of any structure in C is automatically rounded up to the nearest multiple of 8",
+        "This is a compiler error, the size is actually 5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Processors read data more efficiently from addresses that are multiples of the type size (e.g., `int` at an address multiple of 4). The compiler inserts padding bytes after `char a` so that `int b` lies at a properly aligned address.",
+        "Incorrect. The `char` type always takes exactly 1 byte.",
+        "Incorrect. Rounding occurs up to the alignment requirement of the structure's strictest field, not always to 8.",
+        "Incorrect. This is standard behavior of Data Alignment."
+      ]
+    },
+    {
+      "id": "it_clang_1095",
+      "widget_id": "widget_clang_1095",
+      "topic": "Memory Management — Double Free",
+      "q": "What does calling free(ptr) a second time for the same address without intermediate memory allocation lead to?",
+      "hint": "Does calling free() change the value of the pointer ptr itself?",
+      "options": [
+        "To Undefined Behavior and a likely program crash/security vulnerability",
+        "To clearing memory again without any negative consequences",
+        "The repeated call to free() is simply ignored by the operating system",
+        "Memory is automatically moved to a backup stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Double freeing memory corrupts internal heap allocator structures, causing Undefined Behavior (UB), program crash, or security vulnerability.",
+        "Incorrect. Memory cannot be freed twice.",
+        "Incorrect. `free()` doesn't know the memory was already freed unless the pointer value was set to `NULL` (`ptr = NULL`).",
+        "Incorrect. Heap memory cannot be moved to the stack."
+      ]
+    },
+    {
+      "id": "it_clang_1096",
+      "widget_id": null,
+      "topic": "Memory Management — Calling free(NULL)",
+      "q": "Is it safe to pass a null pointer to free(NULL)?",
+      "hint": "Is it necessary to put an if (ptr != NULL) check before calling free(ptr)?",
+      "options": [
+        "Yes, the standard guarantees that free(NULL) performs no action and is completely safe",
+        "No, a Segmentation Fault will occur",
+        "Safe only if set_null_handler() was called beforehand"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! According to the C standard, calling `free(NULL)` does nothing and is guaranteed to be safe. Additional checks like `if (ptr != NULL) free(ptr);` are redundant.",
+        "Incorrect. No execution error occurs.",
+        "Incorrect. No additional functions need to be called."
+      ]
+    },
+    {
+      "id": "it_clang_1097",
+      "widget_id": "widget_clang_1097",
+      "topic": "Structures — Arrow Operator (->)",
+      "q": "Which notation is syntactically equivalent to expression ptr->field, where ptr is a pointer to a structure?",
+      "hint": "How to combine the dereference operator * and member access operator .",
+      "options": [
+        "(*ptr).field",
+        "*ptr.field",
+        "&(ptr.field)",
+        "ptr.*field"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The expression `ptr->field` is syntactic sugar for `(*ptr).field`. Parentheses around `*ptr` are mandatory due to operator precedence.",
+        "Incorrect. Writing `*ptr.field` means `*(ptr.field)` due to higher precedence of member dot operator `.`, causing a compilation error.",
+        "Incorrect. This takes the address of the field.",
+        "Incorrect. The `.*` operator does not exist in C (it exists in C++)."
+      ]
+    },
+    {
+      "id": "it_clang_1098",
+      "widget_id": "widget_clang_1098",
+      "topic": "Unions — Memory Layout",
+      "q": "How many bytes is sizeof of union Data { char c; int i; double d; }, given sizeof(double) == 8?",
+      "hint": "How do elements of a union share memory among themselves?",
+      "options": [
+        "The size of the largest element (8 bytes, subject to alignment requirements)",
+        "The sum of sizes of all elements (1 + 4 + 8 = 13 bytes)",
+        "Always 4 bytes",
+        "The size of the first declared element (1 byte)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In a `union`, all fields are stored at the exact same starting memory address. The total size of a `union` equals the size of its largest field (in this case `double` — 8 bytes).",
+        "Incorrect. Summing sizes is the behavior of fields in regular `struct`s, not `union`s.",
+        "Incorrect. The variable must accommodate the largest type (`double`).",
+        "Incorrect. Declaration order of fields does not determine the total memory of a `union`."
+      ]
+    },
+    {
+      "id": "it_clang_1099",
+      "widget_id": "widget_clang_1099",
+      "topic": "Memory Management — Memory Leak",
+      "q": "What happens to memory allocated via malloc() if the pointer to it is overwritten (ptr = malloc(100); ptr = NULL;) without calling free()?",
+      "hint": "Will the program be able to access this memory block afterward?",
+      "options": [
+        "A memory leak occurs: memory remains allocated until process termination, but access to it is lost",
+        "Memory is automatically freed by C's garbage collector",
+        "The operating system forcibly returns memory to heap upon NULL assignment",
+        "A compilation error occurs"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! C has no built-in Garbage Collector. If the only pointer to an allocated heap block is lost, that memory remains inaccessible and unallocatable until program termination.",
+        "Incorrect. There is no automatic garbage collector in C.",
+        "Incorrect. Assigning `ptr = NULL` only changes the local pointer value, not the heap state.",
+        "Incorrect. The compiler does not track dynamic memory leaks during compilation."
+      ]
+    },
+    {
+      "id": "it_clang_1100",
+      "widget_id": "widget_clang_1100",
+      "topic": "Structures — Flexible Array Member",
+      "q": "What rule applies to a C99 Flexible Array Member of a structure (e.g., struct Buffer { int len; char data[]; })?",
+      "hint": "Where in the structure must such an array be located and what is its syntax?",
+      "options": [
+        "It must be the last element of the structure and declared with empty square brackets []",
+        "It can be located anywhere in the structure and replace the type name",
+        "To use it, the size must be declared as -1",
+        "It can be the only field in the structure"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Starting from C99, a flexible array member (`type name[]`) must strictly be the last member of the structure, and the structure itself must contain at least one other named field.",
+        "Incorrect. Such an array cannot be in the middle of a structure because the compiler wouldn't be able to compute offsets of subsequent fields.",
+        "Incorrect. Negative array sizes are invalid.",
+        "Incorrect. A structure with only a flexible array member is forbidden by standard."
+      ]
+    },
+    {
+      "id": "it_clang_1101",
+      "widget_id": "widget_clang_1101",
+      "topic": "Functions — Passing Basic Types by Value",
+      "q": "What will happen to variable val in the calling code after executing void increment(int x) { x++; }?",
+      "hint": "Is a local copy of the variable created when passing argument by value?",
+      "options": [
+        "The value of variable val will not change because the function operates on its local copy",
+        "Variable val will increase by 1",
+        "A compilation error will occur because function parameters cannot be modified",
+        "A Segmentation Fault will occur"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, basic type parameters (`int`, `float`, `char`) are always passed by value. Function receives a copy of the variable, so any changes to `x` inside `increment` do not affect original variable `val`.",
+        "Incorrect. Function works with a stack copy.",
+        "Incorrect. Modifying a local parameter value inside a function is completely legal.",
+        "Incorrect. Stack memory is allocated correctly."
+      ]
+    },
+    {
+      "id": "it_clang_1102",
+      "widget_id": "widget_clang_1102",
+      "topic": "Functions — Simulating Pass by Reference via Pointers",
+      "q": "How to correctly modify the value of variable val in calling code from inside a function?",
+      "hint": "Which address needs to be passed to the function and how to access it?",
+      "options": [
+        "Pass variable address &val to function void increment(int *x) and dereference it (*x)++",
+        "Declare function as void increment(int &x)",
+        "Declare argument with specifier reference int x",
+        "Call function via super operator"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! C has no true references like C++. Simulating pass-by-reference is achieved by explicitly passing variable address (`&val`) and dereferencing pointer (`*x`) inside function.",
+        "Incorrect. Syntax `int &x` is C++ references, in pure C it will cause a compilation error.",
+        "Incorrect. Specifier `reference` does not exist in C.",
+        "Incorrect. Operator `super` does not exist in C."
+      ]
+    },
+    {
+      "id": "it_clang_1103",
+      "widget_id": "widget_clang_1103",
+      "topic": "Passing Structures — Pass by Value vs Pass by Pointer",
+      "q": "What happens when passing a large structure to a function by value (e.g., void process(struct BigData d))?",
+      "hint": "How does passing large objects affect stack usage and performance?",
+      "options": [
+        "The entire structure is copied byte-by-byte onto stack, which can slow down program and overflow stack",
+        "Only a pointer to structure is passed to function",
+        "Compiler automatically redirects structure to heap",
+        "Passing structures by value is forbidden by C standard"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Unlike arrays, structures in C are passed entirely by value. Passing a huge structure copies all its bytes to function stack frame, causing performance degradation. Therefore, large structures are passed via pointer: `const struct BigData *d`.",
+        "Incorrect. Without `*` operator, full copy is passed.",
+        "Incorrect. Heap is not automatically used.",
+        "Incorrect. Passing structures by value is completely legal."
+      ]
+    },
+    {
+      "id": "it_clang_1104",
+      "widget_id": "widget_clang_1104",
+      "topic": "Function Signatures — Prototype void print_val() before C23",
+      "q": "What did prototype declaration void print_val() (with empty parentheses) mean in standards before C23?",
+      "hint": "Did this behavior differ from void print_val(void)?",
+      "options": [
+        "Function can accept an arbitrary (unspecified) number of arguments of any types",
+        "Function accepts no arguments",
+        "Function can only be called without parameters passed",
+        "This is a syntax compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Before C23, empty parentheses `()` in declaration (prototype) meant function accepts an unspecified number of arguments (K&R style). To strictly forbid arguments, one had to write `void print_val(void)`.",
+        "Incorrect. Strict argument prohibition was specified by `void` keyword in parentheses.",
+        "Incorrect. On the contrary, compiler allowed passing arguments without type checking.",
+        "Incorrect. This is valid legacy syntax."
+      ]
+    },
+    {
+      "id": "it_clang_1105",
+      "widget_id": null,
+      "topic": "Function Pointers — Callback Mechanism",
+      "q": "Why is a pointer to another function often passed as a parameter to a function (e.g., in qsort)?",
+      "hint": "How to make a sorting or processing algorithm universal for any data?",
+      "options": [
+        "To implement a callback mechanism and customize algorithm behavior",
+        "To speed up function execution via JIT compilation",
+        "To bypass restriction on maximum number of function parameters",
+        "So that function does not take space on stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Passing a function pointer allows customizing logic of called function externally (e.g., passing comparator `int (*compar)(const void*, const void*)` to `qsort`).",
+        "Incorrect. C has no JIT compilation, pointer is just instruction address.",
+        "Incorrect. Function pointer is passed like regular argument.",
+        "Incorrect. Calling via pointer still creates standard stack frame."
+      ]
+    },
+    {
+      "id": "it_clang_1106",
+      "widget_id": "widget_clang_1106",
+      "topic": "Variable Arguments — <stdarg.h> Macros",
+      "q": "Which sequence of macros from <stdarg.h> is required when implementing a Variadic Function?",
+      "hint": "Recall order: initialization, argument retrieval, cleanup.",
+      "options": [
+        "va_start, va_arg, va_end",
+        "va_init, va_get, va_close",
+        "std_start, std_arg, std_stop",
+        "va_open, va_read, va_free"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Standard processing loop for `...` arguments requires initializing argument list via `va_start`, extracting each parameter with type via `va_arg`, and closing/cleanup via `va_end`.",
+        "Incorrect. Names `va_init` / `va_get` / `va_close` do not exist in `<stdarg.h>`.",
+        "Incorrect. Invalid macro names.",
+        "Incorrect. Fictional syntax."
+      ]
+    },
+    {
+      "id": "it_clang_1107",
+      "widget_id": "widget_clang_1107",
+      "topic": "const Modifier — Restricting Parameter Modification",
+      "q": "What will happen when attempting to compile function void display(const char *str) { str[0] = 'A'; }?",
+      "hint": "What exactly does const keyword protect in const char *str?",
+      "options": [
+        "A compilation error will occur because memory content of str is read-only",
+        "Character will change successfully at runtime",
+        "Address of pointer str itself will change",
+        "Function will automatically create string copy in heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Writing `const char *str` forbids modifying data at address `str`. Attempting to write value to `str[0]` causes compiler error.",
+        "Incorrect. Compiler will block such attempt at build stage.",
+        "Incorrect. Address `str` itself can be changed (`str++`), modifying underlying buffer is forbidden.",
+        "Incorrect. Copies are not created."
+      ]
+    },
+    {
+      "id": "it_clang_1108",
+      "widget_id": null,
+      "topic": "Functions — Array Decay to Pointer",
+      "q": "What is sizeof(arr) equal to inside function void test(int arr[100]) on a 64-bit system?",
+      "hint": "Does array parameter retain its true size when passed to a function?",
+      "options": [
+        "8 bytes (size of pointer to int on 64-bit architecture)",
+        "400 bytes (100 elements * 4 bytes)",
+        "100 bytes",
+        "4 bytes (size of single int)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! When passing array to function, parameter `int arr[100]` loses size information and decays to pointer `int *arr`. Operator `sizeof(arr)` inside function returns size of pointer itself (8 bytes on 64-bit systems).",
+        "Incorrect. Original array size of 400 bytes is 'forgotten' inside function.",
+        "Incorrect. Element count is not equal to memory size.",
+        "Incorrect. 4 bytes is `sizeof(int)`, not pointer size."
+      ]
+    },
+    {
+      "id": "it_clang_1109",
+      "widget_id": "widget_clang_1109",
+      "topic": "Returning Values — Passing Results via Arguments",
+      "q": "Why do functions often return an error code (int status) while passing computed data via pointer parameters (e.g., int get_value(int *out_val))?",
+      "hint": "How many values can return statement return in C?",
+      "options": [
+        "Because return in C can return only one value, but function often needs to return both execution status and produced data",
+        "Because returning via return always works slower than calling malloc",
+        "Because returning int types via return is forbidden by ISO C standard",
+        "This is done to prevent compiler optimizations"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! C allows returning only one value from a function via `return`. Paradigm of returning error status (`0` — success, non-zero — error) via `return` and data via pointer arguments (`out_val`) is standard C API design pattern.",
+        "Incorrect. `return` statement places value in CPU register and works at maximum speed.",
+        "Incorrect. `return int` is completely legal.",
+        "Incorrect. Unrelated to optimizations."
+      ]
+    },
+    {
+      "id": "it_clang_1110",
+      "widget_id": "widget_clang_1110",
+      "topic": "Optimization — restrict Qualifier in Parameters (C99)",
+      "q": "What does pointer with restrict specifier hint to compiler (e.g., void copy(int * restrict dst, const int * restrict src))?",
+      "hint": "Can memory regions dst and src overlap in this case?",
+      "options": [
+        "Guarantees that pointers dst and src do not refer to same or overlapping memory region (No Aliasing)",
+        "Makes data at pointers read-only",
+        "Forces compiler to automatically allocate memory in heap",
+        "Forbids function call in multithreaded environment"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Specifier `restrict` (C99) tells compiler object accessed by this pointer will be manipulated only by this pointer. This eliminates Pointer Aliasing problem and enables loop autovectorization.",
+        "Incorrect. Write protection is handled by `const`.",
+        "Incorrect. `restrict` doesn't handle memory allocation.",
+        "Incorrect. `restrict` doesn't affect thread safety."
+      ]
+    },
+    {
+      "id": "it_clang_1111",
+      "widget_id": "widget_clang_1111",
+      "topic": "Preprocessor — Side Effects in Macros",
+      "q": "What will happen when invoking macro SQUARE(i++) for #define SQUARE(x) ((x) * (x)) and int i = 3;?",
+      "hint": "How do macros expand prior to compilation stage?",
+      "options": [
+        "Increment i++ will execute twice due to text substitution, leading to side effects and Undefined Behavior",
+        "3 * 3 = 9 will be evaluated, and then i will become 4",
+        "A compilation error will occur",
+        "Increment will execute only once thanks to compiler optimizer"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Preprocessor macros substitute their argument 'as is'. Expression expands into `((i++) * (i++))`. This causes double increment of variable `i` without intermediate Sequence Point, creating Undefined Behavior.",
+        "Incorrect. Macros do not evaluate arguments in advance, unlike functions.",
+        "Incorrect. Code is syntactically correct and compiles.",
+        "Incorrect. Optimizer doesn't alter macro preprocessor text substitution."
+      ]
+    },
+    {
+      "id": "it_clang_1112",
+      "widget_id": "widget_clang_1112",
+      "topic": "Strings — String Literals and Memory",
+      "q": "What is key difference between char *s1 = \"hello\"; and char s2[] = \"hello\";?",
+      "hint": "In which memory area are string literals stored and can they be modified?",
+      "options": [
+        "s1 points to an immutable memory region (.rodata), while s2 creates a modifiable array on the stack",
+        "s1 and s2 are completely identical and stored in the same memory area",
+        "s1 cannot be modified, but s2 is also forbidden from modification",
+        "s2 allocates memory in heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Writing `char *s1` creates pointer to literal in read-only section (`.rodata`). Attempting to modify `s1[0]` triggers Segmentation Fault. Writing `char s2[]` copies literal characters into regular local array on stack, which can be freely modified.",
+        "Incorrect. They behave fundamentally differently when attempting element modification.",
+        "Incorrect. Array elements of `s2` are allowed to be modified (`s2[0] = 'H'`).",
+        "Incorrect. Array `s2` is allocated on stack, not heap."
+      ]
+    },
+    {
+      "id": "it_clang_1113",
+      "widget_id": "widget_clang_1113",
+      "topic": "Preprocessor — Stringification Operator (#)",
+      "q": "What does operator # (hash) do before argument in a preprocessor macro (e.g., #define TO_STR(x) #x)?",
+      "hint": "How to convert passed name or expression into string during preprocessing stage?",
+      "options": [
+        "Converts passed argument into string literal, wrapping it in double quotes",
+        "Performs concatenation of two tokens",
+        "Converts numeric argument to hexadecimal form",
+        "Removes comments from argument"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Operator `#` in macros is called stringification operator. It turns passed lexical token `x` into string literal `\"x\"`.",
+        "Incorrect. For token concatenation operator `##` is used.",
+        "Incorrect. Preprocessor doesn't handle number base conversions.",
+        "Incorrect. Comments are removed by preprocessor before macro evaluation."
+      ]
+    },
+    {
+      "id": "it_clang_1114",
+      "widget_id": "widget_clang_1114",
+      "topic": "Preprocessor — Token Concatenation Operator (##)",
+      "q": "What is operator ## (double hash) used for in preprocessor macros?",
+      "hint": "How to combine two words or identifiers into one new symbol?",
+      "options": [
+        "For concatenation of two tokens into a single token",
+        "For creating logical OR between arguments",
+        "For raising left argument to power of right",
+        "For escaping special characters"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Operator `##` (Token Concatenation) joins two tokens on both sides into one new identifier/token during preprocessor execution.",
+        "Incorrect. Logical OR in C is `||`.",
+        "Incorrect. C has no built-in exponentiation operator (uses `pow()`).",
+        "Incorrect. Escaping is done with backslash `\\`."
+      ]
+    },
+    {
+      "id": "it_clang_1115",
+      "widget_id": null,
+      "topic": "Header Files — Include Guards",
+      "q": "Why are #ifndef, #define, and #endif (Include Guards) or #pragma once used in header files (.h)?",
+      "hint": "What happens if a file includes the same .h file multiple times via other files?",
+      "options": [
+        "To prevent repeated inclusion of header file content and redefinition errors of types and structures",
+        "To speed up main() function execution at runtime",
+        "To make functions inside file private",
+        "To hide header file source code from compiler"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Include Guards guarantee that header file body compiles exactly once per translation unit, preventing errors like `redefinition of struct`.",
+        "Incorrect. This is protection at compile time, not runtime acceleration.",
+        "Incorrect. For function privacy `static` modifier is used.",
+        "Incorrect. Compiler needs access to function and type declarations."
+      ]
+    },
+    {
+      "id": "it_clang_1116",
+      "widget_id": "widget_clang_1116",
+      "topic": "Strings — strlen() vs sizeof()",
+      "q": "What will strlen(str) return for array char str[] = \"Hello\";?",
+      "hint": "Does strlen() count terminating null byte '\\0'?",
+      "options": [
+        "5 (string length excluding null terminator)",
+        "6 (array size including null terminator)",
+        "8 (pointer size)",
+        "1 (single character size)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Function `strlen()` counts number of characters in string BEFORE terminating null byte `'\\0'`. For `\"Hello\"` it returns 5. Meanwhile `sizeof(str)` returns 6 bytes as it includes `'\\0'`.",
+        "Incorrect. 6 would be returned by `sizeof(str)` operator.",
+        "Incorrect. `str` here is a fixed-size array, not a pointer.",
+        "Incorrect. 1 is `sizeof(char)`."
+      ]
+    },
+    {
+      "id": "it_clang_1117",
+      "widget_id": "widget_clang_1117",
+      "topic": "Security — Danger of strcpy() Function",
+      "q": "Why is using standard strcpy(dst, src) function considered dangerous in C?",
+      "hint": "Does strcpy() check bounds of destination buffer dst?",
+      "options": [
+        "It does not check size of destination buffer dst, leading to Buffer Overflow",
+        "It works dozens of times slower than regular memcpy function",
+        "It removes null terminator in target string",
+        "It allocates memory in heap without user permission"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `strcpy()` copies bytes from `src` to `dst` until it encounters `'\\0'`. If `src` string is longer than allocated `dst` buffer, memory out-of-bounds access (Buffer Overflow) occurs, which is a frequent cause of critical vulnerabilities.",
+        "Incorrect. `strcpy` performance is close to `memcpy`.",
+        "Incorrect. `strcpy` always copies null terminator.",
+        "Incorrect. Function does not manage dynamic memory."
+      ]
+    },
+    {
+      "id": "it_clang_1118",
+      "widget_id": "widget_clang_1118",
+      "topic": "Preprocessor — do { ... } while(0) Idiom",
+      "q": "Why are multi-statement macros in C wrapped in construct do { ... } while(0)?",
+      "hint": "Think how multi-statement macro behaves inside if (...) block without curly braces.",
+      "options": [
+        "So macro turns into single compound statement that safely expands in if/else constructs and requires trailing ';'",
+        "So macro executes in loop mode",
+        "So compiler automatically makes macro inline function",
+        "To forbid passing parameters to macro"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Trick `do { ... } while(0)` groups multiple macro expressions into single block, allowing semicolon `;` after macro call without breaking syntax in `if (...) MACRO(); else ...`.",
+        "Incorrect. Loop executes exactly once because condition `while(0)` is always false.",
+        "Incorrect. Macro remains preprocessor text substitution.",
+        "Incorrect. Parameters can be passed to such macro."
+      ]
+    },
+    {
+      "id": "it_clang_1119",
+      "widget_id": null,
+      "topic": "Strings — Null Terminator ('\\0')",
+      "q": "What determines the actual end of a C string (Null-terminated string) in memory?",
+      "hint": "How do string functions (printf, strlen) know where to stop reading?",
+      "options": [
+        "Null byte '\\0' (character with ASCII code 0)",
+        "Newline character '\\n'",
+        "Special length variable stored before string",
+        "Space character ' '"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, strings are null-terminated — their end is marked by a null terminator `'\\0'` (byte with value 0).",
+        "Incorrect. `\\n` is simply a newline character.",
+        "Incorrect. C strings do not store length information in headers.",
+        "Incorrect. Space has ASCII code 32 and is a regular character."
+      ]
+    },
+    {
+      "id": "it_clang_1120",
+      "widget_id": "widget_clang_1120",
+      "topic": "Strings — String Comparison via strcmp()",
+      "q": "What does strcmp(str1, str2) return if str1 and str2 match completely?",
+      "hint": "Be careful: 0 means no difference between strings!",
+      "options": [
+        "0",
+        "1",
+        "true",
+        "-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Function `strcmp()` returns `0` if strings are lexicographically identical. If first string is less than second — returns negative number (`<0`), if greater — positive number (`>0`).",
+        "Incorrect. 1 is returned if first string is greater than second by ASCII codes.",
+        "Incorrect. `strcmp` returns an integer `int`, not a `bool`.",
+        "Incorrect. -1 is returned if first string is less than second."
+      ]
+    }
+  ]
+}

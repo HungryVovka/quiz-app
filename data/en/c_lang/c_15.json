@@ -1,0 +1,611 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_481",
+      "widget_id": "widget_clang_481",
+      "topic": "Conditions — Short-Circuit Evaluation",
+      "q": "What will this code snippet output?",
+      "hint": "Recall the evaluation order of the left and right operands of logical AND (&&). Is the right operand evaluated if the left is false?",
+      "options": [
+        "1 0",
+        "1 1",
+        "2 1",
+        "0 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! On the first check, the left side `i++ > 0` evaluates `0 > 0` (false), and variable `i` increments to 1. Due to short-circuiting, the right side `++j < 2` is NOT evaluated at all, and `j` remains 0. The loop terminates. Output: \"1 0\".",
+        "Incorrect. Expression `++j` was not executed due to short-circuit evaluation of the `&&` operator.",
+        "Incorrect. The loop completed zero iterations, so `i` was incremented only once during the first check.",
+        "Incorrect. Postfix increment `i++` executed during condition evaluation, so `i` is not equal to 0."
+      ]
+    },
+    {
+      "id": "it_clang_482",
+      "widget_id": "widget_clang_482",
+      "topic": "Comma Operator — Comma in Condition Expression",
+      "q": "What will the for loop output when using a comma in its condition expression i < 2, j < 5?",
+      "hint": "The comma operator evaluates the left operand, discards its result, then evaluates and returns the value of the right operand.",
+      "options": [
+        "2 2",
+        "2 5",
+        "5 5",
+        "5 2",
+        "Infinite loop"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Incorrect. Condition `i < 2` is ignored by the comma operator.",
+        "Incorrect. Both variables `i` and `j` are incremented synchronously at each step.",
+        "Correct! Expression `i < 2, j < 5` returns exclusively the result of `j < 5`. Condition `i < 2` is evaluated and discarded. The loop continues until `j` equals 5, at which point `i` also becomes 5. Output: \"5 5\".",
+        "Incorrect. Variable `i` does not stop at value 5 until the whole loop stops.",
+        "Incorrect. Variable `j` increases and is guaranteed to reach 5."
+      ]
+    },
+    {
+      "id": "it_clang_483",
+      "widget_id": "widget_clang_483",
+      "topic": "continue Statement — Behavior Inside do...while",
+      "q": "Where exactly does the continue statement transfer control in a do...while loop, and what will the code output?",
+      "hint": "Does continue transfer control to the beginning of the do block or straight to the while condition check at the bottom?",
+      "options": [
+        "4",
+        "1",
+        "6",
+        "Infinite loop"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In `do...while`, `continue` transfers control directly to condition check `while (i < 3)`. 1) `i=1`: `sum`=1. 2) `i=2`: `continue` jumps to `while(2 < 3)` (true). 3) `i=3`: `sum` = 1 + 3 = 4. `while(3 < 3)` is false. Total: 4.",
+        "Incorrect. On the third iteration `i = 3`, condition `i == 2` is false, so 3 is added to `sum`.",
+        "Incorrect. Value `i = 2` is skipped due to `continue`, so 2 is not added to `sum`.",
+        "Incorrect. Infinite looping does not occur, since `i++` is at the top of the loop body and executes before `continue`."
+      ]
+    },
+    {
+      "id": "it_clang_484",
+      "widget_id": "widget_clang_484",
+      "topic": "Control Flow — Interaction of switch and while",
+      "q": "How do break and continue interact inside a switch statement located inside a while loop?",
+      "hint": "break exits the switch, while continue moves to the next iteration of the while loop.",
+      "options": [
+        "3",
+        "4",
+        "2",
+        "Infinite loop"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! At `i=0` and `i=1`, `break` executes, exiting `switch` and letting `count++` run (`count` becomes 2). At `i=2`, `continue` executes, which applies to `while` loop and skips `count++`! At `i=3`, `default` triggers, making `count` equal to 3. Answer: 3.",
+        "Incorrect. On iteration `i=2`, `continue` call skips `count++` increment.",
+        "Incorrect. Iterations `i=0`, `i=1`, and `i=3` are accounted for.",
+        "Incorrect. On each iteration `i` increases (`i++`), preventing an infinite loop."
+      ]
+    },
+    {
+      "id": "it_clang_485",
+      "widget_id": "widget_clang_485",
+      "topic": "Pointers and Strings — while (*p++) Idiom",
+      "q": "What will pointer difference p - str equal after executing the compact loop?",
+      "hint": "Note that pointer increment p++ occurs even when dereferencing symbol *p yields null terminator '\\0'.",
+      "options": [
+        "3",
+        "4",
+        "5",
+        "0"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. 3 is the length of string \"Hi!\", but the pointer moves one step further past the null terminator.",
+        "Correct! String consists of characters 'H' (0), 'i' (1), '!' (2), and '\\0' (3). On 4th iteration `*p` reads '\\0' (0/false), but postfix `p++` still advances pointer to the next byte (index 4). Difference `(str + 4) - str` equals 4.",
+        "Incorrect. The loop stops immediately after reading and advancing past the null terminator.",
+        "Incorrect. The very first character 'H' evaluates to true in the condition, so pointer advances further."
+      ]
+    },
+    {
+      "id": "it_clang_486",
+      "widget_id": "widget_clang_486",
+      "topic": "Bitwise Operations — Brian Kernighan's Algorithm",
+      "q": "How many iterations will loop while (n) with operation n &= (n - 1) perform for number n = 13?",
+      "hint": "Expression n &= (n - 1) clears the lowest set bit (1) in binary representation of the number.",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "13"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Incorrect. Number 13 contains more than one set bit in binary form.",
+        "Incorrect. Count set bits in binary representation $13_{10} = 1101_2$.",
+        "Correct! This is Kernighan's famous algorithm for counting set bits. Binary 13: `1101_2` (three ones). Each iteration clears one set bit: 13 -> 12 -> 8 -> 0. Loop performs exactly 3 iterations.",
+        "Incorrect. Binary representation of number 13 has only 3 set bits, not 4.",
+        "Incorrect. Loop executes based on set bit count, not numerical value."
+      ]
+    },
+    {
+      "id": "it_clang_487",
+      "widget_id": "widget_clang_487",
+      "topic": "Data Types — Signed Overflow",
+      "q": "What will happen during loop execution with signed 8-bit type signed char c = 125?",
+      "hint": "Maximum value of signed char is 127. What happens to value c past 127 in two's complement?",
+      "options": [
+        "3",
+        "127",
+        "125",
+        "Infinite loop"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Iterations: 1) `c=125` (>0), `c` becomes 126, `count`=1. 2) `c=126` (>0), `c` becomes 127, `count`=2. 3) `c=127` (>0), `c` overflows to -128, `count`=3. 4) `c=-128` (not >0), loop breaks. Total `count` = 3.",
+        "Incorrect. Loop started at value 125, not 1.",
+        "Incorrect. Counter counts actually completed iterations.",
+        "Incorrect. Overflowing to negative value -128 leads to check `-128 > 0` (false) and stops."
+      ]
+    },
+    {
+      "id": "it_clang_488",
+      "widget_id": null,
+      "topic": "C Idioms — Using do...while(0) in Macros",
+      "q": "Why are multi-line C macros almost always wrapped in a do { ... } while(0) construct?",
+      "hint": "Think about what happens if a multi-statement macro is expanded inside an if (cond) MACRO(); else ... branch without curly braces.",
+      "options": [
+        "To combine multiple statements into a single syntactic block safe for expansion in if-else branches",
+        "To force the macro to run in a separate isolated thread",
+        "To optimize code execution speed at processor level",
+        "To allow recursive macro calls"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `do { ... } while(0)` construct groups statements and requires a trailing semicolon after `MACRO();`. This prevents 'dangling else' syntax errors when expanding the macro inside `if (cond) MACRO(); else ...`.",
+        "Incorrect. Macros are simple preprocessor text substitutions; they do not create threads.",
+        "Incorrect. The compiler optimizes `while(0)`, completely removing the loop structure from final machine code.",
+        "Incorrect. C macro expansions do not support recursion."
+      ]
+    },
+    {
+      "id": "it_clang_489",
+      "widget_id": "widget_clang_489",
+      "topic": "Nested Loops — Dependent Loop Limits",
+      "q": "What does the sum calculated in nested loops with dependent limit j <= i equal?",
+      "hint": "Write out iterations: at i=1 adds 1; at i=2 adds (1+2); at i=3 adds (1+2+3).",
+      "options": [
+        "6",
+        "9",
+        "10",
+        "14",
+        "15"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Incorrect. 6 is the sum of only the final outer iteration (1+2+3).",
+        "Incorrect. Check addition accuracy at each step.",
+        "Correct! i=1: sum += 1 (sum=1). i=2: sum += 1 + 2 (sum=4). i=3: sum += 1 + 2 + 3 (sum=10). Final value of `sum` equals 10.",
+        "Incorrect. Range of `i` is bounded by value 3.",
+        "Incorrect. That would be result for `i` from 1 to 5."
+      ]
+    },
+    {
+      "id": "it_clang_490",
+      "widget_id": "widget_clang_490",
+      "topic": "Lifetime and Scope — Static Inside Loop Body",
+      "q": "How does variable static int k = 5 declared inside a for loop body behave?",
+      "hint": "Static variables (static) are initialized only ONCE prior to program execution, not on each iteration.",
+      "options": [
+        "15",
+        "18",
+        "19",
+        "21"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Incorrect. Static variable retains its value between iterations, rather than resetting to 5.",
+        "Incorrect. Check accumulated value of `k` at steps `i=0, 1, 2`.",
+        "Correct! `k` is initialized to 5 once. Iteration 0: `k`=5+0=5, `res`=5. Iteration 1: `k`=5+1=6, `res`=5+6=11. Iteration 2: `k`=6+2=8, `res`=11+8=19. Output: 19.",
+        "Incorrect. Variable `i` takes values 0, 1, and 2 (3 iterations total)."
+      ]
+    },
+    {
+      "id": "it_clang_491",
+      "widget_id": "widget_clang_491",
+      "topic": "Unsigned Types — Risks of i >= 0 Check for unsigned",
+      "q": "Why would condition unsigned int i; i >= 0 without early break lead to an infinite loop?",
+      "hint": "Can an unsigned integer (unsigned) take a negative value?",
+      "options": [
+        "4",
+        "5",
+        "6",
+        "Infinite loop"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Incorrect. Counter will manage to exceed 5.",
+        "Incorrect. At `count = 5`, condition `count > 5` is still false; exit happens on next step.",
+        "Correct! Unsigned number `unsigned` is always `>= 0`. At `i = 0`, step `i--` turns `i` into `UINT_MAX`. Without protection `if (count > 5) break;`, loop would be infinite. With protection, `count` increments 6 times until `break` triggers. Output: 6.",
+        "Incorrect. Safety `break` is present in code, preventing infinite looping."
+      ]
+    },
+    {
+      "id": "it_clang_492",
+      "widget_id": null,
+      "topic": "Loop Control — Semantics of continue in Nesting",
+      "q": "Which statement regarding continue in nested loops is true?",
+      "hint": "Does continue affect outer loops?",
+      "options": [
+        "continue transfers control to header/condition of ONLY the innermost loop inside which it is invoked",
+        "continue terminates execution of current function and returns 0",
+        "continue resets and restarts the outermost loop"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `continue` statement interrupts only the current iteration of the innermost loop and transfers control to its step/condition section.",
+        "Incorrect. To terminate a function, the `return` statement is used.",
+        "Incorrect. `continue` does not directly affect outer loops."
+      ]
+    },
+    {
+      "id": "it_clang_493",
+      "widget_id": null,
+      "topic": "C Optimization and Tricks — Duff's Device",
+      "q": "What is the classic construct 'Duff's Device' famous for in C programming?",
+      "hint": "Think about loop unrolling and overlapping control structures.",
+      "options": [
+        "Unusual interleaving of switch statement and do...while loop for effective loop unrolling",
+        "A technique for buffer overflow protection in strcpy and strcat functions",
+        "A method for quicksorting arrays without using recursion",
+        "An algorithm for detecting memory leaks on heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Tom Duff devised interleaving `switch` and `do...while`, where `case` labels lie inside the loop body. This allows efficient block copying with partial loop unrolling.",
+        "Incorrect. This is a loop optimization pattern, not a string validator.",
+        "Incorrect. Duff's device has no relation to sorting algorithms.",
+        "Incorrect. It does not track `malloc` memory allocations."
+      ]
+    },
+    {
+      "id": "it_clang_494",
+      "widget_id": "widget_clang_494",
+      "topic": "String Copying — Classic while ((*d++ = *s++)) Loop",
+      "q": "What will be stored in array dest after executing loop while ((*d++ = *s++));?",
+      "hint": "Assignment operation = returns assigned value. When '\\0' is assigned, expression returns 0 (false).",
+      "options": [
+        "AB",
+        "A",
+        "Empty string"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! This is a canonical C string copying idiom. Characters 'A', 'B', and '\\0' are sequentially copied from `src` to `dest`. When `'\\0'` is copied, expression returns 0 and loop terminates. `dest` will hold complete string \"AB\".",
+        "Incorrect. Loop will not stop at first character; it copies entire string including null terminator.",
+        "Incorrect. First characters 'A' and 'B' have non-zero ASCII codes, so condition evaluates successfully."
+      ]
+    },
+    {
+      "id": "it_clang_495",
+      "widget_id": "widget_clang_495",
+      "topic": "Control Flow — Jumping into Loop via goto",
+      "q": "What will the program output if making an unconditional goto jump directly inside a while loop body?",
+      "hint": "Trace flow: goto jumps to label target:, executes x *= 2, reaches end of loop body, and moves to standard check x < 3.",
+      "options": [
+        "2",
+        "4",
+        "6",
+        "8",
+        "Compilation error"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Incorrect. After first operation `x` becomes 2, but loop performs another full pass.",
+        "Incorrect. Count addition and multiplication operations on second pass.",
+        "Correct! 1) `goto target`: jump inside, `x *= 2` (`x`=2). 2) Check condition `while (2 < 3)` -> true! 3) Loop entry from top: `x++` (`x`=3), then `target:` `x *= 2` (`x`=6). 4) Check `while (6 < 3)` -> false! Loop exit. Answer: 6.",
+        "Incorrect. Second iteration increases `x` from 2 to 3 prior to multiplication.",
+        "Incorrect. `goto` jump to label inside loop is completely legal in C (unless skipping VLA initialization)."
+      ]
+    },
+    {
+      "id": "it_clang_496",
+      "widget_id": "widget_clang_496",
+      "topic": "C Standards — Unsequenced Modifications",
+      "q": "What effect does expression arr[i] = i++ inside a loop lead to in modern C standards (C99/C11/C17)?",
+      "hint": "Think about whether evaluation order of array index on the left and side effect i++ on the right is guaranteed.",
+      "options": [
+        "Array will equal {0, 1, 2}",
+        "Array will equal {1, 2, 3}",
+        "Undefined Behavior",
+        "Compilation error"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Incorrect. Code has no guaranteed result.",
+        "Incorrect. C standards contain no rule requiring left side of assignment to be evaluated first.",
+        "Correct! In expression `arr[i] = i++`, reading and modification of variable `i` occur without a sequence point between them. This is classic Undefined Behavior (UB).",
+        "Incorrect. Compiler will compile this code, possibly issuing a warning."
+      ]
+    },
+    {
+      "id": "it_clang_497",
+      "widget_id": "widget_clang_497",
+      "topic": "Data Types — Overflow of unsigned char in Condition Comparison",
+      "q": "What will happen when attempting to execute for (i = 250; i < 256; i++) loop with 8-bit unsigned char variable?",
+      "hint": "Recall value range of 8-bit unsigned char type (0 to 255). Can it ever reach 256?",
+      "options": [
+        "Prints 256",
+        "Prints 0",
+        "Prints 255",
+        "Infinite loop"
+      ],
+      "ans": 3,
+      "explanations": [
+        "Incorrect. 8-bit `unsigned char` cannot physically hold value 256.",
+        "Incorrect. Due to infinite looping, code will not reach execution of `printf`.",
+        "Incorrect. Loop will not terminate at value 255.",
+        "Correct! Maximum value of 8-bit `unsigned char` is 255. When `i` equals 255, `i++` operation overflows and resets `i` to 0. Since `0 < 256` is always true, loop becomes infinite."
+      ]
+    },
+    {
+      "id": "it_clang_498",
+      "widget_id": "widget_clang_498",
+      "topic": "Preprocessor — Macro Expansion Errors in Loop Headers",
+      "q": "What will variable sum equal due to specifics of macro substitution MULTIPLY(1 + 1, 2)?",
+      "hint": "Substitute arguments into macro literally: 1 + 1 * 2 without adding outer parentheses.",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Incorrect. Loop will complete more than one iteration.",
+        "Incorrect. Due to operator precedence, condition result will be greater than 2.",
+        "Correct! Preprocessor performs simple text substitution. Expression `MULTIPLY(1 + 1, 2)` expands to `1 + 1 * 2`. Arithmetic rules dictate multiplication first: $1 + (1 \\times 2) = 3$. Condition becomes `i < 3`. Loop executes 3 iterations, and `sum` becomes 3.",
+        "Incorrect. Expected mathematical result `(1+1)*2 = 4` failed due to missing parentheses in macro definition."
+      ]
+    },
+    {
+      "id": "it_clang_499",
+      "widget_id": "widget_clang_499",
+      "topic": "Scope — Shadowing of Loop Variables",
+      "q": "What will printf output after loop execution where variable int x with same name is declared inside?",
+      "hint": "Variable x declared in for (int x = ...) header shadows outer x only within its own block.",
+      "options": [
+        "3",
+        "10",
+        "0",
+        "Compilation error"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Inner variable `x`, reaching 3, is destroyed upon exiting loop.",
+        "Correct! Declaring `int x` inside `for` header creates a new local variable shadowing outer `x = 10`. All modifications affect inner variable. Outer variable `x` remains intact and equals 10.",
+        "Incorrect. Outer `x` was not reset to 0.",
+        "Incorrect. Declaring variable with same name in nested scope block is syntactically allowed in C."
+      ]
+    },
+    {
+      "id": "it_clang_500",
+      "widget_id": "widget_clang_500",
+      "topic": "Pointers and Arrays — Layout of Multidimensional Arrays in Memory",
+      "q": "Is traversing 2D array int a[2][2] using a single pointer int *p valid?",
+      "hint": "In C, elements of multidimensional arrays are guaranteed to lie contiguously in memory (row-major order).",
+      "options": [
+        "Valid, sum will equal 10",
+        "Invalid, causes Undefined Behavior",
+        "Compilation error on pointer assignment",
+        "Valid, sum will equal 4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Elements of a multidimensional array in C lie continuously in memory: `a[0][0]`, `a[0][1]`, `a[1][0]`, `a[1][1]`. Pointer `p` sequentially visits all elements: 1 + 2 + 3 + 4 = 10.",
+        "Incorrect. Because memory is guaranteed contiguous, this traversal is fully standard.",
+        "Incorrect. Expression `&a[0][0]` has type `int*`, compatible with `int *p`.",
+        "Incorrect. Loop sums values of elements (1+2+3+4), not their count."
+      ]
+    },
+    {
+      "id": "it_clang_501",
+      "widget_id": null,
+      "topic": "volatile Keyword — Preventing Optimization of Busy-Wait Loops",
+      "q": "For what purpose is a flag variable in busy-wait loops like while (!flag) declared with the volatile qualifier?",
+      "hint": "Think about what the compiler optimizer will do if variable flag is not modified by explicit instructions INSIDE the loop body.",
+      "options": [
+        "To prevent compiler optimization that might cache the variable value in a CPU register, creating an infinite loop",
+        "To make reading and writing this variable atomic at hardware level",
+        "To forbid other functions from changing this variable's value",
+        "To speed up loop execution by placing variable in L1 cache"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Without `volatile`, the compiler sees that `flag` does not change inside the `while` body, and may read it into a register only ONCE before the loop. The `volatile` qualifier forces the compiler to re-read the value from memory on EVERY iteration.",
+        "Incorrect. `volatile` in C does not provide atomicity or inter-thread synchronization.",
+        "Incorrect. Protection against modification uses `const`, not `volatile`.",
+        "Incorrect. `volatile` may actually decrease speed because it disables register caching."
+      ]
+    },
+    {
+      "id": "it_clang_502",
+      "widget_id": "widget_clang_502",
+      "topic": "for Header — Execution Order of Expressions in Step Section",
+      "q": "What will the program output after executing empty-body loop for (; i < 5; i++, sum += i) ;?",
+      "hint": "Trace order of execution for comma-separated step i++ and summation sum += i.",
+      "options": [
+        "5 10",
+        "5 15",
+        "4 10",
+        "5 5"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Note that `i++` occurs BEFORE evaluating `sum += i` in step section.",
+        "Correct! On each step, `i++` is evaluated first (incrementing `i`), and then across sequence point (comma), `sum += i` is evaluated using UPDATED `i`. Iteration 1: i=1, sum=1. Iteration 2: i=2, sum=1+2=3. Iteration 3: i=3, sum=3+3=6. Iteration 4: i=4, sum=6+4=10. Iteration 5: i=5, sum=10+5=15. Condition `5 < 5` breaks loop. Result: \"5 15\".",
+        "Incorrect. Loop terminates only when `i` equals 5.",
+        "Incorrect. Variable `sum` accumulates values of all intermediate `i`."
+      ]
+    },
+    {
+      "id": "it_clang_503",
+      "widget_id": "widget_clang_503",
+      "topic": "Control Flow — Switch Fallthrough Inside Loops",
+      "q": "What will variable sum equal after executing a for loop with a switch that partially lacks break statements?",
+      "hint": "Trace case 0 carefully: absence of break falls through directly into case 1.",
+      "options": [
+        "6",
+        "8",
+        "9",
+        "5"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. You overlooked fallthrough from `case 0` into `case 1`.",
+        "Correct! 1) `i=0`: `case 0` executes (`sum`+=1), falls through to `case 1` (`sum`+=2), and hits `break` (`sum` = 3). 2) `i=1`: `case 1` executes (`sum`+=2) and hits `break` (`sum` = 5). 3) `i=2`: `case 2` executes (`sum`+=3) (`sum` = 8). Output: 8.",
+        "Incorrect. Check addition for each iteration `i = 0, 1, 2`.",
+        "Incorrect. Third iteration at `i=2` adds 3 to current sum."
+      ]
+    },
+    {
+      "id": "it_clang_504",
+      "widget_id": null,
+      "topic": "C Standards — Signed and Unsigned Type Overflow",
+      "q": "What is the fundamental difference in C standards regarding overflow of signed versus unsigned types in loops?",
+      "hint": "Recall which type's behavior is strictly specified by modulo $2^N$ math, and which is UB.",
+      "options": [
+        "Unsigned type overflow is strictly defined (modulo $2^N$ arithmetic), while signed overflow causes Undefined Behavior (UB)",
+        "Signed type overflow is strictly defined, while unsigned overflow causes Undefined Behavior (UB)",
+        "Overflow of both types leads to Undefined Behavior (UB)",
+        "Both types safely wrap around modulo $2^N$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Under ISO C standard, unsigned type overflow is strictly defined as modulo $2^N$ arithmetic. Meanwhile, signed type overflow is Undefined Behavior (UB), allowing the compiler to optimize or eliminate loops.",
+        "Incorrect. The exact opposite is true: `unsigned` is protected by standard, whereas `signed` causes UB.",
+        "Incorrect. Unsigned types in C never trigger UB on arithmetic overflow.",
+        "Incorrect. Signed types have no standard guarantee of wrapping around modulo $2^N$."
+      ]
+    },
+    {
+      "id": "it_clang_505",
+      "widget_id": "widget_clang_505",
+      "topic": "Data Structures — Classic Singly Linked List Traversal Loop",
+      "q": "What will the traversal loop of a singly linked list struct Node output?",
+      "hint": "Loop starts at node a, traverses via next pointer to b, then c, stopping after c->next equals NULL.",
+      "options": [
+        "1",
+        "3",
+        "6",
+        "0",
+        "Infinite loop"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Incorrect. 1 is only the value of first node `a`.",
+        "Incorrect. 3 is the value of last node `c`.",
+        "Correct! Node `a` has value 1 and points to `b`. Node `b` has value 2 and points to `c`. Node `c` has value 3 and points to `NULL`. Transition `curr = curr->next` sums 1 + 2 + 3 = 6.",
+        "Incorrect. Pointer `curr` is initially initialized with address `&a`, so loop executes.",
+        "Incorrect. Last structure `c` contains `NULL` in `next` field, breaking condition `curr != NULL`."
+      ]
+    },
+    {
+      "id": "it_clang_506",
+      "widget_id": "widget_clang_506",
+      "topic": "Logic Errors — Assignment = Instead of Comparison == in while",
+      "q": "What will printf output after executing code with loop while (x = 0)?",
+      "hint": "The = operation is assignment. What value does expression (x = 0) return?",
+      "options": [
+        "0",
+        "3",
+        "4",
+        "Infinite loop"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Expression `x = 0` assigns value 0 to variable `x` and returns this assigned value (0/false). Loop body executes ZERO times. Variable `x` remains 0. Prints 0.",
+        "Incorrect. Due to assignment operator `x = 0`, value of variable `x` changed before condition check.",
+        "Incorrect. Loop body `x++` was not executed due to false condition.",
+        "Incorrect. Expression `x = 0` evaluates to 0 (false), terminating loop immediately."
+      ]
+    },
+    {
+      "id": "it_clang_507",
+      "widget_id": "widget_clang_507",
+      "topic": "break Statement — Counter State Upon Early Exit",
+      "q": "What value will counter i retain immediately after break triggers under condition i == 2?",
+      "hint": "Does step section i++ execute when the break statement runs?",
+      "options": [
+        "2",
+        "3",
+        "1",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! On iteration `i = 2`, condition `i == 2` evaluates to true and `break` is called. The `break` statement instantly exits loop, skipping increment section `i++`. Value of `i` remains 2.",
+        "Incorrect. Step `i++` is evaluated only AFTER loop body completion, which code does not reach due to `break`.",
+        "Incorrect. At `i = 1`, condition `1 == 2` was false, progressing to next iteration.",
+        "Incorrect. Counter managed to increase to 2."
+      ]
+    },
+    {
+      "id": "it_clang_508",
+      "widget_id": "widget_clang_508",
+      "topic": "Complex Loops — Ternary Operator in Step Section",
+      "q": "How many iterations will a for loop complete when its step depends on the parity of variable i?",
+      "hint": "Trace changes in i: 0 (even -> +1) -> 1 (odd -> +2) -> 3 (odd -> +2) -> 5.",
+      "options": [
+        "3",
+        "4",
+        "5",
+        "2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! 1st iteration: `i=0`, `count=1`. Step: 0 is even, `i += 1` (becomes 1). 2nd iteration: `i=1`, `count=2`. Step: 1 is odd, `i += 2` (becomes 3). 3rd iteration: `i=3`, `count=3`. Step: 3 is odd, `i += 2` (becomes 5). Check `5 < 5` stops loop. Total: 3 iterations.",
+        "Incorrect. Trace step at `i = 1`, 2 is added, not 1.",
+        "Incorrect. Loop skips even values `i = 2` and `i = 4`.",
+        "Incorrect. Loop will complete 3 full steps."
+      ]
+    },
+    {
+      "id": "it_clang_509",
+      "widget_id": "widget_clang_509",
+      "topic": "Control Flow — Emulating while Loop via goto",
+      "q": "Which standard C loop construct does the given goto code replicate?",
+      "hint": "Note: condition check happens AT THE START of the block before main instructions.",
+      "options": [
+        "while loop",
+        "do...while loop",
+        "switch statement",
+        "Recursion"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In this code, condition check `if (i >= 3) goto loop_end;` is at entry before body. This is an exact equivalent of pre-test loop `while (i < 3)`.",
+        "Incorrect. In `do...while`, condition check is at bottom, guaranteeing at least one execution of body.",
+        "Incorrect. Code does not perform matching across multiple labels.",
+        "Incorrect. Code contains no self-referencing function calls."
+      ]
+    },
+    {
+      "id": "it_clang_510",
+      "widget_id": "widget_clang_510",
+      "topic": "Pointers and Arrays — One-Past-The-End Pointer",
+      "q": "Is expression int *end = arr + 3 legal in C and what is the loop result?",
+      "hint": "The C standard allows computing address of element immediately AFTER last array element, provided it is NOT dereferenced.",
+      "options": [
+        "Yes, it is a fully legal 'past-the-end' pointer, sum equals 60",
+        "No, creating pointer arr + 3 causes Undefined Behavior",
+        "Compilation error",
+        "sum equals 30"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The C standard guarantees that obtaining a pointer to element immediately past array end (one-past-the-end) is legal and can be used for comparisons (`p < end`). Dereferencing it is prohibited, but loop dereferences only `p < end`. Result: 10 + 20 + 30 = 60.",
+        "Incorrect. UB occurs only on attempted DEREFERENCING (`*end`), not when computing or comparing address.",
+        "Incorrect. Pointer arithmetic with arrays is fully supported by compiler.",
+        "Incorrect. Loop sums all three array elements."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,581 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_941",
+      "widget_id": null,
+      "topic": "History of Standards — Implicit Declaration of Functions",
+      "q": "How did the handling of function calls without prior declaration/prototype change when transitioning from the C89 to the C99 standard?",
+      "hint": "Think about whether C99 allows the compiler to 'guess' a function's signature as returning int.",
+      "options": [
+        "C89 allowed implicit declarations (the compiler assumed the function returned int), whereas C99 strictly prohibited implicit declarations",
+        "C89 prohibited implicit declarations, while C99 allowed them to simplify code",
+        "No changes occurred — implicit declarations are allowed in all standards",
+        "In C99 implicit declaration is allowed, but only if the function returns float"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C89 there was an 'implicit int' rule: if a function was called without a prototype, the compiler assumed `int func()`. Starting with C99, implicit declarations are forbidden, and a prototype or definition is required before calling a function.",
+        "Incorrect. On the contrary, C89 permitted implicit calls, while C99 removed this feature.",
+        "Incorrect. The standardization change in C99 was an important step towards increasing type safety.",
+        "Incorrect. Implicit declaration defaulted to `int`, not `float`."
+      ]
+    },
+    {
+      "id": "it_clang_942",
+      "widget_id": null,
+      "topic": "Optimization — Inline Functions (inline)",
+      "q": "What is the primary purpose of using the inline specifier before a function declaration in the C99 standard?",
+      "hint": "Is inline a strict command for the compiler or merely a recommendation?",
+      "options": [
+        "It is a hint to the compiler to inline the function body directly at the call site to eliminate overhead, though the compiler may ignore it",
+        "It is a strict directive that guarantees 100% code substitution at the assembly level",
+        "The inline keyword causes the function to execute in a separate thread",
+        "It forbids passing parameters by value"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `inline` specifier informs the compiler that calling the function should preferably be replaced with its body. However, the compiler independently makes the final decision based on optimization heuristics.",
+        "Incorrect. The compiler can ignore `inline` if the function is too complex or recursive.",
+        "Incorrect. The `inline` keyword is not related to multithreading in any way.",
+        "Incorrect. The parameter passing method does not change when using `inline`."
+      ]
+    },
+    {
+      "id": "it_clang_943",
+      "widget_id": "widget_clang_943",
+      "topic": "Function Pointers — Declaration Syntax",
+      "q": "What does the declaration `int (*func_ptr)(int, int)` declare?",
+      "hint": "Pay attention to the parentheses around *func_ptr.",
+      "options": [
+        "A variable func_ptr, which is a pointer to a function taking two ints and returning an int",
+        "A function func_ptr that returns a pointer to int",
+        "An array of two function pointers",
+        "A syntax error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The parentheses `(*func_ptr)` bind the asterisk to the variable name, making `func_ptr` a pointer. The second parentheses `(int, int)` indicate that it is a pointer to a function taking two `int`s and returning an `int`.",
+        "Incorrect. Without parentheses `int *func_ptr(int, int)` would be a function returning `int*`.",
+        "Incorrect. An array of pointers would require square brackets: `int (*func_ptr[2])(int, int)`.",
+        "Incorrect. This is standard and correct syntax for a function pointer."
+      ]
+    },
+    {
+      "id": "it_clang_944",
+      "widget_id": null,
+      "topic": "Recursion — Stack Overflow",
+      "q": "What consequence does deep or infinite recursion without a base case exit lead to?",
+      "hint": "Where are local variables and return addresses stored upon each function call?",
+      "options": [
+        "Call stack memory exhaustion (Stack Overflow) and a crash (Segmentation Fault)",
+        "Dynamic memory overflow (Heap Overflow)",
+        "The program will loop infinitely without crashing, consuming 100% CPU forever",
+        "The compiler will automatically interrupt function execution after 1000 iterations"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Each recursive call creates a new stack frame to store arguments and local variables. With infinite recursion, stack memory is exhausted, leading to Stack Overflow and a program crash.",
+        "Incorrect. Stack frames are allocated in stack memory, not in the heap.",
+        "Incorrect. The stack is limited in size (usually a few megabytes), so the program will inevitably crash rather than run forever.",
+        "Incorrect. At runtime, the compiler does not control the number of recursive iterations."
+      ]
+    },
+    {
+      "id": "it_clang_945",
+      "widget_id": "widget_clang_945",
+      "topic": "Callback Functions — Standard qsort Function",
+      "q": "What is the purpose of the compare function passed as an argument to qsort?",
+      "hint": "How does qsort know which of two array elements is greater than the other?",
+      "options": [
+        "It is a callback comparator function defining the sort order of elements",
+        "A function for allocating dynamic memory for the array",
+        "A function for counting the number of elements in the array",
+        "A function for binary search"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `qsort` uses a pointer to a comparator function (callback) to compare two elements. The return value (negative, zero, positive) indicates their relative order.",
+        "Incorrect. `qsort` sorts the array in-place and does not allocate memory.",
+        "Incorrect. The number of elements is passed to `qsort` as a separate parameter `size_t nmemb`.",
+        "Incorrect. For binary search, the `bsearch` function is used."
+      ]
+    },
+    {
+      "id": "it_clang_946",
+      "widget_id": "widget_clang_946",
+      "topic": "Optimization — Tail Call Optimization",
+      "q": "What is the main advantage of tail recursion (Tail Recursion) when compiling with optimizations enabled?",
+      "hint": "Notice: the recursive call is the very last statement of the function and its result is returned immediately.",
+      "options": [
+        "The compiler can optimize recursion into a regular loop without allocating new stack frames for each call",
+        "The function automatically parallelizes across all CPU cores",
+        "Calculation results are automatically cached in memory",
+        "The function stops consuming CPU time"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! With tail recursion, the compiler (via Tail Call Optimization, TCO) reuses the current stack frame, turning the recursive call into a simple jump/loop. This prevents stack overflow.",
+        "Incorrect. Tail call optimization does not make code multithreaded.",
+        "Incorrect. Caching results (memoization) requires writing custom logic and does not happen automatically.",
+        "Incorrect. Code continues executing on the CPU, but more efficiently."
+      ]
+    },
+    {
+      "id": "it_clang_947",
+      "widget_id": null,
+      "topic": "C11 Standard — _Noreturn Specifier",
+      "q": "What does the _Noreturn specifier (or noreturn from <stdnoreturn.h>) placed before a function inform the compiler?",
+      "hint": "Does this function return control to its call site?",
+      "options": [
+        "The function never returns control to calling code (e.g., terminates the program via exit() or loops infinitely)",
+        "The function returns void",
+        "Calling the function more than once is forbidden",
+        "The function contains no local variables"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `_Noreturn` specifier informs the compiler that the function is guaranteed not to return control back to the calling function (e.g., `exit()`, `abort()`, or an infinite loop). This helps the optimizer and prevents false warnings.",
+        "Incorrect. Returning `void` means the function returns control, but without a specific value. `_Noreturn` means control return itself does not occur.",
+        "Incorrect. The number of function calls is not limited by the specifier.",
+        "Incorrect. This is not related to the presence of local variables."
+      ]
+    },
+    {
+      "id": "it_clang_948",
+      "widget_id": null,
+      "topic": "main Function — Implicit return 0 in C99",
+      "q": "What happens according to the C99/C11 standard if main() execution reaches the closing brace } without an explicit return statement?",
+      "hint": "Does main() behavior differ from regular functions returning int?",
+      "options": [
+        "The compiler automatically inserts an implicit return 0; (successful completion)",
+        "A random undefined value is returned from the register (Undefined Behavior)",
+        "A compilation error will occur",
+        "The program will loop infinitely"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Starting from C99, the `main()` function is an exception: if execution reaches the end of `main()` without `return`, the compiler automatically generates `return 0;`.",
+        "Incorrect. For regular functions with an `int` return type, this would be UB, but a special exception is made for `main()`.",
+        "Incorrect. This is valid behavior according to C99 and newer standards.",
+        "Incorrect. No infinite loop occurs."
+      ]
+    },
+    {
+      "id": "it_clang_949",
+      "widget_id": "widget_clang_949",
+      "topic": "Variadic Functions — Mandatory Completion with va_end",
+      "q": "Which macro from the <stdarg.h> library MUST be called at the end of working with a variable number of arguments before exiting the function?",
+      "hint": "This macro performs va_list resource cleanup.",
+      "options": [
+        "va_end",
+        "va_start",
+        "va_arg",
+        "va_copy"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `va_end(args)` macro is mandatory for cleaning up a `va_list` object. Omitting the `va_end` call before exiting the function leads to Undefined Behavior on some architectures.",
+        "Incorrect. `va_start` initializes the argument list at the beginning of the function.",
+        "Incorrect. `va_arg` is used to sequentially retrieve arguments.",
+        "Incorrect. `va_copy` is used to copy `va_list` state."
+      ]
+    },
+    {
+      "id": "it_clang_950",
+      "widget_id": null,
+      "topic": "Program Termination — Difference Between exit() and return",
+      "q": "What is the fundamental difference between calling exit(0) and the statement return 0 inside a helper function (not main)?",
+      "hint": "Does exit() return control to the calling function?",
+      "options": [
+        "exit(0) immediately terminates the entire program from any point, whereas return 0 terminates only the current function",
+        "exit(0) returns a value to the calling function, whereas return 0 terminates the program",
+        "There is no difference, they work identically",
+        "exit(0) can only be used in C++, but not in C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `exit()` function from `<stdlib.h>` flushes I/O buffers, calls `atexit` handlers, and immediately terminates the entire process. The `return` statement merely returns from the current function frame one level up.",
+        "Incorrect. `exit()` terminates process execution rather than returning a value to the caller.",
+        "Incorrect. The difference is fundamental for program execution control flow.",
+        "Incorrect. The `exit()` function has belonged to the standard C library since the earliest versions."
+      ]
+    },
+    {
+      "id": "it_clang_951",
+      "widget_id": "widget_clang_951",
+      "topic": "Return Values — Pointer to Local Variable",
+      "q": "What consequence will calling function get_ptr() and attempting to dereference the returned pointer lead to?",
+      "hint": "What happens to function local variables after exiting it?",
+      "options": [
+        "Undefined Behavior / Dangling Pointer",
+        "The program is guaranteed to print the number 100",
+        "Compilation error — C forbids returning pointers",
+        "The memory of variable val will automatically move to the heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Variable `val` has auto storage duration and is destroyed upon exiting `get_ptr()`. The returned address refers to an invalid stack frame. Dereferencing such a dangling pointer leads to Undefined Behavior.",
+        "Incorrect. Although 100 may temporarily remain in memory, it cannot be relied upon because stack memory gets reused.",
+        "Incorrect. The compiler may issue a Warning, but syntactically it compiles.",
+        "Incorrect. C does not move stack variables to heap automatically."
+      ]
+    },
+    {
+      "id": "it_clang_952",
+      "widget_id": "widget_clang_952",
+      "topic": "Storage Classes — Static Local Variables (static)",
+      "q": "What will the program output on three sequential calls to counter() function?",
+      "hint": "How many times is a variable with static modifier initialized and where is it stored?",
+      "options": [
+        "1 2 3 ",
+        "1 1 1 ",
+        "0 0 0 ",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! A local variable with `static` modifier retains its value between function calls and is initialized exactly once at program startup. Each call to `counter()` increments the single counter.",
+        "Incorrect. The value `c` is not reset to 0 upon re-entering the function.",
+        "Incorrect. The increment `c++` executes on every call.",
+        "Incorrect. Static local variables are a standard feature of C."
+      ]
+    },
+    {
+      "id": "it_clang_953",
+      "widget_id": null,
+      "topic": "Linkage — static Qualifier for Functions",
+      "q": "What effect does the static specifier have before a function name (e.g., static void helper(void))?",
+      "hint": "Will such a function be visible in other source files (.c) during linking?",
+      "options": [
+        "Limits function scope to the current file / translation unit (Internal Linkage)",
+        "Makes the function run 2 times faster",
+        "Forbids using local variables in the function",
+        "Makes the function visible across all build objects (External Linkage)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `static` keyword at file scope specifies Internal Linkage. Function `helper` becomes 'private' to the current `.c` module and inaccessible from other project files.",
+        "Incorrect. The `static` modifier manages Linkage, not speed optimization.",
+        "Incorrect. Any local variables can be declared inside a static function.",
+        "Incorrect. External Linkage is default for functions without `static`."
+      ]
+    },
+    {
+      "id": "it_clang_954",
+      "widget_id": null,
+      "topic": "Return Values — Returning Structure by Value",
+      "q": "True or False: A function in C can return an entire structure by value using the return statement?",
+      "hint": "Can you write struct Point make_point(void) { struct Point p = {1, 2}; return p; }?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Unlike arrays, structures in C are full values: they can be passed to functions by value and returned from functions via `return` (performing a full copy of structure fields).",
+        "Incorrect. The C standard fully supports returning structures by value."
+      ]
+    },
+    {
+      "id": "it_clang_955",
+      "widget_id": "widget_clang_955",
+      "topic": "Memory Management — alloca() Function",
+      "q": "What is the key feature of alloca() function when allocating memory inside a function compared to malloc()?",
+      "hint": "Where is memory allocated when using alloca and is it necessary to call free()?",
+      "options": [
+        "Memory is allocated directly on call stack and automatically freed upon exiting function",
+        "Memory is allocated on Heap, but write-protected",
+        "Memory is automatically freed after 10 seconds",
+        "alloca() works slower than malloc()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `alloca()` function allocates memory directly in the stack frame of the current function. Calling `free()` is not needed — memory is cleaned up automatically upon function return.",
+        "Incorrect. `alloca()` uses stack, not heap.",
+        "Incorrect. Lifetime of memory is strictly bound to function completion.",
+        "Incorrect. Stack memory allocation by adjusting stack pointer is usually much faster than querying heap via `malloc()`."
+      ]
+    },
+    {
+      "id": "it_clang_956",
+      "widget_id": null,
+      "topic": "Linkage — Default extern Qualifier",
+      "q": "What Linkage do regular functions in C have by default if static keyword is not specified before them?",
+      "hint": "Can the Linker find this function when building from another .c file?",
+      "options": [
+        "External Linkage",
+        "Internal Linkage",
+        "No Linkage",
+        "Dynamic Linkage"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! All functions in C by default have `extern` (External Linkage) and can be called from any other project module if their prototype is declared there.",
+        "Incorrect. Internal Linkage is set explicitly via `static`.",
+        "Incorrect. No Linkage applies to local function variables.",
+        "Incorrect. Dynamic Linkage pertains to DLL/SO libraries, not language-level function linkage type."
+      ]
+    },
+    {
+      "id": "it_clang_957",
+      "widget_id": null,
+      "topic": "Architecture — Stack Frame",
+      "q": "Which information is NOT stored in a function's Stack Frame when it is called?",
+      "hint": "Which of the listed is allocated separately via a memory manager?",
+      "options": [
+        "Dynamic memory allocated via malloc()",
+        "Function local auto-variables",
+        "Return Address to calling function",
+        "Arguments passed to function"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Dynamic memory (`malloc`, `calloc`) is allocated in the Heap and is unrelated to stack frame. Stack frame contains parameters, return address, and local variables.",
+        "Incorrect. Local variables are stored specifically in stack frame.",
+        "Incorrect. Return address is mandatory so processor knows where to resume after `return`.",
+        "Incorrect. Function parameters are placed onto stack (or registers) on call."
+      ]
+    },
+    {
+      "id": "it_clang_958",
+      "widget_id": "widget_clang_958",
+      "topic": "Function Pointers — Calling NULL Pointer",
+      "q": "What will happen at runtime when attempting to call a function through a pointer equal to NULL?",
+      "hint": "To which address will processor attempt to jump (Instruction Pointer)?",
+      "options": [
+        "Program crash (Segmentation Fault / Access Violation)",
+        "Function will simply do nothing and return 0",
+        "Program will skip this call and continue from next line",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Calling via zero address `ptr()` forces CPU to jump to address `0x0`. Since this address is protected by OS, program crash occurs (Segmentation Fault).",
+        "Incorrect. There is no automatic NULL check when invoking function pointer in C.",
+        "Incorrect. Processor attempts to execute instructions at NULL address and crashes.",
+        "Incorrect. Syntactically code is valid, error manifests at Runtime."
+      ]
+    },
+    {
+      "id": "it_clang_959",
+      "widget_id": "widget_clang_959",
+      "topic": "Return Values — Dynamic Memory and Responsibility for free()",
+      "q": "What will happen in the code if caller in main() does not call free() for pointer returned by create_array()?",
+      "hint": "Is memory from malloc() freed automatically upon completion of create_array() function?",
+      "options": [
+        "Memory Leak will occur",
+        "Memory is freed automatically upon exiting create_array()",
+        "Memory is freed automatically upon exiting main()",
+        "Segmentation Fault error will occur"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Memory allocated via `malloc()` has dynamic lifetime and persists until an explicit `free()` call. Omitting `free()` leaves memory occupied until process ends (memory leak).",
+        "Incorrect. Upon exiting `create_array()`, only local pointer `arr` is destroyed, not heap region itself.",
+        "Incorrect. OS reclaims process memory on exit, but inside program memory leaks until process termination.",
+        "Incorrect. Not calling `free` does not cause an immediate crash."
+      ]
+    },
+    {
+      "id": "it_clang_960",
+      "widget_id": null,
+      "topic": "Calling Conventions",
+      "q": "What is Calling Convention (e.g., cdecl, stdcall, fastcall) responsible for?",
+      "hint": "How do function and calling code 'agree' on parameter passing and stack cleanup at machine code level?",
+      "options": [
+        "Defines argument passing order (via stack/registers) and who cleans stack after call",
+        "Sets maximum number of code lines in function body",
+        "Determines whether code compiles for Windows or Linux",
+        "Formats function source code according to PEP8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Calling Convention regulates low-level details: argument push order (right-to-left or left-to-right), used registers, and which party (caller or callee) cleans stack.",
+        "Incorrect. Calling conventions do not regulate function length.",
+        "Incorrect. Different ABIs are used on different OSes, but concept itself regulates low-level passing protocol.",
+        "Incorrect. PEP8 is Python style guide, not C calling convention."
+      ]
+    },
+    {
+      "id": "it_clang_961",
+      "widget_id": "widget_clang_961",
+      "topic": "Function Pointers — Dispatch Tables",
+      "q": "How to correctly declare array `op` containing 2 function pointers accepting two `int`s and returning `int`?",
+      "hint": "Note syntax binding square brackets and pointer asterisk.",
+      "options": [
+        "int (*op[2])(int, int)",
+        "int *op[2](int, int)",
+        "int (op*)[2](int, int)",
+        "int (*op)(int, int)[2]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Parentheses `(*op[2])` define `op` as array of two elements, each a pointer to function with signature `(int, int) -> int`.",
+        "Incorrect. Entry `int *op[2](int, int)` declares array of functions returning `int*`, which is invalid in C.",
+        "Incorrect. Such syntax is invalid in C/C++.",
+        "Incorrect. Invalid combination of pointer to array and function."
+      ]
+    },
+    {
+      "id": "it_clang_962",
+      "widget_id": "widget_clang_962",
+      "topic": "Control Flow — Non-local Jumps (setjmp / longjmp)",
+      "q": "What is purpose of setjmp() and longjmp() pair from standard library <setjmp.h>?",
+      "hint": "Think of ways to handle deep errors without passing flags through dozens of returns.",
+      "options": [
+        "For executing non-local jumps between functions bypassing standard return stack",
+        "For allocating dynamic memory with reset to save point",
+        "For running functions in parallel threads",
+        "For optimizing recursive functions into loops"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `setjmp` saves execution context (stack frame and registers) into `jmp_buf` buffer, while `longjmp` instantly restores this context, transferring control from deeply nested function back to `setjmp` call point (analogous to C++ exceptions).",
+        "Incorrect. `setjmp`/`longjmp` are unrelated to memory allocation.",
+        "Incorrect. It is a control flow tool within a single thread.",
+        "Incorrect. Recursion optimization is handled by compiler, not `<setjmp.h>`."
+      ]
+    },
+    {
+      "id": "it_clang_963",
+      "widget_id": null,
+      "topic": "Security and Multithreading — Reentrancy",
+      "q": "Which function is called Reentrant?",
+      "hint": "Can such function be interrupted by signal and called again within same signal without side effects?",
+      "options": [
+        "Function whose execution can be interrupted at any moment and re-invoked before first call completes without data corruption",
+        "Any function calling itself (recursive function)",
+        "Function containing only static local state",
+        "Function compiled with maximum optimization level -O3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Reentrant function works exclusively with local stack variables or passed arguments and does not use modifiable global/static data.",
+        "Incorrect. Recursion is act of function calling itself, but not guarantee of interrupt safety.",
+        "Incorrect. Presence of static mutable variables makes function non-reentrant.",
+        "Incorrect. Optimization flag `-O3` does not make code reentrant."
+      ]
+    },
+    {
+      "id": "it_clang_964",
+      "widget_id": null,
+      "topic": "Standard Library — Thread Safety (strtok vs strtok_r)",
+      "q": "Why is standard strtok() function not Thread-safe, and which function should be used instead?",
+      "hint": "Where does strtok() save intermediate position between calls?",
+      "options": [
+        "strtok() uses internal static pointer to save state; strtok_r() or strtok_s() should be used",
+        "strtok() allocates memory in heap too intensively; strtok_fast() should be used",
+        "strtok() locks work of other CPU cores",
+        "strtok() works only with ASCII strings up to 256 characters long"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `strtok()` stores current address inside hidden static variable. If two threads call it concurrently, state gets corrupted. Reentrant version `strtok_r()` accepts pointer to state buffer `char **saveptr` externally.",
+        "Incorrect. `strtok()` does not allocate memory on heap at all.",
+        "Incorrect. Function does not lock CPU cores.",
+        "Incorrect. String length is not limited to 256."
+      ]
+    },
+    {
+      "id": "it_clang_965",
+      "widget_id": null,
+      "topic": "Compiler Extensions — __attribute__((const)) Attributes",
+      "q": "What does __attribute__((const)) attribute guarantee to GCC/Clang compiler when declaring function?",
+      "hint": "Do calculations of such function depend on values in global memory or pointers?",
+      "options": [
+        "Function result depends EXCLUSIVELY on its parameters, and it neither reads nor modifies global variables or memory via pointers",
+        "Function executes in constant time $O(1)$",
+        "Function returns constant value of const int type",
+        "All function arguments are automatically declared constants"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `const` attribute indicates to compiler that function is mathematically pure (does not read global memory/pointers, has no side effects). This allows compiler to fully cache call result.",
+        "Incorrect. Algorithmic complexity $O(1)$ does not apply to attribute.",
+        "Incorrect. Attribute applies to function behavior, not just return type.",
+        "Incorrect. Attribute does not add `const` to parameters automatically."
+      ]
+    },
+    {
+      "id": "it_clang_966",
+      "widget_id": null,
+      "topic": "Language Limitations — Returning Array from Function",
+      "q": "By which of the methods CAN a group of values (or array) be returned from function in C?",
+      "hint": "Recall whether C can copy structures by value upon return.",
+      "options": [
+        "Wrap array in structure (struct) and return structure by value, or fill passed pointer",
+        "Write return int[3]{1, 2, 3};",
+        "Use syntax return array[];",
+        "In C it is impossible to return more than one value under any form"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Returning raw arrays by value in C is not allowed. However, structures containing arrays are full data types and copy without issues via `return`.",
+        "Incorrect. Returning array literal `int[3]{...}` is invalid syntax in C.",
+        "Incorrect. Entry `return array[];` causes compilation error.",
+        "Incorrect. Structures and pointers to allocated buffers solve this task successfully."
+      ]
+    },
+    {
+      "id": "it_clang_967",
+      "widget_id": "widget_clang_967",
+      "topic": "Linking — Weak Symbols (__attribute__((weak)))",
+      "q": "Why is __attribute__((weak)) attribute used when defining function in C libraries?",
+      "hint": "What happens if user creates custom function with exact same name?",
+      "options": [
+        "Allows overriding this function with custom 'strong' implementation during build without Multiple Definition error",
+        "Disables argument type checking on function call",
+        "Lowers function priority in OS scheduler",
+        "Makes function read-only"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Weak symbol serves as default fallback. If user defines function with same name in custom code, linker silently replaces weak function with user's implementation.",
+        "Incorrect. Compile-time type checking is preserved.",
+        "Incorrect. Linker attributes do not affect OS scheduler priority.",
+        "Incorrect. Function code is already placed in read-only segment (.text)."
+      ]
+    },
+    {
+      "id": "it_clang_968",
+      "widget_id": null,
+      "topic": "Universal Pointers — Using void*",
+      "q": "Why do generic standard C library functions (e.g., memcpy or qsort) use void* type for memory addresses?",
+      "hint": "Is explicit typecast required when passing any pointer to void*?",
+      "options": [
+        "Pointer of void* type automatically and without explicit typecast accepts addresses of objects of any data type",
+        "type void* works faster than regular pointers",
+        "type void* disables memory allocation on stack",
+        "This is the only way to work with strings in C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, `void*` is a universal pointer. Any data pointer (`int*`, `struct Point*`, etc.) implicitly and safely converts to `void*` and back.",
+        "Incorrect. At assembly level all pointers are identical address values, so no speed gain.",
+        "Incorrect. `void*` is unrelated to stack allocation.",
+        "Incorrect. `char*` is used for strings."
+      ]
+    },
+    {
+      "id": "it_clang_969",
+      "widget_id": "widget_clang_969",
+      "topic": "Preprocessor — Variadic Macros (__VA_ARGS__)",
+      "q": "Using which syntax in C99 standard are macros accepting unspecified number of arguments declared for passing into functions?",
+      "hint": "Use ellipsis in macro parameters and special identifier in body.",
+      "options": [
+        "#define LOG(fmt, ...) printf(fmt, __VA_ARGS__)",
+        "#define LOG(fmt, args) printf(fmt, args...)",
+        "#define LOG(fmt, ...) printf(fmt, ...)",
+        "#define LOG(fmt, args[]) printf(fmt, args)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Starting from C99 standard, preprocessor supports macros with variable number of arguments `...`, and their substitution into body is done via `__VA_ARGS__` keyword.",
+        "Incorrect. Construct `args...` is characteristic of C++ templates, not C99 preprocessor.",
+        "Incorrect. Using `...` directly in macro body is invalid.",
+        "Incorrect. Syntax `args[]` in macros is unacceptable."
+      ]
+    }
+  ]
+}

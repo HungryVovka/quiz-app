@@ -1,0 +1,575 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_781",
+      "widget_id": "widget_clang_781",
+      "topic": "Preprocessor — do { ... } while(0) Idiom in Macros",
+      "q": "True or False: the `do { ... } while(0)` construct is used in multi-line macros so that they can be safely used inside `if / else` branches with a trailing semicolon?",
+      "hint": "Think about what happens to the syntax of `if (cond) MACRO(); else ...` if the macro expands into a simple block `{ ... }`.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! If a macro is wrapped in a simple block `{ ... }`, the trailing semicolon after calling `SWAP(x, y);` will be parsed by the compiler as an isolated empty statement, leading to a `syntax error before 'else'`. The `do { ... } while(0)` wrapper requires a semicolon and prevents this error.",
+        "Incorrect. This is a standard C idiom for safe multi-line macros."
+      ]
+    },
+    {
+      "id": "it_clang_782",
+      "widget_id": "widget_clang_782",
+      "topic": "Pointers — Difference Between const int* and int* const",
+      "q": "What will happen when compiling and executing this code?",
+      "hint": "What does `const` apply to in the declaration `const int *p`: to the pointer itself or to the value it points to?",
+      "options": [
+        "Compiles and outputs 20",
+        "Compilation error — cannot change address p = &y",
+        "Compiles and outputs 10",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The declaration `const int *p` creates a pointer to a constant integer. Modifying the dereferenced value `*p = 30` is forbidden, but the pointer `p` itself can be changed (redirected to `&y`). The code will print 20.",
+        "Incorrect. The pointer itself is not constant; only the data at the address is constant.",
+        "Incorrect. `p` was successfully redirected to `y` (20).",
+        "Incorrect. Changing the pointer target is completely valid."
+      ]
+    },
+    {
+      "id": "it_clang_783",
+      "widget_id": "widget_clang_783",
+      "topic": "Data Types — Signedness of the Base char Type",
+      "q": "Does the C89 standard guarantee that the `char` type is always `signed` by default?",
+      "hint": "Does the signedness of a regular `char` depend on the CPU architecture and GCC compiler flags (for example, `-funsigned-char`)?",
+      "options": [
+        "Implementation-defined depending on the compiler and platform",
+        "Yes, char is always signed in C89",
+        "No, char is always unsigned in C89"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Under the C standard, the signedness of the base `char` type is implementation-defined by compiler developers for a specific target platform. In GCC on x86, `char` is `signed` by default, while on ARM it is `unsigned` (unless overridden by flags).",
+        "Incorrect. The standard explicitly leaves this up to the implementation.",
+        "Incorrect. On some platforms it is signed by default, on others unsigned."
+      ]
+    },
+    {
+      "id": "it_clang_784",
+      "widget_id": "widget_clang_784",
+      "topic": "Preprocessor — Token Pasting Operator ##",
+      "q": "What will `printf` output when executing `CONCAT(x, y)`?",
+      "hint": "How does the `##` operator join two tokens at the preprocessing stage?",
+      "options": [
+        "100",
+        "xy",
+        "x y",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `##` operator pastes tokens `x` and `y` into a single identifier name `xy`. Since the variable `int xy = 100` was declared earlier, `printf` will output its value — 100.",
+        "Incorrect. `xy` is the variable name, but `%d` prints its integer value.",
+        "Incorrect. The `##` operator concatenates tokens without a space.",
+        "Incorrect. Token pasting is a standard C89 feature."
+      ]
+    },
+    {
+      "id": "it_clang_785",
+      "widget_id": "widget_clang_785",
+      "topic": "Memory — Local Static Variables in Functions",
+      "q": "What will three sequential calls to the `count()` function output?",
+      "hint": "How many times is the variable `static int c = 0` initialized over the entire program lifetime?",
+      "options": [
+        "1 2 3 ",
+        "1 1 1 ",
+        "0 0 0 ",
+        "0 1 2 ",
+        "3 3 3 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! A local `static` variable retains its value between function calls and is initialized exactly once at program startup. Sequential calls increment `c`: 1, then 2, then 3.",
+        "Incorrect. The variable is not reset to 0 upon entering the function again.",
+        "Incorrect. The `c++` operator executes before printing.",
+        "Incorrect. Calculate the values after executing `c++`.",
+        "Incorrect. The value grows with each call."
+      ]
+    },
+    {
+      "id": "it_clang_786",
+      "widget_id": "widget_clang_786",
+      "topic": "I/O — Standard Output Stream Buffering (stdout)",
+      "q": "True or False: the output of `printf(\"Hello World\")` without a newline character `\\n` may not appear in the console immediately due to line-buffering of `stdout`?",
+      "hint": "When exactly is the `stdout` buffer flushed to the terminal by default?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The standard stream `stdout` when outputting to an interactive terminal is line-buffered by default. Data is sent to the screen only upon encountering `\\n`, buffer overflow, or an explicit call to `fflush(stdout)`.",
+        "Incorrect. The `\\n` character is critical for forcibly flushing the line buffer."
+      ]
+    },
+    {
+      "id": "it_clang_787",
+      "widget_id": "widget_clang_787",
+      "topic": "Expressions — Automatic Integer Promotion",
+      "q": "What is `sizeof(a + b)` equal to if `a` and `b` have type `unsigned char`, and the size of `int` is 4 bytes?",
+      "hint": "To which type are arguments smaller than `int` automatically promoted when participating in arithmetic operations?",
+      "options": [
+        "4",
+        "1",
+        "2",
+        "8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! According to integer promotion rules in C, any types smaller than `int` (`char`, `short`) are automatically promoted to `int` before performing arithmetic operations (such as addition `+`). The expression `a + b` has type `int` (size of 4 bytes).",
+        "Incorrect. 1 is the size of a single `unsigned char`, but the `+` operator promoted the types to `int`.",
+        "Incorrect. The result type does not become `short`.",
+        "Incorrect. On this platform, the size of `int` is 4 bytes."
+      ]
+    },
+    {
+      "id": "it_clang_788",
+      "widget_id": "widget_clang_788",
+      "topic": "Operators — Difference Between Bitwise AND (&) and Logical AND (&&)",
+      "q": "What will the condition `if (x & y)` output for `x = 1` (`01` in binary) and `y = 2` (`10` in binary)?",
+      "hint": "Calculate the result of bitwise operation `1 & 2` in binary.",
+      "options": [
+        "No",
+        "Yes",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `&` operator is bitwise AND. $1_{10} = 01_2$ and $2_{10} = 10_2$. Bitwise multiplication yields $00_2 = 0$. The condition `if (0)` is false, so the `else` branch executes and prints `No`. (Logical `1 && 2` would yield 1).",
+        "Incorrect. You confused the bitwise `&` operator with logical `&&`.",
+        "Incorrect. A bitwise operation on integer variables is completely valid."
+      ]
+    },
+    {
+      "id": "it_clang_789",
+      "widget_id": "widget_clang_789",
+      "topic": "Memory — Default Values of Local Static Arrays",
+      "q": "What value is guaranteed to be contained in the elements of local array `static int s_arr[3]` when declared without an initializer?",
+      "hint": "In which memory section are local static variables located?",
+      "options": [
+        "0 (all elements are guaranteed zeroed)",
+        "Garbage values from the stack",
+        "Undefined behavior on access",
+        "Compilation error — explicit initialization required",
+        "-1",
+        "NULL pointers"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Static arrays (even those declared inside a function) are placed in the BSS/Data section and are guaranteed to be zero-initialized before `main()` starts. In contrast, a regular non-static `local_arr` on the stack would contain indeterminate garbage.",
+        "Incorrect. Only non-static local arrays contain garbage.",
+        "Incorrect. Reading an element is completely safe.",
+        "Incorrect. In C, initializing static variables manually is not mandatory.",
+        "Incorrect. Memory is filled with zeros by default, not ones.",
+        "Incorrect. Data has integer type `int`, not a pointer type."
+      ]
+    },
+    {
+      "id": "it_clang_790",
+      "widget_id": "widget_clang_790",
+      "topic": "Standard Library — Atomic Type sig_atomic_t for Signals",
+      "q": "True or False: the `sig_atomic_t` type from `<signal.h>` guarantees atomic reading and writing of a variable even when asynchronous OS signals occur?",
+      "hint": "Is this type used for safe flag exchange between a signal handler and the main program loop?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `sig_atomic_t` is the only data type in the C89 standard whose read and write operations are guaranteed to occur atomically (within a single CPU instruction) and safely for use inside signal handlers.",
+        "Incorrect. This is the direct purpose of the `sig_atomic_t` type according to the ANSI C specification."
+      ]
+    },
+    {
+      "id": "it_clang_791",
+      "widget_id": "widget_clang_791",
+      "topic": "Arrays and Pointers — Array Decay to Pointer",
+      "q": "What will `sizeof(arr)` output inside function `print_size` if an array `int data[10]` is passed to it on a 64-bit system?",
+      "hint": "What does array parameter `int arr[]` turn into in a function signature?",
+      "options": [
+        "8 (pointer size on 64-bit architecture)",
+        "40 (10 elements * 4 bytes)",
+        "10 (element count)",
+        "4 (int type size)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! When passing an array to a function, it implicitly decays to a pointer to its first element. Writing `int arr[]` in function parameters is fully equivalent to `int *arr`. Pointer size on a 64-bit system is 8 bytes.",
+        "Incorrect. 40 would be the result of `sizeof(data)` where declared, but inside the function it is a regular pointer.",
+        "Incorrect. Array length is not automatically preserved when passed in C.",
+        "Incorrect. 4 bytes is the size of `int`, not a pointer on a 64-bit system."
+      ]
+    },
+    {
+      "id": "it_clang_792",
+      "widget_id": "widget_clang_792",
+      "topic": "Control Flow — setjmp and longjmp Mechanism",
+      "q": "What will the program print after executing `longjmp(buf, 42)`?",
+      "hint": "What value does function `setjmp(buf)` return when re-entered via `longjmp`?",
+      "options": [
+        "Restored",
+        "0",
+        "Will print nothing, program will terminate with error",
+        "Infinite recursive loop",
+        "42"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! On initial call, `setjmp` saves context and returns 0 (`foo()` executes). Inside `foo()`, calling `longjmp(buf, 42)` restores the stack and forces `setjmp` to return the second value (42). Since $42 \\neq 0$, the `else` branch executes and prints `Restored`.",
+        "Incorrect. 0 is returned only during initial context saving.",
+        "Incorrect. `longjmp` is a standard jump mechanism in C89.",
+        "Incorrect. No infinite loop occurs because repeated `setjmp` returns 42.",
+        "Incorrect. 42 is returned from `setjmp`, triggering execution of the `else` branch."
+      ]
+    },
+    {
+      "id": "it_clang_793",
+      "widget_id": "widget_clang_793",
+      "topic": "Structures — Direct Assignment of Structures by Value",
+      "q": "True or False: direct assignment operator `p2 = p1` for structures is supported in C89 and performs a full memberwise copy of all fields?",
+      "hint": "Is it mandatory to use `memcpy` to copy one structure to another?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Unlike arrays, structures in C are full scalar-like data types. Assignment `p2 = p1` is allowed by the C89 standard and copies all fields.",
+        "Incorrect. Direct structure assignment is completely valid starting from the C89 standard."
+      ]
+    },
+    {
+      "id": "it_clang_794",
+      "widget_id": "widget_clang_794",
+      "topic": "Data Types — Explicit Type Casting in Division",
+      "q": "What will `printf(\"%.1f\", res)` output when executing `double res = (double)x / y` for `x = 5`, `y = 2`?",
+      "hint": "What type does the second operand `y` take during `(double)x / y` division?",
+      "options": [
+        "2.5",
+        "2.0",
+        "2",
+        "0.0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Casting `(double)x` converts 5 to `5.0`. By type casting rules, if one operand is `double`, the second (`y = 2`) is also temporarily converted to `2.0`. Floating-point division `5.0 / 2.0` yields `2.5`.",
+        "Incorrect. Result `2.0` would occur with integer division `(double)(x / y)`.",
+        "Incorrect. Format specifier `%.1f` always prints a fractional part.",
+        "Incorrect. Number 5 successfully divides by 2."
+      ]
+    },
+    {
+      "id": "it_clang_795",
+      "widget_id": "widget_clang_795",
+      "topic": "Control Flow — Labels and the goto Statement",
+      "q": "What will variable `i` equal after exiting the loop via `goto cleanup;` at `i == 3`?",
+      "hint": "Does variable `i` change at the moment of jumping to the label?",
+      "options": [
+        "3",
+        "4",
+        "5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! When `i` reaches 3, condition `i == 3` becomes true, and `goto` instantly transfers control to label `cleanup:`. Increment `i++` is no longer executed, so `i` remains equal to 3.",
+        "Incorrect. The loop broke before the next increment step.",
+        "Incorrect. Execution did not reach the end of the loop (value 5)."
+      ]
+    },
+    {
+      "id": "it_clang_796",
+      "widget_id": "widget_clang_796",
+      "topic": "Function Prototypes — Omitting Parameter Names",
+      "q": "True or False: In a function prototype (signature) declaration, formal parameter names are optional, and the compiler only needs to know their types?",
+      "hint": "Does the compiler require specific variable names before defining the function body itself?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In a function prototype, only the return type and argument type signature matter to the compiler (e.g., `float areaTriangolo(float, float);`). Specifying parameter names is optional, though it improves code readability.",
+        "Incorrect. Parameter names in prototypes are not required."
+      ]
+    },
+    {
+      "id": "it_clang_797",
+      "widget_id": "widget_clang_797",
+      "topic": "return Statement — Function Execution Termination",
+      "q": "What will function `max(10, 20)` return and will instruction `y = y - x;` execute?",
+      "hint": "What happens to the function execution flow when the return statement is called?",
+      "options": [
+        "Will return 20, instruction y = y - x will not execute",
+        "Will return 10, instruction will execute",
+        "Compilation error due to unreachable code",
+        "Will return 10, instruction will not execute"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `return` statement immediately terminates function execution and returns control to the caller. Code `y = y - x;` will never be executed (unreachable code). When calling `max(10, 20)`, condition `10 > 20` is false, the `else` branch executes and returns 20.",
+        "Incorrect. The `else` branch returns `y`, which is 20.",
+        "Incorrect. Unreachable code triggers a compiler warning, not a build error.",
+        "Incorrect. Result of expression `10 > 20` is false, so `y` (20) is returned."
+      ]
+    },
+    {
+      "id": "it_clang_798",
+      "widget_id": "widget_clang_798",
+      "topic": "void Functions — Expression Return Prohibition",
+      "q": "What will happen when attempting to compile a `void` type function containing instruction `return a + b;`?",
+      "hint": "Can a function with a `void` return type return the result of an expression evaluation?",
+      "options": [
+        "Compilation error",
+        "Function will compile and ignore the return value",
+        "Function will automatically change its type to int"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Type `void` specifies that the function returns no value. Attempting to return an expression in a `return` statement inside a `void` function is a syntax error.",
+        "Incorrect. The C compiler strictly checks return type match against signature.",
+        "Incorrect. Function types do not automatically change during compilation."
+      ]
+    },
+    {
+      "id": "it_clang_799",
+      "widget_id": "widget_clang_799",
+      "topic": "Parameters — Call by Value",
+      "q": "What will `printf(\"%d\", a)` output after executing `modify(a)`?",
+      "hint": "Are base data types (`int`, `float`) passed to functions by value or by reference in C?",
+      "options": [
+        "5",
+        "100",
+        "0",
+        "Runtime error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, all base type arguments are passed to functions strictly by value (Call by Value). Function `modify` receives a copy of variable `a`. Modifying this copy inside the function does not affect original variable `a` in `main()`.",
+        "Incorrect. Changes happen only inside local copy `x`.",
+        "Incorrect. Initial value of variable `a` is 5.",
+        "Incorrect. Pass by value is completely safe and correct."
+      ]
+    },
+    {
+      "id": "it_clang_800",
+      "widget_id": "widget_clang_800",
+      "topic": "Arrays and Functions — Passing Arrays as Parameters",
+      "q": "What will element `arr[0]` equal after calling function `incAll(arr, 3)`?",
+      "hint": "What exactly is passed to a function when passing an array by name?",
+      "options": [
+        "2 (original array elements will change)",
+        "1 (original array remains unchanged)",
+        "0",
+        "Compilation error",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! An array name passed to a function automatically decays to a pointer to its first element (`int *`). The function works directly with original array elements in memory, so `a[0] = a[0] + 1` will change `arr[0]` from 1 to 2.",
+        "Incorrect. Arrays are passed by address, so modifications persist.",
+        "Incorrect. Recalculate original value $1 + 1 = 2$.",
+        "Incorrect. Syntax `int a[]` in function parameters is completely valid.",
+        "Incorrect. Array passing is strictly regulated by standard."
+      ]
+    },
+    {
+      "id": "it_clang_801",
+      "widget_id": "widget_clang_801",
+      "topic": "Type Casting — Implicit Call Argument Casting",
+      "q": "What will happen if an integer argument `3` is passed to function `square(float x)`?",
+      "hint": "Can the compiler implicitly cast an integer type to floating-point type on function call?",
+      "options": [
+        "Value 3 is implicitly cast to 3.0f, function returns 9.0",
+        "Compilation error — argument type mismatch",
+        "Value truncates to 0.0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! If a prototype or definition is available before call, the C compiler automatically performs implicit type casting of the argument (`int` 3 becomes `float` 3.0f). Result: $3.0 \\times 3.0 = 9.0$.",
+        "Incorrect. In C, implicit casting of base numeric types is allowed.",
+        "Incorrect. Integer 3 correctly converts to float 3.0 without information loss."
+      ]
+    },
+    {
+      "id": "it_clang_802",
+      "widget_id": "widget_clang_802",
+      "topic": "Scope — Automatic Variables in Repeated Calls",
+      "q": "Does automatic variable `temp` retain its value between independent calls to function `process()`?",
+      "hint": "What happens to local auto-variable memory when the function finishes?",
+      "options": [
+        "No, prints \"5 10 \", because temp is re-created on each call",
+        "Yes, prints \"5 15 \", retaining previous results",
+        "Outputs \"0 0 \", because temp is always reset",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Local variables without the `static` keyword are automatic (`auto`). They are created on stack upon function entry and destroyed on exit. On each call, `temp` is re-initialized to zero. First call prints 5, second — 10.",
+        "Incorrect. Retaining value between calls happens only with `static` variables.",
+        "Incorrect. Operation `temp += x` adds `x` value to 0 before printing.",
+        "Incorrect. Syntax is completely correct."
+      ]
+    },
+    {
+      "id": "it_clang_803",
+      "widget_id": "widget_clang_803",
+      "topic": "C89 — Implicit Function Declaration",
+      "q": "How will the C89 compiler handle call `calc(5)` before its declaration or definition?",
+      "hint": "What return type did the C89 compiler assign to an unknown function by default?",
+      "options": [
+        "Will compile (with warning), implicitly assuming signature int calc()",
+        "Critical compilation error — calling unresolved function forbidden",
+        "Linker error — main does not see functions declared below",
+        "Will automatically create prototype void calc()",
+        "Program will crash at runtime (Segmentation Fault)",
+        "Will compile without any warnings"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Under C89 rules of implicit declaration: if a function is called without a prototype, the compiler issues a warning and assumes signature `int func()`. In C99, this rule was abolished.",
+        "Incorrect. C89 permits implicit function declaration.",
+        "Incorrect. Linker will find `calc` definition lower in the same file.",
+        "Incorrect. Compiler substitutes return type `int`, not `void`.",
+        "Incorrect. Code will execute correctly at runtime.",
+        "Incorrect. Modern and C89 compilers will issue a warning."
+      ]
+    },
+    {
+      "id": "it_clang_804",
+      "widget_id": "widget_clang_804",
+      "topic": "C89 — Difference Between void func(void) and void func()",
+      "q": "True or False: In C, declaration `void func()` means function accepts any (unspecified) number of arguments, while `void func(void)` strictly forbids passing arguments?",
+      "hint": "What is the main difference between an empty parameter list `()` and `(void)` in the C standard, unlike C++?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C (unlike C++), empty parentheses `void func()` mean parameter count and type checking is disabled. Declaration `void func(void)` with explicit `void` strictly tells compiler that function accepts no arguments.",
+        "Incorrect. This is a fundamental difference in function declarations in C."
+      ]
+    },
+    {
+      "id": "it_clang_805",
+      "widget_id": "widget_clang_805",
+      "topic": "Recursion — Base Case and Factorial Calculation",
+      "q": "What is the value of `factorial(4)` equal to?",
+      "hint": "Expand the sequence of recursive calls: $4 \\times 3 \\times 2 \\times 1$.",
+      "options": [
+        "24",
+        "12",
+        "6",
+        "120"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Recursive calls expand as $4 \\times \\text{factorial}(3) = 4 \\times 3 \\times \\text{factorial}(2) = 4 \\times 3 \\times 2 \\times 1 = 24$.",
+        "Incorrect. $4 \\times 3 = 12$, but the next multiplication step by 2 was forgotten.",
+        "Incorrect. 6 is the result of `factorial(3)`.",
+        "Incorrect. 120 is the result of `factorial(5)`."
+      ]
+    },
+    {
+      "id": "it_clang_806",
+      "widget_id": "widget_clang_806",
+      "topic": "Memory — Danger of Returning Local Variable Address",
+      "q": "True or False: Returning local variable address `&num` from a function is safe because allocated memory persists throughout program execution?",
+      "hint": "Where are non-static local function variables created and what happens to this memory on return?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Local variables reside in the function stack frame. When execution completes, stack frame is destroyed, and pointer becomes invalid (Dangling Pointer).",
+        "Correct! Local variables are destroyed immediately upon exiting function. Returning their addresses leads to dangling pointers and undefined behavior."
+      ]
+    },
+    {
+      "id": "it_clang_807",
+      "widget_id": "widget_clang_807",
+      "topic": "Expressions — Nested Function Calls",
+      "q": "What is `val` equal to after executing `add(add(2, 3), add(4, 5))`?",
+      "hint": "First calculate inner calls `add(2, 3)` and `add(4, 5)`, then outer call.",
+      "options": [
+        "14",
+        "9",
+        "5",
+        "20"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Inner calls are evaluated first: `add(2, 3)` yields 5, `add(4, 5)` yields 9. Outer call turns into `add(5, 9)`, resulting in 14.",
+        "Incorrect. 9 is the result of only one inner call `add(4, 5)`.",
+        "Incorrect. 5 is the result of only first inner call `add(2, 3)`.",
+        "Incorrect. Calculate sums correctly: $2+3=5$, $4+5=9$, $5+9=14$."
+      ]
+    },
+    {
+      "id": "it_clang_808",
+      "widget_id": "widget_clang_808",
+      "topic": "C Architecture — Pure Functions and I/O Abstraction",
+      "q": "Why is it recommended to design computational functions (e.g., area calculation) without `scanf` and `printf` statements inside?",
+      "hint": "Think about code reusability across console apps, graphical user interfaces, or web servers.",
+      "options": [
+        "So the function remains independent, reusable, and not tied to console I/O",
+        "Because using printf inside functions is forbidden by the C89 standard",
+        "To speed up CPU execution by 100x"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Avoiding direct I/O inside logical/mathematical functions makes them reusable across any part of a system — e.g., calling from GUI, file, or another function.",
+        "Incorrect. Calling `printf` is completely legal inside any functions.",
+        "Incorrect. Main reason lies in architecture, modularity, and clean code design."
+      ]
+    },
+    {
+      "id": "it_clang_809",
+      "widget_id": "widget_clang_809",
+      "topic": "Structures — Returning Structures from Functions by Value",
+      "q": "Is it allowed in C to return an entire structure from a function via `return` by value, and what will `pt.y` output?",
+      "hint": "Is a structure in C a copyable value when returned from a function?",
+      "options": [
+        "Allowed, will output 20",
+        "Forbidden — structures can only be passed via pointers",
+        "Allowed, but will output 10",
+        "Runtime error (Segmentation Fault)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C89, functions can return structures by value. Structure `p` contents are fully copied into variable `pt`. Field `pt.y` equals 20.",
+        "Incorrect. In C, structures are allowed to be returned by value directly from functions.",
+        "Incorrect. Field `x` equals 10, and field `y` equals 20.",
+        "Incorrect. Copying a structure on function return is standard."
+      ]
+    },
+    {
+      "id": "it_clang_810",
+      "widget_id": "widget_clang_810",
+      "topic": "void Functions — Empty return Statement for Early Exit",
+      "q": "True or False: An empty `return;` statement (without expressions) can be used in `void` functions to terminate function execution early?",
+      "hint": "Can you write `return;` inside an `if` branch to exit from a function returning no value?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In `void` functions, an empty `return;` statement without arguments is used as control flow to exit the function early (e.g., on error validation).",
+        "Incorrect. This is standard way of early exit from `void` functions."
+      ]
+    }
+  ]
+}

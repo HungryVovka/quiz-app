@@ -1,0 +1,781 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_40",
+      "widget_id": "widget_clang_40",
+      "topic": "C Language — Array Indexing",
+      "q": "What will this C code snippet output?",
+      "hint": "Recall how the a[i] syntax is translated using pointer operators.",
+      "options": [
+        "30",
+        "Compilation error",
+        "20",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, the expression `a[i]` is equivalent to `*(a + i)`. Due to the commutativity of addition, `*(2 + a)` is completely equivalent to `2[a]`, which refers to the element at index 2 (value 30).",
+        "Incorrect. This is completely valid syntax in C.",
+        "Incorrect. `2[a]` points to the element at index 2, not 1.",
+        "Incorrect. The code behavior is strictly defined by the C standard."
+      ]
+    },
+    {
+      "id": "it_clang_41",
+      "widget_id": "widget_clang_41",
+      "topic": "C Language — Operator Precedence and Pointers",
+      "q": "What will y and x be equal to after executing this code?",
+      "hint": "Postfix increment ++ has higher precedence than dereference *.",
+      "options": [
+        "y=10, x=10",
+        "y=11, x=11",
+        "y=11, x=10",
+        "y=10, x=11"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The expression `*p++` reads the value at address `p` (10) for assignment to `y`, and then increments the pointer `p` itself (the address), not the value of `x`. Therefore, `x` remains equal to 10.",
+        "Incorrect. `*p++` does not increment the value of variable `x`. That would require `(*p)++`.",
+        "Incorrect. Variable `y` gets the old dereferenced value (10).",
+        "Incorrect. Variable `x` does not increase — the address stored in pointer `p` increases."
+      ]
+    },
+    {
+      "id": "it_clang_42",
+      "widget_id": "widget_clang_42",
+      "topic": "C Language — Preprocessor Macros",
+      "q": "What will the program output as a result of the macro SQUARE(2 + 3)?",
+      "hint": "The preprocessor performs simple text substitution without evaluating expressions beforehand.",
+      "options": [
+        "11",
+        "25",
+        "13",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The preprocessor substitutes text as is: `2 + 3 * 2 + 3`. Multiplication is performed first (3 * 2 = 6), resulting in `2 + 6 + 3 = 11`.",
+        "Incorrect. 25 would result if parentheses were present in the macro definition: `#define SQUARE(x) ((x) * (x))`.",
+        "Incorrect. Check text substitution and mathematical operator precedence.",
+        "Incorrect. The macro and substitution are completely valid."
+      ]
+    },
+    {
+      "id": "it_clang_43",
+      "widget_id": "widget_clang_43",
+      "topic": "C Language — Floating-Point Comparison",
+      "q": "What will this code output when executed?",
+      "hint": "The constant 0.1 without an f suffix has type double, not float.",
+      "options": [
+        "Not equal",
+        "Equal",
+        "Compilation error",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The literal `0.1` has type `double` (64 bits), while `f` has type `float` (32 bits). Due to imprecision in binary representation of fractional numbers, their bit patterns will not match when cast.",
+        "Incorrect. Due to precision differences between `float` and `double`, their binary representations differ.",
+        "Incorrect. Comparing `float` and `double` types is syntactically allowed.",
+        "Incorrect. The result is strictly deterministic under the IEEE 754 standard."
+      ]
+    },
+    {
+      "id": "it_clang_44",
+      "widget_id": "widget_clang_44",
+      "topic": "C Language — Arrays as Function Arguments",
+      "q": "What will the function print_size output on a 64-bit system?",
+      "hint": "Arrays decay to regular pointers when passed into a function.",
+      "options": [
+        "8",
+        "40",
+        "10",
+        "4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! When an array is passed to a function, the parameter `int arr[]` implicitly decays to pointer `int *arr`. Calling `sizeof(arr)` returns the size of a pointer (8 bytes on a 64-bit system).",
+        "Incorrect. The size of the full array (10 * 4 = 40 bytes) is only known where it is declared (in `main`).",
+        "Incorrect. `sizeof` returns size in bytes, not the element count.",
+        "Incorrect. On 64-bit systems, pointer size is 8 bytes."
+      ]
+    },
+    {
+      "id": "it_clang_45",
+      "widget_id": "widget_clang_45",
+      "topic": "C Language — Assignment Inside Condition",
+      "q": "What will happen when executing this code snippet?",
+      "hint": "Pay attention to which operator is used: = or ==.",
+      "options": [
+        "True: 5",
+        "False",
+        "Compilation error",
+        "True: 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The single `=` operator performs assignment: variable `x` is set to 5. The result of the expression is 5, which in C evaluates to TRUE, so the `if` branch triggers.",
+        "Incorrect. The `else` branch would only execute if the assignment result evaluated to 0.",
+        "Incorrect. Assignment inside conditions is allowed by C syntax (though compilers issue a warning).",
+        "Incorrect. Variable `x` changed its value to 5."
+      ]
+    },
+    {
+      "id": "it_clang_46",
+      "widget_id": "widget_clang_46",
+      "topic": "C Language — Comma Operator",
+      "q": "What value will be printed on the screen?",
+      "hint": "The comma operator evaluates expressions from left to right and returns the result of the last one.",
+      "options": [
+        "3",
+        "1",
+        "Compilation error",
+        "6"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The comma operator sequentially evaluates operands from left to right and returns the result of the rightmost expression — in this case `3`.",
+        "Incorrect. Values 1 and 2 are evaluated but discarded.",
+        "Incorrect. This is a completely valid construct in C.",
+        "Incorrect. The comma operator does not add values together."
+      ]
+    },
+    {
+      "id": "it_clang_47",
+      "widget_id": "widget_clang_47",
+      "topic": "C Language — Semicolon After Loop Header",
+      "q": "What will this program output?",
+      "hint": "Look closely at the characters at the end of the for loop header line.",
+      "options": [
+        "1",
+        "5",
+        "6",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The semicolon `;` immediately following `for` terminates the loop body, making it empty. After 5 'empty' iterations, the separate block `{ count++; }` executes exactly ONCE.",
+        "Incorrect. Curly braces do not belong to the `for` loop due to the semicolon at the end of its header.",
+        "Incorrect. The increment is performed once after the loop finishes.",
+        "Incorrect. The block after the loop will execute, changing the value of `count`."
+      ]
+    },
+    {
+      "id": "it_clang_48",
+      "widget_id": "widget_clang_48",
+      "topic": "C Language — Strings and Null Terminator",
+      "q": "What will this code output to the screen?",
+      "hint": "strlen counts characters up to the first \\0, while sizeof determines total allocated array memory size.",
+      "options": [
+        "3, 7",
+        "5, 6",
+        "3, 6",
+        "5, 7"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `strlen` counts characters up to the first `\\0` ('H','e','l' = 3). `sizeof` determines full array size in memory, including explicit `\\0`, characters 'l','o', and implicit null-terminator at the end (7 bytes).",
+        "Incorrect. The `strlen` function stops counting at the first encountered `\\0`.",
+        "Incorrect. The array occupies 7 bytes of memory.",
+        "Incorrect. `strlen` does not count characters after `\\0`."
+      ]
+    },
+    {
+      "id": "it_clang_49",
+      "widget_id": "widget_clang_49",
+      "topic": "C Language — Return Value of printf",
+      "q": "What exactly will this program output?",
+      "hint": "The printf function returns an integer. Think about what it represents.",
+      "options": [
+        "C-Lang 6",
+        "C-Lang 1",
+        "C-Lang 0",
+        "C-Lang C-Lang"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `printf` function returns the number of successfully printed characters. The string \"C-Lang\" has exactly 6 characters, so `res` gets value 6.",
+        "Incorrect. `printf` returns the number of printed characters, not `1` (true).",
+        "Incorrect. 0 is returned only when printing an empty string.",
+        "Incorrect. Variable `res` contains an integer, not a string."
+      ]
+    },
+    {
+      "id": "it_clang_50",
+      "widget_id": "widget_clang_50",
+      "topic": "C Language — Static Local Variables (static)",
+      "q": "What will the program output upon two consecutive calls to counter()?",
+      "hint": "The static modifier preserves variable value between function calls.",
+      "options": [
+        "1 2 ",
+        "1 1 ",
+        "0 1 ",
+        "2 2 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! A variable with the `static` modifier is initialized to 0 only once when the program starts and retains its value between calls. The first call outputs 1, the second outputs 2.",
+        "Incorrect. Calling the function again does not reset a `static` variable.",
+        "Incorrect. Increment occurs before printing, so the first value is 1.",
+        "Incorrect. The first call will increase the value from 0 to 1."
+      ]
+    },
+    {
+      "id": "it_clang_51",
+      "widget_id": "widget_clang_51",
+      "topic": "C Language — Short-Circuit Evaluation of OR (||)",
+      "q": "What will values of a and b be equal to after executing this code?",
+      "hint": "If the first operand of || is true, is the second operand evaluated?",
+      "options": [
+        "a=1, b=0",
+        "a=1, b=1",
+        "a=0, b=0",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `||` operator uses short-circuit evaluation. Since `a` is 1 (true), the right expression `++b` is not evaluated at all. Variable `b` remains 0.",
+        "Incorrect. The expression `++b` is skipped by the compiler due to short-circuiting.",
+        "Incorrect. Variable `a` did not change its value.",
+        "Incorrect. Condition syntax is completely correct."
+      ]
+    },
+    {
+      "id": "it_clang_52",
+      "widget_id": null,
+      "topic": "C Language — Storage Specifiers (extern)",
+      "q": "What does the declaration extern int x; inside a C program module do?",
+      "hint": "Think about whether memory is allocated for the variable with this declaration.",
+      "options": [
+        "Declares variable x allocated in another file without reallocating memory for it",
+        "Allocates memory for a new global variable x",
+        "Creates variable x accessible only within current file",
+        "Automatically resets variable x to zero"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `extern` keyword informs compiler that variable `x` is defined in another module and references it without reallocating memory.",
+        "Incorrect. `extern` denotes declaration without memory allocation.",
+        "Incorrect. `static` is used to limit visibility to the current file.",
+        "Incorrect. `extern` does not perform initialization."
+      ]
+    },
+    {
+      "id": "it_clang_53",
+      "widget_id": "widget_clang_53",
+      "topic": "C Language — Type Promotion in Mixed Operations",
+      "q": "What will this code snippet output?",
+      "hint": "When adding unsigned int and int, signed type is promoted to unsigned.",
+      "options": [
+        "Greater",
+        "Less",
+        "Compilation error",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Value `b` (`int`) is implicitly converted to `unsigned int`. Negative number `-5` becomes a very large positive number, so the sum `a + b` ends up greater than 0!",
+        "Incorrect. In normal math 1 + (-5) = -4, but C rules equate negative numbers to large unsigned numbers during mixed-type operations.",
+        "Incorrect. Operation on `int` and `unsigned int` is completely legal.",
+        "Incorrect. Type conversion is strictly defined by standard."
+      ]
+    },
+    {
+      "id": "it_clang_54",
+      "widget_id": "widget_clang_54",
+      "topic": "C Language — Switch Without Default",
+      "q": "What will this code output if val does not match any case and there is no default?",
+      "hint": "Think about what happens to switch execution flow when no branches match.",
+      "options": [
+        "Done",
+        "Compilation error",
+        "Runtime error",
+        "One Done"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! If no `case` matches and `default` branch is missing, the `switch` statement is skipped and control transfers to the next statement (`printf(\"Done\")`).",
+        "Incorrect. The `default` branch is optional.",
+        "Incorrect. Code executes normally.",
+        "Incorrect. `case 1` branch is not activated."
+      ]
+    },
+    {
+      "id": "it_clang_55",
+      "widget_id": "widget_clang_55",
+      "topic": "C Language — Pointer Arithmetic with Strings",
+      "q": "Which character will be printed on the screen?",
+      "hint": "String element indexing starts at zero.",
+      "options": [
+        "o",
+        "l",
+        "H",
+        "\\0 (null byte)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `p + 4` shifts pointer 4 bytes forward: str[0]='H', str[1]='e', str[2]='l', str[3]='l', str[4]='o'. Dereferencing `*(p + 4)` yields `'o'`.",
+        "Incorrect. Character `'l'` is located at addresses `p + 2` and `p + 3`.",
+        "Incorrect. Character `'H'` is located at address `*p`.",
+        "Incorrect. Null terminator is located at address `p + 5`."
+      ]
+    },
+    {
+      "id": "it_clang_56",
+      "widget_id": "widget_clang_56",
+      "topic": "C Language — Postfix Pointer Increment",
+      "q": "What will the expression *ptr++ evaluate to?",
+      "hint": "Think about whether current value is returned before shifting pointer to next element.",
+      "options": [
+        "10",
+        "20",
+        "11",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Postfix increment `ptr++` first returns old address `ptr`. Operator `*` dereferences it (10). Only after that `ptr` shifts to `arr[1]`.",
+        "Incorrect. 20 would be obtained only on next dereference `*ptr`.",
+        "Incorrect. The pointer itself (address) is incremented, not array element.",
+        "Incorrect. Standard C construct for traversing array elements."
+      ]
+    },
+    {
+      "id": "it_clang_57",
+      "widget_id": null,
+      "topic": "C Language — Pointer Constness",
+      "q": "What is the difference between const int *p and int * const p?",
+      "hint": "Pay attention to which side of asterisk const is located.",
+      "options": [
+        "const int *p prevents changing value at address, while int * const p prevents changing address itself",
+        "const int *p prevents changing address, while int * const p prevents changing value at address",
+        "They are completely identical",
+        "int * const p cannot be passed into functions"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! If `const` is to the left of `*` (`const int`), value cannot be changed. If `const` is to the right of `*` (`* const p`), address in pointer cannot be changed.",
+        "Incorrect. Statements are swapped.",
+        "Incorrect. Fundamentally different memory modification restrictions.",
+        "Incorrect. Both pointer types can be passed to functions."
+      ]
+    },
+    {
+      "id": "it_clang_58",
+      "widget_id": "widget_clang_58",
+      "topic": "C Language — Typecasting",
+      "q": "What value will this code output?",
+      "hint": "Pay attention to parentheses: when exactly is typecasting (float) performed?",
+      "options": [
+        "2.0",
+        "2.5",
+        "2",
+        "2.50"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Parentheses determine order: integer division `(a / b)` = 5 / 2 = 2 executes first. Then result `2` is explicitly cast to `float` (`2.0`).",
+        "Incorrect. To get 2.5 operand must be cast before division: `(float)a / b`.",
+        "Incorrect. Specifier `%.1f` outputs floating-point format (`2.0`).",
+        "Incorrect. Specifier `%.1f` outputs only one digit after decimal point."
+      ]
+    },
+    {
+      "id": "it_clang_59",
+      "widget_id": "widget_clang_59",
+      "topic": "C Language — Sign Bit and Bitwise Shift",
+      "q": "What will expression x < 0 return on 32-bit system after shifting 1 left by 31 bits?",
+      "hint": "Most significant bit in signed int determines sign of number.",
+      "options": [
+        "1 (True, because number became negative)",
+        "0 (False)",
+        "Compilation error",
+        "Result is always positive"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Shifting 1 left by 31 positions places it in MSB (sign bit) of 32-bit `int`, making number negative (`INT_MIN`). Expression `x < 0` returns 1 (true).",
+        "Incorrect. MSB is reserved for sign in two's complement.",
+        "Incorrect. Bitwise shifts on `int` variables are allowed.",
+        "Incorrect. Setting MSB to 1 makes signed number negative."
+      ]
+    },
+    {
+      "id": "it_clang_60",
+      "widget_id": "widget_clang_60",
+      "topic": "C Language — Character Literal Type",
+      "q": "What is the result of sizeof('a') expression in standard C (C99/C11)?",
+      "hint": "In C (unlike C++), character literals have an unexpected type.",
+      "options": [
+        "sizeof(char) — exactly 1 byte",
+        "sizeof(int) — usually 4 bytes",
+        "Compilation error",
+        "0 bytes"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. In C++, expression `sizeof('a')` equals `sizeof(char)` (1), but in C character literals have type `int`!",
+        "Correct! In C, character literals (like `'a'`) have type `int`, so `sizeof('a')` is equivalent to `sizeof(int)` (usually 4 bytes).",
+        "Incorrect. Code is completely valid.",
+        "Incorrect. Data types in C cannot have size of 0 bytes."
+      ]
+    },
+    {
+      "id": "it_clang_61",
+      "widget_id": "widget_clang_61",
+      "topic": "C Language — sizeof Evaluation for VLA",
+      "q": "Will variable n value change after executing sizeof operator on Variable Length Array (VLA)?",
+      "hint": "Usually sizeof does not evaluate expression at runtime, but VLA is an exception.",
+      "options": [
+        "Will change (n becomes 6)",
+        "Will not change (n remains 5)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Regular `sizeof` does not evaluate expression inside. But for Variable Length Arrays (VLA), size is calculated at runtime, so expression `n++` actually executes!",
+        "Incorrect. For VLA arrays `sizeof` must evaluate expression in parentheses at runtime."
+      ]
+    },
+    {
+      "id": "it_clang_62",
+      "widget_id": "widget_clang_62",
+      "topic": "C Language — Signedness of 1-bit Bit-fields",
+      "q": "What will this code output when compiled with most compilers (GCC/Clang)?",
+      "hint": "By default int type in bit-field can be treated as signed.",
+      "options": [
+        "Yes",
+        "No",
+        "Compilation error"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Because 1-bit bit-field is signed, storing value 1 causes overflow.",
+        "Correct! In C, `int` in bit-field is signed by default. 1-bit signed number can only store values 0 and -1. Writing 1 overflows to `-1`, and `-1 == 1` is false!",
+        "Incorrect. Bit-field syntax is completely correct."
+      ]
+    },
+    {
+      "id": "it_clang_63",
+      "widget_id": null,
+      "topic": "C Language — Duff's Device",
+      "q": "Is intertwining switch-case constructs and do-while loops (nesting case inside loop body) allowed by C standard?",
+      "hint": "This famous technique is used for loop unrolling.",
+      "options": [
+        "True (Yes, it is completely legal syntax)",
+        "False (No, this causes syntax error)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, `case` labels can be located inside any nested blocks and loops (`Duff's Device`). Compiler perceives `switch` like a `goto` label.",
+        "Incorrect. C language syntax permits placing `case` labels inside nested constructs."
+      ]
+    },
+    {
+      "id": "it_clang_64",
+      "widget_id": "widget_clang_64",
+      "topic": "C Language — Negative Pointer Indexing",
+      "q": "What will this code output using negative index on a pointer?",
+      "hint": "Syntax p[i] expands to *(p + i).",
+      "options": [
+        "20",
+        "40",
+        "10",
+        "Compilation error (negative indices forbidden)",
+        "Undefined behavior (Segmentation Fault)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `p[-2]` is equivalent to `*(p - 2)`. Since `p` points to `arr[3]` (value 40), shifting back 2 elements gives `arr[1]`, which is 20.",
+        "Incorrect. `p[0]` returns 40, while `p[-2]` shifts pointer backward.",
+        "Incorrect. Element 10 is located at address `p[-3]`.",
+        "Incorrect. In C, pointer arithmetic with negative indices is completely legal if pointing to valid array element.",
+        "Incorrect. Out-of-bounds array access does not occur."
+      ]
+    },
+    {
+      "id": "it_clang_65",
+      "widget_id": "widget_clang_65",
+      "topic": "C Language — Modifying String Literals",
+      "q": "What will happen when attempting to modify character in string literal via char * pointer?",
+      "hint": "Where exactly does compiler place string literals?",
+      "options": [
+        "Undefined behavior / Crash (Segmentation Fault)",
+        "First character successfully changes to 'h'",
+        "Compilation error",
+        "String is copied to stack and modified"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! String literals are stored in read-only memory section. Writing attempt via `char *` triggers Segmentation Fault.",
+        "Incorrect. Literal memory is write-protected.",
+        "Incorrect. Compiler permits assigning literal to `char *` pointer (in C11 without const), so no compilation error.",
+        "Incorrect. Copying to stack requires array declaration: `char s[] = \"Hello\";`."
+      ]
+    },
+    {
+      "id": "it_clang_66",
+      "widget_id": "widget_clang_66",
+      "topic": "C Language — Parameterless Function Signatures",
+      "q": "What does prototype void foo(); mean in C standards prior to C23?",
+      "hint": "Compare with prototype void foo(void);.",
+      "options": [
+        "Function takes an unknown (arbitrary) number of arguments",
+        "Function strictly takes no arguments",
+        "Function returns unknown type",
+        "Syntax error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Prior to C23, empty parentheses `void foo()` mean function takes unknown number of arguments. To disallow arguments, explicit `void foo(void)` must be written.",
+        "Incorrect. Disallowing arguments in C is specified via `(void)`.",
+        "Incorrect. Return type is explicitly specified as `void`.",
+        "Incorrect. Classic C syntax."
+      ]
+    },
+    {
+      "id": "it_clang_67",
+      "widget_id": "widget_clang_67",
+      "topic": "C Language — Tentative Definitions",
+      "q": "Is multiple declaration of same global variable without initializer allowed in C?",
+      "hint": "Study Tentative Definitions mechanism for file scope.",
+      "options": [
+        "True (Yes, they merge into a single definition)",
+        "False (No, redefinition error occurs)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! At top level (file scope), repeated declarations without initialization are called tentative definitions. Compiler merges them into a single variable.",
+        "Incorrect. In global scope, repeated declarations without `extern` and without re-initialization are allowed."
+      ]
+    },
+    {
+      "id": "it_clang_68",
+      "widget_id": "widget_clang_68",
+      "topic": "C Language — Including Files of Any Type",
+      "q": "Can files with any extension (e.g. .txt or .dat) be included in C via #include directive?",
+      "hint": "How exactly does preprocessor handle #include directive?",
+      "options": [
+        "True (Yes, preprocessor simply naïvely inserts file content)",
+        "False (No, only .h and .c files can be included)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! C preprocessor does not care about file extension at all. It simply inserts full text from specified file at `#include` call location.",
+        "Incorrect. `.h` extension is just programmer convention, not preprocessor restriction."
+      ]
+    },
+    {
+      "id": "it_clang_69",
+      "widget_id": "widget_clang_69",
+      "topic": "C Language — Struct Alignment (Padding)",
+      "q": "What is sizeof(struct Test) on 64-bit architecture due to field alignment?",
+      "hint": "Fields are aligned to boundary of their own size.",
+      "options": [
+        "12 bytes",
+        "6 bytes",
+        "8 bytes",
+        "16 bytes"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `a` (1 byte) + 3 bytes padding + `b` (4 bytes) + `c` (1 byte) + 3 bytes padding for struct alignment = 12 bytes.",
+        "Incorrect. Sum of type sizes without alignment is 6, but compiler adds padding bytes.",
+        "Incorrect. 8 bytes size is insufficient to place aligned `int` between `char`s.",
+        "Incorrect. Alignment optimizes size to 12 bytes."
+      ]
+    },
+    {
+      "id": "it_clang_70",
+      "widget_id": "widget_clang_70",
+      "topic": "C Language — Multicharacter Literals",
+      "q": "Will code with value int val = 'AB'; compile?",
+      "hint": "Recall multicharacter literals.",
+      "options": [
+        "Will compile (value depends on implementation/endianness)",
+        "Compilation error (single quotes can only contain 1 character)",
+        "Value of val becomes 0",
+        "Will compile, but val keeps only character 'A'"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Multicharacter literals are permitted in C. They have type `int`, and their value is implementation-defined (packing bytes into an integer).",
+        "Incorrect. Single quotes can contain more than one character in C.",
+        "Incorrect. Variable receives numeric code packed from bytes 'A' and 'B'.",
+        "Incorrect. Both characters are taken into account."
+      ]
+    },
+    {
+      "id": "it_clang_71",
+      "widget_id": null,
+      "topic": "C Language — auto Keyword Prior to C23",
+      "q": "What did auto keyword mean in C prior to C23 standard?",
+      "hint": "It was a storage class specifier applied by default.",
+      "options": [
+        "Automatic storage duration of local variable",
+        "Automatic type inference of variable (like C++11)",
+        "Automatic initialization to zero",
+        "Automatic variable export"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Prior to C23, `auto` indicated automatic lifetime of local variable (stack memory). Essentially redundant since local variables are `auto` by default.",
+        "Incorrect. Type inference for `auto` appeared only in C++11 and C23.",
+        "Incorrect. `auto` variables contain garbage if uninitialized.",
+        "Incorrect. Other mechanisms handle export."
+      ]
+    },
+    {
+      "id": "it_clang_72",
+      "widget_id": "widget_clang_72",
+      "topic": "C Language — Result of Comparison Operations",
+      "q": "What value will expression (5 > 2) + (10 == 10) output?",
+      "hint": "In C, comparison operator results have type int.",
+      "options": [
+        "2",
+        "1",
+        "0",
+        "Type error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, comparison operators are guaranteed to return `1` of type `int` when true and `0` when false. Therefore `1 + 1 = 2`.",
+        "Incorrect. Each condition returns 1.",
+        "Incorrect. Both conditions are true.",
+        "Incorrect. C has no separate bool type for comparison results (returns `int`)."
+      ]
+    },
+    {
+      "id": "it_clang_73",
+      "widget_id": "widget_clang_73",
+      "topic": "C Language — Stringification Operator #",
+      "q": "What will this macro with # operator output?",
+      "hint": "The # operator converts macro argument into string literal.",
+      "options": [
+        "10 + 20",
+        "30",
+        "\"30\"",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `#` operator turns passed text into string literal *without evaluating* expression. Call `TO_STR(10 + 20)` yields string `\"10 + 20\"`.",
+        "Incorrect. Expression is not evaluated before string conversion.",
+        "Incorrect. Quotes are not printed by `%s` specifier.",
+        "Incorrect. `#` operator is completely valid in C macros."
+      ]
+    },
+    {
+      "id": "it_clang_74",
+      "widget_id": "widget_clang_74",
+      "topic": "C Language — const in C89 vs C++",
+      "q": "Is it true that in C89 standard this code caused compilation error?",
+      "hint": "Is a const variable in C a true compile-time constant?",
+      "options": [
+        "True (Yes, const in C does not create compile-time constant expression for array size)",
+        "False (No, const variables can always be used for array size)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, a variable with `const` modifier is just a read-only variable, NOT a compile-time constant (unlike C++). Prior to C99, array sizes required constant expressions.",
+        "Incorrect. In C89 only `enum` enumerations and `#define` macros specified true constants for array sizes."
+      ]
+    },
+    {
+      "id": "it_clang_75",
+      "widget_id": "widget_clang_75",
+      "topic": "C Language — Trigraphs",
+      "q": "What do sequences ??( and ??) represent in older C standards?",
+      "hint": "Trigraphs were used for keyboards lacking certain special characters.",
+      "options": [
+        "Square brackets [ and ]",
+        "Curly braces { and }",
+        "Syntax error",
+        "Pointers"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Trigraphs were created for keyboards lacking certain ASCII characters. `??(` is replaced by `[`, and `??)` by `]`.",
+        "Incorrect. Curly braces `{` and `}` are specified by trigraphs `??<` and `??>`.",
+        "Incorrect. Standard C language feature (removed only in C23).",
+        "Incorrect. Trigraphs have no relation to pointers."
+      ]
+    },
+    {
+      "id": "it_clang_76",
+      "widget_id": "widget_clang_76",
+      "topic": "C Language — Expression i = i++",
+      "q": "What is the execution result of expression i = i++ under C standard?",
+      "hint": "Think about sequence points and multiple modifications.",
+      "options": [
+        "Undefined Behavior",
+        "Variable i becomes equal to 1",
+        "Variable i becomes equal to 2",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Modifying scalar object more than once between sequence points (unsequenced modification) results in Undefined Behavior.",
+        "Incorrect. Relying on a specific result is impossible due to UB.",
+        "Incorrect. Program behavior is not guaranteed by standard.",
+        "Incorrect. Compiler compiles code but issues warning."
+      ]
+    },
+    {
+      "id": "it_clang_77",
+      "widget_id": "widget_clang_77",
+      "topic": "C Language — Pointer Arithmetic on void*",
+      "q": "Is arithmetic with void* pointers allowed under strict ISO C standard (without GCC extensions)?",
+      "hint": "Is size of void type known?",
+      "options": [
+        "False (No, void size is incomplete, arithmetic forbidden)",
+        "True (Yes, void* always steps by 1 byte)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Under ISO C standard, `void` type is an incomplete type, its size is undefined, so arithmetic with `void*` is forbidden (GCC allows this only as extension).",
+        "Incorrect. Addition to `void*` is GCC extension, not ISO C standard."
+      ]
+    },
+    {
+      "id": "it_clang_78",
+      "widget_id": null,
+      "topic": "C Language — Using restrict Keyword",
+      "q": "What is the restrict keyword introduced in C99 used for?",
+      "hint": "It provides a hint to compiler regarding pointers for optimization.",
+      "options": [
+        "Indicates to compiler that memory area is accessed ONLY through this pointer (for optimization)",
+        "Forbids changing variable value via pointer",
+        "Forbids calling pointer from other threads",
+        "Restricts pointer scope to current block"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `restrict` is a promise to compiler that during pointer lifetime no other pointers will access same memory. Allows aggressive compiler load optimizations.",
+        "Incorrect. `const` is used to prevent modification.",
+        "Incorrect. `restrict` has no relation to threads.",
+        "Incorrect. `{}` blocks define scope."
+      ]
+    },
+    {
+      "id": "it_clang_79",
+      "widget_id": "widget_clang_79",
+      "topic": "C Language — Token Pasting Operator ##",
+      "q": "What will this code output using preprocessor ## operator?",
+      "hint": "The ## operator concatenates two tokens into one.",
+      "options": [
+        "100",
+        "xy",
+        "Compilation error",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `##` operator joins tokens `x` and `y` into single token `xy`. Program accesses variable `int xy = 100;` and prints `100`.",
+        "Incorrect. Token `xy` expands to variable value.",
+        "Incorrect. Token pasting is completely standard.",
+        "Incorrect. Variable `xy` was explicitly initialized to 100."
+      ]
+    }
+  ]
+}

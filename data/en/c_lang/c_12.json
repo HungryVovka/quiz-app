@@ -1,0 +1,805 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_390",
+      "widget_id": "widget_clang_390",
+      "topic": "Switch Statement — Missing default Branch with Unmatched Labels",
+      "q": "What will the program in the widget output if the passed value x does not match any case label and default is absent?",
+      "hint": "Think about what happens to a switch statement if no label matches and there is no default block.",
+      "options": [
+        "\"Done\"",
+        "\"OneDone\"",
+        "Compilation error",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! If no `case` value matches and there is no `default` block, the `switch` construct is completely skipped and execution continues from the first statement outside it. \"Done\" is printed.",
+        "Incorrect. In the absence of a matching `case` and a `default` block, the entire `switch` is simply ignored, so \"OneDone\" will not be printed.",
+        "Incorrect. The absence of a `default` block in a `switch` statement is syntactically legal and does not cause a compilation error.",
+        "Incorrect. C standard behavior is strictly defined: if there are no matches and no `default`, execution continues outside the `switch`."
+      ]
+    },
+    {
+      "id": "it_clang_391",
+      "widget_id": "widget_clang_391",
+      "topic": "for Loop — Semicolon After Header",
+      "q": "What will the code snippet in the widget output when a semicolon is present immediately after the for loop header?",
+      "hint": "Think about what the loop body becomes if a semicolon immediately follows it.",
+      "options": [
+        "\"5\"",
+        "\"01234\"",
+        "\"4\"",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The semicolon closes the `for` header, turning the loop body into a null statement. The loop runs 5 iterations, incrementing `i` from 0 to 5, after which the `printf` call outputs the final value `5`.",
+        "Incorrect. The semicolon detaches the `printf` call from the loop, so the function call happens only once after the loop fully completes, rather than on each iteration.",
+        "Incorrect. The loop executes until `i < 5` becomes false, which means up to `i = 5`, not 4.",
+        "Incorrect. A semicolon after a `for` header is syntactically correct and creates an empty loop body (empty statement)."
+      ]
+    },
+    {
+      "id": "it_clang_392",
+      "widget_id": "widget_clang_392",
+      "topic": "Logical Operations — Short-Circuiting of || Operator",
+      "q": "What will the program in the widget output considering short-circuit evaluation?",
+      "hint": "Recall whether the right operand of the || operator is evaluated if the left operand is already true (1).",
+      "options": [
+        "\"1 0\"",
+        "\"1 1\"",
+        "\"0 0\"",
+        "\"1 2\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since variable `a` is 1 (true), the left operand of the `||` operator is true. In C, the right operand `++b` is not evaluated at all, and `b` remains equal to 0. Output: \"1 0\".",
+        "Incorrect. Due to short-circuit evaluation in a `||` operation, increment `++b` is not executed, so `b` remains 0, not 1.",
+        "Incorrect. The value of `a` is 1, so the first output element is 1, not 0.",
+        "Incorrect. Increment `++b` is not evaluated, so the value of `b` cannot become 2."
+      ]
+    },
+    {
+      "id": "it_clang_393",
+      "widget_id": "widget_clang_393",
+      "topic": "Conditional Operator — Ternary Operation (? :)",
+      "q": "What will the code snippet using the ternary operator from the widget output?",
+      "hint": "Evaluate condition (x > y) and determine which of the expressions will be returned.",
+      "options": [
+        "\"20\"",
+        "\"10\"",
+        "\"1\"",
+        "\"0\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Condition `10 > 20` is false, so ternary operator `(x > y) ? x : y` returns the second option (`y`), which is 20.",
+        "Incorrect. If the condition is false, the value after the colon (`y`) is returned, not the one before it (`x`).",
+        "Incorrect. The ternary operator returns the value of variables `x` or `y`, not the boolean result 1.",
+        "Incorrect. The operator returns the value of `y` (20), not logical 0."
+      ]
+    },
+    {
+      "id": "it_clang_394",
+      "widget_id": "widget_clang_394",
+      "topic": "while Loop — continue Statement",
+      "q": "What will the code in the widget output when skipping a number output using continue?",
+      "hint": "Trace the change of variable i and the moment condition i == 2 triggers.",
+      "options": [
+        "\"13\"",
+        "\"123\"",
+        "\"12\"",
+        "\"23\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct!\n- `i=0`: `i` increments to 1, prints `1`.\n- `i=1`: `i` increments to 2, `continue` triggers (printing skipped).\n- `i=2`: `i` increments to 3, prints `3`.\nOutput: \"13\".",
+        "Incorrect. When `i` becomes 2, `continue` immediately jumps to the next iteration, bypassing `printf`, so number 2 is not printed.",
+        "Incorrect. After skipping `2`, the loop continues running and prints `3`.",
+        "Incorrect. Number `1` is printed on the first iteration, and `2` is skipped."
+      ]
+    },
+    {
+      "id": "it_clang_395",
+      "widget_id": "widget_clang_395",
+      "topic": "Switch Statement — Grouping Multiple Cases",
+      "q": "What will the program in the widget output when using multiple case labels without break between them?",
+      "hint": "Pay attention to where control is transferred when val = 2.",
+      "options": [
+        "\"Group 1\"",
+        "\"Group 2\"",
+        "\"Group 1Group 2\"",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Value `val = 2` jumps to `case 2:`. Since there is no code or `break` statement after it, execution falls through to `case 3:`, where \"Group 1\" is printed and `break` executes.",
+        "Incorrect. Label `case 2:` falls through to `case 3:` (\"Group 1\"); execution does not reach \"Group 2\" due to `break`.",
+        "Incorrect. The `break` operator after \"Group 1\" stops falling through to subsequent labels.",
+        "Incorrect. Grouping several `case` labels in a row is a standard and legal technique in C/C++."
+      ]
+    },
+    {
+      "id": "it_clang_396",
+      "widget_id": "widget_clang_396",
+      "topic": "do...while Loop — Negative Counter",
+      "q": "What will the widget code snippet output when working with a negative initial value?",
+      "hint": "Trace changes in x: -3, -2, -1, 0.",
+      "options": [
+        "\"-3-2-1\"",
+        "\"-3-2-10\"",
+        "Outputs nothing",
+        "\"-3\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct!\n- Iteration 1: prints `-3`, `x` becomes -2. `while(-2 < 0)` is true.\n- Iteration 2: prints `-2`, `x` becomes -1. `while(-1 < 0)` is true.\n- Iteration 3: prints `-1`, `x` becomes 0. `while(0 < 0)` is false. Exit.\nOutput: \"-3-2-1\".",
+        "Incorrect. At `x = 0`, condition `0 < 0` is false, so 0 is not printed.",
+        "Incorrect. The `do...while` loop is guaranteed to execute its body at least once.",
+        "Incorrect. The condition continues for `-2` and `-1`, so not only `-3` is output."
+      ]
+    },
+    {
+      "id": "it_clang_397",
+      "widget_id": "widget_clang_397",
+      "topic": "Arrays and Loops — Element Indexing",
+      "q": "What will the for loop in the widget output when traversing array elements?",
+      "hint": "Remember that array indexing in C starts at 0.",
+      "options": [
+        "\"10 20 30 \"",
+        "\"0 1 2 \"",
+        "\"30 20 10 \"",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The loop accesses `arr[0]` (10), `arr[1]` (20), and `arr[2]` (30), outputting their values separated by spaces.",
+        "Incorrect. Expression `arr[i]` returns the array element at index `i`, not index `i` itself.",
+        "Incorrect. The loop iterates from `i = 0` to `i = 2`, so elements are printed in forward order, not reverse.",
+        "Incorrect. The code is written correctly and compiles successfully."
+      ]
+    },
+    {
+      "id": "it_clang_398",
+      "widget_id": "widget_clang_398",
+      "topic": "while Loop — Exiting while(1) via break",
+      "q": "What will variable count equal after completing the while(1) loop from the widget?",
+      "hint": "Count how many times count++ will execute until reaching condition count == 3.",
+      "options": [
+        "3",
+        "4",
+        "2",
+        "Infinite loop"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `count` increments from 0 to 1, then to 2, and to 3. On the iteration when `count == 3`, `break` executes, terminating the loop. Variable value equals 3.",
+        "Incorrect. Check `count == 3` interrupts the loop before `count` can increment to 4.",
+        "Incorrect. At `count = 2`, condition `count == 3` is false, so another increment is performed.",
+        "Incorrect. The presence of a `break` operator on condition `count == 3` guarantees exiting the loop."
+      ]
+    },
+    {
+      "id": "it_clang_399",
+      "widget_id": "widget_clang_399",
+      "topic": "Logical Operations — Short-Circuiting of && Operator",
+      "q": "Will the value of variable b change when evaluating the condition with && operator from the widget?",
+      "hint": "Is the right side of the && operator evaluated if the left side equals 0 (false)?",
+      "options": [
+        "5",
+        "6",
+        "0",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Variable `a` equals 0 (false). In `&&` operator, if first operand is false, entire result is guaranteed false, so second operand `++b` is not evaluated. Variable `b` remains equal to 5.",
+        "Incorrect. At `a = 0`, expression with `&&` operator stops further evaluations, avoiding calling `++b`.",
+        "Incorrect. Initial value of `b` was 5; it is not reset to 0.",
+        "Incorrect. Using short-circuit evaluation is standard C behavior."
+      ]
+    },
+    {
+      "id": "it_clang_400",
+      "widget_id": "widget_clang_400",
+      "topic": "Nested Loops — Filtering Diagonal Elements (i == j)",
+      "q": "What will variable count equal after executing nested loops from the widget?",
+      "hint": "Count how many times indices i and j match for 3x3 dimensions.",
+      "options": [
+        "3",
+        "9",
+        "6",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Condition `i == j` holds exactly 3 times: for index pairs (0,0), (1,1), and (2,2). Consequently, `count` increments to 3.",
+        "Incorrect. Variable `count` does not increment on each of 9 iterations, but only when `i == j` matches.",
+        "Incorrect. For a 3x3 matrix, `i == j` match occurs 3 times, not 6.",
+        "Incorrect. Condition `i == j` triggers on the very first iteration (0,0), so `count` will not remain zero."
+      ]
+    },
+    {
+      "id": "it_clang_401",
+      "widget_id": "widget_clang_401",
+      "topic": "while Loop — Logical NOT Operator (!)",
+      "q": "What will the widget code output when using logical NOT in while (!x) condition?",
+      "hint": "Recall how 0 and 1 are interpreted when applying logical NOT (!).",
+      "options": [
+        "\"0\"",
+        "\"1\"",
+        "Outputs nothing",
+        "Infinite loop"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! At `x = 0`, expression `!x` is equivalent to `!0` (true). Loop body executes: prints `0`, then `x` increments to 1. On second iteration `!1` yields `0` (false) and loop terminates. Output: \"0\".",
+        "Incorrect. Printing happens before incrementing `x`, so current value `x = 0` is printed, not 1.",
+        "Incorrect. Since `x = 0`, negation operator `!0` returns true, and loop body executes at least once.",
+        "Incorrect. Inside loop variable `x` increments, bringing `!x` to false on second iteration."
+      ]
+    },
+    {
+      "id": "it_clang_402",
+      "widget_id": "widget_clang_402",
+      "topic": "for Loop — Comma Operator in Condition Section",
+      "q": "What will the widget code snippet output when using comma operator in the for loop condition section?",
+      "hint": "Recall which expression comma operator returns during sequential evaluation.",
+      "options": [
+        "\"00 11 22 \"",
+        "\"00 11 \"",
+        "\"00 \"",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The comma operator evaluates both expressions left to right and returns the result of the **last** one (`j < 3`). Consequently, the loop terminates only when `j` becomes equal to 3, completing 3 iterations (`j` = 0, 1, 2). Output: \"00 11 22 \".",
+        "Incorrect. Condition `i < 2` is discarded by comma operator; loop depends solely on `j < 3`, thus completing 3 iterations, not 2.",
+        "Incorrect. Loop executes more than one iteration because right side `j < 3` is true for j=0, 1, 2.",
+        "Incorrect. Using comma operator in loop condition is syntactically correct."
+      ]
+    },
+    {
+      "id": "it_clang_403",
+      "widget_id": "widget_clang_403",
+      "topic": "do...while Loop — Interruption on First Iteration via break",
+      "q": "What will the program with do...while loop and condition calling break output?",
+      "hint": "Trace at which step condition if (i == 0) triggers.",
+      "options": [
+        "\"0\"",
+        "\"01234\"",
+        "\"01\"",
+        "Outputs nothing"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! On first iteration `i = 0`, `0` is printed. Then condition `if (i == 0)` is checked, which turns out true, and `break` operator immediately terminates do...while loop.",
+        "Incorrect. The `break` operator instantly halts loop execution before proceeding to next iterations.",
+        "Incorrect. Interruption `break` happens already on first iteration (`i == 0`), so '1' will not be output.",
+        "Incorrect. `printf` instruction is located before `if` check, so '0' will have time to print."
+      ]
+    },
+    {
+      "id": "it_clang_404",
+      "widget_id": "widget_clang_404",
+      "topic": "Arrays and Loops — Reverse Array Traversal",
+      "q": "What will the for loop in the widget output when iterating over an array with counter decrement?",
+      "hint": "Pay attention to initial index i = 2 and termination condition i >= 0.",
+      "options": [
+        "\"15 10 5 \"",
+        "\"5 10 15 \"",
+        "\"10 5 \"",
+        "Out of bounds array access error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Loop starts working from last array element `a[2]` (15), then accesses `a[1]` (10) and completes at `a[0]` (5). Output: \"15 10 5 \".",
+        "Incorrect. Counter `i` decrements from 2 to 0, evaluating array elements from end to start, not vice versa.",
+        "Incorrect. Initial index `i = 2` corresponds to third element (15), so 3 elements are printed.",
+        "Incorrect. Indices 2, 1, 0 are within bounds of array of size 3."
+      ]
+    },
+    {
+      "id": "it_clang_405",
+      "widget_id": "widget_clang_405",
+      "topic": "for Loop — Modulo Operator (%) and continue",
+      "q": "What will the widget code snippet output when skipping iterations via continue?",
+      "hint": "Find out at which value of i condition i % 3 == 0 evaluates to true.",
+      "options": [
+        "\"1245\"",
+        "\"12345\"",
+        "\"3\"",
+        "\"124\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! At `i = 3`, expression `3 % 3 == 0` is true, `continue` triggers and printing 3 is skipped. Remaining numbers (1, 2, 4, 5) are output normally.",
+        "Incorrect. At `i = 3`, `continue` executes, jumping to next loop step without executing `printf`, so 3 is not printed.",
+        "Incorrect. Only number 3 is skipped, not all others.",
+        "Incorrect. Loop executes up to `i = 5` inclusive, so number 5 also gets printed."
+      ]
+    },
+    {
+      "id": "it_clang_406",
+      "widget_id": "widget_clang_406",
+      "topic": "Switch Statement — Placing default Label at Start of Block",
+      "q": "What will the widget program output if default label is placed before case labels?",
+      "hint": "Recall whether order of writing default affects choice of matching case.",
+      "options": [
+        "\"2\"",
+        "\"D12\"",
+        "\"D\"",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Placing `default` at start of block is syntactically permissible. If match is found (like `case 2:` for `x = 2`), control transfer occurs directly to corresponding `case`, skipping `default`. Output: \"2\".",
+        "Incorrect. Since `x = 2` matched `case 2:`, `default` block at start does not execute at all.",
+        "Incorrect. The `default` block executes only if none of `case` labels matched selector value.",
+        "Incorrect. Placing `default` anywhere inside `switch` block is syntactically valid."
+      ]
+    },
+    {
+      "id": "it_clang_407",
+      "widget_id": "widget_clang_407",
+      "topic": "while Loop — Postfix Increment in Condition and Body",
+      "q": "What will the widget code snippet output with variable i incremented in both condition and loop body?",
+      "hint": "Trace variable i value in condition, during printing, and after increment in body.",
+      "options": [
+        "\"1\"",
+        "\"12\"",
+        "\"01\"",
+        "\"0\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct!\n1. `i = 0`: checks `0 < 2` (true), `i` immediately becomes equal to 1. Prints `1`, then `i++` makes `i = 2`.\n2. `i = 2`: checks `2 < 2` (false), `i` becomes 3, loop terminates.\nOutput: \"1\".",
+        "Incorrect. Due to double increment (in condition and body), variable `i` increases by +2 per iteration, so loop will complete only 1 iteration.",
+        "Incorrect. Postfix increment in condition `i++ < 2` increases `i` from 0 to 1 before `printf` execution, so 0 is not printed.",
+        "Incorrect. Printing `printf` outputs updated value `i = 1`."
+      ]
+    },
+    {
+      "id": "it_clang_408",
+      "widget_id": "widget_clang_408",
+      "topic": "for Loop — Ternary Operator Inside Body",
+      "q": "What will the for loop in the widget output when computing counter parity with ternary operator?",
+      "hint": "Calculate result of expression (i % 2 == 0) for i = 0, 1, 2.",
+      "options": [
+        "\"A B A \"",
+        "\"A B C \"",
+        "\"B A B \"",
+        "\"A A A \""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct!\n- `i = 0`: `0 % 2 == 0` (true) -> \"A\"\n- `i = 1`: `1 % 2 == 0` (false) -> \"B\"\n- `i = 2`: `2 % 2 == 0` (true) -> \"A\"\nOutput: \"A B A \".",
+        "Incorrect. Ternary operator has only two possible outcomes (\"A\" or \"B\"); option \"C\" is absent in code.",
+        "Incorrect. At `i = 0`, remainder of division by 2 equals 0 (true), so \"A\" is printed, not \"B\".",
+        "Incorrect. For `i = 1`, parity condition `1 % 2 == 0` is false, so \"B\" is output."
+      ]
+    },
+    {
+      "id": "it_clang_409",
+      "widget_id": "widget_clang_409",
+      "topic": "Logical OR (||) — Right Operand Evaluation when Left is False",
+      "q": "What will variable y equal after executing the if condition from the widget?",
+      "hint": "Is the right operand of || evaluated if the left operand equals 0 (false)?",
+      "options": [
+        "11",
+        "10",
+        "0",
+        "1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since left part `x` equals 0 (false), `||` operator **must** evaluate right part `y++` to determine final result. Variable `y` is incremented from 10 to 11.",
+        "Incorrect. Short-circuiting for `||` triggers only when first operand is *true*. If left operand is false (0), right operand `y++` is evaluated.",
+        "Incorrect. Variable `y` was equal to 10 and increased by 1, rather than being reset to 0.",
+        "Incorrect. Variable `y` takes value 11, while 1 is result of entire logical expression."
+      ]
+    },
+    {
+      "id": "it_clang_410",
+      "widget_id": "widget_clang_410",
+      "topic": "Nested Loops — Modifying Outer Loop Counter in Inner Loop",
+      "q": "How many iterations will the outer for loop complete in the given code snippet?",
+      "hint": "Trace how value i increases in inner loop j.",
+      "options": [
+        "2",
+        "5",
+        "10",
+        "1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct!\n- 1st outer iteration (`i = 0`): inner loop runs 2 times, increasing `i` to 2. Outer loop step `i++` makes `i = 3`.\n- 2nd outer iteration (`i = 3`): inner loop runs 2 times, increasing `i` to 5. Outer loop step `i++` makes `i = 6`.\n- Check `6 < 5` is false -> end. Outer loop completed 2 iterations.",
+        "Incorrect. Value 5 is condition bound `i < 5`, not count of completed outer loop iterations.",
+        "Incorrect. Variable `i` is modified in inner loop, accelerating outer loop completion.",
+        "Incorrect. After first iteration `i` becomes equal to 3, which is still less than 5, so second iteration runs."
+      ]
+    },
+    {
+      "id": "it_clang_411",
+      "widget_id": "widget_clang_411",
+      "topic": "sizeof Operator — Absence of Run-Time Expression Evaluation",
+      "q": "What will variable i equal after executing code from the widget?",
+      "hint": "Think about whether expressions inside sizeof() are evaluated during program runtime.",
+      "options": [
+        "10",
+        "11",
+        "Undefined behavior",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Expression inside `sizeof(...)` is evaluated by compiler at compile time (for fixed-size types) and is not executed at runtime. Increment `i++` is ignored, so `i` remains equal to 10.",
+        "Incorrect. Operator `sizeof` does not evaluate passed expression during program run, so increment `i++` is not executed.",
+        "Incorrect. Expressions with side effects inside `sizeof` do not cause UB; they simply do not execute.",
+        "Incorrect. Passing expressions with increment to `sizeof` is completely legal in C syntax."
+      ]
+    },
+    {
+      "id": "it_clang_412",
+      "widget_id": "widget_clang_412",
+      "topic": "Preprocessor Macros — Side Effects and Operator Precedence",
+      "q": "What will the program in the widget output due to missing parentheses in macro SQUARE(x)?",
+      "hint": "Substitute expression a + 1 directly instead of x into macro x * x.",
+      "options": [
+        "7",
+        "16",
+        "12",
+        "9"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Macros perform text substitution. `SQUARE(a + 1)` expands to `(a + 1 * a + 1)`. At `a = 3`, we get `3 + 1 * 3 + 1 = 3 + 3 + 1 = 7`.",
+        "Incorrect. Without parentheses `(x) * (x)`, substitution yields `a + 1 * a + 1`. Due to multiplication precedence, result equals 7, not 16.",
+        "Incorrect. Order of operations yields `3 + (1 * 3) + 1 = 7`, not 12.",
+        "Incorrect. You cannot compute `(3 + 1)^2` without corresponding parentheses in macro definition."
+      ]
+    },
+    {
+      "id": "it_clang_413",
+      "widget_id": "widget_clang_413",
+      "topic": "Pointers — Pointer to Array int (*p)[3]",
+      "q": "What will the code snippet output when dereferencing a pointer to an array?",
+      "hint": "Understand how pointer to array int (*p)[3] differs from array of pointers int *p[3].",
+      "options": [
+        "20",
+        "10",
+        "Array address",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `p` is a pointer to the entire array of 3 elements. Expression `*p` yields the array itself (decaying to pointer to first element `arr[0]`), and `*p + 1` points to `arr[1]`. Dereferencing `*(*p + 1)` returns `20`.",
+        "Incorrect. First element `arr[0]` is 10, but offset `+ 1` points to second element.",
+        "Incorrect. Double dereference/indexing leads to obtaining `int` element value, not address.",
+        "Incorrect. Syntax for declaring and using pointer to array `int (*p)[3]` is written correctly."
+      ]
+    },
+    {
+      "id": "it_clang_414",
+      "widget_id": "widget_clang_414",
+      "topic": "Recursion — Static Variables in Recursive Functions",
+      "q": "What will the widget code output during a recursive function call with a static variable?",
+      "hint": "Remember that a static variable preserves its value between function calls.",
+      "options": [
+        "\"666\"",
+        "\"321\"",
+        "\"123\"",
+        "\"654\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Static variable `x` is shared across all calls:\n- `func(3)`: `x += 3` (`x = 3`)\n- `func(2)`: `x += 2` (`x = 5`)\n- `func(1)`: `x += 1` (`x = 6`)\n- `func(0)`: exit.\nDuring recursion stack unwinding, current value of `x` is printed three times, i.e. \"666\".",
+        "Incorrect. Variable `x` is static and single for all recursive calls, so by printing time during stack unwinding it already equals 6.",
+        "Incorrect. Printing happens after recursive calls (on return path), while value of `x` is shared across all calls.",
+        "Incorrect. Static variable preserves accumulated total 6 at moment of all three `printf` calls."
+      ]
+    },
+    {
+      "id": "it_clang_415",
+      "widget_id": "widget_clang_415",
+      "topic": "Type Qualifiers — Constant Pointer vs Pointer to Constant",
+      "q": "What behavior will code with const int *ptr qualifier demonstrate?",
+      "hint": "Determine what exactly is protected from modification: value at address (*ptr) or pointer itself (ptr).",
+      "options": [
+        "Compiles successfully and outputs \"20\"",
+        "Compilation error: modifying ptr value is forbidden",
+        "Compilation error: cannot change address in const ptr",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Syntax `const int *ptr` creates a pointer to constant integer. Modifying value `*ptr = ...` is prohibited, but pointer `ptr` itself can be reassigned to another address (`ptr = &b`). Output: \"20\".",
+        "Incorrect. Construct `const int *ptr` permits reassigning pointer itself (`ptr = &b`), forbidding only writing through it (*ptr = ...).",
+        "Incorrect. The pointer itself would be constant under syntax `int * const ptr`.",
+        "Incorrect. Reassigning `ptr` to address of existing variable `b` is completely safe."
+      ]
+    },
+    {
+      "id": "it_clang_416",
+      "widget_id": "widget_clang_416",
+      "topic": "Pointer Arithmetic — Byte-wise Shift via char*",
+      "q": "What will the code snippet output when shifting pointer char* by sizeof(int) bytes?",
+      "hint": "Count by how many elements of arr array char* p will shift when adding sizeof(int).",
+      "options": [
+        "200",
+        "100",
+        "300",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Pointer `p` has type `char*`, so its arithmetic shift step equals 1 byte. Adding `sizeof(int)` (usually 4 bytes) shifts pointer by exactly one `int` element forward — to `arr[1]`. Casting back to `int*` outputs 200.",
+        "Incorrect. Shift by `sizeof(int)` bytes via `char*` shifts address from first element `arr[0]` (100) to next `arr[1]` (200).",
+        "Incorrect. Element 300 is located at offset 2 * sizeof(int) bytes.",
+        "Incorrect. Byte-wise shift along aligned boundary `sizeof(int)` yields valid address `arr[1]`."
+      ]
+    },
+    {
+      "id": "it_clang_417",
+      "widget_id": "widget_clang_417",
+      "topic": "Strings — Attempting Write to String Literal",
+      "q": "What will attempting to modify a character in a string literal via char *str = \"Hello\" lead to?",
+      "hint": "Recall which memory area string literals are stored in in C.",
+      "options": [
+        "Undefined Behavior / Segmentation Fault",
+        "Successfully modifies string and outputs \"hello\"",
+        "Compilation error at build stage",
+        "Turns string into empty array"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! String literals (e.g. `\"Hello\"`) are placed in read-only data segment memory. Attempting to write via `str[0] = 'h'` causes memory access error (SIGSEGV).",
+        "Incorrect. Unlike array `char str[] = \"Hello\";`, writing via pointer `char *str = \"Hello\";` leads to memory protection and Segmentation Fault.",
+        "Incorrect. Compiler does not always issue error at build stage on write via pointer `char*`; crash occurs at runtime.",
+        "Incorrect. Writing to read-only memory crashes process rather than modifying array."
+      ]
+    },
+    {
+      "id": "it_clang_418",
+      "widget_id": "widget_clang_418",
+      "topic": "Pointers — Passing Pointer by Reference via Double Pointer (int **)",
+      "q": "What will the widget program output after calling function modify(&ptr, &b)?",
+      "hint": "Trace how modify function changes address pointed to by ptr.",
+      "options": [
+        "10",
+        "5",
+        "Variable a address",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Function `modify` takes pointer to pointer `int **pp` and reassigns `ptr` to address `&b`. Dereferencing `*ptr` outputs value of `b`, equal to 10.",
+        "Incorrect. Initial value `a = 5` is no longer read because pointer `ptr` is reassigned to `b`.",
+        "Incorrect. Operation `*ptr` dereferences and returns `int` value, not address.",
+        "Incorrect. Passing `&ptr` into `int **` parameter is syntactically completely correct."
+      ]
+    },
+    {
+      "id": "it_clang_419",
+      "widget_id": "widget_clang_419",
+      "topic": "Bitwise Operations — Precedence of Comparison Operators over Bitwise AND (&)",
+      "q": "What will the widget program output considering precedence of operators & and ==?",
+      "hint": "Which operator executes first: x & y or y == 0?",
+      "options": [
+        "\"B\"",
+        "\"A\"",
+        "Compilation error",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Equality operator `==` has higher precedence than bitwise AND `&`. Expression `x & y == 0` evaluates as `x & (y == 0)`. Since `y = 1`, `1 == 0` yields `0`. Then `4 & 0` yields `0` (false). `else` branch (\"B\") executes.",
+        "Incorrect. Due to `==` precedence, `y == 0` (0) is checked first, then bitwise AND is executed: `4 & 0` (0), directing flow to `else` branch.",
+        "Incorrect. Expression is syntactically correct, but operator precedence differs from expected.",
+        "Incorrect. `if` condition evaluates 0 as false and executes command in `else`, outputting string literal \"B\"."
+      ]
+    },
+    {
+      "id": "it_clang_420",
+      "widget_id": "widget_clang_420",
+      "topic": "Structures — Data Alignment (Structure Padding)",
+      "q": "Why is sizeof(struct Data) from widget on 64-bit architecture usually equal to 12 bytes instead of 6 (1 + 4 + 1)?",
+      "hint": "Think about CPU requirements for address alignment on multiple boundaries.",
+      "options": [
+        "Due to data alignment (padding) to optimize CPU memory access",
+        "Because char types always take 4 bytes inside structures",
+        "This is a C99 compiler bug",
+        "Size of any structure in C is always 16 bytes"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Compiler adds padding bytes so that 4-byte integer `int b` is located at address divisible by 4 bytes. This is required by CPU for efficient memory data reading.",
+        "Incorrect. Type `char` always has size 1 byte, while additional bytes are added by compiler as unused filler (padding).",
+        "Incorrect. Alignment is a standard feature of C specification, not a compiler bug.",
+        "Incorrect. Structure size depends on its fields and target architecture alignment."
+      ]
+    },
+    {
+      "id": "it_clang_421",
+      "widget_id": "widget_clang_421",
+      "topic": "Undefined Behavior — Order of Evaluation and Sequence Points",
+      "q": "What will happen when evaluating expression from widget where one variable is modified multiple times without sequence points?",
+      "hint": "Recall C99/C11 standards rules regarding modifying variable more than once within single expression.",
+      "options": [
+        "Undefined Behavior",
+        "Guaranteed to output \"12\"",
+        "Guaranteed to output \"13\"",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Modifying scalar object more than once between sequence points is classic Undefined Behavior. Output of such code is not guaranteed by any standard.",
+        "Incorrect. Result cannot be guaranteed because compilers of different versions and optimization flags generate different code.",
+        "Incorrect. In absence of Sequence Points between increments, evaluation order is undefined.",
+        "Incorrect. This expression is syntactically valid, so compilation succeeds."
+      ]
+    },
+    {
+      "id": "it_clang_422",
+      "widget_id": "widget_clang_422",
+      "topic": "Function Pointers — Array of Function Pointers",
+      "q": "What will the widget code snippet output when calling a function via array of function pointers?",
+      "hint": "Analyze `ops[1]` syntax and determine which function will be called.",
+      "options": [
+        "6",
+        "14",
+        "Compilation error",
+        "Address of sub function"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Element `ops[1]` contains pointer to function `sub`. Call `ops[1](10, 4)` is equivalent to `sub(10, 4)`, yielding `10 - 4 = 6`.",
+        "Incorrect. Result 14 would be obtained when calling `add(10, 4)`, located at index `ops[0]`.",
+        "Incorrect. Arrays of function pointers are declared and called according to C standard.",
+        "Incorrect. Parentheses `ops[1](...)` execute function call, returning `int` numeric result, not address."
+      ]
+    },
+    {
+      "id": "it_clang_423",
+      "widget_id": "widget_clang_423",
+      "topic": "Strict Aliasing Rule — Type Aliasing Violation",
+      "q": "What will writing via int* pointer obtained by casting float variable address lead to?",
+      "hint": "Think about Strict Aliasing Rule in C and compiler optimizations.",
+      "options": [
+        "Undefined Behavior due to Strict Aliasing Rule violation",
+        "Turns number f into 0.000000",
+        "Compilation error at type casting stage",
+        "Modifies only sign bits of float"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! C standard forbids accessing object of one type via dereferencing pointer of incompatible type (except `char*`). Violating Strict Aliasing Rule leads to undefined behavior during compiler optimization.",
+        "Incorrect. Writing via incompatible pointer distorts bit representation and may be discarded by optimizer.",
+        "Incorrect. Explicit pointer cast `(int*)&f` compiles without error.",
+        "Incorrect. Modification affects entire bit pattern, leading to UB."
+      ]
+    },
+    {
+      "id": "it_clang_424",
+      "widget_id": "widget_clang_424",
+      "topic": "Preprocessor — Token Concatenation Operator (##)",
+      "q": "What will the widget code output when using token concatenation operator (##) in macro?",
+      "hint": "Trace what substitution `CONCAT(x, 5)` expands to at preprocessing stage.",
+      "options": [
+        "100",
+        "x5",
+        "Compilation error",
+        "5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Operator `##` combines two tokens `x` and `5` into single identifier `x5`. In code, reference to variable `x5` is substituted, whose value is 100.",
+        "Incorrect. Concatenated token `x5` is treated by compiler as variable name, evaluating its value (100), rather than printing text itself.",
+        "Incorrect. Token concatenation operator `##` is built-in C preprocessor operator.",
+        "Incorrect. Token `x` is not discarded, but joined with `5`."
+      ]
+    },
+    {
+      "id": "it_clang_425",
+      "widget_id": null,
+      "topic": "Type Qualifiers — Purpose of volatile Keyword",
+      "q": "What main task does declaring a variable with volatile qualifier solve in C?",
+      "hint": "Think about working with peripheral devices, interrupts, or multithreading.",
+      "options": [
+        "Prevents compiler from caching variable value in registers and optimizing its reads/writes",
+        "Makes variable thread-safe (atomic) at hardware level",
+        "Places variable in non-volatile (Flash) memory",
+        "Forbids modifying variable after initialization"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Qualifier `volatile` instructs compiler that variable value may change outside current control flow (e.g., by interrupt or hardware), so each access must be performed directly from memory.",
+        "Incorrect. `volatile` does not provide atomicity or thread synchronization in C standard (for that `_Atomic` is used).",
+        "Incorrect. Memory placement is managed by linker sections and compiler attributes, not `volatile` qualifier.",
+        "Incorrect. Forbidding variable modification is enforced by `const` qualifier, not `volatile`."
+      ]
+    },
+    {
+      "id": "it_clang_426",
+      "widget_id": "widget_clang_426",
+      "topic": "Bit-Fields — Signedness of int Type in Bit-Fields",
+      "q": "What will variable s.a value equal after assigning 1 in signedness of 1-bit field?",
+      "hint": "Recall signed number representation in Two's complement for 1 bit.",
+      "options": [
+        "-1 (or 1 if bit-field type is implementation-defined as unsigned)",
+        "Always 1",
+        "Compilation error: 1 bit cannot store value 1",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In 1-bit signed field (`signed int a : 1`), single bit is sign bit. Bit pattern `1` represents `-1`. If compiler defaults `int` in bit-field to `unsigned`, value will be `1`. Behavior depends on signedness implementation.",
+        "Incorrect. If `int` in bit-field defaults to signed, sole bit is interpreted as sign bit, giving -1.",
+        "Incorrect. 1-bit field can store bit pattern 1.",
+        "Incorrect. Value 1 writes 1 into field bit; it is not reset."
+      ]
+    },
+    {
+      "id": "it_clang_427",
+      "widget_id": "widget_clang_427",
+      "topic": "Compound Literals — Pointer Offset",
+      "q": "What will the widget code snippet output when creating an anonymous array via compound literal?",
+      "hint": "Determine which element `(int[]){10, 20, 30} + 1` will point to.",
+      "options": [
+        "20",
+        "10",
+        "Array address",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Syntax `(int[]){10, 20, 30}` creates anonymous array in current scope. Adding `+ 1` shifts pointer to second array element, dereferencing which yields `20`.",
+        "Incorrect. Value 10 is at index 0, while offset `+ 1` moves to index 1.",
+        "Incorrect. Dereferencing `*` reads `int` element value at pointer.",
+        "Incorrect. Compound Literals were officially introduced in C99 standard."
+      ]
+    },
+    {
+      "id": "it_clang_428",
+      "widget_id": "widget_clang_428",
+      "topic": "Pointer Arithmetic — Continuous Indexing of 2D Array",
+      "q": "What will the widget code snippet output when accessing a contiguous 2D array via single int* pointer?",
+      "hint": "Recall how elements of 2D array are laid out in continuous memory block.",
+      "options": [
+        "5",
+        "4",
+        "6",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! 2D array is arranged in memory continuously: `arr[0][0]` (1), `arr[0][1]` (2), `arr[0][2]` (3), `arr[1][0]` (4), `arr[1][1]` (5), `arr[1][2]` (6). Offset `*(p + 4)` corresponds to element `arr[1][1]`, i.e., 5.",
+        "Incorrect. Offset `+ 3` lands on element `arr[1][0]` (4).",
+        "Incorrect. Element 6 is located at offset `+ 5` (`arr[1][2]`).",
+        "Incorrect. Memory for 2D array is contiguous; linear pointer access within overall length is correct."
+      ]
+    },
+    {
+      "id": "it_clang_429",
+      "widget_id": "widget_clang_429",
+      "topic": "Bitwise Operations — Left Shift of Negative Numbers (Left shift of negative int)",
+      "q": "What does bitwise left shift (<<) of a negative signed number lead to in C?",
+      "hint": "Recall C standard rules regarding shifting negative values.",
+      "options": [
+        "Undefined Behavior",
+        "Multiplying number by 2 (-2)",
+        "Architecture-dependent arithmetic shift",
+        "Turning into positive number"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! According to C standards (prior to C23), bitwise left shift of a negative signed integer is Undefined Behavior.",
+        "Incorrect. Although on many platforms this yields `-2`, standard strictly classifies left shift of negative numbers as undefined behavior.",
+        "Incorrect. In standard this is classified as Undefined Behavior, not Implementation-Defined.",
+        "Incorrect. Sign bit is not guaranteed to reset, as operation is undefined."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,821 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_310",
+      "widget_id": "widget_clang_310",
+      "topic": "Branching — Variable Scope in {} Blocks",
+      "q": "What will happen when attempting to compile and execute the code snippet from the widget?",
+      "hint": "Think about where the scope of a variable declared inside the curly braces of an if block ends.",
+      "options": [
+        "Compilation error: variable temp does not exist outside its {} block",
+        "The code will compile and output 42",
+        "The code will compile and output 0",
+        "The program will terminate with a Segmentation Fault error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Variables declared inside a compound statement (`{}` block) have local scope and are destroyed upon exiting it. Attempting to access `temp` outside `if` will cause a compilation error.",
+        "Incorrect. Outside the `{}` block, the variable `temp` is not accessible to the compiler.",
+        "Incorrect. The variable `temp` ceases to exist upon exiting the `{}` block and is not re-initialized to zero.",
+        "Incorrect. The error will occur at the compilation stage, so the program will not reach execution."
+      ]
+    },
+    {
+      "id": "it_clang_311",
+      "widget_id": "widget_clang_311",
+      "topic": "Branching — Precedence of Logical Operators (&& and ||)",
+      "q": "What will the code snippet in the widget output, considering the precedence of logical operations?",
+      "hint": "Recall which operation — logical AND (&&) or logical OR (||) — has higher precedence.",
+      "options": [
+        "\"Yes\"",
+        "\"No\"",
+        "Outputs nothing",
+        "Compilation error due to absence of explicit parentheses"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `&&` operator has higher precedence than `||`. First `b && c` is evaluated (0 && 0 -> 0), and then `a || 0` (1 || 0 -> 1). Since the result is 1 (true), \"Yes\" is printed.",
+        "Incorrect. Operators are not evaluated strictly left-to-right: `&&` has higher precedence than `||`.",
+        "Incorrect. Since the final expression evaluates to true (1), the `if` branch will trigger and output \"Yes\".",
+        "Incorrect. Explicit parentheses are not required for logical operators; their precedence is strictly defined in the C standard."
+      ]
+    },
+    {
+      "id": "it_clang_312",
+      "widget_id": "widget_clang_312",
+      "topic": "Switch Statement — Fall-through Effect",
+      "q": "What will the program from the widget output when break statements are absent in the switch cases?",
+      "hint": "Trace where control is transferred and what happens after executing the matched case branch when break is missing.",
+      "options": [
+        "\"23D\"",
+        "\"2\"",
+        "\"123D\"",
+        "\"D\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! With `x = 2`, control is transferred to `case 2:`. Due to the absence of a `break` statement, execution continues down the chain through `case 3:` and `default:`, printing \"23D\".",
+        "Incorrect. Without `break`, the `switch` statement does not terminate automatically after executing one label.",
+        "Incorrect. The `case 1:` branch is skipped because the value of `x` is 2.",
+        "Incorrect. The `default:` branch would execute alone only if the value of `x` matched no `case` labels."
+      ]
+    },
+    {
+      "id": "it_clang_313",
+      "widget_id": null,
+      "topic": "Switch Statement — Permissible Selector Types",
+      "q": "Which expression types are valid to pass as a selector inside switch(expression) parentheses in C?",
+      "hint": "Think about which data types allow the compiler to build an efficient jump table.",
+      "options": [
+        "Only integer types (char, int, short, long, enum)",
+        "Any types, including float, double, and real numbers",
+        "String types (char*) and arbitrary arrays",
+        "Exclusively the unsigned int type"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, the `switch` selector and `case` labels must be of integer type (including `char` characters and `enum` enumerations). Using floating-point numbers (`float`, `double`) or strings is forbidden.",
+        "Incorrect. Floating-point types and strings are not permitted as `switch` statement conditions.",
+        "Incorrect. In C, strings are not a built-in integer type, so they cannot be passed to `switch`.",
+        "Incorrect. Any integer types (`char`, `short`, `int`, `long`) are allowed, not just `unsigned int`."
+      ]
+    },
+    {
+      "id": "it_clang_314",
+      "widget_id": "widget_clang_314",
+      "topic": "Branching — Bitwise AND (&) vs Logical AND (&&)",
+      "q": "What will the code in the widget output when using bitwise operator & inside an if condition?",
+      "hint": "Convert numbers 2 and 4 to binary and perform bitwise multiplication.",
+      "options": [
+        "\"False\"",
+        "\"True\"",
+        "Compilation error",
+        "\"TrueFalse\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Bitwise operation `2 & 4` (binary `0010 & 0100`) yields `0000` (i.e. 0). In C, 0 is perceived as false, so the `else` branch executes and outputs \"False\".",
+        "Incorrect. Although both variables are non-zero, their bitwise intersection yields 0.",
+        "Incorrect. Using the bitwise `&` operator inside a condition is syntactically correct.",
+        "Incorrect. The `if` branch will not execute because the result of `2 & 4` is 0."
+      ]
+    },
+    {
+      "id": "it_clang_315",
+      "widget_id": "widget_clang_315",
+      "topic": "Branching — Boolean Data Type in C99 Standard",
+      "q": "Is it true that starting from C99 standard, header <stdbool.h> defines bool type and true (1) / false (0) constants?",
+      "hint": "Recall how boolean values are handled in C99 standard and newer.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `<stdbool.h>` header in C99 introduces the alias `bool` for built-in type `_Bool`, as well as `true` (expands to 1) and `false` (expands to 0) macros.",
+        "Incorrect. Official support for `stdbool.h` indeed appeared in C99."
+      ]
+    },
+    {
+      "id": "it_clang_316",
+      "widget_id": "widget_clang_316",
+      "topic": "Branching — Short-Circuiting During Function Calls",
+      "q": "What will the program in the widget output, considering short-circuit evaluation for logical OR (||)?",
+      "hint": "Think about whether the compiler will call function check() if the left OR operand is already 1 (true).",
+      "options": [
+        "\"A\"",
+        "\"CA\"",
+        "\"AC\"",
+        "\"C\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Due to short-circuiting of logical `||`, if the left operand is true (`1`), the right operand is not evaluated at all. Function `check()` is not called, printing only \"A\".",
+        "Incorrect. The right side of the condition is ignored because the left side is sufficient to establish truth of the entire expression.",
+        "Incorrect. The `check()` call does not occur at all, so symbol \"C\" will not be printed.",
+        "Incorrect. The left operand is true, so only the `if` branch executes (outputting \"A\")."
+      ]
+    },
+    {
+      "id": "it_clang_317",
+      "widget_id": "widget_clang_317",
+      "topic": "Branching — Nested Ternary Operator",
+      "q": "What will the widget code snippet using a nested ternary operator output?",
+      "hint": "Evaluate the ternary operator left to right: first condition x < 5, then the alternative branch.",
+      "options": [
+        "2",
+        "1",
+        "3",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! First condition `10 < 5` is false. Execution moves to the alternative `(x > 8) ? 2 : 3`. Condition `10 > 8` is true, so the ternary operator returns 2.",
+        "Incorrect. The first branch returns 1 only if `x < 5`.",
+        "Incorrect. Alternative value 3 is returned only if `x` is less than or equal to 8.",
+        "Incorrect. Nesting ternary operators is syntactically allowed."
+      ]
+    },
+    {
+      "id": "it_clang_318",
+      "widget_id": null,
+      "topic": "Switch Statement — Placement of default Label",
+      "q": "Is it mandatory to place the default branch strictly at the very end of a switch construct?",
+      "hint": "Consider syntax rules regarding label placement inside a switch block.",
+      "options": [
+        "No, default label can be placed anywhere in switch block, but is usually placed at the end for readability",
+        "Yes, placing default at start or middle of construct is a syntax error",
+        "Yes, otherwise default executes before checking other case labels",
+        "The default label is not provided for in C standard at all"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `default` label can be written in any position inside `switch` (even at the very start). The compiler jumps to it only if no `case` matches the selector.",
+        "Incorrect. Order of `case` and `default` labels is not syntactically restricted.",
+        "Incorrect. Jumping to `default` occurs only when no `case` matches, regardless of its position in code.",
+        "Incorrect. The `default` label is part of the C language standard."
+      ]
+    },
+    {
+      "id": "it_clang_319",
+      "widget_id": "widget_clang_319",
+      "topic": "Branching — Unconditional Jump goto",
+      "q": "What will the code in the widget output when executing the unconditional jump statement goto?",
+      "hint": "Trace which instruction the program skips when jumping to label skip.",
+      "options": [
+        "\"2\"",
+        "\"12\"",
+        "\"1\"",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since `x > 0` (5 > 0) is true, `goto skip;` executes. Execution is immediately transferred to label `skip:`, skipping call `printf(\"1\");`. As a result, only \"2\" is printed.",
+        "Incorrect. The `goto` statement fully transfers control flow to the label, skipping intermediate code.",
+        "Incorrect. Line `printf(\"1\");` is skipped due to `goto` jump.",
+        "Incorrect. The `goto` operator is built-in in C and causes no errors when label is correctly specified."
+      ]
+    },
+    {
+      "id": "it_clang_320",
+      "widget_id": "widget_clang_320",
+      "topic": "Branching — Floating-Point Comparison Precision",
+      "q": "What will the widget code snippet output when directly comparing floating-point (double) computation results via == operator?",
+      "hint": "Recall representation features of fractional numbers in IEEE 754 binary format.",
+      "options": [
+        "\"NO\", due to representation inaccuracy of real numbers in binary system",
+        "\"YES\", because 0.1 + 0.2 is mathematically strictly equal to 0.3",
+        "Compilation error: == operator is forbidden for double",
+        "Result is random on each run"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Due to binary encoding features under IEEE 754 standard, expression `0.1 + 0.2` yields `0.30000000000000004`, which does not equal `0.3`. Direct comparison via `==` yields false.",
+        "Incorrect. In programming, floating-point numbers are compared taking tolerance into account (`fabs(a - b) < EPS`), rather than via `==`.",
+        "Incorrect. The `==` operator is permitted for floating-point numbers, though direct comparison is logically unsafe.",
+        "Incorrect. IEEE 754 calculations are deterministic and return the same false result on every run."
+      ]
+    },
+    {
+      "id": "it_clang_321",
+      "widget_id": "widget_clang_321",
+      "topic": "Switch Statement — Character Labels",
+      "q": "What will the widget code snippet output when passing a character value to a switch statement?",
+      "hint": "Pay attention to the missing break operator in matched case 'B' branch.",
+      "options": [
+        "\"23\"",
+        "\"2\"",
+        "\"123\"",
+        "\"234\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Selector matches `case 'B':` and prints \"2\". Due to missing `break`, execution continues (fall-through) into `case 'C':`, outputting \"3\", whereupon encountered `break` terminates switch.",
+        "Incorrect. Allowing execution to fall through without `break`, the program affects subsequent `case 'C:'` branch as well.",
+        "Incorrect. `case 'A':` branch is skipped because character selector equals `'B'`.",
+        "Incorrect. Execution stops at `case 'C':` label because a `break` statement is written there."
+      ]
+    },
+    {
+      "id": "it_clang_322",
+      "widget_id": "widget_clang_322",
+      "topic": "Branching — Precedence of NOT Operator (!)",
+      "q": "What will the code in the widget output considering execution precedence of unary negation operator !?",
+      "hint": "Recall that unary operator ! has higher precedence than comparison operator >.",
+      "options": [
+        "\"No\"",
+        "\"Yes\"",
+        "Compilation error",
+        "Outputs nothing"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Unary `!` executes before `>`. Evaluated expression `!5` turns to `0` (since 5 is true). Then `0 > 0` is checked, yielding false (0). Therefore `else` branch executes and outputs \"No\".",
+        "Incorrect. First `!x` is computed (!5 -> 0), and only then condition `0 > 0` is checked.",
+        "Incorrect. Expression `!x > 0` is syntactically correct.",
+        "Incorrect. The `else` branch will execute and print \"No\"."
+      ]
+    },
+    {
+      "id": "it_clang_323",
+      "widget_id": "widget_clang_323",
+      "topic": "Switch Statement — Grouping case Labels",
+      "q": "What will the widget code snippet output when several case labels are placed sequentially with no statements between them?",
+      "hint": "Think about how fall-through triggers with empty case blocks.",
+      "options": [
+        "\"Group 1\"",
+        "\"Group 2\"",
+        "Compilation error due to empty case labels",
+        "Outputs nothing"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Such grouping of `case` labels is completely legal in C. If `val` is 1, 2, or 3, control transfers to the shared block of statements and outputs \"Group 1\".",
+        "Incorrect. `Group 2` branch triggers only when matching other labels.",
+        "Incorrect. Empty `case` labels are often used specifically to logically merge multiple value variants.",
+        "Incorrect. Since selector value matches one of grouped labels, \"Group 1\" is printed."
+      ]
+    },
+    {
+      "id": "it_clang_324",
+      "widget_id": "widget_clang_324",
+      "topic": "Branching — Increment Inside Ternary Operator",
+      "q": "What will variables a and b equal after executing the ternary operator expression in the widget?",
+      "hint": "Recall that in a ternary operator, only the branch corresponding to the condition result is evaluated.",
+      "options": [
+        "a=11, b=20",
+        "a=11, b=21",
+        "a=10, b=20",
+        "a=10, b=21"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since condition `x > 0` (1 > 0) is true, only first expression `a++` is evaluated. Expression `b++` is completely ignored. Consequently `a` becomes 11, while `b` remains 20.",
+        "Incorrect. The ternary operator does not evaluate the inactive branch, so `b++` does not execute.",
+        "Incorrect. First branch `a++` executed, so `a` changed from 10 to 11.",
+        "Incorrect. Truth selects left expression (`a++`), not right (`b++`)."
+      ]
+    },
+    {
+      "id": "it_clang_325",
+      "widget_id": "widget_clang_325",
+      "topic": "Branching — Zero Assignment in if Condition (x = 0)",
+      "q": "What will the code in the widget output when an accidental zero assignment mistake is made in the condition?",
+      "hint": "Calculate the value of expression x = 0 and its logical interpretation in C.",
+      "options": [
+        "\"False\"",
+        "\"True\"",
+        "Compilation error",
+        "Outputs nothing"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Expression `x = 0` assigns 0 to variable `x` and returns 0. Number 0 in C is false, so `if` branch is skipped and \"False\" is output.",
+        "Incorrect. Since assignment expression value became 0, condition is interpreted as false.",
+        "Incorrect. Assignment inside `if` is syntactically allowed by standard C rules.",
+        "Incorrect. The `else` branch will execute and print \"False\"."
+      ]
+    },
+    {
+      "id": "it_clang_326",
+      "widget_id": "widget_clang_326",
+      "topic": "Branching — Comma Operator in Condition",
+      "q": "What will the widget code snippet output when using comma operator inside if parentheses?",
+      "hint": "Recall which expression separated by commas determines the final value of the entire chain.",
+      "options": [
+        "\"NO\"",
+        "\"YES\"",
+        "Compilation error",
+        "Result is undefined"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The comma operator sequentially evaluates all expressions left-to-right and returns the result of the **last** one. Last evaluated is `y = 0`, result equals 0 (false), so `else` branch (\"NO\") executes.",
+        "Incorrect. First part `x = 1` executes, but final result of entire expression is value `y = 0`.",
+        "Incorrect. Using comma operator in conditions is fully permissible in C syntax.",
+        "Incorrect. Evaluation order with comma is strictly defined: left to right."
+      ]
+    },
+    {
+      "id": "it_clang_327",
+      "widget_id": null,
+      "topic": "Switch Statement — Constant Expressions in case",
+      "q": "Is it permissible in C to use variables as values after case keyword (e.g., case x:)?",
+      "hint": "Think about whether case label values must be known at compile time.",
+      "options": [
+        "No, case labels must be strictly constant expressions known at compile time",
+        "Yes, starting from C99 standard any variables can be used",
+        "Yes, but only if variable is declared with volatile modifier",
+        "No, only integers are allowed after case, while characters are forbidden"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, `case` label values must be compile-time constant expressions (numeric literals, characters, or `enum` constants). Using variables is forbidden.",
+        "Incorrect. Using variables in `case` labels causes compilation error.",
+        "Incorrect. `volatile` modifier does not make variable compile-time constant.",
+        "Incorrect. Character literals (e.g., `'A'`) are integers in C and permitted in `case`."
+      ]
+    },
+    {
+      "id": "it_clang_328",
+      "widget_id": "widget_clang_328",
+      "topic": "Branching — Numeric Value of Comparison Results",
+      "q": "What will the program in the widget output, saving logical operation result (x > y) into an integer variable?",
+      "hint": "Recall which integer comparison operators return upon truth in C.",
+      "options": [
+        "1",
+        "true",
+        "10",
+        "5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, results of comparison operators and logical operations always guaranteed yield integer `1` (on truth) or `0` (on falsity).",
+        "Incorrect. When outputting integer variable via `%d`, number `1` is printed, not word `true`.",
+        "Incorrect. Comparison operators return boolean result (0 or 1), not operand value.",
+        "Incorrect. The operator returns comparison result (1), not initial variable value."
+      ]
+    },
+    {
+      "id": "it_clang_329",
+      "widget_id": "widget_clang_329",
+      "topic": "Branching — Nested switch Constructs",
+      "q": "What will the code snippet with a nested switch operator from the widget output?",
+      "hint": "Trace execution of outer and inner switch blocks.",
+      "options": [
+        "\"XY\"",
+        "\"X\"",
+        "\"Y\"",
+        "\"XYZ\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Outer switch enters `case 1:`. There inner switch on `b` (2) starts, executing `case 2:`, printing \"X\" and breaking inner switch. Then outer branch continues execution and prints \"Y\".",
+        "Incorrect. Inner `break` breaks only inner switch, after which outer branch finishes printing \"Y\".",
+        "Incorrect. Before outputting \"Y\", inner `switch` executes, printing \"X\".",
+        "Incorrect. Symbol \"Z\" will not be printed because outer branch `break` triggers."
+      ]
+    },
+    {
+      "id": "it_clang_330",
+      "widget_id": "widget_clang_330",
+      "topic": "Branching — Prefix Decrement in Condition",
+      "q": "What will the code in the widget output with prefix decrement --x in the condition?",
+      "hint": "Calculate the value of variable x immediately prior to condition check.",
+      "options": [
+        "\"B\"",
+        "\"A\"",
+        "Outputs nothing",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Prefix decrement `--x` first decreases `x` from 1 to 0, then returns resulting 0. Since 0 is false, `else` branch triggers and prints \"B\".",
+        "Incorrect. Because prefix `--` applies, value of `x` decreases BEFORE evaluating condition truth.",
+        "Incorrect. The `else` branch will execute and print \"B\".",
+        "Incorrect. Prefix decrement in condition is syntactically correct."
+      ]
+    },
+    {
+      "id": "it_clang_331",
+      "widget_id": "widget_clang_331",
+      "topic": "Branching — Short-Circuiting of && Operator",
+      "q": "What will the widget code snippet output considering postfix increment rules and short-circuiting?",
+      "hint": "Think about whether right side of && evaluates if left side x++ initially yields 0 (false).",
+      "options": [
+        "\"1 1\"",
+        "\"1 2\"",
+        "\"0 1\"",
+        "\"0 2\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Expression `x++` returns current value 0 (false) and then increments `x` to 1. Due to short-circuiting, right side `y++` is not evaluated (`y` remains 1). Since condition is false, `else` branch executes and outputs \"1 1\".",
+        "Incorrect. Since left side turned out false (0), right side `y++` does not execute due to short-circuiting.",
+        "Incorrect. Variable `x` manages to increment to 1 during postfix increment evaluation.",
+        "Incorrect. Neither `x` remains 0 nor `y` increments."
+      ]
+    },
+    {
+      "id": "it_clang_332",
+      "widget_id": "widget_clang_332",
+      "topic": "Switch Statement — Variable Declaration After case Label",
+      "q": "What will happen when attempting to compile and execute code from the widget?",
+      "hint": "Recall C standard rules regarding declaring variables immediately after case labels without {} block.",
+      "options": [
+        "Compilation error: case label cannot be directly before variable declaration",
+        "Code will compile and output 10",
+        "Code will compile and output D",
+        "Undefined Behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, a label (`case`) can only precede a **statement**, not a variable declaration. Declaring variable directly after `case:` without curly braces `{}` causes compilation error.",
+        "Incorrect. C standard requires a statement to follow `case` label. Declaration `int a = 10;` is not a statement.",
+        "Incorrect. Code will not pass compilation stage.",
+        "Incorrect. Error is caught by compiler, program will not reach execution."
+      ]
+    },
+    {
+      "id": "it_clang_333",
+      "widget_id": "widget_clang_333",
+      "topic": "Branching — Dangling else Problem",
+      "q": "What will the code in the widget output with nested if statements without curly braces?",
+      "hint": "Recall the rule stating which if operator the else branch binds to when curly braces are missing.",
+      "options": [
+        "\"2\"",
+        "\"1\"",
+        "Outputs nothing",
+        "Compilation error due to ambiguity"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! By C rules, `else` always binds to the **nearest** preceding `if` lacking an `else` branch. Thus `else` belongs to `if (y > 0)`. Since `x > 0` is true (5 > 0) but `y > 0` is false (0 > 0), `else` branch executes and outputs \"2\".",
+        "Incorrect. Indentation in C does not affect syntax. `else` belongs to inner `if (y > 0)`.",
+        "Incorrect. Since outer `if (x > 0)` is true, program enters inner `if`, where `else` triggers.",
+        "Incorrect. C has no syntactic ambiguity: nearest `if` binding rule is strictly defined."
+      ]
+    },
+    {
+      "id": "it_clang_334",
+      "widget_id": "widget_clang_334",
+      "topic": "Branching — Negative Numbers in Condition",
+      "q": "What will the program from the widget output when passing a negative integer into an if condition?",
+      "hint": "Recall which numeric values in C are interpreted as true and which as false.",
+      "options": [
+        "\"True\"",
+        "\"False\"",
+        "Compilation error",
+        "Outputs nothing"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, **any** non-zero value (including negative numbers like -5) is interpreted as true. Only pure 0 is false. Therefore \"True\" is output.",
+        "Incorrect. Negative numbers are not false. In C only 0 equals false.",
+        "Incorrect. Passing negative numbers to conditional statements is fully permissible.",
+        "Incorrect. First `if` branch triggers and prints \"True\"."
+      ]
+    },
+    {
+      "id": "it_clang_335",
+      "widget_id": "widget_clang_335",
+      "topic": "Branching — Postfix Increment in Ternary Operator",
+      "q": "What will the widget code snippet saving ternary operator result with postfix increment output?",
+      "hint": "Determine which expression executes, and recall that postfix increment returns old value.",
+      "options": [
+        "\"1 3 2\"",
+        "\"2 3 2\"",
+        "\"1 3 3\"",
+        "\"2 2 1\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Condition `x > y` (1 > 2) is false. Alternative `y++` is evaluated. Postfix increment returns initial value of `y` (2) for assignment to `z`, then increments `y` to 3. Variable `x` does not change. Outputs \"1 3 2\".",
+        "Incorrect. Postfix increment returns value prior to increase, so `z` receives 2 and `y` becomes 3.",
+        "Incorrect. Assignment to `z` occurs before completion of `y` increment, so `z` receives 2.",
+        "Incorrect. Variable `x` has value 1 and does not change."
+      ]
+    },
+    {
+      "id": "it_clang_336",
+      "widget_id": null,
+      "topic": "Switch Statement — Constant Expressions in case",
+      "q": "Is it permissible in C to specify an arithmetic expression as a case label value, e.g., case 2 + 3:?",
+      "hint": "Think about whether the compiler can compute value of such expression before program launch.",
+      "options": [
+        "Yes, if expression consists of constants and can be evaluated at compile time",
+        "No, strictly single numeric or character literals are allowed",
+        "Yes, but only with parentheses around expression",
+        "No, expressions with arithmetic operators lead to compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Any constant expressions (e.g. `2 + 3` or `'A' + 1`) are permitted as `case` values if their final result is known at compile time.",
+        "Incorrect. The compiler's main requirement is that label value can be evaluated at compile time.",
+        "Incorrect. Parentheses are not mandatory for arithmetic expressions in `case`.",
+        "Incorrect. Arithmetic operators with constants are permitted in `case` labels."
+      ]
+    },
+    {
+      "id": "it_clang_337",
+      "widget_id": "widget_clang_337",
+      "topic": "Branching — Null Statement After if",
+      "q": "What will the code in the widget output when a semicolon is present immediately after if condition?",
+      "hint": "Pay attention to semicolon after if(x = 1); and understand what it does.",
+      "options": [
+        "\"A\"",
+        "Outputs nothing",
+        "Compilation error",
+        "\"A\" is output only if x is initially 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Semicolon after `if(...)` forms a null statement, meaning `if` completes doing nothing. Subsequent block `{ printf(\"A\"); }` becomes a regular isolated block and executes always, printing \"A\".",
+        "Incorrect. Semicolon cuts off `if` body into a null statement, while brace block executes regardless of condition.",
+        "Incorrect. Semicolon forms a valid null statement in C.",
+        "Incorrect. Due to semicolon, `if` condition affects nothing; block executes for any values of `x`."
+      ]
+    },
+    {
+      "id": "it_clang_338",
+      "widget_id": "widget_clang_338",
+      "topic": "Branching — Chained Comparison (a < b < c)",
+      "q": "What will the widget code snippet output when attempting a chained comparison of three numbers?",
+      "hint": "Evaluate expression a < b < c strictly left to right according to comparison operator associativity rules.",
+      "options": [
+        "\"True\"",
+        "\"False\"",
+        "Compilation error",
+        "Undefined Behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! C has no built-in mathematical chained comparison. Expression is evaluated left to right: `(a < b) < c` -> `(5 < 2) < 10` -> `0 < 10`, yielding 1 (true). \"True\" is printed. Correct way to write: `a < b && b < c`.",
+        "Incorrect. In C, `a < b < c` does not check if `b` falls within range. First `5 < 2` yields 0, then `0 < 10` yields 1 (true).",
+        "Incorrect. Such syntax compiles without error because comparison operators are left-associative.",
+        "Incorrect. Behavior is strictly defined by operator associativity standard."
+      ]
+    },
+    {
+      "id": "it_clang_339",
+      "widget_id": "widget_clang_339",
+      "topic": "Branching — Logical Negation of Zero",
+      "q": "What will the program in the widget output when applying ! operator to zero?",
+      "hint": "Recall what negation operator ! turns value 0 into.",
+      "options": [
+        "\"Zero\"",
+        "\"Non-zero\"",
+        "Compilation error",
+        "Outputs nothing"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Variable `x = 0` (false). Operator `!x` inverts 0 to 1 (true). Since condition is true, first branch executes and prints \"Zero\".",
+        "Incorrect. Negation of zero (`!0`) yields 1 (true), so `if` branch triggers.",
+        "Incorrect. Operation `!x` on integers is completely valid in C.",
+        "Incorrect. Since condition is true, first `printf` branch executes."
+      ]
+    },
+    {
+      "id": "it_clang_340",
+      "widget_id": "widget_clang_340",
+      "topic": "Switch Statement — Unreachable Code Before First Label",
+      "q": "What will the program in the widget output containing an output statement before first case label?",
+      "hint": "Think about whether control passes to statements inside switch written before any case label.",
+      "options": [
+        "\"World\"",
+        "\"Hello World\"",
+        "\"Hello \"",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Upon entering `switch`, control immediately jumps to matching label `case 1:`. Statements located before first `case` or `default` label are simply skipped and never executed. Only \"World\" is printed.",
+        "Incorrect. Code before first `case` label inside `switch` block is unreachable because switch makes a direct jump to matching label.",
+        "Incorrect. Printing \"Hello \" is prior to labels and will be skipped; `case 1:` will trigger.",
+        "Incorrect. Placing code before first `case` label may cause compiler warnings, but is syntactically permissible."
+      ]
+    },
+    {
+      "id": "it_clang_341",
+      "widget_id": "widget_clang_341",
+      "topic": "Branching — Prefix Increment in Condition",
+      "q": "What will the widget code snippet output when testing a condition with prefix increment ++x?",
+      "hint": "Recall difference between prefix (++x) and postfix (x++) increment when evaluating logical expression.",
+      "options": [
+        "\"A 1\"",
+        "\"B 1\"",
+        "\"A 0\"",
+        "\"B 0\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Prefix increment `++x` first increases `x` from 0 to 1, then returns resulting 1 (true). The `if` branch executes, printing \"A\" and new value of `x` (1).",
+        "Incorrect. Because increment is prefix, value increases BEFORE condition check, so `if` receives one.",
+        "Incorrect. Value of `x` managed to increase to 1 prior to output.",
+        "Incorrect. The `else` branch does not execute because `++x` returned 1 (true)."
+      ]
+    },
+    {
+      "id": "it_clang_342",
+      "widget_id": "widget_clang_342",
+      "topic": "Branching — Logical Negation of Parenthesized Expression",
+      "q": "What will the code in the widget output if logical negation applies to entire parenthesized expression !(x > y)?",
+      "hint": "First compute result of expression (x > y), then apply negation operator !.",
+      "options": [
+        "\"No\"",
+        "\"Yes\"",
+        "Compilation error",
+        "Outputs nothing"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Expression `x > y` (10 > 5) yields 1 (true). Negation operator `!(1)` turns it into 0 (false). As a result control passes to `else` branch, outputting \"No\".",
+        "Incorrect. Parentheses change evaluation order: numbers are compared first (10 > 5 -> true), then result is inverted (!true -> false).",
+        "Incorrect. Using parentheses with negation is completely correct.",
+        "Incorrect. The `else` branch executes and prints \"No\"."
+      ]
+    },
+    {
+      "id": "it_clang_343",
+      "widget_id": "widget_clang_343",
+      "topic": "Switch Statement — Using enum as Selector",
+      "q": "What will the program in the widget output when using enum enumeration members inside switch?",
+      "hint": "Think about whether enum member values correspond to integer constants.",
+      "options": [
+        "\"GREEN\"",
+        "\"RED\"",
+        "\"BLUE\"",
+        "Compilation error: enum is forbidden in switch"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `enum` members in C are essentially integer constants (`RED` = 0, `GREEN` = 1, `BLUE` = 2). Since variable `signal` equals `GREEN`, `case GREEN:` triggers and outputs \"GREEN\".",
+        "Incorrect. `RED` member has a different numeric identifier (0), not matching `GREEN` (1).",
+        "Incorrect. `BLUE` equals 2, while `signal` equals `GREEN` (1).",
+        "Incorrect. Enumeration `enum` elements are well-suited as `case` labels because they are integer constants."
+      ]
+    },
+    {
+      "id": "it_clang_344",
+      "widget_id": "widget_clang_344",
+      "topic": "Branching — Chained Assignment in Condition",
+      "q": "What will the widget code snippet output when assigning comparison result to variables?",
+      "hint": "Calculate condition a == b, understand what number it returns, and trace the assignment chain.",
+      "options": [
+        "\"1 1\"",
+        "\"0 0\"",
+        "\"5 5\"",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Operation `a == b` (5 == 5) returns 1 (true). This value is written to `y`, then to `x` (`x = (y = 1)`). Since `x = 1` is non-zero, `if` condition succeeds and \"1 1\" is printed.",
+        "Incorrect. Condition `5 == 5` is true and returns 1, not 0.",
+        "Incorrect. Equality operator `==` result is 1 or 0, not comparing variables' values.",
+        "Incorrect. Chained assignment in C is valid syntax."
+      ]
+    },
+    {
+      "id": "it_clang_345",
+      "widget_id": "widget_clang_345",
+      "topic": "Branching — Logical AND (&&) with Zero Result",
+      "q": "What will variables x and y equal after executing condition check in widget?",
+      "hint": "Recall short-circuit rule for && operator when first operand is false.",
+      "options": [
+        "x=0, y=10",
+        "x=1, y=11",
+        "x=0, y=11",
+        "x=1, y=10"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Left side `x != 0` (0 != 0) is false. By short-circuit rule, right side `++y` is not even evaluated. Variable `x` remains 0, while `y` remains 10.",
+        "Incorrect. Neither `x` changes nor right side `++y` evaluates due to short-circuiting.",
+        "Incorrect. Right side `++y` is skipped, so `y` does not become 11.",
+        "Incorrect. Expression does not change variable `x`."
+      ]
+    },
+    {
+      "id": "it_clang_346",
+      "widget_id": "widget_clang_346",
+      "topic": "Switch Statement — Duplicate case Labels",
+      "q": "What will happen when attempting to compile code from widget with two identical case labels?",
+      "hint": "Think about whether compiler permits selection ambiguity within a single switch block.",
+      "options": [
+        "Compilation error: duplicate case value detected",
+        "Code will compile and execute first matched case 1",
+        "Code will compile and execute second matched case 1",
+        "Undefined Behavior at runtime"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! All `case` label values within a single `switch` statement must be unique. Attempting to duplicate a label causes a compilation error.",
+        "Incorrect. Compiler cannot decide where to jump, so it issues a syntax error.",
+        "Incorrect. Duplicate labels are strictly forbidden at compilation stage.",
+        "Incorrect. Error is caught prior to program execution stage."
+      ]
+    },
+    {
+      "id": "it_clang_347",
+      "widget_id": "widget_clang_347",
+      "topic": "Branching — Bitwise NOT (~) as Condition",
+      "q": "What will the widget code snippet output when passing bitwise NOT ~0 result into an if condition?",
+      "hint": "Recall what 0 turns into under bitwise NOT and whether this result is non-zero.",
+      "options": [
+        "\"Non-zero\"",
+        "\"Zero\"",
+        "Compilation error",
+        "Outputs nothing"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Bitwise NOT `~0` inverts all zero bits to ones, yielding `-1` (or `0xFFFFFFFF`). Since this value is non-zero, C interprets it as true and outputs \"Non-zero\".",
+        "Incorrect. Bitwise NOT `~0` is not 0, and any non-zero value in C is true.",
+        "Incorrect. Operator `~` in conditional block is syntactically correct.",
+        "Incorrect. First `if` branch executes and prints \"Non-zero\"."
+      ]
+    },
+    {
+      "id": "it_clang_348",
+      "widget_id": "widget_clang_348",
+      "topic": "Branching — Assignment and Comparison Precedence",
+      "q": "What will the program in the widget output when parentheses around assignment operation inside condition are missing?",
+      "hint": "Take into account that comparison operator != has higher precedence than assignment operator =.",
+      "options": [
+        "\"1\"",
+        "\"5\"",
+        "\"0\"",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Due to precedence, comparison `5 != 0` (true, i.e. 1) is evaluated first. Then result `1` is assigned to variable `x`. Condition `if (1)` is true, and printed value of `x` equals 1.",
+        "Incorrect. Braces do not group `(x = 5)` here, so `!=` evaluates before `=`, and `x` gets `1`.",
+        "Incorrect. Comparison `5 != 0` result is 1, not 0.",
+        "Incorrect. Expression is syntactically correct according to C standards."
+      ]
+    },
+    {
+      "id": "it_clang_349",
+      "widget_id": "widget_clang_349",
+      "topic": "Branching — Logical OR (||) and Lazy Evaluation",
+      "q": "What will the widget code snippet output when using logical OR (||) with modifying variables?",
+      "hint": "Recall how short-circuiting works for || operator if left operand equals truth (non-zero).",
+      "options": [
+        "\"1 0\"",
+        "\"1 1\"",
+        "\"0 0\"",
+        "\"0 1\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Left operand `a++` returns current value of `a` (1), which is true, and then increments `a` to 2. Due to short-circuiting, right side `b++` does not execute at all (`b` remains 0). Output: \"1 0\".",
+        "Incorrect. In case of `||`, if left side is true, right side is completely skipped.",
+        "Incorrect. `1` is printed for the first output field because it shows the value prior to increment or status.",
+        "Incorrect. Left side is true, so `b++` is not evaluated."
+      ]
+    },
+    {
+      "id": "it_clang_350",
+      "widget_id": "widget_clang_350",
+      "topic": "Switch Statement — Execution of default Branch in Middle of Block",
+      "q": "What will the code in the widget output if default branch is located at start of switch and contains no break?",
+      "hint": "Trace whether expression matches any case labels and how control is transferred.",
+      "options": [
+        "\"DEF12\"",
+        "\"DEF\"",
+        "\"12\"",
+        "\"2\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Value `val = 5` matches neither `case 1:` nor `case 2:`. Jump goes to `default:`, printing \"DEF\". Since `break` is missing, fall-through occurs into `case 1:` and `case 2:`, printing \"12\". Total: \"DEF12\".",
+        "Incorrect. Due to missing `break` after `default:`, program continues executing code of subsequent `case` branches.",
+        "Incorrect. The `default` branch will trigger and print \"DEF\" prior to moving to `case 1:`.",
+        "Incorrect. Control is transferred to `default:`, not immediately to `case 2:`."
+      ]
+    }
+  ]
+}

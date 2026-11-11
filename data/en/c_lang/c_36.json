@@ -1,0 +1,605 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_1121",
+      "widget_id": "widget_clang_1121",
+      "topic": "Preprocessor — Parentheses in Macro Arguments",
+      "q": "Why is it extremely important to wrap each parameter and the entire expression in parentheses ((a) * (b)) when creating a parameterized macro #define MULTIPLY(a, b) a * b?",
+      "hint": "Think about how the macro will expand when passing expressions with addition operations, such as MULTIPLY(1 + 2, 3 + 4).",
+      "options": [
+        "To avoid violating operator precedence when passing complex expressions as arguments",
+        "To allocate dynamic memory for the evaluation result",
+        "To force the compiler to turn the macro into an inline function",
+        "This is a C standard syntax requirement; without parentheses the code will not compile"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Due to text substitution 'as is', the expression `MULTIPLY(1 + 2, 3 + 4)` will expand to `1 + 2 * 3 + 4 = 11` instead of the expected `(1 + 2) * (3 + 4) = 21`. Wrapping in parentheses guarantees the correct mathematical order of operations.",
+        "Incorrect. The preprocessor only performs text substitution and does not allocate memory.",
+        "Incorrect. Parentheses do not turn a macro into a function.",
+        "Incorrect. Code without parentheses will compile, but will lead to logical errors due to operator precedence."
+      ]
+    },
+    {
+      "id": "it_clang_1122",
+      "widget_id": "widget_clang_1122",
+      "topic": "Preprocessor — Macro Scope",
+      "q": "What is the scope of a macro declared via #define BUFFER_SIZE 1024 inside a function body?",
+      "hint": "Does the preprocessor know about curly braces {} and function blocks in C?",
+      "options": [
+        "From the point of declaration to the end of the translation unit file (or until the #undef directive) — the preprocessor ignores function boundaries",
+        "Limited to the {} block of the function inside which the macro was declared",
+        "The same as that of a regular local variable on the stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The preprocessor works BEFORE the compilation phase and treats code as plain text. It knows nothing about functions or `{}` blocks. The macro is available everywhere from its point of declaration to the end of the file (or until `#undef`).",
+        "Incorrect. The preprocessor does not respect C code block boundaries.",
+        "Incorrect. Macros do not have local variable scope concepts."
+      ]
+    },
+    {
+      "id": "it_clang_1123",
+      "widget_id": null,
+      "topic": "Preprocessor — #undef Directive",
+      "q": "Which preprocessor directive is used to undefine (remove) a previously created macro?",
+      "hint": "The directive name is formed by adding the prefix un- to the word define.",
+      "options": [
+        "#undef",
+        "#delete",
+        "#remove",
+        "#clear"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `#undef MACRO_NAME` directive resets a macro definition. After it, the name is no longer substituted by the preprocessor.",
+        "Incorrect. The `#delete` directive does not exist in C.",
+        "Incorrect. The `#remove` directive is absent.",
+        "Incorrect. The `#clear` directive is not part of the C standard."
+      ]
+    },
+    {
+      "id": "it_clang_1124",
+      "widget_id": "widget_clang_1124",
+      "topic": "Predefined Macros — Line Number __LINE__",
+      "q": "Which standard macro variable contains the current line number of the C source file during compilation?",
+      "hint": "The name contains the word LINE enclosed in double underscores.",
+      "options": [
+        "__LINE__",
+        "__FILE__",
+        "__ROW__",
+        "__LINE_NUM__",
+        "__STDC_LINE__"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `__LINE__` macro is automatically replaced by the compiler with the current line number in the source file (an integer). It is often used together with `__FILE__` for error logging.",
+        "Incorrect. `__FILE__` contains the current file name as a string.",
+        "Incorrect. The `__ROW__` macro does not exist.",
+        "Incorrect. The name `__LINE_NUM__` is not standard.",
+        "Incorrect. Fictional macro name."
+      ]
+    },
+    {
+      "id": "it_clang_1125",
+      "widget_id": "widget_clang_1125",
+      "topic": "Preprocessor — Variadic Macros (__VA_ARGS__)",
+      "q": "What identifier is used in a parameterized macro with a variable number of arguments (e.g., #define LOG(fmt, ...)) to insert the passed argument list?",
+      "hint": "The name starts with double underscores and contains the words VA_ARGS.",
+      "options": [
+        "__VA_ARGS__",
+        "__ARGS__",
+        "__VAR_ARGS__",
+        "..."
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Starting from C99, if a macro is declared with an ellipsis `...`, all additional passed arguments are substituted via the special identifier `__VA_ARGS__`.",
+        "Incorrect. The identifier `__ARGS__` does not exist.",
+        "Incorrect. The correct name is `__VA_ARGS__`.",
+        "Incorrect. The ellipsis `...` is used in the declaration, not in the macro body."
+      ]
+    },
+    {
+      "id": "it_clang_1126",
+      "widget_id": "widget_clang_1126",
+      "topic": "Syntax — Multi-line Macro Continuation",
+      "q": "Which character at the end of a line is used to continue a multi-line #define macro definition onto a new line?",
+      "hint": "This same character is used for escaping special characters.",
+      "options": [
+        "Backslash \\",
+        "Forward slash /",
+        "Double ampersand &&",
+        "Semicolon ;"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since a `#define` macro ends with a newline character, continuation to the next line is done using the backslash `\\` (Line continuation character) at the very end of the line.",
+        "Incorrect. Forward slash is used for comments and division.",
+        "Incorrect. `&&` is a logical AND operator.",
+        "Incorrect. Semicolon in the preprocessor becomes part of the substituted text."
+      ]
+    },
+    {
+      "id": "it_clang_1127",
+      "widget_id": null,
+      "topic": "Comparison — #define vs const Variables",
+      "q": "What is the main difference between the constant #define LIMIT 10 and const int limit = 10;?",
+      "hint": "Does #define participate in compiler type checking?",
+      "options": [
+        "#define performs text substitution without type checking, while const creates a real typed variable in memory",
+        "#define allocates memory on the heap, while const allocates on the stack",
+        "A const variable cannot be used in expressions, whereas #define can",
+        "There is absolutely no difference between them"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `#define` works at the preprocessing stage and has no data type (the compiler simply sees the number `10`). A `const int` variable is checked by the compiler for type and has a real address in memory.",
+        "Incorrect. `#define` does not allocate memory at all.",
+        "Incorrect. `const` constants can be freely used in any expressions.",
+        "Incorrect. The difference is fundamental at the preprocessing and compilation stages."
+      ]
+    },
+    {
+      "id": "it_clang_1128",
+      "widget_id": "widget_clang_1128",
+      "topic": "Syntax — Space in Function-like Macro Declarations",
+      "q": "What will happen if a space is placed between the name of a parameterized macro and the opening parenthesis in its declaration: #define FOO (x) ((x) + 1)?",
+      "hint": "Will the macro turn into an object-like constant instead of a function-like macro with a parameter?",
+      "options": [
+        "The preprocessor will create an object-like macro FOO with the value \"(x) ((x) + 1)\" instead of a function-like macro",
+        "The space will be automatically ignored by the preprocessor",
+        "A compilation error will occur",
+        "The macro will automatically be converted into an inline function"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C preprocessor syntax, a function-like macro requires the parenthesis to follow IMMEDIATELY after the name: `#define FOO(x)`. If a space is inserted, `FOO` becomes a regular object-like macro replacing text with `(x) ((x) + 1)`.",
+        "Incorrect. The space here fundamentally changes the macro type.",
+        "Incorrect. This is valid C code, so the preprocessor will not issue an error.",
+        "Incorrect. No function will be created."
+      ]
+    },
+    {
+      "id": "it_clang_1129",
+      "widget_id": null,
+      "topic": "Conditional Compilation — #ifdef and #if defined Directives",
+      "q": "Which preprocessor directive allows checking if a macro with a specific name has been previously defined?",
+      "hint": "The directive name combines the words if and defined.",
+      "options": [
+        "#ifdef (or #if defined(...))",
+        "#ifexist",
+        "#isdefined",
+        "#check"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `#ifdef MACRO` or `#if defined(MACRO)` directives check for the existence of a macro, regardless of what value is assigned to it.",
+        "Incorrect. The `#ifexist` directive does not exist in the C standard.",
+        "Incorrect. The `#isdefined` directive does not exist.",
+        "Incorrect. `#check` is not a C preprocessor directive."
+      ]
+    },
+    {
+      "id": "it_clang_1130",
+      "widget_id": "widget_clang_1130",
+      "topic": "Preprocessor — Redefining a Macro without #undef",
+      "q": "What will happen if an attempt is made to redefine a macro with a different value #define VAL 100 and below #define VAL 200 without a prior #undef VAL?",
+      "hint": "Will the compiler stop building or issue a warning?",
+      "options": [
+        "The compiler will issue a warning about redefinition, and the macro will receive the new value 200",
+        "The program will not compile due to a fatal error",
+        "The new value will be ignored, keeping VAL == 100",
+        "Both values will merge into an array"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Redefining a macro with different content is not strictly forbidden, but the compiler will issue a `macro redefinition` warning and overwrite the macro with the new value `200`.",
+        "Incorrect. This is a warning, not a critical error.",
+        "Incorrect. Priority is given to the latest declaration.",
+        "Incorrect. Arrays are not created in preprocessor macros this way."
+      ]
+    },
+    {
+      "id": "it_clang_1131",
+      "widget_id": "widget_clang_1131",
+      "topic": "Preprocessor vs Typedef — Type Replacement via #define",
+      "q": "What is the pitfall of using the macro #define INT_PTR int* when declaring multiple variables separated by commas INT_PTR a, b;?",
+      "hint": "How will text substitution of 'int*' affect the asterisk before the second variable name?",
+      "options": [
+        "Variable a will become an int* pointer, while variable b will be a regular int",
+        "Both variables a and b will become int* pointers",
+        "A syntax compilation error will occur",
+        "Variable a will become int, while b will be an int* pointer"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Because the preprocessor simply substitutes text, the line expands to `int* a, b;`. In C, the asterisk applies only to the name of the specific variable, so `a` will be of type `int*`, and `b` of type `int`. To correctly declare types, `typedef int* INT_PTR;` should be used.",
+        "Incorrect. Text substitution does not propagate `*` to variable `b`.",
+        "Incorrect. The code compiles completely, but variable `b`'s type will be unexpected.",
+        "Incorrect. The asterisk will attach to variable `a`."
+      ]
+    },
+    {
+      "id": "it_clang_1132",
+      "widget_id": "widget_clang_1132",
+      "topic": "Preprocessor — Repeated Evaluation in Ternary Operator",
+      "q": "What will be the values of variable res and variable a after executing the code int a = 5, b = 2; int res = MAX(a++, b); given the macro #define MAX(x, y) ((x) > (y) ? (x) : (y))?",
+      "hint": "How many times will variable a be substituted into the ternary operator and where will the increment execute?",
+      "options": [
+        "res == 6, and variable a will equal 7 (due to two increments)",
+        "res == 5, and variable a will equal 6",
+        "res == 5, and variable a will equal 7",
+        "res == 6, and variable a will equal 6"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The expression expands into `((a++) > (b) ? (a++) : (b))`. First, the condition `5 > 2` is evaluated (true, `a` becomes 6). Then the true branch `a++` executes (returns current 6 and increments `a` to 7). As a result, `res == 6` and `a == 7`.",
+        "Incorrect. The condition is true, so the `(a++)` branch executes a second time.",
+        "Incorrect. The second evaluation returns the value of `a` before the second increment (which is 6).",
+        "Incorrect. Repeated evaluation will perform the increment again."
+      ]
+    },
+    {
+      "id": "it_clang_1133",
+      "widget_id": "widget_clang_1133",
+      "topic": "Preprocessor — Two-Level Stringification",
+      "q": "Why is a two-level wrapper used when turning the value of another macro into a string (e.g., #define STR_HELPER(x) #x and #define STR(x) STR_HELPER(x))?",
+      "hint": "Do macros inside the # operator expand directly?",
+      "options": [
+        "So that the argument macro first expands into its value, and only then turns into a string",
+        "To automatically strip spaces from the created string",
+        "To force the preprocessor to allocate memory on the heap",
+        "This is a specific requirement for working with Unicode"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `#` operator suppresses macro expansion of arguments. Calling `STR_HELPER(VERSION)` yields the string `\"VERSION\"`. The intermediate macro `STR(VERSION)` first expands `VERSION` into its value (e.g., `1.0`), and then passes it to `STR_HELPER`, producing `\"1.0\"`.",
+        "Incorrect. The preprocessor does not remove spaces from strings.",
+        "Incorrect. The preprocessor works only with text during build time.",
+        "Incorrect. This is a general rule of macro expansion in ANSI C."
+      ]
+    },
+    {
+      "id": "it_clang_1134",
+      "widget_id": null,
+      "topic": "Predefined Macros — __DATE__ and __TIME__",
+      "q": "What do the standard predefined macros __DATE__ and __TIME__ contain?",
+      "hint": "At what moment are the values of these macros fixed?",
+      "options": [
+        "String literals with the date and time of file compilation",
+        "Current date and time at the moment of program invocation in seconds (time_t)",
+        "Runtime of the current process since startup",
+        "Time of last file modification on disk"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `__DATE__` (format `\"Mmm dd yyyy\"`) and `__TIME__` (format `\"hh:mm:ss\"`) macros are substituted by the compiler as string literals fixing the exact build moment of the module.",
+        "Incorrect. At runtime, these values do not change or update.",
+        "Incorrect. To measure execution time, functions from `<time.h>` are used.",
+        "Incorrect. File modification time is tracked by the build system (Make/CMake), not these macros."
+      ]
+    },
+    {
+      "id": "it_clang_1135",
+      "widget_id": "widget_clang_1135",
+      "topic": "Preprocessor — Self-Referential Macros",
+      "q": "What will happen if a macro refers to its own name inside its definition (e.g., #define A (A + 1))?",
+      "hint": "Will the preprocessor enter an infinite expansion loop?",
+      "options": [
+        "The preprocessor replaces A with (A + 1) and suppresses re-expansion of A, preventing looping",
+        "The preprocessor will hang due to infinite recursion",
+        "A fatal compilation error 'Recursive macro detected' will occur",
+        "The identifier A will automatically reset to 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The C standard forbids recursive macro expansion: during re-scanning of substituted text, the macro name `A` is disabled, preventing infinite replacement.",
+        "Incorrect. Infinite looping does not occur thanks to C standard re-scanning rules.",
+        "Incorrect. No compilation error occurs.",
+        "Incorrect. The name `A` remains in text 'as is'."
+      ]
+    },
+    {
+      "id": "it_clang_1136",
+      "widget_id": "widget_clang_1136",
+      "topic": "Preprocessor — #line Directive",
+      "q": "What is the purpose of the preprocessor directive #line 100 \"custom.c\"?",
+      "hint": "How does this affect compiler error output and __LINE__ / __FILE__ macros?",
+      "options": [
+        "To forcibly change the values of __LINE__ and __FILE__ macros for subsequent lines of code",
+        "To jump to line 100 of the file during program execution",
+        "To limit the maximum number of lines in a file",
+        "To include an external file starting from line 100"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `#line` directive changes compiler internal counters: current line becomes 100, and file name becomes `\"custom.c\"`. Code generators (yacc/bison) often use this so compiler errors point back to the source DSL file.",
+        "Incorrect. The directive operates during compilation, not runtime.",
+        "Incorrect. File length limits are not set by the directive.",
+        "Incorrect. To include files, `#include` is used."
+      ]
+    },
+    {
+      "id": "it_clang_1137",
+      "widget_id": null,
+      "topic": "Syntax — String Literal Concatenation",
+      "q": "How will the C compiler process two string literals written with a space, for example #define MSG \"Hello, \" \"World!\"?",
+      "hint": "Is a string addition operator needed in C?",
+      "options": [
+        "Automatically merge them into a single string literal \"Hello, World!\"",
+        "Issue a compilation error because the + operator is missing",
+        "Create an array of two separate strings",
+        "Ignore the second literal"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, adjacent string literals separated only by whitespace or newlines are automatically concatenated by the translator into a single string during text analysis phases.",
+        "Incorrect. C has no `+` operator for strings.",
+        "Incorrect. A single string literal is created.",
+        "Incorrect. Both parts of the string will be preserved."
+      ]
+    },
+    {
+      "id": "it_clang_1138",
+      "widget_id": "widget_clang_1138",
+      "topic": "C99 Standard — __func__ Identifier",
+      "q": "Is __func__ (C99) a preprocessor macro?",
+      "hint": "Can the presence of __func__ be checked via #ifdef __func__?",
+      "options": [
+        "No, __func__ is an implicit local static variable created by the compiler inside every function",
+        "Yes, it is a regular preprocessor macro similar to __LINE__",
+        "Yes, it is a built-in macro available only in header files",
+        "No, it is a keyword for declaring functions"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! According to C99, `__func__` is not a preprocessor macro, but an implicitly declared array `static const char __func__[] = \"function-name\";` at the beginning of the function body. Therefore `#ifdef __func__` will not work.",
+        "Incorrect. Unlike `__FILE__` and `__LINE__`, the preprocessor knows nothing about `__func__`.",
+        "Incorrect. It is declared by the compiler during function syntax parsing.",
+        "Incorrect. It is the name of a built-in local array."
+      ]
+    },
+    {
+      "id": "it_clang_1139",
+      "widget_id": "widget_clang_1139",
+      "topic": "C23 / GNU Standard — Deleting Trailing Comma (__VA_OPT__)",
+      "q": "What problem does the __VA_OPT__(,) macro in C23 standard (or GNU extension , ## __VA_ARGS__) solve?",
+      "hint": "What happens to the comma before __VA_ARGS__ if the user calls a variadic macro without additional arguments?",
+      "options": [
+        "Safely deletes the trailing comma if the additional argument list __VA_ARGS__ is empty",
+        "Automatically casts arguments to const char* type",
+        "Counts the number of passed arguments",
+        "Creates a variadic array on the heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Calling macro `#define LOG(fmt, ...)` without arguments expanded `printf(fmt, __VA_ARGS__)` into `printf(\"test\", )` with an extra comma. The `__VA_OPT__(,)` construct inserts a comma only if `__VA_ARGS__` is non-empty.",
+        "Incorrect. The macro does not perform type conversions.",
+        "Incorrect. Other macro tricks are used to count arguments.",
+        "Incorrect. Heap memory work is not performed."
+      ]
+    },
+    {
+      "id": "it_clang_1140",
+      "widget_id": "widget_clang_1140",
+      "topic": "Conditional Compilation — Undeclared Macros in #if",
+      "q": "What will be the value of macro UNKNOWN_MACRO in conditional directive #if UNKNOWN_MACRO == 0 if it was not previously declared via #define?",
+      "hint": "How does the preprocessor handle unknown identifiers inside an #if expression?",
+      "options": [
+        "The preprocessor will replace the unknown identifier with 0, and the condition will become true",
+        "A fatal preprocessor error 'Undefined macro' will occur",
+        "The condition is automatically deemed false",
+        "The preprocessor will replace it with the value -1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In `#if` and `#elif` directive expressions, any remaining unreplaced identifiers (except `defined`) are automatically replaced by the preprocessor with the integer `0`.",
+        "Incorrect. Undeclared macros in `#if` do not cause build abort.",
+        "Incorrect. Since it becomes 0, expression `0 == 0` yields 1 (true).",
+        "Incorrect. Default value is always 0."
+      ]
+    },
+    {
+      "id": "it_clang_1141",
+      "widget_id": "widget_clang_1141",
+      "topic": "Function-like Macros — Comparison with Inline Functions",
+      "q": "What is the main advantage of a static inline function over a #define function-like macro when implementing logic inside functions?",
+      "hint": "Does the preprocessor check argument types, unlike the compiler?",
+      "options": [
+        "Inline functions provide strict argument type checking and are convenient for debugging (gdb), while maintaining direct inlining speed",
+        "Inline functions never increase final executable file size",
+        "Inline functions can be called before main function execution",
+        "Inline functions are automatically compiled for graphics card (GPU)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! A `static inline` function combines body substitution speed (without call overhead) with strict compiler argument type checking and proper debugger visibility.",
+        "Incorrect. Like macros, excessive inlining of large functions increases binary size.",
+        "Incorrect. Calling inline functions follows standard control flow rules.",
+        "Incorrect. Unrelated to GPU subsystems."
+      ]
+    },
+    {
+      "id": "it_clang_1142",
+      "widget_id": "widget_clang_1142",
+      "topic": "Dangers — return Statement inside Macro",
+      "q": "What will happen if a macro called inside a function expands into a return -1; instruction?",
+      "hint": "Where does the return statement belong during macro text substitution?",
+      "options": [
+        "An immediate return will occur from the function in whose body the macro was called",
+        "The return statement will return a value from the macro itself without terminating the calling function",
+        "A compilation error 'illegal return in macro' will occur",
+        "The value -1 will be written to global variable errno"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The preprocessor substitutes `return -1;` directly into the code of the outer function. Executing this line will terminate the outer function and return `-1`.",
+        "Incorrect. Macros do not create their own stack frame or function boundary.",
+        "Incorrect. Syntactically completely correct C code.",
+        "Incorrect. The `return` statement exits function, rather than setting `errno`."
+      ]
+    },
+    {
+      "id": "it_clang_1143",
+      "widget_id": "widget_clang_1143",
+      "topic": "Optimization — Disabling Functions in Release via #define",
+      "q": "How to correctly disable a debug function log_debug(...) via #define in a release build so that the compiler generates no call code?",
+      "hint": "What replaces a variadic macro call in C so that it turns into a 'noop' expression?",
+      "options": [
+        "#define log_debug(...) ((void)0)",
+        "#define log_debug(...) NULL",
+        "#define log_debug(...) return 0",
+        "#define log_debug(...) break"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The notation `((void)0)` represents a safe no-op expression. It fits syntactically with a trailing semicolon `;` anywhere in a function and is completely removed by the optimizer.",
+        "Incorrect. Using `NULL` without assignment will trigger compiler warnings.",
+        "Incorrect. This will terminate the calling function upon logging attempt.",
+        "Incorrect. `break` outside loop or `switch` will cause a compilation error."
+      ]
+    },
+    {
+      "id": "it_clang_1144",
+      "widget_id": "widget_clang_1144",
+      "topic": "Debugging — Function Wrapping with Metadata Passing",
+      "q": "Why is function void* custom_malloc(size_t sz, const char* file, int line) often wrapped with macro #define malloc(sz) custom_malloc(sz, __FILE__, __LINE__)?",
+      "hint": "How does the debug function learn where in user code memory was allocated?",
+      "options": [
+        "To implicitly pass file name and call line number to the debug function for tracking memory leaks",
+        "To speed up memory allocation via precompilation",
+        "To make function call thread-safe",
+        "To forcibly allocate memory on stack instead of heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! At call site `malloc(100)`, the macro substitutes `__FILE__` and `__LINE__`, allowing memory profiler to record exactly which line of which file requested memory.",
+        "Incorrect. Allocation speed is determined by `malloc` algorithm.",
+        "Incorrect. Thread safety is ensured by mutexes/atomics, not macros.",
+        "Incorrect. Function continues allocating memory on heap."
+      ]
+    },
+    {
+      "id": "it_clang_1145",
+      "widget_id": "widget_clang_1145",
+      "topic": "GNU C Extensions — Block Expression ({ ... }) in Macros",
+      "q": "Why is the ({ ... }) construct (Statement Expression) used in GCC/Clang extensions when creating safe function-like macros?",
+      "hint": "How to declare a temporary local variable and force the macro to 'return' a result?",
+      "options": [
+        "To declare local variables inside a macro and return the value of the last expression, avoiding repeated evaluation of arguments",
+        "To execute macro code in a separate background thread",
+        "To automatically turn macro into assembly insertion",
+        "To call a base class method"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `({ ... })` construct allows putting a compound block with local variables inside a macro, with the value of the last expression inside the block becoming the 'return value' of the macro.",
+        "Incorrect. No multithreading is created by this construct.",
+        "Incorrect. `__asm__` is used for assembly insertions.",
+        "Incorrect. There are no classes or inheritance in C."
+      ]
+    },
+    {
+      "id": "it_clang_1146",
+      "widget_id": "widget_clang_1146",
+      "topic": "Design Patterns — X-Macros Pattern",
+      "q": "What is the idea behind applying the X-Macros idiom when generating functions or data tables in C?",
+      "hint": "How to avoid duplicating lists (enum, strings, handler functions) in different parts of a program?",
+      "options": [
+        "The list of items is stored in a single macro, which is redefined and expanded multiple times to generate enums, string arrays, and functions",
+        "Function code is automatically parallelized across all CPU cores",
+        "All project functions are merged into one huge file using preprocessor",
+        "Used to protect source code from decompilation"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The X-Macros pattern allows describing data once (as a list of lists), and then substituting different definitions of macro `X(...)` to automatically generate enums, string mappings, and function switch cases.",
+        "Incorrect. This is a preprocessor code generation pattern, not parallelization.",
+        "Incorrect. Project file structure does not change.",
+        "Incorrect. X-Macros is not code obfuscation or anti-tamper."
+      ]
+    },
+    {
+      "id": "it_clang_1147",
+      "widget_id": "widget_clang_1147",
+      "topic": "Generic Programming — typeof Keyword in Macros",
+      "q": "Why is typeof (or __typeof__) keyword used in safe function-like macros (e.g., minimum calculation MIN(a, b))?",
+      "hint": "How to preserve argument type when creating temporary local variables inside a macro?",
+      "options": [
+        "To determine argument type and create local variables of same type, preventing repeated evaluation of side effects",
+        "To find exact data type size in bytes at runtime",
+        "To forcibly cast argument to void* type",
+        "To check if variable is a structure or pointer"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Writing `typeof(a) _a = (a);` creates local variable `_a` of the same type as parameter `a`. This evaluates `a` exactly once, avoiding issues with `MIN(i++, j++)`.",
+        "Incorrect. `sizeof` is used to get memory size.",
+        "Incorrect. Casting to `void*` is done via `(void*)` syntax.",
+        "Incorrect. `typeof` does not inspect structures."
+      ]
+    },
+    {
+      "id": "it_clang_1148",
+      "widget_id": "widget_clang_1148",
+      "topic": "Working with Structures — offsetof Macro from <stddef.h>",
+      "q": "What does standard offsetof(type, member) macro calculate when manipulating structure fields inside functions?",
+      "hint": "How to find how many bytes offset from structure start a specific field occupies?",
+      "options": [
+        "Offset of field member in bytes relative to start of structure type",
+        "Total size of structure type in bytes",
+        "Pointer to first field of structure",
+        "Number of fields contained in structure type"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `offsetof` macro returns a `size_t` value — the byte offset of field `member` from the start of structure `type`. Frequently used in low-level serialization or `container_of`.",
+        "Incorrect. Total structure size is computed by `sizeof(type)`.",
+        "Incorrect. That would cast structure address.",
+        "Incorrect. `offsetof` does not count field numbers."
+      ]
+    },
+    {
+      "id": "it_clang_1149",
+      "widget_id": "widget_clang_1149",
+      "topic": "Compatibility — Replacing Function Names via #define",
+      "q": "Why is replacing system functions like #define strdup _strdup often found in cross-platform code?",
+      "hint": "Do names of some standard functions differ in MSVC (Windows) and GCC (POSIX) compilers?",
+      "options": [
+        "To ensure cross-platform building by adapting function names to specifics of a particular compiler/OS",
+        "To multiply strdup call execution speed",
+        "To forbid heap memory allocation",
+        "To make function calls completely hidden from system debugger"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The MSVC compiler requires using POSIX functions with an underscore (e.g. `_strdup` instead of `strdup`). Using `#define`, developers maintain unified code syntax across all OSes.",
+        "Incorrect. The macro changes only called symbol name, without changing implementation.",
+        "Incorrect. Memory will still be allocated on heap.",
+        "Incorrect. Debugger sees final symbol `_strdup`."
+      ]
+    },
+    {
+      "id": "it_clang_1150",
+      "widget_id": "widget_clang_1150",
+      "topic": "Dangers — Name Conflict (Shadowing) in Macros",
+      "q": "What problem can arise if a macro declares variable tmp inside block do { int tmp = ...; } while(0), and a variable with the same name already exists in the function?",
+      "hint": "Which variable will be hidden (shadowed) in the inner scope block?",
+      "options": [
+        "Macro local variable will shadow outer variable tmp inside macro block, which can lead to logical error during interaction",
+        "A compilation error 'Duplicate symbol error' will occur",
+        "Outer variable tmp from calling function will automatically reset to zero",
+        "Program will crash with Segmentation Fault"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! New block `{}` creates its own scope. Inner `int tmp` hides outer `tmp`. If macro tries to read outer `tmp` (e.g., `a = tmp`), it reads its own newly created variable!",
+        "Incorrect. Declaring variable in inner block with same name is syntactically allowed in C.",
+        "Incorrect. Outer variable retains its value, but becomes inaccessible inside macro block.",
+        "Incorrect. No memory access errors occur here."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,605 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_571",
+      "widget_id": "widget_clang_571",
+      "topic": "sizeof Operator — Array Decay to Pointer Parameter",
+      "q": "What will sizeof(arr) output inside function void test(int arr[10]) on a 64-bit architecture?",
+      "hint": "Remember what the compiler converts any array parameters to in function headers.",
+      "options": [
+        "8",
+        "40",
+        "10",
+        "4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In function parameters, the array size specification [10] is ignored by the compiler, and the type int arr[10] implicitly becomes a pointer int *arr. On a 64-bit system, the size of any pointer is 8 bytes.",
+        "Incorrect. 40 bytes ($10 \\times 4$) would be the sizeof(arr) value for a local array outside of function parameters.",
+        "Incorrect. sizeof returns the size of the type in bytes, not the number of elements.",
+        "Incorrect. 4 is the size of a single int type, whereas the operand is a pointer."
+      ]
+    },
+    {
+      "id": "it_clang_572",
+      "widget_id": "widget_clang_572",
+      "topic": "C99 Standards — Runtime Evaluation of sizeof Operand for VLAs",
+      "q": "What will printf(\"%zu %d\", sizeof(arr), n) output when declaring VLA int arr[n++] with n = 5?",
+      "hint": "Is sizeof for a VLA an unevaluated operand or a runtime expression?",
+      "options": [
+        "20 6",
+        "20 5",
+        "24 6",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! For standard types, sizeof is a compile-time constant expression. However, for VLAs (Variable Length Arrays), the size is evaluated at runtime! Expression n++ is evaluated: the value 5 goes into the array size ($5 \\times 4 = 20$ bytes), and variable n itself is incremented to 6. Output: \"20 6\".",
+        "Incorrect. Side effect n++ must be executed because the operand is a VLA.",
+        "Incorrect. Array size is calculated based on the old value n = 5.",
+        "Incorrect. The code is completely valid in C99 standard and newer."
+      ]
+    },
+    {
+      "id": "it_clang_573",
+      "widget_id": "widget_clang_573",
+      "topic": "sizeof Operator — Absence of Side Effects for Statically Known Types",
+      "q": "What will s and i equal after executing size_t s = sizeof(arr[i++]) for a fixed-size array?",
+      "hint": "Are side effects (such as i++) evaluated inside sizeof for regular types?",
+      "options": [
+        "4 1",
+        "4 2",
+        "20 1",
+        "20 2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! If the operand of sizeof is not a VLA, the expression inside it is NOT evaluated at runtime (Unevaluated Context). The compiler inspects only the type of expression arr[i++] (which is int, size 4 bytes). Increment i++ is not executed, so i remains 1. Output: \"4 1\".",
+        "Incorrect. Expression i++ is discarded by the compiler and not executed at runtime.",
+        "Incorrect. arr[i] is a single element of type int (4 bytes), not the whole array.",
+        "Incorrect. Increment i++ does not occur, and operand evaluates as a single element."
+      ]
+    },
+    {
+      "id": "it_clang_574",
+      "widget_id": "widget_clang_574",
+      "topic": "C99 Standards — Flexible Array Member and sizeof",
+      "q": "Is flexible array member char data[] included when computing sizeof(struct Buffer)?",
+      "hint": "How much memory does an unnamed flexible array add to the end of a structure according to the standard?",
+      "options": [
+        "4",
+        "0",
+        "8",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! According to the C99 standard, a Flexible Array Member char data[] does not add bytes to the size of the structure itself returned by sizeof. Only int length is included in structure size (4 bytes, plus potential alignment padding). Memory for the flexible array itself is allocated dynamically via malloc.",
+        "Incorrect. Field int length takes 4 bytes, so structure size is not 0.",
+        "Incorrect. 8 bytes would occur only if padding were present, but for a single int alignment is usually 4 bytes.",
+        "Incorrect. Flexible array syntax is official starting from C99."
+      ]
+    },
+    {
+      "id": "it_clang_575",
+      "widget_id": "widget_clang_575",
+      "topic": "sizeof Operator — Comparing sizeof(arr) and sizeof(&arr)",
+      "q": "What will printf(\"%zu %zu\", sizeof(arr), sizeof(&arr)) output on a 64-bit system for int arr[10]?",
+      "hint": "What are the types of expressions arr and &arr from the perspective of operand sizeof?",
+      "options": [
+        "40 8",
+        "40 40",
+        "8 8",
+        "10 8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Expression arr in sizeof(arr) represents the array int[10] itself, so it returns $10 \\times 4 = 40$ bytes. Expression &arr has type 'pointer to array' (int(*)[10]). Since the operand is a POINTER, sizeof(&arr) returns pointer size — 8 bytes. Output: \"40 8\".",
+        "Incorrect. &arr is a pointer; its size is 8 bytes, not 40.",
+        "Incorrect. Array name arr inside sizeof does not decay to a simple pointer.",
+        "Incorrect. sizeof measures size in bytes, not element count."
+      ]
+    },
+    {
+      "id": "it_clang_576",
+      "widget_id": "widget_clang_576",
+      "topic": "Data Types — Unsigned Promotion When Comparing with sizeof Result (size_t)",
+      "q": "What will condition if (-1 < sizeof(arr)) evaluate to for array int arr[3]?",
+      "hint": "What type does the sizeof operator return and how does type promotion occur when comparing signed and unsigned?",
+      "options": [
+        "False",
+        "True",
+        "Compilation error",
+        "Undefined Behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The sizeof operator returns a value of type size_t (unsigned integer). Under Usual Arithmetic Conversions rules, signed number -1 is automatically cast to size_t when compared with unsigned size_t. On a 64-bit system, -1 becomes 18446744073709551615 (SIZE_MAX). Condition 18446744073709551615 < 12 is false (False)!",
+        "Incorrect. Although mathematically $-1 < 12$, implicit promotion of signed -1 to unsigned size_t yields a huge value.",
+        "Incorrect. Comparing signed and unsigned integers is syntactically valid.",
+        "Incorrect. Type promotion logic is strictly defined in C standard."
+      ]
+    },
+    {
+      "id": "it_clang_577",
+      "widget_id": "widget_clang_577",
+      "topic": "C99 Standards — Applying sizeof to Compound Literals",
+      "q": "What is the result of sizeof((double[]){1.0, 2.0, 3.0})?",
+      "hint": "What type and size does this anonymous array have?",
+      "options": [
+        "24",
+        "8",
+        "3",
+        "32"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Compound literal (double[]){1.0, 2.0, 3.0} creates an anonymous array of 3 elements of type double. In C standard, sizeof(double) equals 8 bytes. Total array size: $3 \\times 8 = 24$ bytes.",
+        "Incorrect. 8 bytes is the size of only a single double element.",
+        "Incorrect. 3 is the element count, not memory volume in bytes.",
+        "Incorrect. Memory is allocated for exactly 3 double elements."
+      ]
+    },
+    {
+      "id": "it_clang_578",
+      "widget_id": "widget_clang_578",
+      "topic": "Pointer Types — Array of Pointers vs Pointer to Array in sizeof",
+      "q": "What will printf(\"%zu %zu\", sizeof(a), sizeof(b)) output on a 64-bit system for int *a[5] and int (*b)[5]?",
+      "hint": "Which of these is an array of 5 pointers, and which is a single pointer?",
+      "options": [
+        "40 8",
+        "8 40",
+        "40 40",
+        "8 8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! a is an array of 5 pointers int*. Its size equals $5 \\times 8 = 40$ bytes. b is a SINGLE pointer to array int[5]. Size of any pointer is 8 bytes. Output: \"40 8\".",
+        "Incorrect. Types mixed up: a is an array, while b is a single pointer.",
+        "Incorrect. b is not an array; parentheses (*b) make it a pointer.",
+        "Incorrect. a is an array, so its size is sum of sizes of all elements."
+      ]
+    },
+    {
+      "id": "it_clang_579",
+      "widget_id": "widget_clang_579",
+      "topic": "C99 Standards — Counting Array Elements with Designated Initializers",
+      "q": "What is the element count sizeof(arr) / sizeof(arr[0]) for array declared as int arr[] = {[10] = 42}?",
+      "hint": "What maximum index is specified in designated initializer and how many total slots will compiler allocate?",
+      "options": [
+        "11",
+        "10",
+        "1",
+        "44"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Designated initializer [10] = 42 explicitly sets element at index 10. Compiler allocates memory for indices 0 to 10 inclusive, which is 11 elements. Element count: $11 \\times 4 / 4 = 11$.",
+        "Incorrect. Since indexing starts at 0, max index 10 yields 11 elements.",
+        "Incorrect. Elements 0 through 9 are created and automatically zero-initialized.",
+        "Incorrect. 44 is array size in bytes ($11 \\times 4$), but question asks about element count."
+      ]
+    },
+    {
+      "id": "it_clang_580",
+      "widget_id": "widget_clang_580",
+      "topic": "sizeof Operator — Slices of 3D Array",
+      "q": "What is sizeof(a[0]) for 3D array int a[2][3][4] with 4-byte int?",
+      "hint": "What type does slice a[0] have and what is its dimension?",
+      "options": [
+        "48",
+        "96",
+        "12",
+        "16"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Array a has type int[2][3][4]. Slice a[0] is a 2D array of type int[3][4]. Element count in it: $3 \\times 4 = 12$. In bytes: $12 \\times 4 = 48$ bytes.",
+        "Incorrect. 96 is full size of entire array sizeof(a) ($2 \\times 3 \\times 4 \\times 4$).",
+        "Incorrect. 12 is int element count in slice, while sizeof returns bytes.",
+        "Incorrect. 16 is size of single row of last dimension int[4]."
+      ]
+    },
+    {
+      "id": "it_clang_581",
+      "widget_id": "widget_clang_581",
+      "topic": "sizeof Operator — Incomplete Array Types",
+      "q": "What will happen when attempting to apply sizeof to incomplete array type extern int incomplete_arr[];?",
+      "hint": "Does compiler know exact file/array size in current translation unit?",
+      "options": [
+        "Compilation error: sizeof cannot be applied to incomplete data types",
+        "Returns 0",
+        "Returns 8 (pointer size)",
+        "Undefined behavior at linking phase (linker error)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Under C standard, operand of sizeof must be a complete type. For extern int incomplete_arr[];, array size is unknown at this translation point, so attempting to query its sizeof causes a compilation error.",
+        "Incorrect. Compiler does not substitute 0 for incomplete types.",
+        "Incorrect. Array without explicit size does not automatically decay to pointer inside sizeof.",
+        "Incorrect. Error is detected strictly at compile stage, not linking."
+      ]
+    },
+    {
+      "id": "it_clang_582",
+      "widget_id": "widget_clang_582",
+      "topic": "sizeof Operator — Character Array Buffer vs String Literal",
+      "q": "What are sizeof(a) and sizeof(\"abc\") equal to for char a[10] = \"abc\"?",
+      "hint": "Do you remember the difference between allocated array buffer size and string literal size?",
+      "options": [
+        "10 4",
+        "4 4",
+        "10 3",
+        "3 4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! sizeof(a) evaluates total array memory specified in declaration: 10 bytes. String literal \"abc\" consists of 3 characters plus null terminator '\\0', its size is 4 bytes. Output: \"10 4\".",
+        "Incorrect. Array a size is explicitly fixed at 10 bytes.",
+        "Incorrect. String literal \"abc\" always includes \\0, so its size is 4.",
+        "Incorrect. sizeof for a returns array size, not length of stored string."
+      ]
+    },
+    {
+      "id": "it_clang_583",
+      "widget_id": "widget_clang_583",
+      "topic": "C99 Standards — Multidimensional VLA Array Size",
+      "q": "What is sizeof(a) equal to for 2D VLA array int a[n][m] with n = 2, m = 3 and 4-byte int?",
+      "hint": "Memory volume formula for VLA works exactly the same as for standard arrays.",
+      "options": [
+        "24",
+        "6",
+        "8",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! 2D VLA int a[n][m] calculates total size at runtime by multiplying all dimensions by type size: $n \\times m \\times \\text{sizeof}(int) = 2 \\times 3 \\times 4 = 24$ bytes.",
+        "Incorrect. 6 is total element count in matrix.",
+        "Incorrect. 8 is pointer size, but a is declared as VLA array.",
+        "Incorrect. Multidimensional VLA arrays are fully supported by C99 standard."
+      ]
+    },
+    {
+      "id": "it_clang_584",
+      "widget_id": "widget_clang_584",
+      "topic": "sizeof Operator — Counting Total Elements of a Matrix",
+      "q": "What value will formula sizeof(a) / sizeof(a[0][0]) return for array int a[4][5]?",
+      "hint": "What happens if total size of matrix is divided by size of single element?",
+      "options": [
+        "20",
+        "4",
+        "5",
+        "80"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! sizeof(a) equals total matrix memory ($4 \\times 5 \\times 4 = 80$ bytes). sizeof(a[0][0]) is size of single int element (4 bytes). Result of division: $80 / 4 = 20$ (total cell count in matrix).",
+        "Incorrect. 4 is row count sizeof(a) / sizeof(a[0]).",
+        "Incorrect. 5 is column count sizeof(a[0]) / sizeof(a[0][0]).",
+        "Incorrect. 80 is matrix size in bytes."
+      ]
+    },
+    {
+      "id": "it_clang_585",
+      "widget_id": "widget_clang_585",
+      "topic": "Strings and sizeof — String Literals with Embedded Null Terminators",
+      "q": "What is sizeof(str) equal to for array char str[] = \"a\\0b\\0c\"?",
+      "hint": "Remember to count all explicit characters including \\0, plus hidden trailing null terminator.",
+      "options": [
+        "6",
+        "1",
+        "5",
+        "3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! String literal consists of following byte sequence: 'a', '\\0', 'b', '\\0', 'c', plus hidden trailing '\\0' of literal itself. Total 6 bytes. Operator sizeof(str) returns total array size — 6.",
+        "Incorrect. 1 is value of strlen(str), which stops at first \\0.",
+        "Incorrect. Implicit trailing null terminator of string literal forgotten.",
+        "Incorrect. Characters \\0 are full-fledged data bytes in array."
+      ]
+    },
+    {
+      "id": "it_clang_586",
+      "widget_id": "widget_clang_586",
+      "topic": "Pointers and Arrays — Combining Pointer Offset and Subscripting",
+      "q": "What is value of expression p[1] if p = a + 2 for array a[] = {10, 20, 30, 40}?",
+      "hint": "Expression p[1] expands to *(p + 1). Which element of original array will this address point to?",
+      "options": [
+        "40",
+        "30",
+        "20",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! p points to a[2] (value 30). Expression p[1] computes address p + 1, corresponding to a[3], and dereferences it, returning 40.",
+        "Incorrect. 30 is p[0] (a[2] element).",
+        "Incorrect. 20 is p[-1] (a[1] element).",
+        "Incorrect. Element a[3] is within array bounds."
+      ]
+    },
+    {
+      "id": "it_clang_587",
+      "widget_id": "widget_clang_587",
+      "topic": "Arrays of Pointers — Accessing Elements via Dereferencing",
+      "q": "What is result of expression *arr[1] for array of pointers int *arr[3]?",
+      "hint": "Consider operator precedence: square brackets [] execute before dereferencing *.",
+      "options": [
+        "2",
+        "1",
+        "3",
+        "Address of variable b"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! arr is an array of pointers int*. Element arr[1] holds address &b. Dereferencing *arr[1] returns value of variable b, which is 2.",
+        "Incorrect. 1 would be obtained by dereferencing *arr[0].",
+        "Incorrect. 3 would be obtained by dereferencing *arr[2].",
+        "Incorrect. Address is returned without dereference operator *."
+      ]
+    },
+    {
+      "id": "it_clang_588",
+      "widget_id": "widget_clang_588",
+      "topic": "Memory — Automatic Initialization of Static Arrays",
+      "q": "What will printf output when printing elements of an array declared with static keyword without initializer?",
+      "hint": "With what values are variables with static storage duration initialized?",
+      "options": [
+        "0 0 0",
+        "Indeterminate values (memory garbage)",
+        "Compilation error",
+        "1 1 1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Variables and arrays with static storage duration (static or global) are automatically zero-filled before program execution according to C standard.",
+        "Incorrect. Only automatic (local) variables without static receive memory garbage.",
+        "Incorrect. Declaring array without explicit initializer is syntactically valid.",
+        "Incorrect. Default values are zeros."
+      ]
+    },
+    {
+      "id": "it_clang_589",
+      "widget_id": "widget_clang_589",
+      "topic": "Memory — Uninitialized Automatic Arrays",
+      "q": "What will function return when reading first element of uninitialized local array int arr[3]?",
+      "hint": "Are automatic local arrays on stack initialized by default?",
+      "options": [
+        "Indeterminate ('garbage') value from memory",
+        "0",
+        "NULL",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Local automatic arrays on stack are not automatically initialized. Reading their elements prior to explicit write yields arbitrary memory garbage (or UB upon invalid byte representations).",
+        "Incorrect. Automatic zero-initialization works only for static or partially initialized arrays.",
+        "Incorrect. NULL is used for pointers, not regular int numbers.",
+        "Incorrect. Code compiles without errors."
+      ]
+    },
+    {
+      "id": "it_clang_590",
+      "widget_id": "widget_clang_590",
+      "topic": "Memory — Row-Major Order Layout of 2D Arrays",
+      "q": "What is value of *(p + 3) when casting int arr[2][3] to single pointer int*?",
+      "hint": "Calculate which element will be at offset 3 in continuous memory block of 6 numbers.",
+      "options": [
+        "4",
+        "3",
+        "5",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C 2D arrays are arranged in Row-Major Order. Memory fills sequentially: arr[0][0] (1), arr[0][1] (2), arr[0][2] (3), arr[1][0] (4), arr[1][1] (5), arr[1][2] (6). Offset + 3 points to 4th element — number 4.",
+        "Incorrect. 3 is arr[0][2] element (offset + 2).",
+        "Incorrect. 5 is arr[1][1] element (offset + 4).",
+        "Incorrect. Traversing continuous array memory using base pointer is correct."
+      ]
+    },
+    {
+      "id": "it_clang_591",
+      "widget_id": "widget_clang_591",
+      "topic": "Functions — Passing Arrays by Pointer and Modifying Original",
+      "q": "Will element arr[0] change in main function after calling modify(arr)?",
+      "hint": "Are arrays passed to functions by value or via pointer to first element?",
+      "options": [
+        "Changes: outputs 99, because array name decays to pointer, and function modifies original array",
+        "Does not change: outputs 1, because arrays are passed by copy",
+        "Compilation error: forbidden to modify array parameter elements",
+        "Outputs 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C arrays are never passed to functions by value. Array name arr converts to pointer int* to its first element. Modification a[0] = 99 inside modify directly changes original array memory arr[0], outputting 99.",
+        "Incorrect. Arrays are not copied as a whole when passed to functions.",
+        "Incorrect. Parameter int a[] is equivalent to int *a, modifying memory via pointer is permitted.",
+        "Incorrect. Explicit value 99 assigned."
+      ]
+    },
+    {
+      "id": "it_clang_592",
+      "widget_id": "widget_clang_592",
+      "topic": "Structures — Value Copying of Arrays Inside Structures",
+      "q": "What will b1.arr[0] equal after copying structure b2 = b1 and subsequently modifying b2.arr[0] = 99?",
+      "hint": "Are arrays inside structures copied when assigning one structure to another?",
+      "options": [
+        "10: structures are copied by value (including embedded arrays), so b1 remains unchanged",
+        "99: structures copy only array addresses, so b1 also changes",
+        "Compilation error: cannot copy structures with arrays via =",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Unlike isolated arrays, an array inside a structure is an integral field of it. Operator = performs value copy of all structure fields (byte copy). b2 gets its own copy of array, so modifying b2.arr[0] does not affect b1.arr[0], outputting 10.",
+        "Incorrect. Arrays inside structures do not decay to pointers when copying structure itself.",
+        "Incorrect. Structure assignment is fully supported by C standard.",
+        "Incorrect. Structure copying behavior is strictly specified."
+      ]
+    },
+    {
+      "id": "it_clang_593",
+      "widget_id": "widget_clang_593",
+      "topic": "Strings — 2D Indexing of String Pointer Array",
+      "q": "What will expression names[1][0] output for array of string pointers char *names[]?",
+      "hint": "Which string is at index names[1] and what is its first character?",
+      "options": [
+        "B",
+        "A",
+        "C",
+        "Bob"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! names[1] selects second pointer to string literal — \"Bob\". Second index [0] reads first character of this string — 'B'. Specifier %c prints that character.",
+        "Incorrect. 'A' is names[0][0] character (from string \"Alice\").",
+        "Incorrect. 'C' is names[2][0] character (from string \"Charlie\").",
+        "Incorrect. Printing entire string \"Bob\" would require %s specifier and expression names[1]."
+      ]
+    },
+    {
+      "id": "it_clang_594",
+      "widget_id": "widget_clang_594",
+      "topic": "Pointer Arithmetic — Subtracting Pointers to Subarrays int(*)[2]",
+      "q": "What is difference (arr + 2) - arr equal to for 2D array int arr[3][2]?",
+      "hint": "In what units is difference of int (*)[2] pointers calculated?",
+      "options": [
+        "2",
+        "4",
+        "12",
+        "6"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! arr has type int (*)[2] (pointer to array of 2 int elements). Subtracting two pointers of same type returns count of elements of that type between them: $(arr + 2) - arr = 2$.",
+        "Incorrect. 4 is difference in simple int element count, not subarrays.",
+        "Incorrect. 12 is difference in bytes ($2 \\times 2 \\times 4$ for 4-byte int).",
+        "Incorrect. 6 is total element count in entire array."
+      ]
+    },
+    {
+      "id": "it_clang_595",
+      "widget_id": "widget_clang_595",
+      "topic": "Strings — Direct Indexing of String Literal",
+      "q": "Is expression \"Hello\"[1] valid in C and which character will it return?",
+      "hint": "String literal has array type char[], which decays to char* upon indexing.",
+      "options": [
+        "e",
+        "H",
+        "l",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! String literal \"Hello\" is a character array. Upon subscripting it implicitly converts to char* pointer to first character. Expression \"Hello\"[1] is equivalent to *(\"Hello\" + 1), yielding second character — 'e'. Code is completely valid.",
+        "Incorrect. 'H' is character at index 0 (\"Hello\"[0]).",
+        "Incorrect. 'l' is character at index 2.",
+        "Incorrect. Direct literal subscripting is permitted by C syntax."
+      ]
+    },
+    {
+      "id": "it_clang_596",
+      "widget_id": "widget_clang_596",
+      "topic": "Array Bounds — Out-of-Bounds Access (Buffer Overflow)",
+      "q": "What will happen when accessing arr[3] for 3-element array int arr[3] = {10, 20, 30}?",
+      "hint": "What is valid index range for array of size 3?",
+      "options": [
+        "Undefined Behavior (UB): read outside array bounds occurs",
+        "Returns 30",
+        "Returns 0",
+        "Compilation error occurs"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Valid indices for 3-element array are 0, 1, and 2. Element arr[3] lies outside array memory. C language does not perform runtime array bounds checking, so access leads to Undefined Behavior (UB).",
+        "Incorrect. 30 is last valid element arr[2].",
+        "Incorrect. Memory past array bounds does not guarantee value 0.",
+        "Incorrect. C compiler usually does not issue compile error for simple index overflow (though it might warn)."
+      ]
+    },
+    {
+      "id": "it_clang_597",
+      "widget_id": "widget_clang_597",
+      "topic": "Arrays — Partial Initialization with Nested Braces",
+      "q": "What are elements a[0][1] and a[1][0] equal to for matrix int a[2][2] = {{1}}?",
+      "hint": "How are omitted elements in subarrays zeroed?",
+      "options": [
+        "0 0",
+        "1 1",
+        "1 0",
+        "Memory garbage"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! First row explicitly initializes only first element a[0][0] = 1, second element of row a[0][1] is automatically zeroed. Second row has no explicit initializers in braces, so all its elements (a[1][0] and a[1][1]) are also zeroed. Output: \"0 0\".",
+        "Incorrect. Only very first element a[0][0] initialized to 1.",
+        "Incorrect. a[1][0] does not get 1, since second subarray is not explicitly initialized.",
+        "Incorrect. If at least one element has initializer, all others zeroed."
+      ]
+    },
+    {
+      "id": "it_clang_598",
+      "widget_id": "widget_clang_598",
+      "topic": "Type Qualifiers — Protecting Array Elements via const in Parameters",
+      "q": "What result will attempt to write a[0] = 10 inside function void print_first(const int a[]) lead to?",
+      "hint": "What does const qualifier before element type in parameter protect?",
+      "options": [
+        "Compilation error: array elements declared constant (const int)",
+        "Modifies first element value to 10",
+        "Causes warning, but compiles and executes",
+        "Turns pointer a into NULL"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Syntax const int a[] adjusts to const int *a (pointer to constant integer). This forbids modifying values pointed to by a. Attempting to modify a[0] leads to compile error.",
+        "Incorrect. const protects elements from modification.",
+        "Incorrect. Data modification through constant pointer is a strict type error.",
+        "Incorrect. const does not affect pointer value itself, only read/write access."
+      ]
+    },
+    {
+      "id": "it_clang_599",
+      "widget_id": "widget_clang_599",
+      "topic": "Pointers to Arrays — Dereferencing and Double Subscripting int (*p)[N]",
+      "q": "What is value p[1][0] for pointer to array int (*p)[2] = arr if arr equals {{5, 10}, {15, 20}}?",
+      "hint": "Expression p[1] selects second row of array. Which element will index [0] select?",
+      "options": [
+        "15",
+        "5",
+        "10",
+        "20"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! p has type int (*)[2] and points to arr[0]. Indexing p[1] steps pointer forward by one row and gives access to second row {15, 20}. Additional index [0] selects first element of this row, which is 15.",
+        "Incorrect. 5 is p[0][0] (arr[0][0]).",
+        "Incorrect. 10 is p[0][1] (arr[0][1]).",
+        "Incorrect. 20 is p[1][1] (arr[1][1])."
+      ]
+    },
+    {
+      "id": "it_clang_600",
+      "widget_id": "widget_clang_600",
+      "topic": "Type Sizes — Character Array Initialization with String Literal",
+      "q": "What is sizeof(a) equal to for array char a[] = \"AB\"?",
+      "hint": "Remember to account for trailing null terminator of string literal.",
+      "options": [
+        "3",
+        "2",
+        "8",
+        "4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! String literal \"AB\" consists of characters 'A', 'B' and implicit trailing null terminator '\\0'. Declaring char a[] = \"AB\" creates an array of exactly 3 bytes, so sizeof(a) returns 3.",
+        "Incorrect. 2 is printable character count (returned by strlen), excluding '\\0'.",
+        "Incorrect. 8 is size of pointer char*, but a is declared as array.",
+        "Incorrect. Exactly 3 bytes allocated for three characters."
+      ]
+    }
+  ]
+}

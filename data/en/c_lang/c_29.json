@@ -1,0 +1,799 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_901",
+      "widget_id": null,
+      "topic": "Language Standards — Nested Functions in ISO C",
+      "q": "Are nested functions supported by official C standards (C89, C99, C11, C17, C23)?",
+      "hint": "Think about whether the C standard allows declaring the body of one function inside the body of another.",
+      "options": [
+        "No, according to the C standard all functions must be declared strictly at the global level",
+        "Yes, starting from the C99 standard",
+        "Yes, in all C standards without restrictions",
+        "Yes, but only if the nested function returns void"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! No official ISO C standard supports nested functions. All functions in standard C must be at the top level (file scope).",
+        "Incorrect. The C99 standard added compound literals and // comments, but not nested functions.",
+        "Incorrect. Standard C has never supported nested functions.",
+        "Incorrect. The return type has no effect on the standard prohibition."
+      ]
+    },
+    {
+      "id": "it_clang_902",
+      "widget_id": null,
+      "topic": "Compiler Extensions — Support in GCC",
+      "q": "Which popular compiler provides support for nested functions as its own language extension (GNU C Extension)?",
+      "hint": "This compiler is often used in the Linux world and contains many non-standard C extensions.",
+      "options": [
+        "GCC (GNU Compiler Collection)",
+        "MSVC (Microsoft Visual C++)",
+        "Standard C89 compiler",
+        "SDCC (Small Device C Compiler) in strict mode"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! GCC supports nested functions as a GNU C language extension. Other compilers (MSVC, Clang) in standard mode do not support this feature.",
+        "Incorrect. MSVC strictly enforces the absence of nested functions in C.",
+        "Incorrect. Nested functions are absent in the C89 standard.",
+        "Incorrect. Strict mode of compilers disables such extensions."
+      ]
+    },
+    {
+      "id": "it_clang_903",
+      "widget_id": "widget_clang_903",
+      "topic": "GCC Extensions — Accessing Variables of Outer Function",
+      "q": "What will the program output when compiled with the GCC compiler?",
+      "hint": "Does a nested function in GCC have access to local variables of its containing function?",
+      "options": [
+        "15",
+        "10",
+        "5",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! A nested function in GCC has access to the lexical environment (lexical scope) and can read and modify local variables of the outer function. The value of $x$ will become $5 + 10 = 15$.",
+        "Incorrect. The nested function modified the value of $x$, not just read it.",
+        "Incorrect. The call `add_to_x(10)` managed to add to the initial value of 5.",
+        "Incorrect. In GCC compiler, this code will compile correctly."
+      ]
+    },
+    {
+      "id": "it_clang_904",
+      "widget_id": "widget_clang_904",
+      "topic": "Lifetime and Pointers — Danger of Calling via Pointer",
+      "q": "What consequence will calling `fn()` in main lead to if function `get_nested()` returns a pointer to its nested function?",
+      "hint": "What happens to the stack frame of function get_nested() after it completes its execution?",
+      "options": [
+        "Undefined Behavior or Crash",
+        "The program will print the number 42 correctly and without errors",
+        "Compilation error at build stage",
+        "Function memory will automatically move to Heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! A nested function accesses the local variable `secret` residing on the stack of `get_nested()`. When `get_nested()` completes, its stack frame is destroyed. Calling via pointer afterwards leads to a crash or reading garbage (Dangling Pointer / Undefined Behavior).",
+        "Incorrect. Variable `secret` no longer exists on the stack.",
+        "Incorrect. Syntactically GCC will allow obtaining a pointer to a nested function, so the error will manifest at runtime.",
+        "Incorrect. Automatic transfer of stack variables to heap does not happen in C."
+      ]
+    },
+    {
+      "id": "it_clang_905",
+      "widget_id": null,
+      "topic": "Security and Architecture — Trampolines and Executable Stack",
+      "q": "Why is generating pointers to nested functions in GCC considered a Security Risk?",
+      "hint": "How does GCC pass the context of a parent function to a nested function when called through a regular pointer?",
+      "options": [
+        "GCC generates a small fragment of executable code ('trampoline') right on the stack, which requires an executable stack and violates NX/DEP protection",
+        "Nested functions clog the operating system import table",
+        "Pointers to nested functions always occupy more than 1024 bytes in memory",
+        "They lead to automatic decryption of private keys"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! To pass the context of the parent function, GCC dynamically creates a adapter instruction ('trampoline') on the stack. For this, the stack must have execution permissions (Executable Stack), which disables hardware NX/DEP protection and creates a vulnerability for Buffer Overflow attacks.",
+        "Incorrect. Nested functions are not related to OS import table.",
+        "Incorrect. A function pointer has a standard size (e.g., 8 bytes on 64-bit systems).",
+        "Incorrect. This is a distorted view of security issues."
+      ]
+    },
+    {
+      "id": "it_clang_906",
+      "widget_id": null,
+      "topic": "GCC Syntax — Forward Declaration",
+      "q": "Which keyword in GCC extension allows making a forward declaration of a nested function before its full definition?",
+      "hint": "This keyword in regular C is used to automatically define the storage class of local variables.",
+      "options": [
+        "auto",
+        "static",
+        "extern",
+        "inline",
+        "typedef"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In GCC, forward declaration of a nested function is done using the keyword `auto`, for example: `auto void nested_func(int);`.",
+        "Incorrect. `static` sets internal linkage for global entities.",
+        "Incorrect. `extern` informs the compiler about declaring a function in another file/module.",
+        "Incorrect. `inline` is used for code inlining.",
+        "Incorrect. `typedef` creates a data type alias."
+      ]
+    },
+    {
+      "id": "it_clang_907",
+      "widget_id": "widget_clang_907",
+      "topic": "Clang/Apple Extensions — Blocks",
+      "q": "Which technology/extension in Clang/Apple compilers serves as an alternative to nested functions and uses syntax with the caret symbol `^`?",
+      "hint": "Pay attention to the declaration syntax of type `int (^my_block)(int)`.",
+      "options": [
+        "Blocks (Blocks / Apple Blocks)",
+        "Nested Lambdas",
+        "Compound Functions",
+        "C99 Macros"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Clang and Apple C use the 'Blocks' extension (`^`), which adds support for closures with the ability to copy context to the heap (`Block_copy`).",
+        "Incorrect. The term 'lambdas' is used in C++, C#, and other languages, but in Clang C it is called Blocks.",
+        "Incorrect. Compound applies to literals, not functions.",
+        "Incorrect. This is a full-fledged compiler syntax extension, not a macro preprocessor."
+      ]
+    },
+    {
+      "id": "it_clang_908",
+      "widget_id": null,
+      "topic": "Scope — Scope of Nested Function Name",
+      "q": "What is the Scope of a nested function name declared inside function `process()`?",
+      "hint": "Is the nested function name visible outside the function in which it was created?",
+      "options": [
+        "Name is limited only to code block / body of process() function",
+        "Name becomes available throughout the entire .c file",
+        "Name is accessible from any other project files (External Linkage)",
+        "Name is available only inside switch statements"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! A nested function has local scope (Block Scope) and is visible only inside the function (or `{}` block) where it was declared.",
+        "Incorrect. The name does not leak into global file scope.",
+        "Incorrect. Nested functions do not have external linkage.",
+        "Incorrect. Scope is limited to the declaration block, not just switch."
+      ]
+    },
+    {
+      "id": "it_clang_909",
+      "widget_id": null,
+      "topic": "Comparing C and C++ — Closures and Lambda Expressions",
+      "q": "True or False: Unlike standard C, C++ (starting from C++11 standard) officially supports anonymous nested functions — Lambda Expressions?",
+      "hint": "Recall the capture-list syntax in C++: [=]() { ... }",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! C++11 added official support for lambda expressions (anonymous nested functions with context capture). Standard C still lacks this feature.",
+        "Incorrect. Lambdas are indeed a standardized part of C++11 and subsequent C++ versions."
+      ]
+    },
+    {
+      "id": "it_clang_910",
+      "widget_id": "widget_clang_910",
+      "topic": "Scope — Variable Shadowing",
+      "q": "What will the program output when executed?",
+      "hint": "How does local variable shadowing affect a variable in the outer context?",
+      "options": [
+        "100 50",
+        "50 50",
+        "100 100",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Declaration `int val = 100` inside `inner()` creates a new local variable that shadows outer `val`. The first print will output `100`, and after exiting `inner()`, outer `val` remains equal to `50`.",
+        "Incorrect. The variable inside `inner()` shadowed outer `val` and printed 100.",
+        "Incorrect. Outer `val` was not changed inside `inner()` because it was shadowed.",
+        "Incorrect. Redeclaring a variable in an inner block is syntactically allowed."
+      ]
+    },
+    {
+      "id": "it_clang_911",
+      "widget_id": "widget_clang_911",
+      "topic": "Nested Statements — Behavior of break inside switch in a Loop",
+      "q": "What will happen when executing a break statement inside a switch that is nested within a for loop?",
+      "hint": "Does break terminate both switch and the outer loop simultaneously?",
+      "options": [
+        "The break statement terminates only the switch execution, while the loop will continue to the next iteration",
+        "The break statement terminates both switch and the outer for loop",
+        "A compilation error will occur due to context ambiguity",
+        "The program will loop infinitely"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, `break` terminates only the innermost `switch` or loop in which it is directly contained. The outer `for` loop will continue executing.",
+        "Incorrect. Exiting the outer loop would require another `break`, an exit flag, or `goto`/`return`.",
+        "Incorrect. This is standard syntactic behavior in C.",
+        "Incorrect. The loop will complete all its iterations."
+      ]
+    },
+    {
+      "id": "it_clang_912",
+      "widget_id": "widget_clang_912",
+      "topic": "Control Flow — Early Return from Nested Loops",
+      "q": "What main advantage does using a return statement provide when searching for an element in a multidimensional array inside a function?",
+      "hint": "How many loops can a single break statement terminate compared to return?",
+      "options": [
+        "return instantly terminates the function and exits all loop nesting levels simultaneously",
+        "return works faster because it does not use the stack",
+        "break cannot be used in nested loops at all",
+        "return guarantees automatic zeroing of the array"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! A single `break` statement exits only the innermost loop, requiring additional checks to exit remaining loops. A `return` statement immediately stops function execution regardless of loop nesting depth.",
+        "Incorrect. The advantage lies in control flow logic, not in abstract stack speed.",
+        "Incorrect. `break` can be used at any nesting level.",
+        "Incorrect. `return` does not affect array contents."
+      ]
+    },
+    {
+      "id": "it_clang_913",
+      "widget_id": "widget_clang_913",
+      "topic": "Branching — Dangling else Problem",
+      "q": "To which if statement does the else branch belong in the provided code when curly braces are omitted?",
+      "hint": "Recall the else binding rule in nested branches.",
+      "options": [
+        "To the nearest preceding if that does not have its own else (to the inner if (b > 0))",
+        "To the first outer if (a > 0)",
+        "Compilation error — curly braces are required when nesting if statements",
+        "The else branch is ignored by the compiler"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, the rule is: `else` is always attached to the *nearest* preceding `if` that does not have its own `else` (in this case, to `if (b > 0)`). Curly braces `{}` are needed to change this order.",
+        "Incorrect. Without braces, `else` never attaches to an outer `if` when an inner one is present.",
+        "Incorrect. Braces are recommended for readability, but syntax permits omitting them.",
+        "Incorrect. The `else` branch will compile normally."
+      ]
+    },
+    {
+      "id": "it_clang_914",
+      "widget_id": "widget_clang_914",
+      "topic": "Scope — Variable Shadowing in Nested Braces {}",
+      "q": "What will printf(\"%d\", x) output at the end of function execution?",
+      "hint": "What value does variable x have in the scope where printf is called?",
+      "options": [
+        "20",
+        "30",
+        "10",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The innermost block with `x = 30` ends, and its `x` is destroyed. At `printf` level, variable `x = 20` declared in the `for` loop block is visible. Outer `x = 10` is still shadowed.",
+        "Incorrect. Variable with value 30 existed only inside the deepest `{}` block.",
+        "Incorrect. Variable `x = 10` is covered by variable `x = 20` from the loop block.",
+        "Incorrect. Declaring same-named variables in inner blocks is completely valid."
+      ]
+    },
+    {
+      "id": "it_clang_915",
+      "widget_id": null,
+      "topic": "goto Statement — Exiting Deeply Nested Constructs",
+      "q": "In which situations is using the goto statement inside C functions considered accepted and justified practice (for example, in the Linux kernel)?",
+      "hint": "Think about error handling in functions that allocate multiple resources sequentially.",
+      "options": [
+        "For centralized exit from deeply nested loops/conditions to a single resource cleanup block on errors",
+        "For replacing all while and for loops for optimization purposes",
+        "For transferring control from one function into the middle of another function",
+        "For automatic heap memory allocation"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `goto cleanup;` pattern is widely used in C system programming. It avoids duplicating resource release code (free, fclose) when exiting deeply nested checks.",
+        "Incorrect. Using `goto` instead of standard loops degrades readability and provides no benefits.",
+        "Incorrect. `goto` can only jump within a *single* function.",
+        "Incorrect. `goto` does not manage dynamic memory."
+      ]
+    },
+    {
+      "id": "it_clang_916",
+      "widget_id": "widget_clang_916",
+      "topic": "Nested Loops — continue Statement",
+      "q": "What will the program output when executing nested loops with a continue statement?",
+      "hint": "Which iteration and of which specific loop does continue skip?",
+      "options": [
+        "01 11 ",
+        "00 01 10 11 ",
+        "00 10 ",
+        "01 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! When `j == 0`, `continue` triggers. It skips the rest of the *inner* loop `j` body and advances to `j++`. As a result, only pairs where `j == 1` are printed: `01` and `11`.",
+        "Incorrect. When `j == 0`, `printf` call is skipped, so `00` and `10` are not printed.",
+        "Incorrect. Iteration with `j == 0` is skipped, not `j == 1`.",
+        "Incorrect. Outer loop `i` will make two iterations (i=0 and i=1)."
+      ]
+    },
+    {
+      "id": "it_clang_917",
+      "widget_id": "widget_clang_917",
+      "topic": "Switch Statements — Fallthrough in switch inside a Loop",
+      "q": "What will the code snippet output due to the absence of a break statement in case 0?",
+      "hint": "Trace the execution of case 0 and fallthrough into case 1.",
+      "options": [
+        "ABB",
+        "AB",
+        "AB B",
+        "B"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! On iteration `i = 0`: hits `case 0` (prints `A`), then falls through into `case 1` (prints `B`) where `break` triggers. On iteration `i = 1`: hits `case 1` (prints `B`) where `break` triggers. Total: `ABB`.",
+        "Incorrect. On second iteration with `i = 1`, another letter `B` is printed.",
+        "Incorrect. There are no spaces in the output.",
+        "Incorrect. On first iteration both `case 0` and `case 1` execute."
+      ]
+    },
+    {
+      "id": "it_clang_918",
+      "widget_id": "widget_clang_918",
+      "topic": "switch Syntax — Declaring and Initializing Variables Before First case",
+      "q": "What will happen if you declare and initialize variable int a = 5; right after switch(...) {, but BEFORE the first case?",
+      "hint": "Will control pass to the initialization line when jumping via case label?",
+      "options": [
+        "Variable will be declared in switch scope, but its initialization a = 5 will be skipped (a contains garbage)",
+        "Code will successfully initialize a = 5 on each entry to switch",
+        "Compilation error will occur",
+        "Variable a will become static"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `switch` jumps (like `goto`) directly to the matching `case` label, skipping any initialization statements at the start of the block. Memory is allocated on stack, but value of `a` remains uninitialized.",
+        "Incorrect. The initialization line is physically bypassed when jumping to `case`.",
+        "Incorrect. In C this is syntactically allowed (unlike C++, where it would cause an error).",
+        "Incorrect. The `static` qualifier is not automatically added."
+      ]
+    },
+    {
+      "id": "it_clang_919",
+      "widget_id": "widget_clang_919",
+      "topic": "Infinite Loops — Exiting Nested while(1) via return",
+      "q": "What will calling function process(3) return?",
+      "hint": "Will the inner condition be able to stop both infinite loops?",
+      "options": [
+        "3",
+        "Program will hang in an infinite loop",
+        "0",
+        "Runtime error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Despite two nested infinite loops `while(1)`, statement `return count;` triggers when `count` reaches 3, immediately returning control from function with value 3.",
+        "Incorrect. The `return` statement instantly breaks both loops.",
+        "Incorrect. Function will return value of variable `count`, which is 3.",
+        "Incorrect. Code is completely valid."
+      ]
+    },
+    {
+      "id": "it_clang_920",
+      "widget_id": "widget_clang_920",
+      "topic": "C99 Standard — Declaring Counters in Nested for Loops",
+      "q": "Will code compile in C99 standard and what will it output when redeclaring for (int i = 0; ...)?",
+      "hint": "Does a for loop counter have its own scope in C99?",
+      "options": [
+        "Code compiles successfully and outputs: 0 1 0 1 ",
+        "Compilation error — redeclaration of variable i in the same function",
+        "Code outputs: 0 0 1 1 ",
+        "Loop becomes infinite"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Starting from C99, variable declared in `for (int i...)` header has scope limited to that loop. Inner `i` shadows outer `i`, so code compiles and outputs `0 1 0 1 `.",
+        "Incorrect. Inner loop creates its own separate scope, so there is no error.",
+        "Incorrect. On each step of outer loop, inner loop runs fully from 0 to 1.",
+        "Incorrect. Inner loop does not corrupt counter value of outer loop."
+      ]
+    },
+    {
+      "id": "it_clang_921",
+      "widget_id": "widget_clang_921",
+      "topic": "Passing Parameters — Copying Base Types (Pass-by-Value)",
+      "q": "What will happen to variable `num` in `main` after executing function `add_five(num)`?",
+      "hint": "Does function modify a local variable copy or original?",
+      "options": [
+        "Value of num will remain equal to 10",
+        "Value of num will become equal to 15",
+        "Compilation error will occur",
+        "Value of num will become equal to 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, arguments are passed by value. Function `add_five` receives a copy of variable `num`, so increment `a += 5` occurs only inside local function context. In `main`, variable remains equal to 10.",
+        "Incorrect. That would happen only if pointer `&num` were passed.",
+        "Incorrect. Code is written without syntax errors.",
+        "Incorrect. Value of `num` in `main` is not reset."
+      ]
+    },
+    {
+      "id": "it_clang_922",
+      "widget_id": null,
+      "topic": "Passing Arrays — Absence of Element Copying",
+      "q": "Is an array passed to a function with full copying of all its elements when declared `void process(int arr[])`?",
+      "hint": "What does array name turn into when passed as function parameter?",
+      "options": [
+        "No, array is passed as a pointer to its first element, so element modifications are visible in calling function",
+        "Yes, C always fully copies entire array onto stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! When passing an array to a function, type decay occurs (Array Decay) — only address of its first element (`int *`) is passed. Copying of entire array does not happen, and element modifications inside function are visible outside.",
+        "Incorrect. In C, arrays are never automatically copied when passed to functions."
+      ]
+    },
+    {
+      "id": "it_clang_923",
+      "widget_id": "widget_clang_923",
+      "topic": "Argument Evaluation Order — Undefined Behavior (UB)",
+      "q": "What effect will calling `print_two(x++, x++)` lead to?",
+      "hint": "Is argument evaluation order specified in C standard (left-to-right or right-to-left)?",
+      "options": [
+        "Undefined Behavior — argument evaluation order and sequence points between them are not specified in C",
+        "Guaranteed to output '5 6'",
+        "Guaranteed to output '6 5'",
+        "Compilation error — passing increment operators in arguments is forbidden"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The C standard does not specify evaluation order of function arguments. Modifying same variable `x` multiple times without an intervening sequence point leads to Undefined Behavior.",
+        "Incorrect. Evaluation order is not guaranteed to be left-to-right.",
+        "Incorrect. Right-to-left evaluation order is also not guaranteed by standard.",
+        "Incorrect. Increment expressions are syntactically allowed in parameters, but create UB."
+      ]
+    },
+    {
+      "id": "it_clang_924",
+      "widget_id": null,
+      "topic": "Passing Structures — Field Copying (Pass-by-Value)",
+      "q": "What happens when passing a structure by value to function `void process(struct Point p)`?",
+      "hint": "Unlike arrays, do structures behave like base types when passed?",
+      "options": [
+        "A full copy of all structure fields is created on stack; any field modifications inside function will not affect original",
+        "Only a pointer to structure is passed, so original fields will change",
+        "Compilation error — structures in C are forbidden to pass without asterisk (*)",
+        "Only first 8 bytes of structure are passed",
+        "Structure is automatically saved to file"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Unlike arrays, structures in C are passed by value entirely. Compiler copies contents of all structure fields onto stack.",
+        "Incorrect. For pointer passing, declaration must be `struct Point *p`.",
+        "Incorrect. Passing structures by value is fully supported by C language.",
+        "Incorrect. Entire structure is copied completely, regardless of its size.",
+        "Incorrect. Parameter passing is not related to I/O operations."
+      ]
+    },
+    {
+      "id": "it_clang_925",
+      "widget_id": null,
+      "topic": "Multidimensional Arrays — Mandatory Specification of Dimensions",
+      "q": "Why when declaring function `void print_matrix(int m[][4], int rows)` is specifying dimension `[4]` for second dimension mandatory?",
+      "hint": "How does compiler calculate address of element $m[i][j]$ in one-dimensional RAM?",
+      "options": [
+        "So compiler can correctly calculate element address using memory offset formula",
+        "This is a preprocessor requirement for memory allocation",
+        "Dimension `[4]` indicates total number of elements in matrix",
+        "This is optional — brackets `[][]` can be left empty"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! A 2D array is stored in memory as a continuous sequence of elements. To find address of element $m[i][j]$, compiler uses formula: $\\text{base\\_address} + (i \\times \\text{cols} + j) \\times \\text{sizeof(type)}$. Without knowing number of columns (`cols = 4`), compiling indexed access is impossible.",
+        "Incorrect. Address calculation is performed by compiler itself, not preprocessor.",
+        "Incorrect. Number 4 indicates only number of columns in one row.",
+        "Incorrect. Omitting all dimensions for multidimensional arrays will cause compilation error."
+      ]
+    },
+    {
+      "id": "it_clang_926",
+      "widget_id": null,
+      "topic": "const Qualifier — Protecting Data via Pointer",
+      "q": "Which parameter declaration guarantees that function cannot modify the *value* pointed to by this pointer?",
+      "hint": "On which side of asterisk must const be located to protect addressed data?",
+      "options": [
+        "const int *ptr",
+        "int * const ptr",
+        "int *ptr",
+        "void *ptr"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Entry `const int *ptr` (or `int const *ptr`) means value of type `int` located at address `ptr` is read-only.",
+        "Incorrect. Entry `int * const ptr` creates a constant pointer: address itself cannot change, but modifying value at address `*ptr = ...` is allowed.",
+        "Incorrect. Regular pointer `int *ptr` permits modifying data at address.",
+        "Incorrect. `void *ptr` is simply an untyped pointer."
+      ]
+    },
+    {
+      "id": "it_clang_927",
+      "widget_id": "widget_clang_927",
+      "topic": "String Literals — Immutable Memory",
+      "q": "What consequence will calling function `zero_first(\"hello\")` lead to?",
+      "hint": "In which memory region (.rodata) are string literals enclosed in double quotes placed?",
+      "options": [
+        "Runtime error (Segmentation fault) — string literals are located in read-only memory",
+        "First character of string successfully replaced with null byte '\\0'",
+        "Compilation error — cannot pass string literal into char* parameter",
+        "String 'hello' will become empty throughout entire program",
+        "Automatic heap memory allocation will occur"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! String literal `\"hello\"` is placed by compiler in write-protected memory section (`.rodata`). Attempting to write `s[0] = '\\0'` will trigger a Segmentation Fault signal on most OS.",
+        "Incorrect. String literal memory is protected at OS level.",
+        "Incorrect. Under C standards passing literal into `char*` compiles (though in C++ it is forbidden or causes warning).",
+        "Incorrect. Change will not execute because program crashes on call.",
+        "Incorrect. Dynamic memory allocation does not occur."
+      ]
+    },
+    {
+      "id": "it_clang_928",
+      "widget_id": null,
+      "topic": "Function Pointers — Implicit Conversion of Function Name",
+      "q": "True or False: When passing a function name as an argument (e.g., `apply(my_func)`), function name automatically converts to a pointer to it?",
+      "hint": "Is writing address-of operator `apply(&my_func)` strictly required?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Like arrays, function name in expressions and arguments automatically decays into a pointer to that function. Entries `apply(my_func)` and `apply(&my_func)` are completely equivalent.",
+        "Incorrect. In C, `&` operator before function name when passed in arguments is optional."
+      ]
+    },
+    {
+      "id": "it_clang_929",
+      "widget_id": null,
+      "topic": "main Arguments — Type of argv Array",
+      "q": "What data type does parameter `argv` have in signature `int main(int argc, char *argv[])`?",
+      "hint": "An array of strings in C is represented as an array of pointers to char.",
+      "options": [
+        "Array of pointers to character strings (char **)",
+        "Single character array (char *)",
+        "Pointer to array of integers (int *)",
+        "Array of structs struct Argument",
+        "File descriptor"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Parameter `char *argv[]` converts to pointer to pointer `char **argv`, that is an array where each element contains address of null-terminated argument string.",
+        "Incorrect. `char *` represents only one string, whereas `argv` contains multiple arguments.",
+        "Incorrect. Command-line arguments are always passed as text (strings).",
+        "Incorrect. In C arguments are passed as array of strings, not structures.",
+        "Incorrect. File descriptors are integers for working with I/O."
+      ]
+    },
+    {
+      "id": "it_clang_930",
+      "widget_id": null,
+      "topic": "Passing Optimization — const Struct * Instead of Copying",
+      "q": "Why when working with large structures is it recommended to pass parameter as `const StructType *s` instead of passing by value `StructType s`?",
+      "hint": "Think about byte count copied to stack on each call.",
+      "options": [
+        "Only pointer (8 bytes) is passed, preventing expensive copying of entire structure onto stack, while const protects against changes",
+        "C forbids passing structures larger than 16 bytes by value",
+        "Passing by value automatically deletes structure from memory",
+        "This is the only way to pass structures with floating points"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Passing structure by value copies each of its bytes onto stack. For large structures this reduces performance. Passing `const StructType *` copies only address (8 bytes on 64-bit systems), preserving data immutability via `const`.",
+        "Incorrect. C language allows passing structures of any size by value.",
+        "Incorrect. Passing by value creates local copy, but does not delete original.",
+        "Incorrect. Floating-point fields copy perfectly when passed by value."
+      ]
+    },
+    {
+      "id": "it_clang_931",
+      "widget_id": "widget_clang_931",
+      "topic": "Pointers to Pointers — Modifying Address Inside Function",
+      "q": "For a function to modify address stored in pointer itself (e.g., allocate dynamic memory for it), its parameter must accept:",
+      "hint": "Think what level of indirection is needed to modify variable of type int*.",
+      "options": [
+        "Pointer to pointer (int **ptr)",
+        "Regular pointer (int *ptr)",
+        "Value of int type",
+        "Array int arr[]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! To modify value of variable of type `int*` (write new address into it), you need to pass pointer to this variable into function, that is `int **ptr`.",
+        "Incorrect. Regular pointer `int *ptr` is passed by value (copied), and changing address inside function will not reflect in main.",
+        "Incorrect. Type `int` stores an integer, not a pointer.",
+        "Incorrect. Array `int arr[]` converts to `int *`, which does not allow modifying original pointer."
+      ]
+    },
+    {
+      "id": "it_clang_932",
+      "widget_id": "widget_clang_932",
+      "topic": "C99 Standard — static Keyword in Array Parameter Sizes",
+      "q": "What does entry `int arr[static 5]` mean in function parameter starting from C99 standard?",
+      "hint": "This is a hint to compiler about minimum guaranteed element count.",
+      "options": [
+        "Argument is guaranteed to be a pointer to an array containing at least 5 elements",
+        "Array preserves its elements between function calls in static memory",
+        "Function will cause compilation error — such syntax is forbidden",
+        "Passed array must contain exactly 5 elements, passing larger size is forbidden"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Construct `static N` in array parameter declaration provides guarantee to compiler that passed pointer is non-NULL and points to at least `N` elements, enabling additional optimizations.",
+        "Incorrect. Modifier `static` inside square brackets of parameter does not change storage class of array.",
+        "Incorrect. Syntax is official starting from C99 standard.",
+        "Incorrect. Array can contain *more* than 5 elements, but not fewer."
+      ]
+    },
+    {
+      "id": "it_clang_933",
+      "widget_id": "widget_clang_933",
+      "topic": "Variadic Functions — Automatic Type Promotions (Integer Promotions)",
+      "q": "To which data type are arguments of `char` and `short` types automatically promoted when passed to a function with unspecified number of arguments (`...`)?",
+      "hint": "Recall Default Argument Promotion rules for integer types smaller than int.",
+      "options": [
+        "int (or unsigned int)",
+        "Types char and short are passed unchanged",
+        "long",
+        "double"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! When passing arguments to variadic functions, integer types smaller than `int` (such as `char` and `short`) are automatically promoted to `int` (or `unsigned int`). They must be extracted via `va_arg(args, int)`.",
+        "Incorrect. Type promotion always occurs when calling variadic functions.",
+        "Incorrect. Types `char` and `short` are not promoted to `long` by default.",
+        "Incorrect. `float` type is promoted to `double`, but not integer types."
+      ]
+    },
+    {
+      "id": "it_clang_934",
+      "widget_id": "widget_clang_934",
+      "topic": "Pointers to Arrays — Difference Between int* and int(*)[10]",
+      "q": "What does parameter `int (*arr)[10]` accept in function header?",
+      "hint": "Note parentheses around (*arr). This is a pointer to one single whole array.",
+      "options": [
+        "Pointer to whole array of 10 elements of int type",
+        "Array of 10 pointers to int (int *arr[10])",
+        "Pointer to function returning array",
+        "Syntax error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Parentheses `(*arr)` set precedence: `arr` is pointer to fixed array of 10 elements of `int` type. Pointer step `arr + 1` equals $10 \\times \\text{sizeof(int)}$ bytes.",
+        "Incorrect. Entry without parentheses `int *arr[10]` declares array of 10 pointers.",
+        "Incorrect. Function pointer syntax includes argument parentheses: `int (*func)(int)`.",
+        "Incorrect. This is completely valid C syntax."
+      ]
+    },
+    {
+      "id": "it_clang_935",
+      "widget_id": null,
+      "topic": "Function Prototypes — Omitting Parameter Names",
+      "q": "Is specifying only parameter types while omitting parameter names allowed in C function prototype (declaration) (e.g., `void log_msg(int, const char *);`)?",
+      "hint": "Does compiler need parameter names to check call signature?",
+      "options": [
+        "Yes, parameter names in function prototypes are optional",
+        "No, names of all parameters must be specified in prototype",
+        "Allowed to omit name only for last parameter"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! For compiler in function prototype only data types and their order matter. Parameter names in declaration serve only for readability and can be omitted.",
+        "Incorrect. Requirement to specify parameter names exists only in function body definition.",
+        "Incorrect. Rule applies to any parameters in prototype."
+      ]
+    },
+    {
+      "id": "it_clang_936",
+      "widget_id": "widget_clang_936",
+      "topic": "Data Types — Passing Enumerations (enum)",
+      "q": "How are `enum` type values passed to C functions?",
+      "hint": "By which base type are enum constants represented in memory?",
+      "options": [
+        "By value as integer values",
+        "Exclusively by pointer",
+        "As text strings with constant names",
+        "Enums are forbidden to pass into functions"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, `enum` elements represent integer constants (usually of `int` type). Passing occurs by value via standard number copying.",
+        "Incorrect. Enumerations are scalar types and do not require passing by pointer.",
+        "Incorrect. Enum constant names exist only at compile stage and are not preserved as strings.",
+        "Incorrect. Enumerations are full-fledged C data type."
+      ]
+    },
+    {
+      "id": "it_clang_937",
+      "widget_id": "widget_clang_937",
+      "topic": "restrict Qualifier (C99) — Pointers Without Memory Overlap",
+      "q": "What do `restrict` qualifiers in pointer parameters of function `copy_data(int * restrict dst, const int * restrict src, int n)` inform compiler about?",
+      "hint": "Can pointers dst and src point to same or overlapping memory?",
+      "options": [
+        "Pointed memory areas do not overlap, allowing compiler to perform aggressive vector optimizations",
+        "Pointers are constant and their addresses cannot change inside function",
+        "Function must execute strictly in single-threaded mode",
+        "Pointers are guaranteed non-NULL"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `restrict` qualifier from C99 promises compiler that access to object during pointer lifetime will occur *only* through given pointer. This prevents aliasing (memory overlap) and gives optimizer freedom of action.",
+        "Incorrect. Constness of pointer itself is set by `int * const`.",
+        "Incorrect. Thread parallelism is not directly linked to `restrict` qualifier.",
+        "Incorrect. `restrict` qualifier does not perform NULL checks."
+      ]
+    },
+    {
+      "id": "it_clang_938",
+      "widget_id": "widget_clang_938",
+      "topic": "Passing Parameters — Modifying Pointer Copy",
+      "q": "What will `printf(\"%d\", *ptr)` output after calling `shift(ptr)`?",
+      "hint": "Is pointer itself (variable ptr) passed by value to function shift?",
+      "options": [
+        "10",
+        "20",
+        "0",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Pointer `ptr` is passed to `shift` by value. Inside function local pointer copy `p++` is incremented. Original pointer `ptr` in `main` does not change its value and still points to 10.",
+        "Incorrect. Shifting pointer `ptr` itself in `main` would require passing `shift(&ptr)`.",
+        "Incorrect. Memory was not zeroed.",
+        "Incorrect. Code is written without errors."
+      ]
+    },
+    {
+      "id": "it_clang_939",
+      "widget_id": "widget_clang_939",
+      "topic": "C99 Syntax — Variable Length Arrays (VLA) in Parameters",
+      "q": "Which rule strictly regulates parameter order when passing Variable Length Array (VLA) into a function?",
+      "hint": "Can parameter n be used in brackets [n] if compiler has not encountered it in argument list yet?",
+      "options": [
+        "Parameter n specifying array size must be located in parameter list STRICTLY BEFORE array parameter arr[n]",
+        "Parameter order does not matter",
+        "Parameter n must be specified strictly after array arr[n]",
+        "VLA arrays are forbidden to pass into functions"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Compiler reads function header left to right. For expression `arr[n]` to compile, variable `n` must be declared above (to the left) in parameter list.",
+        "Incorrect. Order is strictly fixed left to right.",
+        "Incorrect. In that case `n undeclared` error will occur when parsing brackets `arr[n]`.",
+        "Incorrect. Passing VLA arrays is fully supported by C99 standard."
+      ]
+    },
+    {
+      "id": "it_clang_940",
+      "widget_id": "widget_clang_940",
+      "topic": "Passing Structures — Prohibition of Bit-field Addressing",
+      "q": "What will happen when attempting to pass an individual bit-field of a structure by pointer (calling `check(&h.flag)`)?",
+      "hint": "Does an individual bit-field (e.g., 1 bit in size) have its own unique address in memory?",
+      "options": [
+        "Compilation error — taking address of a bit-field is directly forbidden by C standard",
+        "Code will compile successfully and pass address of byte containing field",
+        "Only NULL pointer will be passed",
+        "Bit-field will automatically copy to heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Addressing in C works at byte level. Bit-fields may share a single byte and do not have their own unique address, so operator `&` applied to a bit-field is forbidden and causes compilation error.",
+        "Incorrect. Pointers reference byte address, not individual bit, so such call will not compile.",
+        "Incorrect. Error occurs at compile stage.",
+        "Incorrect. No memory allocation on heap occurs."
+      ]
+    }
+  ]
+}

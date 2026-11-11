@@ -1,0 +1,603 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_451",
+      "widget_id": "widget_clang_451",
+      "topic": "while Loop — Sequential Increments and Condition",
+      "q": "What will this code snippet with a `while` loop output?",
+      "hint": "Think about when the postfix increment `i++` occurs relative to the `printf` call.",
+      "options": [
+        "012",
+        "123",
+        "0123",
+        "Infinite loop"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! On the first iteration, `0` is output and `i` becomes 1. On the second, `1` is output (`i` becomes 2). On the third, `2` is output (`i` becomes 3). On the fourth, check `3 < 3` is false, and the loop terminates. Output: \"012\".",
+        "Incorrect. Postfix increment returns the value *before* increasing, so the first digit will be 0, not 1.",
+        "Incorrect. The loop will execute exactly 3 times (at `i = 0, 1, 2`); at `i = 3`, the condition becomes false.",
+        "Incorrect. Variable `i` increases on each iteration, so the exit condition is guaranteed to be reached."
+      ]
+    },
+    {
+      "id": "it_clang_452",
+      "widget_id": "widget_clang_452",
+      "topic": "while Loop — Infinite Loop",
+      "q": "What will happen when executing the given code?",
+      "hint": "Notice the absence of counter `i` modification inside the loop body.",
+      "options": [
+        "The program will enter an infinite loop, continuously outputting character '0'",
+        "Outputs numbers from 0 to 4",
+        "Compilation error",
+        "Outputs nothing and terminates immediately"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! If you forget to update the control variable (increment `i++`), condition `i < 5` will always remain true, leading to an infinite loop.",
+        "Incorrect. The value of `i` never changes and remains equal to 0, so condition `i < 5` will never become false.",
+        "Incorrect. Syntactically the code is completely correct; this is a logical runtime error.",
+        "Incorrect. Since `i = 0`, condition `0 < 5` is true upon the very first loop entry."
+      ]
+    },
+    {
+      "id": "it_clang_453",
+      "widget_id": "widget_clang_453",
+      "topic": "do...while Loop — Guaranteed Body Execution",
+      "q": "What will this code snippet with a `do...while` construct output?",
+      "hint": "Recall the main difference of `do...while`: the loop body always executes AT LEAST once before checking the condition.",
+      "options": [
+        "10",
+        "Outputs nothing",
+        "Infinite loop",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In `do...while`, the body executes at least 1 time. `printf` outputs 10, then `x` becomes 11. Check `11 < 5` returns false, and the loop terminates. Output: \"10\".",
+        "Incorrect. Unlike `while`, in `do...while` the condition is checked AFTER the first iteration, so output will occur.",
+        "Incorrect. Condition `x < 5` is checked after incrementing `x` to 11 and immediately stops the loop.",
+        "Incorrect. Syntax `do { ... } while(cond);` is written without errors."
+      ]
+    },
+    {
+      "id": "it_clang_454",
+      "widget_id": "widget_clang_454",
+      "topic": "for Loop — Empty Header Sections",
+      "q": "Is `for (;;)` permissible, and what will this code output?",
+      "hint": "Semicolons without expressions inside `for(;;)` create an infinite loop, from which exit is possible via `break`.",
+      "options": [
+        "012",
+        "Syntax error due to empty sections in `for`",
+        "Infinite loop",
+        "0123"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! All three sections of `for` are optional. Construct `for(;;)` creates an infinite loop, but `if (i >= 3) break;` prematurely terminates it at `i = 3`. Output: \"012\".",
+        "Incorrect. Header `for(;;)` is completely legal in C.",
+        "Incorrect. Early exit from the loop is provided by the `break` statement.",
+        "Incorrect. At `i = 3`, `break` triggers before the `printf` call."
+      ]
+    },
+    {
+      "id": "it_clang_455",
+      "widget_id": null,
+      "topic": "Loop Equivalence — Connection Between for and while",
+      "q": "Which of the following statements regarding the interchangeability of `for` and `while` loops is true?",
+      "hint": "Recall slide material: 'for = while in disguise'.",
+      "options": [
+        "for and while loops are functionally equivalent: any for loop can be rewritten as a while loop, and vice versa",
+        "The for loop runs faster at hardware level than while",
+        "The while construct cannot be used if the iteration count is known in advance",
+        "The do...while loop is the only way to write iteration with a parameter"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, `for` and `while` constructs are completely equivalent. `for(A; B; C) D;` fully corresponds to `A; while(B) { D; C; }` (except for `continue` statement specifics).",
+        "Incorrect. The compiler generates identical machine code for equivalent `for` and `while` loops.",
+        "Incorrect. `while` is perfectly suitable for a known iteration count (e.g. with an external counter `i++`).",
+        "Incorrect. `do...while` differs only in post-condition checking, not parameter support."
+      ]
+    },
+    {
+      "id": "it_clang_456",
+      "widget_id": "widget_clang_456",
+      "topic": "Loop Control — break and continue Statements",
+      "q": "What will the code snippet output when using `continue` and `break` together?",
+      "hint": "Trace the iterations: `continue` skips the rest of the body, while `break` instantly terminates the entire loop.",
+      "options": [
+        "124",
+        "1234",
+        "12",
+        "1245"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! For `i=1` and `i=2`, '1' and '2' are printed. At `i=3`, `continue` triggers (printing is skipped). At `i=4`, '4' is printed. At `i=5`, `break` triggers (loop terminates). Final output: \"124\".",
+        "Incorrect. Value 3 is skipped due to calling `continue`.",
+        "Incorrect. Value 4 will also manage to print before `i` becomes 5.",
+        "Incorrect. Value 5 will not be printed because `break` terminates the loop prior to `printf`."
+      ]
+    },
+    {
+      "id": "it_clang_457",
+      "widget_id": "widget_clang_457",
+      "topic": "Loop Conditions — Postfix Decrement in Conditions",
+      "q": "What will this `while (i--)` loop output?",
+      "hint": "First value of `i` is evaluated for condition, then `i` decreases, and only then body executes.",
+      "options": [
+        "210",
+        "321",
+        "3210",
+        "210-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! 1) `i=3`: condition true (3), `i` becomes 2, prints 2. 2) `i=2`: condition true (2), `i` becomes 1, prints 1. 3) `i=1`: condition true (1), `i` becomes 0, prints 0. 4) `i=0`: condition false (0), loop terminates. Output: \"210\".",
+        "Incorrect. Inside loop body `i` is already decremented by 1 due to postfix decrement, so initial 3 is not printed.",
+        "Incorrect. The loop will make exactly 3 iterations, outputting 2, 1, and 0.",
+        "Incorrect. At `i=0`, condition check yields false and loop body does not execute."
+      ]
+    },
+    {
+      "id": "it_clang_458",
+      "widget_id": null,
+      "topic": "Practical Tasks — Processing Sequence Until Terminating Zero",
+      "q": "Which loop construct is most natural for solving the task: 'Read numbers from keyboard and sum them until user enters 0'?",
+      "hint": "Refer to exercise list from presentation.",
+      "options": [
+        "while or do...while loop checking that entered number is not zero",
+        "Fixed loop for (int i = 0; i < 100; i++)",
+        "Multiple duplicating copy-paste of scanf functions without using loops",
+        "Using C exceptions"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In situations where iteration count is unknown in advance and depends on user input, `while` or `do...while` checking stop condition (zero input) is ideal.",
+        "Incorrect. We do not know in advance how many numbers user will enter — 5 or 500, so a fixed `for` with bound 100 is unsuitable.",
+        "Incorrect. Code duplication (copy-paste) is the worst solution.",
+        "Incorrect. In C there are no built-in exceptions (try-catch)."
+      ]
+    },
+    {
+      "id": "it_clang_459",
+      "widget_id": "widget_clang_459",
+      "topic": "Comma Operator — Multiple Counters in for Loop",
+      "q": "What will this loop with multiple expressions in the `for` header output?",
+      "hint": "Trace changes in both variables: `i` grows by 1, and `j` decreases by 3 at each step.",
+      "options": [
+        "10 8 6 ",
+        "10 8 ",
+        "10 9 8 ",
+        "10 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Iteration 1: `i=0, j=10` (0<10), sum 10. Step: `i=1, j=7`. Iteration 2: `1<7`, sum 8. Step: `i=2, j=4`. Iteration 3: `2<4`, sum 6. Step: `i=3, j=1`. Iteration 4: `3<1` (false). Output: \"10 8 6 \".",
+        "Incorrect. On third step `2 < 4` is still true, so third number 6 will also be output.",
+        "Incorrect. Variable `j` decreases by 3, not 1, so sums will decrease with step 2.",
+        "Incorrect. The loop will complete 3 iterations, not one."
+      ]
+    },
+    {
+      "id": "it_clang_460",
+      "widget_id": "widget_clang_460",
+      "topic": "Nested Loops — Modifying Outer Counter Inside Inner Loop",
+      "q": "What will the program output when modifying outer loop counter `i` inside inner loop?",
+      "hint": "Calculate how variable `i` changes in outer and inner loops.",
+      "options": [
+        "25",
+        "24",
+        "0123",
+        "Infinite loop"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! 1) Outer `i=0`. Inner loop increases `i` by 2 (`i` becomes 2). Output: '2'. Outer step `i++` makes `i=3`. 2) Check `3 < 4` (true). Inner loop increases `i` by 2 (`i` becomes 5). Output: '5'. Outer step `i++` makes `i=6`. 3) Check `6 < 4` (false). End. Output: \"25\".",
+        "Incorrect. In second iteration `i` will increase from 3 to 5, not to 4.",
+        "Incorrect. Due to increments in inner loop, outer variable `i` grows much faster than standard step 1.",
+        "Incorrect. The loop will correctly terminate in 2 outer steps."
+      ]
+    },
+    {
+      "id": "it_clang_461",
+      "widget_id": null,
+      "topic": "Practical Algorithms — Finding Maximum in a Sequence",
+      "q": "What common mistake is made when initializing variable `max` before loop finding maximum among $n$ input integers?",
+      "hint": "Think about what happens if user enters only negative numbers (e.g., -5, -10, -2).",
+      "options": [
+        "Initializing max = 0, causing program to yield incorrect result (0) if all input numbers are strictly negative",
+        "Initializing max with first entered number of sequence",
+        "Initializing max = INT_MIN from <limits.h> header",
+        "Using iteration counter variable"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! If initialized with `max = 0`, and input contains only negative numbers (e.g. -5, -20), condition `a > max` never succeeds, and program erroneously returns 0.",
+        "Incorrect. Initializing `max` with first element of sequence is actually a correct and safe approach.",
+        "Incorrect. Using `INT_MIN` is a correct solution for signed integers.",
+        "Incorrect. Using iteration counter is necessary for controlling loop step count."
+      ]
+    },
+    {
+      "id": "it_clang_462",
+      "widget_id": "widget_clang_462",
+      "topic": "Syntax Errors — Semicolon After while",
+      "q": "What effect will an accidental semicolon `;` immediately following `while (i < 3);` condition lead to?",
+      "hint": "Semicolon forms an empty loop body. Check whether `i` changes inside this empty body.",
+      "options": [
+        "Program will hang in an infinite empty loop",
+        "Outputs 012",
+        "Outputs 0 and terminates",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Semicolon turns loop body into a null statement. Since `i = 0` does not change inside this empty loop, condition `0 < 3` remains true forever, and program hangs.",
+        "Incorrect. The block in curly braces below becomes regular block, but control never reaches it due to hanging on `;`.",
+        "Incorrect. No output will occur at all, as `printf` is located after infinite empty loop.",
+        "Incorrect. Null statement `;` is syntactically legal in C, so compiler will not issue an error."
+      ]
+    },
+    {
+      "id": "it_clang_463",
+      "widget_id": null,
+      "topic": "do...while Syntax — Final Semicolon",
+      "q": "What is the syntax peculiarity of concluding a `do...while` loop compared to regular `while`?",
+      "hint": "Refer to syntax rules.",
+      "options": [
+        "A semicolon is mandatory after closing parenthesis of condition while(condition);",
+        "Placing a semicolon at end of while(condition) is strictly forbidden",
+        "Body of do...while cannot consist of multiple statements",
+        "Using break or continue statements inside do...while is forbidden"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Construct syntax strictly requires a trailing semicolon at end: `do { ... } while(cond);`.",
+        "Incorrect. Omitting semicolon at end of `do...while` leads to compilation error.",
+        "Incorrect. Body of `do...while` loop can contain any compound block `{ ... }`.",
+        "Incorrect. Loop control statements (`break`, `continue`) work fully inside `do...while`."
+      ]
+    },
+    {
+      "id": "it_clang_464",
+      "widget_id": "widget_clang_464",
+      "topic": "Unsigned Types — Risk of Underflow",
+      "q": "What will a loop with an `unsigned int` variable output when decremented down to zero?",
+      "hint": "Notice explicit `break` call at `i == 0`.",
+      "options": [
+        "2 1 0 ",
+        "2 1 ",
+        "Infinite loop",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! For `i=2`, `i=1`, and `i=0`, corresponding values are printed. When `i=0`, condition `if (i == 0) break;` triggers and loop terminates. Output: \"2 1 0 \". (Without `break`, underflow to `UINT_MAX` and infinite loop would occur).",
+        "Incorrect. Iteration with `i = 0` manages to execute and print '0' before `break` triggers.",
+        "Incorrect. In this code an explicit `if (i == 0) break;` check is present, protecting against infinite loop.",
+        "Incorrect. Using `unsigned int` in loop header section is legal."
+      ]
+    },
+    {
+      "id": "it_clang_465",
+      "widget_id": "widget_clang_465",
+      "topic": "Scope — Loop Variables (C99)",
+      "q": "What will `printf` output after `for` loop completion if a variable with same name is declared inside loop?",
+      "hint": "Recall variable shadowing rules and scope of variables declared in `for`.",
+      "options": [
+        "100",
+        "3",
+        "2",
+        "Compilation error due to re-declaration of `i`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Variable `int i = 0` declared in `for` header has scope restricted strictly to this loop. It shadows outer `i`. After loop completion, outer `i` remains 100. Output: \"100\".",
+        "Incorrect. Inner loop variable is destroyed upon exiting loop, without changing outer `i`.",
+        "Incorrect. Loop counter value is not transferred to outer variable.",
+        "Incorrect. Declaring variable in inner block/header with same name is completely legal in C99."
+      ]
+    },
+    {
+      "id": "it_clang_466",
+      "widget_id": "widget_clang_466",
+      "topic": "do...while Loop — Post-Condition Checking",
+      "q": "How many times will the body of this `do...while` loop execute?",
+      "hint": "Remember that `do...while` checks condition only AFTER executing loop body.",
+      "options": [
+        "0 times",
+        "1 time",
+        "2 times",
+        "Infinitely"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. In do...while, body is guaranteed to execute at least 1 time before condition check.",
+        "Correct! Body executes 1 time: `x` becomes 1. Then condition `1 < 0` is checked — false, and loop terminates.",
+        "Incorrect. After first iteration `x = 1`, so check `1 < 0` stops loop.",
+        "Incorrect. Condition is false on first check."
+      ]
+    },
+    {
+      "id": "it_clang_467",
+      "widget_id": null,
+      "topic": "Infinite Loops — Syntax Equivalence",
+      "q": "Are `while (1)` and `for (;;)` constructs functionally and performance-wise equivalent in C?",
+      "hint": "Consider whether generated machine code differs for these two options.",
+      "options": [
+        "Yes, they are completely equivalent",
+        "No, `while (1)` runs slower"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Both constructs create an infinite loop. C compilers translate them into identical machine code for unconditional jump.",
+        "Incorrect. There is no performance or behavior difference between them at compiled code level."
+      ]
+    },
+    {
+      "id": "it_clang_468",
+      "widget_id": "widget_clang_468",
+      "topic": "Nested Loops — Counting Total Iterations",
+      "q": "What will variable `count` equal after executing nested loops?",
+      "hint": "For nested loops, total inner loop iterations equal product of outer and inner loop iterations.",
+      "options": [
+        "3",
+        "4",
+        "7",
+        "12",
+        "16"
+      ],
+      "ans": 3,
+      "explanations": [
+        "Incorrect. This is only outer loop iteration count.",
+        "Incorrect. This is only inner loop iteration count per single outer pass.",
+        "Incorrect. Nested loop iterations multiply, not add.",
+        "Correct! Outer loop executes 3 times (i = 0, 1, 2). At each step inner loop executes 4 times (j = 0, 1, 2, 3). Total: 3 * 4 = 12.",
+        "Incorrect. Outer loop runs 3 times, not 4."
+      ]
+    },
+    {
+      "id": "it_clang_469",
+      "widget_id": "widget_clang_469",
+      "topic": "continue Statement — Risk of Skipping Increment in while",
+      "q": "What will happen when executing this code with a `while` loop and `continue` statement?",
+      "hint": "Trace what happens to counter `i` when `continue` call transfers control directly to `while` condition.",
+      "options": [
+        "Program will output 0 1 2",
+        "Program will enter an infinite loop",
+        "Compilation error"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Code will not reach completion due to infinite looping.",
+        "Correct! When `i` becomes 1, `continue` triggers. Control immediately jumps to checking condition `while (i < 3)`, skipping `i++`. Value of `i` forever remains 1, leading to an infinite loop.",
+        "Incorrect. Syntactically code is completely correct."
+      ]
+    },
+    {
+      "id": "it_clang_470",
+      "widget_id": "widget_clang_470",
+      "topic": "String Processing — Finding Terminator '\\0' via while",
+      "q": "What will variable `len` equal after executing this string traversal loop?",
+      "hint": "Character array \"C-lang\" contains letters 'C', '-', 'l', 'a', 'n', 'g' and invisible null terminator '\\0'.",
+      "options": [
+        "5",
+        "6",
+        "7",
+        "0"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Word \"C-lang\" length is 6 characters.",
+        "Correct! String \"C-lang\" consists of 6 visible characters. Loop increments `len` until encountering null barrier `\\0`. Result: 6.",
+        "Incorrect. Null terminating byte `\\0` terminates loop and does not increment counter.",
+        "Incorrect. First character 'C' does not equal `\\0`, so loop starts running."
+      ]
+    },
+    {
+      "id": "it_clang_471",
+      "widget_id": "widget_clang_471",
+      "topic": "Compound Conditions — Logical AND (&&) in for Header",
+      "q": "What will `printf` print after loop completion?",
+      "hint": "Loop stops as soon as at least one part of condition `i < 5 && i != 3` becomes false.",
+      "options": [
+        "0",
+        "2",
+        "3",
+        "4",
+        "5",
+        "Infinite loop"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Incorrect. Variable `i` manages to increment during first iterations.",
+        "Incorrect. At `i = 2`, conditions `2 < 5` and `2 != 3` are true, so step `i++` increments `i` to 3.",
+        "Correct! On iterations `i = 0, 1, 2`, both parts of condition are true. When `i` becomes equal to 3, check `i != 3` yields false. Loop terminates, and `printf` prints 3.",
+        "Incorrect. Loop will not reach 4 due to stopping at `i = 3`.",
+        "Incorrect. Condition `i != 3` terminates loop before reaching 5.",
+        "Incorrect. Counter increments at each step, no infinite loop."
+      ]
+    },
+    {
+      "id": "it_clang_472",
+      "widget_id": "widget_clang_472",
+      "topic": "Practical Algorithm — Sum of Number Digits",
+      "q": "What will value `sum` equal after splitting number in `while` loop?",
+      "hint": "Operation `% 10` yields last digit of number, while `/= 10` discards it.",
+      "options": [
+        "3",
+        "5",
+        "6",
+        "123"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Incorrect. This is only first extracted digit (3).",
+        "Incorrect. This is sum of first two digits (3 + 2).",
+        "Correct! Step 1: `123 % 10 = 3`, `sum` = 3, `n` = 12. Step 2: `12 % 10 = 2`, `sum` = 5, `n` = 1. Step 3: `1 % 10 = 1`, `sum` = 6, `n` = 0. Condition `n > 0` becomes false. Answer: 6.",
+        "Incorrect. Algorithm sums individual digits, not initial number itself."
+      ]
+    },
+    {
+      "id": "it_clang_473",
+      "widget_id": "widget_clang_473",
+      "topic": "Flag Variable — Early Exit on Condition",
+      "q": "What will index `i` equal after completing search for element with value 5?",
+      "hint": "Carefully check if `else` branch (containing `i++`) executes when match is found.",
+      "options": [
+        "2",
+        "3",
+        "4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Element with value 5 is located at index 2 (`arr[2] == 5`). On this iteration branch `found = 1` executes, and `else` is skipped (index `i` remains 2). On next step `!found` yields 0, and loop terminates.",
+        "Incorrect. Since increment `i++` was in `else` branch, upon match `i` did not increment to 3.",
+        "Incorrect. Search terminates via `found` flag immediately upon detecting 5."
+      ]
+    },
+    {
+      "id": "it_clang_474",
+      "widget_id": "widget_clang_474",
+      "topic": "Edge Cases — Inexact Floating-Point Types (float/double)",
+      "q": "What is the critical danger of condition `x != 1.0` when working with `double` or `float` types in a loop?",
+      "hint": "Recall how floating-point numbers are stored in binary computer memory.",
+      "options": [
+        "Due to rounding error, x may 'overshoot' exact value 1.0 and enter an infinite loop",
+        "This is a C compiler syntax error",
+        "The loop will never execute any iteration",
+        "Type double is forbidden to use in for loop headers"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Fractional numbers (e.g. 0.2) cannot be represented exactly in binary. Accumulated error leads to `x` becoming e.g. 0.9999999999999999, then 1.1999999999999999, without matching `1.0` exactly.",
+        "Incorrect. Syntactically code is completely correct; this is a logical calculation precision error.",
+        "Incorrect. First iteration at `x = 0.0` will start without problems.",
+        "Incorrect. Floating-point variables can be used in `for`, but should be compared via inequality like `x < 1.0`, not strict `!=`."
+      ]
+    },
+    {
+      "id": "it_clang_475",
+      "widget_id": "widget_clang_475",
+      "topic": "Beginner Mistakes — Uninitialized Accumulator",
+      "q": "Does this code guarantee obtaining correct sum of numbers from 1 to 5 (i.e. 15)?",
+      "hint": "Check initial value of local variable `sum` before first addition.",
+      "options": [
+        "No, because variable sum is not initialized to zero and contains garbage",
+        "Yes, in C all local variables are automatically initialized to zero"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Local variables in C are NOT automatically zero-initialized. Variable `sum` contains residual memory value ('garbage'), to which `i` will be added, leading to unpredictable result.",
+        "Incorrect. In C, automatic local variables contain arbitrary garbage from memory unless explicitly initialized (`int sum = 0;`)."
+      ]
+    },
+    {
+      "id": "it_clang_476",
+      "widget_id": "widget_clang_476",
+      "topic": "break Statement — Scope in Nested Loops",
+      "q": "What will variable `total` equal after code execution?",
+      "hint": "Remember that `break` statement terminates ONLY the single loop directly inside which it is located.",
+      "options": [
+        "1",
+        "3",
+        "6",
+        "9",
+        "0"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Outer loop will make 3 iterations.",
+        "Correct! Outer loop makes 3 iterations (`i = 0, 1, 2`). Inside on iteration `j = 0`, `total++` increments. On iteration `j = 1`, `break` triggers, exiting inner loop. Total: 1 operation per each of 3 outer passes = 3.",
+        "Incorrect. Inner loop terminates early at `j = 1`, without reaching `j = 2`.",
+        "Incorrect. Without `break`, result would be 9 (3 * 3).",
+        "Incorrect. Variable `total` definitely increments on first iteration of each loop."
+      ]
+    },
+    {
+      "id": "it_clang_477",
+      "widget_id": "widget_clang_477",
+      "topic": "Prefix Increment — Effect on Loop Condition",
+      "q": "What will variable `count` equal after completion of `while (++i < 3)` loop?",
+      "hint": "With prefix increment `++i`, variable increases BEFORE condition check.",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. The loop will make more than one iteration.",
+        "Correct! 1) `++i` makes `i = 1`. Check `1 < 3` (true), `count` becomes 1. 2) `++i` makes `i = 2`. Check `2 < 3` (true), `count` becomes 2. 3) `++i` makes `i = 3`. Check `3 < 3` (false), loop terminates. Output: 2.",
+        "Incorrect. On third step `i` becomes 3, and condition `3 < 3` stops loop.",
+        "Incorrect. The loop will complete exactly 2 iterations."
+      ]
+    },
+    {
+      "id": "it_clang_478",
+      "widget_id": "widget_clang_478",
+      "topic": "Array Bounds — Off-By-One Error",
+      "q": "What dangerous mistake is made in a loop traversing a 5-element array?",
+      "hint": "Recall index of last element in 5-element array.",
+      "options": [
+        "Out-of-bounds read on iteration i = 5",
+        "Array index in C cannot start at 0",
+        "Syntax error in for header",
+        "Loop will execute only 4 times"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, elements of a 5-element array have indices from `0` to `4`. Condition `i <= 5` leads to attempted read of `arr[5]`, exceeding allocated memory bounds and causing Undefined Behavior.",
+        "Incorrect. Array indexing in C always starts at 0.",
+        "Incorrect. Loop syntax is correct.",
+        "Incorrect. Due to `<=` sign, loop attempts 6 iterations (for `i = 0, 1, 2, 3, 4, 5`)."
+      ]
+    },
+    {
+      "id": "it_clang_479",
+      "widget_id": "widget_clang_479",
+      "topic": "Countdown — Counting Iterations from N to 0",
+      "q": "How many iterations will countdown loop `for (int i = 3; i >= 0; i--)` complete?",
+      "hint": "Do not forget iteration when `i` becomes strictly 0.",
+      "options": [
+        "3",
+        "4",
+        "5",
+        "0",
+        "Infinite loop",
+        "1"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Iteration for `i = 0` was forgotten.",
+        "Correct! Loop executes for values `i = 3`, `i = 2`, `i = 1`, and `i = 0`. Since check sign is `>=`, value 0 is included in loop. Total: 4 iterations.",
+        "Incorrect. Values less than 0 (e.g. -1) will not pass `i >= 0` check.",
+        "Incorrect. Initial value `i = 3` satisfies condition `3 >= 0`.",
+        "Incorrect. Since `i` is signed `int`, it will normally become -1, condition breaks and no infinite loop occurs.",
+        "Incorrect. Loop will make 4 steps."
+      ]
+    },
+    {
+      "id": "it_clang_480",
+      "widget_id": null,
+      "topic": "Nesting Control — Early Exit from Multiple Loops",
+      "q": "Which C construct allows instant exit from multiple deeply nested loops to a designated label?",
+      "hint": "Regular `break` exits only from one current loop.",
+      "options": [
+        "goto statement",
+        "break 2; statement",
+        "continue statement"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Although `goto` is often scrutinized, exiting multi-nested loops to a label (e.g., `goto cleanup;`) is one of the few classic C tasks where using `goto` is justified by style guidelines.",
+        "Incorrect. In C, `break` does not accept numeric depth parameters (unlike languages such as PHP).",
+        "Incorrect. `continue` only transfers control to next iteration of the INNERMOST loop."
+      ]
+    }
+  ]
+}

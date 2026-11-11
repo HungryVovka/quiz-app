@@ -1,0 +1,785 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_01",
+      "widget_id": "widget_clang_01",
+      "topic": "C Language — Pointers and Memory",
+      "q": "What will this C code snippet output?",
+      "hint": "Recall the difference between an operation on the pointer itself and a dereference operation using `*`.",
+      "options": [
+        "10",
+        "20",
+        "Address of variable x",
+        "Compilation error"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. `x` was initially equal to 10, but the operation `*p = 20` dereferences the pointer and overwrites the contents of the original memory cell with a new value.",
+        "Correct! Pointer `p` stores the address of variable `x`. The `*` operator provides direct access to the contents of this memory cell, so the assignment `*p = 20` changes the value of `x` to 20.",
+        "Incorrect. Printing a memory address requires using the `%p` format specifier and passing pointer `p` itself, rather than the value of variable `x` via `%d`.",
+        "Incorrect. The code is completely valid: the pointer is initialized with the address of an existing `int` variable using the `&` operator, and dereferencing is performed without errors."
+      ]
+    },
+    {
+      "id": "it_clang_02",
+      "widget_id": "widget_clang_02",
+      "topic": "C Language — Compilation Stages",
+      "q": "Which sequence of build stages for a C program is correct (from source code to executable file)?",
+      "hint": "Remember which tool processes `#include` and `#define` macros before translation into machine code.",
+      "options": [
+        "Preprocessing -> Compilation -> Assembly -> Linking",
+        "Linking -> Preprocessing -> Compilation -> Assembly",
+        "Compilation -> Preprocessing -> Linking -> Execution",
+        "Assembly -> Compilation -> Preprocessing -> Linking"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The preprocessor substitutes files and macros, the compiler generates an assembly file, the assembler translates it into object code, and the linker combines the object files into an executable binary.",
+        "Incorrect. Linking is the final build stage where prepared object files are linked together.",
+        "Incorrect. Preprocessing is always executed BEFORE compiling the program text.",
+        "Incorrect. Assembly takes place after the compiler generates assembly code."
+      ]
+    },
+    {
+      "id": "it_clang_03",
+      "widget_id": null,
+      "topic": "C Language — Algorithm Flowcharts",
+      "q": "Which symbol in algorithm flowcharts is used to represent condition checking and decision making (branching)?",
+      "hint": "Recall the geometric shape with two exits ('Yes' and 'No').",
+      "options": [
+        "Rectangle",
+        "Oval (rounded rectangle)",
+        "Diamond",
+        "Parallelogram"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Incorrect. A rectangle represents a 'Process' block (calculations, assignments, and operations).",
+        "Incorrect. An oval is used to indicate the start and end of an algorithm (Start/Stop).",
+        "Correct! A diamond in flowcharts is responsible for checking conditions and algorithm branching.",
+        "Incorrect. A parallelogram is used to represent data input and output operations."
+      ]
+    },
+    {
+      "id": "it_clang_04",
+      "widget_id": "widget_clang_04",
+      "topic": "C Language — Data Types and sizeof",
+      "q": "What will this code snippet output on a standard 64-bit architecture (x86-64 / GCC)?",
+      "hint": "The `sizeof` operator returns the size of a type or variable in bytes.",
+      "options": [
+        "2, 4",
+        "4, 8",
+        "4, 4",
+        "8, 8"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. On modern 64-bit systems, the `int` type takes 4 bytes, not 2.",
+        "Correct! On 64-bit architectures, the size of `int` is 4 bytes, and `double` is 8 bytes.",
+        "Incorrect. The floating-point type `double` occupies 8 bytes in memory.",
+        "Incorrect. The `int` type occupies 4 bytes, not 8."
+      ]
+    },
+    {
+      "id": "it_clang_05",
+      "widget_id": "widget_clang_05",
+      "topic": "C Language — Increment and Undefined Behavior",
+      "q": "What will happen when trying to compile and execute the following code snippet?",
+      "hint": "Pay attention to how many times the variable `x` is modified within a single expression.",
+      "options": [
+        "Outputs: x = 7, y = 12",
+        "Outputs: x = 7, y = 11",
+        "Result is not guaranteed (Undefined Behavior)",
+        "Outputs: x = 6, y = 11"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Incorrect. A specific compiler version might produce this value, but it is coincidental.",
+        "Incorrect. The behavior is not defined by the standard, so the result is not guaranteed.",
+        "Correct! Modifying a variable more than once within a single expression causes Undefined Behavior.",
+        "Incorrect. The program's behavior is undefined; relying on a specific output is impossible."
+      ]
+    },
+    {
+      "id": "it_clang_06",
+      "widget_id": null,
+      "topic": "C Language — Formatted Output",
+      "q": "Which format specifier should be used in the `printf` function to output an integer in lowercase hexadecimal format?",
+      "hint": "The specifier name matches the first letter of the word 'hexadecimal'.",
+      "options": [
+        "%d",
+        "%x",
+        "%o",
+        "%p"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. The `%d` specifier prints an integer in decimal format.",
+        "Correct! The `%x` specifier outputs a number in hexadecimal format with lowercase letters a-f.",
+        "Incorrect. The `%o` specifier is designed to output a number in octal format.",
+        "Incorrect. The `%p` specifier is used to output pointer addresses."
+      ]
+    },
+    {
+      "id": "it_clang_07",
+      "widget_id": "widget_clang_07",
+      "topic": "C Language — Ternary Operator",
+      "q": "What value will be assigned to variable `z` as a result of executing this code?",
+      "hint": "Evaluate expressions step-by-step: first the main condition `(a > b)`, then the inner ternary operator.",
+      "options": [
+        "15",
+        "20",
+        "25",
+        "10"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Incorrect. The condition `(15 > 20)` is false, so branch `a` is not chosen.",
+        "Incorrect. The operator evaluates the expression `(b % 3 == 2)` next, rather than returning `b` directly.",
+        "Correct! Since `15 > 20` is false, `(20 % 3 == 2)` is evaluated. The remainder of dividing 20 by 3 is 2 (true), so the result is `b + 5` (20 + 5 = 25).",
+        "Incorrect. The `b - 5` branch is executed only if the second condition is false."
+      ]
+    },
+    {
+      "id": "it_clang_08",
+      "widget_id": "widget_clang_08",
+      "topic": "C Language — Switch Statement",
+      "q": "What will the following program print to the screen?",
+      "hint": "Check if `break` statements are present in the `case` blocks.",
+      "options": [
+        "Two ",
+        "Two Three ",
+        "Two Three End",
+        "One Two Three End"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Incorrect. Due to the missing `break` after `case 2`, execution falls through to the next `case`.",
+        "Incorrect. Execution will not stop at `case 3` and will also execute the `default` branch.",
+        "Correct! The program enters `case 2:`, prints 'Two ', and due to the lack of a `break`, falls through into `case 3:` and `default:`, printing 'Three End'.",
+        "Incorrect. Block `case 1:` is ignored because `val` is equal to 2."
+      ]
+    },
+    {
+      "id": "it_clang_09",
+      "widget_id": "widget_clang_09",
+      "topic": "C Language — Logical Operators",
+      "q": "What will be the result of running this program?",
+      "hint": "Remember short-circuit evaluation for the `&&` operator.",
+      "options": [
+        "True a=0, b=6",
+        "a=0, b=5",
+        "a=0, b=6",
+        "Compilation error"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. The condition `a != 0` yields 0 (false), so the `if` body is not executed.",
+        "Correct! Since the first operand `(a != 0)` is false, the second operand `(++b > 5)` is not evaluated due to short-circuiting. Variable `b` remains 5.",
+        "Incorrect. The increment `++b` was not performed due to logical AND short-circuiting.",
+        "Incorrect. The code is completely valid in terms of C syntax."
+      ]
+    },
+    {
+      "id": "it_clang_10",
+      "widget_id": null,
+      "topic": "C Language — Identifiers and Variables",
+      "q": "Which of the following variable names is CORRECT and valid according to the C standard?",
+      "hint": "An identifier cannot start with a digit, contain a hyphen, or be a reserved keyword.",
+      "options": [
+        "2nd_value",
+        "_user_score",
+        "default",
+        "total-sum"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Variable names in C cannot start with a digit.",
+        "Correct! An identifier in C can start with an underscore `_` and contain alphanumeric characters.",
+        "Incorrect. `default` is a reserved keyword in C.",
+        "Incorrect. The hyphen symbol `-` is interpreted by the compiler as a subtraction operator."
+      ]
+    },
+    {
+      "id": "it_clang_11",
+      "widget_id": "widget_clang_11",
+      "topic": "C Language — do-while Loop",
+      "q": "How many times will the body of the `do-while` loop execute in this code snippet?",
+      "hint": "Unlike a regular `while`, a `do-while` loop executes the first iteration before checking the condition.",
+      "options": [
+        "0 times",
+        "1 time",
+        "5 times",
+        "Infinitely"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. A `do-while` loop is a post-condition loop, so the body is guaranteed to execute at least once.",
+        "Correct! The loop body runs once, incrementing `count` to 11. Then the condition `(11 < 5)` is checked, which evaluates to false, and the loop terminates.",
+        "Incorrect. The condition `(count < 5)` is checked after the first iteration and immediately terminates the loop.",
+        "Incorrect. The condition will quickly become false; no infinite loop occurs."
+      ]
+    },
+    {
+      "id": "it_clang_12",
+      "widget_id": "widget_clang_12",
+      "topic": "C Language — for Loop",
+      "q": "Which of the following constructs will create an infinite loop in C?",
+      "hint": "In a `for` loop, all three sections (initialization, condition check, step) are optional.",
+      "options": [
+        "for (int i = 0; i < 0; i++)",
+        "for (;;)",
+        "for (while(1))",
+        "for (null; null; null)"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. The condition `(0 < 0)` is initially false; this loop will not execute any iterations.",
+        "Correct! Writing `for (;;)` omits the continuation condition, which according to the C standard is interpreted as 'always true' (an infinite loop).",
+        "Incorrect. Invalid C syntax — you cannot insert a `while` loop inside a `for` header.",
+        "Incorrect. `null` is not a valid C construct for a loop header (C uses uppercase `NULL`, but that would also cause a syntax error)."
+      ]
+    },
+    {
+      "id": "it_clang_13",
+      "widget_id": "widget_clang_13",
+      "topic": "C Language — Loop Control (break / continue)",
+      "q": "What will this code snippet output to the screen?",
+      "hint": "The `continue` statement skips the rest of the current iteration, while `break` completely stops the loop.",
+      "options": [
+        "1 2 3 4 5",
+        "1 2 4",
+        "1 2 4 5",
+        "1 2"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. The number 3 is skipped by the `continue` statement, and at 5 the loop terminates.",
+        "Correct! At `i=3`, `continue` triggers (3 is not printed). At `i=4`, '4' is printed. At `i=5`, `break` triggers, abruptly ending the loop before `printf` is called.",
+        "Incorrect. On iteration `i=5`, `break` executes, so 5 will not be printed.",
+        "Incorrect. After skipping `i=3`, the loop continues for `i=4`."
+      ]
+    },
+    {
+      "id": "it_clang_14",
+      "widget_id": "widget_clang_14",
+      "topic": "C Language — Array Initialization",
+      "q": "What value will element `arr[3]` contain after executing the following line of code?",
+      "hint": "If fewer values are provided during initialization than the array size, the remaining elements are filled by default.",
+      "options": [
+        "Garbage (random memory data)",
+        "0",
+        "2",
+        "Compilation error"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Random 'garbage' remains in the array only in the complete absence of initialization (`int arr[5];`).",
+        "Correct! With partial initialization using list `{1, 2}`, the first elements get the specified values, and all unsupplied elements (including `arr[3]`) are automatically zeroed out.",
+        "Incorrect. The value 2 will be written into element `arr[1]`.",
+        "Incorrect. The syntax of partial initialization is completely valid in C."
+      ]
+    },
+    {
+      "id": "it_clang_15",
+      "widget_id": "widget_clang_15",
+      "topic": "C Language — Integer Division",
+      "q": "What will this code snippet print to the screen?",
+      "hint": "The result of dividing two integers (`int / int`) in C is always an integer.",
+      "options": [
+        "2.5",
+        "2.0",
+        "2",
+        "Compilation error"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. To get 2.5, one of the operands must be cast to a floating-point type (e.g., `(double)a / b`).",
+        "Correct! The expression `a / b` performs integer division 5 / 2 = 2. Then 2 is implicitly converted to `double` (2.0) and printed with one decimal place.",
+        "Incorrect. The specifier `%f` expects a floating-point number, so it will print a decimal part (`2.0`).",
+        "Incorrect. Assignment and type printing are completely valid."
+      ]
+    },
+    {
+      "id": "it_clang_16",
+      "widget_id": "widget_clang_16",
+      "topic": "C Language — Bitwise Operations",
+      "q": "What will be the result of executing bitwise AND (`&`) in this code?",
+      "hint": "Convert numbers 6 and 3 into binary representation and apply logical AND to each bit.",
+      "options": [
+        "7",
+        "2",
+        "9",
+        "0"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. 7 (0111) would result from using bitwise OR (`a | b`).",
+        "Correct! In binary: 6 = 0110₂, 3 = 0011₂. The operation 0110 & 0011 yields 0010₂, which is equal to 2 in decimal.",
+        "Incorrect. 9 exceeds the bit length of the operands.",
+        "Incorrect. Both numbers share the second bit from the right (value 1)."
+      ]
+    },
+    {
+      "id": "it_clang_17",
+      "widget_id": "widget_clang_17",
+      "topic": "C Language — Scope",
+      "q": "What will the program output when executing this code?",
+      "hint": "Declaring a variable with the same name in an inner block `{}` shadows the outer variable.",
+      "options": [
+        "20 20",
+        "20 10",
+        "10 10",
+        "Redeclaration error"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Changes inside the inner block do not affect the value of the outer `x` outside the block.",
+        "Correct! Inside the inner block `{}`, a new variable `x = 20` is created, which is printed first. After exiting the block, it is destroyed, and the outer `printf` outputs `x = 10`.",
+        "Incorrect. Inside blocks, priority is given to the inner variable.",
+        "Incorrect. In C, creating variables with the same name in nested scopes is allowed."
+      ]
+    },
+    {
+      "id": "it_clang_18",
+      "widget_id": "widget_clang_18",
+      "topic": "C Language — Logical Conditions",
+      "q": "What will this program output to the screen?",
+      "hint": "In C, there was no built-in `bool` type (before C99). Which non-zero value is considered true?",
+      "options": [
+        "True",
+        "False",
+        "Outputs nothing",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, only `0` is considered FALSE. Any non-zero value (including negative numbers like `-5`) is interpreted as TRUE.",
+        "Incorrect. Negative numbers are not equal to zero, so the `if` branch condition triggers.",
+        "Incorrect. The program will definitely enter one of the `if-else` branches.",
+        "Incorrect. Using integers as conditions in `if` statements is a fundamental feature of C."
+      ]
+    },
+    {
+      "id": "it_clang_19",
+      "widget_id": "widget_clang_19",
+      "topic": "C Language — Bitwise Shift",
+      "q": "What will be the value of variable `result` after shifting bits to the left?",
+      "hint": "A left shift `x << n` is equivalent to multiplying number `x` by `2` to the power of `n` (x * 2^n).",
+      "options": [
+        "10",
+        "20",
+        "1",
+        "25"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. 10 would result from shifting 1 bit to the left (`5 << 1`).",
+        "Correct! The binary representation of 5 is 00000101₂. Shifting 2 bits to the left yields 00010100₂, which equals 20 in decimal (5 * 2² = 20).",
+        "Incorrect. A right shift (`5 >> 2`) would yield 1 (integer division by 4).",
+        "Incorrect. Bitwise shift performs multiplication by powers of two, not squaring."
+      ]
+    },
+    {
+      "id": "it_clang_20",
+      "widget_id": null,
+      "topic": "Programming 1 — Credits and Hours",
+      "q": "How many credit units (CFU) and academic lecture hours are specified for the 'Programming 1' course?",
+      "hint": "Recall the standard volume of lectures and lab sessions for this course.",
+      "options": [
+        "9 CFU and 72 hours",
+        "6 CFU and 48 hours",
+        "12 CFU and 100 hours",
+        "9 CFU and 60 hours"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The course includes lecture and lab sessions with a total duration of 72 hours, which corresponds to 9 credits (CFU).",
+        "Incorrect. 6 CFU (48 hours) is the volume of shorter disciplines.",
+        "Incorrect. 12 CFU usually corresponds to two-semester disciplines.",
+        "Incorrect. The number of hours for 9 CFU in this course is 72, not 60."
+      ]
+    },
+    {
+      "id": "it_clang_21",
+      "widget_id": null,
+      "topic": "Flowcharts — Input/Output Operations",
+      "q": "Which graphical symbol in algorithm flowcharts represents an Input/Output operation?",
+      "hint": "Recall the geometric shape with two parallel slanted sides.",
+      "options": [
+        "Parallelogram",
+        "Rectangle",
+        "Diamond",
+        "Circle"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! A parallelogram is used to represent data input and output operations.",
+        "Incorrect. A rectangle represents data processing operations or assignments.",
+        "Incorrect. A diamond is used for condition checking and algorithm branching.",
+        "Incorrect. A circle or oval is used to indicate the start and end of an algorithm."
+      ]
+    },
+    {
+      "id": "it_clang_22",
+      "widget_id": null,
+      "topic": "Programming Paradigms",
+      "q": "Which of the following languages belongs to the functional programming paradigm?",
+      "hint": "This language is a well-known dialect of Lisp.",
+      "options": [
+        "Scheme",
+        "Prolog",
+        "Java",
+        "C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Scheme is a representative of the functional programming paradigm.",
+        "Incorrect. Prolog belongs to logic programming.",
+        "Incorrect. Java belongs to object-oriented programming.",
+        "Incorrect. The C language belongs to the procedural (imperative) paradigm."
+      ]
+    },
+    {
+      "id": "it_clang_23",
+      "widget_id": null,
+      "topic": "Code Translation — Interpretation",
+      "q": "What is the main advantage of interpretation compared to compilation?",
+      "hint": "Think about the ability to run the same code on different hardware platforms.",
+      "options": [
+        "Portability and platform independence",
+        "Higher execution speed and efficiency",
+        "Automatic machine code optimization",
+        "No need for additional software"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Interpretation allows source code to run on any architecture provided an appropriate interpreter is available.",
+        "Incorrect. On the contrary, interpreted programs usually run slower than compiled ones.",
+        "Incorrect. Machine code optimization is performed by the compiler.",
+        "Incorrect. Interpretation requires an interpreter (additional software)."
+      ]
+    },
+    {
+      "id": "it_clang_24",
+      "widget_id": null,
+      "topic": "Java Compilation — Bytecode",
+      "q": "What is the intermediate code generated when compiling a Java program called?",
+      "hint": "This code is executed by the Java Virtual Machine (JVM).",
+      "options": [
+        "Bytecode",
+        "Machine code",
+        "Pseudocode",
+        "Source code"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The Java compiler translates source code into intermediate bytecode, which is then executed by the JVM.",
+        "Incorrect. Machine code is executed directly by the processor, whereas bytecode is executed by a virtual machine.",
+        "Incorrect. Pseudocode is a non-executable textual description of an algorithm.",
+        "Incorrect. Source code is the text of a program before compilation."
+      ]
+    },
+    {
+      "id": "it_clang_25",
+      "widget_id": null,
+      "topic": "Exam — Laboratory Practice",
+      "q": "What is the duration of the practical lab exam for the 'Programming 1' course?",
+      "hint": "The time allotted for writing, compiling, and debugging a program in the lab.",
+      "options": [
+        "2 hours",
+        "1.5 hours",
+        "3 hours",
+        "4 hours"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The practical exam lasts 2 hours and involves writing and debugging a C program.",
+        "Incorrect. 1.5 hours is not enough to complete the lab work fully.",
+        "Incorrect. 3 hours exceeds the established exam duration.",
+        "Incorrect. 4 hours is too long for a single stage."
+      ]
+    },
+    {
+      "id": "it_clang_26",
+      "widget_id": "widget_clang_26",
+      "topic": "GCC Compiler — Default File Name",
+      "q": "What default name is given to the executable file when compiling with GCC if the `-o` flag is omitted?",
+      "hint": "The name historically comes from 'assembler output'.",
+      "options": [
+        "a.out (or a.exe)",
+        "primo.out",
+        "main.exe",
+        "primo.exe"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Without specifying the `-o` flag, the GCC compiler creates an executable file named `a.out` (or `a.exe` on Windows).",
+        "Incorrect. GCC does not take the name of the first function or source file without the `-o` flag.",
+        "Incorrect. The name `main.exe` is not assigned automatically.",
+        "Incorrect. The source file name is not used by default for the binary file."
+      ]
+    },
+    {
+      "id": "it_clang_27",
+      "widget_id": "widget_clang_27",
+      "topic": "GCC Compiler — Flag -o",
+      "q": "Which GCC command compiles `primo.c` and sets the output executable name to `primo`?",
+      "hint": "The `-o` flag stands for output file.",
+      "options": [
+        "gcc primo.c -o primo",
+        "gcc -compile primo.c primo",
+        "gcc primo.c -out primo.exe",
+        "gcc -make primo.c"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! To set the output file name, use the `-o <filename>` option.",
+        "Incorrect. The `-compile` flag does not exist in GCC.",
+        "Incorrect. The `-out` key is not used in GCC to specify the output file.",
+        "Incorrect. `-make` is not a GCC compiler flag."
+      ]
+    },
+    {
+      "id": "it_clang_28",
+      "widget_id": null,
+      "topic": "C Language — Primitive Data Types",
+      "q": "Which three basic primitive C data types are covered in this introductory course?",
+      "hint": "Types for characters, integers, and floating-point numbers.",
+      "options": [
+        "char, int, float",
+        "string, int, boolean",
+        "integer, real, char",
+        "byte, int, double"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The fundamental primitive types in C are `char` (characters), `int` (integers), and `float` (floating-point).",
+        "Incorrect. The types `string` and `boolean` do not exist in standard basic C.",
+        "Incorrect. Keywords `integer` and `real` are used in Pascal, not C.",
+        "Incorrect. `byte` is not a built-in keyword in C."
+      ]
+    },
+    {
+      "id": "it_clang_29",
+      "widget_id": "widget_clang_29",
+      "topic": "C Language — printf Format Specifiers",
+      "q": "Which format specifier is used in `printf` to output a `float` variable?",
+      "hint": "The specifier matches the first letter of the word 'float'.",
+      "options": [
+        "%f",
+        "%d",
+        "%c",
+        "%s"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `%f` specifier is used for formatted output of `float` numbers.",
+        "Incorrect. The `%d` specifier is used for `int` integers.",
+        "Incorrect. The `%c` specifier is intended for single `char` characters.",
+        "Incorrect. The `%s` specifier is used for outputting strings."
+      ]
+    },
+    {
+      "id": "it_clang_30",
+      "widget_id": "widget_clang_30",
+      "topic": "C Language — Input via scanf",
+      "q": "What is the correct syntax for reading an integer from the keyboard into variable `var` using `scanf`?",
+      "hint": "Don't forget to pass the address of the variable using the `&` operator.",
+      "options": [
+        "scanf(\"%d\", &var);",
+        "scanf(\"%d\", var);",
+        "scanf(\"%f\", &var);",
+        "scanf(var, \"%d\");"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `scanf` function takes a format string `\"%d\"` and the variable address `&var`.",
+        "Incorrect. Without the `&` operator, the variable's value is passed instead of its address, leading to an error.",
+        "Incorrect. The `%f` specifier is intended for reading `float` numbers.",
+        "Incorrect. The argument order is swapped."
+      ]
+    },
+    {
+      "id": "it_clang_31",
+      "widget_id": null,
+      "topic": "C Language — Control Characters (Escape Sequences)",
+      "q": "Which escape sequence is used for a tab character in C?",
+      "hint": "First letter of the word 'tab'.",
+      "options": [
+        "\\t",
+        "\\n",
+        "\\b",
+        "\\\\"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `\\t` sequence inserts a horizontal tab.",
+        "Incorrect. `\\n` is used to move to a new line.",
+        "Incorrect. `\\b` stands for backspace (move back one character).",
+        "Incorrect. `\\\\` is used to output a literal backslash character."
+      ]
+    },
+    {
+      "id": "it_clang_32",
+      "widget_id": "widget_clang_32",
+      "topic": "C Language — Comments",
+      "q": "Which syntax is used in C to create a multi-line comment?",
+      "hint": "Slash and asterisk characters enclose the comment text.",
+      "options": [
+        "/* comment */",
+        "// comment",
+        "<!-- comment -->",
+        "# comment"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `/* ... */` construct allows formatting comments across one or multiple lines.",
+        "Incorrect. `//` is used for single-line comments.",
+        "Incorrect. `<!-- -->` is comment syntax in HTML.",
+        "Incorrect. `#` is used in Python and Bash scripts, not for comments in C."
+      ]
+    },
+    {
+      "id": "it_clang_33",
+      "widget_id": "widget_clang_33",
+      "topic": "C Language — Constants (const)",
+      "q": "How do you correctly declare a `float` constant named `PIGRECO` with a value of `3.1415`?",
+      "hint": "Use the `const` keyword before the variable type.",
+      "options": [
+        "const float PIGRECO = 3.1415;",
+        "float const PIGRECO : 3.1415;",
+        "constant PIGRECO = 3.1415;",
+        "define float PIGRECO = 3.1415;"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The formal syntax for declaring a constant is `const <type> <name> = <value>;`.",
+        "Incorrect. A colon is not used for assignment in C.",
+        "Incorrect. The keyword `constant` does not exist in C.",
+        "Incorrect. The preprocessor uses the `#define` directive, not `define float`."
+      ]
+    },
+    {
+      "id": "it_clang_34",
+      "widget_id": "widget_clang_34",
+      "topic": "C Language — Preprocessor Directives (#define)",
+      "q": "What is the correct syntax for defining a symbolic macro constant using the preprocessor?",
+      "hint": "A preprocessor directive does not require an equals sign `=` or a semicolon `;`.",
+      "options": [
+        "#define PIGR 3.1415",
+        "#define PIGR = 3.1415;",
+        "const #define PIGR 3.1415",
+        "#define float PIGR 3.1415;"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! A preprocessor directive is written in the format `#define <name> <value>` without `=` or `;`.",
+        "Incorrect. `=` and `;` are not placed in `#define`, otherwise they would be substituted directly into the code.",
+        "Incorrect. `const` and `#define` are different language mechanisms.",
+        "Incorrect. Data type is not specified in a `#define` macro."
+      ]
+    },
+    {
+      "id": "it_clang_35",
+      "widget_id": null,
+      "topic": "C Language — Case Sensitivity",
+      "q": "Why do the names `pippo` and `Pippo` refer to two completely different entities in C?",
+      "hint": "Uppercase and lowercase letters are treated differently by the compiler.",
+      "options": [
+        "Because C is a case-sensitive language",
+        "Because C does not support uppercase letters in names",
+        "Because one of the names is a reserved keyword",
+        "Because they have different default memory types"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! C is case-sensitive and strictly distinguishes between uppercase and lowercase letters.",
+        "Incorrect. C supports uppercase letters in identifier names.",
+        "Incorrect. Neither `pippo` nor `Pippo` are reserved keywords.",
+        "Incorrect. Name case does not affect memory type."
+      ]
+    },
+    {
+      "id": "it_clang_36",
+      "widget_id": null,
+      "topic": "C Language — Identifier Naming Rules",
+      "q": "Which of the following rules is MANDATORY when declaring an identifier name in C?",
+      "hint": "What must any identifier in C start with?",
+      "options": [
+        "The name must start with a letter or an underscore (_)",
+        "The name can start with a numeric character",
+        "The name can match a language keyword such as int or main",
+        "The name length cannot exceed 5 characters"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! An identifier must start with a letter or `_` and must not match keywords.",
+        "Incorrect. An identifier cannot start with a digit.",
+        "Incorrect. C keywords are reserved and cannot be used as variable names.",
+        "Incorrect. Identifier length can exceed 5 characters."
+      ]
+    },
+    {
+      "id": "it_clang_37",
+      "widget_id": "widget_clang_37",
+      "topic": "C Language — Assignment Operation",
+      "q": "What exactly does the assignment statement `x = x + 3;` perform?",
+      "hint": "First, the right-hand side is evaluated, then the result is written to the left-hand side.",
+      "options": [
+        "Calculates the value of x + 3 and writes the result to variable x",
+        "Declares an algebraic equality that causes an error",
+        "Increases the allocated memory size for x",
+        "Checks equality between x and x + 3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `=` operator first evaluates the expression on the right (`x + 3`), then saves the result into the variable on the left (`x`).",
+        "Incorrect. In programming, `=` denotes assignment, not algebraic equality.",
+        "Incorrect. Allocated memory size is determined by the variable type and does not change.",
+        "Incorrect. Equality checking is performed using the `==` operator."
+      ]
+    },
+    {
+      "id": "it_clang_38",
+      "widget_id": "widget_clang_38",
+      "topic": "C Language — Printing a Backslash",
+      "q": "Which escape sequence is used inside a `printf` string to output a literal backslash character (`\\`)?",
+      "hint": "The special character must be escaped with itself.",
+      "options": [
+        "\\\\",
+        "\\b",
+        "\\n",
+        "\\\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! To output a single `\\` character, it must be duplicated: `\\\\`.",
+        "Incorrect. `\\b` performs a backspace.",
+        "Incorrect. `\\n` moves to a new line.",
+        "Incorrect. `\\\"` is used to output a double quote inside a string."
+      ]
+    },
+    {
+      "id": "it_clang_39",
+      "widget_id": "widget_clang_39",
+      "topic": "C Language — stdio.h Library",
+      "q": "Which library (header file) must be included to use `printf` and `scanf` functions?",
+      "hint": "The library name stands for Standard Input/Output.",
+      "options": [
+        "stdio.h",
+        "stdlib.h",
+        "math.h",
+        "conio.h"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Input/output functions `printf` and `scanf` are declared in the `stdio.h` header file.",
+        "Incorrect. `stdlib.h` contains memory management and random number generation functions.",
+        "Incorrect. `math.h` contains mathematical functions (`sqrt`, `pow`, etc.).",
+        "Incorrect. `conio.h` is not part of the standard C library."
+      ]
+    }
+  ]
+}

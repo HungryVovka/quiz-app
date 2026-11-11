@@ -1,0 +1,693 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_240",
+      "widget_id": null,
+      "topic": "C Basics — Strict Aliasing Rule",
+      "q": "Is it true that according to the Strict Aliasing rule, accessing the memory of an int object through a float* pointer causes Undefined Behavior (UB), but accessing it through char* or unsigned char* is explicitly permitted by the C standard?",
+      "hint": "Consider whether the C standard makes an exception for character types when accessing the byte representation of any object.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The standard makes an explicit exception for `char*`, `signed char*`, and `unsigned char*` types, allowing them to reference the memory of any object to inspect its byte representation.",
+        "Incorrect. Accessing memory through `char*` is a fundamental exception to the Strict Aliasing rule in C."
+      ]
+    },
+    {
+      "id": "it_clang_241",
+      "widget_id": null,
+      "topic": "C Basics — The restrict Qualifier",
+      "q": "Is it true that the restrict keyword obligates the compiler to automatically generate dynamic pointer overlap checks at runtime?",
+      "hint": "Recall whether restrict is a programmer's promise to the compiler for optimization or a runtime safety mechanism.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. `restrict` is a promise by the *programmer* to the compiler that pointers do not reference overlapping memory regions. The compiler generates no runtime checks; it merely uses this promise for aggressive optimizations.",
+        "Correct! The `restrict` qualifier does not generate any check code at runtime. Violating the `restrict` contract leads to Undefined Behavior."
+      ]
+    },
+    {
+      "id": "it_clang_242",
+      "widget_id": "widget_clang_242",
+      "topic": "C Basics — Integer Promotion",
+      "q": "What will the code snippet in the widget output if a variable of type uint8_t undergoes bitwise NOT (~)?",
+      "hint": "Pay attention to the rule of automatic integer promotion of small integer types to int before executing bitwise operations.",
+      "options": [
+        "-1",
+        "255",
+        "0",
+        "4294967295"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Due to Integer Promotion, value `a` (0) is first promoted to signed `int` (0x00000000). Bitwise inversion `~` turns it into -1 (0xFFFFFFFF in two's complement).",
+        "Incorrect. If `~a` were evaluated in `uint8_t`, the result would be 255. However, operands are automatically promoted to `int`.",
+        "Incorrect. Bitwise NOT of zero yields a number with all bits set.",
+        "Incorrect. The promoted result has signed type `int`, so -1 is printed."
+      ]
+    },
+    {
+      "id": "it_clang_243",
+      "widget_id": null,
+      "topic": "C Basics — Pointer Subtraction",
+      "q": "Is it true that the result of the difference between two pointers (ptr2 - ptr1) pointing to elements of the same array is always an unsigned number of type size_t?",
+      "hint": "Think about whether pointer subtraction can yield a negative result if the second pointer points to an element earlier than the first.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. The result of pointer subtraction has a special signed integer type `ptrdiff_t`, as the offset can be either positive or negative.",
+        "Correct! Pointer subtraction returns a value of signed type `ptrdiff_t` (from `<stddef.h>`), not unsigned `size_t`."
+      ]
+    },
+    {
+      "id": "it_clang_244",
+      "widget_id": "widget_clang_244",
+      "topic": "C Basics — Compiler Optimizations and UB",
+      "q": "Is it true that with optimization enabled, the compiler has the right to completely remove the check if (ptr == NULL) if dereferencing *ptr = 10; is performed immediately before it?",
+      "hint": "Think about how dereferencing a pointer affects the compiler's assumption about whether that pointer can be null in a correct program.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Dereferencing a null pointer is UB. The compiler operates under the assumption that UB does not occur. Therefore, if `*ptr = 10` executed, `ptr` is guaranteed not to be `NULL`, and the subsequent check is eliminated by the optimizer as redundant (Dead Code Elimination).",
+        "Incorrect. In C, optimizers actively strip NULL checks if they were preceded by dereferencing, relying on the absence of UB."
+      ]
+    },
+    {
+      "id": "it_clang_245",
+      "widget_id": "widget_clang_245",
+      "topic": "C Basics — Casting Away const and Memory Mutability",
+      "q": "Is it true that casting away const via explicit type casting (int*)&c makes subsequently modifying the value of const int c = 5; fully compliant with the standard?",
+      "hint": "Distinguish between modifying regular objects through const pointers and modifying objects originally declared constant.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Attempting to modify an object originally declared as `const` results in Undefined Behavior, even if the qualifier is cast away (the compiler may place it in read-only memory, `.rdata`).",
+        "Correct! Casting away `const` avoids UB only when modifying an object that was *not* originally declared as `const`."
+      ]
+    },
+    {
+      "id": "it_clang_246",
+      "widget_id": null,
+      "topic": "C Basics — Struct Comparison via memcmp",
+      "q": "Is it true that memcmp always guarantees correct byte-for-byte equality comparison of two instances of the same struct across all their fields?",
+      "hint": "Recall the presence of uninitialized padding bytes between fields inside a struct.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Due to padding bytes filled with garbage (which are not guaranteed to be identical during field-by-field assignment), `memcmp` can return a false negative for structs with identical field values.",
+        "Correct! Due to uninitialized padding, `memcmp` is unreliable for comparing structs. Struct fields must be compared element by element."
+      ]
+    },
+    {
+      "id": "it_clang_247",
+      "widget_id": null,
+      "topic": "C Basics — Order of Function Argument Evaluation",
+      "q": "Is it true that when calling func(a(), b(), c()), the C standard strictly guarantees left-to-right evaluation of argument functions?",
+      "hint": "Think about whether argument evaluation order is fixed by the standard.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Function argument evaluation order is unspecified. The compiler may call `c()`, then `a()`, then `b()`.",
+        "Correct! Unlike languages like Java or C#, function argument evaluation order in C is not fixed by the standard."
+      ]
+    },
+    {
+      "id": "it_clang_248",
+      "widget_id": null,
+      "topic": "C Basics — Signed Overflow",
+      "q": "Is it true that signed int overflow in C is strictly defined as modulo $2^N$ wrapping, similar to unsigned types?",
+      "hint": "Compare the strict guarantees of unsigned arithmetic with the classification of signed overflow in the C specification.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Signed integer overflow in C is Undefined Behavior (UB). Modulo $2^N$ wrapping is guaranteed by the standard exclusively for unsigned types.",
+        "Correct! Signed overflow is UB. Compilers leverage this fact for optimizations (e.g., replacing `x + 1 > x` with `1`)."
+      ]
+    },
+    {
+      "id": "it_clang_249",
+      "widget_id": "widget_clang_249",
+      "topic": "C Basics — Stringification in Macros (#)",
+      "q": "What will the macro with the stringification operator STR(10 + 20) in the code return?",
+      "hint": "Think about whether the preprocessor evaluates arithmetic expressions before turning tokens into a string literal.",
+      "options": [
+        "The string \"10 + 20\"",
+        "The string \"30\"",
+        "The integer 30",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The preprocessor `#` operator turns received tokens into a string literal as-is, without evaluating arithmetic expressions. The result is `\"10 + 20\"`.",
+        "Incorrect. The preprocessor operates on text tokens, not mathematical value evaluation.",
+        "Incorrect. The `#` operator always produces a string literal, not a numeric value.",
+        "Incorrect. Stringifying a valid expression is a standard preprocessor operation."
+      ]
+    },
+    {
+      "id": "it_clang_250",
+      "widget_id": null,
+      "topic": "C Basics — Calling via Incompatible Function Pointer",
+      "q": "Is it true that casting a function pointer void(*)() to int(*)(int) and subsequently calling the function through this cast pointer is defined behavior if argument counts match?",
+      "hint": "Match function signature conversion rules with standard restrictions when invoking them directly.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Casting function pointers is allowed, but calling a function through an incompatible function pointer type leads to Undefined Behavior.",
+        "Correct! Calling a function via a pointer with a mismatched signature is Undefined Behavior."
+      ]
+    },
+    {
+      "id": "it_clang_251",
+      "widget_id": null,
+      "topic": "C Basics — VLA Status in C11 Standard",
+      "q": "Is it true that starting from C11 standard, support for Variable Length Arrays (VLA) remains mandatory for implementation in every C compiler?",
+      "hint": "Recall changes in mandatory VLA status between C99 and C11 standards.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. In C99 VLAs were mandatory, but in C11 they were made an optional feature (the presence of `__STDC_NO_VLA__` macro indicates lack of VLA support).",
+        "Correct! The C11 standard moved VLAs into the category of optional language features."
+      ]
+    },
+    {
+      "id": "it_clang_252",
+      "widget_id": null,
+      "topic": "C Basics — Variables and setjmp/longjmp",
+      "q": "Is it true that upon return from longjmp, the value of a local automatic variable is guaranteed to be preserved only if it was declared with the volatile qualifier?",
+      "hint": "Think about how optimizing local variable storage into CPU registers affects their values after restoring context via longjmp.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! According to the standard, if a local automatic variable is modified between `setjmp` and `longjmp`, its value after `longjmp` becomes indeterminate unless declared `volatile`.",
+        "Incorrect. Without `volatile`, a variable value modified after `setjmp` is not guaranteed due to potential CPU register optimization."
+      ]
+    },
+    {
+      "id": "it_clang_253",
+      "widget_id": null,
+      "topic": "C Basics — Static Inline Functions in Header Files",
+      "q": "Is it true that if a header file contains a static inline function definition, including this file in multiple source files (.c) will cause a link error due to duplicate symbols?",
+      "hint": "Pay attention to symbol linkage specified by the static keyword.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. The `static` qualifier gives a function internal linkage. Each translation unit receives its own local copy, preventing duplicate symbol linker errors.",
+        "Correct! Declaring `static inline` functions in headers is standard, safe practice in C."
+      ]
+    },
+    {
+      "id": "it_clang_254",
+      "widget_id": null,
+      "topic": "C Basics — fflush Specification and stdin",
+      "q": "Is it true that calling fflush(stdin) is guaranteed by the ISO C standard to flush and clear the keyboard input buffer?",
+      "hint": "Consider whether ISO C defines applying fflush to input streams.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Under ISO C, calling `fflush` on an *input* stream is Undefined Behavior. Although some compilers (like MSVC) support this as an extension, portable C code must not rely on it.",
+        "Correct! Under ISO C, `fflush` is defined only for output streams or update streams where the last operation was a write."
+      ]
+    },
+    {
+      "id": "it_clang_255",
+      "widget_id": null,
+      "topic": "C Basics — Function Type Compatibility and Qualifiers",
+      "q": "Is it true that function types void f(int) and void f(const int) are fully compatible from the C compiler's perspective because top-level const qualifiers on value parameters are ignored?",
+      "hint": "Think about whether local constness of a parameter copy is part of the function's external interface.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Top-level type qualifiers (`const`, `volatile`) on pass-by-value parameters are ignored when determining the function type. Signatures `void f(int)` and `void f(const int)` are considered fully compatible.",
+        "Incorrect. The C standard explicitly states that top-level qualifiers on value parameters do not affect function type."
+      ]
+    },
+    {
+      "id": "it_clang_256",
+      "widget_id": null,
+      "topic": "C Basics — Type Punning via Union",
+      "q": "Is it true that type punning through a union is an officially allowed mechanism in the C standard (C99+) to read an inactive union member, unlike C++?",
+      "hint": "Recall the difference between ISO C and C++ specifications regarding access to different union fields.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The C standard (since C99, footnote to 6.5.2.3) explicitly allows writing to one `union` field and reading from another (type punning) for byte reinterpretation. In C++, this is UB.",
+        "Incorrect. In C, unlike C++, reading an inactive `union` field is officially legalized by the standard."
+      ]
+    },
+    {
+      "id": "it_clang_257",
+      "widget_id": "widget_clang_257",
+      "topic": "C Basics — Address-of Operator and Bit-fields",
+      "q": "Is it true that the address-of operator (&) can be applied to a struct bit-field (e.g. &s.flags) to get a pointer to the corresponding bit?",
+      "hint": "Think about whether the smallest addressable unit of memory (byte) can reference an individual bit inside a field.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. In C, taking the address of a bit-field (`&s.flags`) is forbidden because pointers address bytes, not individual bits.",
+        "Correct! The unary `&` operator cannot be applied to struct bit-fields. Attempting to do so causes a compilation error."
+      ]
+    },
+    {
+      "id": "it_clang_258",
+      "widget_id": null,
+      "topic": "C Basics — Arithmetic of Signed Shifts",
+      "q": "Is it true that right-shifting a negative signed integer (e.g. -8 >> 1) is strictly guaranteed by the C standard to be an arithmetic shift (preserving the sign bit)?",
+      "hint": "Match ISO C guarantees for shifting negative numbers with implementation-defined behavior.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Bitwise right-shifting a negative signed integer is implementation-defined behavior. Although most platforms perform arithmetic shift, the C standard does not guarantee it.",
+        "Correct! The result of right-shifting negative signed values is not fixed by the standard and depends on the platform."
+      ]
+    },
+    {
+      "id": "it_clang_259",
+      "widget_id": "widget_clang_259",
+      "topic": "C Basics — Compound Literals Lifetime",
+      "q": "Is it true that a compound literal created inside a function block has automatic storage duration and becomes invalid upon exiting that block?",
+      "hint": "Pay attention to compound literal lifetime depending on whether declared inside a function or at file scope.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Compound literals inside functions are bound to the block in which they are created. Returning a pointer to such a literal results in a dangling pointer.",
+        "Incorrect. Unlike string literals, compound literals inside functions have local block lifetime."
+      ]
+    },
+    {
+      "id": "it_clang_260",
+      "widget_id": null,
+      "topic": "C Basics — Default Argument Promotions",
+      "q": "Is it true that when calling a variadic function (e.g. printf), float parameters are automatically promoted to double?",
+      "hint": "Recall standard Default Argument Promotions rules.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! For variadic functions (`...`), Default Argument Promotions apply: `float` is promoted to `double`, and integer types smaller than `int` are promoted to `int`/`unsigned int`.",
+        "Incorrect. Passing `float` to a variadic parameter list always promotes it to `double`."
+      ]
+    },
+    {
+      "id": "it_clang_261",
+      "widget_id": null,
+      "topic": "C Basics — The _Noreturn Specifier",
+      "q": "Is it true that if a function is declared with _Noreturn specifier but finishes via regular return, it causes Undefined Behavior (UB)?",
+      "hint": "Think about whether _Noreturn promises the compiler that the return point will never be reached.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! A function with `_Noreturn` promises the compiler that control never returns to the caller (e.g., via `exit()` or an infinite loop). Returning from such a function is Undefined Behavior.",
+        "Incorrect. The compiler optimizes under the assumption that returning from a `_Noreturn` function is impossible; violating this contract causes UB."
+      ]
+    },
+    {
+      "id": "it_clang_262",
+      "widget_id": null,
+      "topic": "C Basics — Preprocessor and Self-recursive Macros",
+      "q": "Is it true that if a preprocessor macro references itself (e.g. #define FOO (1 + FOO)), the C preprocessor enters infinite recursion and loops indefinitely?",
+      "hint": "Consider how the preprocessor protects against re-expanding a macro name inside its own definition.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. The C preprocessor disables re-expansion of a macro if its name appears inside its own body during substitution, preventing infinite recursion.",
+        "Correct! The preprocessor disables recursive expansion to avoid infinite loops. As a result, `FOO` remains an unexpanded token in the inner expression."
+      ]
+    },
+    {
+      "id": "it_clang_263",
+      "widget_id": "widget_clang_263",
+      "topic": "C Basics — Array Subscript Commutativity",
+      "q": "Is it true that 5[arr] syntax is valid C code and fully equivalent to arr[5]?",
+      "hint": "Recall the mathematical definition of array subscripting via pointer arithmetic.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! By definition, `arr[i]` is `*(arr + i)`. Since addition is commutative (`arr + 5` equals `5 + arr`), `5[arr]` evaluates `*(5 + arr)`, which is valid and identical to `arr[5]`.",
+        "Incorrect. This is valid C syntax resulting from commutativity of pointer-integer addition."
+      ]
+    },
+    {
+      "id": "it_clang_264",
+      "widget_id": null,
+      "topic": "C Basics — Freeing Offset Pointers in free()",
+      "q": "Is it true that calling free(ptr + 1) is safe and frees dynamic memory starting from the second element if ptr was returned by malloc?",
+      "hint": "Think about memory manager requirements for addresses passed to free().",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. `free()` accepts only the exact address previously returned by `malloc`/`calloc`/`realloc` (or `NULL`). Passing an offset pointer causes heap corruption and UB.",
+        "Correct! Freeing memory using an offset pointer is forbidden and leads to a crash."
+      ]
+    },
+    {
+      "id": "it_clang_265",
+      "widget_id": null,
+      "topic": "C Basics — Default Static Memory Initialization",
+      "q": "Is it true that all global and static variables without explicit initializers are guaranteed to be zeroed by the C standard prior to main() execution?",
+      "hint": "Recall default initialization rules for objects with static storage duration.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Static storage duration variables lacking explicit initializers are automatically zero-initialized (0 for numbers, `NULL` for pointers) in the `.bss` section.",
+        "Incorrect. Unlike local (automatic) variables containing garbage, static and global variables are always guaranteed to be zeroed."
+      ]
+    },
+    {
+      "id": "it_clang_266",
+      "widget_id": "widget_clang_266",
+      "topic": "C Basics — _Generic Macros in C11",
+      "q": "Is it true that the _Generic construct in C11 evaluates and selects the appropriate expression branch at runtime depending on variable contents?",
+      "hint": "Think about at which stage (compile-time or runtime) the compiler knows the type of the controlling expression.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. `_Generic` in C11 performs type matching fully resolved at compile time. No runtime type evaluation takes place.",
+        "Correct! The `_Generic` macro works strictly at compile time based on the static type of the controlling expression."
+      ]
+    },
+    {
+      "id": "it_clang_267",
+      "widget_id": null,
+      "topic": "C Basics — Implicit return in main Function",
+      "q": "Is it true that in C99 and C11 standards, reaching the closing brace of main() without a return statement is Undefined Behavior?",
+      "hint": "Recall the special exception made in C99+ specifically for main().",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Starting with C99, an exception was introduced for `main()`: if control reaches the end without `return`, the compiler automatically generates `return 0;`.",
+        "Correct! In C99 and C11, an explicit `return 0;` at the end of `main()` is optional and does not cause UB."
+      ]
+    },
+    {
+      "id": "it_clang_268",
+      "widget_id": null,
+      "topic": "C Basics — Inline Function Guarantees",
+      "q": "Is it true that the inline keyword in C (since C99) guarantees the compiler must inline the function body at all call sites?",
+      "hint": "Consider whether inline is a strict compiler directive or a hint to the optimizer.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. `inline` in C is merely a hint to the compiler optimizer. The compiler may ignore it and generate a standard function call.",
+        "Correct! The `inline` keyword does not force the compiler to inline a function."
+      ]
+    },
+    {
+      "id": "it_clang_269",
+      "widget_id": "widget_clang_269",
+      "topic": "C Basics — Type of Character Literals",
+      "q": "Is it true that the type of character literal 'a' in C is char, so sizeof('a') is always strictly 1?",
+      "hint": "Recall the type of character literals in C versus C++.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. In C, single character literal `'a'` has type `int` (not `char`!), so `sizeof('a')` equals `sizeof(int)` (typically 4 bytes). In C++, `'a'` is indeed `char`.",
+        "Correct! In C, character literal type is `int`, so its `sizeof` equals `sizeof(int)`."
+      ]
+    },
+    {
+      "id": "it_clang_270",
+      "widget_id": null,
+      "topic": "Selection — Purpose of Selection Constructs",
+      "q": "What are selection (branching) control structures used for in algorithms and programs?",
+      "hint": "Think about how an algorithm makes decisions when execution flow depends on evaluated data.",
+      "options": [
+        "To execute different blocks of instructions depending on whether certain conditions are true",
+        "To repeatedly execute the same group of instructions in a loop",
+        "To automatically allocate dynamic heap memory",
+        "To link system libraries during compilation"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Selection constructs allow directing program flow down different branches depending on condition evaluation.",
+        "Incorrect. Repeating instructions is handled by loop (iteration) structures.",
+        "Incorrect. Memory allocation is performed by memory management functions (e.g., `malloc`).",
+        "Incorrect. Linking libraries is handled by preprocessor directives (`#include`)."
+      ]
+    },
+    {
+      "id": "it_clang_271",
+      "widget_id": null,
+      "topic": "Flowcharts — Representing Conditions",
+      "q": "Which graphical block in a flowchart represents testing a branching condition?",
+      "hint": "Recall the shape from which two branches emerge — true (vero) and false (falso).",
+      "options": [
+        "Diamond",
+        "Parallelogram",
+        "Oval",
+        "Rectangle"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In flowcharts, condition checking (e.g., `x > y`) is represented by a diamond, with two paths branching out: true and false.",
+        "Incorrect. A parallelogram is used for Input/Output operations.",
+        "Incorrect. Ovals represent algorithm start and end (`BEGIN`/`END`).",
+        "Incorrect. Rectangles represent process/assignment steps."
+      ]
+    },
+    {
+      "id": "it_clang_272",
+      "widget_id": null,
+      "topic": "Flowcharts — Representing Input and Output",
+      "q": "Which graphical block in a flowchart represents reading input (I) or printing output (O)?",
+      "hint": "Pay attention to the shape of blocks labeled I (Input) and O (Output).",
+      "options": [
+        "Parallelogram",
+        "Oval",
+        "Diamond",
+        "Rectangle"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Input/output operations (e.g., reading `x`, `y` or printing maximum) are represented by parallelograms labeled `I` and `O`.",
+        "Incorrect. Ovals denote start and finish (`BEGIN`/`END`).",
+        "Incorrect. A diamond is used for testing logical conditions.",
+        "Incorrect. A rectangle is used for computation/action steps."
+      ]
+    },
+    {
+      "id": "it_clang_273",
+      "widget_id": null,
+      "topic": "if...else Syntax — Optional else Branch",
+      "q": "Is the presence of an else branch mandatory in an if selection statement in C?",
+      "hint": "Consider whether a program needs to take action if a condition evaluates to false and handling that case is unnecessary.",
+      "options": [
+        "No, the else branch is optional and can be omitted",
+        "Yes, omitting else always causes a compilation error",
+        "Yes, but only if the if contains a printf call",
+        "No, but only under the condition that the if statement is placed inside main"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `else` branch is optional. If no alternative action is needed when the condition is false, simple `if (condition)` is used.",
+        "Incorrect. C syntax fully permits standalone `if` statements without `else`.",
+        "Incorrect. Function calls inside an `if` branch do not make the `else` branch mandatory.",
+        "Incorrect. Standalone `if` statements without `else` are allowed anywhere in a program."
+      ]
+    },
+    {
+      "id": "it_clang_274",
+      "widget_id": null,
+      "topic": "C Syntax — Curly Braces in Branching Blocks",
+      "q": "Under what condition MUST statements inside if or else branches be enclosed in curly braces {}?",
+      "hint": "Think about how the compiler determines the boundaries of a group of statements belonging to a branch.",
+      "options": [
+        "When the corresponding branch contains a block of multiple statements",
+        "Curly braces are mandatory always, even for a single statement",
+        "Only if the condition uses comparison operators > or <",
+        "Only if input via scanf is executed inside the branch"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! If an `if` or `else` branch contains more than one statement, they must be grouped into a compound statement (block) using curly braces `{}`.",
+        "Incorrect. For a single statement, braces are optional (though recommended for readability).",
+        "Incorrect. The condition operator type has no effect on needing curly braces.",
+        "Incorrect. Having `scanf` inside a branch does not mandate braces if it is a single statement."
+      ]
+    },
+    {
+      "id": "it_clang_275",
+      "widget_id": null,
+      "topic": "Algorithm Logic — Finding the Maximum of Two Numbers",
+      "q": "In an algorithm finding the maximum of two numbers x and y, the condition x > y is tested. What is output in the else branch (when false)?",
+      "hint": "Match the negation of 'x is greater than y' with which number is the maximum in that case.",
+      "options": [
+        "The value of y, as it is greater than or equal to x",
+        "The value of x, as it always exceeds y",
+        "Zero, as the numbers are considered equal",
+        "Execution error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! If `x > y` is false, it means `y >= x`. Thus, the maximum value is `y`.",
+        "Incorrect. If `x > y` is false, `x` cannot be strictly greater than `y`.",
+        "Incorrect. Falsity of `x > y` means `y >= x`, but does not zero out the result.",
+        "Incorrect. A false branch condition is normal execution flow, not an error."
+      ]
+    },
+    {
+      "id": "it_clang_276",
+      "widget_id": null,
+      "topic": "C Syntax — Parentheses in an if Statement",
+      "q": "What will happen when attempting to compile code if x > y printf(...); without parentheses around the condition?",
+      "hint": "Recall the required syntactic element surrounding condition expressions in C if statements.",
+      "options": [
+        "The compiler will issue a syntax error",
+        "The program will compile, but the condition will always be false",
+        "Only the else branch will execute",
+        "The preprocessor will automatically insert parentheses"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! C syntax requires `if` conditions to be enclosed in parentheses: `if (condition)`. Omitting parentheses causes a compilation error.",
+        "Incorrect. This is a syntax violation preventing compilation, not a runtime logical error.",
+        "Incorrect. Without parentheses, code won't compile, so no branches execute.",
+        "Incorrect. The preprocessor does not fix C statement syntax."
+      ]
+    },
+    {
+      "id": "it_clang_277",
+      "widget_id": "widget_clang_277",
+      "topic": "C Syntax — Single Statement Execution Without Braces",
+      "q": "What will the code snippet in the widget output if x = 3 and y = 5?",
+      "hint": "Pay attention to the absence of curly braces after if(x > y) and determine which statement belongs to the condition.",
+      "options": [
+        "Only \"B\"",
+        "\"A\" and \"B\"",
+        "Only \"A\"",
+        "Outputs nothing"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since curly braces are missing, only the first statement `printf(\"A\");` belongs to `if(x > y)`. As `3 > 5` is false, \"A\" is not printed. `printf(\"B\");` is outside the branch and always executes.",
+        "Incorrect. `3 > 5` is false, so `printf(\"A\");` does not execute.",
+        "Incorrect. `printf(\"A\");` is skipped, while `printf(\"B\");` always executes.",
+        "Incorrect. `printf(\"B\");` is outside `if` and will print \"B\"."
+      ]
+    },
+    {
+      "id": "it_clang_278",
+      "widget_id": null,
+      "topic": "Concepts — Pseudocode",
+      "q": "What is the primary purpose of writing pseudocode before implementing an algorithm in C?",
+      "hint": "Think about representing human-readable algorithms prior to translating them to a specific programming language.",
+      "options": [
+        "To describe algorithm logic in a high-level, human-readable format independent of specific programming language syntax",
+        "To automatically compile a binary file without GCC compiler involvement",
+        "To test CPU speed and allocate RAM",
+        "To replace flowcharts across all software design standards"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Pseudocode allows designing and analyzing algorithm steps in human-readable terms without getting distracted by syntax details.",
+        "Incorrect. Pseudocode is neither executed nor compiled by machines.",
+        "Incorrect. Pseudocode is a conceptual text representation, not hardware interaction.",
+        "Incorrect. Pseudocode and flowcharts complement each other."
+      ]
+    },
+    {
+      "id": "it_clang_279",
+      "widget_id": null,
+      "topic": "C Syntax — Scope in a Branching Block",
+      "q": "What happens if you declare int max; inside curly braces of an if branch (if (...) { int max = x; }) and try to access it after the closing brace }?",
+      "hint": "Recall block scope rules for variables declared inside a {} block.",
+      "options": [
+        "A compilation error occurs because variable scope is restricted to the {} block",
+        "The variable persists and is accessible throughout main()",
+        "The variable value is automatically zeroed",
+        "The variable becomes accessible only inside the else branch"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Variables declared inside `{}` have block scope and cease to exist upon exiting the block. Accessing them outside causes an `undeclared identifier` error.",
+        "Incorrect. The variable is inaccessible outside its block.",
+        "Incorrect. The variable ceases to exist rather than being zeroed.",
+        "Incorrect. The `else` branch has its own scope and cannot access `if` block locals."
+      ]
+    }
+  ]
+}

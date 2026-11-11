@@ -1,0 +1,605 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_1031",
+      "widget_id": "widget_clang_1031",
+      "topic": "Returning Multiple Results — Pass by Pointer",
+      "q": "How to properly design a mathematical calculation function if you need to calculate and return two values at once (for example, minimum and maximum from an array)?",
+      "hint": "Since return in C can only return a single value, what mechanism is used to pass alternative outputs?",
+      "options": [
+        "Pass pointers to variables for results into function parameters and write calculations to those addresses",
+        "Use two return statements in a row: return min; return max;",
+        "Pass results through global variable errno",
+        "Create an array inside the function and return its local address"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Passing pointers in function parameters (`void get_min_max(..., int *out_min, int *out_max)`) is the standard way to return multiple calculated results in C.",
+        "Incorrect. The first executed `return` will immediately terminate the function.",
+        "Incorrect. The `errno` variable is intended exclusively for system error codes, not for regular calculation results.",
+        "Incorrect. Returning the address of a local array will lead to a dangling pointer and Undefined Behavior."
+      ]
+    },
+    {
+      "id": "it_clang_1032",
+      "widget_id": "widget_clang_1032",
+      "topic": "Passing Structures — Calculation Efficiency",
+      "q": "Why is it recommended to use const Vector *v instead of Vector v when passing a large structure (for example, a $4 \\times 4$ matrix or a 3D grid) into a mathematical calculation function?",
+      "hint": "Compare pass-by-value and pass-by-pointer in terms of resource consumption and data protection.",
+      "options": [
+        "Passing by `const` pointer avoids expensive copying of the entire structure onto the stack and protects it from accidental modification",
+        "Pass-by-value is strictly forbidden by the compiler for any structures",
+        "The `const` qualifier speeds up CPU performance by 10 times",
+        "A pointer automatically offloads calculations to the graphics card (GPU)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Passing `Vector v` by value performs a byte-for-byte copy of all structure fields onto the stack. Using `const Vector *v` passes only an address (8 bytes on a 64-bit system), and `const` guarantees that the calculation function will not modify the original data.",
+        "Incorrect. Passing structures by value is completely allowed in C, but inefficient for large objects.",
+        "Incorrect. `const` helps the compiler and protects code, but does not inherently speed up work by a fixed factor.",
+        "Incorrect. Offloading calculations to a GPU requires specific frameworks (OpenCL, CUDA)."
+      ]
+    },
+    {
+      "id": "it_clang_1033",
+      "widget_id": "widget_clang_1033",
+      "topic": "Function Pointers — Numerical Methods",
+      "q": "Why pass a parameter like double (*math_func)(double) to a numerical integration function (for example, computing an integral using the trapezoidal rule)?",
+      "hint": "Does this allow making the algorithm universal for different functions $f(x)$?",
+      "options": [
+        "So that the integration algorithm can compute the integral of any mathematical function $f(x)$ passed as an argument",
+        "To speed up function calculation at compile time",
+        "This is the only way to pass real numbers of type double into functions",
+        "So that the integration function can modify the source code of the mathematical function"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Passing a function pointer allows abstracting a mathematical algorithm (integration, root finding, differentiation) from a specific formula $f(x)$.",
+        "Incorrect. Calling via a function pointer instead creates an indirect call at runtime.",
+        "Incorrect. Regular `double` numbers are passed directly by value.",
+        "Incorrect. Function code in execution memory resides in a read-only section (`.text`)."
+      ]
+    },
+    {
+      "id": "it_clang_1034",
+      "widget_id": "widget_clang_1034",
+      "topic": "Passing Arrays — Loss of Size Information",
+      "q": "Why is it mandatory to pass the size `size` as a separate parameter to an array summation function `double sum(const double *arr, size_t size)`?",
+      "hint": "What happens to an array when its name is passed as a function argument?",
+      "options": [
+        "The array name decays to a pointer to the first element, and the function has no information about the array length",
+        "C forbids passing arrays without specifying a size parameter of type `size_t` at the end",
+        "Array size is automatically determined via `sizeof(arr)` inside the function",
+        "This is required only for arrays of negative numbers"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, when an array is passed as a function parameter, it degrades to a regular pointer to the element type (`const double *`). All information about the number of elements is lost (Array decay), so the length `size` must be passed explicitly.",
+        "Incorrect. The order and presence of parameters is defined by the programmer, but without size, loop iteration becomes impossible.",
+        "Incorrect. Inside the function, `sizeof(arr)` will return the size of the pointer itself (4 or 8 bytes), not the entire array.",
+        "Incorrect. This rule applies to arrays of any types and values."
+      ]
+    },
+    {
+      "id": "it_clang_1035",
+      "widget_id": "widget_clang_1035",
+      "topic": "Standard Library — div() Function",
+      "q": "Which function from <stdlib.h> calculates both the quotient and remainder of integer division simultaneously and returns them as a div_t structure?",
+      "hint": "The function name matches the mathematical division operation.",
+      "options": [
+        "div()",
+        "mod()",
+        "quotient()",
+        "split_div()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `div(int numer, int denom)` function computes the quotient and remainder in a single operation and returns a `div_t` structure containing fields `quot` (quotient) and `rem` (remainder).",
+        "Incorrect. The remainder operation in C is the `%` operator or the `fmod()` function for `double`.",
+        "Incorrect. The `quotient()` function does not exist in the standard library.",
+        "Incorrect. The `split_div()` function is absent in C."
+      ]
+    },
+    {
+      "id": "it_clang_1036",
+      "widget_id": "widget_clang_1036",
+      "topic": "Multidimensional Arrays — Matrix Parameter Syntax",
+      "q": "Which of the following function headers is valid for receiving a $3 \\times 3$ two-dimensional array (matrix) to calculate its determinant?",
+      "hint": "Which dimension must be explicitly specified to the compiler to calculate memory strides?",
+      "options": [
+        "double det(double m[][3])",
+        "double det(double m[][])",
+        "double det(double [][]m)",
+        "double det(double *m[3][3])"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! When passing multidimensional arrays, the C compiler requires the length of all dimensions except the first (in this case `[3]`) to correctly compute element addresses `m[i][j]` using the formula `i * cols + j`.",
+        "Incorrect. Writing `double m[][]` will cause a compilation error because the compiler cannot determine the row size.",
+        "Incorrect. Such bracket syntax is invalid in C.",
+        "Incorrect. Writing `double *m[3][3]` declares a two-dimensional array of pointers, not an array of `double` numbers."
+      ]
+    },
+    {
+      "id": "it_clang_1037",
+      "widget_id": "widget_clang_1037",
+      "topic": "Returning Values — Complex and Composite Numbers via struct",
+      "q": "How does the function `Complex add_complex(Complex a, Complex b)`, which returns the result of adding two complex numbers as a structure, behave?",
+      "hint": "What happens to a returned object of type struct?",
+      "options": [
+        "The returned structure is copied entirely by value to the calling code",
+        "A pointer to a structure on the heap is automatically created",
+        "The compiler forbids returning structures from calculation functions",
+        "The structure is destroyed before the calling code has time to read it"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, functions can return structures by value. The returned instance is copied into the calling function's context (often via ABI optimization using special registers).",
+        "Incorrect. Heap memory is not allocated automatically.",
+        "Incorrect. Returning structures is fully supported by the C standard.",
+        "Incorrect. A copy of the return value is created before the stack frame is destroyed."
+      ]
+    },
+    {
+      "id": "it_clang_1038",
+      "widget_id": "widget_clang_1038",
+      "topic": "Variadic Functions — Calculating Unknown Length Parameters",
+      "q": "Why is the count parameter passed first when calculating the sum of numbers in a variadic function `double sum(int count, ...)`?",
+      "hint": "Does the `...` function know the number of arguments passed into it by itself?",
+      "options": [
+        "The variadic argument mechanism in C does not track argument count, so it must be passed explicitly",
+        "This is a requirement of the mathematical library for formatting",
+        "The first parameter `count` is automatically calculated by the preprocessor",
+        "Without `count`, the function cannot return a `double` value"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The variadic list `...` contains no information about the number or types of arguments. Passing the count (or a sentinel terminator) is necessary so the `va_arg` loop knows when to stop reading from the stack.",
+        "Incorrect. This is a general C rule for any variadic functions, not just mathematical ones.",
+        "Incorrect. The preprocessor does not count function call arguments.",
+        "Incorrect. The return type is completely unrelated to the `count` parameter."
+      ]
+    },
+    {
+      "id": "it_clang_1039",
+      "widget_id": "widget_clang_1039",
+      "topic": "Optimization — restrict Qualifier in Vector Calculations",
+      "q": "What advantage does adding the restrict qualifier to pointers provide in an element-wise vector addition function `void add_vectors(size_t n, double * restrict a, const double * restrict b)`?",
+      "hint": "Can vector memory regions overlap, and how does this affect SIMD vectorization?",
+      "options": [
+        "Guarantees that memory regions `a` and `b` do not overlap, allowing the compiler to apply SIMD loop vectorization",
+        "Makes the function thread-safe",
+        "Automatically computes vector size at compile time",
+        "Forbids passing NaN values into the function"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `restrict` promises the compiler that pointers `a` and `b` do not refer to overlapping memory regions (no aliasing). This allows the compiler's auto-vectorizer to unroll the loop using fast vector instructions (AVX/NEON).",
+        "Incorrect. `restrict` affects pointer aliasing, not thread synchronization.",
+        "Incorrect. Vector size is passed via `size_t n` at runtime.",
+        "Incorrect. `restrict` does not affect checking for NaN values."
+      ]
+    },
+    {
+      "id": "it_clang_1040",
+      "widget_id": "widget_clang_1040",
+      "topic": "Optimization — Pure Function Attribute (pure/const)",
+      "q": "Which calculation function is called a 'Pure function' and permits optimization by eliminating redundant calls with identical arguments?",
+      "hint": "Do such functions depend on global variables or modify external state?",
+      "options": [
+        "A function whose result depends ONLY on passed arguments and has no side effects",
+        "A function written without using pointers",
+        "A function that accepts only `int` type arguments",
+        "A function containing no `for` or `while` loops inside"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! A pure function always returns the same result for identical input arguments and does not modify global state (no side effects). The compiler can optimize code by replacing repeated calls to `f(x)` with a previously saved result.",
+        "Incorrect. Using pointers (especially with the `const` qualifier) does not prevent a function from being pure.",
+        "Incorrect. Parameter types do not affect the concept of function purity.",
+        "Incorrect. The presence of loops in no way contradicts the concept of a pure function."
+      ]
+    },
+    {
+      "id": "it_clang_1041",
+      "widget_id": "widget_clang_1041",
+      "topic": "return Statement — Early Exit from void Function",
+      "q": "Can a return statement be used without specifying a value inside a function with return type void?",
+      "hint": "Think about how to interrupt function execution before it reaches the end of its last line.",
+      "options": [
+        "Yes, return; is used for early exit and terminating void function execution",
+        "No, in void functions the return statement is strictly forbidden",
+        "Yes, but only if written as return 0;",
+        "No, a function is always required to reach the closing brace }"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `return;` instruction (without an expression) immediately terminates a `void` function and returns control to the call site.",
+        "Incorrect. `return;` is completely legal in `void` functions and is often used to check boundary conditions at the beginning of a function.",
+        "Incorrect. Writing `return 0;` in a `void` function causes a compilation error because the function must not return a value.",
+        "Incorrect. Early exit is a standard control flow pattern."
+      ]
+    },
+    {
+      "id": "it_clang_1042",
+      "widget_id": "widget_clang_1042",
+      "topic": "Parameters — Default Values",
+      "q": "Does standard C support default parameter values (for example, void print_num(int x = 10))?",
+      "hint": "Recall if this feature from C++ is available in pure C.",
+      "options": [
+        "No, C has no syntax for default parameter values",
+        "Yes, it is a standard feature of C and C++",
+        "Yes, but only for int type arguments",
+        "Yes, if the argument is marked as static"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Unlike C++, pure C does not support default parameter values. All arguments declared in a function prototype must be explicitly passed upon calling.",
+        "Incorrect. This feature exists in C++, but is absent in C.",
+        "Incorrect. The `int x = 10` syntax in a C parameter list causes a compiler error regardless of type.",
+        "Incorrect. The `static` modifier cannot be applied to function parameters in this manner."
+      ]
+    },
+    {
+      "id": "it_clang_1043",
+      "widget_id": "widget_clang_1043",
+      "topic": "Scope — Variable Isolation",
+      "q": "If int x = 5; is declared inside main(), and int x = 20; is declared inside function foo(), how will they interact?",
+      "hint": "Do local variables with identical names in different functions affect each other?",
+      "options": [
+        "These are two completely separate variables located in different memory regions; they do not affect each other in any way",
+        "A compilation error will occur due to redeclaring variable x",
+        "The variable in foo() will overwrite the variable value in main()",
+        "The variable x value in main() will automatically become equal to 20"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Each function creates its own scope (stack frame). The `x` variables are completely independent and stored in different memory locations.",
+        "Incorrect. Redeclaration error occurs only when creating two variables with the same name inside the same scope.",
+        "Incorrect. Function `foo()` works only with its own local `x`.",
+        "Incorrect. Variable `x` in `main()` will retain its value of 5."
+      ]
+    },
+    {
+      "id": "it_clang_1044",
+      "widget_id": "widget_clang_1044",
+      "topic": "Arguments — Passing Numeric Literals",
+      "q": "Is it allowed to pass specific numbers directly into a function instead of variables (for example, sum(10, 20))?",
+      "hint": "Does it matter to a function whether it is passed a variable holding 10 or the number 10 itself?",
+      "options": [
+        "Yes, any expressions including constants and literals can be passed as arguments",
+        "No, only pre-created variables can be passed",
+        "Yes, but only if passed through pointers first",
+        "No, C requires creating variables for every call"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Because parameters are passed by value, the compiler only cares about the evaluated value of the type (in this case `int`), so calls `sum(10, 20)` and `sum(a, b)` are completely valid.",
+        "Incorrect. Storing numbers in intermediate variables before calling is optional.",
+        "Incorrect. Pointers do not need to be applied to literals.",
+        "Incorrect. Direct passing of literals is one of the most common function usage patterns."
+      ]
+    },
+    {
+      "id": "it_clang_1045",
+      "widget_id": "widget_clang_1045",
+      "topic": "Parameters — Immutability of Original Variables",
+      "q": "What will happen to variable num in main() if passed to function void add_one(int val) { val = val + 1; }?",
+      "hint": "Recall the fundamental rule of pass-by-value parameters.",
+      "options": [
+        "Variable num in main() will NOT change because the function modified only its local copy val",
+        "Variable num will increase by 1",
+        "A runtime error will occur",
+        "Variable num will be set to zero"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! When passing by value, `add_one` receives a copy of `num`'s content. Modifying local parameter `val` inside `add_one` does not affect the original `num`.",
+        "Incorrect. To change the original, the variable address `&num` would need to be passed.",
+        "Incorrect. This is a completely standard and safe operation.",
+        "Incorrect. The original value remains unchanged."
+      ]
+    },
+    {
+      "id": "it_clang_1046",
+      "widget_id": "widget_clang_1046",
+      "topic": "Syntax Synonyms — void Specifier in Parameter List",
+      "q": "What does specifying the word void in parameter list void say_hi(void) guarantee in C?",
+      "hint": "How does `foo(void)` differ from `foo()` in classic C standards?",
+      "options": [
+        "Strictly guarantees that the function takes no arguments",
+        "Means the function takes one argument of unspecified type",
+        "Instructs compiler to make function virtual",
+        "This is obsolete syntax that does not compile"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, `void func(void)` explicitly informs the compiler that the function accepts zero arguments. Historically, `void func()` meant the function accepts an *unspecified* number of arguments.",
+        "Incorrect. For unspecified types, `void*` or variadic arguments `...` are used.",
+        "Incorrect. There is no concept of virtual functions in C.",
+        "Incorrect. This is the standard and correct way to declare parameterless functions in C."
+      ]
+    },
+    {
+      "id": "it_clang_1047",
+      "widget_id": "widget_clang_1047",
+      "topic": "Concepts — Printing to Screen vs Returning Value",
+      "q": "What is the fundamental difference between calling printf() inside a function and using return statement?",
+      "hint": "Can the calling program use text simply printed to console?",
+      "options": [
+        "printf() only prints text to the screen (side effect), while return passes the result back to the program for further calculations",
+        "There is no difference, both options pass data into main()",
+        "return works only with strings, and printf() only with numbers",
+        "printf() terminates function execution, while return does not"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Terminal output via `printf()` is visible to the user, but the calling function does not receive this data. The `return` statement gives the computed value back to the program so it can be stored in a variable or used in a formula.",
+        "Incorrect. Displaying in console and returning value to register/stack are fundamentally different things.",
+        "Incorrect. Both `return` and `printf` can work with any data types.",
+        "Incorrect. On the contrary: `return` terminates function, while `printf` simply performs output and passes control to the next line."
+      ]
+    },
+    {
+      "id": "it_clang_1048",
+      "widget_id": "widget_clang_1048",
+      "topic": "Parameters — Argument Passing Order",
+      "q": "In what order are values bound to parameters when calling function void display(int id, double price)?",
+      "hint": "How are arguments matched to parameter names when calling `display(101, 19.99)`?",
+      "options": [
+        "In strict left-to-right order: first value is written to id, second — to price",
+        "In reverse order: first value to price, second — to id",
+        "Order is random and depends on compiler",
+        "Values are matched by variable name matching"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! When calling a function, argument values are assigned to parameters strictly left-to-right: first argument to first parameter, second to second.",
+        "Incorrect. Passing order is strictly fixed by function declaration.",
+        "Incorrect. Evaluation order of arguments may vary, but binding to parameters is always left-to-right.",
+        "Incorrect. Binding occurs by position, not by name."
+      ]
+    },
+    {
+      "id": "it_clang_1049",
+      "widget_id": "widget_clang_1049",
+      "topic": "Syntax — Saving Function Result",
+      "q": "Which line of code correctly saves the result of int multiply(int a, int b) into a new variable?",
+      "hint": "Which construct is used to assign a return value?",
+      "options": [
+        "int res = multiply(3, 4);",
+        "multiply(3, 4) -> int res;",
+        "int res = int multiply(3, 4);",
+        "save multiply(3, 4) to res;"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The expression `multiply(3, 4)` is evaluated and assigned to the created variable `res` via the `=` operator.",
+        "Incorrect. Such arrow syntax does not exist in C.",
+        "Incorrect. When calling a function, return type `int` before its name is not written.",
+        "Incorrect. The `save` operator does not exist in C."
+      ]
+    },
+    {
+      "id": "it_clang_1050",
+      "widget_id": "widget_clang_1050",
+      "topic": "Expressions — Calling Function Inside Math Operations",
+      "q": "Can a function call returning int be used directly inside a mathematical expression, for example: int result = get_number() * 2;?",
+      "hint": "What does a function call become after execution within expression context?",
+      "options": [
+        "Yes, a function call returns a value that immediately participates in expression calculation",
+        "No, a function call must be the sole operation on a line",
+        "Yes, but only if the function is declared with inline keyword",
+        "No, a temporary variable must be declared first"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Calling a value-returning function is a full-fledged expression. It is evaluated, and the substituted result participates in further operations (multiplying by 2).",
+        "Incorrect. Function calls can be freely combined in any expressions.",
+        "Incorrect. The `inline` keyword is merely a hint to the optimizer and does not affect syntax rules.",
+        "Incorrect. A temporary variable is created by the compiler automatically if needed."
+      ]
+    },
+    {
+      "id": "it_clang_1051",
+      "widget_id": "widget_clang_1051",
+      "topic": "Scope — static Modifier for Functions",
+      "q": "What does the static keyword placed before a function declaration do (for example, static void helper(void))?",
+      "hint": "Think about function visibility from other project files (modules).",
+      "options": [
+        "Limits function scope to the current file (translation unit)",
+        "Forces function to execute faster due to caching",
+        "Makes all variables inside function static by default",
+        "Allows calling function without using parentheses"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `static` qualifier before a function gives it internal linkage. The function name is not exported to the linker and cannot be called from other source files (`.c`).",
+        "Incorrect. `static` affects symbol visibility to the linker, not execution speed.",
+        "Incorrect. Variables inside function retain their normal declaration rules.",
+        "Incorrect. Calling any function in C always requires `()` syntax."
+      ]
+    },
+    {
+      "id": "it_clang_1052",
+      "widget_id": "widget_clang_1052",
+      "topic": "Passing Arrays — Modifying Elements",
+      "q": "If an array is passed to function void zero_out(int arr[], int size), will its elements change in calling code when arr[0] = 0 is executed?",
+      "hint": "Recall what int arr[] parameter turns into when passed to a function.",
+      "options": [
+        "Yes, array elements will change because array is passed via pointer to its first element",
+        "No, function is passed a local copy of entire array",
+        "A compilation error will occur, arrays cannot be modified",
+        "Will change only if array is declared with static key"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Parameter `int arr[]` is equivalent to `int *arr`. A pointer to the first array element is passed, so writing to `arr[i]` modifies elements of original array in memory.",
+        "Incorrect. Arrays in C are never copied by value automatically when passed to functions.",
+        "Incorrect. Modifying array elements via pointer is standard behavior.",
+        "Incorrect. `static` is not required to modify elements."
+      ]
+    },
+    {
+      "id": "it_clang_1053",
+      "widget_id": "widget_clang_1053",
+      "topic": "Optimization — inline Specifier",
+      "q": "What is the primary goal of adding inline specifier to a small function declaration?",
+      "hint": "How to avoid overhead of creating stack frame and jumping to address?",
+      "options": [
+        "Hint to compiler to inline function body directly at call site",
+        "Make function automatically thread-safe",
+        "Forbid function from accepting parameters",
+        "Turn function into recursive function"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `inline` keyword suggests the compiler substitute function code directly at the call point (Inlining), eliminating function call and return overhead.",
+        "Incorrect. `inline` has no effect on thread safety.",
+        "Incorrect. `inline` functions can accept any parameters.",
+        "Incorrect. Recursion and inlining are opposite concepts."
+      ]
+    },
+    {
+      "id": "it_clang_1054",
+      "widget_id": "widget_clang_1054",
+      "topic": "Data Security — Constant Pointers in Parameters",
+      "q": "What does declaring parameter as const int *p in function header void analyze(const int *p) guarantee?",
+      "hint": "Will function be able to modify value lying at address *p?",
+      "options": [
+        "Function will not be able to modify value of variable pointed to by p",
+        "Function will not be able to modify address of pointer p itself",
+        "Variable in memory is completely protected against reading",
+        "Pointer p must necessarily be equal to NULL"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Writing `const int *p` makes data at address `*p` read-only inside this function. Attempting to write `*p = 10` will cause a compilation error.",
+        "Incorrect. Moving pointer itself (`p++`) is allowed, as data is constant, not the pointer itself.",
+        "Incorrect. Reading data is allowed; only writing is forbidden.",
+        "Incorrect. Pointer can refer to any valid object."
+      ]
+    },
+    {
+      "id": "it_clang_1055",
+      "widget_id": "widget_clang_1055",
+      "topic": "Pointers — Passing Pointer to Pointer (int **)",
+      "q": "Why pass a double pointer to a function (for example, void allocate(int **ptr)) when allocating memory for an array?",
+      "hint": "Does address stored in original pointer itself change?",
+      "options": [
+        "So function can write new address of allocated memory into caller's original pointer",
+        "To allocate memory twice as fast",
+        "This is the only syntactically valid form of calling malloc()",
+        "To forbid memory deallocation via free()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! To change value of regular variable, we pass `int*`. To change value of pointer (address it points to), we must pass address of pointer itself — that is `int**`.",
+        "Incorrect. Pointer type does not affect `malloc()` speed.",
+        "Incorrect. Memory can also be allocated by returning pointer via `return` (`int* allocate()`).",
+        "Incorrect. Memory allocated on heap must be freed via `free()` in any case."
+      ]
+    },
+    {
+      "id": "it_clang_1056",
+      "widget_id": "widget_clang_1056",
+      "topic": "Syntax — Function Pointer Declaration",
+      "q": "Which of the following variants is correct syntax for declaring function pointer pfunc to a function taking int and returning double?",
+      "hint": "Pay attention to parentheses around name and * symbol.",
+      "options": [
+        "double (*pfunc)(int);",
+        "double *pfunc(int);",
+        "double pfunc*(int);",
+        "(double*)(int) pfunc;"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Parentheses `(*pfunc)` are mandatory. `double (*pfunc)(int)` declares a function pointer. Without parentheses, `double *pfunc(int)` declares a function returning `double*`.",
+        "Incorrect. `double *pfunc(int);` is prototype of function returning pointer to double.",
+        "Incorrect. Invalid C syntax.",
+        "Incorrect. Invalid syntax."
+      ]
+    },
+    {
+      "id": "it_clang_1057",
+      "widget_id": "widget_clang_1057",
+      "topic": "Errors — Infinite Recursion",
+      "q": "What emergency crash will a recursive function without exit condition (base case) lead to?",
+      "hint": "Where are return addresses and local variables saved on each new function call?",
+      "options": [
+        "Stack Overflow and program crash",
+        "Memory Leak in heap",
+        "Automatic code fix by compiler",
+        "Program will ignore extra calls and continue running"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Each recursive call allocates a new frame on the stack. Without a stop condition, stack will quickly exhaust allocated memory limit, leading to Stack Overflow and process crash.",
+        "Incorrect. Heap is not used when calling functions without `malloc`.",
+        "Incorrect. Compiler does not fix infinite call logic at runtime.",
+        "Incorrect. Stack memory is limited, so function cannot be called infinitely."
+      ]
+    },
+    {
+      "id": "it_clang_1058",
+      "widget_id": "widget_clang_1058",
+      "topic": "Data Types — Passing Base Types (char, float)",
+      "q": "How are single char type characters passed into function void process(char c)?",
+      "hint": "Does passing mechanism differ for int and char?",
+      "options": [
+        "By value (byte copy of numeric character code is passed to function)",
+        "By pointer to first byte of automatic string",
+        "By reference",
+        "All characters are passed only through global array"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Character `char` is simply an 8-bit integer. It is passed by value, like any other base type (`int`, `float`).",
+        "Incorrect. Single `char` is not a string or pointer.",
+        "Incorrect. References do not exist in C.",
+        "Incorrect. Characters are passed in standard way via stack or registers."
+      ]
+    },
+    {
+      "id": "it_clang_1059",
+      "widget_id": "widget_clang_1059",
+      "topic": "Memory Management — Returning Address of Local Variable",
+      "q": "Why does function int* get_ptr(void) { int a = 10; return &a; } contain a critical error?",
+      "hint": "What happens to variable 'a' stack frame after exiting function?",
+      "options": [
+        "Variable a memory is freed upon function exit, creating a 'dangling pointer'",
+        "Syntactically forbidden to return pointers from functions",
+        "Variable a must be zeroed out beforehand",
+        "Function is required to accept at least one argument"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Local variable `a` lives on stack only while `get_ptr()` executes. Returning its address leads to a dangling pointer: accessing this memory after return causes Undefined Behavior.",
+        "Incorrect. Pointers can be returned, but must point to valid memory (heap, static, or external variables).",
+        "Incorrect. Zeroing out will not solve destruction of local stack memory.",
+        "Incorrect. Functions without arguments are completely valid."
+      ]
+    },
+    {
+      "id": "it_clang_1060",
+      "widget_id": "widget_clang_1060",
+      "topic": "Linkage — extern Specifier",
+      "q": "Why is declaration extern int calculate(int x); used in a header file?",
+      "hint": "Where is actual definition of such function body located?",
+      "options": [
+        "Informs compiler that function is defined in another source file or library",
+        "Makes function private to current file",
+        "Automatically creates empty function body",
+        "Indicates that function should execute in separate thread"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Keyword `extern` states that function has external linkage and its definition (body) is in another module/file of project.",
+        "Incorrect. `static` is used for file privacy.",
+        "Incorrect. `extern` only declares signature, but does not generate function body.",
+        "Incorrect. `extern` is not related to multithreading."
+      ]
+    }
+  ]
+}

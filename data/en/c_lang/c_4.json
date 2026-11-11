@@ -1,0 +1,625 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_119",
+      "widget_id": "widget_clang_119",
+      "topic": "Linux CLI — Time Measurement (time)",
+      "q": "What do the real, user, and sys values mean in the output of the command time ./app?",
+      "hint": "Distinguish between wall-clock time and CPU time in different modes.",
+      "options": [
+        "real is elapsed physical time, user is CPU time in user code, sys is CPU time in kernel calls",
+        "real is disk operation time, user is keyboard input time, sys is OS system time",
+        "real is compilation time, user is execution time, sys is debugging time",
+        "real is memory time, user is processor time, sys is graphics card time"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `real` is actual elapsed time (\"wall-clock time\"). `user` is total CPU time spent on program code. `sys` is CPU time spent by the kernel executing system calls for this program.",
+        "Incorrect. These are precise indicators of processor resource allocation.",
+        "Incorrect. `time` measures parameters of one specific process during execution.",
+        "Incorrect. The parameters describe only CPU and system time."
+      ]
+    },
+    {
+      "id": "it_clang_120",
+      "widget_id": "widget_clang_120",
+      "topic": "Linux CLI — Disassembly using objdump",
+      "q": "What is the command objdump -d used for when analyzing a compiled C program?",
+      "hint": "The letter -d stands for disassemble.",
+      "options": [
+        "To view assembly instructions of the machine code sections of an executable file",
+        "To strip the symbol table from a binary",
+        "To decompile machine code back into C source code",
+        "To check memory for leaks"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `objdump -d` decompiles executable sections of an ELF binary file, allowing you to see actual machine instructions in assembly.",
+        "Incorrect. Symbol stripping is performed by the `strip` utility.",
+        "Incorrect. `objdump` outputs assembly code; it does not recreate C source code.",
+        "Incorrect. Memory leaks are checked by `Valgrind`."
+      ]
+    },
+    {
+      "id": "it_clang_121",
+      "widget_id": "widget_clang_121",
+      "topic": "Linux CLI — Stripping Symbols with strip",
+      "q": "What does the strip command do to an application binary file?",
+      "hint": "Think about how to reduce the size of a final release file.",
+      "options": [
+        "Removes the symbol table and debugging information to reduce file size",
+        "Compresses the binary file using the gzip algorithm",
+        "Deletes the executable file from disk permanently",
+        "Clears dynamic memory (heap) of the application"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `strip` utility removes symbol tables and DWARF debugging sections, which significantly reduces the size of an executable file or shared `.so` library before release.",
+        "Incorrect. `strip` does not use archiving or compression; it cuts out metadata.",
+        "Incorrect. Files are deleted using `rm`.",
+        "Incorrect. `strip` operates on a static file on disk, not runtime memory."
+      ]
+    },
+    {
+      "id": "it_clang_122",
+      "widget_id": "widget_clang_122",
+      "topic": "Linux CLI — ELF Section Size Analysis (size)",
+      "q": "What information is output by the console utility size ./app?",
+      "hint": "Recall standard ELF file sections: text, data, bss.",
+      "options": [
+        "The sizes of the .text, .data, and .bss memory sections of the executable file in bytes",
+        "File size on disk taking all access permissions into account",
+        "Amount of allocated virtual memory at launch time",
+        "Number of lines of code in the project"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `size` utility outputs the size of the main segments of a binary file: `.text` (code), `.data` (initialized global data), and `.bss` (uninitialized data).",
+        "Incorrect. Disk size is shown by `ls -lh` or `stat`.",
+        "Incorrect. Dynamic memory consumption is measured by `top`, `ps`, or `valgrind`.",
+        "Incorrect. Lines of code are counted by `cloc` or `wc -l`."
+      ]
+    },
+    {
+      "id": "it_clang_123",
+      "widget_id": "widget_clang_123",
+      "topic": "Linux CLI — Profiling with gprof",
+      "q": "Which flag must be passed to GCC during build to later analyze C code performance via gprof?",
+      "hint": "This flag forces the compiler to inject code for collecting profiling info into gmon.out.",
+      "options": [
+        "-pg",
+        "-profile",
+        "-gprof",
+        "-O3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `-pg` flag embeds function call counters into the executable. Running the program generates a `gmon.out` file, which is then analyzed by `gprof`.",
+        "Incorrect. The `-profile` flag does not exist in GCC.",
+        "Incorrect. The utility name is `gprof`, but the compiler flag is `-pg`.",
+        "Incorrect. `-O3` sets the optimization level, not profiling."
+      ]
+    },
+    {
+      "id": "it_clang_124",
+      "widget_id": "widget_clang_124",
+      "topic": "Linux CLI — Sanitizers (AddressSanitizer)",
+      "q": "What does the -fsanitize=address option do when building a C program?",
+      "hint": "AddressSanitizer (ASan) catches memory errors right at runtime.",
+      "options": [
+        "Embeds fast dynamic checking for out-of-bounds array access, use-after-free, and memory leaks at runtime",
+        "Optimizes address alignment in RAM",
+        "Encrypts pointers in the binary file",
+        "Checks code style compliance against PEP/MISRA standards"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! AddressSanitizer (ASan) replaces memory allocation calls and adds shadow memory checks, crashing with an instant intelligible report upon any out-of-bounds access or use-after-free.",
+        "Incorrect. ASan increases memory consumption and slightly slows down the program, but does not optimize it.",
+        "Incorrect. Encryption is not performed.",
+        "Incorrect. ASan works at program runtime, not with code style."
+      ]
+    },
+    {
+      "id": "it_clang_125",
+      "widget_id": "widget_clang_125",
+      "topic": "Linux CLI — Translating Addresses to Code via addr2line",
+      "q": "Why do C developers use the addr2line console utility?",
+      "hint": "The name of the utility stands for Address to Line.",
+      "options": [
+        "Translates a hexadecimal memory address from an error report into a C file and line number",
+        "Counts the total number of lines in memory addresses",
+        "Binds library addresses to network IP addresses",
+        "Formats source code into a single line"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! If debug symbols are present in a crashed program, `addr2line -e ./app 0x...` translates a virtual instruction address into a `.c` file name and exact line number.",
+        "Incorrect. The utility does not count lines of code in a project.",
+        "Incorrect. The utility works with DWARF symbols in ELF files.",
+        "Incorrect. It is a binary/DWARF debugging tool, not a text formatter."
+      ]
+    },
+    {
+      "id": "it_clang_126",
+      "widget_id": "widget_clang_126",
+      "topic": "Linux CLI — Dry Run Build with make -n",
+      "q": "What does the -n (or --just-print) flag do when calling the make build system?",
+      "hint": "This flag is useful to see which commands make would execute.",
+      "options": [
+        "Prints the commands that WOULD be executed to build, but does not execute them (\"dry run\")",
+        "Runs the build with parallel execution across N threads",
+        "Ignores all errors in the Makefile",
+        "Creates a new empty Makefile"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `make -n` outputs the full chain of compiler and linker invocation commands to the console without actually running them. This helps debug the `Makefile` itself.",
+        "Incorrect. Parallel building is handled by the `-j` flag.",
+        "Incorrect. Error ignoring is done with the `-k` or `-i` flags.",
+        "Incorrect. `make -n` does not create files."
+      ]
+    },
+    {
+      "id": "it_clang_127",
+      "widget_id": "widget_clang_127",
+      "topic": "Linux CLI — Parallel Build make -j",
+      "q": "What does the -j4 argument mean in the command make -j4?",
+      "hint": "The letter j stands for jobs.",
+      "options": [
+        "Runs up to 4 parallel jobs (build tasks) simultaneously to speed up compilation",
+        "Sets compiler optimization to level 4",
+        "Builds only the 4th file from the list",
+        "Sets a 4 GB RAM limit for the build"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `-jN` flag sets the number of jobs executed concurrently (compiling independent `.c` files), which significantly speeds up builds on multi-core processors.",
+        "Incorrect. Optimization is controlled by compiler flags in the Makefile (e.g., `-O2`).",
+        "Incorrect. `-j4` does not select the 4th file in order.",
+        "Incorrect. The flag does not manage memory limits."
+      ]
+    },
+    {
+      "id": "it_clang_128",
+      "widget_id": "widget_clang_128",
+      "topic": "GDB CLI — Printing Arrays via Pointer",
+      "q": "What will the command (gdb) print *ptr@5 output in GDB if ptr is an int* pointer?",
+      "hint": "The @ symbol lets you specify the number of displayed elements in a contiguous array.",
+      "options": [
+        "The first 5 elements of the array pointed to by ptr",
+        "The value of the 5th element of the array (ptr[5])",
+        "The value at address ptr multiplied by 5",
+        "A syntax error (@ operator is forbidden in GDB)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `*ptr@len` construct in GDB allows printing an array of `len` elements starting from address `ptr`.",
+        "Incorrect. The fifth element is printed as `print ptr[4]` or `print *(ptr+4)`.",
+        "Incorrect. Multiplication uses standard `*`.",
+        "Incorrect. The `@` operator is a special GDB feature for working with memory via pointers."
+      ]
+    },
+    {
+      "id": "it_clang_129",
+      "widget_id": "widget_clang_129",
+      "topic": "GDB CLI — Watchpoints",
+      "q": "How does the command (gdb) watch counter differ from a standard (gdb) break?",
+      "hint": "A watchpoint responds to memory changes rather than reaching a line of code.",
+      "options": [
+        "watch pauses program execution at the moment the value of variable counter CHANGES",
+        "watch pauses the program on the first READ of variable counter",
+        "watch tracks memory leaks of variable counter",
+        "watch removes variable counter from memory"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! A `watchpoint` stops the program immediately after a processor instruction changes the value in the tracked variable/memory region.",
+        "Incorrect. To track memory reads, `rwatch` (read watchpoint) is used.",
+        "Incorrect. GDB watchpoints do not look for memory leaks.",
+        "Incorrect. The command does not modify the program's memory structure."
+      ]
+    },
+    {
+      "id": "it_clang_130",
+      "widget_id": "widget_clang_130",
+      "topic": "Linux CLI — Standalone Preprocessor Launch cpp",
+      "q": "What function does the cpp binary perform on a Linux system?",
+      "hint": "cpp is not C++, it is the C PreProcessor.",
+      "options": [
+        "It is a standalone C preprocessor that substitutes #include and macros without invoking the compiler",
+        "It is a C++ compiler",
+        "It is a utility for checking C syntax",
+        "It is a package manager for C/C++ libraries"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `cpp` (C PreProcessor) command runs the C preprocessor directly. The output is processed text with expanded macros and inserted headers.",
+        "Incorrect. The C++ compiler is `g++` or `clang++`.",
+        "Incorrect. `cpp` performs text substitutions, not full syntax parsing.",
+        "Incorrect. Package managers include `conan`, `vcpkg`, or system apt/dnf."
+      ]
+    },
+    {
+      "id": "it_clang_131",
+      "widget_id": "widget_clang_131",
+      "topic": "Linux CLI — Viewing Data Dump via xxd",
+      "q": "Why do C developers use utilities like xxd or hexdump?",
+      "hint": "Think about working with binary data files or non-text dumps.",
+      "options": [
+        "To view the contents of binary files in hexadecimal (hex) and ASCII forms",
+        "To convert C code into HTML",
+        "To compress files into hex format",
+        "To encrypt program data"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Utilities `xxd` and `hexdump` display raw bytes of binary files in a hex grid with parallel printable ASCII character output.",
+        "Incorrect. Code to HTML conversion is done by highlighters like `highlight`.",
+        "Incorrect. Hex representation increases size rather than compressing it.",
+        "Incorrect. The utility simply displays bytes."
+      ]
+    },
+    {
+      "id": "it_clang_132",
+      "widget_id": "widget_clang_132",
+      "topic": "Linux CLI — Updating Library Cache (ldconfig)",
+      "q": "Why is sudo ldconfig run after copying a new .so library into the system directory /usr/local/lib?",
+      "hint": "How does the dynamic linker quickly find libraries without rescanning all folders?",
+      "options": [
+        "Updates system dynamic library cache (/etc/ld.so.cache) so the loader can find them immediately",
+        "Compiles library source files into an object file",
+        "Scans the library for viruses",
+        "Restarts all running C applications"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The dynamic linker `ld.so` reads the binary cache `/etc/ld.so.cache`. The `ldconfig` command scans system directories and updates this cache and symbolic links.",
+        "Incorrect. `ldconfig` does not compile code.",
+        "Incorrect. Security checking is done by antivirus software.",
+        "Incorrect. Processes are not restarted when updating `ldconfig` cache."
+      ]
+    },
+    {
+      "id": "it_clang_133",
+      "widget_id": "widget_clang_133",
+      "topic": "Linux CLI — Changing RPATH via patchelf",
+      "q": "What is the patchelf tool used for when working with compiled binaries in Linux?",
+      "hint": "It allows modifying metadata of an existing ELF file.",
+      "options": [
+        "Allows modifying RPATH and dynamic interpreter name in an existing ELF file without rebuilding",
+        "Automatically fixes bugs in C code",
+        "Patches the Linux kernel for faster system calls",
+        "Converts ELF binaries into Windows .exe format"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `patchelf` utility lets you modify header fields of existing ELF executables and `.so` files (e.g., changing dependency search path `RPATH` or interpreter `ld-linux.so`).",
+        "Incorrect. `patchelf` is unrelated to semantic bugs in source C code.",
+        "Incorrect. The utility works with user-space ELF files, not the kernel.",
+        "Incorrect. Running on Windows uses Wine or cross-compilation."
+      ]
+    },
+    {
+      "id": "it_clang_134",
+      "widget_id": "widget_clang_134",
+      "topic": "Linux CLI — Symbol Demangling with c++filt",
+      "q": "Why might a C developer need c++filt when analyzing symbol tables?",
+      "hint": "When calling C++ libraries from C or in mixed compiled code, function names get mangled.",
+      "options": [
+        "Decodes (\"demangles\") compiler-mangled symbol names (e.g., _Z3foov -> foo())",
+        "Converts C++ code into pure C",
+        "Filters string literals in a binary file",
+        "Removes C++ code from a C project"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! C++ compilers (and some C functions) mangle function names in the symbol table to support overloading. `c++filt` turns a mangled name back into a readable function signature.",
+        "Incorrect. It does not translate code.",
+        "Incorrect. Filtering strings is done with `grep` or `strings`.",
+        "Incorrect. `c++filt` only decodes text symbol strings."
+      ]
+    },
+    {
+      "id": "it_clang_135",
+      "widget_id": "widget_clang_135",
+      "topic": "Linux CLI — Massif Memory Profiler (Valgrind)",
+      "q": "What problem does the Massif tool solve within Valgrind (--tool=massif)?",
+      "hint": "Massif plots memory usage over time.",
+      "options": [
+        "Profiles RAM consumption (heap/stack) over time and produces peak call snapshots",
+        "Searches for data races in multithreaded programs (Data Races)",
+        "Checks GPU performance",
+        "Automatically frees unclosed dynamic memory"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `Massif` is a heap profiler. It takes detailed snapshots of memory allocations during program execution and shows which functions allocated the most memory at peak.",
+        "Incorrect. Data races are searched using `Helgrind` or `DRD` in Valgrind.",
+        "Incorrect. Valgrind works with host CPU and memory.",
+        "Incorrect. Valgrind does not alter code behavior or call `free` for the programmer."
+      ]
+    },
+    {
+      "id": "it_clang_136",
+      "widget_id": "widget_clang_136",
+      "topic": "Linux CLI — UndefinedBehaviorSanitizer (UBSan)",
+      "q": "What does the compiler flag -fsanitize=undefined detect?",
+      "hint": "UBSan detects atypical runtime behavior: signed int overflow, division by 0, etc.",
+      "options": [
+        "Catches undefined behavior cases (signed overflow, division by 0, shifts by invalid bits) during program execution",
+        "Finds unused variables at compile time",
+        "Detects functions without return specifiers",
+        "Forbids code compilation if there is no main function"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! UndefinedBehaviorSanitizer (UBSan) inserts checks for runtime operations exceeding standard guarantees (signed integer overflow, null pointer dereference, misaligned pointer access).",
+        "Incorrect. Unused variables are detected by static flag `-Wunused-variable`.",
+        "Incorrect. Missing return check is set via `-Wreturn-type`.",
+        "Incorrect. This is checked by the linker by default."
+      ]
+    },
+    {
+      "id": "it_clang_137",
+      "widget_id": "widget_clang_137",
+      "topic": "GDB CLI — Batch Mode for CI/CD",
+      "q": "Why are gdb flags -batch -ex \"bt\" ./app core used in automated test scripts (CI/CD)?",
+      "hint": "The -batch flag disables interactive mode, while -ex executes a debug command.",
+      "options": [
+        "To automatically extract a stack trace (backtrace) from a crashed program's core file to console and exit GDB immediately",
+        "To interactively connect to a crashed server",
+        "To force-restart a crashed program",
+        "To convert a core file into C text code"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `-batch` flag suppresses GDB's interactive prompt, `-ex \"bt\"` runs the call stack print command `backtrace` on the crashed `core` file and returns control to the pipeline immediately.",
+        "Incorrect. `-batch` excludes interactive user input.",
+        "Incorrect. GDB in this mode only reads a memory dump.",
+        "Incorrect. Source code is not restored from a `core` file."
+      ]
+    },
+    {
+      "id": "it_clang_138",
+      "widget_id": "widget_clang_138",
+      "topic": "Linux CLI — Virtual Filesystem /proc",
+      "q": "What can be learned by reading the virtual file /proc/$PID/maps of a running C program?",
+      "hint": "The maps file contains information on memory address segments of a process.",
+      "options": [
+        "Process virtual memory allocation map (stack, heap addresses, loaded .so libraries, and access permissions)",
+        "All source `.c` files used by the program",
+        "History of commands entered by the user into the program",
+        "Passwords and encryption keys of the process"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `/proc/$PID/maps` contains a full snapshot of the process address space: virtual address ranges, permissions (`rwxp`), offsets, and loaded dynamic modules.",
+        "Incorrect. Source C files are not contained in the kernel `/proc` virtual interface.",
+        "Incorrect. Input history is handled by other libraries (readline/bash history).",
+        "Incorrect. This file shows memory layout, not secret application data."
+      ]
+    },
+    {
+      "id": "it_clang_139",
+      "widget_id": "widget_clang_139",
+      "topic": "Linux CLI — Inspecting Open Descriptors (lsof)",
+      "q": "Why does a C programmer use the command lsof -p <PID>?",
+      "hint": "lsof stands for List Open Files.",
+      "options": [
+        "Shows all open files, network sockets, and pipes held by the specified process",
+        "Counts number of lines in project files",
+        "Forcefully closes process with specified PID",
+        "Clears disk cache of process"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `lsof -p <PID>` outputs a list of all open file descriptors (including regular files, devices, network sockets, and FIFO pipes) used by the process. Useful for finding file descriptor leaks.",
+        "Incorrect. Line count is calculated with `wc`.",
+        "Incorrect. Terminating processes is done with `kill`.",
+        "Incorrect. Cache clearing is managed by the OS kernel."
+      ]
+    },
+    {
+      "id": "it_clang_140",
+      "widget_id": null,
+      "topic": "GCC — Optimizations and Debugging (-O0)",
+      "q": "Is it true that -O0 disables GCC compiler optimizations, making code generation straightforward and convenient for step-by-step GDB debugging?",
+      "hint": "At -O0, machine code instructions strictly correspond to line order in C source.",
+      "options": [
+        "True (-O0 disables optimizations, preventing line jumping during debugging)",
+        "False (-O0 enables maximum optimization level)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `-O0` flag disables most code transformations. Variables are not evicted from memory into registers unnecessarily, and instruction order matches source C code.",
+        "Incorrect. Maximum standardized optimizations are enabled with `-O3` or `-Ofast`."
+      ]
+    },
+    {
+      "id": "it_clang_141",
+      "widget_id": "widget_clang_141",
+      "topic": "Linux CLI — Function Interposition via LD_PRELOAD",
+      "q": "What happens when running a program with the LD_PRELOAD environment variable specified?",
+      "hint": "This variable specifies a priority library for the dynamic loader ld.so.",
+      "options": [
+        "The dynamic loader loads the specified library before all others, allowing interception (hooking) of functions like malloc() or write()",
+        "The program is forcibly recompiled before execution",
+        "The loader raises a security error and completely blocks execution of the binary"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `LD_PRELOAD` allows injecting your `.so` library with top priority. If function `malloc()` is declared in it, the loader will bind application calls to your implementation.",
+        "Incorrect. `LD_PRELOAD` works only at dynamic loading time upon startup without compilation.",
+        "Incorrect. The loader successfully runs the program (unless SUID mode is enabled for root-owned files)."
+      ]
+    },
+    {
+      "id": "it_clang_142",
+      "widget_id": null,
+      "topic": "Linux CLI — Determining Binary Parameters with file",
+      "q": "Which utility allows you to instantly inspect binary architecture (32/64-bit), linkage type (dynamically linked), and debug symbol status (stripped / not stripped)?",
+      "hint": "A simple system utility for determining file type by signature.",
+      "options": [
+        "file ./app",
+        "cat ./app",
+        "stat ./app",
+        "type ./app"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `file` command analyzes Magic Numbers headers and outputs a detailed summary: `ELF 64-bit LSB executable, x86-64, dynamically linked, with debug_info, not stripped`.",
+        "Incorrect. `cat` will simply output binary garbage on terminal.",
+        "Incorrect. `stat` shows permissions, file size, and timestamps (atime, mtime, ctime).",
+        "Incorrect. `type` shows whether a command is shell builtin or external file."
+      ]
+    },
+    {
+      "id": "it_clang_143",
+      "widget_id": null,
+      "topic": "GCC — Turning Warnings into Errors (-Werror)",
+      "q": "Which GCC compiler flag forces all warnings to be treated as fatal errors, stopping compilation?",
+      "hint": "Used in CI/CD to enforce high code quality.",
+      "options": [
+        "-Werror",
+        "-Wall",
+        "-Wextra",
+        "-Wfatal-errors",
+        "-Wpedantic"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `-Werror` flag instructs GCC to abort compilation if even a single warning occurs.",
+        "Incorrect. `-Wall` only enables a basic set of warnings.",
+        "Incorrect. `-Wextra` enables additional checks.",
+        "Incorrect. `-Wfatal-errors` stops compilation on the first ERROR, but does not turn warnings into errors.",
+        "Incorrect. `-Wpedantic` issues warnings for non-conformance to strict ISO C standard."
+      ]
+    },
+    {
+      "id": "it_clang_144",
+      "widget_id": "widget_clang_144",
+      "topic": "Linux CLI — Default Process Signals",
+      "q": "Which signal is sent to a process by default when calling kill <PID> without extra flags?",
+      "hint": "This signal requests process to gracefully terminate (signal number 15).",
+      "options": [
+        "SIGTERM (15)",
+        "SIGKILL (9)",
+        "SIGINT (2)",
+        "SIGSEGV (11)",
+        "SIGHUP (1)",
+        "SIGABRT (6)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `kill PID` command sends the `SIGTERM` (15) signal, giving the program a chance to catch it, clean up resources, and exit gracefully.",
+        "Incorrect. `SIGKILL` (9) is sent when explicitly specifying `kill -9` or `kill -KILL`.",
+        "Incorrect. `SIGINT` (2) is usually sent via `Ctrl+C` shortcut.",
+        "Incorrect. `SIGSEGV` (11) is generated by kernel on memory protection violation.",
+        "Incorrect. `SIGHUP` (1) is sent when closing terminal.",
+        "Incorrect. `SIGABRT` (6) is triggered by `abort()` function or `assert()` failure."
+      ]
+    },
+    {
+      "id": "it_clang_145",
+      "widget_id": null,
+      "topic": "GCC — Static Linking with Standard Library",
+      "q": "Is it true that when compiling a C program with the -static flag, the final executable includes all necessary libc functions (e.g., printf, malloc), and libc.so libraries are not required at runtime?",
+      "hint": "Static compilation embeds library code directly inside binary.",
+      "options": [
+        "True (The file becomes standalone, but significantly larger in size)",
+        "False (Shared libraries are still loaded at runtime)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `-static` flag tells the linker to embed all library code inside the binary itself. The application does not require external `.so` libraries, but increases in size.",
+        "Incorrect. Under dynamic linking, libraries are loaded via `ld.so`, but with `-static` dynamic loader is not used at all."
+      ]
+    },
+    {
+      "id": "it_clang_146",
+      "widget_id": "widget_clang_146",
+      "topic": "GDB CLI — Displaying Local Variables in All Stack Frames",
+      "q": "What does the bt full command do in the GDB debugger?",
+      "hint": "The bt (backtrace) command shows the call stack, and the full modifier expands output.",
+      "options": [
+        "Prints function call stack (backtrace), displaying local variables in each stack frame",
+        "Restarts program debugging with full clearing of all breakpoints",
+        "Prints full disassembly of current function"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `bt full` not only prints function names and line numbers of call stack, but also automatically outputs values of all local variables for each frame.",
+        "Incorrect. Restart is done with `run`, breakpoint clearing with `delete`.",
+        "Incorrect. Assembly code is printed with `disassemble`."
+      ]
+    },
+    {
+      "id": "it_clang_147",
+      "widget_id": null,
+      "topic": "Linux CLI — Source Code Indexing (ctags)",
+      "q": "Which utility creates a 'tags' index file for fast navigation to function definitions, structs, and data types in console editors (Vim/Emacs)?",
+      "hint": "The utility name contains the word tags.",
+      "options": [
+        "ctags",
+        "gcc-index",
+        "objdump",
+        "grep"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `ctags` utility (or `exuberant-ctags` / `universal-ctags`) scans C files and creates an index table allowing Vim to jump to function declarations instantly upon cursor placement.",
+        "Incorrect. `gcc-index` utility does not exist in standard toolkit.",
+        "Incorrect. `objdump` works with compiled ELF files.",
+        "Incorrect. `grep` performs text search across files but does not generate index structures."
+      ]
+    },
+    {
+      "id": "it_clang_148",
+      "widget_id": "widget_clang_148",
+      "topic": "GCC — Code Coverage Analysis (gcov)",
+      "q": "Which compilation option must be passed to GCC so that executing the program generates statistical data files (.gcda/.gcno) for the gcov tool?",
+      "hint": "This flag enables generation of code coverage counting instructions.",
+      "options": [
+        "--coverage (or -fprofile-arcs -ftest-coverage)",
+        "-fPIC -shared",
+        "-fsanitize=address",
+        "-g -O3",
+        "-pg"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `--coverage` flag instruments code so execution creates line call statistics for subsequent coverage analysis via `gcov` / `lcov`.",
+        "Incorrect. `-fPIC -shared` are used for building dynamic libraries.",
+        "Incorrect. `-fsanitize=address` activates ASan for finding memory errors.",
+        "Incorrect. `-g -O3` include debug symbols and maximum optimization.",
+        "Incorrect. `-pg` is used for call time profiling via `gprof`."
+      ]
+    },
+    {
+      "id": "it_clang_149",
+      "widget_id": "widget_clang_149",
+      "topic": "Linux CLI — Redirecting stdout and stderr to Single File",
+      "q": "Which construct in Bash shell combines and redirects BOTH standard output (stdout) AND error stream (stderr) to file log.txt?",
+      "hint": "Modern Bash uses the compact operator &>.",
+      "options": [
+        "./app &> log.txt (or ./app > log.txt 2>&1)",
+        "./app 2> log.txt",
+        "./app < log.txt",
+        "./app 1>&2 log.txt",
+        "./app | log.txt",
+        "./app >> log.txt 0>&1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Syntax `&> log.txt` (or classic `> log.txt 2>&1`) redirects both file descriptors (1 and 2) into one specified file.",
+        "Incorrect. `2> log.txt` redirects ONLY errors (stderr).",
+        "Incorrect. `< log.txt` passes file to standard input (stdin).",
+        "Incorrect. `1>&2` redirects stdout to stderr.",
+        "Incorrect. `|` creates a pipe to pass stream to another program, not a file.",
+        "Incorrect. `0>&1` binds input to standard output."
+      ]
+    }
+  ]
+}

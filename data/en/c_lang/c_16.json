@@ -1,0 +1,601 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_511",
+      "widget_id": "widget_clang_511",
+      "topic": "Optimization — restrict Qualifier and Pointer Aliasing",
+      "q": "What does the `restrict` keyword guarantee to the compiler when optimizing this loop?",
+      "hint": "Think about whether writing to address `a[i]` can change the value read from `b[i]`.",
+      "options": [
+        "Pointers `a` and `b` refer to non-overlapping memory regions, enabling vector optimization without unnecessary reloads from RAM",
+        "Arrays `a` and `b` have strictly the same physical size `n`",
+        "Elements of arrays `a` and `b` are forbidden from being modified inside the loop"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `restrict` qualifier (C99) informs the compiler that access to the object in this scope is achieved exclusively through this pointer. This guarantees no memory aliasing and enables SIMD vector optimization.",
+        "Incorrect. Array size is passed via a separate variable `n`; `restrict` does not check sizes.",
+        "Incorrect. Prohibition of modification is specified by the `const` keyword, not `restrict`."
+      ]
+    },
+    {
+      "id": "it_clang_512",
+      "widget_id": "widget_clang_512",
+      "topic": "C99 Standards — Compound Literals in Loops",
+      "q": "What value will `printf` output when using compound literal `((int[]){10, 20, 30})[i]` inside a loop?",
+      "hint": "What storage duration does a compound literal declared inside a loop body have?",
+      "options": [
+        "10",
+        "30",
+        "60",
+        "0",
+        "Undefined Behavior (UB)"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Incorrect. The loop will sum all 3 elements of the compound literal.",
+        "Incorrect. This is the value of only the last element `[2]`.",
+        "Correct! In C99, a compound literal inside a block has automatic storage duration of the current block. On each iteration, array `{10, 20, 30}` is created, element `[i]` is read, and summation occurs: 10 + 20 + 30 = 60.",
+        "Incorrect. Array elements are initialized with values 10, 20, and 30.",
+        "Incorrect. Literal memory is valid throughout the current iteration of the block."
+      ]
+    },
+    {
+      "id": "it_clang_513",
+      "widget_id": "widget_clang_513",
+      "topic": "C Standards — Attempting to Modify an Originally const Object",
+      "q": "What is the status of code execution when casting away the `const` qualifier via explicit `(int *)&val`?",
+      "hint": "Distinguish between a pointer to a constant and an object ORIGINALLY declared as `const`.",
+      "options": [
+        "Outputs 20",
+        "Outputs 10",
+        "Undefined Behavior",
+        "Compilation error"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Incorrect. Although type casting suppresses the compiler warning, performing such an operation is forbidden by the standard.",
+        "Incorrect. The compiler may place a `const` variable in read-only memory section (e.g. `.rodata`).",
+        "Correct! According to ISO C, attempting to modify an object originally declared with a `const` qualifier through a non-const pointer leads to Undefined Behavior (UB). Code may crash with a Segmentation Fault.",
+        "Incorrect. Explicit type cast `(int *)&val` forces compiler to process code without errors."
+      ]
+    },
+    {
+      "id": "it_clang_514",
+      "widget_id": "widget_clang_514",
+      "topic": "Type Conversions — Integer Promotions",
+      "q": "Will unsigned overflow occur in addition `(a + b)` for type `unsigned short`?",
+      "hint": "Recall to what type types smaller than `int` are automatically promoted when participating in arithmetic operations.",
+      "options": [
+        "Promotion to `signed int` will cause expression `(65535 + 1)` to evaluate to 65536, condition is true (`65536 > 0`), `count` becomes 1",
+        "Addition `a + b` will overflow modulo in `unsigned short` (value 0), condition is false (`0 > 0`), `count` remains 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Under Integer Promotions, if `int` can hold all values of the original type (and 32-bit `int` holds 65535 of `unsigned short`), operands are automatically promoted to `signed int`. Result $65535 + 1 = 65536 > 0$ (true).",
+        "Incorrect. Addition does NOT happen in type `unsigned short`, because it is first promoted to `int`."
+      ]
+    },
+    {
+      "id": "it_clang_515",
+      "widget_id": "widget_clang_515",
+      "topic": "Low-Level Jumps — setjmp/longjmp and volatile Variables",
+      "q": "Why is variable `count` declared with `volatile` specifier when working with `setjmp` and `longjmp`?",
+      "hint": "What happens to local variables stored in CPU registers upon calling `longjmp`?",
+      "options": [
+        "To preserve variable modifications: values of non-volatile local variables modified between `setjmp` and `longjmp` become indeterminate",
+        "To guarantee atomicity of operations on `count` during jump",
+        "To allow calling `longjmp` from other threads of execution",
+        "This is optional, variable will be preserved without `volatile` as well"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! ISO C standard explicitly states: if a local automatic variable is modified between `setjmp` and `longjmp` and is NOT declared `volatile`, its value after `longjmp` is indeterminate (since compiler could store it in a register restored from `jmp_buf`).",
+        "Incorrect. `volatile` is unrelated to operation atomicity.",
+        "Incorrect. `setjmp/longjmp` in C were not intended for multithreaded synchronization.",
+        "Incorrect. Without `volatile`, an optimizing compiler will 'roll back' `count` value to 0."
+      ]
+    },
+    {
+      "id": "it_clang_516",
+      "widget_id": "widget_clang_516",
+      "topic": "Structures — Signed Bit-Fields and Their Limits",
+      "q": "What value will signed bit-field `signed int x : 2` of 2 bits width take after iterations?",
+      "hint": "Range of a signed 2-bit field in two's complement is from -2 to +1.",
+      "options": [
+        "Range of 2-bit signed field is -2 to 1; signed bit-field overflow result is implementation-defined / UB",
+        "Field overflows through chain of values 0, 1, 2, 3, 4",
+        "Field will retain value 5",
+        "Compilation error due to using `++` operator on a bit-field",
+        "Field will equal 1, and `count` will equal 5",
+        "Field will equal 0, and `count` will equal 5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Bit-field `signed int x : 2` stores signed values [-2, 1]. On `0 + 1` we get 1. Upon next increment, signed bit-field overflow in C is Implementation-Defined / UB. Usually resets to -2.",
+        "Incorrect. Two signed bits cannot represent positive numbers 2, 3, or 4.",
+        "Incorrect. Value 5 requires at least 4 bits (for signed representation).",
+        "Incorrect. Increment operators `++` are syntactically permitted for bit-fields in C.",
+        "Incorrect. Value will not stop at 1 due to continuing loop.",
+        "Incorrect. Depending on platform, value will cycle within 2-bit range."
+      ]
+    },
+    {
+      "id": "it_clang_517",
+      "widget_id": "widget_clang_517",
+      "topic": "Scope — Triple Variable Shadowing",
+      "q": "What will `printf(\"%d\", i)` output after given `for` loop completes?",
+      "hint": "In C99, `for(int i...)` header creates a separate scope block, and body `{ int i... }` creates its own nested block.",
+      "options": [
+        "100",
+        "3",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! There are 3 different variables `i` here: 1) Outer `i = 100`. 2) Loop variable `for (int i = 0)`. 3) Inner `int i = 10` in loop body block. Inner modifies to 11 and is destroyed. Loop counter reaches 3 and is destroyed. Outer `i = 100` remains intact.",
+        "Incorrect. Loop variable `i`, which became 3, ceases to exist upon loop exit.",
+        "Incorrect. Re-declaring a variable with same name IN INNER block is completely valid."
+      ]
+    },
+    {
+      "id": "it_clang_518",
+      "widget_id": "widget_clang_518",
+      "topic": "Pointer Types — Prohibition of void* Arithmetic in ISO C",
+      "q": "Why does offsetting `ptr` in strict ISO C standard require explicit cast `(char *)ptr + 1`?",
+      "hint": "What is `sizeof(void)` equal to in pure C language standard?",
+      "options": [
+        "In ISO C, arithmetic on `void*` is forbidden because `void` is an incomplete type without size (`sizeof(void)` is undefined)",
+        "Type `void*` is automatically converted only during pointer subtraction",
+        "Without `(char*)` cast, `void*` offset will automatically step by 4 bytes",
+        "Type `void*` in C is a constant pointer by default"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Under ISO C standard, type `void` is an incomplete type, and `sizeof(void)` has no value. Therefore `ptr + 1` is syntactically invalid in pure C (though GCC compiler has an extension where `sizeof(void) == 1`).",
+        "Incorrect. Arithmetic is forbidden for all addition and subtraction operations with `void*` equally.",
+        "Incorrect. Standard does not equate `void*` to `int*` (4 bytes).",
+        "Incorrect. Mutability of pointer is determined by `const` qualifier, not `void` type."
+      ]
+    },
+    {
+      "id": "it_clang_519",
+      "widget_id": "widget_clang_519",
+      "topic": "sizeof Operator — Expression Evaluation Exceptions (VLA Evaluation)",
+      "q": "Will side effect `i++` evaluate inside `sizeof(int[i++])`?",
+      "hint": "Are expressions inside `sizeof` evaluated if operand is a VLA (Variable Length Array)?",
+      "options": [
+        "Yes! Starting with C99, if `sizeof` operand is a VLA, expression is evaluated at Runtime",
+        "No, `sizeof` operand is always a compile-time unevaluated operand",
+        "Compilation error",
+        "Undefined Behavior (UB)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! This is a unique exception of C99+ standards: if `sizeof` operand type is a VLA (Variable Length Array), array size is unknown at compile time, so expression INSIDE `sizeof` is evaluated at runtime, and increment `i++` triggers!",
+        "Incorrect. This rule holds for all regular types, but NOT for VLA types.",
+        "Incorrect. VLA syntax inside `sizeof` is completely correct in C99.",
+        "Incorrect. Behavior is strictly defined by standard."
+      ]
+    },
+    {
+      "id": "it_clang_520",
+      "widget_id": "widget_clang_520",
+      "topic": "C99 Standards — Flexible Array Member",
+      "q": "What rule of C99 standard describes flexible array member `int data[]` in a structure?",
+      "hint": "Where exactly inside a structure must a flexible array member be located, and is it included in `sizeof` of the structure?",
+      "options": [
+        "Flexible array member must be the LAST element of structure, and `sizeof(struct Buffer)` does NOT include memory for `data[]` elements",
+        "Size `sizeof(struct Buffer)` automatically includes default size of 1 element",
+        "Elements `data[]` are automatically allocated on stack upon structure declaration"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C99, Flexible Array Member (`type name[]`) must strictly be the last field of structure. When computing `sizeof(struct)`, memory for this array is not included; it is allocated dynamically via `malloc(sizeof(struct) + N * sizeof(elem))`.",
+        "Incorrect. Unlike obsolete trick with `data[1]`, `data[]` adds no bytes to structure size.",
+        "Incorrect. Memory for flexible array must be explicitly allocated in dynamic memory (heap)."
+      ]
+    },
+    {
+      "id": "it_clang_521",
+      "widget_id": "widget_clang_521",
+      "topic": "Multidimensional VLAs — 2D Variable Length Arrays in Loops",
+      "q": "What will sum of all elements of 2D VLA array `arr[2][3]` equal?",
+      "hint": "Iterations $i=0, j \\in [0..2]$ add $(0+0)+(0+1)+(0+2) = 3$. Calculate $i=1$.",
+      "options": [
+        "9",
+        "6",
+        "12",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! At `i=0`: elements 0, 1, 2 (sum 3). At `i=1`: elements 1, 2, 3 (sum 6). Total sum of all elements of VLA array equals $3 + 6 = 9$.",
+        "Incorrect. Elements of row `i=0` forgotten.",
+        "Incorrect. Re-check index sums for last row.",
+        "Incorrect. Variable `sum` accumulates results in loop."
+      ]
+    },
+    {
+      "id": "it_clang_522",
+      "widget_id": "widget_clang_522",
+      "topic": "C11 Standards — Memory Alignment via aligned_alloc",
+      "q": "What strict requirement does function `aligned_alloc(alignment, size)` from C11 standard impose on size parameter `size`?",
+      "hint": "Can `size` be smaller or not a multiple of alignment value `alignment`?",
+      "options": [
+        "Parameter `size` must strictly be a multiple of alignment value `alignment`",
+        "Alignment `alignment` must necessarily be an odd number",
+        "Size `size` must equal exactly 1024 bytes",
+        "Function `aligned_alloc` allocates memory exclusively on stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C11 standard for `aligned_alloc(alignment, size)`, parameter `size` MUST be a multiple of `alignment` (in example `64` is multiple of `64`). Otherwise function returns `NULL` or triggers UB.",
+        "Incorrect. Alignment in C must always be a power of two.",
+        "Incorrect. Fixed restriction of 1024 bytes does not exist.",
+        "Incorrect. Function `aligned_alloc` allocates memory on heap, similarly to `malloc`."
+      ]
+    },
+    {
+      "id": "it_clang_523",
+      "widget_id": "widget_clang_523",
+      "topic": "C Standards — Strict Aliasing Rule",
+      "q": "What key C language rule is violated when writing to memory of float variable via `int *p = (int *)&f`?",
+      "hint": "Does standard allow reading and writing memory of one type via pointer to an incompatible type?",
+      "options": [
+        "Strict Aliasing Rule — accessing a `float` object via `int*` pointer causes UB",
+        "Alignment Rule",
+        "Lifetime Rule of global variables",
+        "`const` Type Casting Rule",
+        "C syntax error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Strict Aliasing Rule forbids accessing memory of one type via pointer to another incompatible type (except `char*`). Compiler assumes `f` and `*p` are distinct objects, and may omit writes from loop during optimization.",
+        "Incorrect. `int` and `float` usually have same alignment (4 bytes).",
+        "Incorrect. Variable is on stack, its lifetime is valid.",
+        "Incorrect. Qualifier `const` is not used here.",
+        "Incorrect. Code compiles successfully, but contains logical standard UB."
+      ]
+    },
+    {
+      "id": "it_clang_524",
+      "widget_id": "widget_clang_524",
+      "topic": "Dynamic Memory — 2D Arrays via Pointer to Pointer",
+      "q": "What will element `matrix[1][0]` equal after initializing dynamic matrix in loop?",
+      "hint": "Substitute indices `i = 1` and `j = 0` into formula `i + j + 1`.",
+      "options": [
+        "2",
+        "1",
+        "3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! At `i = 1` and `j = 0`, formula calculation gives: $1 + 0 + 1 = 2$. Value of `matrix[1][0]` becomes 2.",
+        "Incorrect. 1 is obtained for element `matrix[0][0]`.",
+        "Incorrect. 3 is obtained for element `matrix[1][1]`."
+      ]
+    },
+    {
+      "id": "it_clang_525",
+      "widget_id": "widget_clang_525",
+      "topic": "Aliasing Exceptions — Memory Inspection via char* / unsigned char*",
+      "q": "Why does this Endianness detection code via `unsigned char*` NOT violate Strict Aliasing?",
+      "hint": "Which data types in C standard are officially allowed to alias memory of absolutely ANY object?",
+      "options": [
+        "Character types (`char`, `unsigned char`, `signed char`) are official exceptions in C standards for byte-by-byte memory inspection of any object",
+        "Because type `unsigned int` is automatically cast to array upon reading",
+        "Violates, this code causes Undefined Behavior (UB)",
+        "Due to writing numbers in hexadecimal notation `0x`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! ISO C standard explicitly makes an exception from Strict Aliasing rules for types `char`, `signed char`, and `unsigned char`. Pointers to character types are permitted to read and inspect memory representation of any other object.",
+        "Incorrect. Automatic conversion to array does not happen.",
+        "Incorrect. Code is standardized and is a classic way to test Little/Big Endian.",
+        "Incorrect. Hexadecimal number notation (`0x`) in no way affects compiler aliasing rules."
+      ]
+    },
+    {
+      "id": "it_clang_526",
+      "widget_id": "widget_clang_526",
+      "topic": "Arrays and Pointers — Subscript Operator Symmetry",
+      "q": "Is `2[arr]` syntax valid in C, and what will this line output?",
+      "hint": "Recall what expression `a[b]` expands to at pointer level.",
+      "options": [
+        "30",
+        "Compilation error",
+        "10",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, expression `a[b]` is by definition equivalent to `*(a + b)`. Due to commutativity of addition, `*(a + b)` equals `*(b + a)`. Therefore `2[arr]` is strictly equivalent to `arr[2]` and returns third element (30).",
+        "Incorrect. Such syntax fully conforms to ANSI/ISO C standard.",
+        "Incorrect. 10 is `arr[0]` or `0[arr]`.",
+        "Incorrect. Operation is strictly defined by standard."
+      ]
+    },
+    {
+      "id": "it_clang_527",
+      "widget_id": "widget_clang_527",
+      "topic": "Arrays — Exceptions to Pointer Decay Rule",
+      "q": "What will `printf(\"%zu %zu\", sizeof(arr), sizeof(arr + 0))` output on 64-bit architecture?",
+      "hint": "The `sizeof` operator is one of rare exceptions where array name does NOT automatically decay to a pointer.",
+      "options": [
+        "20 8",
+        "20 20",
+        "8 8",
+        "5 8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Operator `sizeof(arr)` takes array itself as operand and returns its full size in bytes ($5 \\times 4 = 20$). Expression `arr + 0` causes explicit pointer addition, causing `arr` to decay to `int*`. Size of a pointer on 64-bit system is 8 bytes. Output: 20 8.",
+        "Incorrect. In `sizeof(arr + 0)`, operand is result of pointer addition, not array itself.",
+        "Incorrect. `sizeof(arr)` returns memory size of entire array, not pointer size.",
+        "Incorrect. `sizeof` returns size in bytes, not element count."
+      ]
+    },
+    {
+      "id": "it_clang_528",
+      "widget_id": "widget_clang_528",
+      "topic": "Strings — Modifying String Literals",
+      "q": "What effect will attempting to write `s[0] = 'h'` to a pointer to string literal lead to?",
+      "hint": "In which memory region does compiler usually place string literals?",
+      "options": [
+        "Undefined Behavior (UB) / Segmentation Fault",
+        "Successfully modifies string to \"hello\"",
+        "Compilation error",
+        "String becomes empty"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Under ISO C standard, string literals are immutable (read-only) and are often placed in protected memory sections (e.g. `.rodata`). Attempting to write to `s[0]` triggers Undefined Behavior (UB), leading to Segmentation Fault.",
+        "Incorrect. Only character arrays (`char s[] = \"Hello\"`) can be modified, not literals via `char*`.",
+        "Incorrect. In C (unlike C++), type of string literal is `char[]`, not `const char[]`, so code compiles without error.",
+        "Incorrect. Modification causes program crash, not clearing."
+      ]
+    },
+    {
+      "id": "it_clang_529",
+      "widget_id": "widget_clang_529",
+      "topic": "Pointers — Pointer Arithmetic on Array Pointers int (*p)[N]",
+      "q": "What does `(*p)[0]` equal after incrementing pointer `p` to array of 3 elements?",
+      "hint": "Pointer `p` has type `int (*)[3]`. How many bytes will `p` shift by when executing `p++`?",
+      "options": [
+        "4",
+        "2",
+        "1",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `p` is a pointer to an ARRAY of 3 `int` elements (`sizeof(int[3]) = 12` bytes). Increment `p++` shifts pointer forward by a whole row of 3 elements. `*p` now refers to second row `{4, 5, 6}`, and `(*p)[0]` returns first element of this row — 4.",
+        "Incorrect. 2 is second element of first row `arr[0][1]`.",
+        "Incorrect. 1 is first element of first row prior to increment.",
+        "Incorrect. Declaration of pointer to array `int (*p)[3]` is syntactically correct."
+      ]
+    },
+    {
+      "id": "it_clang_530",
+      "widget_id": "widget_clang_530",
+      "topic": "C99 Standards — Designated Initializers",
+      "q": "What will sum of elements of array `int arr[5] = {[1] = 10, [3] = 20}` equal?",
+      "hint": "What happens to array elements whose indices are not specified during explicit initialization?",
+      "options": [
+        "30",
+        "10",
+        "20",
+        "Indeterminate value (garbage from memory)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C99 designated initializers allow explicitly setting element values `arr[1] = 10` and `arr[3] = 20`. According to C standard, if an array is partially initialized, all uninitialized elements are automatically zero-filled. Array looks like `{0, 10, 0, 20, 0}`. Sum: 30.",
+        "Incorrect. Do not forget accounted value `arr[3] = 20`.",
+        "Incorrect. Do not forget accounted value `arr[1] = 10`.",
+        "Incorrect. Garbage remains only if initializers are COMPLETELY absent (`int arr[5];`)."
+      ]
+    },
+    {
+      "id": "it_clang_531",
+      "widget_id": null,
+      "topic": "Data Types — Incompatibility of int** and 2D Array int[][N]",
+      "q": "Why does passing 2D array `int arr[2][2]` to a function with `int **p` parameter without casting cause UB when accessing `p[0][0]`?",
+      "hint": "Is a 2D array an array of pointers or a continuous matrix of numbers?",
+      "options": [
+        "2D array is a continuous block of data. Expression `p[0]` reads first 4/8 bytes of array and interprets numerical element value itself as ADDRESS in memory",
+        "Because 2D arrays are passed by value, not by reference",
+        "Because `int**` allocates memory on stack, while `arr[2][2]` on heap",
+        "This is a completely safe operation in C11"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In memory `arr[2][2]` is simply 4 consecutive `int` numbers. Parameter `int **p` expects a POINTER `int*` to lie at address `p`. Attempting to dereference `p[0]` forces processor to take numerical value of `arr[0][0]` (e.g., 1) and access memory at address `0x1`, causing crash.",
+        "Incorrect. Arrays in C are never passed by value.",
+        "Incorrect. Local arrays are declared on stack.",
+        "Incorrect. This is a severe pointer type bug."
+      ]
+    },
+    {
+      "id": "it_clang_532",
+      "widget_id": "widget_clang_532",
+      "topic": "Strings — Embedded Null Terminators and string.h Functions",
+      "q": "What will `printf` output for string with embedded null terminators `\"A\\0B\\0C\"`?",
+      "hint": "Think about how `sizeof` determines string literal size and how `strlen` finds end of string.",
+      "options": [
+        "6 1",
+        "6 5",
+        "5 1",
+        "3 1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `sizeof(str)` counts total array memory including literal trailing `\\0`: 'A', '\\0', 'B', '\\0', 'C', '\\0' = 6 bytes. Function `strlen(str)` searches for first encountered null byte `\\0` immediately following 'A', so length equals 1. Output: 6 1.",
+        "Incorrect. `strlen` does not count characters after first encountered `\\0`.",
+        "Incorrect. Automatic trailing null terminator of literal itself forgotten.",
+        "Incorrect. Null bytes in middle of array are ignored."
+      ]
+    },
+    {
+      "id": "it_clang_533",
+      "widget_id": "widget_clang_533",
+      "topic": "Strings — Missing Null Terminator",
+      "q": "What will happen when passing array `char str[3] = {'a', 'b', 'c'}` to `%s` specifier of `printf`?",
+      "hint": "How does `printf` determine where printed string ends?",
+      "options": [
+        "Out-of-bounds read and Undefined Behavior (UB) will occur",
+        "Prints \"abc\"",
+        "Compilation error",
+        "Prints \"abc\\0\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! 3-element array is filled with characters without `\\0` byte. Specifier `%s` expects null-terminated string. `printf` will read memory past array bounds until it hits arbitrary 0 in memory (UB).",
+        "Incorrect. Without `\\0`, output will guaranteed continue with memory garbage.",
+        "Incorrect. Initializing character array without `\\0` is syntactically legal.",
+        "Incorrect. Symbol `\\0` itself is not printed."
+      ]
+    },
+    {
+      "id": "it_clang_534",
+      "widget_id": "widget_clang_534",
+      "topic": "Pointers and Arrays — Flat Linear Indexing of Multidimensional Array",
+      "q": "What will `*p` equal if 2D array `a[3][3]` is cast to `int*` and 4 is added?",
+      "hint": "Array elements lie sequentially in memory. Which element by count will be at offset 4?",
+      "options": [
+        "5",
+        "4",
+        "6",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! 2D array is stored sequentially in memory (Row-Major Order): 1, 2, 3, 4, 5, 6, 7, 8, 9. Casting to `(int*)a` gives address of first element (1). Offset `+ 4` points to 5th element (index 4), which equals 5.",
+        "Incorrect. 4 is element with index 3.",
+        "Incorrect. 6 is element with index 5.",
+        "Incorrect. Traversal over continuous array via base pointer is standardized."
+      ]
+    },
+    {
+      "id": "it_clang_535",
+      "widget_id": null,
+      "topic": "C99 Standards — Lifetime of VLA Array Inside Loops",
+      "q": "What happens to memory of VLA (Variable Length Array) created inside `for` loop body on each iteration?",
+      "hint": "How does block scope affect allocation and deallocation of VLA memory on stack?",
+      "options": [
+        "VLA memory is allocated on stack upon entry into loop block and automatically deallocated upon each exit from iteration block",
+        "Memory is allocated on heap and accumulates until end of function, creating memory leak",
+        "Memory is allocated once before loop start and reused",
+        "Creating VLAs inside loops is forbidden"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C99 VLA lifetime is bound to its block scope. On each iteration of loop upon entering block, stack frame is allocated for VLA, and upon exiting block (reaching `}` or `continue`), automatic VLA memory is immediately cleared.",
+        "Incorrect. VLAs are placed on stack, not on heap.",
+        "Incorrect. Since size can change each iteration, allocation happens anew.",
+        "Incorrect. Declaring VLA inside loop blocks is completely permitted."
+      ]
+    },
+    {
+      "id": "it_clang_536",
+      "widget_id": "widget_clang_536",
+      "topic": "Pointers — Negative Indices in Pointers",
+      "q": "Is expression `p[-1]` legal in C if `p` points to `&arr[2]`?",
+      "hint": "What does `p[-1]` expand to according to pointer arithmetic rules?",
+      "options": [
+        "Yes, completely legal, outputs 20",
+        "No, negative indices are forbidden by C syntax",
+        "Causes Undefined Behavior (UB)",
+        "Outputs 10"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Expression `p[-1]` turns into `*(p - 1)`. Since `p` points to `arr[2]` (value 30), `p - 1` points to `arr[1]` (value 20). Since this element is within original array bounds, operation is completely legal.",
+        "Incorrect. Unlike other languages, C allows using negative indices for pointers.",
+        "Incorrect. UB occurs only if dereferenced address exceeds array bounds.",
+        "Incorrect. 10 is `arr[0]` or `p[-2]`."
+      ]
+    },
+    {
+      "id": "it_clang_537",
+      "widget_id": "widget_clang_537",
+      "topic": "Preprocessor / Lexing — Automatic String Literal Concatenation",
+      "q": "What is `sizeof(str)` equal to for expression `\"Hello \" \"World\"`?",
+      "hint": "Think about what C translator does with adjacent string literals.",
+      "options": [
+        "12",
+        "11",
+        "2",
+        "Syntax error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! At Translation Phase 6, adjacent string literals are concatenated by compiler into one: `\"Hello World\"`. String length is 11 characters + 1 null terminator `\\0` = 12 bytes.",
+        "Incorrect. 11 is count of printable characters without `\\0`.",
+        "Incorrect. Compiler concatenates literals, rather than creating an array of two pointers.",
+        "Incorrect. Separating strings with spaces or newlines is fully supported by C standards."
+      ]
+    },
+    {
+      "id": "it_clang_538",
+      "widget_id": "widget_clang_538",
+      "topic": "Functions — Syntactic Sugar of Array Parameters",
+      "q": "What will `sizeof(a)` output inside function `void print_size(int a[5][10])` on 64-bit system?",
+      "hint": "What does ANY top-level array parameter turn into in a C function header?",
+      "options": [
+        "8",
+        "200",
+        "40",
+        "5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C function parameters array types do not exist. Declaration `int a[5][10]` implicitly adjusts by compiler to a pointer to its first element: `int (*a)[10]`. Operator `sizeof(a)` returns size of pointer itself (8 bytes on 64-bit system).",
+        "Incorrect. $5 \\times 10 \\times 4 = 200$ bytes would be size of original array outside function parameters.",
+        "Incorrect. 40 is size of only one row `int[10]`.",
+        "Incorrect. Array size is not implicitly passed within type."
+      ]
+    },
+    {
+      "id": "it_clang_539",
+      "widget_id": "widget_clang_539",
+      "topic": "C99 Standards — Scope and Lifetime of Compound Literals",
+      "q": "Is access `p[0]` to a compound literal outside its block `{}` safe?",
+      "hint": "What storage duration does a compound literal created inside a block possess?",
+      "options": [
+        "Unsafe (Undefined Behavior): compound literal in a block has automatic storage duration and is destroyed upon exiting `{}`",
+        "Safe: compound literal always has static storage duration",
+        "Compilation error: forbidden to assign literal to pointer",
+        "Safe: prints 1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C99 compound literal declared inside a block `{}` has automatic storage duration bound to that block. Upon exiting block, memory is deallocated and `p` becomes a dangling pointer. Reading `p[0]` is UB.",
+        "Incorrect. Only literals declared OUTSIDE all functions (at file scope) have static storage duration.",
+        "Incorrect. Assigning address of compound literal to pointer is completely valid inside its block.",
+        "Incorrect. Although you may accidentally get 1, code contains a memory bug."
+      ]
+    },
+    {
+      "id": "it_clang_540",
+      "widget_id": "widget_clang_540",
+      "topic": "Arrays — Comparing Array Names via == Operator",
+      "q": "What will condition `if (a == b)` output when comparing two local arrays with identical content?",
+      "hint": "What do names `a` and `b` represent when participating in binary comparison operations?",
+      "options": [
+        "Prints \"Not Equal\"",
+        "Prints \"Equal\"",
+        "Compilation error",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C operator `==` does NOT compare array content element-by-element. Names `a` and `b` decay to pointers to their first elements (`&a[0]` and `&b[0]`). Since these are two distinct arrays on stack, their memory addresses differ. Comparison returns 0 (false), printing \"Not Equal\".",
+        "Incorrect. Element-wise array comparison in C is not provided by `==` operator (for strings use `memcmp` or `strcmp`).",
+        "Incorrect. Comparing pointers is allowed by language syntax.",
+        "Incorrect. Result of comparing two address pointers is clearly defined."
+      ]
+    }
+  ]
+}

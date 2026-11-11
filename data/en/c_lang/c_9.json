@@ -1,0 +1,581 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_280",
+      "widget_id": null,
+      "topic": "Branching — Sequential Execution vs Branching",
+      "q": "Is it true that sequential algorithms (consisting only of a linear chain of commands) are capable of solving absolutely any computational problem in programming?",
+      "hint": "Think about whether it is possible to find, for example, the maximum of two numbers without conditions and choices.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Simple linear sequences of instructions cannot solve problems where the choice of action depends on the input data. This requires selection/branching structures.",
+        "Correct! Solving most real-world problems requires more complex control structures, such as selection (branching)."
+      ]
+    },
+    {
+      "id": "it_clang_281",
+      "widget_id": "widget_clang_281",
+      "topic": "Branching — Signature of the main Function",
+      "q": "What will happen when compiling code main() { ... } without specifying the int signature before main() in modern C standards (C99 and newer)?",
+      "hint": "Recall the implicit int rules in older and modern C standards.",
+      "options": [
+        "In older standards (C89/C90) this will compile due to implicit int, but in C99+ it will cause a compiler warning or error",
+        "This is a syntax error forbidden in absolutely all C standards",
+        "The compiler will automatically insert void instead of int",
+        "The program will compile without any warnings in all standards"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In the old C89 standard, an omitted return type defaulted to `int`, but starting from C99 the 'implicit int' rule was completely removed from the language.",
+        "Incorrect. In the C89/C90 standard, omitting `int` before `main()` was permitted.",
+        "Incorrect. The compiler does not insert `void`; previously `int` was inserted by default.",
+        "Incorrect. Starting from C99, the absence of a return type leads to a compiler error or warning."
+      ]
+    },
+    {
+      "id": "it_clang_282",
+      "widget_id": "widget_clang_282",
+      "topic": "Branching — Dangling else Problem",
+      "q": "Which if statement does the else keyword belong to in the widget code (in the absence of curly braces)?",
+      "hint": "Consider the rule for binding an else branch to preceding if statements in C.",
+      "options": [
+        "To the second (nested) if (x > 0)",
+        "To the first (outer) if (a > 0)",
+        "The compiler will issue an error due to ambiguity",
+        "The else branch will be ignored by the compiler"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, an `else` branch is always associated with the nearest preceding `if` statement that does not already have an `else` pair (unless an explicit `{}` block specifies a different scope).",
+        "Incorrect. Despite indentation, the compiler binds `else` to the nearest `if (x > 0)`.",
+        "Incorrect. There is no ambiguity for the compiler, as the rule unambiguously binds `else` to the nearest `if`.",
+        "Incorrect. The `else` branch compiles fully and binds to the inner `if`."
+      ]
+    },
+    {
+      "id": "it_clang_283",
+      "widget_id": "widget_clang_283",
+      "topic": "Branching — Assignment Error = Instead of Comparison ==",
+      "q": "What will happen when executing the code shown in the widget, where the condition contains x = y instead of x == y?",
+      "hint": "Recall what value the assignment operator = returns in C and how it is interpreted as a logical condition.",
+      "options": [
+        "The value of y (5) will be assigned to x, the condition will become true (>0), and \"Equal\" will be printed",
+        "The compiler will issue an error and forbid the `=` operation inside `if`",
+        "The condition will always return 0 (false)",
+        "Variable y will take the value of x"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The expression `x = y` assigns 5 to variable `x` and yields 5. By C rules, any non-zero value is true, so the `if` branch executes.",
+        "Incorrect. In C, assignment inside conditions is syntactically allowed, although compilers may issue a warning.",
+        "Incorrect. The result of the assignment is 5, which is interpreted as true (non-zero).",
+        "Incorrect. The `=` operator assigns the right operand's value to the left, so `y`'s value is copied to `x`, not vice versa."
+      ]
+    },
+    {
+      "id": "it_clang_284",
+      "widget_id": null,
+      "topic": "Branching — Passing Arguments to scanf",
+      "q": "Is it true that when reading integers via scanf(\"%d\", &x); you must pass the variable's address (&x) rather than its value (x)?",
+      "hint": "Think about whether the scanf function can modify an external variable's value if passed only a copy of the value.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `scanf` function must write the read data into the variable's memory, so it requires passing the variable's address via the `&` operator.",
+        "Incorrect. Passing `x` instead of `&x` leads to an attempted write to an arbitrary address and a crash (Segmentation Fault)."
+      ]
+    },
+    {
+      "id": "it_clang_285",
+      "widget_id": null,
+      "topic": "Branching — Algorithm Behavior with Equal Values",
+      "q": "How will the algorithm for finding the maximum of two numbers behave if two identical numbers (x = 5, y = 5) are entered as arguments x and y?",
+      "hint": "Trace the execution of condition x > y when x = 5 and y = 5.",
+      "options": [
+        "Condition 5 > 5 will return 'false', the program will jump to the else branch and print 5 (value of y)",
+        "Condition 5 > 5 will return 'true', the program will jump to the if branch and print 5 (value of x)",
+        "The program will terminate with a division-by-zero error",
+        "The program will enter an infinite loop"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since `5 > 5` is false, execution proceeds to the `else` branch, which prints the value of `y` (i.e. 5). The result 5 is the correct maximum.",
+        "Incorrect. Strict inequality `5 > 5` yields false, so the `else` branch is selected.",
+        "Incorrect. Comparison arithmetic contains no division operations.",
+        "Incorrect. `if...else` branching is a one-time check and creates no loops."
+      ]
+    },
+    {
+      "id": "it_clang_286",
+      "widget_id": "widget_clang_286",
+      "topic": "Branching — Ternary Operator as an Equivalent to if...else",
+      "q": "Is it true that an expression with the ternary operator max = (x > y) ? x : y; is completely equivalent to the construct if (x > y) max = x; else max = y;?",
+      "hint": "Compare how conditions work in the ternary operator and in the if...else construct.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The ternary operator `?:` evaluates the condition and returns either the first expression (if true) or the second (if false).",
+        "Incorrect. These are conceptually and logically identical forms of branching syntax."
+      ]
+    },
+    {
+      "id": "it_clang_287",
+      "widget_id": null,
+      "topic": "Branching — Flowchart Logic",
+      "q": "Is it true that both branching paths ('true' and 'false') on a selection flowchart converge into a single common flow point before termination (END)?",
+      "hint": "Think about how algorithm branches merge after executing alternative actions.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! On a flowchart, after executing their output operations (`x` or `y`), the 'true' and 'false' branches merge into a single control flow leading to the end block.",
+        "Incorrect. The flowchart clearly shows the merging of branches before termination."
+      ]
+    },
+    {
+      "id": "it_clang_288",
+      "widget_id": "widget_clang_288",
+      "topic": "Branching — Formatted Output in printf",
+      "q": "What will the call printf(\"Maximum: %d\", x); output if the value of x is 10?",
+      "hint": "Recall how the %d specifier substitutes the value of an integer variable.",
+      "options": [
+        "Maximum: 10",
+        "Maximum: %d 10",
+        "10",
+        "Maximum: x"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `%d` specifier inside the format string is replaced by the text representation of the integer from variable `x` (10).",
+        "Incorrect. The `%d` specifier is replaced by the value, rather than remaining in the output string.",
+        "Incorrect. The text \"Maximum: \" preceding the specifier will also be printed.",
+        "Incorrect. The numeric value of the variable is substituted instead of its name."
+      ]
+    },
+    {
+      "id": "it_clang_289",
+      "widget_id": null,
+      "topic": "Branching — Equivalence of Conditions",
+      "q": "Is it true that replacing condition if (x > y) with if (!(x <= y)) yields absolutely identical program behavior for any integers?",
+      "hint": "Apply the laws of logic to strict and non-strict inequalities for integers.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Negation of `x <= y` is equivalent to the strict check `x > y` for all integers.",
+        "Incorrect. These expressions are logically completely equivalent."
+      ]
+    },
+    {
+      "id": "it_clang_290",
+      "widget_id": null,
+      "topic": "Branching — Behavior When else Branch Is Omitted",
+      "q": "What will happen during program execution if the else branch is omitted (using only if(condition)) and the tested condition turns out to be false?",
+      "hint": "Recall how the short form of branching constructs operates.",
+      "options": [
+        "The block of instructions inside if will be skipped, and execution will immediately continue with the instruction following if",
+        "The program will terminate with a runtime error",
+        "The compiler will generate an error due to the absence of a mandatory else block",
+        "The program will enter an infinite waiting loop"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `else` branch is optional. If the condition is false, the `if` branch is simply skipped and control passes forward.",
+        "Incorrect. Omitting the `else` branch is standard behavior in C.",
+        "Incorrect. The `else` branch is optional, so the compiler will not issue an error.",
+        "Incorrect. A standalone `if` without `else` does not create loops."
+      ]
+    },
+    {
+      "id": "it_clang_291",
+      "widget_id": "widget_clang_291",
+      "topic": "Branching — Finding the Maximum Without an else Branch",
+      "q": "What will the code snippet in the widget output, where the maximum search algorithm is implemented using a standalone if?",
+      "hint": "Trace whether the value of variable max changes after checking condition x > y.",
+      "options": [
+        "20",
+        "10",
+        "0",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Initially `max` is 20 (`y`). Since condition `10 > 20` is false, the `if` body is skipped, and variable `max` retains the value 20.",
+        "Incorrect. The value of `max` would change to 10 only if `x` were strictly greater than `y`.",
+        "Incorrect. Variable `max` was initialized to the value of `y` (20), not zero.",
+        "Incorrect. The code syntax is correct and will compile without errors."
+      ]
+    },
+    {
+      "id": "it_clang_292",
+      "widget_id": null,
+      "topic": "Branching — Condition Interpretation in C",
+      "q": "How does the C compiler interpret the result of an expression inside the parentheses of an if (condition) statement?",
+      "hint": "Recall which numeric values in C are considered true and which are considered false.",
+      "options": [
+        "The value 0 is interpreted as false, and any non-zero value as true",
+        "Only positive numbers are considered true, and negative numbers false",
+        "The expression must return a boolean type bool from stdbool.h",
+        "Inside if, only comparison operators (>, <, ==) are allowed"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, truth value is based on numbers: value `0` corresponds to false, and any non-zero number (including negative ones) is considered true.",
+        "Incorrect. Negative numbers are also non-zero, so they are perceived by the compiler as true.",
+        "Incorrect. The `bool` type in C appeared later (in C99); historically and syntactically, any integer or floating type can be used as conditions.",
+        "Incorrect. Any arithmetic expression or function call returning a number can serve as a condition."
+      ]
+    },
+    {
+      "id": "it_clang_293",
+      "widget_id": "widget_clang_293",
+      "topic": "Branching — Syntax Error Binding if and else",
+      "q": "What will happen when attempting to compile the code snippet shown in the widget?",
+      "hint": "Pay attention to the presence of statement printf(\"Y\"); between the if branch and else branch when curly braces are absent.",
+      "options": [
+        "The compiler will issue an error because else was separated from if by an intervening statement",
+        "The code will compile and output \"Y\"",
+        "The code will compile and output \"Z\"",
+        "The code will compile and output \"YZ\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Without curly braces, only `printf(\"X\");` belongs to `if`. The next line `printf(\"Y\");` terminates the branching structure, leaving the `else` keyword syntactically orphaned.",
+        "Incorrect. The compiler will issue an `error: 'else' without a previous 'if'`.",
+        "Incorrect. The code will fail compilation due to an `else` binding syntax error.",
+        "Incorrect. The program will not even compile."
+      ]
+    },
+    {
+      "id": "it_clang_294",
+      "widget_id": null,
+      "topic": "Branching — Algorithm Execution Analysis with User Input",
+      "q": "What will be the result of running the maximum search program if the user inputs values 15 and 20?",
+      "hint": "Substitute values into scanf: x = 15, y = 20 and evaluate condition x > y.",
+      "options": [
+        "The program will output 20, because the if branch will be skipped and else will execute",
+        "The program will output 15",
+        "The program will terminate with an error due to invalid number ordering",
+        "The program will request user input again"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Value `x` becomes 15, and `y` becomes 20. Checking `15 > 20` yields false, control passes to `else`, and the program prints `20`.",
+        "Incorrect. Condition `15 > 20` is false, so the first `if` branch does not execute.",
+        "Incorrect. Input order of numbers does not affect execution; it compares them correctly.",
+        "Incorrect. `scanf` executes input once and passes control forward."
+      ]
+    },
+    {
+      "id": "it_clang_295",
+      "widget_id": "widget_clang_295",
+      "topic": "Branching — Arithmetic as a Condition",
+      "q": "What will the widget code snippet output if arithmetic expression x - y is passed as the condition in if?",
+      "hint": "Evaluate expression 5 - 5 and recall how it is interpreted in a condition block.",
+      "options": [
+        "\"Same\"",
+        "\"Diff\"",
+        "Compilation error",
+        "Outputs nothing"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Expression `x - y` gives `5 - 5 = 0`. Number `0` is interpreted in C as false, so the `else` branch executes, printing \"Same\".",
+        "Incorrect. The `if` branch executes only when the expression result is non-zero.",
+        "Incorrect. Passing an arithmetic expression to `if` is syntactically valid.",
+        "Incorrect. The `else` branch will execute and output \"Same\"."
+      ]
+    },
+    {
+      "id": "it_clang_296",
+      "widget_id": null,
+      "topic": "Branching — Correspondence Between Pseudocode and C Code",
+      "q": "Which line of C code strictly corresponds to the pseudocode step 'if x>y then print x'?",
+      "hint": "Find the combination of condition operator and output function for true condition in C code.",
+      "options": [
+        "if(x>y) printf(\"Maximum: %d\", x);",
+        "scanf(\"%d\", &x);",
+        "else printf(\"Maximum: %d\", y);",
+        "main() { int x, y; }"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The step 'if x>y' translates into `if(x>y)`, and 'then print x' into the print call `printf(..., x)`.",
+        "Incorrect. `scanf` corresponds to the pseudocode step 'read x'.",
+        "Incorrect. This line corresponds to the step 'else print y'.",
+        "Incorrect. This line is a function and variable declaration, not a branching statement."
+      ]
+    },
+    {
+      "id": "it_clang_297",
+      "widget_id": "widget_clang_297",
+      "topic": "Branching — Cascading else if Conditions",
+      "q": "What will the cascading branching structure from the widget output when x = 10?",
+      "hint": "Check conditions in order: first the first, then the second if the first is false.",
+      "options": [
+        "\"B\"",
+        "\"A\"",
+        "\"C\"",
+        "\"BC\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! First condition `10 < 5` is false. Control moves to `else if`. Second condition `10 < 15` is true, so `printf(\"B\")` executes and the structure completes.",
+        "Incorrect. First condition `10 < 5` is not met, and after the first matched `else if` remaining branches are skipped.",
+        "Incorrect. Control will not reach the `else` branch (`\"C\"`) because the `else if` condition matched.",
+        "Incorrect. Cascading `if...else if...else` executes only the first true branch, not a combination of several."
+      ]
+    },
+    {
+      "id": "it_clang_298",
+      "widget_id": null,
+      "topic": "Flowcharts — Flowchart Logical Sequence",
+      "q": "What is the strict execution sequence of maximum search algorithm steps on a flowchart?",
+      "hint": "Trace the arrows from the BEGIN block down to the condition check.",
+      "options": [
+        "Input x -> Input y -> Check x > y -> Output result (x or y) -> End (END)",
+        "Check x > y -> Input x -> Input y -> END",
+        "Input x and y simultaneously -> Output x -> END",
+        "Input x -> Check x > y -> Input y -> END"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The flowchart sets the sequence clearly: first `x` is read, then `y`, followed by branching on `x > y` to output `x` or `y` and algorithm completion.",
+        "Incorrect. Comparing variables is impossible before they are read.",
+        "Incorrect. Arguments are read first, and outputting `x` depends on the comparison result.",
+        "Incorrect. `y` must be read before performing the `x > y` check."
+      ]
+    },
+    {
+      "id": "it_clang_299",
+      "widget_id": null,
+      "topic": "Branching — Pitfall of a Semicolon After if",
+      "q": "How will the program behave if a semicolon is accidentally placed immediately after an if statement, e.g.: if (x > y); printf(\"%d\", x);?",
+      "hint": "Think about what a semicolon represents to a C compiler.",
+      "options": [
+        "The semicolon will be parsed as a null statement, so printf will execute always, regardless of condition",
+        "The compiler will issue a syntax error",
+        "The printf call will never execute",
+        "The program will enter an infinite loop"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Semicolon `;` forms a null statement. Condition `if (x > y);` controls this null statement, and the following `printf` executes always as a separate independent statement.",
+        "Incorrect. This is valid C syntax (though often a programmer's logic error).",
+        "Incorrect. The `printf` call lies outside the conditional block and executes unconditionally.",
+        "Incorrect. A single `if` with a null statement creates no loop."
+      ]
+    },
+    {
+      "id": "it_clang_300",
+      "widget_id": null,
+      "topic": "Branching — Using Curly Braces {} in if Blocks",
+      "q": "What will happen if multiple statements need to execute inside an if block, but are not enclosed in curly braces {}?",
+      "hint": "Recall how many statements default to an if operator when curly braces are omitted.",
+      "options": [
+        "Only the first statement will belong to the if branch, while the rest will execute always, regardless of condition",
+        "The compiler will automatically group all subsequent statements into one block until the end of the function",
+        "The program will compile with a fatal \"Missing block braces\" error",
+        "All statements inside if will be ignored by the compiler"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! If curly braces `{}` are not used to create a compound statement, only the very first statement following `if` belongs to the `if` branch. All subsequent statements execute in standard linear order.",
+        "Incorrect. Without `{}` braces, strictly the first statement belongs to the condition.",
+        "Incorrect. Curly braces are optional for single-statement `if` branches, so the compiler raises no error.",
+        "Incorrect. The first statement binds to `if` rather than being ignored."
+      ]
+    },
+    {
+      "id": "it_clang_301",
+      "widget_id": "widget_clang_301",
+      "topic": "Branching — Logical NOT (!) and Checking for Zero",
+      "q": "What will the code snippet in the widget output when x = 0?",
+      "hint": "Recall how logical NOT ! inverts the truth value of zero in C.",
+      "options": [
+        "Zero",
+        "Not zero",
+        "Outputs nothing",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, `0` is considered false. Negation `!0` turns false into true (`1`), so the `if` branch executes and outputs \"Zero\".",
+        "Incorrect. Since `x = 0`, expression `!x` yields true (`1`), directing execution to the first branch.",
+        "Incorrect. The first `if` branch will execute and print \"Zero\".",
+        "Incorrect. The code compiles without errors."
+      ]
+    },
+    {
+      "id": "it_clang_302",
+      "widget_id": "widget_clang_302",
+      "topic": "Branching — Short-Circuit Evaluation of Conditions",
+      "q": "What will the code snippet in the widget output and what will variable y equal after evaluating the condition?",
+      "hint": "Think about whether the right side of logical AND (&&) will evaluate if the left side already yields false (0).",
+      "options": [
+        "Outputs 5 (the second expression ++y > 5 was not evaluated)",
+        "Outputs 6",
+        "Outputs \"A6\"",
+        "Runtime error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `&&` operator uses short-circuiting: since `x != 0` is false (`0 != 0` -> 0), the right side `++y > 5` is not even evaluated. Variable `y` remains equal to 5.",
+        "Incorrect. In C with `&&`, if the left operand is 0, the right operand is ignored for optimization.",
+        "Incorrect. The `if` condition turns out false, so the branch printing \"A\" does not execute.",
+        "Incorrect. Short-circuiting is standard C behavior causing no runtime errors."
+      ]
+    },
+    {
+      "id": "it_clang_303",
+      "widget_id": null,
+      "topic": "Branching — Non-Strict Comparison Operators",
+      "q": "How does the evaluation result of condition if (x >= y) differ from if (x > y) when variables are equal (x = 5, y = 5)?",
+      "hint": "Compare strict vs non-strict inequality when operands are equal.",
+      "options": [
+        "x >= y returns true (1), while x > y returns false (0)",
+        "Both conditions return true (1)",
+        "Both conditions return false (0)",
+        "The expression x >= y causes a syntax error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Non-strict inequality `>=` includes equality, so `5 >= 5` is true. Strict inequality `5 > 5` is false.",
+        "Incorrect. Strict inequality `>` is not satisfied when values are equal.",
+        "Incorrect. Non-strict inequality `>=` is true when values are equal.",
+        "Incorrect. `>=` is a standard binary comparison operator in C."
+      ]
+    },
+    {
+      "id": "it_clang_304",
+      "widget_id": "widget_clang_304",
+      "topic": "Branching — Behavior of Nested if Conditions Without else",
+      "q": "What will the program in the widget output with values a = 5 and b = 10?",
+      "hint": "Trace step by step: is the first condition met? Is the second condition met?",
+      "options": [
+        "2",
+        "1",
+        "Outputs nothing",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! First condition `a > 0` (5 > 0) is true, so the program enters the inner `if`. There `b < 5` (10 < 5) is checked — it is false, so its associated `else` branch executes, printing \"2\".",
+        "Incorrect. Nested condition `b < 5` is false, so its `else` block executes.",
+        "Incorrect. The nested `else` branch will execute and print \"2\".",
+        "Incorrect. The code contains no syntax errors."
+      ]
+    },
+    {
+      "id": "it_clang_305",
+      "widget_id": null,
+      "topic": "Branching — Logical OR (||)",
+      "q": "In which case will the compound expression (a > 0 || b > 0) return false (0)?",
+      "hint": "Recall the truth table for the logical OR operator.",
+      "options": [
+        "Only when both a <= 0 and b <= 0 simultaneously",
+        "When at least one variable is less than or equal to 0",
+        "When a <= 0, but b > 0",
+        "This expression is always true"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `||` operator yields false (`0`) only when **both** of its operands are simultaneously false.",
+        "Incorrect. If at least one operand is true, `||` returns true (`1`).",
+        "Incorrect. If `b > 0`, the right operand is true, hence the entire `||` expression is true.",
+        "Incorrect. The expression can be false if both conditions are false."
+      ]
+    },
+    {
+      "id": "it_clang_306",
+      "widget_id": "widget_clang_306",
+      "topic": "Branching — Safe Condition Writing (Yoda Conditions)",
+      "q": "What advantage does writing if (5 == x) offer compared to standard if (x == 5)?",
+      "hint": "Think about what happens if a developer typos single = instead of double ==.",
+      "options": [
+        "An accidental typo if (5 = x) triggers a compilation error, preventing accidental assignment",
+        "Such code runs twice as fast at the hardware level",
+        "Writing 5 == x allows floating-point comparison without loss of precision",
+        "This is the only valid syntax adopted in C99 standard"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Accidental `if (x = 5)` executes assignment in C. But `if (5 = x)` causes a compiler error because a value cannot be assigned to literal `5`.",
+        "Incorrect. This style does not affect execution speed or standard compliance; its goal is preventing typo bugs.",
+        "Incorrect. Yoda conditions do not affect floating-point comparison precision.",
+        "Incorrect. Both operand orders (`x == 5` and `5 == x`) fully conform to C standards."
+      ]
+    },
+    {
+      "id": "it_clang_307",
+      "widget_id": null,
+      "topic": "Branching — Selection Algorithm Transformation",
+      "q": "Is it true that any algorithm with if...else branching can always be rewritten using only standalone if constructs without using else?",
+      "hint": "Think about whether else can be replaced by a second if with an inverted condition.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `else` branch can always be logically replaced by a separate `if` statement with an inverted condition, though it might reduce code readability.",
+        "Incorrect. Structurally, `else` is not a strictly mandatory language element."
+      ]
+    },
+    {
+      "id": "it_clang_308",
+      "widget_id": "widget_clang_308",
+      "topic": "Branching — Postfix Increment in a Condition",
+      "q": "What will the code in the widget output with initial value x = 3?",
+      "hint": "Recall the difference between postfix (x++) and prefix (++x) increment when evaluating a condition.",
+      "options": [
+        "A",
+        "B",
+        "AB",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Postfix increment `x++` first returns the current value (3), which is interpreted as true, and then increments `x` to 4. Therefore, the `if` branch executes and prints \"A\".",
+        "Incorrect. Since initial `x = 3` is non-zero, the condition is true.",
+        "Incorrect. Only one `if` branch executes, printing \"A\".",
+        "Incorrect. Syntactically, postfix increment inside `if` is completely legal."
+      ]
+    },
+    {
+      "id": "it_clang_309",
+      "widget_id": null,
+      "topic": "Branching — Purpose of Branching Constructs",
+      "q": "Which of the following statements most accurately describes the purpose of a selection (branching) control construct in C?",
+      "hint": "Think about how branching alters sequential program execution.",
+      "options": [
+        "Allows altering the execution order of instructions depending on condition truth",
+        "Allows repeatedly executing a block of instructions a specified number of times",
+        "Allows dynamically allocating RAM memory",
+        "Serves exclusively for keyboard user input"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Selection (branching) control structures allow a program to deviate from strict sequential instruction execution and choose alternative code paths based on conditions.",
+        "Incorrect. Repeating blocks is the task of loops, not branching.",
+        "Incorrect. Memory allocation is performed by functions like `malloc`.",
+        "Incorrect. Data input is performed using functions like `scanf`."
+      ]
+    }
+  ]
+}

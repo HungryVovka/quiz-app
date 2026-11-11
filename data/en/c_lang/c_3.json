@@ -1,0 +1,769 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_80",
+      "widget_id": "widget_clang_80",
+      "topic": "GCC / Linux — Naming convention for libraries with -l",
+      "q": "If you want to link the libmath.so (or libmath.a) library, which parameter should be passed to the GCC compiler?",
+      "hint": "The -l flag automatically prepends the lib prefix and appends .so/.a extensions.",
+      "options": [
+        "-lmath",
+        "-llibmath",
+        "-lmath.so",
+        "-Lmath"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `-l` flag drops the standard `lib` prefix and `.so`/`.a` extension. Therefore, for `libmath.so`, the `-lmath` flag is used.",
+        "Incorrect. The `lib` prefix does not need to be specified — `-llibmath` will look for a file named `liblibmath.so`.",
+        "Incorrect. The `.so` extension does not need to be written; the linker will select `.so` or `.a` on its own.",
+        "Incorrect. The `-L` flag specifies the path to the directory containing libraries, not the library name."
+      ]
+    },
+    {
+      "id": "it_clang_81",
+      "widget_id": "widget_clang_81",
+      "topic": "GCC / Linux — Order of -l flags during build",
+      "q": "Why might Command A fail with an 'undefined reference to...' error, while Command B compiles successfully?",
+      "hint": "The GCC linker (GNU ld) processes object files and libraries strictly from left to right.",
+      "options": [
+        "The linker searches for unresolved symbols from left to right: if the `-l` library comes BEFORE the `.c`/`.o` file, unused symbols from it are discarded",
+        "According to the Linux standard, the `-lmath` flag must always be placed before `main.c`",
+        "This is a bug in a specific version of GCC",
+        "Flags with `-o` do not work if `-l` is at the beginning"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `ld` scans files from left to right. When it sees `-lmath` right at the start, it doesn't yet have a list of unresolved functions from `main.c`, so it drops the library's functions as unnecessary. `-l` flags must always come AFTER the files that depend on them!",
+        "Incorrect. On the contrary, the `-l` flag must be placed AFTER the source code files.",
+        "Incorrect. This is a fundamental operating principle of classic linkers in UNIX/Linux.",
+        "Incorrect. The position of `-o app` does not affect the order of symbol resolution."
+      ]
+    },
+    {
+      "id": "it_clang_82",
+      "widget_id": null,
+      "topic": "GCC / Linux — libdl library and the -ldl flag",
+      "q": "Why is it mandatory to add the -ldl flag when compiling a program that uses dlopen(), dlsym(), or dlclose()?",
+      "hint": "Think about which specific Linux library implements these dynamic loading functions.",
+      "options": [
+        "The dynamic loader API functions reside in a separate libdl.so library (in older glibc versions)",
+        "The -ldl flag is included to compress the executable file",
+        "The -ldl flag allows the use of the gdb debugger",
+        "This flag is used for compiling exclusively for 64-bit architectures"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In Linux (prior to glibc 2.34), dynamic library management functions (`dlopen`, `dlsym`, `dlerror`, `dlclose`) resided in a separate `libdl.so` library, which needed to be explicitly linked via `-ldl`.",
+        "Incorrect. `libdl` has nothing to do with file compression.",
+        "Incorrect. The `-g` flag is used to enable debugging.",
+        "Incorrect. `libdl` is used regardless of the system's bitness."
+      ]
+    },
+    {
+      "id": "it_clang_83",
+      "widget_id": "widget_clang_83",
+      "topic": "GCC / Linux — Dynamic library lookup in dlopen",
+      "q": "Why will dlopen(\"libplugin.so\", RTLD_LAZY) return NULL, even if libplugin.so is located in the current project directory?",
+      "hint": "Does the Linux dynamic loader search for libraries in the current working directory by default?",
+      "options": [
+        "For security reasons, Linux by default does not search for libraries in the current folder '.' unless specified with './' or set in LD_LIBRARY_PATH / RPATH",
+        "dlopen accepts only absolute paths starting from root /",
+        "The RTLD_LAZY flag prohibits loading local files",
+        "The filename must specify the version (e.g., libplugin.so.1)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The Linux loader (`ld.so`) does not include the current folder `.` in the standard library search path. You must either explicitly write `\"./libplugin.so\"` or add the directory to `LD_LIBRARY_PATH` / `rpath`.",
+        "Incorrect. Relative paths like `./libplugin.so` work perfectly.",
+        "Incorrect. `RTLD_LAZY` only determines when symbol binding occurs (as they are called).",
+        "Incorrect. The filename can be any valid path."
+      ]
+    },
+    {
+      "id": "it_clang_84",
+      "widget_id": "widget_clang_84",
+      "topic": "GCC / Linux — Position-Independent Code (-fPIC)",
+      "q": "Why is the -fPIC flag used when compiling source files into a dynamic library (.so)?",
+      "hint": "The acronym PIC stands for Position Independent Code.",
+      "options": [
+        "Generates position-independent code, allowing the .so to be loaded at any virtual memory address without relocation",
+        "Accelerates floating-point calculations (Floating Point Instruction Controller)",
+        "Defines the maximum memory size for a shared library",
+        "Packs multiple files into a single .a archive"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `-fPIC` (Position-Independent Code) generates assembly instructions using relative addressing. This allows multiple processes to map the same `.so` library at different virtual addresses in memory.",
+        "Incorrect. PIC is completely unrelated to floating-point calculations.",
+        "Incorrect. The flag does not limit memory size.",
+        "Incorrect. Packing files into `.a` archives is handled by the `ar` utility."
+      ]
+    },
+    {
+      "id": "it_clang_85",
+      "widget_id": null,
+      "topic": "GCC / Linux — Creating shared libraries",
+      "q": "Which GCC flag tells the linker to create a shared object (.so) instead of a standard executable?",
+      "hint": "This option tells the compiler to build a Shared Library.",
+      "options": [
+        "-shared",
+        "-static",
+        "-dynamic",
+        "-so"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `-shared` flag instructs GCC to create a dynamic/shared library (`.so`).",
+        "Incorrect. `-static` creates a statically linked executable with no external `.so` dependencies.",
+        "Incorrect. The `-dynamic` flag does not exist in GCC basic options for this purpose.",
+        "Incorrect. The `-so` flag does not exist."
+      ]
+    },
+    {
+      "id": "it_clang_86",
+      "widget_id": "widget_clang_86",
+      "topic": "GCC / Linux — Difference between -I and -L",
+      "q": "What is the fundamental difference between the compilation flags -I and -L?",
+      "hint": "One is for the preprocessing stage, the other is for the linking stage.",
+      "options": [
+        "-I specifies the header file (.h) search directory, while -L specifies the library (.so / .a) search directory",
+        "-I specifies library directories, while -L specifies header file directories",
+        "-I is used for C++, while -L is used only for C language",
+        "-I links libraries dynamically, while -L links statically"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `-I` (Include) adds a directory to the `#include <...>` search list, while `-L` (Link path) adds a directory to the library search path for the `-l` flag.",
+        "Incorrect. The flag meanings are swapped.",
+        "Incorrect. Both flags work identically for C and C++.",
+        "Incorrect. The flags specify directory paths, not the linkage type."
+      ]
+    },
+    {
+      "id": "it_clang_87",
+      "widget_id": null,
+      "topic": "GCC / Linux — LD_LIBRARY_PATH variable and RPATH",
+      "q": "What happens if you run a compiled program that requires a non-standard libcustom.so without setting LD_LIBRARY_PATH or RPATH?",
+      "hint": "What does the dynamic linker ld.so do during application launch?",
+      "options": [
+        "Runtime error: error while loading shared libraries... No such file or directory",
+        "The program will automatically find .so in the current folder",
+        "The program will not compile at all",
+        "The system will automatically download libcustom.so from the internet"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The dynamic loader `ld.so` won't find the library file in standard `/lib` or `/usr/lib` locations at startup and will crash with a shared library loading error.",
+        "Incorrect. The current directory is not searched by default.",
+        "Incorrect. Compilation and linking succeeded during the build phase (since `-L` was provided); the error occurs *at runtime*.",
+        "Incorrect. Linux OS does not automatically download missing libraries when launching a binary."
+      ]
+    },
+    {
+      "id": "it_clang_88",
+      "widget_id": "widget_clang_88",
+      "topic": "GCC / Linux — Compilation stage flags (-E, -S, -c)",
+      "q": "What does the command gcc -E main.c > main.i do?",
+      "hint": "Think about the very first processing stage GCC performs on a file.",
+      "options": [
+        "Stops processing after the preprocessing stage (macro expansion, #include) and outputs the result",
+        "Generates a file with assembly code",
+        "Creates a finished object file main.i",
+        "Runs the syntax analyzer without saving the file"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `-E` flag forces GCC to run only the preprocessor (expand `#define`, substitute `#include` directives, strip comments) and direct output to stdout.",
+        "Incorrect. Generating assembly code is done via the `-S` flag.",
+        "Incorrect. An object file is created with the `-c` flag.",
+        "Incorrect. Output is saved to a file via `>` redirection."
+      ]
+    },
+    {
+      "id": "it_clang_89",
+      "widget_id": "widget_clang_89",
+      "topic": "GCC / Linux — Passing macros via command line (-D)",
+      "q": "What does the parameter -DBUFFER_SIZE=1024 do in a GCC command?",
+      "hint": "The letter D stands for Define.",
+      "options": [
+        "Equivalent to declaring #define BUFFER_SIZE 1024 in all compiled files",
+        "Enables Debug mode with level 1024",
+        "Sets the maximum stack size to 1024 bytes",
+        "Sets the memory buffer size for the GCC compiler itself"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `-DNAME=VALUE` flag injects a preprocessor macro definition as if `#define NAME VALUE` were written at the top of the source file.",
+        "Incorrect. Debug mode is enabled using the `-g` flag.",
+        "Incorrect. Stack size is controlled by the linker and system limits.",
+        "Incorrect. This is not a compiler buffer setting."
+      ]
+    },
+    {
+      "id": "it_clang_90",
+      "widget_id": null,
+      "topic": "GCC / Linux — Creating static libraries (.a)",
+      "q": "Which command line utility is used in Linux to bundle .o files into a static library (.a)?",
+      "hint": "An archiver for objects in .a format.",
+      "options": [
+        "ar",
+        "ld",
+        "make",
+        "tar"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `ar` (archiver) utility is used to package multiple `.o` object files into a single `.a` static library file (e.g., `ar rcs libfoo.a foo.o bar.o`).",
+        "Incorrect. `ld` is the linker; it links executable files and `.so`.",
+        "Incorrect. `make` is a build automation system.",
+        "Incorrect. `tar` is a general-purpose file archiver."
+      ]
+    },
+    {
+      "id": "it_clang_91",
+      "widget_id": null,
+      "topic": "GCC / Linux — The -Wall flag (Trick question!)",
+      "q": "Is it true that the -Wall flag enables absolutely ALL possible compiler warnings in GCC?",
+      "hint": "Pay attention to the names of flags like -Wextra and -Wpedantic.",
+      "options": [
+        "False (The name is misleading: -Wall only enables a recommended majority of warnings, but not all!)",
+        "True (-Wall stands for 'Warning All' and catches 100% of questionable code)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Despite its name, `-Wall` only includes the most popular base set of warnings. To enable additional checks, flags like `-Wextra`, `-Wpedantic`, `-Wconversion`, etc., are required.",
+        "Incorrect. The `-Wall` flag does not enable ALL existing warnings in GCC."
+      ]
+    },
+    {
+      "id": "it_clang_92",
+      "widget_id": "widget_clang_92",
+      "topic": "GCC / Linux — Specifics of the dlerror() function",
+      "q": "What will the second call printf(\"2: %s\\n\", dlerror()); output in this code snippet?",
+      "hint": "The dlerror() function has a specific side effect each time it is read.",
+      "options": [
+        "2: (null)",
+        "2: No such file or directory (duplicate of the first error)",
+        "Segmentation Fault",
+        "2: Error cleared"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Calling `dlerror()` returns the current error string and RESETS it to NULL. A second call to `dlerror()`, provided no new loading errors occurred in between, is guaranteed to return `NULL` (printing `(null)`).",
+        "Incorrect. The error text is not preserved after the first read.",
+        "Incorrect. `printf` with `%s` safely handles `NULL` in glibc, printing `(null)`.",
+        "Incorrect. The message string is not replaced with \"Error cleared\"."
+      ]
+    },
+    {
+      "id": "it_clang_93",
+      "widget_id": "widget_clang_93",
+      "topic": "GCC / Linux — Constructors in shared libraries",
+      "q": "When will a function init_lib(), marked with the constructor attribute in a dynamic library, execute?",
+      "hint": "A special GCC attribute triggers automatically upon loading the module into memory.",
+      "options": [
+        "Automatically upon loading the .so library into memory (via dlopen or when starting the program)",
+        "Only when unloading the library via dlclose()",
+        "Only upon an explicit call in main()",
+        "Upon the first access to any library variable"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Functions with `__attribute__((constructor))` are automatically called by the dynamic loader right after mapping the `.so` into memory (during `dlopen` or at program startup).",
+        "Incorrect. For unloading, `__attribute__((destructor))` is used.",
+        "Incorrect. The function is called before executing the code that requested the library.",
+        "Incorrect. Execution occurs when loading the code, not when accessing data."
+      ]
+    },
+    {
+      "id": "it_clang_94",
+      "widget_id": null,
+      "topic": "GCC / Linux — Passing parameters to the linker via -Wl",
+      "q": "What is the -Wl, prefix used for (e.g., -Wl,-rpath,/usr/local/lib) in GCC commands?",
+      "hint": "The letters Wl stand for Warning/Write to Linker.",
+      "options": [
+        "To pass comma-separated options directly to the linker (ld)",
+        "To suppress linker warnings",
+        "To enable logging of the build process to a file",
+        "For static linking of individual modules"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `-Wl,option1,option2` prefix informs the GCC compiler driver to pass these parameters unchanged to the linker utility `ld`.",
+        "Incorrect. Suppressing warnings is done with the `-w` flag.",
+        "Incorrect. This is not a logging flag.",
+        "Incorrect. Linkage type is set via `-static` / `-shared` flags."
+      ]
+    },
+    {
+      "id": "it_clang_95",
+      "widget_id": "widget_clang_95",
+      "topic": "GCC / Linux — Exporting executable symbols (-rdynamic)",
+      "q": "Which flag must be passed to GCC when building an executable so that dlopen(NULL, ...) can locate functions from the main binary itself?",
+      "hint": "By default, an executable file does not place its symbols into the dynamic symbol table.",
+      "options": [
+        "-rdynamic",
+        "-fPIC",
+        "-ldl",
+        "-export-all"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `-rdynamic` flag (or `-Wl,--export-dynamic`) forces the linker to add all global symbols of the executable to the dynamic symbol table. Without this, `dlsym(dlopen(NULL, ...), \"func\")` will return NULL.",
+        "Incorrect. `-fPIC` generates position-independent code but doesn't add symbols of the main file to the dynamic symbol table.",
+        "Incorrect. `-ldl` only links the loader API.",
+        "Incorrect. The `-export-all` flag does not exist in GCC for ELF systems."
+      ]
+    },
+    {
+      "id": "it_clang_96",
+      "widget_id": null,
+      "topic": "GCC / Linux — Difference between -std=c11 and -std=gnu11",
+      "q": "What is the main difference between -std=c11 and -std=gnu11 flags in the GCC compiler?",
+      "hint": "One is strictly restricted by ISO standard, while the second includes GNU extensions.",
+      "options": [
+        "-std=gnu11 enables GNU extensions and POSIX functions (popen, strdup, etc.), while -std=c11 disables them for strict ISO C compliance",
+        "-std=c11 is designed only for 32-bit systems",
+        "-std=gnu11 disables compiler optimizations",
+        "They are completely identical and synonyms"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! By default GCC uses the `gnuXX` dialect (e.g., `gnu11`), which includes language extensions and POSIX macro declarations. The `c11` flag enables strict ISO C standard compliance mode.",
+        "Incorrect. Both flags work on all supported architectures.",
+        "Incorrect. Language standard choice does not disable the optimizer.",
+        "Incorrect. Differences lie in available system headers and syntax extensions."
+      ]
+    },
+    {
+      "id": "it_clang_97",
+      "widget_id": "widget_clang_97",
+      "topic": "GCC / Linux — Default output filename",
+      "q": "What will the compiled file be named when calling gcc main.c without specifying the -o parameter?",
+      "hint": "This is the historical default output filename in UNIX systems (Assembler Output).",
+      "options": [
+        "a.out",
+        "main.o",
+        "main",
+        "main.exe"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! For historical reasons, UNIX compilers in the absence of `-o <name>` save the finished executable file under the name `a.out`.",
+        "Incorrect. The `.o` file is created only when `-c` is present.",
+        "Incorrect. The compiler does not automatically take the source file name for the binary.",
+        "Incorrect. The `.exe` extension is used on Windows OS."
+      ]
+    },
+    {
+      "id": "it_clang_98",
+      "widget_id": null,
+      "topic": "GCC / Linux — Stopping compilation at assembly (-S)",
+      "q": "What extension will the file generated by gcc -S main.c have?",
+      "hint": "The -S flag stops the build after generating text assembly code.",
+      "options": [
+        ".s",
+        ".o",
+        ".i",
+        ".so"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `-S` flag forces GCC to translate C code into assembly text and save the result in a file with a `.s` extension (e.g., `main.s`).",
+        "Incorrect. The `.o` extension is for binary object files (`-c` flag).",
+        "Incorrect. The `.i` extension is for post-preprocessor files (`-E` flag).",
+        "Incorrect. The `.so` extension is for shared libraries (`-shared` flag)."
+      ]
+    },
+    {
+      "id": "it_clang_99",
+      "widget_id": null,
+      "topic": "GCC / Linux — Combining -g and -O3",
+      "q": "What will happen if you invoke GCC with both gcc -g -O3 main.c flags specified simultaneously?",
+      "hint": "Debugging info stores links to source code lines, but the optimizer can reorder instructions.",
+      "options": [
+        "The code will compile successfully with maximum optimization and will contain debug symbols, though step-by-step debugging may be difficult",
+        "The compiler will fail with an error due to flag incompatibility",
+        "The -O3 flag will completely disable the effect of the -g flag",
+        "The -g flag will automatically reset the optimization level to -O0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In GCC, debug info (`-g`) and optimization (`-O3`) are independent. You get an optimized binary with DWARF debug symbols, but due to inlining and instruction reordering, stepping through lines in GDB may 'jump'.",
+        "Incorrect. The flags are fully compatible.",
+        "Incorrect. Debug symbols will still be included in the binary.",
+        "Incorrect. Optimization level remains `-O3`."
+      ]
+    },
+    {
+      "id": "it_clang_100",
+      "widget_id": "widget_clang_100",
+      "topic": "Linux CLI — Stream redirection order",
+      "q": "Where will the error stream (stderr) be directed when executing this command?",
+      "hint": "Redirections in the Bash command line are processed strictly from left to right.",
+      "options": [
+        "To the terminal (stdout up to the point of redirection)",
+        "To the output.txt file",
+        "To /dev/null",
+        "Will terminate with a syntax error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `2>&1` redirects stderr to wherever stdout points AT THAT MOMENT (the terminal). Only then does `> output.txt` send stdout to a file, but stderr remains tied to the terminal!",
+        "Incorrect. To redirect errors to a file, the correct syntax is `> output.txt 2>&1`.",
+        "Incorrect. `2>&1` does not direct output to a black hole device.",
+        "Incorrect. The syntax is completely valid."
+      ]
+    },
+    {
+      "id": "it_clang_101",
+      "widget_id": "widget_clang_101",
+      "topic": "Linux CLI — Pipeline return code ($?)",
+      "q": "What will echo $? output by default in Bash if cat fails with an error (1) and grep succeeds and finds a match (0)?",
+      "hint": "By default, the $? variable holds the return code of only one command in the pipeline.",
+      "options": [
+        "0 (Return code of the last command in the pipeline)",
+        "1 (Return code of the first error)",
+        "127",
+        "Execution error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `$?` variable contains the return code of the LAST command in the chain (`grep`). To track errors of previous commands, use `${PIPESTATUS[@]}` or `set -o pipefail`.",
+        "Incorrect. The `cat` error is overridden by the successful `grep` status.",
+        "Incorrect. Code 127 occurs when a command is missing.",
+        "Incorrect. The command returns a valid numeric value."
+      ]
+    },
+    {
+      "id": "it_clang_102",
+      "widget_id": "widget_clang_102",
+      "topic": "Linux CLI — Special character handling and NUL delimiter",
+      "q": "Why are the -print0 flag in find and -0 in xargs needed when processing files?",
+      "hint": "Think about what happens if a filename contains spaces or newlines.",
+      "options": [
+        "For safe handling of filenames containing spaces and newlines (uses a NUL byte instead of space)",
+        "For instant deletion without confirmation in 0 seconds",
+        "For running operations as superuser (root)",
+        "For creating backups of deleted files"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Standard `xargs` splits input stream by spaces and newlines. Using `-print0` and `-0` sets the delimiter to a null byte (`\\0`), allowing safe handling of any unusual filenames.",
+        "Incorrect. The `-0` flag sets a byte delimiter, not a timer.",
+        "Incorrect. Access permissions strictly depend on the current user.",
+        "Incorrect. These utilities do not automatically back up files."
+      ]
+    },
+    {
+      "id": "it_clang_103",
+      "widget_id": null,
+      "topic": "Linux CLI — Uncatchable process signals",
+      "q": "Can the SIGKILL (9) signal be caught or ignored inside a C program using signal() or sigaction()?",
+      "hint": "One of the Linux signals is designed to guarantee process termination by the kernel.",
+      "options": [
+        "False (SIGKILL cannot be caught or ignored — handling is performed by the OS kernel)",
+        "True (Any signal can be caught in a C program)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `SIGKILL` (9) and `SIGSTOP` signals cannot be caught or ignored. The kernel immediately terminates (or stops) the process.",
+        "Incorrect. Unlike `SIGTERM` or `SIGINT`, `SIGKILL` cannot be handled."
+      ]
+    },
+    {
+      "id": "it_clang_104",
+      "widget_id": "widget_clang_104",
+      "topic": "Linux CLI — strace tool",
+      "q": "What exactly does the strace console utility monitor when running a C program?",
+      "hint": "The letters st stand for System Trace.",
+      "options": [
+        "System calls of a process to the Linux kernel and signals",
+        "Calls to C library functions (printf, malloc, etc.)",
+        "RAM memory leaks",
+        "Number of text lines in a file"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `strace` intercepts and displays system calls (`open`, `read`, `write`, `mmap`, etc.) that the program makes to the OS kernel.",
+        "Incorrect. User library function calls are tracked by `ltrace`.",
+        "Incorrect. Finding memory leaks is done by `valgrind`.",
+        "Incorrect. Text lines are counted by `wc`."
+      ]
+    },
+    {
+      "id": "it_clang_105",
+      "widget_id": "widget_clang_105",
+      "topic": "Linux CLI — Difference between strace and ltrace",
+      "q": "What is the main difference between ltrace and strace utilities?",
+      "hint": "Pay attention to the first letter l (Library).",
+      "options": [
+        "ltrace tracks dynamic library calls (Library calls), while strace tracks kernel system calls (System calls)",
+        "ltrace works only in a graphical interface",
+        "ltrace is used exclusively for debugging static libraries",
+        "They are completely identical utilities"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `ltrace` (Library trace) traces calls to dynamic libraries (e.g., `printf`, `strcpy`), whereas `strace` monitors Linux kernel calls.",
+        "Incorrect. Both utilities work exclusively in the console.",
+        "Incorrect. Static libraries are not intercepted through PLT/GOT mechanisms of `ltrace`.",
+        "Incorrect. They have different call interception levels."
+      ]
+    },
+    {
+      "id": "it_clang_106",
+      "widget_id": "widget_clang_106",
+      "topic": "Linux CLI — Enabling Core Dump files",
+      "q": "Why run ulimit -c unlimited before debugging a crashing C program?",
+      "hint": "By default in many distributions, core file size is limited to zero.",
+      "options": [
+        "Removes the memory dump file (core dump) size limit upon program crash",
+        "Removes CPU usage limits",
+        "Prevents the program from crashing with a Segmentation Fault",
+        "Enables unlimited RAM allocation mode"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `ulimit -c unlimited` command allows the OS to save the memory image of a crashed process (`core dump`) of any size for subsequent debugging.",
+        "Incorrect. CPU time limits are regulated by `ulimit -t`.",
+        "Incorrect. Crashes due to invalid memory cannot be prevented by `ulimit`.",
+        "Incorrect. Virtual memory limit is set via the `-v` flag."
+      ]
+    },
+    {
+      "id": "it_clang_107",
+      "widget_id": "widget_clang_107",
+      "topic": "Linux CLI — One-time environment variables",
+      "q": "Will the VAR variable persist in the current Bash console environment after executing this command?",
+      "hint": "The VAR=val ./app syntax sets the variable only for the launched process.",
+      "options": [
+        "False (The variable is passed ONLY to the child process ./app)",
+        "True (The variable will become available in the current session)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The declaration `VAR=10 ./app` places `VAR` into the environment of `./app` process only. It is not created or saved in the current Bash shell.",
+        "Incorrect. To keep the variable in the session, you must write `export VAR=10` on a separate line first."
+      ]
+    },
+    {
+      "id": "it_clang_108",
+      "widget_id": "widget_clang_108",
+      "topic": "Linux CLI — File wildcards (Globbing)",
+      "q": "Who expands the *.c wildcard into a list of filenames when running ./app *.c?",
+      "hint": "Does the C program itself receive the original asterisk in arguments?",
+      "options": [
+        "The shell expands the wildcard BEFORE passing arguments to the program's argv",
+        "The C program itself inside the main() function",
+        "The GCC compiler during the build phase",
+        "The Linux kernel when loading the ELF file"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In Linux, it is the `shell` (Bash) that matches files against `*.c` and passes the resulting list of files to `argv`. Unlike CMD/PowerShell on Windows, where expansion is performed by the application itself.",
+        "Incorrect. The C program receives an already expanded array of strings in `argv`.",
+        "Incorrect. GCC is not involved during execution in the terminal.",
+        "Incorrect. The kernel receives the formed `argv` array from `execve`."
+      ]
+    },
+    {
+      "id": "it_clang_109",
+      "widget_id": "widget_clang_109",
+      "topic": "Linux CLI — Memory bug hunting with Valgrind",
+      "q": "Which issues CANNOT be detected by the Valgrind Memcheck utility?",
+      "hint": "Valgrind tracks heap memory and dynamic arrays.",
+      "options": [
+        "Overflow of a static array declared on the stack in C",
+        "Dynamic memory leaks (malloc without free)",
+        "Reading from uninitialized memory",
+        "Double free of a pointer"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Basic `valgrind` (memcheck) catches heap errors, but CANNOT detect stack array out-of-bounds access! For stack checks, `AddressSanitizer` (`-fsanitize=address`) is better suited.",
+        "Incorrect. Memory leaks are a core target of `valgrind`.",
+        "Incorrect. Using uninitialized data is reported via `Uninitialised value`.",
+        "Incorrect. Repeated `free` calls are caught instantly."
+      ]
+    },
+    {
+      "id": "it_clang_110",
+      "widget_id": "widget_clang_110",
+      "topic": "Linux CLI — Symbol analysis with nm",
+      "q": "What does the nm utility show with the -D flag?",
+      "hint": "The letter D points to the dynamic symbol table.",
+      "options": [
+        "Dynamic symbols (functions and global variables) of a .so shared library",
+        "File dependencies in a Makefile",
+        "Size of debug information",
+        "Source code directories"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `nm` utility outputs the symbol table. The `-D` (or `--dynamic`) flag forces it to read the dynamic symbol table of a library/binary.",
+        "Incorrect. Dependencies in a Makefile are analyzed by `make`.",
+        "Incorrect. Debug information is inspected via `dwarfdump` or `gdb`.",
+        "Incorrect. The symbol table stores function and variable names."
+      ]
+    },
+    {
+      "id": "it_clang_111",
+      "widget_id": "widget_clang_111",
+      "topic": "Linux CLI — Command isolation in Subshell",
+      "q": "Will the current working directory of your main console change after executing this command inside parentheses?",
+      "hint": "Parentheses ( ... ) run commands in a separate, isolated child process (Subshell).",
+      "options": [
+        "False (The command executes in a subshell; the current directory of the main session remains unchanged)",
+        "True (The main console will switch to the /tmp folder)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Parentheses `( ... )` create a `subshell` (child process). All environment and directory changes inside the parentheses are lost when the subshell terminates.",
+        "Incorrect. Switching to `/tmp` occurs only within the child process."
+      ]
+    },
+    {
+      "id": "it_clang_112",
+      "widget_id": "widget_clang_112",
+      "topic": "Linux CLI — grep return codes",
+      "q": "What will echo $? output if grep finds no matches in a file?",
+      "hint": "Are the statuses 'found', 'not found', and 'file error' different?",
+      "options": [
+        "1 (If no matches are found)",
+        "0 (Successful execution)",
+        "2 (File access error)",
+        "-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `grep` returns `0` if a line is found, `1` if NO matches are found, and `2` on file reading or syntax errors.",
+        "Incorrect. 0 is returned only if the target text was found.",
+        "Incorrect. Code 2 indicates a fatal error (e.g., missing file).",
+        "Incorrect. Return codes in Linux cannot be negative (they range from 0 to 255)."
+      ]
+    },
+    {
+      "id": "it_clang_113",
+      "widget_id": "widget_clang_113",
+      "topic": "Linux CLI — Pseudo-devices /dev/null and /dev/zero",
+      "q": "What is the difference between the pseudo-device /dev/zero and /dev/null?",
+      "hint": "Think about what happens when reading from these system files.",
+      "options": [
+        "Reading from /dev/zero produces an infinite stream of null bytes (\\0), while /dev/null immediately returns EOF (end of file)",
+        "/dev/null generates random numbers, while /dev/zero generates zeros",
+        "They are completely interchangeable",
+        "/dev/zero permanently deletes files without recovery"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Reading from `/dev/zero` endlessly returns zero bytes (`\\0`). Reading from `/dev/null` immediately returns 0 bytes (EOF). Writing to BOTH devices simply discards the data.",
+        "Incorrect. Random numbers are provided by `/dev/urandom` and `/dev/random`.",
+        "Incorrect. Their behavior upon reading is fundamentally different.",
+        "Incorrect. Writing to these files does not delete objects on disk."
+      ]
+    },
+    {
+      "id": "it_clang_114",
+      "widget_id": "widget_clang_114",
+      "topic": "Linux CLI — Permissions and SUID bit",
+      "q": "What does the octal digit 4 mean in the permission mode chmod 4755 app?",
+      "hint": "This is the special SUID bit (Set User ID).",
+      "options": [
+        "Sets the SUID bit: the program runs with the privileges of the file owner, not the user who launched it",
+        "Makes the file read-only",
+        "The file runs in debug mode",
+        "Prevents file deletion"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The SUID flag (4 in the first octal position) forces the OS to run the binary with the file owner's privileges (e.g., `root` privileges, as in the `passwd` utility).",
+        "Incorrect. Read permission is represented by bit 4 in the standard rwx triad.",
+        "Incorrect. Debugging does not depend on permission flags.",
+        "Incorrect. Deletion prevention is configured via sticky bit or `chattr` attributes."
+      ]
+    },
+    {
+      "id": "it_clang_115",
+      "widget_id": "widget_clang_115",
+      "topic": "Linux CLI — Post-mortem debugging in GDB",
+      "q": "Why is a core file (core dump) passed into the GDB debugger?",
+      "hint": "A core file contains a snapshot of the process RAM.",
+      "options": [
+        "To analyze memory state, variables, and the call stack at the moment of the crash (post-mortem debugging)",
+        "To fix a bug directly in the executable file",
+        "To resume execution of the crashed program from the point of failure",
+        "For code optimization"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `core` file saves process memory at the time of a crash (Segmentation fault). GDB reads it and allows viewing the stack trace (`bt`), variable values, and the line of code that triggered the fault.",
+        "Incorrect. GDB does not edit C source code.",
+        "Incorrect. Resuming a crashed process from a core dump is impossible.",
+        "Incorrect. Core dump does not optimize calculations."
+      ]
+    },
+    {
+      "id": "it_clang_116",
+      "widget_id": "widget_clang_116",
+      "topic": "Linux CLI — Viewing dependencies with ldd",
+      "q": "What will the command ldd ./app display for a compiled binary file?",
+      "hint": "ldd stands for List Dynamic Dependencies.",
+      "options": [
+        "A list of all shared libraries (.so) required for the application to run, and their paths",
+        "The executable file size in bytes",
+        "A list of functions taking the longest time to run",
+        "The source C code of the application"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `ldd` queries the dynamic loader and outputs a list of all `.so` libraries required to launch the program, along with their resolved locations.",
+        "Incorrect. File size is shown by `ls -l` or `du`.",
+        "Incorrect. Profiling is handled by `perf` or `gprof`.",
+        "Incorrect. `ldd` works only with compiled binary ELF files."
+      ]
+    },
+    {
+      "id": "it_clang_117",
+      "widget_id": "widget_clang_117",
+      "topic": "Linux CLI — Process Substitution syntax",
+      "q": "What is the <(...) syntax called in Bash shell?",
+      "hint": "This construct allows passing command output where a file is expected.",
+      "options": [
+        "Process Substitution",
+        "Command Substitution",
+        "Standard Input Redirection",
+        "Anonymous Pipe"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `<(command)` syntax is Process Substitution. It creates a named pipe (or `/dev/fd/X`) and allows utilities (such as `diff`) expecting files as parameters to read command output directly.",
+        "Incorrect. Command Substitution is `$(command)` or `` `command` ``.",
+        "Incorrect. Input redirection is written as `< file`.",
+        "Incorrect. A standard pipe is written as `|`."
+      ]
+    },
+    {
+      "id": "it_clang_118",
+      "widget_id": "widget_clang_118",
+      "topic": "Linux CLI — Analyzing ELF structure with readelf",
+      "q": "What information does the command readelf -h app show?",
+      "hint": "The -h flag stands for Header.",
+      "options": [
+        "ELF Header (architecture, bitness, endianness, Entry Point address)",
+        "Headers of all functions in the C source code",
+        "Compilation history of the file",
+        "License information"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `readelf -h` reads the main ELF file header and outputs metadata: target architecture (x86_64, ARM), file type (EXEC, DYN), `Entry point address`, and table sizes.",
+        "Incorrect. C source code is not present in compiled headers.",
+        "Incorrect. `readelf` inspects binary structure, not build logs.",
+        "Incorrect. License text is not included in the ELF header."
+      ]
+    }
+  ]
+}

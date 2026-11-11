@@ -1,0 +1,603 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_871",
+      "widget_id": "widget_clang_871",
+      "topic": "Function Pointers — Calling via Pointer",
+      "q": "What will the program output when calling `apply(multiply, 3, 4)`?",
+      "hint": "A function pointer is dereferenced or called directly by passing arguments.",
+      "options": [
+        "12",
+        "7",
+        "1",
+        "0",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Function `apply` accepts a function pointer `op`. When calling `apply(multiply, 3, 4)`, `multiply(3, 4)` is executed internally, which returns $3 \\times 4 = 12$.",
+        "Incorrect. Function `multiply` performs multiplication, not addition.",
+        "Incorrect. Values 3 and 4 are passed.",
+        "Incorrect. Result of operation $3 \\times 4$ equals 12.",
+        "Incorrect. Passing function name as a pointer is syntactically correct in C."
+      ]
+    },
+    {
+      "id": "it_clang_872",
+      "widget_id": "widget_clang_872",
+      "topic": "Pointers — Pass by Pointer to Modify Variable",
+      "q": "What will variable `val` equal after executing function `increment(&val)`?",
+      "hint": "Dereferencing `(*p)++` increments value of variable itself at passed address.",
+      "options": [
+        "11",
+        "10",
+        "12",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since address `&val` is passed into function, operator `(*p)++` dereferences pointer and increments original value of `val` from 10 to 11.",
+        "Incorrect. Passing by address allows function to modify original variable.",
+        "Incorrect. Increment is performed once.",
+        "Incorrect. Variable value is not reset."
+      ]
+    },
+    {
+      "id": "it_clang_873",
+      "widget_id": null,
+      "topic": "main Arguments — argc and argv",
+      "q": "What does parameter `argc` contain in signature `int main(int argc, char *argv[])`?",
+      "hint": "The word argc stands for Argument Count.",
+      "options": [
+        "Number of command-line arguments, including program name itself",
+        "Number of command-line arguments, NOT including program name",
+        "Pointer to array of strings with arguments",
+        "Size of allocated memory for program in kilobytes"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `argc` (argument count) stores total count of command-line arguments. First argument (`argv[0]`) is always name/path of executed program.",
+        "Incorrect. Program name itself is always included in `argc` count as zeroth argument.",
+        "Incorrect. Pointer to array of strings is `argv` (argument vector).",
+        "Incorrect. `argc` is responsible for argument count, not memory."
+      ]
+    },
+    {
+      "id": "it_clang_874",
+      "widget_id": "widget_clang_874",
+      "topic": "Strings in Functions — Modification via char* Pointer",
+      "q": "What will `printf(\"%s\", str)` output after calling `to_uppercase(str)`?",
+      "hint": "Character strings in C are passed as pointer to first character `char*`, so their elements can be modified.",
+      "options": [
+        "HELLO",
+        "hello",
+        "H",
+        "Runtime error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Character array is passed by address, so loop converts each character of original array `str` to uppercase. `HELLO` will be output.",
+        "Incorrect. Function changed lowercase letters to uppercase.",
+        "Incorrect. Function iterates through entire string up to `\\0` character, without stopping at first character.",
+        "Incorrect. Array `str` is placed in mutable memory (stack), so modification is safe."
+      ]
+    },
+    {
+      "id": "it_clang_875",
+      "widget_id": null,
+      "topic": "Specifiers — noreturn / _Noreturn",
+      "q": "What does `_Noreturn` specifier (or `noreturn` from `<stdnoreturn.h>`) inform compiler in function header?",
+      "hint": "Will such a function return control to its call site?",
+      "options": [
+        "Function never returns control to calling program (e.g., calls exit() or abort())",
+        "Function returns value of void type",
+        "Function contains no branch statements or loops",
+        "Function accepts no parameters",
+        "Calling function inside main is forbidden"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `_Noreturn` tells compiler that function terminates program or loops infinitely and will never return control back to call site (e.g., termination function `exit()`).",
+        "Incorrect. `void` means absence of return value, but function of type `void` still returns control.",
+        "Incorrect. Presence of loops and branches is not related to `_Noreturn`.",
+        "Incorrect. `(void)` is used for absence of parameters.",
+        "Incorrect. Such functions can be called from `main`."
+      ]
+    },
+    {
+      "id": "it_clang_876",
+      "widget_id": null,
+      "topic": "Standard Library — exit() Function",
+      "q": "True or False: Calling `exit(0)` function from any deeply nested function immediately terminates entire program?",
+      "hint": "What is difference between exit() and regular return statement inside helper function?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Unlike `return`, which only terminates current function, `exit()` from `<stdlib.h>` library instantly aborts execution of entire program from any point.",
+        "Incorrect. Function `exit()` is intended specifically for immediate termination of entire program."
+      ]
+    },
+    {
+      "id": "it_clang_877",
+      "widget_id": "widget_clang_877",
+      "topic": "Recursion — Base Step and Factorial Calculation",
+      "q": "What value will call `fact(4)` return?",
+      "hint": "Factorial of number 4 equals $4! = 4 \\times 3 \\times 2 \\times 1$.",
+      "options": [
+        "24",
+        "12",
+        "10",
+        "4",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Calculations execute in chain: $4 \\times \\text{fact}(3) = 4 \\times 3 \\times \\text{fact}(2) = 4 \\times 3 \\times 2 \\times \\text{fact}(1) = 4 \\times 3 \\times 2 \\times 1 = 24$.",
+        "Incorrect. $4! = 24$, not 12.",
+        "Incorrect. 10 is sum of numbers from 1 to 4, not their product.",
+        "Incorrect. This is value of argument n at first step.",
+        "Incorrect. For $n \\le 1$ function returns 1, so zeroing out does not occur."
+      ]
+    },
+    {
+      "id": "it_clang_878",
+      "widget_id": null,
+      "topic": "Data Types — Implicit Return Type Conversion",
+      "q": "What will happen if a function declared with return type `double` executes statement `return 5;`?",
+      "hint": "Does compiler automatically convert integer 5 to double type?",
+      "options": [
+        "Integer value 5 will automatically be converted to floating-point number 5.0 of double type",
+        "Compilation error will occur due to type mismatch",
+        "Value will truncate to 0",
+        "Program will crash upon call"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! C performs implicit type conversion for returned value to type specified in function signature (`int` $\\rightarrow$ `double` $= 5.0$).",
+        "Incorrect. Implicit conversion between base numeric types is allowed.",
+        "Incorrect. Integer 5 is correctly represented as `5.0`.",
+        "Incorrect. This is a completely valid operation at compile stage."
+      ]
+    },
+    {
+      "id": "it_clang_879",
+      "widget_id": "widget_clang_879",
+      "topic": "Pointers — Argument Modification via Dereferencing",
+      "q": "What will `printf(\"%d %d\", a, b)` output after executing call `update(&a, b)`?",
+      "hint": "Note which variable is passed by address `&a` and which by value `b`.",
+      "options": [
+        "15 10",
+        "15 15",
+        "5 10",
+        "5 15"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Variable `a` is passed by address `&a`, so `*x += y` changes `a` to $5 + 10 = 15$. Variable `b` is passed by value, so operation `y = 0` modifies only copy `y`, leaving `b` equal to 10.",
+        "Incorrect. Variable `b` did not change because it was passed by value.",
+        "Incorrect. Value of `a` changed from 5 to 15.",
+        "Incorrect. Check which variable changed and which remained unchanged."
+      ]
+    },
+    {
+      "id": "it_clang_880",
+      "widget_id": null,
+      "topic": "main Arguments — Type of Element argv[0]",
+      "q": "What is zeroth element of command-line argument array `argv[0]` by standard?",
+      "hint": "What does OS pass as first element of argv array?",
+      "options": [
+        "String containing name or path to executable file of program",
+        "String with first argument passed by user",
+        "NULL pointer",
+        "Number equal to count of running processes",
+        "Name of operating system"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Element `argv[0]` always contains pointer to string with name or full path to executable file of program being run.",
+        "Incorrect. First argument entered by user is in `argv[1]`.",
+        "Incorrect. `argv[0]` is guaranteed to contain program name/path, not NULL.",
+        "Incorrect. `argv` contains text strings of arguments.",
+        "Incorrect. OS passes path to current running program."
+      ]
+    },
+    {
+      "id": "it_clang_881",
+      "widget_id": null,
+      "topic": "Pointers — Universal Return Type void*",
+      "q": "What does it mean if a function is declared with return type `void*` (e.g., `void* malloc(size_t size)`)?",
+      "hint": "Think about how a pointer can be used without a specific data type.",
+      "options": [
+        "It returns an untyped pointer to a memory region, which can be cast to any pointer type",
+        "It is guaranteed to return NULL pointer",
+        "It will cause compilation error because void cannot have a size"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Type `void*` represents a raw pointer to a memory region without binding to a specific type. In C it automatically casts to any other pointer type (`int*`, `char*`, etc.).",
+        "Incorrect. Function returns address of allocated or processed memory, while NULL is returned only on error.",
+        "Incorrect. Pointer to void (`void*`) is a completely valid data type in C."
+      ]
+    },
+    {
+      "id": "it_clang_882",
+      "widget_id": null,
+      "topic": "Recursion — Tail Recursion",
+      "q": "Which recursion is called 'tail recursion' (Tail Recursion)?",
+      "hint": "Where in function is recursive call located, and do unexecuted operations remain after it?",
+      "options": [
+        "Kind of recursion where recursive call is very last operation before return from function",
+        "Recursion that calls itself exactly twice at each step",
+        "Recursive function that completely lacks a base stop case"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In tail recursion recursive call is last action. C compilers can optimize such recursion (Tail Call Optimization) into a regular loop without consuming stack.",
+        "Incorrect. This is description of tree or double recursion (e.g., when calculating Fibonacci numbers).",
+        "Incorrect. Function without base case will lead to stack overflow."
+      ]
+    },
+    {
+      "id": "it_clang_883",
+      "widget_id": "widget_clang_883",
+      "topic": "Array Parameters — const Modifier for Data Protection",
+      "q": "What will happen when attempting to compile function `process_elements`?",
+      "hint": "Note keyword const in array parameter declaration.",
+      "options": [
+        "Compilation error — assignment operation forbidden for array with const qualifier",
+        "Code will compile successfully and zero out first array element",
+        "Compiler warning, but program will modify element in memory",
+        "Runtime error (Segmentation Fault)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Qualifier `const` before array type indicates to compiler that elements are read-only. Attempting to modify `arr[0]` will cause compilation error.",
+        "Incorrect. Modifier `const` strictly protects data from writing.",
+        "Incorrect. Attempting write to `const` data is a syntax error, not a warning.",
+        "Incorrect. Error is detected at compile stage."
+      ]
+    },
+    {
+      "id": "it_clang_884",
+      "widget_id": "widget_clang_884",
+      "topic": "return Statement — Multiple Function Exit Points",
+      "q": "What will `printf(\"%d\", check_sign(-5))` output?",
+      "hint": "Trace in order which branching condition triggers first.",
+      "options": [
+        "-1",
+        "1",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! For value -5 first condition `val > 0` is false. Second condition `val < 0` is true, `return -1;` triggers, and function immediately returns value -1.",
+        "Incorrect. First condition `val > 0` is not met for number -5.",
+        "Incorrect. Execution will not reach last statement `return 0;`."
+      ]
+    },
+    {
+      "id": "it_clang_885",
+      "widget_id": null,
+      "topic": "C Concepts — Strict Pass by Value",
+      "q": "True or False: In C language absolutely all arguments are passed to functions exclusively by value (Call by Value), and 'pass by reference' is merely an emulation by passing pointer value?",
+      "hint": "Think: when we pass pointer `&x`, is address itself copied?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! C has no built-in pass by reference (unlike C++). When we pass `&x`, function receives local copy of variable address by value.",
+        "Incorrect. On a conceptual level C supports only pass by value."
+      ]
+    },
+    {
+      "id": "it_clang_886",
+      "widget_id": "widget_clang_886",
+      "topic": "Function Pointers — Array of Function Pointers",
+      "q": "What will command `printf(\"%d\", actions[1](10, 2))` output?",
+      "hint": "Which function is at index 1 in `actions` array?",
+      "options": [
+        "8",
+        "12",
+        "20",
+        "5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! At index 0 is `add`, and at index 1 — `sub`. Calling `actions[1](10, 2)` executes `sub(10, 2)`, yielding $10 - 2 = 8$.",
+        "Incorrect. 12 is result of function `add` at index 0.",
+        "Incorrect. Array has no multiplication functions.",
+        "Incorrect. Array has no division functions."
+      ]
+    },
+    {
+      "id": "it_clang_887",
+      "widget_id": null,
+      "topic": "Variadic Functions — Default Argument Promotion",
+      "q": "To which data type is argument of `float` type automatically promoted when passed to a variadic function (via `...`)?",
+      "hint": "Recall Default Argument Promotion rules in C for floating points.",
+      "options": [
+        "double",
+        "float (type remains unchanged)",
+        "int",
+        "void*"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! According to C standard, when passing parameters to variadic functions (`...`), arguments of `float` type are automatically promoted to `double`, and integer types smaller than `int` — to `int`.",
+        "Incorrect. In variadic functions `float` is not preserved and is always promoted to `double`.",
+        "Incorrect. Fractional types are not converted to integers during type promotions.",
+        "Incorrect. Numeric types do not turn into pointers."
+      ]
+    },
+    {
+      "id": "it_clang_888",
+      "widget_id": null,
+      "topic": "Language Standards — Implicit Return Type (Implicit int)",
+      "q": "Which rule applies in modern C standards (C99, C11, C17) regarding functions declared without specifying return type?",
+      "hint": "Is omitting return type allowed in modern C like it was done in C89?",
+      "options": [
+        "Omitting return type is forbidden — type must be specified explicitly (e.g., int or void)",
+        "Type is automatically assumed to be int (Implicit int rule)",
+        "Type is automatically assumed to be void"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In old C89 standard unspecified type defaulted to `int`. Starting from C99 standard, `Implicit int` rule was removed, and explicit type specification became mandatory.",
+        "Incorrect. This rule applied only in legacy C89 standard.",
+        "Incorrect. Implicit conversion to `void` was never standard in C."
+      ]
+    },
+    {
+      "id": "it_clang_889",
+      "widget_id": "widget_clang_889",
+      "topic": "Scope — Parameter Name Shadowing",
+      "q": "What will `printf(\"%d\", g_val)` output after executing functions?",
+      "hint": "What is situation called when function parameter name matches global variable name?",
+      "options": [
+        "100",
+        "50",
+        "0",
+        "Compilation error due to redeclaration"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Parameter `g_val` shadows global variable `g_val` of same name inside function. Operation `g_val = 50` changes only local parameter, while global variable remains equal to 100.",
+        "Incorrect. Global variable was shadowed by parameter and did not change its value.",
+        "Incorrect. Global variable was initialized with number 100.",
+        "Incorrect. Name shadowing in inner scopes is allowed by C standard."
+      ]
+    },
+    {
+      "id": "it_clang_890",
+      "widget_id": null,
+      "topic": "Optimization and Headers — Why static inline is Used in .h Files",
+      "q": "For what purpose are functions in header files (`.h`) often declared with combination of `static inline` specifiers?",
+      "hint": "Think about what happens when `#include` of same header file is included in multiple source files (.c).",
+      "options": [
+        "To suggest inlining function code and avoid symbol duplication errors (Multiple Definition) when including header in multiple .c files",
+        "To forbid calling function from main.c file",
+        "To make function available only for multithreaded programs",
+        "To forcibly allocate memory for function on heap",
+        "To make function recursive"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! If regular function is described in `.h` file, including it in multiple `.c` files will cause linker error (multiple definition). Specifier `static` limits function visibility to current file, and `inline` speeds up small functions.",
+        "Incorrect. `static inline` functions can be called from any file that includes header.",
+        "Incorrect. This is not related to multithreading.",
+        "Incorrect. Function code is placed in text segment, not heap.",
+        "Incorrect. Specifiers are not related to recursiveness."
+      ]
+    },
+    {
+      "id": "it_clang_891",
+      "widget_id": null,
+      "topic": "Standard Library — Comparator Signature for qsort",
+      "q": "Which argument type by standard must a comparator function accept for sorting via `qsort` from `<stdlib.h>`?",
+      "hint": "Comparator must be universal and able to work with data of any type without possibility of accidental modification.",
+      "options": [
+        "const void *, const void *",
+        "int, int",
+        "void *, void *",
+        "const int *, const int *",
+        "char *, char *"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Function `qsort` expects pointer to comparator with signature `int (*compar)(const void *, const void *)`. Using `const void*` allows comparing elements of any type without modifying their values.",
+        "Incorrect. `qsort` works with pointers to array elements, not `int` values.",
+        "Incorrect. Without `const` qualifier protection of sorted data against accidental write is not guaranteed.",
+        "Incorrect. Pointers `const int*` suit only integer arrays, whereas `qsort` is universal.",
+        "Incorrect. `char*` is restricted to character data only."
+      ]
+    },
+    {
+      "id": "it_clang_892",
+      "widget_id": "widget_clang_892",
+      "topic": "C99 Syntax — Compound Literals in Function Arguments",
+      "q": "What will `printf(\"%d\", res)` output when passing an unnamed array via compound literal?",
+      "hint": "C99 allows creating temporary objects directly at call site using `(type){initializer}` syntax.",
+      "options": [
+        "60",
+        "30",
+        "Compilation error — cannot pass compound literals into functions",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Compound literal `(int[]){10, 20, 30}` creates temporary array on stack. Function accepts its address and sums elements: $10 + 20 + 30 = 60$.",
+        "Incorrect. Function sums all 3 array elements, not just last one.",
+        "Incorrect. Compound literals are official feature of C99 and higher standards.",
+        "Incorrect. Lifetime of compound literal in this case is limited to block in which function is called, so passing is completely safe."
+      ]
+    },
+    {
+      "id": "it_clang_893",
+      "widget_id": null,
+      "topic": "GNU C Extensions — Function Attributes (constructor)",
+      "q": "What happens to a function declared with `__attribute__((constructor))` attribute in GCC/Clang compilers?",
+      "hint": "Recall when constructors of global objects in C++ are called relative to main function.",
+      "options": [
+        "Function automatically executes before main() starts",
+        "Function is called only when memory is allocated via malloc()",
+        "Function automatically converts into C++ class method",
+        "Calling function from other files is forbidden",
+        "Compiler generates error because C has no constructors"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Attribute `__attribute__((constructor))` instructs compiler and linker to place function address in initialization section. It will automatically execute on program load prior to entering `main()`.",
+        "Incorrect. This attribute is not related to memory allocation on heap.",
+        "Incorrect. C remains C, objects and classes are not created.",
+        "Incorrect. Attribute does not affect function scope.",
+        "Incorrect. This is a popular extension of GCC and Clang compilers for C language."
+      ]
+    },
+    {
+      "id": "it_clang_894",
+      "widget_id": null,
+      "topic": "Function Safety — Reentrancy",
+      "q": "Why is standard string parsing function `strtok()` not thread-safe and reentrant?",
+      "hint": "How does `strtok()` 'remember' which string it parsed on previous call when NULL is passed to it?",
+      "options": [
+        "It stores string parsing state in an internal static variable",
+        "It allocates dynamic memory via malloc() without releasing it",
+        "It locks operating system mutexes during operation",
+        "It exclusively uses global CPU register"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `strtok()` uses a static local variable to save pointer to current position in string. Concurrent calls from different threads or nested calls corrupt state. For safety, `strtok_r()` (or `strtok_s()`) is used.",
+        "Incorrect. `strtok()` does not use heap and works directly with its static variable and source buffer.",
+        "Incorrect. If it locked mutexes, it would be thread-safe.",
+        "Incorrect. CPU register is overwritten on every context switch."
+      ]
+    },
+    {
+      "id": "it_clang_895",
+      "widget_id": "widget_clang_895",
+      "topic": "Variadic Functions — Type Extraction Error in va_arg",
+      "q": "What will happen when calling `print_first_as_double(1, 42)` if `int` is passed and extracted with `va_arg(args, double)` macro?",
+      "hint": "Default argument promotion turns int to int, float to double, but does not convert int to double for you.",
+      "options": [
+        "Undefined Behavior due to mismatch between actually passed and extracted types",
+        "Compiler will automatically accept integer 42 and convert it to 42.0",
+        "Compilation error on line with va_arg",
+        "Program will print 0.000000"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Macro `va_arg` simply reads specified byte count from stack and interprets representation. Extracting type (`double`) different from actually passed (`int`) leads to Undefined Behavior.",
+        "Incorrect. `va_arg` does not know actual type on stack and cannot perform safe conversion at runtime.",
+        "Incorrect. Variadic functions bypass static type checking of compiler.",
+        "Incorrect. Garbage value may print, but main point is Undefined Behavior."
+      ]
+    },
+    {
+      "id": "it_clang_896",
+      "widget_id": "widget_clang_896",
+      "topic": "Control Flow — Inter-function Jumps with longjmp",
+      "q": "What will `printf(\"%d\", val)` output after executing `longjmp(buf, 42)` from a deeply nested function?",
+      "hint": "Function longjmp restores CPU context saved by setjmp, causing setjmp to repeatedly return value of second longjmp argument.",
+      "options": [
+        "42",
+        "0",
+        "1",
+        "Runtime error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Call `setjmp(buf)` on first pass returns 0. Call `longjmp(buf, 42)` restores register state and jumps back to `setjmp` point, returning passed second argument — 42.",
+        "Incorrect. 0 is returned only on initial `setjmp` initialization.",
+        "Incorrect. Value 1 is returned by `setjmp` only if 0 was passed to `longjmp` (since 0 is reserved for initial launch).",
+        "Incorrect. Mechanism `setjmp/longjmp` is standard C tool for handling exception situations."
+      ]
+    },
+    {
+      "id": "it_clang_897",
+      "widget_id": null,
+      "topic": "Memory Management — Dynamic Allocation on Stack (alloca)",
+      "q": "When does memory allocated inside function using `alloca()` get freed?",
+      "hint": "In which memory region — heap or stack — does alloca() allocate resources?",
+      "options": [
+        "Automatically upon function exit and stack unwinding",
+        "After explicit call to free() function",
+        "Upon exiting current code block in curly braces {}",
+        "Memory remains allocated until program terminates"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Function `alloca()` allocates memory directly in stack frame of current function. This memory is automatically freed upon function exit when its stack frame is destroyed.",
+        "Incorrect. Calling `free()` on memory allocated with `alloca()` is strictly forbidden — it will cause program crash.",
+        "Incorrect. Memory is allocated at stack frame level of entire function, not an individual block `{}`.",
+        "Incorrect. Heap memory behaves this way without `free()`, but not `alloca()`."
+      ]
+    },
+    {
+      "id": "it_clang_898",
+      "widget_id": null,
+      "topic": "Data Passing — Returning Large Structures by Value",
+      "q": "How on ABI level of architectures (e.g., x86-64) is returning large structures from functions by value most commonly implemented?",
+      "hint": "Will structures hundreds of bytes in size fit into standard CPU registers?",
+      "options": [
+        "Calling function allocates memory for structure and implicitly passes hidden pointer to it to called function",
+        "Structure is copied via special non-volatile CPU memory",
+        "Compiler generates error because returning structures larger than 8 bytes in C is forbidden",
+        "Structure is always placed in RAM L1 cache and read from there"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! If structure is too large to return via registers (RAX/RDX), caller allocates space for it on stack and implicitly passes pointer as first argument. Called function writes result to this address.",
+        "Incorrect. There is no special non-volatile memory for this.",
+        "Incorrect. Returning structures of any size by value is allowed by C standard.",
+        "Incorrect. L1 cache is not managed at ABI calling convention level."
+      ]
+    },
+    {
+      "id": "it_clang_899",
+      "widget_id": "widget_clang_899",
+      "topic": "Recursion — Recursion Depth and Local Arrays",
+      "q": "What is main danger of creating large local buffers (e.g., `char buffer[1024*1024]`) inside recursive functions?",
+      "hint": "Think about what happens to stack at each new recursion level.",
+      "options": [
+        "Each recursive call creates its own array copy on stack, instantly leading to Stack Overflow",
+        "Large arrays make recursive function static",
+        "Placing arrays in recursion turns them into global variables",
+        "Compiler will refuse to compile recursive functions with arrays"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Local automatic variables are created on stack for *each* call. Allocating 1 MB at each recursion step will exhaust standard stack limit (typically 1 to 8 MB) in just a few calls.",
+        "Incorrect. Arrays remain automatic, local variables.",
+        "Incorrect. Scope and storage class do not change.",
+        "Incorrect. Syntactically and semantically compilation will succeed."
+      ]
+    },
+    {
+      "id": "it_clang_900",
+      "widget_id": null,
+      "topic": "Calling Conventions — cdecl vs stdcall",
+      "q": "Who is responsible for cleaning parameters from stack after function call completes under `cdecl` convention (standard for C)?",
+      "hint": "Think: which side knows exact count of passed arguments in variadic functions like printf?",
+      "options": [
+        "Calling function (Caller)",
+        "Called function (Callee)",
+        "Operating system on thread switch",
+        "Garbage collector"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In `cdecl` convention, *calling* function (Caller) is responsible for stack cleanup. This is precisely why variadic functions (`printf`) are possible in C, where only caller accurately knows how many arguments were pushed onto stack.",
+        "Incorrect. In `stdcall` convention, *called* function (Callee) cleans stack, which is why `stdcall` does not support variadic functions.",
+        "Incorrect. Operating system does not interfere in function stack frame cleanup.",
+        "Incorrect. C language has no built-in garbage collector."
+      ]
+    }
+  ]
+}

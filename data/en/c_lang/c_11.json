@@ -1,0 +1,785 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_351",
+      "widget_id": "widget_clang_351",
+      "topic": "do...while Loop — Order of Condition Checking",
+      "q": "What will the widget code snippet output when using a do...while loop if the condition is initially false?",
+      "hint": "Recall the main difference between a do...while loop and while or for loops.",
+      "options": [
+        "\"10\"",
+        "Outputs nothing",
+        "\"11\"",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Unlike `while`, the `do...while` construct executes the loop body at least once before the first condition check. `10` is printed, `x` is incremented to 11, after which the check `11 < 5` evaluates to false and the loop terminates.",
+        "Incorrect. The `do...while` loop checks the condition at the end, so the body is guaranteed to execute once before checking.",
+        "Incorrect. The value of `x` is 10 at the moment `printf` is called, and the increment `x++` happens only after printing.",
+        "Incorrect. The code contains no syntax errors and compiles successfully."
+      ]
+    },
+    {
+      "id": "it_clang_352",
+      "widget_id": "widget_clang_352",
+      "topic": "for Loop — Omitted Header Sections",
+      "q": "What will the widget code output when the initialization section of the for loop is omitted?",
+      "hint": "Consider whether all three sections inside for(;;) are mandatory.",
+      "options": [
+        "\"012\"",
+        "Compilation error: initialization is missing",
+        "\"123\"",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Any of the three sections in the header `for (initialization; condition; step)` can be omitted. Since `i` was already initialized to zero before the loop, the program will correctly output \"012\".",
+        "Incorrect. Omitting the initialization section is completely legal in C if the variable is declared and initialized beforehand.",
+        "Incorrect. The increment is performed after printing, so the first printed digit will be the initial value 0, not 1.",
+        "Incorrect. Program behavior is fully defined by the standard since the variable was initialized before entering the loop."
+      ]
+    },
+    {
+      "id": "it_clang_353",
+      "widget_id": "widget_clang_353",
+      "topic": "while Loop — Infinite Loop",
+      "q": "What will happen when executing the widget code if the condition variable is not modified inside the while loop body?",
+      "hint": "Trace whether the value of i changes during the loop execution.",
+      "options": [
+        "Infinite loop continuously printing zero (\"000...\")",
+        "The loop will execute once and terminate",
+        "Compilation error",
+        "The program will terminate immediately without outputting anything"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! If the control variable is not updated inside the loop body, condition `i < 3` always remains true (`0 < 3`), leading to an infinite loop.",
+        "Incorrect. Without modifying `i`, the condition will never become false, so the loop cannot terminate.",
+        "Incorrect. Failing to update the loop variable is a logical programming bug, not a syntax compilation error.",
+        "Incorrect. Since `i = 0`, the initial condition `0 < 3` is true, and the program will enter the loop."
+      ]
+    },
+    {
+      "id": "it_clang_354",
+      "widget_id": "widget_clang_354",
+      "topic": "for Loop — Prefix Increment in the Step Section",
+      "q": "Will the output of the for loop in the widget change if prefix increment ++i is used in the step section instead of i++?",
+      "hint": "Consider how the expression in the step section of a for loop is evaluated.",
+      "options": [
+        "No, it will output the same: \"012\"",
+        "Yes, it will output \"123\"",
+        "Yes, it will output \"01\"",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The step section executes as a separate standalone statement at the end of each iteration. The expression's returned value is discarded, and the increment itself increases `i` identically for both `++i` and `i++`.",
+        "Incorrect. The loop step is executed AFTER the iteration, not before it, so the first iteration will still execute with value 0.",
+        "Incorrect. Using prefix increment in the step section does not reduce the total number of loop iterations.",
+        "Incorrect. Using prefix `++i` in the third section of a `for` loop is completely valid."
+      ]
+    },
+    {
+      "id": "it_clang_355",
+      "widget_id": "widget_clang_355",
+      "topic": "do...while Loop — Syntax and Semicolon",
+      "q": "What error is present in the do...while loop shown in the widget?",
+      "hint": "Look closely at how the do...while construct concludes.",
+      "options": [
+        "Missing mandatory semicolon ; after while(...)",
+        "The word do must be capitalized",
+        "Variable i must be updated before the while parenthesis",
+        "Using increment inside a do...while body is prohibited in C99"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Unlike `while` and `for`, the syntax `do { ... } while(condition);` strictly requires a semicolon at the very end. Omitting it causes a compilation error.",
+        "Incorrect. Keywords in C are written strictly in lowercase.",
+        "Incorrect. Updating the variable can occur anywhere within the `do...while` loop body.",
+        "Incorrect. Using increment operators inside a loop body is permitted across all C standards."
+      ]
+    },
+    {
+      "id": "it_clang_356",
+      "widget_id": "widget_clang_356",
+      "topic": "while Loop — Semicolon After Condition",
+      "q": "What will happen when executing the widget code with a semicolon immediately after while(i < 3)?",
+      "hint": "Recall how a semicolon affects the while loop body.",
+      "options": [
+        "Infinite loop; the program will hang outputting nothing",
+        "The program will output \"012\"",
+        "Compilation error",
+        "The block in curly braces will execute exactly once and output \"0\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! A semicolon immediately following `while` turns it into a null statement. Since `i` (0) is not modified in this empty body, condition `0 < 3` remains true forever, causing the program to hang in an empty loop.",
+        "Incorrect. The block of code in curly braces is detached from the loop by the semicolon and will never be reached.",
+        "Incorrect. The C standard permits null statements `;`, so the code is syntactically correct and will compile.",
+        "Incorrect. Execution will hang on `while(i < 3);` itself and won't even reach the subsequent braced block."
+      ]
+    },
+    {
+      "id": "it_clang_357",
+      "widget_id": "widget_clang_357",
+      "topic": "for Loop — Scope of Declared Variable",
+      "q": "What will happen when attempting to access variable i outside a for loop if it was declared in the loop header?",
+      "hint": "Recall variable scope rules for variables declared inside the for loop initialization section.",
+      "options": [
+        "Compilation error: variable i not found outside the loop",
+        "The program will compile and output \"3\"",
+        "The program will compile and output \"2\"",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Starting from C99, a variable declared in the initialization section `for (int i = 0; ...)` exists only inside that loop. Outside of it, it is not visible, which causes a compilation error.",
+        "Incorrect. Variable `i` does not exist outside the `for` loop block; the compiler will raise an undeclared identifier error.",
+        "Incorrect. Scope is limited to the `for` body; `i` cannot be accessed after the loop.",
+        "Incorrect. This is not a runtime issue (UB), but a strict compilation error due to scope rules."
+      ]
+    },
+    {
+      "id": "it_clang_358",
+      "widget_id": null,
+      "topic": "Loop Comparison — Equivalence of for and while",
+      "q": "Which of the following statements is true regarding the interchangeability of for and while loops in C?",
+      "hint": "Consider whether any for loop can be rewritten using while and vice versa.",
+      "options": [
+        "for and while loops are functionally equivalent and can be mutually converted into one another",
+        "The for loop executes iterations faster than the while loop at the machine code level",
+        "The while loop cannot be used if the iteration count is known in advance",
+        "The for loop cannot contain more than one condition"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Any `for` loop can be represented as a `while` loop and vice versa. Converting between them is purely a matter of convenience and code style.",
+        "Incorrect. At compiled machine code level, equivalent `for` and `while` loops yield identical instructions.",
+        "Incorrect. The `while` loop is well-suited for any iteration type, including cases with a known repetition count.",
+        "Incorrect. Multiple expressions can be combined in a `for` loop condition using logical operators (`&&`, `||`)."
+      ]
+    },
+    {
+      "id": "it_clang_359",
+      "widget_id": "widget_clang_359",
+      "topic": "while Loop — Postfix Decrement in Condition",
+      "q": "What will the code snippet in the widget output with decrement i-- inside the while condition?",
+      "hint": "Trace the value of variable i at each condition check step and inside the loop body.",
+      "options": [
+        "\"10\"",
+        "\"210\"",
+        "\"21\"",
+        "\"10-1\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct!\n1. `i = 2`: check `2 != 0` (true), `i` decrements to 1. Print `1`.\n2. `i = 1`: check `1 != 0` (true), `i` decrements to 0. Print `0`.\n3. `i = 0`: check `0 != 0` (false), `i` decrements to -1. Loop terminates.\nOutput: \"10\".",
+        "Incorrect. The value 2 is compared in the condition, but immediately after comparison decrement occurs, so 1 enters the loop body.",
+        "Incorrect. For `i = 1`, condition `1 != 0` is true, decrementing to 0 and outputting 0 into the loop body.",
+        "Incorrect. When `i = 0`, condition `0 != 0` yields false, and the loop body does not execute for -1."
+      ]
+    },
+    {
+      "id": "it_clang_360",
+      "widget_id": "widget_clang_360",
+      "topic": "Nested Loops — Counting Total Iterations",
+      "q": "What will variable count equal after executing the nested loops in the widget?",
+      "hint": "Multiply outer loop iterations by inner loop iterations.",
+      "options": [
+        "6",
+        "5",
+        "9",
+        "3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The outer `for` loop executes 3 times (i = 0, 1, 2). For each outer iteration, the inner loop executes 2 times (j = 0, 1). Total: 3 * 2 = 6 iterations.",
+        "Incorrect. Iterations multiply (3 * 2) rather than add, because the inner loop restarts at every outer step.",
+        "Incorrect. Iteration counts multiply: 3 outer iterations times 2 inner iterations equal 6, not 9.",
+        "Incorrect. Value 3 is only the outer loop iteration count without accounting for the inner loop."
+      ]
+    },
+    {
+      "id": "it_clang_361",
+      "widget_id": "widget_clang_361",
+      "topic": "for Loop — Comma Operator in Header Sections",
+      "q": "What will the widget code snippet output when using the comma operator to manage multiple variables in a for loop?",
+      "hint": "Trace changes in variables i and j at each loop step.",
+      "options": [
+        "\"0-5 1-4 2-3\"",
+        "\"0-5 1-4 2-3 3-2\"",
+        "\"0-5 1-4\"",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The comma operator allows initializing (`i = 0, j = 5`) and modifying (`i++, j--`) multiple variables at once:\n1. Iteration 1 (`i=0, j=5`): condition `0 < 5` is true, outputs \"0-5\".\n2. Iteration 2 (`i=1, j=4`): condition `1 < 4` is true, outputs \"1-4\".\n3. Iteration 3 (`i=2, j=3`): condition `2 < 3` is true, outputs \"2-3\".\n4. At `i=3, j=2`, condition `3 < 2` becomes false and the loop terminates.",
+        "Incorrect. At `i=3, j=2`, condition `3 < 2` evaluates to false, so the 4th iteration does not execute.",
+        "Incorrect. At `i=2, j=3`, condition `2 < 3` is still true, so iteration \"2-3\" will also be printed.",
+        "Incorrect. Using the comma operator in the first and third sections of a `for` loop is completely legal in C."
+      ]
+    },
+    {
+      "id": "it_clang_362",
+      "widget_id": "widget_clang_362",
+      "topic": "Loops — break and continue Statements",
+      "q": "What will the widget program output when using break and continue together inside a loop?",
+      "hint": "Recall how continue affects the current iteration and how break terminates the entire loop.",
+      "options": [
+        "\"1 3\"",
+        "\"1 2 3\"",
+        "\"0 1 3 4\"",
+        "\"1 3 4\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct!\n- `i=0`: `continue` triggers, step skipped.\n- `i=1`: 1 is printed.\n- `i=2`: `continue` triggers, step skipped.\n- `i=3`: 3 is printed.\n- `i=4`: `break` triggers, loop terminates immediately.\nFinal output: \"1 3\".",
+        "Incorrect. For `i=2`, `continue` executes, skipping digit 2 output.",
+        "Incorrect. For `i=0`, `continue` triggers, and for `i=4`, `break` triggers, so 0 and 4 will not be printed.",
+        "Incorrect. Digit 4 will not be output because for `i=4`, `break` triggers, instantly terminating the loop."
+      ]
+    },
+    {
+      "id": "it_clang_363",
+      "widget_id": "widget_clang_363",
+      "topic": "do...while Loop — Bitwise Shift in Condition",
+      "q": "How many times will the body of the do...while loop in the widget execute when right-shifting number n?",
+      "hint": "Count how many right shift operations (n >>= 1) it takes for number 8 to turn into 0.",
+      "options": [
+        "4 times",
+        "3 times",
+        "5 times",
+        "Infinitely"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct!\nIteration 1: `n=8`, prints count (1), `n >>= 1` (n becomes 4), condition `4 != 0` is true.\nIteration 2: prints count (2), `n` becomes 2, condition is true.\nIteration 3: prints count (3), `n` becomes 1, condition is true.\nIteration 4: prints count (4), `n` becomes 0, condition `0 != 0` is false. Exit.",
+        "Incorrect. After the 3rd iteration `n` becomes 1 (non-zero), so the 4th iteration executes.",
+        "Incorrect. On the 4th iteration `n` shifts to 0, and check `0 != 0` stops the loop without a 5th iteration.",
+        "Incorrect. Right shift gradually reduces positive numbers to 0; infinite looping is impossible."
+      ]
+    },
+    {
+      "id": "it_clang_364",
+      "widget_id": "widget_clang_364",
+      "topic": "Loops — Nested break",
+      "q": "What will the code snippet in the widget output when break is called inside an inner loop?",
+      "hint": "Remember that a break statement terminates only the loop in which it is directly contained.",
+      "options": [
+        "\"001020\"",
+        "\"00\"",
+        "\"000102\"",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The inner `j` loop outputs `i` and `j` (when `j=0`) on each iteration and immediately hits `break`, which terminates **only** the inner loop. The outer `i` loop continues executing for `i=0, 1, 2`. Output: \"001020\".",
+        "Incorrect. `break` terminates only the current inner loop, not the outer loop, so the outer loop will continue.",
+        "Incorrect. Variable `i` changes in the outer loop (0, 1, 2), while `j` in the inner loop is always 0 before `break`.",
+        "Incorrect. Using `break` inside nested loops is syntactically valid."
+      ]
+    },
+    {
+      "id": "it_clang_365",
+      "widget_id": "widget_clang_365",
+      "topic": "for Loop — Infinite for(;;) Loop",
+      "q": "What will happen when executing a for(;;) construct without specifying expressions in parentheses?",
+      "hint": "Consider what default value an omitted condition assumes in a for loop.",
+      "options": [
+        "An infinite loop is created because the absence of condition is interpreted as true",
+        "Compilation error: all three for sections must contain expressions",
+        "The loop will not execute any iterations",
+        "The program will terminate immediately with an error code"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The canonical way to write an infinite loop in C is `for(;;)`. By standard, an omitted condition in `for` is automatically treated as true by the compiler.",
+        "Incorrect. All three header sections of `for` are optional according to the C standard.",
+        "Incorrect. Since omitting the condition is equivalent to `true`, the loop is not skipped and starts running infinitely.",
+        "Incorrect. This construct is valid standardized syntax and causes no execution errors."
+      ]
+    },
+    {
+      "id": "it_clang_366",
+      "widget_id": "widget_clang_366",
+      "topic": "while Loop — Postfix Increment in Condition",
+      "q": "What will the widget code output with postfix increment i++ inside the while condition?",
+      "hint": "Compare the current value of i with number 3 before the variable increases.",
+      "options": [
+        "\"123\"",
+        "\"012\"",
+        "\"0123\"",
+        "\"12\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct!\n1. `i=0`: checks `0 < 3` (true), `i` increments to 1. Prints `1`.\n2. `i=1`: checks `1 < 3` (true), `i` increments to 2. Prints `2`.\n3. `i=2`: checks `2 < 3` (true), `i` increments to 3. Prints `3`.\n4. `i=3`: checks `3 < 3` (false), `i` becomes 4. Loop terminates.\nOutput: \"123\".",
+        "Incorrect. Postfix increment increases `i` immediately after condition checking, so the incremented variable enters the loop body.",
+        "Incorrect. For `i=3`, check `3 < 3` yields false, so the 4th print does not occur.",
+        "Incorrect. For `i=2`, condition `2 < 3` is true, so digit 3 will also be printed."
+      ]
+    },
+    {
+      "id": "it_clang_367",
+      "widget_id": "widget_clang_367",
+      "topic": "for Loop — Negative Step",
+      "q": "What will the widget code snippet output during a countdown in a for loop?",
+      "hint": "Pay attention to the initial value of i, continuation condition, and decrement.",
+      "options": [
+        "\"321\"",
+        "\"3210\"",
+        "\"210\"",
+        "Infinite loop"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The loop starts with `i = 3`, checks `3 > 0` (true), prints `3`. Then `2 > 0` -> prints `2`, `1 > 0` -> prints `1`. Next step `i = 0`, condition `0 > 0` is false, loop terminates. Output: \"321\".",
+        "Incorrect. Condition `i > 0` is strict, so at `i = 0` check returns false and zero is not printed.",
+        "Incorrect. Initial `i` value is 3, so digit 3 is printed first.",
+        "Incorrect. Variable `i` decrements at each step until reaching 0, which guarantees stopping the loop."
+      ]
+    },
+    {
+      "id": "it_clang_368",
+      "widget_id": "widget_clang_368",
+      "topic": "do...while Loop — Postfix Decrement in Condition",
+      "q": "What will the widget program output with a do...while loop and expression while(i-- > 0)?",
+      "hint": "Trace variable i output in the loop body and i change at the end of iteration.",
+      "options": [
+        "\"210\"",
+        "\"21\"",
+        "\"210-1\"",
+        "\"10\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct!\n- Iteration 1: prints `2`. Condition `2 > 0` (true), `i` becomes 1.\n- Iteration 2: prints `1`. Condition `1 > 0` (true), `i` becomes 0.\n- Iteration 3: prints `0`. Condition `0 > 0` (false), `i` becomes -1. Exit.\nOutput: \"210\".",
+        "Incorrect. On iteration 3, printing `0` occurs before condition check `0 > 0`, so 0 is printed.",
+        "Incorrect. After iteration 3, condition `0 > 0` returns false, so iteration 4 printing -1 will not execute.",
+        "Incorrect. Loop starts with `i = 2`, so digit 2 is printed first."
+      ]
+    },
+    {
+      "id": "it_clang_369",
+      "widget_id": "widget_clang_369",
+      "topic": "Loops — Skipping Iterations with continue",
+      "q": "What will the widget code output when skipping even numbers using the continue statement?",
+      "hint": "Recall how the modulo operator % 2 determines evenness of numbers.",
+      "options": [
+        "\"135\"",
+        "\"024\"",
+        "\"12345\"",
+        "\"012345\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Condition `i % 2 == 0` is true for even numbers (0, 2, 4). When encountered, `continue` immediately transfers control to loop step `i++`. Only odd numbers reach `printf`: 1, 3, 5.",
+        "Incorrect. For even numbers `continue` executes, skipping `printf`, so they are not output.",
+        "Incorrect. Even numbers are skipped by `continue`, and 0 is the first even number.",
+        "Incorrect. Not all numbers are output because `continue` filters out even ones."
+      ]
+    },
+    {
+      "id": "it_clang_370",
+      "widget_id": "widget_clang_370",
+      "topic": "for Loop — Modifying the Control Variable Inside the Body",
+      "q": "What will the widget code snippet output when additionally modifying variable i inside the loop body?",
+      "hint": "Combine the increment inside the loop body and the increment in the for header step section.",
+      "options": [
+        "\"024\"",
+        "\"01234\"",
+        "\"0246\"",
+        "\"012\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct!\n1. `i = 0`: prints `0`, then `i++` changes `i` to 1. In header, `i++` changes `i` to 2.\n2. `i = 2`: prints `2`, `i` becomes 3, in header `i` becomes 4.\n3. `i = 4`: prints `4`, `i` becomes 5, in header `i` becomes 6.\n4. `i = 6`: condition `6 < 5` is false. Output: \"024\".",
+        "Incorrect. Double increment (in body and header) causes `i` to increase by 2 per step, skipping odd numbers.",
+        "Incorrect. At `i = 6`, condition `6 < 5` is false, so 6 is not printed.",
+        "Incorrect. Variable `i` steps by 2, printing 0, 2, and 4."
+      ]
+    },
+    {
+      "id": "it_clang_371",
+      "widget_id": "widget_clang_371",
+      "topic": "while Loop — Calculating Sum of Sequence Until 0 is Entered",
+      "q": "Which data input will cause the reading and summing loop shown in the widget to terminate?",
+      "hint": "Look at the condition in parentheses while (val != 0).",
+      "options": [
+        "Entering the number 0",
+        "Entering a negative number",
+        "Reaching 100 iterations",
+        "Entering any odd number"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The loop checks condition `val != 0`. As soon as the user enters 0, the condition becomes false and the loop terminates.",
+        "Incorrect. Negative numbers are non-zero (`val != 0`), so the loop will continue summing them.",
+        "Incorrect. Iterations are not counter-bound; the loop depends solely on the value of `val`.",
+        "Incorrect. Parity of entered numbers does not affect termination condition `val != 0`."
+      ]
+    },
+    {
+      "id": "it_clang_372",
+      "widget_id": "widget_clang_372",
+      "topic": "for Loop — Infinite for(;;) Loop and break Interruption",
+      "q": "What will the code snippet with a for(;;) loop output when exiting upon condition via break?",
+      "hint": "Trace the value of variable i when calling printf and checking if (i >= 2).",
+      "options": [
+        "\"01\"",
+        "\"012\"",
+        "Outputs nothing",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! At `i = 0`, condition `0 >= 2` is false, `0` is printed, `i` becomes 1. At `i = 1`, condition `1 >= 2` is false, `1` is printed, `i` becomes 2. At `i = 2`, condition `2 >= 2` is true, `break` executes and loop terminates. Output: \"01\".",
+        "Incorrect. At `i = 2`, `break` triggers BEFORE `printf` call, so digit 2 is not printed.",
+        "Incorrect. For `i = 0` and `i = 1`, `break` condition is false, so printing occurs.",
+        "Incorrect. Using `for(;;)` in combination with `break` is completely legal."
+      ]
+    },
+    {
+      "id": "it_clang_373",
+      "widget_id": "widget_clang_373",
+      "topic": "do...while Loop — Guaranteed First Iteration",
+      "q": "What will this code snippet with a do...while loop output?",
+      "hint": "Trace the value of variable a on each iteration and the check moment of while (a > 3).",
+      "options": [
+        "\"54\"",
+        "\"543\"",
+        "\"5\"",
+        "\"43\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct!\n1. Prints `5`, `a` decrements to 4. Check `4 > 3` (true).\n2. Prints `4`, `a` decrements to 3. Check `3 > 3` (false). Loop terminates. Output: \"54\".",
+        "Incorrect. When `a` becomes 3, condition `3 > 3` yields false and 3rd iteration does not start.",
+        "Incorrect. After 1st iteration `a = 4`, and check `4 > 3` is true, so 2nd iteration executes.",
+        "Incorrect. On the first iteration initial value `a` (5) is printed, not 4."
+      ]
+    },
+    {
+      "id": "it_clang_374",
+      "widget_id": null,
+      "topic": "Loop Comparison — Equivalence of for and while",
+      "q": "Which statement regarding the relationship between for and while loops is true in C?",
+      "hint": "Recall what the for loop is in relation to while.",
+      "options": [
+        "Any for loop can be equivalently rewritten using a while loop",
+        "The while loop runs faster than the for loop at the CPU instruction level",
+        "The for loop does not allow using increment and decrement operations",
+        "Using the break statement is strictly forbidden in a while loop"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `for` loop is syntactic sugar for the `while` loop, and any `for` can be converted to `while` without altering logic.",
+        "Incorrect. An optimizing compiler translates `for` and `while` into equivalent machine code.",
+        "Incorrect. Increment and decrement are constantly used in the `for` loop step section.",
+        "Incorrect. The `break` and `continue` statements apply equally to all loop types (`for`, `while`, `do...while`)."
+      ]
+    },
+    {
+      "id": "it_clang_375",
+      "widget_id": "widget_clang_375",
+      "topic": "while Loop — Logical Condition with Zero Value",
+      "q": "How many times will the body of the while (i) loop in the widget execute with initial value i = 0?",
+      "hint": "Recall how integer 0 is interpreted as a condition in C.",
+      "options": [
+        "0 times (the loop body will be completely skipped)",
+        "1 time",
+        "Infinite number of times",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, 0 is perceived as false. Since `i = 0`, condition `while (i)` is immediately false, and the loop body does not execute at all.",
+        "Incorrect. Unlike `do...while`, the `while` loop checks condition before entering the body, and for `0` skips execution.",
+        "Incorrect. Value 0 is treated as `false`, so looping will not occur.",
+        "Incorrect. Expression `while(i)` with an integer variable is completely valid in C syntax."
+      ]
+    },
+    {
+      "id": "it_clang_376",
+      "widget_id": "widget_clang_376",
+      "topic": "for Loop — Arbitrary Counter Step Modification (+= 2)",
+      "q": "What will the for loop in the widget output with state change i += 2?",
+      "hint": "Trace variable i value: 1, then 1 + 2, then 3 + 2.",
+      "options": [
+        "\"13\"",
+        "\"123\"",
+        "\"1\"",
+        "\"135\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct!\n- `i = 1`: `1 <= 3` (true) -> prints `1`, `i` becomes `1 + 2 = 3`.\n- `i = 3`: `3 <= 3` (true) -> prints `3`, `i` becomes `3 + 2 = 5`.\n- `i = 5`: `5 <= 3` (false) -> exits loop. Output: \"13\".",
+        "Incorrect. Step `i += 2` adds 2 to `i` each time, so value 2 is skipped.",
+        "Incorrect. At `i = 3`, condition `3 <= 3` is true, so digit 3 will be output.",
+        "Incorrect. At `i = 5`, condition `5 <= 3` is false, so 5 will not be output."
+      ]
+    },
+    {
+      "id": "it_clang_377",
+      "widget_id": "widget_clang_377",
+      "topic": "Nested Loops — Accumulating Product and Sum",
+      "q": "What will variable sum equal after executing the nested loops in the widget?",
+      "hint": "Sum the values of product i * j for all combinations i=1..2 and j=1..2.",
+      "options": [
+        "9",
+        "4",
+        "6",
+        "10"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! 4 combinations are evaluated and summed:\n- i=1, j=1: 1*1 = 1\n- i=1, j=2: 1*2 = 2\n- i=2, j=1: 2*1 = 2\n- i=2, j=2: 2*2 = 4\nTotal sum: 1 + 2 + 2 + 4 = 9.",
+        "Incorrect. Value 4 is only the result of the last iteration (`2 * 2`), ignoring previous iterations.",
+        "Incorrect. Combinations for `i=2` were missed; summing all variants yields 9.",
+        "Incorrect. Accurately recalculating all four iterations yields 9."
+      ]
+    },
+    {
+      "id": "it_clang_378",
+      "widget_id": null,
+      "topic": "Loops — Non-Guaranteed Termination (Infinite Loop)",
+      "q": "Why does program termination cease to be unconditionally guaranteed with the introduction of loops (while, for)?",
+      "hint": "Think about situations where the loop termination condition is never reached.",
+      "options": [
+        "The loop continuation condition may remain true indefinitely due to a logic error or failure to update the control variable",
+        "The C compiler automatically converts all loops into infinite instructions",
+        "Operating systems forbid a program from terminating if it contains a while loop",
+        "CPU memory overflows with every for statement declaration"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Unlike sequential code and branching, a loop can enter an infinite loop if its condition never becomes false.",
+        "Incorrect. The compiler generates infinite loops only when explicitly specified in code.",
+        "Incorrect. The OS in no way restricts termination of programs with `while` loops.",
+        "Incorrect. Declaring a `for` loop uses minimal resources and does not cause memory overflow."
+      ]
+    },
+    {
+      "id": "it_clang_379",
+      "widget_id": "widget_clang_379",
+      "topic": "do...while Loop — Increment in Termination Condition",
+      "q": "What will the code snippet with a do...while loop and postfix increment k++ in the condition output?",
+      "hint": "Remember that the do...while body first prints k, then checks condition k++ < 0.",
+      "options": [
+        "\"0\"",
+        "Outputs nothing",
+        "\"01\"",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `do...while` body executes once without checking conditions and prints `0`. Then condition `k++ < 0` is checked (where current `0 < 0` is false). Loop terminates. Output: \"0\".",
+        "Incorrect. The `do...while` construct guarantees at least one iteration before condition check.",
+        "Incorrect. Although `k` increments to 1 in the condition, a second iteration does not start because check `0 < 0` yielded false.",
+        "Incorrect. Expression `k++ < 0` inside `while` condition is completely valid."
+      ]
+    },
+    {
+      "id": "it_clang_380",
+      "widget_id": "widget_clang_380",
+      "topic": "for Loop — Integer Division in Step Section (n /= 2)",
+      "q": "What will the code snippet with division n /= 2 in the for loop state modification section output?",
+      "hint": "Trace changes in variable n: 10, 5, 2 (since 5/2 = 2 in integers) and 1.",
+      "options": [
+        "\"10 5 2 \"",
+        "\"10 5 2 1 \"",
+        "\"10 5 \"",
+        "\"10 5 2.5 \""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct!\n- `n = 10`: `10 > 1` (true) -> prints `10 `, `n` becomes `10 / 2 = 5`.\n- `n = 5`: `5 > 1` (true) -> prints `5 `, `n` becomes `5 / 2 = 2` (integer division).\n- `n = 2`: `2 > 1` (true) -> prints `2 `, `n` becomes `2 / 2 = 1`.\n- `n = 1`: `1 > 1` (false) -> exit. Output: \"10 5 2 \".",
+        "Incorrect. At `n = 1`, condition `1 > 1` becomes false, so 1 is not output.",
+        "Incorrect. At `n = 2`, condition `2 > 1` is true, so digit 2 will be output.",
+        "Incorrect. Variable `n` has an integer type, so 5 / 2 truncates to 2 without a fractional part."
+      ]
+    },
+    {
+      "id": "it_clang_381",
+      "widget_id": "widget_clang_381",
+      "topic": "while Loop — Counting Iterations When Dividing by 2",
+      "q": "What will the widget program output when dividing variable n by 2 in a while loop?",
+      "hint": "Trace the decrease of variable n: 16 -> 8 -> 4 -> 2 -> 1.",
+      "options": [
+        "4",
+        "5",
+        "3",
+        "16"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct!\nIteration 1: `n=16` (`16 > 1` true), `count`=1, `n` becomes 8.\nIteration 2: `n=8` (`8 > 1` true), `count`=2, `n` becomes 4.\nIteration 3: `n=4` (`4 > 1` true), `count`=3, `n` becomes 2.\nIteration 4: `n=2` (`2 > 1` true), `count`=4, `n` becomes 1.\nIteration 5: `n=1` (`1 > 1` false), loop terminates. Output: 4.",
+        "Incorrect. At `n = 1`, condition `1 > 1` is false, so 5th iteration does not start.",
+        "Incorrect. At `n = 2`, condition `2 > 1` is still true, so 4th iteration is evaluated.",
+        "Incorrect. 16 is the initial value of `n`, not the number of loop iterations."
+      ]
+    },
+    {
+      "id": "it_clang_382",
+      "widget_id": "widget_clang_382",
+      "topic": "Branching and Loops — Nested if Inside for",
+      "q": "What will the sum of odd numbers from 1 to 5 inclusive equal as a result of executing the loop in the widget?",
+      "hint": "Check remainder condition i % 2 != 0 for all i values from 1 to 5.",
+      "options": [
+        "9",
+        "15",
+        "6",
+        "8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Condition `i % 2 != 0` holds for odd numbers: 1, 3, and 5. Variable `sum` accumulates their sum: `1 + 3 + 5 = 9`.",
+        "Incorrect. Value 15 is the sum of all numbers from 1 to 5 without odd filtering.",
+        "Incorrect. Even numbers 2 and 4 yield sum 6, but the condition selects odd numbers.",
+        "Incorrect. Summing 1 + 3 + 5 yields 9, not 8."
+      ]
+    },
+    {
+      "id": "it_clang_383",
+      "widget_id": "widget_clang_383",
+      "topic": "do...while Loop — Guaranteed Execution on False Condition",
+      "q": "What will the code snippet with a do...while loop output on an explicitly false while(0) condition?",
+      "hint": "Recall the minimum number of times a do...while loop body executes.",
+      "options": [
+        "5",
+        "0",
+        "10",
+        "Outputs nothing"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `do...while` loop first executes the body, then checks condition. Variable `count` increases by 5, and condition `while(0)` stops the loop after the first iteration. Output: 5.",
+        "Incorrect. Initial value 0 changes in loop body when executing `count += 5`.",
+        "Incorrect. A second iteration adding another 5 will not happen due to false condition `while(0)`.",
+        "Incorrect. The `do...while` body always executes at least once."
+      ]
+    },
+    {
+      "id": "it_clang_384",
+      "widget_id": "widget_clang_384",
+      "topic": "Switch Statement — Character Constants and Fall-Through",
+      "q": "What will the program in the widget output considering fall-through when break is missing?",
+      "hint": "Pay attention to the absence of break statement in case '+' branch.",
+      "options": [
+        "13",
+        "15",
+        "8",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `case '+':` triggers first, making `res` equal to `10 + 5 = 15`. Due to missing `break`, execution continues into `case '-':`, where `res` becomes `15 - 2 = 13`. Encountered `break` terminates `switch`. Output: 13.",
+        "Incorrect. Value 15 would be obtained only if `break` were present in `case '+'`.",
+        "Incorrect. Calculation does not proceed to `case '*'`, because `break` is in `case '-'`.",
+        "Incorrect. Triggered `case '+'` branch correctly modifies variable `res`."
+      ]
+    },
+    {
+      "id": "it_clang_385",
+      "widget_id": "widget_clang_385",
+      "topic": "for Loop — Multiple Conditions Using &&",
+      "q": "What will variables i and j equal after completing the for loop with compound condition in the widget?",
+      "hint": "Trace evaluation of condition (i < 5 && j > 7) at each step.",
+      "options": [
+        "3 7",
+        "5 5",
+        "4 6",
+        "3 6"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct!\n- Iteration 1: `i=0, j=10`. Condition `0<5 && 10>7` (true). Step: `i=1, j=9`.\n- Iteration 2: `i=1, j=9`. Condition `1<5 && 9>7` (true). Step: `i=2, j=8`.\n- Iteration 3: `i=2, j=8`. Condition `2<5 && 8>7` (true). Step: `i=3, j=7`.\n- Iteration 4: `i=3, j=7`. Check: `3<5` (true), but `7>7` (false). Total condition false, exit. Variables: `i=3, j=7`.",
+        "Incorrect. The loop stops earlier because `j` reaches 7 before `i` becomes 5.",
+        "Incorrect. At `i=3, j=7`, condition `7 > 7` is already false, so step `i=4, j=6` does not execute.",
+        "Incorrect. Decrement `j--` in the third section does not execute when the loop condition is violated."
+      ]
+    },
+    {
+      "id": "it_clang_386",
+      "widget_id": "widget_clang_386",
+      "topic": "Loops — Breaking Nested Loops with goto Statement",
+      "q": "What will the widget code output when jumping via goto label from deep inside nested loops?",
+      "hint": "Find index pair i and j for which sum i + j equals 2 in first calculation order.",
+      "options": [
+        "0 2",
+        "1 1",
+        "2 0",
+        "3 3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! At `i = 0`, inner loop checks `j = 0` (`0+0!=2`), `j = 1` (`0+1!=2`), and `j = 2` (`0+2 == 2`). Condition met, `goto end` triggers, instantly jumping outside both loops at `i = 0, j = 2`.",
+        "Incorrect. The loop will not reach `i = 1` because termination condition triggers on the first outer pass (`i = 0`).",
+        "Incorrect. Search starts at `i = 0`, and the first triggering indices will be `i = 0, j = 2`.",
+        "Incorrect. The `goto` jump triggers much earlier, on pair (0, 2)."
+      ]
+    },
+    {
+      "id": "it_clang_387",
+      "widget_id": "widget_clang_387",
+      "topic": "while Loop — Postfix Decrement of Variable in Condition",
+      "q": "How many iterations will the while (a--) loop in the widget complete with initial value a = 5?",
+      "hint": "Remember that postfix decrement first compares current value a with zero, then decrements it.",
+      "options": [
+        "5",
+        "4",
+        "6",
+        "Infinitely"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Loop checks expressions `5`, `4`, `3`, `2`, `1` (all non-zero = true), completing 5 iterations. When `a` equals 0, check `0` yields false, `a` decrements to -1 and loop terminates.",
+        "Incorrect. Value 1 evaluates as true, completing the 5th iteration before check on 0 stops the loop.",
+        "Incorrect. At value 0 check returns false, so 6th iteration does not execute.",
+        "Incorrect. Postfix decrement reduces `a` at each step, so the loop is guaranteed to terminate."
+      ]
+    },
+    {
+      "id": "it_clang_388",
+      "widget_id": "widget_clang_388",
+      "topic": "Branching — Precedence of Bitwise AND (&) and Equality Operator (==)",
+      "q": "What will the widget program output considering operator precedence of & and ==?",
+      "hint": "Note that equality operator == has higher precedence than bitwise operator &.",
+      "options": [
+        "\"NO\"",
+        "\"YES\"",
+        "Compilation error",
+        "Outputs nothing"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Due to precedence, expression `x & y == 0` becomes `x & (y == 0)`. Since `y = 2`, check `2 == 0` yields `0`. Then `1 & 0` evaluates to `0` (false). `else` branch (\"NO\") triggers.",
+        "Incorrect. It might seem `(x & y) == 0` yields true, but `==` has higher precedence than `&`, so grouping is different.",
+        "Incorrect. Expression is syntactically completely valid according to C standards.",
+        "Incorrect. One of the expressions (`if` or `else`) will necessarily execute."
+      ]
+    },
+    {
+      "id": "it_clang_389",
+      "widget_id": "widget_clang_389",
+      "topic": "for Loop — Absence of Step Section in Header",
+      "q": "What will the widget code snippet output if the third header section of the for loop is left empty?",
+      "hint": "Trace where increment of variable i actually occurs.",
+      "options": [
+        "\"012\"",
+        "Compilation error",
+        "Infinite loop",
+        "\"0123\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Omitting the third section in `for (; i < 3 ;)` is completely valid. Increment `i++` occurs inside the loop body, so the program normally outputs \"012\".",
+        "Incorrect. The third section of `for` loop is not mandatory if state changes inside loop body.",
+        "Incorrect. Inside loop body increment `i++` is present, so the loop will finish after 3 iterations.",
+        "Incorrect. At `i = 3`, condition `3 < 3` is false, so digit 3 is not printed."
+      ]
+    }
+  ]
+}

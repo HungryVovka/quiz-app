@@ -1,0 +1,597 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_841",
+      "widget_id": null,
+      "topic": "Function Syntax — Main Components of Declaration",
+      "q": "Which main elements are required in a C function header (signature)?",
+      "hint": "Recall the order of return type, function name, and parameter list.",
+      "options": [
+        "Return type, function name, and parameter list in parentheses",
+        "Function name, goto statement, and allocated memory size",
+        "Local variable list and calling module name",
+        "Function name only and a semicolon"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! A function header consists of the return type (or `void`), function name, and a parameter list with their types enclosed in parentheses.",
+        "Incorrect. The `goto` keyword and memory are not specified in the function header.",
+        "Incorrect. Local variables are declared inside the function body, not in its header.",
+        "Incorrect. You cannot make a header without specifying the return type and parentheses."
+      ]
+    },
+    {
+      "id": "it_clang_842",
+      "widget_id": "widget_clang_842",
+      "topic": "Passing Parameters — Pass by Value for Base Types",
+      "q": "What will `printf(\"%d\", num)` output after executing call `double_val(num)`?",
+      "hint": "Does a variable in the calling program change if a base type parameter is passed by value?",
+      "options": [
+        "10",
+        "20",
+        "0",
+        "Runtime error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, arguments of base types (`int`, `float`, `char`) are passed by value. Function `double_val` receives a local copy of the variable, so changes inside it do not affect `num` in `main`. It will output 10.",
+        "Incorrect. Modification `x = x * 2` happens only to the local copy inside the function.",
+        "Incorrect. The value of `num` remains the original (10).",
+        "Incorrect. The call is completely valid and executes without errors."
+      ]
+    },
+    {
+      "id": "it_clang_843",
+      "widget_id": null,
+      "topic": "Scope — Lifetime of Local Variables",
+      "q": "True or False: Local variables declared inside a function are created when that function is called and automatically destroyed upon exiting it (unless the static keyword is used)?",
+      "hint": "Where is memory allocated for regular automatic function variables when it is called?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Regular local variables are allocated in stack memory. They exist only while the function is running and are destroyed after its completion.",
+        "Incorrect. Local variables do not persist between calls unless marked as `static`."
+      ]
+    },
+    {
+      "id": "it_clang_844",
+      "widget_id": "widget_clang_844",
+      "topic": "Function Evaluation — Nested Function Calls",
+      "q": "What will `printf(\"%d\", res)` output when executing nested call `add(add(2, 3), 4)`?",
+      "hint": "First evaluate the inner call `add(2, 3)`, and then pass the result to the outer call.",
+      "options": [
+        "9",
+        "5",
+        "24",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! First, the inner expression `add(2, 3)` is evaluated, returning 5. Then the outer function `add(5, 4)` is called, resulting in 9.",
+        "Incorrect. 5 is only the result of the inner call `add(2, 3)`.",
+        "Incorrect. The function performs addition, not multiplication.",
+        "Incorrect. Passing the result of one function as an argument to another is completely legal."
+      ]
+    },
+    {
+      "id": "it_clang_845",
+      "widget_id": "widget_clang_845",
+      "topic": "void Functions — Value Return Error",
+      "q": "What will happen when attempting to compile function `calculate_sum` with a `void` return type?",
+      "hint": "Is an expression allowed in the return statement if the function has void type?",
+      "options": [
+        "Compilation error — void function cannot return a value",
+        "Program will compile and return the sum of numbers a and b",
+        "Compiler warning, but program will output 0",
+        "Runtime error when calling function"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In a function with a `void` return type, the `return` statement cannot contain a returned expression. This causes a compilation error.",
+        "Incorrect. The compiler will block compilation due to a mismatch between `void` type and the returned expression.",
+        "Incorrect. This is a critical syntax error, not just a warning.",
+        "Incorrect. The error is detected before execution, at compile time."
+      ]
+    },
+    {
+      "id": "it_clang_846",
+      "widget_id": null,
+      "topic": "Prototypes — Location in Source Code",
+      "q": "Where in a C source file are function prototypes placed by convention and good practice?",
+      "hint": "Where are prototypes located relative to main() and the bodies of the functions themselves?",
+      "options": [
+        "At the beginning of the file before function main() and before the definitions of the functions themselves",
+        "At the very end of the file, after all function implementations",
+        "Inside the else branch in the main function",
+        "Placing prototypes before main is forbidden"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Prototypes are usually placed at the beginning of the file (after `#include` header inclusions) so that the compiler knows about the existence of functions before calling them in `main()` or other functions.",
+        "Incorrect. If you place a prototype at the end of the file, it loses its purpose because the compiler will not see it before calls.",
+        "Incorrect. Prototypes are declared at global file scope, not inside conditional statements.",
+        "Incorrect. Placing them right before `main()` is recommended."
+      ]
+    },
+    {
+      "id": "it_clang_847",
+      "widget_id": "widget_clang_847",
+      "topic": "Arrays in Functions — Modifying Elements in a Loop",
+      "q": "What will `printf(\"%d\", arr[1])` output after calling `scale(arr, 3)`?",
+      "hint": "Find initial value `arr[1]` and apply `*= 2` operation.",
+      "options": [
+        "8",
+        "4",
+        "2",
+        "16"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Initially `arr[1]` is equal to 4. Since an array is passed by address, operation `nums[i] *= 2` multiplies element of original array by 2: $4 \\times 2 = 8$.",
+        "Incorrect. Value 4 was prior to calling function `scale`.",
+        "Incorrect. Multiplication $4 \\times 2$ gives 8.",
+        "Incorrect. Operation executes once per iteration for each element."
+      ]
+    },
+    {
+      "id": "it_clang_848",
+      "widget_id": null,
+      "topic": "C Architecture — Advantages of Using Functions",
+      "q": "Which of the following statements is NOT an advantage of dividing code into functions?",
+      "hint": "Think about whether splitting code into functions guarantees absence of logical or syntax errors.",
+      "options": [
+        "Automatic correction of any syntax and logical errors in code",
+        "Code reusability (Avoid Code Duplication)",
+        "Improving program readability and structure",
+        "Simplifying testing and debugging of individual modules"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Splitting code into functions facilitates structure, but cannot automatically correct programmer errors.",
+        "Incorrect. Avoiding code duplication is one of the main advantages of functions.",
+        "Incorrect. Improving readability is a direct merit of modular code.",
+        "Incorrect. Isolated functions are indeed much easier to test."
+      ]
+    },
+    {
+      "id": "it_clang_849",
+      "widget_id": "widget_clang_849",
+      "topic": "return Statement — Premature Loop Exit",
+      "q": "What will calling `find_first_negative` output for array `{3, 5, -2, -8, 4}`?",
+      "hint": "On which element will condition `arr[i] < 0` be fulfilled and trigger `return`?",
+      "options": [
+        "-2",
+        "-8",
+        "3",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Traversal goes in order: 3 (>=0), 5 (>=0), -2 (<0). On element `-2`, condition `arr[i] < 0` becomes true, `return arr[i]` triggers, and the function immediately terminates execution, returning `-2`.",
+        "Incorrect. Loop will not reach element `-8` because it terminates on the first negative number `-2`.",
+        "Incorrect. Element 3 is positive.",
+        "Incorrect. Function returns 0 only if there are no negative numbers in the array at all."
+      ]
+    },
+    {
+      "id": "it_clang_850",
+      "widget_id": null,
+      "topic": "Parameters — Importance of Argument Order",
+      "q": "True or False: In C, when calling a function, the value of the first actual argument is always passed to the first formal parameter, the second to the second, and so on (order is strictly fixed by position)?",
+      "hint": "Does the C compiler match parameters by their names or exclusively by their order on call?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, passing arguments occurs strictly by position (positional matching). The first argument on call goes into the first header parameter of function, second into second.",
+        "Incorrect. In C there are no named arguments, matching is strictly positional."
+      ]
+    },
+    {
+      "id": "it_clang_851",
+      "widget_id": "widget_clang_851",
+      "topic": "Returning Pointers — Danger of Returning Local Variable Address",
+      "q": "What will happen when attempting to use value returned by `get_pointer()` function?",
+      "hint": "Does local variable temp exist in memory after function completes?",
+      "options": [
+        "Undefined Behavior — variable temp ceases to exist after exiting function",
+        "Will always guaranteed output 42",
+        "Compilation error — returning pointers from functions is forbidden in C",
+        "Variable temp will automatically move to global memory area"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Local variable `temp` is placed on stack and destroyed upon exiting function. Returning its address creates a dangling pointer, accessing which leads to undefined behavior.",
+        "Incorrect. Memory occupied by `temp` is freed, and value stored there can be overwritten at any moment.",
+        "Incorrect. Returning pointers from functions is allowed, but they must point to valid memory (e.g. static or dynamic).",
+        "Incorrect. Local variables do not change their storage class automatically."
+      ]
+    },
+    {
+      "id": "it_clang_852",
+      "widget_id": "widget_clang_852",
+      "topic": "Array Parameters — Loss of Size Information (Array Decay)",
+      "q": "What will `sizeof(arr)` equal inside function `check_size(int arr[])` on a 64-bit system?",
+      "hint": "What does an array parameter implicitly convert into when passed to a function?",
+      "options": [
+        "Pointer size (8 bytes)",
+        "Full size of array in bytes (40 bytes)",
+        "Number of elements in array (10)",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In function parameters, declaration `int arr[]` is equivalent to `int *arr`. Operator `sizeof` inside function will return pointer size (8 bytes on 64-bit systems), not original array size.",
+        "Incorrect. Function loses information about original array size because it receives only pointer.",
+        "Incorrect. `sizeof` returns count of bytes, not elements, and for a pointer it will be address size.",
+        "Incorrect. Pointer occupies a fixed amount of memory depending on architecture."
+      ]
+    },
+    {
+      "id": "it_clang_853",
+      "widget_id": null,
+      "topic": "Function Parameters — Difference Between func(void) and func()",
+      "q": "What is the difference between signature declaration `void print_msg(void)` and `void print_msg()` in C?",
+      "hint": "Which notation strictly forbids passing any arguments on call?",
+      "options": [
+        "`func(void)` explicitly indicates that function accepts no arguments, while `func()` means an unspecified number of parameters",
+        "`func()` forbids function call, while `func(void)` allows it",
+        "No difference, complete synonyms",
+        "`func(void)` returns void, while `func()` returns int type"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Notation `func(void)` strictly specifies that function accepts no arguments. Notation `func()` indicates that parameter list is unassigned, allowing arguments to be passed without compiler type checks.",
+        "Incorrect. Both functions can be called, but argument checking works differently.",
+        "Incorrect. In C these two declarations have different argument type checking strictness.",
+        "Incorrect. Return type in both cases is specified on the left as `void`."
+      ]
+    },
+    {
+      "id": "it_clang_854",
+      "widget_id": null,
+      "topic": "Function Design — Pure Functions",
+      "q": "What main property characterizes a 'pure' function?",
+      "hint": "Does pure function result depend on external state, and does it change global data?",
+      "options": [
+        "It returns the same result for the same input arguments and creates no side effects",
+        "It necessarily contains a loop and console output",
+        "It accepts no input parameters and returns nothing",
+        "It reads data from keyboard using scanf"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! A pure function is deterministic (its result depends only on passed arguments) and causes no side effects (does not change global variables, perform I/O).",
+        "Incorrect. I/O is a side effect violating function 'purity'.",
+        "Incorrect. Function without parameters and return usually relies on global state.",
+        "Incorrect. Reading user input refers to side effects."
+      ]
+    },
+    {
+      "id": "it_clang_855",
+      "widget_id": null,
+      "topic": "Modularity — Self-documentation and Code Reuse",
+      "q": "True or False: Extracting reusable or complex code fragments into separate functions makes program clearer, simplifies debugging, and prevents code duplication?",
+      "hint": "Does decomposing a task into small functions help approach solution step-by-step?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Modular approach and task decomposition into functions are fundamental principles of writing quality, maintainable, and readable code.",
+        "Incorrect. Dividing into functions is one of the best ways to improve program structure."
+      ]
+    },
+    {
+      "id": "it_clang_856",
+      "widget_id": "widget_clang_856",
+      "topic": "Passing Parameters — Modifying Parameter Copy",
+      "q": "What will `printf(\"%d\", val)` output after executing call `reset(val)`?",
+      "hint": "Are base type variables passed by value (copying) in C?",
+      "options": [
+        "15",
+        "0",
+        "Compilation error",
+        "Random garbage value"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since parameter `a` is passed by value, function `reset` works with a local variable copy. Assignment `a = 0` does not change original `val` in `main`. Will print 15.",
+        "Incorrect. Parameter change occurred only inside local function context.",
+        "Incorrect. Code is written without syntax errors.",
+        "Incorrect. Value of `val` is clearly defined and equals 15."
+      ]
+    },
+    {
+      "id": "it_clang_857",
+      "widget_id": null,
+      "topic": "Prototypes — Implicit Function Declaration Warning",
+      "q": "What will happen when attempting to call a function before its declaration and definition in a file?",
+      "hint": "How does compiler react to unknown identifier on function call without prototype?",
+      "options": [
+        "Compiler will issue warning or error about implicit function declaration",
+        "Program will automatically create function body at runtime",
+        "Function call will be ignored without messages",
+        "All call arguments will automatically become global"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! If compiler encounters function call without prior prototype or definition, it reports error or warning of implicit declaration.",
+        "Incorrect. Compiler cannot generate code of non-existent function.",
+        "Incorrect. Calls to undescribed functions are caught at build stage.",
+        "Incorrect. Argument scope does not change."
+      ]
+    },
+    {
+      "id": "it_clang_858",
+      "widget_id": "widget_clang_858",
+      "topic": "return Statement — Returning Arithmetic Expression Results",
+      "q": "What will `printf(\"%.1f\", average(5, 10))` output?",
+      "hint": "Calculate expression $(5 + 10) / 2.0f$.",
+      "options": [
+        "7.5",
+        "7.0",
+        "15.0",
+        "5.0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Expression in `return` adds integers $5 + 10 = 15$, and then divides by floating-point divisor `2.0f`, yielding `7.5` of `float` type.",
+        "Incorrect. Divisor `2.0f` is floating-point, so integer truncation to 7.0 does not occur.",
+        "Incorrect. 15.0 is sum of numbers before division.",
+        "Incorrect. Check arithmetic mean calculation accuracy."
+      ]
+    },
+    {
+      "id": "it_clang_859",
+      "widget_id": "widget_clang_859",
+      "topic": "Recursion — Step-by-Step Sum Calculation",
+      "q": "What value will call to recursive function `sum(3)` return?",
+      "hint": "Expand call chain: $3 + \\text{sum}(2) = 3 + 2 + \\text{sum}(1) = \\dots$",
+      "options": [
+        "6",
+        "3",
+        "5",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Call chain: `sum(3)` $= 3 + \\text{sum}(2) = 3 + 2 + \\text{sum}(1) = 3 + 2 + 1 + \\text{sum}(0) = 3 + 2 + 1 + 0 = 6$.",
+        "Incorrect. 3 is only first addition operand.",
+        "Incorrect. Recalculate sum of numbers from 1 to 3.",
+        "Incorrect. 0 is returned only at base step for `sum(0)`."
+      ]
+    },
+    {
+      "id": "it_clang_860",
+      "widget_id": "widget_clang_860",
+      "topic": "Arrays in Parameters — Optional First Dimension Size",
+      "q": "Why when declaring a 1D array in function parameter `void print_arr(int a[])` can array size inside brackets be omitted?",
+      "hint": "Into which syntax construct does compiler convert array in function parameters?",
+      "options": [
+        "Because array parameter is decayed by compiler to pointer to its first element",
+        "Because array size by default equals 100",
+        "Because C allocates memory for array dynamically on each call",
+        "This is a syntax error — specifying size is always mandatory"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In function header, entry `int a[]` decays to pointer `int *a`. Compiler doesn't need array size because only address of first element is passed.",
+        "Incorrect. No built-in default sizes exist.",
+        "Incorrect. Memory allocation for array happens in calling program before call.",
+        "Incorrect. Omitting size in brackets for 1D arrays in parameters is completely allowed."
+      ]
+    },
+    {
+      "id": "it_clang_861",
+      "widget_id": "widget_clang_861",
+      "topic": "Scope — Static Local Variables (static)",
+      "q": "What will program output on three sequential calls to counter() function?",
+      "hint": "Static local variables are initialized only once and retain their value between function calls.",
+      "options": [
+        "1 2 3",
+        "1 1 1",
+        "0 0 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Keyword static makes variable 'c' static. Memory for it is allocated once, and value is retained between calls: 1, then 2, then 3.",
+        "Incorrect. That would happen without static keyword, where variable c would be re-created on stack on each call.",
+        "Incorrect. Increment c++ occurs before value output."
+      ]
+    },
+    {
+      "id": "it_clang_862",
+      "widget_id": "widget_clang_862",
+      "topic": "Pointers in Functions — Simulating Pass by Reference",
+      "q": "What will printf(\"%d %d\", x, y) output after executing function swap(&x, &y)?",
+      "hint": "Passing variable addresses allows function to modify original values in calling context.",
+      "options": [
+        "10 5",
+        "5 10",
+        "10 10",
+        "0 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Passing pointers (variable addresses &x and &y), function swap swaps values of dereferenced pointers, modifying variables x and y in main.",
+        "Incorrect. Values swap places, x becomes 10, y becomes 5.",
+        "Incorrect. Variable y does not overwrite x without saving old x value to temporary variable.",
+        "Incorrect. Code dereferences pointers correctly and zeroing out doesn't occur."
+      ]
+    },
+    {
+      "id": "it_clang_863",
+      "widget_id": "widget_clang_863",
+      "topic": "const Modifier — Data Protection in Pointer Parameters",
+      "q": "What will happen when attempting to compile function modify_data(const int *ptr)?",
+      "hint": "Pay attention to placement of const keyword relative to data type and asterisk.",
+      "options": [
+        "Compilation error — modifying value pointed to by const int* is forbidden",
+        "Code will compile successfully and modify variable value",
+        "Compiler warning, but value will change",
+        "Runtime error (Segmentation fault)",
+        "Program will loop infinitely"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Declaration const int *ptr means value at pointer is read-only. Attempting to modify *ptr causes compilation error.",
+        "Incorrect. C compiler strictly checks const qualifier on write attempts.",
+        "Incorrect. This is critical type error, not just warning.",
+        "Incorrect. Error is caught at compile stage, not runtime.",
+        "Incorrect. No loops in code."
+      ]
+    },
+    {
+      "id": "it_clang_864",
+      "widget_id": "widget_clang_864",
+      "topic": "Recursion — Absence of Base Case",
+      "q": "What consequence will calling function infinite_recursion(5) lead to?",
+      "hint": "Is there a termination condition (recursion base case) in function?",
+      "options": [
+        "Stack Overflow and crash of program",
+        "Infinite loop without memory consumption",
+        "Program will stop when n becomes 0",
+        "Compilation error due to recursive call"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Function has no base case (exit condition). Each recursive call creates a new stack frame, which quickly leads to stack memory exhaustion (Stack Overflow).",
+        "Incorrect. Function calls consume stack memory for return address and local arguments.",
+        "Incorrect. No check condition n == 0 exists, arguments go into negative numbers: -1, -2, etc.",
+        "Incorrect. Recursion in C is completely syntactically allowed."
+      ]
+    },
+    {
+      "id": "it_clang_865",
+      "widget_id": null,
+      "topic": "Function Pointers — Declaration Syntax",
+      "q": "Which syntax correctly declares function pointer pf taking two int parameters and returning int?",
+      "hint": "Parentheses around pointer name (*pf) are mandatory due to operator precedence.",
+      "options": [
+        "int (*pf)(int, int);",
+        "int *pf(int, int);",
+        "int pf*(int, int);",
+        "(int*) pf(int, int);",
+        "void (*pf)(int, int);",
+        "int (*pf)();"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Entry int (*pf)(int, int) declares function pointer pf. Parentheses around *pf defined precedence, distinguishing function pointer from function returning pointer.",
+        "Incorrect. int *pf(int, int) declares function pf returning pointer to int.",
+        "Incorrect. Asterisk must be before pointer name inside parentheses.",
+        "Incorrect. This is invalid syntax for function pointer declaration.",
+        "Incorrect. Such pointer would assume return type void, not int.",
+        "Incorrect. Entry without specifying parameters is obsolete and does not set accepted argument types."
+      ]
+    },
+    {
+      "id": "it_clang_866",
+      "widget_id": null,
+      "topic": "inline Keyword — Function Code Inlining",
+      "q": "True or False: The inline keyword suggests compiler to inline function body directly at call site to avoid function call overhead?",
+      "hint": "Is inline a recommendation for compiler optimizer?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Modifier inline hints compiler to replace function call with its body to speed up execution, though final decision stays with compiler.",
+        "Incorrect. inline is used specifically for inline code substitution."
+      ]
+    },
+    {
+      "id": "it_clang_867",
+      "widget_id": null,
+      "topic": "Variadic Functions — stdarg.h Library",
+      "q": "Which macro from <stdarg.h> header file is used to initialize work with variadic argument list?",
+      "hint": "Recall standard macros: va_list, va_start, va_arg, va_end.",
+      "options": [
+        "va_start",
+        "va_arg",
+        "va_end",
+        "va_list",
+        "va_init"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Macro va_start(args, last_fixed_arg) initializes va_list pointer to access subsequent optional arguments.",
+        "Incorrect. va_arg is used to retrieve next argument of given type.",
+        "Incorrect. va_end completes work with argument list and cleans resources.",
+        "Incorrect. va_list is data type for storing argument traversal state, not initialization macro.",
+        "Incorrect. Macro va_init does not exist in C standard."
+      ]
+    },
+    {
+      "id": "it_clang_868",
+      "widget_id": null,
+      "topic": "Passing Structures — By Value vs Pointer",
+      "q": "Which statement about passing structures to C functions is most accurate?",
+      "hint": "Think about structure field copying overhead when passing large amounts of data.",
+      "options": [
+        "Structures can be passed both by value and by pointer, but passing by pointer is more efficient for large structures",
+        "In C structures are allowed to be passed exclusively by pointer",
+        "Passing structure by value allows function to modify original structure fields in main"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C structures can be passed by value (all bytes copied), but to save memory and time a pointer (const StructType *) is usually passed.",
+        "Incorrect. Passing by value is fully supported by C standard.",
+        "Incorrect. When passing by value, local copy is created, and changes inside function do not affect original."
+      ]
+    },
+    {
+      "id": "it_clang_869",
+      "widget_id": null,
+      "topic": "main Function — Return Code",
+      "q": "What by accepted standard does return value 0 from main function mean?",
+      "hint": "Which code does program return to operating system on successful completion?",
+      "options": [
+        "Successful program completion (EXIT_SUCCESS)",
+        "Out of memory error (Out of Memory)",
+        "Undefined critical error",
+        "Request to operating system to restart program"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Return 0 from main (or EXIT_SUCCESS macro) informs operating system that program completed without errors.",
+        "Incorrect. Errors are usually denoted by non-zero return codes (e.g. 1, -1, or EXIT_FAILURE).",
+        "Incorrect. Any non-zero code is interpreted by OS as error.",
+        "Incorrect. Return code does not control program restart by operating system."
+      ]
+    },
+    {
+      "id": "it_clang_870",
+      "widget_id": null,
+      "topic": "Function Linkage — Static Functions (Internal Linkage)",
+      "q": "What does specifier static before function declaration at global file level mean (static void helper(void))?",
+      "hint": "Will such function be visible in other translation units (.c files) during project build?",
+      "options": [
+        "Function has internal linkage (Internal Linkage) and is limited to scope of current file",
+        "Function automatically retains values of all its local variables between calls",
+        "Function can be called exactly once during program execution",
+        "Function executes automatically before calling main()",
+        "Function cannot accept parameters",
+        "Compiler completely disables optimizations for this function"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Keyword static for global function limits its scope to current file (translation unit), preventing name collisions during linkage.",
+        "Incorrect. Limiting function visibility does not automatically make all its local variables static.",
+        "Incorrect. static puts no restrictions on number of function calls.",
+        "Incorrect. Function is called normally by name, not automatically before main.",
+        "Incorrect. Static function can accept arguments just like normal one.",
+        "Incorrect. static modifier does not affect compiler optimization level."
+      ]
+    }
+  ]
+}

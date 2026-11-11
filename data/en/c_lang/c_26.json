@@ -1,0 +1,569 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_811",
+      "widget_id": "widget_clang_811",
+      "topic": "Terminology — Formal and Actual Parameters",
+      "q": "True or False: Variables `x` and `y` in the function header are formal parameters, and the numbers `5` and `6` at the moment of calling `func(5, 6)` are actual arguments?",
+      "hint": "What are the 'containers' in the function declaration and the specific values passed during the call named?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Variables `x` and `y` specified in the function declaration are formal parameters (containers). The values `5` and `6` with which the function is called are called actual arguments.",
+        "Incorrect. This is a fundamental distinction of terms in C programming."
+      ]
+    },
+    {
+      "id": "it_clang_812",
+      "widget_id": "widget_clang_812",
+      "topic": "Parameters — Independence of Function Calls",
+      "q": "True or False: The binding between formal and actual parameters is active only during the current function call, and subsequent calls do not retain memory of previous arguments?",
+      "hint": "Does a function preserve the state of local variables between independent calls if they are not declared as static?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Each function call is created independently on the stack. Parameter binding lasts exactly as long as the current function call executes. Variable `x` in `main` after two calls to `update(x)` will remain equal to 10.",
+        "Incorrect. Repeated calls are independent and do not store state from previous executions."
+      ]
+    },
+    {
+      "id": "it_clang_813",
+      "widget_id": "widget_clang_813",
+      "topic": "return Statement — Return Type Match",
+      "q": "What will `printf(\"%d\", res)` output when calling `divide(7, 2)` for a function with an `int` return type?",
+      "hint": "What will be the result of integer division $7 / 2$ and does it match the `int` return type?",
+      "options": [
+        "3",
+        "3.5",
+        "4",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Division of two integers `7 / 2` in C performs integer division truncating the fractional part, yielding `3`. Since the return type of the function is `int`, the result `3` is returned and printed.",
+        "Incorrect. To obtain 3.5, the operands or function return must be of type `float`/`double`.",
+        "Incorrect. Rounding truncates towards zero.",
+        "Incorrect. $7$ is greater than $2$, the division result is not equal to 0."
+      ]
+    },
+    {
+      "id": "it_clang_814",
+      "widget_id": "widget_clang_814",
+      "topic": "return Statement — Multiple Function Exit Points",
+      "q": "Is it allowed in C to use multiple `return` statements in different conditional branches inside a single function?",
+      "hint": "What will happen on the first execution of a `return` statement inside a function?",
+      "options": [
+        "Yes, it is allowed; the function will terminate at the first encountered return",
+        "Forbidden — a C89 function can have strictly one return",
+        "Allowed, but only the very last return will ever execute"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, it is allowed to place as many `return` statements as necessary according to the program logic. The function immediately terminates execution upon the first execution of any of them.",
+        "Incorrect. The C89 standard does not limit the number of `return` statements in a function body.",
+        "Incorrect. After executing any `return`, the remaining function code stops executing."
+      ]
+    },
+    {
+      "id": "it_clang_815",
+      "widget_id": "widget_clang_815",
+      "topic": "Prototypes — Prototype and Definition Mismatch",
+      "q": "What will happen if the signature in prototype `int calc(int a, int b);` differs in parameter count from definition `int calc(int a)`?",
+      "hint": "How does the compiler check the match between the prototype and function definition?",
+      "options": [
+        "Compilation error — definition signature does not match prototype",
+        "Will compile, second parameter will automatically become 0",
+        "Function will ignore the prototype",
+        "Runtime error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! One of the main tasks of a function prototype is helping the compiler find syntax errors. Mismatch in parameter count or types between prototype and definition leads to a compilation error.",
+        "Incorrect. Compiler does not substitute values for missing parameters.",
+        "Incorrect. Prototype must strictly match the real function definition.",
+        "Incorrect. Error is detected at compile time."
+      ]
+    },
+    {
+      "id": "it_clang_816",
+      "widget_id": "widget_clang_816",
+      "topic": "Arrays in Functions — Side Effect When Modifying Elements",
+      "q": "True or False: Calling `reset_first(data)` will modify element `data[0]` of the original array in `main`, since the array is passed by address (pointer)?",
+      "hint": "Are array elements passed by copy, or does the function get direct access to the original array memory?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! When passing an array to a function, the address of its first element is passed. Modifications of array elements inside the function affect the array in the calling program (`main`). 0 will be printed.",
+        "Incorrect. Unlike base types (`int`, `float`), arrays are passed with access to original elements."
+      ]
+    },
+    {
+      "id": "it_clang_817",
+      "widget_id": "widget_clang_817",
+      "topic": "C Architecture — User Input/Output Isolation",
+      "q": "Which statement best explains why calculating the area `areaTriangolo` is implemented without `scanf` and `printf` inside the function body?",
+      "hint": "How does I/O isolation affect reusability of a function from other modules or graphical interfaces?",
+      "options": [
+        "This makes the function universal: it can be called from any other functions without imposing console I/O",
+        "Using printf inside functions lowers float precision accuracy",
+        "Functions with float return type forbid calling scanf",
+        "So required by C89 standard specification for all math functions",
+        "C89 preprocessor cannot handle printf inside functions"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Good design style in C assumes that a pure logic or math function interacts only via input parameters and `return`. User I/O is organized in `main` or specialized functions.",
+        "Incorrect. `printf` does not affect calculation precision of type `float`.",
+        "Incorrect. Calling `scanf` is technically allowed, but bad architecturally.",
+        "Incorrect. Standard does not forbid this; it is a code design recommendation.",
+        "Incorrect. Preprocessor works independently of `printf` calls."
+      ]
+    },
+    {
+      "id": "it_clang_818",
+      "widget_id": "widget_clang_818",
+      "topic": "void Functions — Empty return for Early Termination",
+      "q": "True or False: In `void` functions, the `return;` statement without an expression is used for early exit from the function upon fulfilling a certain condition?",
+      "hint": "What expression should `return` contain in a `void` type function?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! When a function has `void` type, `return;` without arguments can be used to immediately terminate execution (e.g., if an invalid argument is passed).",
+        "Incorrect. Using an empty `return;` fully complies with standard."
+      ]
+    },
+    {
+      "id": "it_clang_819",
+      "widget_id": "widget_clang_819",
+      "topic": "Recursion — Base Case",
+      "q": "What will happen if the condition `if (n <= 0) return;` is removed from recursive function `recursive_print`?",
+      "hint": "What happens to the call stack during infinite recursion?",
+      "options": [
+        "Infinite recursion and stack overflow (Stack Overflow) will occur",
+        "Function will execute exactly 1 time",
+        "Compiler will issue an error at build stage",
+        "Program will compile and terminate without printing"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Without a base case (stop condition), the function will call itself infinitely, exhaust available call stack memory, and crash with a stack overflow error.",
+        "Incorrect. Function will continue infinitely calling itself with decreasing `n` values.",
+        "Incorrect. Code without `if` branch is syntactically valid; compiler does not know recursion depth.",
+        "Incorrect. Printing will occur until the stack overflows."
+      ]
+    },
+    {
+      "id": "it_clang_820",
+      "widget_id": "widget_clang_820",
+      "topic": "Memory — State Preservation with static Variables",
+      "q": "What will three sequential calls to `printf(\"%d \", get_next_id());` output?",
+      "hint": "What is `id` value on first call and how does postfix increment `id++` change it?",
+      "options": [
+        "100 101 102 ",
+        "100 100 100 ",
+        "101 102 103 ",
+        "0 1 2 ",
+        "101 101 101 ",
+        "0 0 0 "
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Static variable `static int id = 100;` is initialized to 100 at program start. On first call postfix increment returns 100 and sets `id = 101`. On second call returns 101 setting `id = 102`. On third call returns 102.",
+        "Incorrect. Variable retains its value between calls thanks to `static`.",
+        "Incorrect. Postfix increment `id++` returns current value (100) first, then increments it.",
+        "Incorrect. Initial variable value is explicitly set to 100.",
+        "Incorrect. Increment persists in program memory.",
+        "Incorrect. Variable has explicit initialization of 100."
+      ]
+    },
+    {
+      "id": "it_clang_821",
+      "widget_id": "widget_clang_821",
+      "topic": "Pointers — Passing Functions as Arguments",
+      "q": "What will call `apply(add, 3, 4)` output?",
+      "hint": "How is expression `op(x, y)` inside `apply` calculated if function `add` is passed as `op`?",
+      "options": [
+        "7",
+        "12",
+        "34",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Function `apply` takes a function pointer `int (*op)(int, int)`. When passing `add`, call `op(x, y)` turns into `add(3, 4)`, which yields 7.",
+        "Incorrect. Function `add` performs addition $3 + 4 = 7$, not multiplication.",
+        "Incorrect. Arguments are not concatenated as strings.",
+        "Incorrect. Passing function pointers is a standard C mechanism."
+      ]
+    },
+    {
+      "id": "it_clang_822",
+      "widget_id": "widget_clang_822",
+      "topic": "Scope — Shadowing Global Variables",
+      "q": "What will `show(5)` output if global variable `int val = 50` is declared in program, and function has parameter with same name `int val`?",
+      "hint": "Which variable has higher priority in function's inner scope?",
+      "options": [
+        "5 (local parameter shadows global variable)",
+        "50 (global variable has priority)",
+        "Compilation error — redefinition of name val"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Local variables and function parameters shadow global variables of same name inside their scope block. Inside `show`, name `val` refers to passed argument 5.",
+        "Incorrect. Inner local parameter shadows global scope.",
+        "Incorrect. Declaring local parameter with name of global variable is allowed by standard."
+      ]
+    },
+    {
+      "id": "it_clang_823",
+      "widget_id": "widget_clang_823",
+      "topic": "C89 — inline Keyword in Strict C89 Standard",
+      "q": "True or False: The keyword `inline` is an official part of C89 standard (ANSI C)?",
+      "hint": "In which C standard did keyword `inline` officially enter language specification?",
+      "options": [
+        "False",
+        "True"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In official C89 / C90 standard, keyword `inline` did not exist. It was added to C standard only in C99 (though in GCC it existed as extension `__inline__`).",
+        "Incorrect. In C89 `inline` was not part of standard keywords set."
+      ]
+    },
+    {
+      "id": "it_clang_824",
+      "widget_id": "widget_clang_824",
+      "topic": "Structures — Passing Structures by Value to Functions",
+      "q": "Will call `change_box(my_box)` modify value of field `my_box.size` in function `main`?",
+      "hint": "Are structures passed to functions by value (copying) or by reference in C by default?",
+      "options": [
+        "No, will output 10 (structure passed by value)",
+        "Yes, will output 99 (structure will change)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Like base types, structures in C by default are passed to functions by value (full local copy of structure is created). Modifying local copy in `change_box` does not affect `my_box` in `main`. Will output 10.",
+        "Incorrect. To modify original structure, you must pass pointer to it (`struct Box *`)."
+      ]
+    },
+    {
+      "id": "it_clang_825",
+      "widget_id": "widget_clang_825",
+      "topic": "Arrays — Explicitly Passing Array Size in Parameters",
+      "q": "Why when passing an array to a function in C is an extra parameter with its size `int n` almost always passed?",
+      "hint": "Does array pointer preserve information about element count?",
+      "options": [
+        "Because array decays to pointer and loses information about its size",
+        "Required by compiler — without size array will not compile",
+        "To allocate dynamic memory on stack",
+        "To change element type from int to float"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, function receives only pointer to first element of array and doesn't know where array ends. Thus passing size `int n` as second argument is necessary for safe loop traversal.",
+        "Incorrect. Function will compile without size, but won't know element count.",
+        "Incorrect. Memory allocation occurs before function call.",
+        "Incorrect. Array element type is fixed and doesn't change."
+      ]
+    },
+    {
+      "id": "it_clang_826",
+      "widget_id": "widget_clang_826",
+      "topic": "Parameters — Formal and Actual Parameters",
+      "q": "How do formal function parameters differ from actual (effective) arguments?",
+      "hint": "What is declared when describing function structure, and what is passed during call?",
+      "options": [
+        "Formal parameters are variable names in function declaration; actual arguments are specific values passed during call",
+        "Formal parameters are passed by reference only, actual by value only",
+        "Actual arguments are specified in function body, formal in main block",
+        "No difference, complete synonyms in C standard"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Formal parameters (`x`, `y`) define list and types of 'containers' in function header. Actual arguments (`5`, `6`) are specific values supplied by caller during specific call.",
+        "Incorrect. Pass method is determined by parameter type and syntax, not terms.",
+        "Incorrect. Formal parameters are specified in header, actual on call.",
+        "Incorrect. Difference is fundamental to understanding function calls."
+      ]
+    },
+    {
+      "id": "it_clang_827",
+      "widget_id": "widget_clang_827",
+      "topic": "void Functions — Absence of Return Value",
+      "q": "Why is return type `void` used in function `somma`?",
+      "hint": "Does this function return calculated value to calling program via return or print it immediately?",
+      "options": [
+        "Because function does not return value to calling program, only prints result to screen",
+        "Because function accepts int arguments",
+        "Because C forbids returning results from functions with for loops",
+        "Because void type speeds up loop execution"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `void` type is specified when function executes for side effects (e.g., screen output) and should not return any values to caller program.",
+        "Incorrect. Input parameter types do not determine function return type.",
+        "Incorrect. Functions with loops can freely return values via `return`.",
+        "Incorrect. Type `void` indicates absence of result, not loop optimization."
+      ]
+    },
+    {
+      "id": "it_clang_828",
+      "widget_id": "widget_clang_828",
+      "topic": "void Functions — Syntax and Absence of Evaluated Expression in return",
+      "q": "True or False: In `void` type functions, the `return` statement must either be absent or called without expressions (`return;`) for early exit?",
+      "hint": "Can you write `return val;` in a function with return type `void`?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! If function has type `void`, it does not return result. The `return` statement can either be omitted completely or written as `return;` without arguments for early exit.",
+        "Incorrect. Returning any expression from `void` function will cause compilation error."
+      ]
+    },
+    {
+      "id": "it_clang_829",
+      "widget_id": "widget_clang_829",
+      "topic": "Prototypes — Checking Argument Count and Types",
+      "q": "What will compiler do when attempting to call `areaTriangolo(10.0)` if prototype declares two `float` parameters?",
+      "hint": "How does prototype help compiler find syntax errors on call?",
+      "options": [
+        "Issue a compilation error for argument count mismatch",
+        "Automatically substitute 0.0f as second argument",
+        "Compile code and assign random garbage value to second argument",
+        "Issue warning but replace missing parameter with one"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Prototype informs compiler about count and types of parameters. Passing fewer or more arguments leads to compilation error.",
+        "Incorrect. C compiler does not substitute default values for arguments.",
+        "Incorrect. With prototype present, parameter mismatch is caught before build.",
+        "Incorrect. Cannot call function with incorrect argument count when prototype is present."
+      ]
+    },
+    {
+      "id": "it_clang_830",
+      "widget_id": "widget_clang_830",
+      "topic": "Arrays and Functions — Passing Address and Modifying Elements",
+      "q": "What will elements of array `elenco` equal after calling `incAll(elenco)`?",
+      "hint": "Will 1 be added to each element of original array `{4, 3, 7, 12, -9}`?",
+      "options": [
+        "{5, 4, 8, 13, -8}",
+        "{4, 3, 7, 12, -9}",
+        "{1, 1, 1, 1, 1}",
+        "{0, 0, 0, 0, 0}"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Function `incAll` takes an array and increments each element by 1 (`a[i] = a[i] + 1`). Array is modified in place, so result is `{5, 4, 8, 13, -8}`.",
+        "Incorrect. Array is passed by address, so modifications persist.",
+        "Incorrect. Elements increment by 1 from original values, not set to 1.",
+        "Incorrect. Array is not zeroed out."
+      ]
+    },
+    {
+      "id": "it_clang_831",
+      "widget_id": "widget_clang_831",
+      "topic": "Function Evaluation — Argument Substitution",
+      "q": "What is value `z` equal to after executing `int z = f(5, 6)` for mathematical function $f(x, y) = 5x + 3y$?",
+      "hint": "Calculate expression $5 \\times 5 + 3 \\times 6$.",
+      "options": [
+        "43",
+        "30",
+        "28",
+        "56"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Substituting actual arguments $x = 5$ and $y = 6$ yields: $5 \\times 5 + 3 \\times 6 = 25 + 18 = 43$.",
+        "Incorrect. Check operation precedence and values: $25 + 18 = 43$.",
+        "Incorrect. Recalculate $5 \\times 5 = 25$ and $3 \\times 6 = 18$.",
+        "Incorrect. Value $5 \\times 6 + 3 \\times 5$ equals 45, whereas $5 \\times 5 + 3 \\times 6 = 43$."
+      ]
+    },
+    {
+      "id": "it_clang_832",
+      "widget_id": "widget_clang_832",
+      "topic": "return Statement — Function Execution Termination",
+      "q": "Why is statement `y = y - x;` in `max` function body marked as unreachable code (never executed)?",
+      "hint": "What happens to function immediately after executing `return` statement?",
+      "options": [
+        "Because any return statement above leads to immediate exit from function",
+        "Because variable y is not declared",
+        "Because subtraction operator is forbidden after if-else branch",
+        "Because if and else conditions cover only positive numbers"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `return` statement terminates function execution at the point it is encountered. Since both `if` and `else` branches contain `return`, control returns to caller before line `y = y - x;`.",
+        "Incorrect. Variable `y` is declared in formal parameters list.",
+        "Incorrect. Subtraction operator is completely legal.",
+        "Incorrect. Condition `x > y` covers any numeric values."
+      ]
+    },
+    {
+      "id": "it_clang_833",
+      "widget_id": "widget_clang_833",
+      "topic": "Prototypes — Advantage of Placement Before main()",
+      "q": "What is main convenience of placing function prototypes before calling `main()`?",
+      "hint": "Where by convention is function body placed and what does prototype allow compiler to do?",
+      "options": [
+        "Allows placing function definitions after main() and helps compiler find call errors",
+        "Allows omitting return type in function body",
+        "Reduces compiled binary file size",
+        "Automatically makes all function variables global"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Prototype declares function signature before actual definition. This allows placing function code after `main()` and gives compiler ability to check argument types on call.",
+        "Incorrect. Return type is mandatory in both prototype and definition.",
+        "Incorrect. Prototypes serve for type checking and do not affect final code size.",
+        "Incorrect. Prototypes do not alter scope of local variables."
+      ]
+    },
+    {
+      "id": "it_clang_834",
+      "widget_id": "widget_clang_834",
+      "topic": "Parameters — Dynamic Binding on Call",
+      "q": "True or False: Parameter binding is created dynamically on each call and retains no memory of previous function calls?",
+      "hint": "Do calculations in call `a2 = areaTriangolo(7.5, 14.0)` depend on previously called `a1 = areaTriangolo(10.0, 20.0)`?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Each function call is isolated and independent. Parameter binding is active only during current execution session, after which state is reset.",
+        "Incorrect. Memory of parameters is not preserved between regular calls."
+      ]
+    },
+    {
+      "id": "it_clang_835",
+      "widget_id": "widget_clang_835",
+      "topic": "Design Norms — Input/Output (I/O) Isolation",
+      "q": "True or False: According to clean code rules, a computational function (e.g., area calculation) should not perform I/O (`scanf`/`printf`) itself unless specially intended for interactive input?",
+      "hint": "Who should manage user interaction — pure calculation function itself or calling code / main?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Computational function should interact only with calling program via parameters and `return`. This allows reusing function in other programs or modules without console dependency.",
+        "Incorrect. This is a fundamental design norm for modular C code."
+      ]
+    },
+    {
+      "id": "it_clang_836",
+      "widget_id": "widget_clang_836",
+      "topic": "Arrays — Result of incAll Function",
+      "q": "Which element will be at index `a[4]` of array `elenco` after call `incAll(elenco)` completes?",
+      "hint": "Original value of `elenco[4]` was `-9`. Add 1.",
+      "options": [
+        "-8",
+        "-9",
+        "-10",
+        "0",
+        "8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Original fifth element of array is `-9`. Expression `a[i] = a[i] + 1` increases its value by 1: $-9 + 1 = -8$.",
+        "Incorrect. Value `-9` changed because array was passed by address.",
+        "Incorrect. $-9 + 1 = -8$, not $-10$.",
+        "Incorrect. Recalculate $-9 + 1$.",
+        "Incorrect. Sign of number remains negative."
+      ]
+    },
+    {
+      "id": "it_clang_837",
+      "widget_id": "widget_clang_837",
+      "topic": "Identifiers — Function Naming Rules",
+      "q": "True or False: Function names in C obey the exact same identifier syntax rules as regular variable names?",
+      "hint": "Can a function name start with a digit, contain spaces or special characters?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Function names, like variable names, must start with a letter or underscore, may contain digits, and cannot match C keywords. Name `2nd_calc_val` is invalid because it starts with a digit.",
+        "Incorrect. Identifier naming rules are uniform for variables and functions."
+      ]
+    },
+    {
+      "id": "it_clang_838",
+      "widget_id": "widget_clang_838",
+      "topic": "return Statement — Type Conversion on Return",
+      "q": "What will happen to value `2.5` obtained from evaluating `(float)5 / 2` when returned from function `calc_ratio` having type `int`?",
+      "hint": "To which type will C convert returned expression if function type is `int`?",
+      "options": [
+        "Value will implicitly cast to int and drop fractional part (returns 2)",
+        "Compilation error will occur due to type mismatch",
+        "2.5 will be returned unchanged",
+        "Program will crash with runtime error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! If type of expression in `return` differs from function type, C automatically casts returned value to function type. Floating-point `2.5` casts to `int` and truncates to `2`.",
+        "Incorrect. Implicit casting of base types on function return is allowed.",
+        "Incorrect. Function type `int` cannot return floating-point value.",
+        "Incorrect. Type casting occurs correctly during execution."
+      ]
+    },
+    {
+      "id": "it_clang_839",
+      "widget_id": "widget_clang_839",
+      "topic": "Prototypes — Meaningful Argument Names",
+      "q": "Why is it recommended to specify meaningful argument names in prototypes (e.g., `float base, float altezza`), even though formal parameter names in prototypes are optional?",
+      "hint": "How do parameter names in signature affect code readability and self-documentation?",
+      "options": [
+        "This improves code readability and makes parameter purpose clear",
+        "Required by GCC compiler for proper linking",
+        "Without parameter names function runs slower",
+        "This prevents crash when passing negative numbers"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Using meaningful parameter names even in prototypes increases code readability and serves as built-in documentation for programmer.",
+        "Incorrect. Compiler does not require parameter names in prototype.",
+        "Incorrect. Parameter names do not affect execution speed.",
+        "Incorrect. Names do not affect sign or number checks."
+      ]
+    },
+    {
+      "id": "it_clang_840",
+      "widget_id": "widget_clang_840",
+      "topic": "Parameters — Rule of Actual Parameter Matching",
+      "q": "By which three criteria must actual parameters passed on call match formal function parameters?",
+      "hint": "Recall requirements for passing argument list at moment of function call.",
+      "options": [
+        "By count, position, and type",
+        "By memory size, variable name, and scope",
+        "By sign, string length, and letter case",
+        "By declaration order in main, const and static modifiers"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Actual parameters must match formal parameters by count (same number of arguments), position (order of passing), and type (type compatibility).",
+        "Incorrect. Variable names on call can be anything.",
+        "Incorrect. Signs and string lengths are not parameter matching criteria.",
+        "Incorrect. Main C rules are count, position, and type."
+      ]
+    }
+  ]
+}

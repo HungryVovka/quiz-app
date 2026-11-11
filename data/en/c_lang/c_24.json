@@ -1,0 +1,579 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_751",
+      "widget_id": "widget_clang_751",
+      "topic": "C89 — Rule of Implicit int (Implicit int)",
+      "q": "Will the function `add(a, b)` compile in the C89 standard, and what return type will the compiler choose by default?",
+      "hint": "What type did the C89 compiler substitute if the function or argument type was not explicitly specified?",
+      "options": [
+        "It will compile and return int (7)",
+        "Compilation error — parameters must specify a type",
+        "It will compile, but will return void",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In the C89 standard, the 'implicit int' rule applied: if the return type or argument type of a function was omitted, the compiler defaulted it to `int`. In C99, this rule was abolished.",
+        "Incorrect. In C89, omitting `int` when declaring functions and variables was allowed.",
+        "Incorrect. The default type was always `int`, not `void`.",
+        "Incorrect. The behavior of C89 compilers strictly regulated this case."
+      ]
+    },
+    {
+      "id": "it_clang_752",
+      "widget_id": "widget_clang_752",
+      "topic": "Pointers — Operator Precedence *p++",
+      "q": "What will `printf` output after executing the expression `int val = *p++`?",
+      "hint": "How do the precedences of dereferencing `*` and postfix increment `++` relate to each other?",
+      "options": [
+        "10 20",
+        "10 10",
+        "11 20",
+        "20 20"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Postfix `++` has higher precedence than `*`. The expression parses as `*(p++)`: pointer `p`'s address shifts to the next element, but returns the OLD pointer to `a[0]`. Consequently, `val` gets 10, and `*p` becomes equal to `a[1]` (20).",
+        "Incorrect. Pointer `p` shifted to the next element of the array.",
+        "Incorrect. The value of `a[0]` was not incremented; the pointer itself increased.",
+        "Incorrect. Variable `val` reads the value before shifting the pointer."
+      ]
+    },
+    {
+      "id": "it_clang_753",
+      "widget_id": "widget_clang_753",
+      "topic": "Address Arithmetic — Shifting void* via Explicit Type Casting",
+      "q": "What will `printf(\"%d\", *(int *)p)` output after executing `p = (char *)p + sizeof(int)`?",
+      "hint": "By how many bytes will pointer `p` shift if cast to `char *` and `sizeof(int)` is added?",
+      "options": [
+        "20",
+        "10",
+        "30",
+        "40"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Casting `(char *)p` allows moving through memory in 1-byte steps. Adding `sizeof(int)` (4 bytes) shifts the address exactly to the second element `arr[1]`. Casting back to `(int *)` and dereferencing gives 20.",
+        "Incorrect. 10 is the initial element `arr[0]` before the shift.",
+        "Incorrect. 30 is the third element `arr[2]`.",
+        "Incorrect. 40 is the fourth element `arr[3]`."
+      ]
+    },
+    {
+      "id": "it_clang_754",
+      "widget_id": "widget_clang_754",
+      "topic": "Memory — Alignment and Padding in Structures",
+      "q": "Why will the expression `sizeof(struct Data) > (sizeof(char) + sizeof(int))` return 1 (true) on most architectures?",
+      "hint": "What does the compiler add between structure fields for optimal memory alignment of data?",
+      "options": [
+        "The compiler inserts alignment bytes (padding) after char",
+        "The struct type automatically adds 4 bytes to the header",
+        "The char type size is 4 bytes inside structures",
+        "The sizeof operator is mistaken for structures"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Due to processor alignment rules, `int` fields must be placed at addresses that are multiples of 4 bytes. The compiler adds 3 padding bytes after `char c`, making the structure size 8 bytes, which is strictly greater than $1 + 4 = 5$ bytes.",
+        "Incorrect. No headers are added to C structure memory.",
+        "Incorrect. `sizeof(char)` is guaranteed to be 1 in C.",
+        "Incorrect. `sizeof` correctly accounts for alignment bytes."
+      ]
+    },
+    {
+      "id": "it_clang_755",
+      "widget_id": "widget_clang_755",
+      "topic": "Strings — Attempting to Write to a String Literal (Read-only Memory)",
+      "q": "What will happen if you attempt to uncomment and execute the line `str[0] = 'h'` for `char *str = \"Hello\"`?",
+      "hint": "In which memory region are string literals stored in C?",
+      "options": [
+        "Runtime error (Segmentation Fault / Access Violation)",
+        "The string will successfully change to \"hello\"",
+        "Compilation error",
+        "Nothing will happen, the operation will be ignored"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, string literals are located in a read-only memory section (`.rodata`). Attempting to modify a literal via a pointer leads to undefined behavior, and on modern OSes — to a program crash (Segmentation Fault).",
+        "Incorrect. Writing to read-only memory is forbidden at the OS level.",
+        "Incorrect. Syntactically the code is valid, so the compiler does not issue an error (unless `const char*` is specified).",
+        "Incorrect. Memory protection will trigger and terminate the process."
+      ]
+    },
+    {
+      "id": "it_clang_756",
+      "widget_id": "widget_clang_756",
+      "topic": "Memory — Returning a Pointer to a Local Automatic Variable",
+      "q": "What will calling `*get_ptr()` lead to when returning `&x` from a function where `int x` is a local variable?",
+      "hint": "What happens to a function's stack frame after its execution completes?",
+      "options": [
+        "To undefined behavior (Dangling Pointer)",
+        "Will always guaranteed output 42",
+        "To a compilation error in C89",
+        "Variable x is automatically moved to the heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Local automatic variables are destroyed upon exiting the function. Returning the address of such a variable creates a dangling pointer. Accessing it leads to undefined behavior.",
+        "Incorrect. Although the value 42 might accidentally remain in stack garbage, there is no guarantee of operation.",
+        "Incorrect. The compiler may issue a warning, but not an error.",
+        "Incorrect. Stack memory is not automatically moved to the heap."
+      ]
+    },
+    {
+      "id": "it_clang_757",
+      "widget_id": "widget_clang_757",
+      "topic": "Bitwise Operations — Right Bitwise Shift of Negative Numbers",
+      "q": "What will `printf(\"%d\", x >> 1)` output for `int x = -1` when compiled in GCC (x86/x64)?",
+      "hint": "Which shift (arithmetic or logical) does GCC use for signed negative numbers?",
+      "options": [
+        "-1",
+        "0",
+        "2147483647",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The C standard specifies that right shifting a negative signed number is implementation-defined. Virtually all compilers (including GCC) use an arithmetic shift, filling high bits with ones. For -1 (`1111...1111`), shifting right leaves all bits equal to 1, preserving the value -1.",
+        "Incorrect. 0 would result from a logical shift (zero-filling), but GCC applies an arithmetic shift.",
+        "Incorrect. This is the maximum `INT_MAX` value.",
+        "Incorrect. The bitwise shift operation is completely valid."
+      ]
+    },
+    {
+      "id": "it_clang_758",
+      "widget_id": "widget_clang_758",
+      "topic": "C89 — Local Block extern Declaration",
+      "q": "Is the declaration `extern int g_var;` inside a function allowed in C89 if the variable itself is defined below in the code?",
+      "hint": "Does the `extern` keyword allow informing the compiler of a global variable's existence inside a local block?",
+      "options": [
+        "Yes, it will compile and output 100",
+        "No, extern can only be used in global scope",
+        "Linker error — global variables must be defined before their first call",
+        "Will output 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C89, an `extern` declaration inside a function block informs the compiler that the variable `g_var` has external linkage. The linker will bind it to the global definition `int g_var = 100`, and the code will output 100.",
+        "Incorrect. Writing `extern` inside functions is allowed in the C89 standard.",
+        "Incorrect. The order of defining a global variable in a file does not matter to the linker if a declaration exists.",
+        "Incorrect. Variable `g_var` has an explicit initialization with value 100."
+      ]
+    },
+    {
+      "id": "it_clang_759",
+      "widget_id": "widget_clang_759",
+      "topic": "Pointers — Function Pointers and Their Call Syntax",
+      "q": "Is the call `f(2, 3)` equivalent to `(*f)(2, 3)` when working with a function pointer `int (*f)(int, int)`?",
+      "hint": "Does the C standard require explicit dereferencing `*` when calling a function via pointer?",
+      "options": [
+        "Yes, both syntaxes are completely equivalent and will output 5",
+        "No, syntax f(2, 3) is forbidden in C89",
+        "No, f(2, 3) will cause a compilation error",
+        "Both calls lead to a memory crash"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, a function name automatically converts to a pointer. Dereferencing a function pointer `(*f)` implicitly converts back to a pointer. Calls `f(2, 3)` and `(*f)(2, 3)` are identical and return 5.",
+        "Incorrect. The shorthand call `f(2, 3)` is supported in all C standards starting from C89.",
+        "Incorrect. There is no compilation error.",
+        "Incorrect. This is standard mechanism for working with function pointers."
+      ]
+    },
+    {
+      "id": "it_clang_760",
+      "widget_id": "widget_clang_760",
+      "topic": "Memory — Initial Initialization of Global and Automatic Variables",
+      "q": "Does the C89 standard guarantee that global variable `g_a` will equal 0 when the program starts?",
+      "hint": "How do initial initialization rules differ for static and automatic memory?",
+      "options": [
+        "Yes, variables with static storage duration are always zeroed",
+        "No, global variables contain garbage",
+        "Yes, only if they are explicitly declared with the static keyword",
+        "Depends on compiler settings"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Variables with 'static' storage duration (including all global variables) are guaranteed to be initialized to zero (0 for numbers, NULL for pointers) before program execution starts. Automatic local variables contain garbage.",
+        "Incorrect. Garbage is contained only in uninitialized local auto-variables on the stack.",
+        "Incorrect. The `static` keyword is not required to zero global variables.",
+        "Incorrect. This is a strict requirement of all C standards."
+      ]
+    },
+    {
+      "id": "it_clang_761",
+      "widget_id": "widget_clang_761",
+      "topic": "Operators — Lack of Evaluation Inside sizeof (Unevaluated Operand)",
+      "q": "What will variable `x` equal after executing the line `sizeof(x++)`?",
+      "hint": "Are expressions inside `sizeof` evaluated at runtime for regular types?",
+      "options": [
+        "5",
+        "6",
+        "4",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `sizeof` operator is evaluated at compile-time and only determines the expression type. The expression `x++` inside `sizeof` is not executed at runtime, so `x` remains equal to 5.",
+        "Incorrect. Increment `x++` is not executed.",
+        "Incorrect. 4 is a possible result of `sizeof(int)` itself, but the value of `x` does not change.",
+        "Incorrect. The value of `x` is preserved."
+      ]
+    },
+    {
+      "id": "it_clang_762",
+      "widget_id": "widget_clang_762",
+      "topic": "C89 — Automatic Concatenation of Adjacent String Literals",
+      "q": "Will the entry `char str[] = \"Hello, \" \"World!\";` compile in C89 and what will `printf` output?",
+      "hint": "How does the C compiler react to two string literals written consecutively separated by whitespace?",
+      "options": [
+        "It will compile and output: Hello, World!",
+        "Compilation error — missing + operator",
+        "Will output only the first word: Hello,",
+        "Compilation error — comma required"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C89, adjacent string literals separated only by whitespace or newlines are automatically concatenated by the compiler into a single string `\"Hello, World!\"`.",
+        "Incorrect. The `+` operator is not used for string concatenation in C.",
+        "Incorrect. Both parts are joined into a single array.",
+        "Incorrect. The construct fully complies with C89 standard."
+      ]
+    },
+    {
+      "id": "it_clang_763",
+      "widget_id": "widget_clang_763",
+      "topic": "Preprocessor — Macro Substitution Order and Operator #",
+      "q": "What will `printf` output when executing `TO_STR(VAL)` given `#define VAL 100` and `#define TO_STR(x) #x`?",
+      "hint": "Does macro `VAL` expand into number `100` if operator `#` is directly applied to its parameter?",
+      "options": [
+        "VAL",
+        "100",
+        "\"100\"",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! When a macro parameter is used with operator `#`, the preprocessor does NOT expand the passed macro argument, but converts the argument name into a string as is. Therefore `TO_STR(VAL)` becomes `\"VAL\"` (outputs `VAL`). To expand `VAL` to `100`, a two-level macro is needed.",
+        "Incorrect. 100 would result when using an additional macro substitution level.",
+        "Incorrect. Double quotes are not output with specifier `%s`.",
+        "Incorrect. Preprocessing is correct."
+      ]
+    },
+    {
+      "id": "it_clang_764",
+      "widget_id": "widget_clang_764",
+      "topic": "Functions — Classic String Copying via strcpy",
+      "q": "What does standard function `strcpy(dst, src)` from `<string.h>` library do?",
+      "hint": "Does `strcpy` copy null terminator `\\0` from the source string?",
+      "options": [
+        "Copies characters from src to dst, including trailing '\\0'",
+        "Copies characters, but does NOT write '\\0'",
+        "Checks dst size and truncates string on overflow",
+        "Returns number of copied bytes"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Function `strcpy` character-by-character copies string from `src` to `dst` until it encounters null terminator `\\0`, which is also copied into `dst`. It does not check destination `dst` buffer size (unlike `strncpy`).",
+        "Incorrect. Trailing null terminator is mandatory copied.",
+        "Incorrect. `strcpy` does not know array `dst` size and does not protect against buffer overflow.",
+        "Incorrect. Function returns pointer `dst`, not byte count."
+      ]
+    },
+    {
+      "id": "it_clang_765",
+      "widget_id": "widget_clang_765",
+      "topic": "Data Types — Array Type Aliases Declaration via typedef",
+      "q": "What is element `arr[2]` equal to given declaration `typedef int IntArray[3]; IntArray arr = {1, 2, 3};`?",
+      "hint": "What type does `IntArray` name become in such a `typedef` declaration?",
+      "options": [
+        "3",
+        "2",
+        "1",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Syntax `typedef int IntArray[3]` creates alias `IntArray` for type 'array of 3 int elements'. Declaration `IntArray arr` is equivalent to `int arr[3]`. Third element `arr[2]` equals 3.",
+        "Incorrect. 2 is element `arr[1]`.",
+        "Incorrect. 1 is element `arr[0]`.",
+        "Incorrect. Such `typedef` syntax is completely legal in C."
+      ]
+    },
+    {
+      "id": "it_clang_766",
+      "widget_id": "widget_clang_766",
+      "topic": "Preprocessor — Conditional Compilation #if 0",
+      "q": "True or False: code inside block `#if 0 ... #endif` is completely excluded by preprocessor and does not get into machine code of program?",
+      "hint": "Is C syntax parsing performed for lines inside disabled preprocessor branches?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Preprocessor completely removes contents of block `#if 0` before translation phase in compiler. This is a popular way to quickly disable ('comment out') large blocks of code.",
+        "Incorrect. Block is completely cut out during preprocessor step."
+      ]
+    },
+    {
+      "id": "it_clang_767",
+      "widget_id": "widget_clang_767",
+      "topic": "Qualifiers — Purpose of volatile Keyword",
+      "q": "Why is `volatile` qualifier used before variable declaration `flag`?",
+      "hint": "What does compiler do with variable reads from memory if it assumes nobody changes it in a loop?",
+      "options": [
+        "Prevents compiler from optimizing (caching in registers) repeated reads of variable from memory",
+        "Makes variable constant, forbidding write operation",
+        "Forces compiler to place variable in flash memory (Flash/ROM)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Qualifier `volatile` informs compiler that variable value can change externally (by interrupt, hardware, or another thread). Compiler disables caching optimizations in CPU registers and re-reads cell from RAM each time.",
+        "Incorrect. Write prohibition is done by `const`, not `volatile`.",
+        "Incorrect. ROM placement is managed by sections and `const`."
+      ]
+    },
+    {
+      "id": "it_clang_768",
+      "widget_id": "widget_clang_768",
+      "topic": "Scope — Static Functions (Internal Linkage)",
+      "q": "True or False: function with `static` keyword has internal linkage (Internal Linkage) and is visible only within current `.c` file?",
+      "hint": "Will linker be able to bind a call from one file to a static function from another file?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Declaring function as `static` limits its scope to current translation unit (`.c` file). Other files cannot call this function by name.",
+        "Incorrect. This is one of main purposes of `static` for functions in C."
+      ]
+    },
+    {
+      "id": "it_clang_769",
+      "widget_id": "widget_clang_769",
+      "topic": "Operators — Side Effects and Sequence Points (i = i++)",
+      "q": "What is result of evaluating expression `i = i++` in C?",
+      "hint": "Does modification of same scalar variable occur twice between adjacent sequence points?",
+      "options": [
+        "Undefined Behavior",
+        "Guaranteed value 5",
+        "Guaranteed value 6",
+        "Compilation error",
+        "Runtime error (Segmentation Fault)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Modifying same variable more than once without intermediate sequence point is classic example of Undefined Behavior in C. Program behavior is not guaranteed and depends on compiler.",
+        "Incorrect. Behavior is not defined by standard.",
+        "Incorrect. Result cannot be predicted by standard.",
+        "Incorrect. Code is syntactically valid for compiler.",
+        "Incorrect. Command does not access invalid memory addresses."
+      ]
+    },
+    {
+      "id": "it_clang_770",
+      "widget_id": "widget_clang_770",
+      "topic": "Dynamic Memory — Passing NULL to free() Function",
+      "q": "True or False: passing `NULL` pointer to `free(ptr)` function is absolutely safe operation according to standard?",
+      "hint": "What does `free` function do when receiving a null pointer?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! According to C standard (starting from C89), if `NULL` is passed to `free`, function simply does nothing and immediately returns control without errors.",
+        "Incorrect. `free(NULL)` is standard and guaranteed safe operation."
+      ]
+    },
+    {
+      "id": "it_clang_771",
+      "widget_id": "widget_clang_771",
+      "topic": "C89 — Absence of return in main() Function",
+      "q": "What will happen in C89 if exit point from `int main(void)` is reached without explicit `return` statement?",
+      "hint": "Was automatic insertion of `return 0;` part of C89 standard (unlike C99+)?",
+      "options": [
+        "Function will finish, but return undefined value (garbage) to operating system",
+        "Compiler will automatically insert return 0;",
+        "Compilation error — main must contain return",
+        "Program will loop infinitely",
+        "Program will terminate with crash (Segmentation Fault)",
+        "Compiler will generate critical linker error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C89 standard, if control reaches end of `main()` without `return`, exit code to calling process (OS) is undefined. Automatic `return 0;` was added only starting from C99.",
+        "Incorrect. Automatic `return 0;` appeared only in C99.",
+        "Incorrect. In C89 compiler will issue warning, but compile code.",
+        "Incorrect. Program correctly terminates CPU execution.",
+        "Incorrect. No memory crash occurs.",
+        "Incorrect. Linker does not check presence of `return` in body."
+      ]
+    },
+    {
+      "id": "it_clang_772",
+      "widget_id": "widget_clang_772",
+      "topic": "Bitwise Operations — Bitwise Inversion ~",
+      "q": "What will `printf(\"%d\", b)` output when inverting all bits of 8-bit `unsigned char a = 0`?",
+      "hint": "Convert 0 to binary (`00000000`) and invert each bit.",
+      "options": [
+        "255",
+        "-1",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Number `0` in 8-bit form is `00000000`. Bitwise NOT (`~`) changes all bits to `11111111`, which for unsigned 8-bit type equals 255.",
+        "Incorrect. For unsigned type `unsigned char` result cannot be negative.",
+        "Incorrect. Inversion changed all zero bits to ones."
+      ]
+    },
+    {
+      "id": "it_clang_773",
+      "widget_id": "widget_clang_773",
+      "topic": "C89 — Variable Declarations Strictly at Start of Block",
+      "q": "True or False: declaration `int b = 10;` after `printf` call will cause compilation error when building with `-std=c89` flag in GCC?",
+      "hint": "Where do C89/C90 standards permit declaring local variables inside block `{}`?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C89 standard, absolutely all local variable declarations must be strictly at the very beginning of compound statement (block `{}`) prior to any executable instructions.",
+        "Incorrect. Mixing instructions and declarations is forbidden in strict C89."
+      ]
+    },
+    {
+      "id": "it_clang_774",
+      "widget_id": "widget_clang_774",
+      "topic": "Address Arithmetic — Pointer Subtraction (Pointer Difference)",
+      "q": "What is difference of two pointers `p2 - p1` equal to for elements of same array?",
+      "hint": "Does pointer subtraction return difference in BYTES or count of ELEMENTS between them?",
+      "options": [
+        "3",
+        "12",
+        "4",
+        "16"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Pointer subtraction in C returns element count (type `ptrdiff_t`) located between addresses, not bytes. `p2` points to index 4, `p1` — to index 1. Result: $4 - 1 = 3$.",
+        "Incorrect. 12 is byte difference on 32-bit system ($3 \\times 4$), but pointer subtraction is divided by `sizeof(int)`.",
+        "Incorrect. Calculate difference between indices 4 and 1.",
+        "Incorrect. This is byte difference for 4 elements."
+      ]
+    },
+    {
+      "id": "it_clang_775",
+      "widget_id": "widget_clang_775",
+      "topic": "Preprocessor — Text Substitution of Unparenthesized Macro Arguments",
+      "q": "True or False: value of expression `SQUARE(2 + 3)` with macro `#define SQUARE(x) x * x` will equal 25?",
+      "hint": "Expand text substitution without parentheses: `2 + 3 * 2 + 3` and calculate by precedence.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Incorrect. Macro performs direct text substitution: `2 + 3 * 2 + 3`. Multiplication $3 \\times 2 = 6$ is performed first, then addition $2 + 6 + 3 = 11$, not 25.",
+        "Correct! Due to absence of parentheses `(x)` in macro definition expression expands into `2 + 3 * 2 + 3`, which yields 11 instead of 25."
+      ]
+    },
+    {
+      "id": "it_clang_776",
+      "widget_id": "widget_clang_776",
+      "topic": "Dynamic Memory — Difference Between calloc and malloc",
+      "q": "How does `calloc` function fundamentally differ from `malloc` when allocating memory?",
+      "hint": "Does memory allocated via `calloc` contain random garbage?",
+      "options": [
+        "calloc fills allocated memory with zeros (byte 0)",
+        "calloc allocates memory on stack, not heap",
+        "calloc does not require subsequent release via free()",
+        "calloc works twice as fast as malloc",
+        "calloc accepts only one parameter"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Function `calloc(num, size)` allocates memory for array and guarantees zeroing all its bytes. Unlike it, `malloc` leaves old garbage in memory.",
+        "Incorrect. Both functions allocate memory on heap.",
+        "Incorrect. Memory from `calloc` must be freed via `free()`.",
+        "Incorrect. Due to zeroing `calloc` works slightly slower than `malloc`.",
+        "Incorrect. `calloc` accepts 2 parameters: element count and their size."
+      ]
+    },
+    {
+      "id": "it_clang_777",
+      "widget_id": "widget_clang_777",
+      "topic": "C89 — Calling realloc(p, 0)",
+      "q": "True or False: calling `realloc(p, 0)` with zero size for valid pointer `p` is equivalent to calling `free(p)` in C89/C99?",
+      "hint": "Is memory freed when requesting zero size in reallocation?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! According to C89 standard, calling `realloc(p, 0)` frees memory at pointer `p` and returns `NULL` (equivalent of `free(p)`). Note that in C11 this call is declared as undefined/deprecated.",
+        "Incorrect. In C89/C99 this is officially regulated memory freeing behavior."
+      ]
+    },
+    {
+      "id": "it_clang_778",
+      "widget_id": "widget_clang_778",
+      "topic": "C89 — Constant Expressions in case of switch Statement",
+      "q": "Will `switch` statement compile in C if variable `const int val = 2` is passed to `case`?",
+      "hint": "Is `const int` variable a compile-time constant expression in C language?",
+      "options": [
+        "Compilation error — const variable in C is NOT a constant expression",
+        "Will compile and output 'Match'",
+        "Will compile, but case label will be ignored"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Unlike C++, in C qualifier `const` means 'read-only variable', but NOT compile-time constant expression. `case` labels require a pure constant (literal or enum), so code will issue compilation error.",
+        "Incorrect. In C `const int` cannot be used in `case` labels and static array sizes.",
+        "Incorrect. Compiler will reject syntax at type check step."
+      ]
+    },
+    {
+      "id": "it_clang_779",
+      "widget_id": "widget_clang_779",
+      "topic": "Enumerations — Element Numbering in enum",
+      "q": "True or False: element `BLUE` in declaration `enum Color { RED = 5, GREEN, BLUE };` equals 7?",
+      "hint": "How are subsequent enum element values calculated if only first is explicitly specified?",
+      "options": [
+        "True",
+        "False"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! If explicit values are not specified for enum elements, they automatically auto-increment by +1 from previous. `RED = 5`, hence `GREEN = 6`, and `BLUE = 7`.",
+        "Incorrect. Recalculate auto-increment: $5 \\rightarrow 6 \\rightarrow 7$."
+      ]
+    },
+    {
+      "id": "it_clang_780",
+      "widget_id": "widget_clang_780",
+      "topic": "Preprocessor — Built-in Macro __LINE__",
+      "q": "What will built-in macro `__LINE__` output when called on 4th line of source file?",
+      "hint": "Does `__LINE__` return current physical line of source code?",
+      "options": [
+        "4",
+        "1",
+        "0",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Built-in macro `__LINE__` substitutes current line number of source file at preprocessing stage. Since `printf` is on 4th line, number 4 will be substituted.",
+        "Incorrect. 1 is first line of file.",
+        "Incorrect. Line numbering in `__LINE__` starts from 1.",
+        "Incorrect. Macro `__LINE__` is standardized in all C versions."
+      ]
+    }
+  ]
+}

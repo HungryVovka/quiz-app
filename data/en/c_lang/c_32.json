@@ -1,0 +1,605 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_1001",
+      "widget_id": "widget_clang_1001",
+      "topic": "C99 Standard — Implicit return 0 in main()",
+      "q": "What will happen in C99/C11 standard if main() reaches the closing brace } without an explicit return statement?",
+      "hint": "Recall C99 innovation regarding main function execution reaching the end.",
+      "options": [
+        "The compiler will automatically insert return 0 (EXIT_SUCCESS)",
+        "A random value (garbage from register) will be returned, as this is Undefined Behavior",
+        "A compilation error will occur — return in main is strictly required",
+        "The function will return -1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Starting from the C99 standard, if control reaches the end of `main()` without encountering a `return`, the compiler implicitly returns `0` (`EXIT_SUCCESS`).",
+        "Incorrect. Random garbage was returned in C89/C90 standard, but starting with C99, returning 0 is guaranteed.",
+        "Incorrect. The code will compile successfully without errors.",
+        "Incorrect. By default, 0 is returned upon successful completion."
+      ]
+    },
+    {
+      "id": "it_clang_1002",
+      "widget_id": "widget_clang_1002",
+      "topic": "main Parameters — argv[argc] Element",
+      "q": "What is the argv[argc] element guaranteed to be equal to when passing command-line arguments to int main(int argc, char *argv[])?",
+      "hint": "Does the C standard allow iterating through the argv array via pointers up to a null terminator?",
+      "options": [
+        "NULL pointer",
+        "Name of the program itself",
+        "Undefined value (out of bounds array access)",
+        "Pointer to an empty string \"\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! By the C standard, `argv[argc]` is always equal to `NULL`. This allows iterating through arguments with a `while (*argv != NULL)` loop without explicitly using `argc`.",
+        "Incorrect. The program name is equal to `argv[0]`.",
+        "Incorrect. This is not out of bounds: the size of `argv` is `argc + 1` elements.",
+        "Incorrect. This is specifically a null pointer `NULL`, not a pointer to an empty string."
+      ]
+    },
+    {
+      "id": "it_clang_1003",
+      "widget_id": "widget_clang_1003",
+      "topic": "Return Type — Non-standard void main()",
+      "q": "Why is the void main() signature non-standard for a standard (hosted) C execution environment?",
+      "hint": "How does the operating system learn about the program's exit status?",
+      "options": [
+        "The C standard requires int type; the void main() signature is implementation-defined and can lead to an incorrect return code in the OS",
+        "Because void functions are forbidden in C",
+        "Because main() with void cannot accept argc and argv arguments",
+        "The void main() signature will become standard only starting from C23"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In a hosted environment, the C standard requires return type `int`. The operating system expects to receive an exit code via the return register. Using `void main()` can lead to undefined behavior when reading the call status.",
+        "Incorrect. Functions with `void` type are fully supported by C.",
+        "Incorrect. Receiving command-line arguments does not depend directly on the return type.",
+        "Incorrect. In C23, `int main()` remains standard."
+      ]
+    },
+    {
+      "id": "it_clang_1004",
+      "widget_id": "widget_clang_1004",
+      "topic": "GCC/Clang Extensions — Executing Code Before main()",
+      "q": "Which function attribute in GCC/Clang compilers can force a function to execute BEFORE control is passed to main()?",
+      "hint": "Recall the term for initialization constructs.",
+      "options": [
+        "__attribute__((constructor))",
+        "__attribute__((before_main))",
+        "__attribute__((startup))",
+        "__attribute__((init))"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Functions with `__attribute__((constructor))` are placed in the `.init_array` section and automatically called by the CRT runtime before entering `main()`.",
+        "Incorrect. The `before_main` attribute does not exist.",
+        "Incorrect. Keyword `startup` is not used for this attribute.",
+        "Incorrect. The attribute is named `constructor`."
+      ]
+    },
+    {
+      "id": "it_clang_1005",
+      "widget_id": "widget_clang_1005",
+      "topic": "POSIX / Extensions — Third Parameter char *envp[]",
+      "q": "What does the third (non-standard, but widely supported) parameter in main(int argc, char *argv[], char *envp[]) contain?",
+      "hint": "Think about process environment variables (PATH, HOME, etc.).",
+      "options": [
+        "Array of strings with process Environment Variables",
+        "Array of OS kernel arguments",
+        "Pointers to open file descriptors",
+        "List of loaded dynamic libraries"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In signature `int main(int argc, char *argv[], char *envp[])`, parameter `envp` represents a `NULL`-terminated array of strings of form `KEY=VALUE`, containing environment variables.",
+        "Incorrect. Kernel arguments are passed via regular `argv` when launching init/systemd.",
+        "Incorrect. File descriptors are tracked by the OS and are not passed to `main` parameters.",
+        "Incorrect. Dynamic libraries are loaded by system linker and do not reside in `envp`."
+      ]
+    },
+    {
+      "id": "it_clang_1006",
+      "widget_id": "widget_clang_1006",
+      "topic": "Standard Restrictions — inline Qualifier for main()",
+      "q": "Is applying the inline qualifier to main() function allowed by the C standard?",
+      "hint": "Does inlining make sense for the entry point of a program?",
+      "options": [
+        "No, the C standard explicitly forbids declaring main() function as inline",
+        "Yes, it is common practice to speed up program startup",
+        "Allowed only when argc and argv arguments are omitted",
+        "Allowed only in C23"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! By the C standard, function `main()` cannot be declared with `inline` qualifier, because it is an external entry point of the program and inlining it is meaningless.",
+        "Incorrect. The prohibition is explicitly written in the standard.",
+        "Incorrect. Presence of arguments does not affect this prohibition.",
+        "Incorrect. In C23 this prohibition persists."
+      ]
+    },
+    {
+      "id": "it_clang_1007",
+      "widget_id": "widget_clang_1007",
+      "topic": "Standard Library — EXIT_SUCCESS and EXIT_FAILURE",
+      "q": "What does using macros EXIT_SUCCESS and EXIT_FAILURE from <stdlib.h> instead of numbers 0 and 1 guarantee when returning from main()?",
+      "hint": "Is code 0 always indicative of success on all target platforms and OSes?",
+      "options": [
+        "Cross-platform compatibility — macros expand into correct exit codes for a specific OS",
+        "Protection against memory leaks upon exiting main()",
+        "Speeding up process termination",
+        "Automatic call to fflush() for all stdout streams"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Although on POSIX and Windows `EXIT_SUCCESS` is 0, on some non-standard OSes successful exit code may differ. Using macros from `<stdlib.h>` guarantees portability.",
+        "Incorrect. `EXIT_SUCCESS` does not affect memory cleanup.",
+        "Incorrect. Process termination speed is identical.",
+        "Incorrect. Flushing stream buffers is done by standard on any normal `return` from `main` or call to `exit()`."
+      ]
+    },
+    {
+      "id": "it_clang_1008",
+      "widget_id": null,
+      "topic": "Execution Environment — Freestanding Environment",
+      "q": "What is a C execution environment called (e.g. for OS kernel or microcontrollers) where presence of main() function and standard libraries is not required?",
+      "hint": "As opposed to Hosted Environment.",
+      "options": [
+        "Freestanding Environment",
+        "Hosted Environment",
+        "Sandbox Environment",
+        "Kernel Environment"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In a Freestanding environment, program executes without an operating system. The entry point is defined by developer/compiler (e.g., `Reset_Handler` or `_start`) and is not required to be named `main()`.",
+        "Incorrect. Hosted Environment specifically requires `main()` and the entire C standard library.",
+        "Incorrect. Sandbox is execution isolation, not a C standard term.",
+        "Incorrect. Kernel Environment is a general concept, but C standard uses term Freestanding."
+      ]
+    },
+    {
+      "id": "it_clang_1009",
+      "widget_id": "widget_clang_1009",
+      "topic": "Modifying argv — Modification of Elements",
+      "q": "Is it safe to overwrite characters inside argv[i] strings (e.g., argv[1][0] = 'a')?",
+      "hint": "Are strings in argv constant literals?",
+      "options": [
+        "Yes, strings and the argv array itself are guaranteed to be modifiable within passed length",
+        "No, this will cause Segfault because argv points to Read-Only memory",
+        "Forbidden by C standard and leads to UB",
+        "Only argv[0] can be modified"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! C standard guarantees that `argv` parameters are passed as modifiable character arrays. Modifying them is legal (often used to hide passwords from process list `ps`).",
+        "Incorrect. Strings in `argv` are not placed in read-only memory segment.",
+        "Incorrect. This behavior is allowed by C standard.",
+        "Incorrect. All elements from `argv[0]` to `argv[argc-1]` can be modified."
+      ]
+    },
+    {
+      "id": "it_clang_1010",
+      "widget_id": "widget_clang_1010",
+      "topic": "Program Termination — exit() vs return in main()",
+      "q": "What is the main difference between calling exit(0) and calling return 0 inside main() itself?",
+      "hint": "Are local destructors/stack cleaners called on exit()?",
+      "options": [
+        "exit(0) terminates process without unwinding main() stack frame, while return 0 correctly closes main() stack",
+        "exit(0) does not call functions registered via atexit()",
+        "return 0 does not flush stdout/stderr buffers",
+        "There is no difference at all"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! When calling `exit(0)`, local variables of `main()` do not leave scope naturally (their cleanup attributes are not called) because stack is not unwound. With `return 0`, standard function return occurs.",
+        "Incorrect. Both `exit()` and `return` from `main()` equally call functions registered via `atexit()`.",
+        "Incorrect. Both methods automatically flush and close file streams.",
+        "Incorrect. Difference in unwinding stack frame of `main()` itself is significant for automatic resources."
+      ]
+    },
+    {
+      "id": "it_clang_1011",
+      "widget_id": "widget_clang_1011",
+      "topic": "Execution Environment — Real Entry Point (_start)",
+      "q": "What is actually the true Entry Point for an ELF executable file in Linux prior to calling main()?",
+      "hint": "Think about the C Runtime (CRT) function that prepares stack and arguments.",
+      "options": [
+        "Service function _start provided by CRT library",
+        "Function main() is called directly by Linux kernel",
+        "Special macro __init_main()",
+        "Function init() from standard library"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Entry point of an ELF file is symbol `_start`, provided by CRT (C Runtime) startup code. This function sets up environment, stack, `argc`/`argv` arguments, and only then calls `main()`.",
+        "Incorrect. Linux kernel transfers control to `_start`, not directly to `main()`.",
+        "Incorrect. Macro `__init_main()` does not exist in C/CRT standard.",
+        "Incorrect. `init()` is not standard CRT entry point."
+      ]
+    },
+    {
+      "id": "it_clang_1012",
+      "widget_id": "widget_clang_1012",
+      "topic": "main Parameters — Contents of argv[0]",
+      "q": "Does the C standard guarantee that argv[0] always contains file name of launched program?",
+      "hint": "Can calling process (e.g. via execve) pass something else in argv[0]?",
+      "options": [
+        "No, parent process can pass an arbitrary string or even NULL in argv[0]",
+        "Yes, OS always automatically overwrites argv[0] with real file name",
+        "Yes, this is a strict C standard requirement for all operating systems",
+        "No, argv[0] is always empty, and program name resides in argv[1]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Standard defines that `argv[0]` represents program name *if available*. However, when calling system functions like `execve()`, calling process can pass any string or `NULL` as first argument.",
+        "Incorrect. OS passes exactly the `argv` array constructed by calling process.",
+        "Incorrect. Standard allows cases where program name is unavailable.",
+        "Incorrect. By convention `argv[0]` is used to pass name, but this is not 100% guaranteed."
+      ]
+    },
+    {
+      "id": "it_clang_1013",
+      "widget_id": "widget_clang_1013",
+      "topic": "Scope — Static Variables in main() Recursion",
+      "q": "How does a local variable with static modifier inside main() behave during recursive call to main()?",
+      "hint": "Does static variable depend on current stack frame?",
+      "options": [
+        "Retains its value between calls because it is placed in global data segment, not on stack",
+        "Recreated on stack on each recursive call",
+        "Causes compilation error when attempting to combine static and main()",
+        "Automatically resets to 0 on each new call"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Variables with `static` qualifier have static storage duration and are placed in data segment (BSS or Data). They are initialized once before program startup and retain value between recursive `main()` calls.",
+        "Incorrect. Only `auto` variables are placed on stack.",
+        "Incorrect. Static variables are allowed inside any function, including `main()`.",
+        "Incorrect. Initialization occurs only once at startup."
+      ]
+    },
+    {
+      "id": "it_clang_1014",
+      "widget_id": "widget_clang_1014",
+      "topic": "Function Pointers — Taking Address of main() Function",
+      "q": "Is taking address of main() function (e.g. &main) valid in C standard?",
+      "hint": "Recall if status of main() in C differs from C++.",
+      "options": [
+        "Yes, in C you can take address of main and pass it to function pointer (unlike C++)",
+        "No, taking address of main is strictly forbidden in all C standards",
+        "Allowed only in C89",
+        "Allowed only when static attribute is present"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, `main()` is a regular function. You can take its address `&main` and call via pointer. In C++, taking address of `main` or calling `main` from program is forbidden.",
+        "Incorrect. In C this is a completely legal operation.",
+        "Incorrect. Allowed in all C standards.",
+        "Incorrect. `main()` cannot be declared `static` in hosted environment."
+      ]
+    },
+    {
+      "id": "it_clang_1015",
+      "widget_id": "widget_clang_1015",
+      "topic": "GCC/Clang Extensions — Function Destructors __attribute__((destructor))",
+      "q": "At what point is a function marked with __attribute__((destructor)) attribute called?",
+      "hint": "Analogous to constructor attribute, but upon program termination.",
+      "options": [
+        "After exiting main() or calling exit(), prior to final process termination",
+        "Immediately before entering main()",
+        "Only upon occurrence of fatal error (Segmentation Fault)",
+        "Only when calling abort()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Functions with `destructor` attribute are entered into special `.fini_array` section and automatically executed prior to program unloading after return from `main()` or call to `exit()`.",
+        "Incorrect. For code before `main()`, `__attribute__((constructor))` is used.",
+        "Incorrect. On Segfault crash CRT destructors may not have time to execute.",
+        "Incorrect. `abort()` terminates process abnormally without running exit handlers."
+      ]
+    },
+    {
+      "id": "it_clang_1016",
+      "widget_id": "widget_clang_1016",
+      "topic": "C11 Standard — Quick Termination via quick_exit()",
+      "q": "How does quick_exit() function distinguish its termination process from regular exit() when called from main()?",
+      "hint": "Are registered atexit() functions called and file buffers flushed?",
+      "options": [
+        "quick_exit() does NOT call atexit() functions and does NOT flush file buffers, replacing them with at_quick_exit()",
+        "quick_exit() executes 2 times faster by disabling optimizations",
+        "quick_exit() calls only compiler destructors",
+        "There is no difference between them"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Function `quick_exit()` (C11) is designed for 'fast' exit: it does NOT run `atexit()` handlers and does NOT flush open `stdio` streams. Instead, it calls only functions registered via `at_quick_exit()`.",
+        "Incorrect. Speed is achieved by skipping cleanup steps, not disabling optimizations.",
+        "Incorrect. It works with `at_quick_exit` list.",
+        "Incorrect. Behavior fundamentally differs regarding invocation of registered cleanups."
+      ]
+    },
+    {
+      "id": "it_clang_1017",
+      "widget_id": "widget_clang_1017",
+      "topic": "main Parameters — Modifying Pointers in argv Array",
+      "q": "Is reassigning pointers of argv array itself (e.g., argv[1] = \"new_str\") permitted?",
+      "hint": "Distinguish between modifying characters in string and replacing elements of pointer array itself.",
+      "options": [
+        "Yes, argv array consists of regular char* pointers, which can be reassigned",
+        "No, argv array is const char * const argv[] and protected against changes",
+        "This leads to compilation error",
+        "Only argv[0] can be modified"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Argument type is `char *argv[]`. Pointer array itself and strings they point to are not declared `const`. You can reassign element `argv[i] = \"other_string\"`.",
+        "Incorrect. `const` qualifiers are absent from standard `main` signature.",
+        "Incorrect. Assignment operation is completely valid from type system perspective.",
+        "Incorrect. All elements of pointer array can be modified."
+      ]
+    },
+    {
+      "id": "it_clang_1018",
+      "widget_id": "widget_clang_1018",
+      "topic": "Memory Management — Huge Arrays on Stack in main()",
+      "q": "What problem will declaring array char buf[16 * 1024 * 1024] as an automatic local variable inside main() lead to?",
+      "hint": "Recall standard thread stack size in popular OSes (typically 1 to 8 MB).",
+      "options": [
+        "Stack Overflow and abnormal program termination",
+        "Memory will automatically redirect to Heap",
+        "Compiler will issue build error",
+        "Program will run without any issues"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Variable `buf` will be allocated on stack. On most OSes (Linux/Windows), default stack size is 1 to 8 MB. Attempting to allocate 16 MB will cause Stack Overflow when `main()` is called.",
+        "Incorrect. Automatic transfer of local arrays from stack to heap does not exist in C.",
+        "Incorrect. If size is known at compile time, compiler silently generates stack pointer offset.",
+        "Incorrect. Upon accessing memory beyond stack limit, crash (Segmentation Fault) occurs."
+      ]
+    },
+    {
+      "id": "it_clang_1019",
+      "widget_id": "widget_clang_1019",
+      "topic": "System Calls — Termination via _Exit()",
+      "q": "Are functions registered via atexit() called when invoking _Exit(code) (or _exit) function?",
+      "hint": "Think about purpose of low-level instant process termination functions.",
+      "options": [
+        "No, _Exit() terminates process immediately without calling atexit() functions or cleaning up stdio",
+        "Yes, _Exit() is a complete synonym of exit()",
+        "Yes, but only if exit code is 0",
+        "Only GCC destructors are called"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Function `_Exit()` (C99) / `_exit()` (POSIX) performs instant program exit at kernel level without calling functions from `atexit()` or `at_quick_exit()` and without flushing `stdio` buffers.",
+        "Incorrect. `exit()` performs full high-level CRT cleanup, unlike `_Exit()`.",
+        "Incorrect. Exit code does not affect skipping cleanup procedures.",
+        "Incorrect. `_Exit()` immediately makes system process exit call."
+      ]
+    },
+    {
+      "id": "it_clang_1020",
+      "widget_id": "widget_clang_1020",
+      "topic": "Syntax — Declaring Prototype of main()",
+      "q": "Is it required to declare prototype of main() function at start of file prior to its definition?",
+      "hint": "Is a header file or prototype required for main function?",
+      "options": [
+        "No, main() is entry point and does not require prior prototype declaration",
+        "Yes, this is mandatory C standard requirement",
+        "Yes, main() prototype is contained in <stdio.h>",
+        "Yes, if main() is called recursively"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Function `main()` does not require prototype declaration. System header files do not contain it either — compiler knows existence of entry point by default.",
+        "Incorrect. C standard does not require prototype for `main()`.",
+        "Incorrect. `<stdio.h>` and other standard headers do not have `main()` prototype.",
+        "Incorrect. For `main()` recursion prototype is also unneeded if function definition is at top level."
+      ]
+    },
+    {
+      "id": "it_clang_1021",
+      "widget_id": "widget_clang_1021",
+      "topic": "Syntax — Function Prototype",
+      "q": "What does Function Prototype represent in C?",
+      "hint": "Think how to inform compiler about function existence before its body is written.",
+      "options": [
+        "Function declaration without its body, informing compiler of name, return type, and function parameters",
+        "Function code compiled into separate library",
+        "Variable storing result of function work",
+        "Special preprocessor macro for calling functions"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Prototype (e.g. `int add(int, int);`) informs compiler of function signature, allowing it to be called before full definition in code and performing argument type checking.",
+        "Incorrect. Prototype is only syntactic declaration in code, not binary file.",
+        "Incorrect. Prototype describes function itself, not result.",
+        "Incorrect. Prototypes are part of C syntax, not preprocessor."
+      ]
+    },
+    {
+      "id": "it_clang_1022",
+      "widget_id": "widget_clang_1022",
+      "topic": "Basic Types — void Return Type",
+      "q": "What does using void as return type of a function mean (e.g. void print_msg(void))?",
+      "hint": "Is returning something via return necessary from such function?",
+      "options": [
+        "Function returns no value to calling code",
+        "Function returns random integer",
+        "Function returns NULL pointer",
+        "Function can return value of absolutely any type"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Keyword `void` as return type value means function performs actions (side effects), but passes back no result.",
+        "Incorrect. `void` guarantees complete absence of return value.",
+        "Incorrect. For returning null pointer type `void*` would be used, not `void`.",
+        "Incorrect. `void` denotes emptiness/absence of type, not universal type."
+      ]
+    },
+    {
+      "id": "it_clang_1023",
+      "widget_id": "widget_clang_1023",
+      "topic": "Parameters — Pass by Value",
+      "q": "How are basic variables (int, float, char) passed to function parameters in C by default?",
+      "hint": "Does original variable in main change if corresponding parameter inside function is modified?",
+      "options": [
+        "By value (local copy of variable is created inside function)",
+        "By reference (modifying parameter inside function changes original variable)",
+        "By pointer automatically",
+        "Through global memory area"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C arguments are always passed by value. Function receives copies of passed data, so parameter changes inside function do not affect calling code variables.",
+        "Incorrect. Passing by reference (like `&` in C++) does not exist in pure C.",
+        "Incorrect. To pass value by pointer pointer syntax `*` must be used explicitly.",
+        "Incorrect. Parameters are allocated in local stack frame."
+      ]
+    },
+    {
+      "id": "it_clang_1024",
+      "widget_id": null,
+      "topic": "Terminology — Parameters vs Arguments",
+      "q": "What is difference between terms 'parameter' and 'argument' of a function?",
+      "hint": "What is written in function declaration vs passed during actual call?",
+      "options": [
+        "Parameters are variables in function declaration, while arguments are specific values passed during call",
+        "They are complete synonyms, no syntactic or terminological difference exists between them",
+        "Parameters are used only in main(), while arguments — in all other functions",
+        "Parameters are data types, while arguments are variable names"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In declaration `void foo(int x)`, variable `x` is formal parameter. In call `foo(5)`, number `5` is actual argument.",
+        "Incorrect. Although often confused in speech, in standards and C terminology these are distinct concepts.",
+        "Incorrect. Both terms apply to absolutely any function.",
+        "Incorrect. Parameter includes both type and variable name."
+      ]
+    },
+    {
+      "id": "it_clang_1025",
+      "widget_id": "widget_clang_1025",
+      "topic": "Scope — Lifetime of Local Variables",
+      "q": "What happens to a regular local variable created inside a function upon exiting that function?",
+      "hint": "Where are function local variables stored?",
+      "options": [
+        "Variable is destroyed, and memory allocated for it on stack is freed",
+        "Variable retains its value until next function call",
+        "Variable automatically becomes global",
+        "Variable moves to dynamic memory (heap)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Regular (automatic) local variables live only during execution of function block. Upon return from function, stack frame is cleared, and variable ceases to exist.",
+        "Incorrect. For variable to retain value between calls, it must be declared `static`.",
+        "Incorrect. Scope of local variable is limited to function body.",
+        "Incorrect. In heap memory is allocated only manually via `malloc/calloc`."
+      ]
+    },
+    {
+      "id": "it_clang_1026",
+      "widget_id": "widget_clang_1026",
+      "topic": "Syntax — return Statement",
+      "q": "Which statement is used to terminate function execution and return result to call point?",
+      "hint": "This keyword is present in all functions returning a result.",
+      "options": [
+        "return",
+        "yield",
+        "break",
+        "exit"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Statement `return` terminates current function execution and passes expression value to calling code.",
+        "Incorrect. `yield` is used in other languages (e.g. Python/C#) for generators.",
+        "Incorrect. `break` is used to exit loops and `switch` constructs.",
+        "Incorrect. `exit()` terminates whole program completely, rather than returning value from single function."
+      ]
+    },
+    {
+      "id": "it_clang_1027",
+      "widget_id": "widget_clang_1027",
+      "topic": "Basic Concepts — Recursion",
+      "q": "What is called a recursive function in programming?",
+      "hint": "What does recursive function do inside its body?",
+      "options": [
+        "A function that calls itself",
+        "A function that has no parameters",
+        "A function executing in an infinite loop",
+        "A function working without return statement"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Recursion is a technique where function calls itself (directly or via other functions) to solve subtask.",
+        "Incorrect. Presence or absence of parameters does not make function recursive.",
+        "Incorrect. Recursion must have base case to stop, otherwise it causes stack overflow.",
+        "Incorrect. To return values from recursion `return` statement is actively used."
+      ]
+    },
+    {
+      "id": "it_clang_1028",
+      "widget_id": "widget_clang_1028",
+      "topic": "Pointers — Modifying Variables via Pointers",
+      "q": "How to allow function to modify value of variable located in calling main() function?",
+      "hint": "What needs to be passed in parameter instead of regular value?",
+      "options": [
+        "Pass address of variable (pointer) and dereference it inside function",
+        "Use keyword ref before argument",
+        "Simply change variable name to parameter name",
+        "In C it is impossible to modify variable from another function"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Passing address of variable `&x` to pointer `int *p`, function gains direct access to memory of original variable and can modify it via dereference `*p = val`.",
+        "Incorrect. Keyword `ref` is used in C#, in C it does not exist.",
+        "Incorrect. Variable names in different scopes are not linked in any way.",
+        "Incorrect. Using pointers is standard way to modify calling function data."
+      ]
+    },
+    {
+      "id": "it_clang_1029",
+      "widget_id": null,
+      "topic": "Errors — Missing return in Non-void Function",
+      "q": "What will happen if in function with int type do_math(void) return is omitted and attempt is made to use its result?",
+      "hint": "Does C standard guarantee any specific default value for regular functions?",
+      "options": [
+        "Undefined Behavior (UB) occurs, and program receives random garbage from register",
+        "Compiler will automatically always return number 0",
+        "Program will print error and close correctly",
+        "Result automatically becomes equal to NULL"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Unlike `main()`, for all other functions missing `return` with declared return type leads to Undefined Behavior when attempting to read call result.",
+        "Incorrect. Automatic `return 0` is guaranteed by C99 standard only for `main()` function.",
+        "Incorrect. Runtime protection against missing `return` is usually absent.",
+        "Incorrect. NULL is used for pointers, not for `int` type."
+      ]
+    },
+    {
+      "id": "it_clang_1030",
+      "widget_id": "widget_clang_1030",
+      "topic": "Syntax — Function Call",
+      "q": "Which of the following lines is correct syntax for calling function int sum(int a, int b)?",
+      "hint": "Do data types need to be specified when calling a function?",
+      "options": [
+        "int result = sum(5, 10);",
+        "int result = sum(int a = 5, int b = 10);",
+        "int result = call sum(5, 10);",
+        "int result = sum[5, 10];"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! When calling function only expressions/values inside parentheses `sum(5, 10)` are passed, specifying parameter types again is unnecessary.",
+        "Incorrect. Repeatedly specifying types `int a = ...` on call is syntax error.",
+        "Incorrect. Keyword `call` is not used in C.",
+        "Incorrect. For calling functions parentheses `()` are used, not square brackets `[]`."
+      ]
+    }
+  ]
+}

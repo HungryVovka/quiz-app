@@ -1,0 +1,605 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_601",
+      "widget_id": "widget_clang_601",
+      "topic": "Indexing — Commutativity of a[i] and i[a] Syntax",
+      "q": "What will the expression `2[a]` output for array `int a[] = {10, 20, 30}`?",
+      "hint": "Recall how syntactic sugar `x[y]` is expanded by the compiler using pointers.",
+      "options": [
+        "30",
+        "20",
+        "10",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, the expression `a[i]` is turned by the compiler into `*(a + i)`. Since addition is commutative, `*(a + i)` is equivalent to `*(i + a)`, and thus `i[a]`. Writing `2[a]` returns the third element `a[2]`, which is 30.",
+        "Incorrect. 20 is element `1[a]` (`a[1]`).",
+        "Incorrect. 10 is element `0[a]` (`a[0]`).",
+        "Incorrect. The syntax `i[a]` is completely legal under the C standard."
+      ]
+    },
+    {
+      "id": "it_clang_602",
+      "widget_id": "widget_clang_602",
+      "topic": "Pointer Arithmetic — Pointer Shift for the Entire Array &a + 1",
+      "q": "What is the difference in bytes between `&a + 1` and `a` for an array `int a[5]` given a 4-byte `int`?",
+      "hint": "What type does `&a` have and how many bytes does the `+ 1` operator shift a pointer of this type?",
+      "options": [
+        "20",
+        "4",
+        "5",
+        "8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The expression `&a` has the type 'pointer to the entire array of 5 elements' (`int(*)[5]`). A shift of `+ 1` shifts this pointer by the size of the ENTIRE array: $5 \\times 4 = 20$ bytes.",
+        "Incorrect. 4 bytes is the difference for regular array decay `a + 1` (shift by one `int`).",
+        "Incorrect. 5 is the element count, whereas a difference of `char*` pointers returns bytes.",
+        "Incorrect. 8 bytes would occur when shifting pointers to 64-bit types."
+      ]
+    },
+    {
+      "id": "it_clang_603",
+      "widget_id": "widget_clang_603",
+      "topic": "Function Pointers — Arrays of Function Pointers",
+      "q": "What will the call `ops[1](10, 4)` output for an array of function pointers `ops`?",
+      "hint": "Which function is located at index `ops[1]`?",
+      "options": [
+        "6",
+        "14",
+        "10",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `ops[1]` selects the second element of the array — a pointer to the `sub` function. The call `sub(10, 4)` performs subtraction $10 - 4 = 6$.",
+        "Incorrect. 14 would be returned by the `add` function located at index `ops[0]`.",
+        "Incorrect. The target function from the array is called.",
+        "Incorrect. Declaration and call via an array of function pointers are syntactically valid."
+      ]
+    },
+    {
+      "id": "it_clang_604",
+      "widget_id": "widget_clang_604",
+      "topic": "Memory — Mutability of Character Array vs String Literal",
+      "q": "What will `printf` output after executing `s[0] = 'J'` for array `char s[] = \"Hello\"`?",
+      "hint": "Is a separate mutable buffer created on the stack here, or is immutable literal memory used?",
+      "options": [
+        "Jello",
+        "Hello",
+        "Abnormal program termination (Segmentation Fault)",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Declaring `char s[] = \"Hello\"` creates a local array on the stack and COPIES the literal characters into it. Stack memory is writable, so `s[0] = 'J'` successfully changes the first character to `'J'`, printing \"Jello\".",
+        "Incorrect. Assignment `s[0] = 'J'` modifies the array data.",
+        "Incorrect. Segfault occurs when attempting to modify a string literal via pointer `char *p = \"Hello\"`, but not for a character array `char s[]`.",
+        "Incorrect. A character array is fully mutable."
+      ]
+    },
+    {
+      "id": "it_clang_605",
+      "widget_id": "widget_clang_605",
+      "topic": "typedef — Applying sizeof to Array Type Aliases",
+      "q": "What is `sizeof(a)` equal to if `a` is declared via `typedef int IntArray[4]` with a 4-byte `int`?",
+      "hint": "Does a typedef alias preserve full information about array type and size?",
+      "options": [
+        "16",
+        "4",
+        "8",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `IntArray` is a full-fledged alias for type `int[4]`. The `sizeof(a)` operator computes the full size of the array: $4 \\times 4 = 16$ bytes.",
+        "Incorrect. 4 is the size of a single `int` element.",
+        "Incorrect. 8 is pointer size, but `a` has type array `int[4]`, not a pointer.",
+        "Incorrect. `typedef` for array types is completely valid."
+      ]
+    },
+    {
+      "id": "it_clang_606",
+      "widget_id": "widget_clang_606",
+      "topic": "2D Arrays — Equivalence of Pointer Dereferencing and Subscripting",
+      "q": "Which matrix element will expression `*(*(a + 1) + 1)` select for `int a[2][2] = {{10, 20}, {30, 40}}`?",
+      "hint": "Expand parentheses: what is `*(*(a + i) + j)` equivalent to in standard subscript notation?",
+      "options": [
+        "40",
+        "30",
+        "20",
+        "10"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Expression `*(*(a + i) + j)` is the fundamental representation of element `a[i][j]` via pointers. At `i = 1` and `j = 1` we get element `a[1][1]`, which is 40.",
+        "Incorrect. 30 is element `a[1][0]` (`*(*(a + 1) + 0)`).",
+        "Incorrect. 20 is element `a[0][1]` (`*(*(a + 0) + 1)`).",
+        "Incorrect. 10 is the first element `a[0][0]`."
+      ]
+    },
+    {
+      "id": "it_clang_607",
+      "widget_id": "widget_clang_607",
+      "topic": "Operators — Array-to-Pointer Decay in Ternary Expressions",
+      "q": "What will expression `p[1]` output if `p` is initialized with ternary operator `1 ? a : b`?",
+      "hint": "What do array operands `a` and `b` implicitly convert to inside a ternary `?:` operation?",
+      "options": [
+        "2",
+        "5",
+        "1",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In a ternary operator, arrays `a` and `b` decay to pointers to their first elements `int*`. Since condition `1` is true, a pointer to `a[0]` is returned. Thus `p[1]` equals `a[1]`, which is 2.",
+        "Incorrect. 5 is element `b[1]`, which is not selected because condition is true.",
+        "Incorrect. 1 is element `p[0]` (`a[0]`).",
+        "Incorrect. Using arrays in a ternary operator is fully permissible."
+      ]
+    },
+    {
+      "id": "it_clang_608",
+      "widget_id": "widget_clang_608",
+      "topic": "Pointers — Negative Pointer Subscripting",
+      "q": "What is expression `p[-1]` equal to if pointer `p` is initialized as `arr + 1`?",
+      "hint": "How does negative index `p[-1]` expand according to pointer arithmetic?",
+      "options": [
+        "10",
+        "20",
+        "30",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `p[-1]` expands to `*(p - 1)`. Since `p` pointed to `arr[1]` (with value 20), stepping back `p - 1` returns a pointer to `arr[0]`. Dereferencing it yields 10.",
+        "Incorrect. 20 is element `p[0]` (`arr[1]`).",
+        "Incorrect. 30 is element `p[1]` (`arr[2]`).",
+        "Incorrect. The resulting address is within valid memory of array `arr`, so there is no UB."
+      ]
+    },
+    {
+      "id": "it_clang_609",
+      "widget_id": "widget_clang_609",
+      "topic": "Initialization — Automatic Zeroing of Unspecified Elements",
+      "q": "What will `printf` output for elements `a[0]` and `a[4]` given declaration `int a[5] = {0}`?",
+      "hint": "What happens to all subsequent array elements if at least one is explicitly initialized?",
+      "options": [
+        "0 0",
+        "0 and memory garbage",
+        "1 1",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Under the C standard, if an initializer list contains at least one element (here `{0}` for `a[0]`), all remaining unspecified elements are automatically zero-filled. Output: \"0 0\".",
+        "Incorrect. There will be no garbage, because presence of an initializer forces compiler to zero the entire array.",
+        "Incorrect. There are no ones in the array.",
+        "Incorrect. Initializer `{0}` is a classic way to zero-fill an array in C."
+      ]
+    },
+    {
+      "id": "it_clang_610",
+      "widget_id": "widget_clang_610",
+      "topic": "Operator Precedence — Combining Postfix Increment and Dereference (*p++)",
+      "q": "What will `val` and `*p` equal after executing `int val = *p++` for array `int arr[] = {5, 10, 15}`?",
+      "hint": "Which operator has higher precedence — `*` or postfix `++`, and what value does postfix increment return?",
+      "options": [
+        "5 10",
+        "6 10",
+        "5 5",
+        "10 10"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Postfix `++` has higher precedence than `*` and binds to pointer `p`. However, postfix increment returns the OLD pointer value. Thus `*` dereferences the unshifted address (`arr[0]`), assigning `val = 5`. After that, `p` shifts to `arr[1]`, so `*p` becomes equal to 10.",
+        "Incorrect. The value at the address is not incremented; the pointer address `p` itself changes.",
+        "Incorrect. Pointer `p` is guaranteed to shift to the next element.",
+        "Incorrect. `val` receives the value of `arr[0]` (5), because increment is postfix."
+      ]
+    },
+    {
+      "id": "it_clang_611",
+      "widget_id": "widget_clang_611",
+      "topic": "Function Parameters — Decay of Multidimensional Arrays in Parameters",
+      "q": "What will `sizeof(a)` output inside `void print_size(int a[5][5])` on a 64-bit system?",
+      "hint": "What does the first dimension parameter of any multidimensional array convert to in a function header?",
+      "options": [
+        "8",
+        "100",
+        "20",
+        "25"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In function parameters, the outermost array dimension always decays to a pointer. Type `int a[5][5]` implicitly becomes `int (*a)[5]` (pointer to array of 5 `int` elements). Size of any pointer on a 64-bit architecture is 8 bytes.",
+        "Incorrect. 100 bytes ($5 \\times 5 \\times 4$) would occur only for a local array outside of function parameters.",
+        "Incorrect. 20 bytes is the size of a single row `int[5]`.",
+        "Incorrect. 25 is element count, not size in bytes."
+      ]
+    },
+    {
+      "id": "it_clang_612",
+      "widget_id": "widget_clang_612",
+      "topic": "Comma Operator — Forced Array Decay in Comma Operator Inside sizeof",
+      "q": "What will `sizeof(1, arr)` output on a 64-bit system for array `int arr[5]`?",
+      "hint": "Is expression `(1, arr)` a simple array name or an evaluated expression?",
+      "options": [
+        "8",
+        "20",
+        "4",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Comma operator `(1, arr)` evaluates the left operand, discards it, and returns the right operand value. However, resulting expression `(1, arr)` is NO LONGER a simple array name! As a result, `arr` instantly decays to pointer `int*`. `sizeof(int*)` on a 64-bit system is 8 bytes.",
+        "Incorrect. 20 bytes would be printed for clean `sizeof(arr)` without comma operator.",
+        "Incorrect. 4 is size of number 1 or single `int` element.",
+        "Incorrect. Expression `(1, arr)` is completely valid."
+      ]
+    },
+    {
+      "id": "it_clang_613",
+      "widget_id": "widget_clang_613",
+      "topic": "Operator Precedence — Parentheses and Dereferenced Value Increment (*p)++",
+      "q": "What will `x` and `arr[0]` equal after executing `int x = (*p)++` for `int arr[3] = {10, 20, 30}`?",
+      "hint": "What exactly is incremented thanks to parentheses `(*p)` — pointer address or value in array?",
+      "options": [
+        "10 11",
+        "10 10",
+        "11 11",
+        "10 20"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Parentheses `(*p)` explicitly specify order: first address `arr[0]` is dereferenced, giving value 10. Postfix `++` increments memory value `arr[0]` to 11, but returns the OLD value (10) for assignment to `x`. Result: `x = 10`, `arr[0] = 11`.",
+        "Incorrect. Increment `++` modifies the value inside array `arr[0]`.",
+        "Incorrect. `x` receives value prior to increment because operator is postfix.",
+        "Incorrect. Pointer `p` does not shift to `arr[1]` (20), because `++` applies to value, not address."
+      ]
+    },
+    {
+      "id": "it_clang_614",
+      "widget_id": "widget_clang_614",
+      "topic": "Character Arrays — String Initialization Without Room for Null Terminator",
+      "q": "Which character will be written to `a[4]` when declaring `char a[5] = \"Hello\"`?",
+      "hint": "Does null terminator `'\\0'` fit into a 5-element array when string length is 5 letters?",
+      "options": [
+        "o",
+        "\\0 (null-terminator)",
+        "Indeterminate value",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Under C standard, if character array size exactly matches string literal length without null terminator (5 letters in this case), compiler copies only those 5 characters. Character `a[4]` equals `'o'`. Note: such array `a` will not be a valid null-terminated string!",
+        "Incorrect. Null terminator is discarded because there is no room for it in a 5-byte array.",
+        "Incorrect. Fifth element is explicitly initialized with letter `'o'`.",
+        "Incorrect. In classic C such syntax is permitted by standards."
+      ]
+    },
+    {
+      "id": "it_clang_615",
+      "widget_id": "widget_clang_615",
+      "topic": "sizeof Operator — Comparing sizeof(arr) and sizeof(&arr[0])",
+      "q": "What will expression `sizeof(arr) == sizeof(&arr[0])` output for `int arr[3]` on a 64-bit system with a 4-byte `int`?",
+      "hint": "What are the sizes of whole array `arr` and pointer to its first element `&arr[0]`?",
+      "options": [
+        "0 (False)",
+        "1 (True)",
+        "Compilation error",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `sizeof(arr)` returns total array memory: $3 \\times 4 = 12$ bytes. Expression `&arr[0]` is an explicit pointer `int*`, and its `sizeof` equals 8 bytes. $12 == 8$ is false, so result is 0.",
+        "Incorrect. Sizes of array (12 bytes) and pointer (8 bytes) differ.",
+        "Incorrect. Comparing results of two `sizeof` operators is completely correct.",
+        "Incorrect. Behavior of equality logical operator is strictly defined."
+      ]
+    },
+    {
+      "id": "it_clang_616",
+      "widget_id": "widget_clang_616",
+      "topic": "2D Arrays — Access via Pointer to Array int (*p)[N]",
+      "q": "What is expression `*(*(p + 2) + 1)` equal to for 2D array `int a[3][2]`?",
+      "hint": "Which row does `p + 2` select and which column does subsequent step `+ 1` select?",
+      "options": [
+        "6",
+        "5",
+        "4",
+        "3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Expression `*(*(p + 2) + 1)` is equivalent to `a[2][1]`. Array `a[3][2]` fills in pairs: `a[0] = {1, 2}`, `a[1] = {3, 4}`, `a[2] = {5, 6}`. Third row and second column yield value 6.",
+        "Incorrect. 5 is element `a[2][0]` (`*(*(p + 2) + 0)`).",
+        "Incorrect. 4 is element `a[1][1]` (`*(*(p + 1) + 1)`).",
+        "Incorrect. 3 is element `a[1][0]`."
+      ]
+    },
+    {
+      "id": "it_clang_617",
+      "widget_id": "widget_clang_617",
+      "topic": "Strings — Explicit Null Terminators Inside String Literals",
+      "q": "What are `sizeof(a)` and `strlen(a)` equal to for array `char a[] = \"Hello\\0World\"`?",
+      "hint": "Does sizeof account for bytes after explicit '\\0' and where does strlen function stop?",
+      "options": [
+        "12 5",
+        "12 11",
+        "11 5",
+        "6 5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! String literal contains: `'H','e','l','l','o'`, `'\\0'`, `'W','o','r','l','d'` plus implicit trailing `'\\0'`. Total 12 bytes in array (`sizeof` is 12). Function `strlen` counts bytes only up to first null terminator, which is 5 characters (\"Hello\"). Output: \"12 5\".",
+        "Incorrect. `strlen` stops counting at first encountered `'\\0'`, returning 5, not 11.",
+        "Incorrect. Implicit trailing null terminator of string literal forgotten.",
+        "Incorrect. `sizeof` measures total array size in memory, not just up to first `'\\0'`."
+      ]
+    },
+    {
+      "id": "it_clang_618",
+      "widget_id": "widget_clang_618",
+      "topic": "Operator Precedence — Difference Between *a + 3 and *(a + 3)",
+      "q": "What is expression `*a + 3` equal to for array `int a[5] = {10, 20, 30, 40, 50}`?",
+      "hint": "Is shift `+ 3` applied to pointer address or dereferenced value?",
+      "options": [
+        "13",
+        "40",
+        "30",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Dereference operator `*` has higher precedence than plus `+`. Therefore `*a` first takes value of first element `a[0]` (10), after which 3 is added to it: $10 + 3 = 13$. (To get 40, parentheses would be needed: `*(a + 3)`).",
+        "Incorrect. 40 would be obtained with `*(a + 3)` (value of element `a[3]`).",
+        "Incorrect. 30 is value of `a[2]`.",
+        "Incorrect. Expression is completely valid."
+      ]
+    },
+    {
+      "id": "it_clang_619",
+      "widget_id": "widget_clang_619",
+      "topic": "Operator Precedence — Postfix Pointer Increment During Dereferencing *p++",
+      "q": "What will `printf(\"%d\", *p++)` output for `int a[3] = {1, 2, 3}` and `int *p = a`?",
+      "hint": "What value does postfix increment return at the time of expression evaluation?",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Postfix `++` has higher precedence than `*`, but returns OLD value of pointer `p`. Dereferencing occurs for old address (`a[0]`), printing 1. Only after that pointer `p` shifts to `a[1]`.",
+        "Incorrect. 2 would be printed with prefix increment `*++p`.",
+        "Incorrect. 3 is the last element `a[2]`.",
+        "Incorrect. Idiom `*p++` is widely used in C."
+      ]
+    },
+    {
+      "id": "it_clang_620",
+      "widget_id": "widget_clang_620",
+      "topic": "Pointer Arithmetic — Subtracting char* Pointers",
+      "q": "What is difference `(char*)&arr[3] - (char*)&arr[1]` equal to given 4-byte `int`?",
+      "hint": "In what units is difference between two pointers of type `char*` calculated?",
+      "options": [
+        "8",
+        "2",
+        "4",
+        "16"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In regular pointer arithmetic `&arr[3] - &arr[1]` would return 2 (elements). However, casting to `char*` forces subtraction of byte-type pointers. Between indices 1 and 3 are 2 `int` elements of 4 bytes each: $2 \\times 4 = 8$ bytes.",
+        "Incorrect. 2 would be obtained without explicit type casting to `char*`.",
+        "Incorrect. 4 is size of single `int`.",
+        "Incorrect. 16 is size of entire array `arr`."
+      ]
+    },
+    {
+      "id": "it_clang_621",
+      "widget_id": "widget_clang_621",
+      "topic": "Pointers — Negative Subscripting of Subarrays a[1][-1]",
+      "q": "What is element `a[1][-1]` equal to for matrix `int a[2][3] = {1, 2, 3, 4, 5, 6}`?",
+      "hint": "Indicate which element of contiguous memory block a step backward from start of second row points to.",
+      "options": [
+        "3",
+        "4",
+        "2",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Expression `a[1]` yields a pointer to first element of second row (`&a[1][0]`, value 4). Subscript `[-1]` steps back by one `int` element in contiguous matrix memory, moving to last element of first row — `a[0][2]` with value 3.",
+        "Incorrect. 4 is element `a[1][0]`.",
+        "Incorrect. 2 is element `a[0][1]`.",
+        "Incorrect. Since a 2D array lies continuously in memory, stepping within allocated array bounds is valid."
+      ]
+    },
+    {
+      "id": "it_clang_622",
+      "widget_id": "widget_clang_622",
+      "topic": "sizeof Operator — Loss of Array Status in Expressions a + 0",
+      "q": "What will `sizeof(a + 0)` output on 64-bit systems for array `int a[3]`?",
+      "hint": "Is expression `a + 0` a simple array name or an evaluated pointer address?",
+      "options": [
+        "8",
+        "12",
+        "4",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Operator `sizeof(a)` returns size of entire array (12 bytes). But in expression `a + 0`, array name implicitly decays to pointer `int*`. As a result `sizeof` evaluates size of type `int*`, which on a 64-bit architecture is 8 bytes.",
+        "Incorrect. 12 would be printed only for `sizeof(a)` without addition `+ 0`.",
+        "Incorrect. 4 is size of type `int`.",
+        "Incorrect. Expression `a + 0` is syntactically correct."
+      ]
+    },
+    {
+      "id": "it_clang_623",
+      "widget_id": "widget_clang_623",
+      "topic": "Pointers — Positive Shifted Index p[1]",
+      "q": "What is value `p[1]` equal to if `p = &a[1]` for array `int a[3] = {1, 2, 3}`?",
+      "hint": "Which element of original array does `p + 1` point to?",
+      "options": [
+        "3",
+        "2",
+        "1",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `p` pointed to `a[1]` (value 2). Expression `p[1]` is equivalent to `*(p + 1)`, shifting pointer to next cell — `a[2]`, storing number 3.",
+        "Incorrect. 2 is element `p[0]` (`a[1]`).",
+        "Incorrect. 1 is element `p[-1]` (`a[0]`).",
+        "Incorrect. Element `a[2]` is within array bounds."
+      ]
+    },
+    {
+      "id": "it_clang_624",
+      "widget_id": "widget_clang_624",
+      "topic": "Memory — Attempting Write to String Literal via char*",
+      "q": "What will happen when attempting write `p[0] = 'h'` in code `char *p = \"Hello\";`?",
+      "hint": "In which memory region (read-only or read-write) does compiler place string literals?",
+      "options": [
+        "Abnormal program termination at runtime (Segmentation Fault / Bus Error)",
+        "First character will successfully change to 'h'",
+        "Compilation error",
+        "Character will change in all string literals of the program"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Under C standard, string literals are stored in read-only data segment. Attempting to write via pointer `char *p = \"Hello\"` causes undefined behavior, which in practice leads to program crash (Segmentation Fault).",
+        "Incorrect. String literal modification is forbidden at OS memory protection level.",
+        "Incorrect. Literal type is `char[]`, assignment to `char*` without `const` is allowed in C for backward compatibility, so compiler passes the code.",
+        "Incorrect. Memory is write-protected, execution will abort."
+      ]
+    },
+    {
+      "id": "it_clang_625",
+      "widget_id": "widget_clang_625",
+      "topic": "Indexing — Commutativity of 2D Subscripting 1[a][0]",
+      "q": "What is element `1[a][0]` equal to for matrix `int a[2][2] = {1, 2, 3, 4}`?",
+      "hint": "What does expression `1[a]` turn into according to array commutativity rules?",
+      "options": [
+        "3",
+        "1",
+        "2",
+        "4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Expression `1[a]` expands as `*(1 + a)`, fully equivalent to `a[1]` (second row). Then index zero element of this row is selected — `a[1][0]`. In fill order `{1, 2, 3, 4}`, element `a[1][0]` equals 3.",
+        "Incorrect. 1 is element `a[0][0]` (`0[a][0]`).",
+        "Incorrect. 2 is element `a[0][1]`.",
+        "Incorrect. 4 is element `a[1][1]` (`1[a][1]`)."
+      ]
+    },
+    {
+      "id": "it_clang_626",
+      "widget_id": "widget_clang_626",
+      "topic": "Pointer Arithmetic — Classic Trick with &a + 1 and Runtime Step Back",
+      "q": "What is expression `*(p - 1)` equal to if `p` is created as `(int*)(&a + 1)` for `int a[] = {1, 2, 3, 4, 5}`?",
+      "hint": "Where does `&a + 1` point and which element do we land on with step `- 1`?",
+      "options": [
+        "5",
+        "1",
+        "4",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Expression `&a + 1` shifts pointer by size of ENTIRE array, pointing to slot immediately after last element `a[4]`. Casting to `(int*)` and subtracting 1 (`p - 1`) shifts pointer one `int` back, returning address of element `a[4]`. Dereferencing it yields 5.",
+        "Incorrect. 1 is first element of array `a[0]`.",
+        "Incorrect. 4 is element `a[3]`.",
+        "Incorrect. Stepping to one past the end of array is allowed by C standard, and subsequent subtraction returns a valid address."
+      ]
+    },
+    {
+      "id": "it_clang_627",
+      "widget_id": "widget_clang_627",
+      "topic": "sizeof Operator — Preserving Total Size During Partial Initialization",
+      "q": "What is expression `sizeof(a) / sizeof(a[0])` equal to given declaration `int a[5] = {1, 2}`?",
+      "hint": "Does partial initialization decrease memory allocated for array?",
+      "options": [
+        "5",
+        "2",
+        "0",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Array size is explicitly set in brackets `[5]`. Partial initialization fills unspecified slots with zeros, but does not alter array memory size. Division result: $20 / 4 = 5$.",
+        "Incorrect. 2 is count of explicit initializers, but array size is 5.",
+        "Incorrect. Array size is computed statically and is non-zero.",
+        "Incorrect. Partial initialization fully complies with standard."
+      ]
+    },
+    {
+      "id": "it_clang_628",
+      "widget_id": "widget_clang_628",
+      "topic": "Pointer Arithmetic — Subtracting Matrix Cell Addresses",
+      "q": "What is pointer difference `&a[2][0] - &a[0][1]` equal to for 2D array `int a[3][3]`?",
+      "hint": "Calculate flat indices of elements `a[2][0]` and `a[0][1]` in memory.",
+      "options": [
+        "5",
+        "6",
+        "2",
+        "20"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In flat memory of $3 \\times 3$ matrix, element `a[0][1]` is at flat index $0 \\times 3 + 1 = 1$. Element `a[2][0]` is at flat index $2 \\times 3 + 0 = 6$. Difference of two `int*` pointers equals difference of their flat indices: $6 - 1 = 5$ elements.",
+        "Incorrect. 6 is flat index of element `a[2][0]` from array start.",
+        "Incorrect. 2 is difference between row indices only.",
+        "Incorrect. 20 is difference in bytes ($5 \\times 4$), while subtraction operator returns element count."
+      ]
+    },
+    {
+      "id": "it_clang_629",
+      "widget_id": "widget_clang_629",
+      "topic": "Operator Precedence — Prefix Pointer Increment During Dereferencing *++p",
+      "q": "What will `printf(\"%d\", *++p)` output for `int a[4] = {1, 2, 3, 4}` and `int *p = a`?",
+      "hint": "When exactly does shift of pointer `p` happen in prefix increment form?",
+      "options": [
+        "2",
+        "1",
+        "3",
+        "4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Prefix `++` executes BEFORE dereferencing. Pointer `p` immediately shifts from `a[0]` to `a[1]`. Operator `*` dereferences new address, returning value 2.",
+        "Incorrect. 1 would be printed with postfix form `*p++`.",
+        "Incorrect. 3 would be printed with double shift `*++(++p)`.",
+        "Incorrect. 4 is element `a[3]`."
+      ]
+    },
+    {
+      "id": "it_clang_630",
+      "widget_id": "widget_clang_630",
+      "topic": "Initialization — Omitted Elements in Complex Multidimensional Initialization",
+      "q": "What are elements `a[0][2]` and `a[1][1]` equal to for matrix `int a[2][3] = {{1, 2}, {4}}`?",
+      "hint": "How are unspecified slots padded in each individual row?",
+      "options": [
+        "0 0",
+        "2 4",
+        "0 4",
+        "1 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! First row `{1, 2}` has dimension 3, so omitted 3rd element `a[0][2]` is zeroed (`0`). Second row `{4}` initializes only `a[1][0] = 4`, and remaining elements `a[1][1]` and `a[1][2]` are also zero-filled. Output: \"0 0\".",
+        "Incorrect. 2 is `a[0][1]`, and 4 is `a[1][0]`.",
+        "Incorrect. Element `a[1][1]` is zeroed because second row specifies only one element.",
+        "Incorrect. 1 is element `a[0][0]`."
+      ]
+    }
+  ]
+}

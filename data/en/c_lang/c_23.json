@@ -1,0 +1,605 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_721",
+      "widget_id": "widget_clang_721",
+      "topic": "Matrices — Pointer to Array int (*p)[N]",
+      "q": "What will `printf` output when accessing `p[1][2]` via a pointer to array `int (*p)[3]`?",
+      "hint": "Does `p[1]` point to the second row of the array (`{4, 5, 6}`)?",
+      "options": [
+        "6",
+        "5",
+        "3",
+        "2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The declaration `int (*p)[3]` creates a pointer to an array of 3 integers. Expression `p[1]` selects the second row `{4, 5, 6}`, and index `[2]` takes its third element — 6.",
+        "Incorrect. 5 is element `p[1][1]`.",
+        "Incorrect. 3 is an element of the first row `p[0][2]`.",
+        "Incorrect. 2 is element `p[0][1]`."
+      ]
+    },
+    {
+      "id": "it_clang_722",
+      "widget_id": "widget_clang_722",
+      "topic": "Matrices — Linear Addressing i * cols + j",
+      "q": "What is expression `p[1 * cols + 1]` equal to when linearly reading a `2x3` matrix via a 1D pointer?",
+      "hint": "Which element of 2D matrix `m[i][j]` is at linear index 4?",
+      "options": [
+        "50",
+        "40",
+        "20",
+        "60"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Matrix memory stores rows sequentially (row-major order). Index $1 \\times 3 + 1 = 4$ corresponds to the 5th element of the contiguous memory block: `m[0][0]` (10), `m[0][1]` (20), `m[0][2]` (30), `m[1][0]` (40), `m[1][1]` (50).",
+        "Incorrect. 40 is at index 3 (`m[1][0]`).",
+        "Incorrect. 20 is at index 1 (`m[0][1]`).",
+        "Incorrect. 60 is at index 5 (`m[1][2]`)."
+      ]
+    },
+    {
+      "id": "it_clang_723",
+      "widget_id": "widget_clang_723",
+      "topic": "Pointers — Array of Pointers int *arr[N]",
+      "q": "What will `printf(\"%d\", *arr[1])` output for an array of pointers `int *arr[3] = {&x, &y, &z}`?",
+      "hint": "Which address is stored in `arr[1]` and what is its value upon dereferencing `*`?",
+      "options": [
+        "20",
+        "10",
+        "30",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Declaration `int *arr[3]` creates an array of 3 pointers. Element `arr[1]` contains the address of variable `y`. The dereference operator `*arr[1]` retrieves the value of `y`, which is 20.",
+        "Incorrect. 10 is the value of `*arr[0]` (variable `x`).",
+        "Incorrect. 30 is the value of `*arr[2]` (variable `z`).",
+        "Incorrect. Arrays of pointers are completely valid in C."
+      ]
+    },
+    {
+      "id": "it_clang_724",
+      "widget_id": "widget_clang_724",
+      "topic": "sizeof Operator — Size of Entire Matrix and Size of One Row",
+      "q": "What will `printf` output for `sizeof(a)` and `sizeof(a[0])` of matrix `int a[3][4]` given a 4-byte `int`?",
+      "hint": "Calculate the total size of the entire $3 \\times 4$ element matrix and the size of one row of 4 elements.",
+      "options": [
+        "48 16",
+        "12 4",
+        "48 4",
+        "12 16"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The entire matrix contains $3 \\times 4 = 12$ elements of 4 bytes each, giving $12 \\times 4 = 48$ bytes. Element `a[0]` is a row of 4 integers, occupying $4 \\times 4 = 16$ bytes. Output: `48 16`.",
+        "Incorrect. 12 and 4 are element counts, not sizes in bytes.",
+        "Incorrect. 4 bytes is the size of only a single `int` element, not the whole row `a[0]`.",
+        "Incorrect. Recalculate the size of the entire matrix carefully."
+      ]
+    },
+    {
+      "id": "it_clang_725",
+      "widget_id": "widget_clang_725",
+      "topic": "Matrices — Combined Syntax (*(a + i))[j]",
+      "q": "What is expression `(*(a + 1))[0]` equal to for matrix `int a[2][2] = {{5, 10}, {15, 20}}`?",
+      "hint": "Which row does expression `*(a + 1)` select?",
+      "options": [
+        "15",
+        "5",
+        "10",
+        "20"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Expression `*(a + 1)` gets the subarray of the second row (`a[1]`). Applying index `[0]` reads its first element `a[1][0]`, which is 15.",
+        "Incorrect. 5 is element `(*(a + 0))[0]` (`a[0][0]`).",
+        "Incorrect. 10 is element `(*(a + 0))[1]` (`a[0][1]`).",
+        "Incorrect. 20 is element `(*(a + 1))[1]` (`a[1][1]`)."
+      ]
+    },
+    {
+      "id": "it_clang_726",
+      "widget_id": "widget_clang_726",
+      "topic": "Algorithms — Main Diagonal Traversal a[i][i]",
+      "q": "What will variable `sum` equal after passing through the loop over diagonal `a[i][i]`?",
+      "hint": "Add up the elements located at the intersection of identical rows and columns: (0,0), (1,1), (2,2).",
+      "options": [
+        "6",
+        "0",
+        "3",
+        "1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Expression `a[i][i]` accesses main diagonal elements of the matrix: `a[0][0]` (1), `a[1][1]` (2), and `a[2][2]` (3). Sum equals $1 + 2 + 3 = 6$.",
+        "Incorrect. Off-diagonal elements equal 0, but on the diagonal itself are numbers 1, 2, and 3.",
+        "Incorrect. 3 is only the last diagonal element.",
+        "Incorrect. Recalculate the sum of all three elements."
+      ]
+    },
+    {
+      "id": "it_clang_727",
+      "widget_id": "widget_clang_727",
+      "topic": "Dynamic Memory — Allocating a 2D Matrix via int **",
+      "q": "What is element `m[1][0]` equal to for a dynamically created 2D structure?",
+      "hint": "Was value 42 successfully assigned to the first cell of the second row?",
+      "options": [
+        "42",
+        "0",
+        "Memory garbage",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Code creates an array of pointers `m`, where each pointer stores its own dynamic 1D `int` array. Operation `m[1][0] = 42` correctly writes value into the second row and outputs 42.",
+        "Incorrect. Value 42 was explicitly written over uninitialized memory.",
+        "Incorrect. Variable received value 42 before output.",
+        "Incorrect. Creating dynamic matrices via `int**` is a classic C pattern."
+      ]
+    },
+    {
+      "id": "it_clang_728",
+      "widget_id": "widget_clang_728",
+      "topic": "String Arrays — Size of 2D Character Array char a[N][M]",
+      "q": "What is `sizeof(a)` equal to for 2D character array `char a[2][10]`?",
+      "hint": "How many `char` elements in total are allocated in memory regardless of written string lengths?",
+      "options": [
+        "20",
+        "5",
+        "16",
+        "8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! 2D array `char a[2][10]` allocates a contiguous memory block for exactly $2 \\times 10 = 20$ `char` elements. Since `sizeof(char) == 1`, total size equals 20 bytes.",
+        "Incorrect. 5 is total character count in phrases \"hi\" and \"bye\".",
+        "Incorrect. 16 bytes would be occupied by an array of pointers `char *a[2]` on a 64-bit system.",
+        "Incorrect. 8 bytes is occupied by a regular pointer."
+      ]
+    },
+    {
+      "id": "it_clang_729",
+      "widget_id": "widget_clang_729",
+      "topic": "Memory — Casting Matrix Type to Flat Pointer (int*)a",
+      "q": "What will `printf` output when examining first `p[0]` and last `p[3]` elements of a `2x2` matrix via flat pointer?",
+      "hint": "In what order are elements of matrix `{{1, 2}, {3, 4}}` placed in contiguous memory?",
+      "options": [
+        "1 4",
+        "1 2",
+        "1 3",
+        "2 3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In memory, elements of `2x2` matrix lie strictly sequentially: index 0: `a[0][0]` (1), index 1: `a[0][1]` (2), index 2: `a[1][0]` (3), index 3: `a[1][1]` (4). `p[0]` equals 1, and `p[3]` equals 4.",
+        "Incorrect. 1 and 2 are elements of first row `p[0]` and `p[1]`.",
+        "Incorrect. 1 and 3 are elements `p[0]` and `p[2]`.",
+        "Incorrect. Check order of elements in memory."
+      ]
+    },
+    {
+      "id": "it_clang_730",
+      "widget_id": "widget_clang_730",
+      "topic": "Function Parameters — Passing 2D Array int m[][N]",
+      "q": "What will function `print_val` output when matrix `a[2][3]` is passed to it?",
+      "hint": "Which element of original matrix `a` corresponds to index `m[1][1]`?",
+      "options": [
+        "5",
+        "4",
+        "2",
+        "6"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! When passing a matrix to a function, specifying second dimension `[][3]` is required. Element `m[1][1]` references second row and second column of matrix, which is number 5.",
+        "Incorrect. 4 is element `m[1][0]`.",
+        "Incorrect. 2 is element `m[0][1]`.",
+        "Incorrect. 6 is element `m[1][2]`."
+      ]
+    },
+    {
+      "id": "it_clang_731",
+      "widget_id": "widget_clang_731",
+      "topic": "Multidimensional Arrays — 3D Array a[2][2][2]",
+      "q": "What is element `a[1][0][1]` equal to in 3D array `int a[2][2][2]`?",
+      "hint": "Step 1: select block [1]. Step 2: select row [0] of this block. Step 3: take element [1].",
+      "options": [
+        "6",
+        "5",
+        "2",
+        "7"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Index `a[1]` selects second 2D block `{{5, 6}, {7, 8}}`. Index `[0]` takes first row `{5, 6}` from it. Index `[1]` takes second element of this row — 6.",
+        "Incorrect. 5 is element `a[1][0][0]`.",
+        "Incorrect. 2 is element of first block `a[0][0][1]`.",
+        "Incorrect. 7 is element `a[1][1][0]`."
+      ]
+    },
+    {
+      "id": "it_clang_732",
+      "widget_id": "widget_clang_732",
+      "topic": "Initialization — Incomplete Row Initialization of Matrix",
+      "q": "What will `printf` output for elements `a[0][1]` and `a[1][2]` when declaring `int a[2][3] = {{1}, {4, 5}}`?",
+      "hint": "What replaces omitted elements in matrix rows during initialization in curly braces?",
+      "options": [
+        "0 0",
+        "1 5",
+        "0 5",
+        "Garbage Garbage"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! If not all elements are specified for a subarray (row), remaining slots are automatically zero-filled. First row becomes `{1, 0, 0}`, second `{4, 5, 0}`. Values `a[0][1]` and `a[1][2]` equal 0.",
+        "Incorrect. 1 is element `a[0][0]`, and 5 is `a[1][1]`.",
+        "Incorrect. `a[1][2]` also equals 0 because third cell of second row is omitted.",
+        "Incorrect. Explicit initialization guarantees absence of garbage."
+      ]
+    },
+    {
+      "id": "it_clang_733",
+      "widget_id": "widget_clang_733",
+      "topic": "Double Dereference — Expression **(a + 1) for 2D Array",
+      "q": "What is expression `**(a + 1)` equal to for matrix `int a[2][3] = {{1, 2, 3}, {4, 5, 6}}`?",
+      "hint": "Which row does first dereference `*(a + 1)` yield and which element does second `*` return?",
+      "options": [
+        "4",
+        "1",
+        "2",
+        "5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Expression `a + 1` shifts pointer to 2nd row of matrix. First dereference `*(a + 1)` converts type to pointer to first element of this row (`&a[1][0]`). Second dereference `**(a + 1)` retrieves value of `a[1][0]`, which is 4.",
+        "Incorrect. 1 is element `**a` (`a[0][0]`).",
+        "Incorrect. 2 is element `*(*a + 1)` (`a[0][1]`).",
+        "Incorrect. 5 is element `*(*(a + 1) + 1)` (`a[1][1]`)."
+      ]
+    },
+    {
+      "id": "it_clang_734",
+      "widget_id": "widget_clang_734",
+      "topic": "Pointer Arithmetic — Syntax *(*(a) + 2)",
+      "q": "What is expression `*(*(a) + 2)` equal to for matrix `int a[2][3] = {{10, 20, 30}, {40, 50, 60}}`?",
+      "hint": "Which matrix element `a[i][j]` does this notation correspond to?",
+      "options": [
+        "30",
+        "20",
+        "60",
+        "10"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Expression `*(a)` is shorthand for `*(a + 0)`, which is first row `a[0]`. Adding `+ 2` gives address of 3rd element of this row (`&a[0][2]`). Dereferencing retrieves 30.",
+        "Incorrect. 20 is element `*(*(a) + 1)` (`a[0][1]`).",
+        "Incorrect. 60 is element of 3rd column of second row `*(*(a + 1) + 2)` (`a[1][2]`).",
+        "Incorrect. 10 is initial element `**a` (`a[0][0]`)."
+      ]
+    },
+    {
+      "id": "it_clang_735",
+      "widget_id": "widget_clang_735",
+      "topic": "C99 — 2D Variable Length Arrays (VLA)",
+      "q": "Is dynamic VLA matrix dimension `int a[n][m]` legal and will `a[1][2]` output value 99 in C99+?",
+      "hint": "Does C99 standard support dynamic VLA allocation on stack?",
+      "options": [
+        "Will output 99",
+        "Compilation error",
+        "Undefined behavior",
+        "Will output 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! C99 standard allows variable length arrays (VLAs). Dimensions `n` and `m` are calculated at runtime, and assignment `a[1][2] = 99` correctly outputs 99.",
+        "Incorrect. An error would occur only in older C89 standard.",
+        "Incorrect. Working with VLAs is fully regulated in C99.",
+        "Incorrect. Cell value was explicitly changed to 99."
+      ]
+    },
+    {
+      "id": "it_clang_736",
+      "widget_id": "widget_clang_736",
+      "topic": "C99 — Designated Initializers for Arrays",
+      "q": "What will `printf` output when initializing array via `[2] = 10, 20`?",
+      "hint": "From which index does array filling continue after specifying explicit index `[2]`?",
+      "options": [
+        "0 20",
+        "10 20",
+        "0 10",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C99, initializer `[2] = 10` sets `a[2] = 10`. Next unindexed element (`20`) is written to next position `a[3]`. Unspecified elements (`a[0]`, `a[1]`, `a[4]`) are zeroed. Element `a[1]` equals 0, and `a[3]` equals 20.",
+        "Incorrect. `a[1]` remained explicitly uninitialized, taking value 0.",
+        "Incorrect. 10 was written to `a[2]`, not `a[3]`.",
+        "Incorrect. Designated initializers are standardized in C99."
+      ]
+    },
+    {
+      "id": "it_clang_737",
+      "widget_id": "widget_clang_737",
+      "topic": "C99 — Designated Initializers for Structs",
+      "q": "What will `printf(\"%d %d\", p.x, p.y)` output when using explicit fields `.y = 5, .x = 10`?",
+      "hint": "Does initialization order depend on declaration order of fields in struct?",
+      "options": [
+        "10 5",
+        "5 10",
+        "0 5",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Designated initializers `.field` in C99 allow populating struct fields in any order. `p.x` receives value 10, and `p.y` — value 5.",
+        "Incorrect. `p.x` corresponds to passed `.x = 10`.",
+        "Incorrect. All specified fields are successfully initialized.",
+        "Incorrect. Syntax is completely correct for C99."
+      ]
+    },
+    {
+      "id": "it_clang_738",
+      "widget_id": "widget_clang_738",
+      "topic": "C99 — Flexible Array Members",
+      "q": "What is `sizeof(struct Flex)` equal to for a struct with a flexible array `int data[]` at end?",
+      "hint": "Does operator `sizeof` account for size of elements of flexible array `data[]`?",
+      "options": [
+        "4",
+        "0",
+        "8",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C99, flexible array member at struct end (`int data[]`) does not increase size of struct itself when calling `sizeof`. Only field `len` (4 bytes on 32/64-bit systems) plus alignment is accounted for.",
+        "Incorrect. Struct contains at least fixed field `int len`.",
+        "Incorrect. Alignment does not require additional 4 bytes for single `int`.",
+        "Incorrect. Flexible arrays are a standard C99 feature."
+      ]
+    },
+    {
+      "id": "it_clang_739",
+      "widget_id": "widget_clang_739",
+      "topic": "C99 — Evaluating sizeof for VLA at Runtime",
+      "q": "What is expression `sizeof(a) / sizeof(a[0])` equal to for VLA array `int a[n]` given `n = 5`?",
+      "hint": "Is `sizeof` evaluated at runtime for variable length arrays in C99?",
+      "options": [
+        "5",
+        "1",
+        "0",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Unlike regular arrays where `sizeof` is evaluated at compile time, for VLAs in C99 it is evaluated at runtime. Total byte size $5 \\times \\text{sizeof(int)}$ divided by $\\text{sizeof(int)}$ yields exactly 5.",
+        "Incorrect. Size of VLA array is dynamically calculated correctly.",
+        "Incorrect. `sizeof` for VLA does not return 0.",
+        "Incorrect. Expression is completely valid."
+      ]
+    },
+    {
+      "id": "it_clang_740",
+      "widget_id": "widget_clang_740",
+      "topic": "Qualifiers — Pointer to Constant const int *p",
+      "q": "What will `printf(\"%d\", *p)` output when indirectly reading `x` via `const int *p` if variable `x` itself was modified directly (`x = 20`)?",
+      "hint": "Does `const int *p` forbid modifying value of original variable `x` directly via its own name?",
+      "options": [
+        "20",
+        "10",
+        "Compilation error",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Declaration `const int *p` only forbids modifying value *via pointer* `p` (`*p = ...` will cause error). Modifying variable `x` directly is allowed, and pointer `p` sees updated value 20.",
+        "Incorrect. 10 is old value prior to writing.",
+        "Incorrect. Modifying regular non-const object `x` is legal.",
+        "Incorrect. There is no undefined behavior here."
+      ]
+    },
+    {
+      "id": "it_clang_741",
+      "widget_id": "widget_clang_741",
+      "topic": "C99 — Function snprintf and Its Return Value",
+      "q": "What will `res` and `strlen(buf)` output when calling `snprintf(buf, 5, \"Hello, World!\")`?",
+      "hint": "What does `snprintf` return: number of actually written bytes or number of bytes that WOULD HAVE BEEN written without limits?",
+      "options": [
+        "13 4",
+        "4 4",
+        "5 4",
+        "13 5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! According to C99 standard, `snprintf` returns number of characters that WOULD HAVE BEEN written (13 without null terminator). Into buffer of size 5 fit 4 characters + null terminator `\\0` (\"Hell\\0\"), so `strlen(buf)` equals 4.",
+        "Incorrect. 4 would be returned if `snprintf` returned count of actually written characters.",
+        "Incorrect. `res` is not equal to buffer size.",
+        "Incorrect. String length in buffer excluding null terminator equals 4."
+      ]
+    },
+    {
+      "id": "it_clang_742",
+      "widget_id": "widget_clang_742",
+      "topic": "C99 — Variable Declarations in for Loop (Block Scope)",
+      "q": "What will code output given two variables `i` (outer and inside `for` block)?",
+      "hint": "Does variable from `for(int i = ...)` shadow same-named outer variable?",
+      "options": [
+        "10 0",
+        "10 11",
+        "10 10",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Variable `i` declared inside `for` header is visible only inside loop body. It shadows outer `i`. Inside loop 10 is printed, and after completion outer `i` remains equal to 0.",
+        "Incorrect. Outer `i` does not change during loop execution.",
+        "Incorrect. Variables have different values.",
+        "Incorrect. Declaring variable inside `for` is permitted starting from C99."
+      ]
+    },
+    {
+      "id": "it_clang_743",
+      "widget_id": "widget_clang_743",
+      "topic": "C99 — Boolean Type _Bool",
+      "q": "What is value of `(int)b` equal to when assigning `_Bool b = 100`?",
+      "hint": "What value does any non-zero number turn into when cast to `_Bool` type?",
+      "options": [
+        "1",
+        "100",
+        "0",
+        "255"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! According to C99, converting any non-zero scalar value to `_Bool` type always yields 1. Cast `(int)b` will return 1.",
+        "Incorrect. `_Bool` stores only 0 or 1.",
+        "Incorrect. 0 is obtained only when assigning zero value.",
+        "Incorrect. Overflow like with `char` does not occur here."
+      ]
+    },
+    {
+      "id": "it_clang_744",
+      "widget_id": "widget_clang_744",
+      "topic": "Qualifiers — Constant Pointer int * const p",
+      "q": "What will `printf(\"%d\", a)` output after executing `*p = 30` via constant pointer `int * const p`?",
+      "hint": "What is constant in `int * const p`: address in pointer itself or data it points to?",
+      "options": [
+        "30",
+        "10",
+        "Compilation error",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Writing `int * const p` means pointer `p` itself is constant (cannot change address it points to). However data `*p` can be modified, so `a` becomes equal to 30.",
+        "Incorrect. 10 was initial value.",
+        "Incorrect. Error would occur only when attempting `p = &b`.",
+        "Incorrect. Modifying dereferenced constant pointer is completely legal."
+      ]
+    },
+    {
+      "id": "it_clang_745",
+      "widget_id": "widget_clang_745",
+      "topic": "Pointers — Subscripting Relative to Shifted Pointer p[2]",
+      "q": "What is value `p[2]` equal to if `p = &a[1]` for array `a = {1, 2, 3, 4, 5}`?",
+      "hint": "Which expression `*(p + 2)` relative to original array is `p[2]` equivalent to?",
+      "options": [
+        "4",
+        "3",
+        "2",
+        "5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since `p` points to `a[1]` (value 2), `p[0]` is `a[1]`, `p[1]` is `a[2]`, and `p[2]` is `a[3]`, whose value equals 4.",
+        "Incorrect. 3 is `p[1]` (`a[2]`).",
+        "Incorrect. 2 is `p[0]` (`a[1]`).",
+        "Incorrect. 5 is `p[3]` (`a[4]`)."
+      ]
+    },
+    {
+      "id": "it_clang_746",
+      "widget_id": "widget_clang_746",
+      "topic": "Preprocessor — Side Effects of Repeated Argument Evaluation in Macros",
+      "q": "What will `printf(\"%d %d\", x, y)` output for `MAX(x++, y++)` with initial `x = 2, y = 3`?",
+      "hint": "Expand macro `((x++) > (y++) ? (x++) : (y++))` and count number of increments.",
+      "options": [
+        "3 5",
+        "3 4",
+        "4 4",
+        "3 3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Macro expands to `((x++) > (y++) ? (x++) : (y++))`. First 2 and 3 are compared: `x` becomes 3, `y` becomes 4. Since condition is false, branch `(y++)` is executed: value 4 is selected and `y` is incremented second time to 5. Result: `x = 3, y = 5`.",
+        "Incorrect. `y` was incremented twice, not once.",
+        "Incorrect. `x++` was evaluated only once in condition.",
+        "Incorrect. Side effects took effect."
+      ]
+    },
+    {
+      "id": "it_clang_747",
+      "widget_id": "widget_clang_747",
+      "topic": "C99 — Restrict Qualifier",
+      "q": "What is keyword `restrict` added in C99 standard used for?",
+      "hint": "What guarantee does programmer give to compiler regarding pointer aliasing?",
+      "options": [
+        "Guarantees object is accessible only through given pointer (for optimizations)",
+        "Makes pointer thread-safe",
+        "Forbids modifying memory pointed to by pointer",
+        "Automatically frees memory upon function exit"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Qualifier `restrict` informs compiler that during lifetime of given pointer no other pointer will access same memory region (no pointer aliasing), allowing compiler to perform aggressive register optimizations.",
+        "Incorrect. `restrict` is not related to multithreading.",
+        "Incorrect. Forbidding memory modification is specified with `const` keyword.",
+        "Incorrect. Memory management remains manual."
+      ]
+    },
+    {
+      "id": "it_clang_748",
+      "widget_id": "widget_clang_748",
+      "topic": "Data Types — Integer Promotions",
+      "q": "What will `printf(\"%d\", c + 1)` output for `unsigned char c = 255`?",
+      "hint": "To which type is `unsigned char` automatically promoted when participating in arithmetic operations?",
+      "options": [
+        "256",
+        "0",
+        "-1",
+        "255"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Due to Integer Promotions rule, types smaller than `int` (`char`, `short`) are automatically promoted to signed `int` before performing arithmetic operations. Result $255 + 1 = 256$ without `unsigned char` overflow.",
+        "Incorrect. 0 would occur if result were immediately truncated back to `unsigned char`.",
+        "Incorrect. Number does not overflow into signed negative.",
+        "Incorrect. Addition with 1 was executed."
+      ]
+    },
+    {
+      "id": "it_clang_749",
+      "widget_id": "widget_clang_749",
+      "topic": "Syntax — Commutativity of Index Operator 2[a]",
+      "q": "What will `printf(\"%d\", 2[a])` output for array `int a[3] = {10, 20, 30}`?",
+      "hint": "What does expression `i[a]` turn into according to C language rules?",
+      "options": [
+        "30",
+        "20",
+        "10",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, notation `a[i]` is translated by compiler as `*(a + i)`. Since addition is commutative, `*(2 + a)` is fully equivalent to `2[a]` and returns `a[2]`, which is 30.",
+        "Incorrect. 20 is element `1[a]` (`a[1]`).",
+        "Incorrect. 10 is element `0[a]` (`a[0]`).",
+        "Incorrect. Syntax `N[arr]` is completely legal in C."
+      ]
+    },
+    {
+      "id": "it_clang_750",
+      "widget_id": "widget_clang_750",
+      "topic": "C99 — Single-line Comments //",
+      "q": "In which C standard were single-line comments `//` officially introduced?",
+      "hint": "Previously this comment style was part of C++ standard, while C89 had only `/* ... */`.",
+      "options": [
+        "C99",
+        "C89 / C90",
+        "C11",
+        "K&R C (1978)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Single-line comments like `//` were borrowed from C++ and officially added to C language standard in C99. In C89/C90 only multi-line comments `/* ... */` were allowed.",
+        "Incorrect. In C89/C90 `//` comments were a compilation error (or treated as compiler extension).",
+        "Incorrect. In C11 they had already been present for a long time.",
+        "Incorrect. In classic K&R C `//` comments did not exist."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,605 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_691",
+      "widget_id": "widget_clang_691",
+      "topic": "Pointer Arithmetic — Subtracting Shifted Pointers p - (a + 1)",
+      "q": "What is difference `p - (a + 1)` equal to if `p = a + 3` for array `int a[4] = {10, 20, 30, 40}`?",
+      "hint": "Calculate indices of elements referenced by pointers `p` and `a + 1`.",
+      "options": [
+        "2",
+        "3",
+        "1",
+        "8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Pointer `p` references element `a[3]`, while expression `a + 1` references `a[1]`. Pointer difference is calculated in number of elements: $3 - 1 = 2$.",
+        "Incorrect. 3 is offset of pointer `p` relative to start of array `a`.",
+        "Incorrect. 1 is offset of expression `a + 1`.",
+        "Incorrect. Difference is measured in elements, not bytes."
+      ]
+    },
+    {
+      "id": "it_clang_692",
+      "widget_id": "widget_clang_692",
+      "topic": "Dynamic Memory — Accessing Elements via p + 1 After malloc",
+      "q": "What will `printf` output when dereferencing `*(p + 1)` for a dynamically allocated array?",
+      "hint": "Which element with subscript notation `p[i]` does notation `*(p + 1)` correspond to?",
+      "options": [
+        "2",
+        "1",
+        "3",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Pointer `p` returned by `malloc` works similarly to regular array name. Dereferencing `*(p + 1)` is equivalent to `p[1]`, which stores value 2.",
+        "Incorrect. 1 is element `p[0]` (`*p`).",
+        "Incorrect. 3 is element `p[2]` (`*(p + 2)`).",
+        "Incorrect. Memory was initialized with values 1, 2, and 3."
+      ]
+    },
+    {
+      "id": "it_clang_693",
+      "widget_id": "widget_clang_693",
+      "topic": "String Arrays — Shifting Pointer to First Character *arr + 1",
+      "q": "What will `printf(\"%s\", *arr + 1)` output for string array `char *arr[] = {\"Red\", \"Green\", \"Blue\"}`?",
+      "hint": "Which string does `*arr` point to and where does adding one shift it?",
+      "options": [
+        "ed",
+        "Red",
+        "Green",
+        "d"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Expression `*arr` dereferences first element `arr[0]`, returning pointer to string `\"Red\"`. Shift `+ 1` moves pointer to second character `'e'`. Function `printf` with specifier `%s` prints substring to end: `\"ed\"`.",
+        "Incorrect. \"Red\" would be printed without shift `+ 1`.",
+        "Incorrect. \"Green\" would be printed when calling `*(arr + 1)` or `arr[1]`.",
+        "Incorrect. Specifier `%s` prints entire string starting from given address, not a single character."
+      ]
+    },
+    {
+      "id": "it_clang_694",
+      "widget_id": "widget_clang_694",
+      "topic": "Function Pointers — Calling Function via fp(3, 4)",
+      "q": "What will program output when calling function via pointer `fp(3, 4)`?",
+      "hint": "Does `fp` point to function `add` returning sum of two arguments?",
+      "options": [
+        "7",
+        "12",
+        "0",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Variable `fp` stores address of function `add`. Syntax `fp(3, 4)` explicitly calls original function with arguments 3 and 4, returning their sum: $3 + 4 = 7$.",
+        "Incorrect. 12 would be obtained when multiplying numbers.",
+        "Incorrect. Function returns specific sum value.",
+        "Incorrect. Initializing and calling function pointer is completely valid."
+      ]
+    },
+    {
+      "id": "it_clang_695",
+      "widget_id": "widget_clang_695",
+      "topic": "Preprocessor — Order of Evaluation in Unparenthesized Macros",
+      "q": "What is result of macro `SQUARE(2 + 3)` given definition `#define SQUARE(x) x * x`?",
+      "hint": "Substitute expression `2 + 3` instead of `x` literally, without pre-evaluating it.",
+      "options": [
+        "11",
+        "25",
+        "10",
+        "13"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Preprocessor macros are substituted textually. Expression `SQUARE(2 + 3)` expands to `2 + 3 * 2 + 3`. Accounting for operator precedence, multiplication is performed first: $2 + (3 \\times 2) + 3 = 2 + 6 + 3 = 11$.",
+        "Incorrect. 25 ($(2+3)^2$) would be obtained if macro argument were wrapped in parentheses: `#define SQUARE(x) ((x) * (x))`.",
+        "Incorrect. Carefully calculate operator precedence.",
+        "Incorrect. C macros do not evaluate expressions prior to substitution."
+      ]
+    },
+    {
+      "id": "it_clang_696",
+      "widget_id": "widget_clang_696",
+      "topic": "Bitwise Operations — Bitwise Exclusive OR (XOR) Over Elements",
+      "q": "What is result `a[0] ^ a[1]` equal to for array `int a[2] = {5, 12}`?",
+      "hint": "Convert numbers 5 (`0101`) and 12 (`1100`) to binary format and apply XOR operation.",
+      "options": [
+        "9",
+        "17",
+        "7",
+        "1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Converting to binary: $5_{10} = 0101_2$, $12_{10} = 1100_2$. Applying bitwise XOR operation: $0101 \\oplus 1100 = 1001_2$, which equals $9_{10}$.",
+        "Incorrect. 17 is regular sum of numbers $5 + 12$.",
+        "Incorrect. 7 is obtained when subtracting $12 - 5$.",
+        "Incorrect. 1 is obtained with bitwise AND (`5 & 12`)."
+      ]
+    },
+    {
+      "id": "it_clang_697",
+      "widget_id": "widget_clang_697",
+      "topic": "Memory Alignment — Comparing Structure Size with Sum of Member Sizes",
+      "q": "What will comparison `sizeof(struct Test) > sizeof(char) + sizeof(int)` output given padding bytes?",
+      "hint": "Does compiler add extra padding bytes to align members in memory?",
+      "options": [
+        "1 (True)",
+        "0 (False)",
+        "Compilation error",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Due to architecture alignment requirements, field `int` must start at address multiple of 4. Compiler inserts 3 padding bytes after `char c`. Thus `sizeof(struct Test)` is 8 bytes, which is strictly greater than $1 + 4 = 5$ bytes. Comparison result: 1.",
+        "Incorrect. Size of aligned structure usually exceeds arithmetic sum of its members.",
+        "Incorrect. Size calculation syntax is completely correct.",
+        "Incorrect. Alignment rules are strictly fixed in platform ABI."
+      ]
+    },
+    {
+      "id": "it_clang_698",
+      "widget_id": "widget_clang_698",
+      "topic": "Type Aliases — sizeof Operator for Array typedef",
+      "q": "What is `sizeof(a)` equal to with 4-byte `int` if array type is defined as `typedef int IntArray[3]`?",
+      "hint": "How many bytes does array type `IntArray` of 3 `int` elements occupy?",
+      "options": [
+        "12",
+        "4",
+        "3",
+        "8"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `typedef` creates alias `IntArray` for type 'array of 3 int'. Object `a` has size of 3 `int` elements. Calculating $3 \\times 4$ yields 12 bytes.",
+        "Incorrect. 4 bytes is size of single `int` element.",
+        "Incorrect. 3 is element count in array.",
+        "Incorrect. 8 is size of regular pointer."
+      ]
+    },
+    {
+      "id": "it_clang_699",
+      "widget_id": "widget_clang_699",
+      "topic": "Constness — Pointer to Constant const int *p",
+      "q": "What will `printf` output when redirecting pointer `const int *p = &x` to another address `&y`?",
+      "hint": "Does declaration `const int *p` allow modifying ADDRESS ITSELF in variable `p`?",
+      "options": [
+        "20",
+        "Compilation error",
+        "10",
+        "Undefined behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Syntax `const int *p` declares pointer to constant. Modifying VALUE at address (`*p = ...`) is forbidden, but address ITSELF can be changed. Redirection `p = &y` is valid, and `*p` will output 20.",
+        "Incorrect. Compilation error would occur with `int * const p` (constant pointer).",
+        "Incorrect. 10 is old value of `x` before changing address `p`.",
+        "Incorrect. Changing address of pointer to constant is strictly regulated."
+      ]
+    },
+    {
+      "id": "it_clang_700",
+      "widget_id": "widget_clang_700",
+      "topic": "2D Arrays — Automatic Calculation of First Dimension int a[][2]",
+      "q": "How many rows will expression `sizeof(a) / sizeof(a[0])` count for `int a[][2] = {1, 2, 3, 4, 5, 6}`?",
+      "hint": "Divide total element count (6) by dimension of second axis (2).",
+      "options": [
+        "3",
+        "6",
+        "2",
+        "12"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Compiler determines first dimension automatically: $6 / 2 = 3$ rows. Size of entire matrix `sizeof(a)` equals $3 \\times 2 \\times 4 = 24$ bytes. Size of first row `sizeof(a[0])` equals $2 \\times 4 = 8$ bytes. Result: $24 / 8 = 3$.",
+        "Incorrect. 6 is total element count.",
+        "Incorrect. 2 is column count in each row.",
+        "Incorrect. 12 is matrix size in short elements."
+      ]
+    },
+    {
+      "id": "it_clang_701",
+      "widget_id": "widget_clang_701",
+      "topic": "Syntax — Commutativity of Address and Offset *(3 + a)",
+      "q": "Which character will expression `*(3 + a)` output for `char a[] = \"Hello\"`?",
+      "hint": "Use commutativity of addition: `*(3 + a)` is equivalent to `*(a + 3)`.",
+      "options": [
+        "l",
+        "e",
+        "H",
+        "o"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! By law of addition commutativity `3 + a` is fully equivalent to `a + 3`. Dereferencing `*(a + 3)` gives `a[3]`. In string \"Hello\": `a[0]='H'`, `a[1]='e'`, `a[2]='l'`, `a[3]='l'`. Second character `'l'` is printed.",
+        "Incorrect. 'e' is at index `a[1]`.",
+        "Incorrect. 'H' is at index `a[0]`.",
+        "Incorrect. 'o' is at index `a[4]`."
+      ]
+    },
+    {
+      "id": "it_clang_702",
+      "widget_id": "widget_clang_702",
+      "topic": "Character Type — Subtracting Characters c - 'A'",
+      "q": "What is difference `c - 'A'` equal to for `char c = 'D'` in ASCII encoding?",
+      "hint": "What is distance in alphabet between letters 'A' and 'D'?",
+      "options": [
+        "3",
+        "4",
+        "67",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Characters in C are represented as integers (ASCII codes). Since Latin letters are arranged in sequence: 'A' (65), 'B' (66), 'C' (67), 'D' (68), difference is $68 - 65 = 3$.",
+        "Incorrect. 4 would be obtained if letter counting started from 1.",
+        "Incorrect. 67 is ASCII code of character 'C'.",
+        "Incorrect. Arithmetic on `char` types is fully supported by C."
+      ]
+    },
+    {
+      "id": "it_clang_703",
+      "widget_id": "widget_clang_703",
+      "topic": "String Literals — Embedded Null Terminator Inside Array",
+      "q": "What will `printf(\"%s\", str)` output for array `char str[] = \"C\\0Programming\"`?",
+      "hint": "Where does string output stop when encountering specific character '\\0'?",
+      "options": [
+        "C",
+        "C\\0Programming",
+        "CProgramming",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Character `'\\0'` is an explicit null terminator marking string end. Function `printf` with specifier `%s` stops printing as soon as it encounters byte with value 0. Only letter character `\"C\"` is printed.",
+        "Incorrect. Escaped null `'\\0'` is not printed as text.",
+        "Incorrect. Function `printf` does not skip past null terminators.",
+        "Incorrect. Embedding null terminators in string literals is permissible."
+      ]
+    },
+    {
+      "id": "it_clang_704",
+      "widget_id": "widget_clang_704",
+      "topic": "Ternary Operator — Selecting Array by Condition",
+      "q": "What is element `p[1]` equal to if `p` is initialized as `(1 < 2) ? a : b`?",
+      "hint": "Which of two arrays will be selected by ternary operator under condition 1 < 2?",
+      "options": [
+        "20",
+        "10",
+        "40",
+        "30"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Condition `1 < 2` is true, so ternary operator returns array `a`. Pointer `p` references `a`. Expression `p[1]` reads second element `a[1]`, equal to 20.",
+        "Incorrect. 10 is first element `a[0]` (`p[0]`).",
+        "Incorrect. 40 is element of second array `b[1]`, which was not selected.",
+        "Incorrect. 30 is first element of array `b[0]`."
+      ]
+    },
+    {
+      "id": "it_clang_705",
+      "widget_id": "widget_clang_705",
+      "topic": "Bitwise Shifts — Left Shift Over Array Elements a[0] << a[1]",
+      "q": "What is expression `a[0] << a[1]` equal to for array `int a[2] = {1, 8}`?",
+      "hint": "Operation `x << y` is equivalent to multiplying `x` by $2^y$.",
+      "options": [
+        "256",
+        "8",
+        "16",
+        "512"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Expression expands to `1 << 8`. Bitwise left shift of one by 8 positions is equivalent to calculating $1 \\times 2^8 = 256$.",
+        "Incorrect. 8 is obtained when shifting by 3 positions ($1 \\ll 3$).",
+        "Incorrect. 16 is obtained when shifting by 4 positions ($1 \\ll 4$).",
+        "Incorrect. 512 is obtained when shifting by 9 positions ($1 \\ll 9$)."
+      ]
+    },
+    {
+      "id": "it_clang_706",
+      "widget_id": "widget_clang_706",
+      "topic": "Unions — Shared Memory Usage in union",
+      "q": "What will `u.a` equal after assignment `u.b = 20` in `union U`?",
+      "hint": "Do members of a union share the exact same memory region?",
+      "options": [
+        "20",
+        "10",
+        "0",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Unlike structures, all members of a `union` occupy the same memory location. Overwriting `u.b = 20` modifies memory shared with `u.a`, so `u.a` also returns 20.",
+        "Incorrect. 10 was initial value, but was overwritten when `u.b` changed.",
+        "Incorrect. Union memory was replaced with number 20.",
+        "Incorrect. Working with unions is part of C language standard."
+      ]
+    },
+    {
+      "id": "it_clang_707",
+      "widget_id": "widget_clang_707",
+      "topic": "C99 — Compound Literals",
+      "q": "What is element `p[1]` equal to when initializing pointer via compound literal `(int[]){10, 20, 30}`?",
+      "hint": "Compound literal creates an unnamed array in current scope.",
+      "options": [
+        "20",
+        "10",
+        "30",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Starting from C99 standard, syntax `(type[]){...}` creates temporary unnamed array with specified lifetime. Element at index 1 equals 20.",
+        "Incorrect. 10 is element `p[0]`.",
+        "Incorrect. 30 is element `p[2]`.",
+        "Incorrect. Compound literals are supported in C99 and newer standards."
+      ]
+    },
+    {
+      "id": "it_clang_708",
+      "widget_id": "widget_clang_708",
+      "topic": "Preprocessor — Token Concatenation Operator ##",
+      "q": "What will `printf(\"%d\", CONCAT(x, y))` output when using macro `#define CONCAT(a, b) a ## b`?",
+      "hint": "What does expression `x ## y` turn into during preprocessor run?",
+      "options": [
+        "100",
+        "xy",
+        "x y",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Operator `##` joins two tokens into one. Expression `CONCAT(x, y)` at preprocessing stage concatenates into variable name `xy`, whose value equals 100.",
+        "Incorrect. Preprocessor replaces token `xy` with its runtime value.",
+        "Incorrect. No space is inserted between tokens.",
+        "Incorrect. Concatenation operator is completely valid."
+      ]
+    },
+    {
+      "id": "it_clang_709",
+      "widget_id": "widget_clang_709",
+      "topic": "Preprocessor — Stringification Operator #",
+      "q": "What will `printf(\"%s\", STR(123 + 456))` output given `#define STR(x) #x`?",
+      "hint": "Does `#` operator calculate mathematical expressions or convert their argument to string as is?",
+      "options": [
+        "123 + 456",
+        "579",
+        "\"123 + 456\"",
+        "123456"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Operator `#` wraps passed macro argument in double quotes during text substitution without evaluating it. Result is string `\"123 + 456\"`.",
+        "Incorrect. 579 would be output if value were evaluated by regular code first.",
+        "Incorrect. Quotes themselves are part of string literal in C, but are not printed with `%s` specifier.",
+        "Incorrect. Plus signs are not discarded."
+      ]
+    },
+    {
+      "id": "it_clang_710",
+      "widget_id": "widget_clang_710",
+      "topic": "Ternary Operator — Side Effects of Postfix Increment",
+      "q": "What will `printf(\"%d %d\", x, y)` output after executing `y = (x > 0) ? x++ : x--` given `x = 5`?",
+      "hint": "What value does postfix increment `x++` return into variable `y` and how does `x` change?",
+      "options": [
+        "6 5",
+        "5 5",
+        "6 6",
+        "5 6"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Since `x > 0` is true (5 > 0), branch `x++` is executed. Postfix increment returns OLD value (5) into variable `y`, and then increments `x` to 6.",
+        "Incorrect. `x` was incremented after operation execution.",
+        "Incorrect. `y` receives value prior to increment.",
+        "Incorrect. `x` equals 6 and `y` equals 5."
+      ]
+    },
+    {
+      "id": "it_clang_711",
+      "widget_id": "widget_clang_711",
+      "topic": "Enumerations — Element Numbering in enum",
+      "q": "What will `printf` output for values `GREEN` and `YELLOW` in `enum Color { RED = 3, GREEN, BLUE = 10, YELLOW }`?",
+      "hint": "Which value is assigned to `enum` element if no explicit number is specified for it?",
+      "options": [
+        "4 11",
+        "3 10",
+        "4 10",
+        "1 2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Each uninitialized `enum` value is 1 greater than previous. After `RED = 3` comes `GREEN = 4`. Then `BLUE = 10` is specified, after which comes `YELLOW = 11`.",
+        "Incorrect. 3 and 10 are explicit values of `RED` and `BLUE`.",
+        "Incorrect. `YELLOW` comes after `BLUE` (10), so takes value 11.",
+        "Incorrect. Default counting starts from 0, but explicit values change order."
+      ]
+    },
+    {
+      "id": "it_clang_712",
+      "widget_id": "widget_clang_712",
+      "topic": "Conditional Expressions — Short-circuiting of AND Operator (&&)",
+      "q": "What will variable `b` equal after checking condition `if (a && ++b)` given `a = 0` and `b = 5`?",
+      "hint": "Is right hand side of `&&` operator evaluated if left hand side is already false (0)?",
+      "options": [
+        "5",
+        "6",
+        "0",
+        "1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C `&&` operator uses short-circuiting: if left operand is false (`a == 0`), right side (`++b`) is NOT evaluated at all. Variable `b` remains equal to 5.",
+        "Incorrect. 6 would occur if `++b` were evaluated.",
+        "Incorrect. 0 is value of variable `a`.",
+        "Incorrect. Condition returns 0, but `b` does not change."
+      ]
+    },
+    {
+      "id": "it_clang_713",
+      "widget_id": "widget_clang_713",
+      "topic": "Conditional Expressions — Short-circuiting of OR Operator (||)",
+      "q": "What will variable `b` equal after checking condition `if (a || ++b)` given `a = 1` and `b = 5`?",
+      "hint": "Is right hand side of `||` operator evaluated if left hand side is already true (1)?",
+      "options": [
+        "5",
+        "6",
+        "1",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Operator `||` stops evaluation if left operand is true (`a == 1`). Right side (`++b`) is skipped, and `b` remains equal to 5.",
+        "Incorrect. Increment `++b` is not executed due to short-circuiting.",
+        "Incorrect. 1 is truth value of expression.",
+        "Incorrect. Variable `b` retains initial value."
+      ]
+    },
+    {
+      "id": "it_clang_714",
+      "widget_id": "widget_clang_714",
+      "topic": "Loops — Guaranteed Single Execution of do-while",
+      "q": "What is value of `x` after completing loop `do { x += 2; } while (x < 0)` given initial `x = 0`?",
+      "hint": "How many times is `do-while` loop body executed prior to first condition check?",
+      "options": [
+        "2",
+        "0",
+        "Infinite loop",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! A `do-while` loop first executes body, then checks condition. `x` increases by 2, becoming equal to 2. Condition `2 < 0` is false, loop terminates. Output: 2.",
+        "Incorrect. 0 would be printed if loop body never executed (as in `while`).",
+        "Incorrect. Condition quickly becomes false.",
+        "Incorrect. Loop construction is correct."
+      ]
+    },
+    {
+      "id": "it_clang_715",
+      "widget_id": "widget_clang_715",
+      "topic": "Bitwise Operations — Bitwise NOT ~",
+      "q": "What is result of cast `(unsigned char)~x` equal to for `unsigned char x = 0`?",
+      "hint": "Which bits do all zeros of an 8-bit number turn into upon inversion `~`?",
+      "options": [
+        "255",
+        "-1",
+        "0",
+        "127"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Number 0 in 8-bit format is `00000000`. Bitwise negation `~` inverts all bits to `11111111`, which for `unsigned char` equals 255.",
+        "Incorrect. -1 is obtained for signed `signed char`.",
+        "Incorrect. 0 is initial value prior to inversion.",
+        "Incorrect. 127 has bitmask `01111111`."
+      ]
+    },
+    {
+      "id": "it_clang_716",
+      "widget_id": "widget_clang_716",
+      "topic": "Arithmetic — Modulo of Negative Numbers %",
+      "q": "What is result of expression `-7 % 3` equal to under C99+ standard?",
+      "hint": "Sign of modulo remainder in C99+ always matches sign of dividend (left operand).",
+      "options": [
+        "-1",
+        "1",
+        "2",
+        "-2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Under C99+ standard, division truncates towards zero, and sign of remainder (`a % b`) ALWAYS matches sign of dividend (`a`). Since dividend -7 is negative, remainder equals -1 ($ -7 = 3 \\times (-2) + (-1) $).",
+        "Incorrect. +1 would be obtained in some mathematical definitions (where remainder is strictly positive), but not in C99.",
+        "Incorrect. 2 is not a valid remainder value for 7 / 3.",
+        "Incorrect. -2 is quotient of division."
+      ]
+    },
+    {
+      "id": "it_clang_717",
+      "widget_id": "widget_clang_717",
+      "topic": "Arithmetic — Integer Division of Negative Numbers /",
+      "q": "What is result of `-7 / 3` equal to under C99+ standard?",
+      "hint": "In which direction is integer division result rounded in C?",
+      "options": [
+        "-2",
+        "-3",
+        "2",
+        "3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! C99 standard requires integer division results to round TOWARDS ZERO (truncation towards zero). Value $-2.333...$ truncates towards zero, becoming -2.",
+        "Incorrect. -3 would be obtained when rounding down (towards minus infinity).",
+        "Incorrect. Result of dividing negative number by positive number must be negative.",
+        "Incorrect. Plus sign is impossible."
+      ]
+    },
+    {
+      "id": "it_clang_718",
+      "widget_id": "widget_clang_718",
+      "topic": "State — Retaining Values in Function static Variables",
+      "q": "What will `printf(\"%d\", counter())` output if function `counter()` was already called once before?",
+      "hint": "Is a `static` variable inside a function reset between its calls?",
+      "options": [
+        "2",
+        "1",
+        "0",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Variable marked `static` is initialized only once at program startup and retains its value between function calls. First call increments `count` to 1, second call — to 2.",
+        "Incorrect. 1 would be output on first call to `counter()`.",
+        "Incorrect. 0 is initial value prior to increment.",
+        "Incorrect. Local `static` variables are fully permitted by standards."
+      ]
+    },
+    {
+      "id": "it_clang_719",
+      "widget_id": "widget_clang_719",
+      "topic": "Pointers — Type Casting in Pointer Offsets *(int*)((char*)p + sizeof(int))",
+      "q": "What is expression `*(int*)((char*)p + sizeof(int))` equal to for `int a[2] = {100, 200}` and `void *p = a`?",
+      "hint": "How many bytes does address shift when casting to `char*` and adding `sizeof(int)`?",
+      "options": [
+        "200",
+        "100",
+        "0",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Casting to `char*` allows performing byte-level address arithmetic. Shift by `sizeof(int)` (4 bytes) moves pointer exactly to second element `a[1]`. Casting back to `int*` and dereferencing returns 200.",
+        "Incorrect. 100 is first element `a[0]` prior to shift.",
+        "Incorrect. Data is correctly read from array.",
+        "Incorrect. Casting `void*` pointers to `char*` for arithmetic is widely used in C."
+      ]
+    },
+    {
+      "id": "it_clang_720",
+      "widget_id": "widget_clang_720",
+      "topic": "Memory — Returning Pointer to static Array from Function",
+      "q": "Is it safe to use value `p[1]` after calling a function that returns a `static` array?",
+      "hint": "Is a local array with `static` specifier destroyed upon function exit?",
+      "options": [
+        "20",
+        "10",
+        "Undefined behavior",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Static arrays (`static`) reside in static memory rather than on stack, so their lifetime matches the entire program duration. Returning pointer is completely safe; `p[1]` equals 20.",
+        "Incorrect. 10 is element `p[0]`.",
+        "Incorrect. Undefined behavior occurs only when returning pointer to regular local automatic array (on stack).",
+        "Incorrect. Function is syntactically correct."
+      ]
+    }
+  ]
+}

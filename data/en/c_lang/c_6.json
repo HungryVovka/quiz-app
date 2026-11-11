@@ -1,0 +1,428 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_175",
+      "widget_id": null,
+      "topic": "C Basics — The Main Application Function (main)",
+      "q": "Which code block serves as the main entry point where execution begins for any standard C program?",
+      "hint": "The name of this function is required in all executable C programs.",
+      "options": [
+        "`main()`",
+        "`include()`",
+        "`stdio()`",
+        "`printf()`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `main()` function is the main entry point, and execution of a C program begins directly with it.",
+        "Incorrect. `#include` is a preprocessor directive used for including header files.",
+        "Incorrect. `stdio.h` is a standard input/output library header, not a function.",
+        "Incorrect. `printf()` is a library function used for printing text to the console."
+      ]
+    },
+    {
+      "id": "it_clang_176",
+      "widget_id": null,
+      "topic": "GCC — Default Executable File Name",
+      "q": "What is the default name of the created executable file if the `-o` flag is not specified when compiling with `gcc main.c`?",
+      "hint": "The file name dates back to UNIX origins (assembler output).",
+      "options": [
+        "`a.out` (or `a.exe` on Windows)",
+        "`main.out` (or `main.exe`)",
+        "`primo.out`",
+        "`output.bin`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! If you do not pass the `-o` flag, the GCC compiler saves the binary output as `a.out` (or `a.exe` on Windows).",
+        "Incorrect. The source file name is not automatically applied to the executable.",
+        "Incorrect. The compiler does not assign this default name.",
+        "Incorrect. The file `output.bin` is not created by default."
+      ]
+    },
+    {
+      "id": "it_clang_177",
+      "widget_id": null,
+      "topic": "GCC — Specifying Output File Name (-o)",
+      "q": "Which GCC compiler flag is used to specify the output executable file name?",
+      "hint": "The flag consists of a single lowercase letter from the word 'output'.",
+      "options": [
+        "`-o &lt;name&gt;`",
+        "`-out &lt;name&gt;`",
+        "`-name &lt;name&gt;`",
+        "`-exe &lt;name&gt;`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `-o <filename>` flag sets a custom name for the compiled executable file.",
+        "Incorrect. The `-out` flag does not exist in GCC.",
+        "Incorrect. The `-name` flag is used in the `find` utility, not in the GCC compiler.",
+        "Incorrect. GCC does not have an `-exe` flag."
+      ]
+    },
+    {
+      "id": "it_clang_178",
+      "widget_id": null,
+      "topic": "Memory — Variable Allocation at Runtime",
+      "q": "What type of computer memory is allocated for program variables during execution?",
+      "hint": "Fast, volatile, random-access memory.",
+      "options": [
+        "Random-Access Memory (RAM)",
+        "Hard drive / SSD (ROM / NVMe)",
+        "Browser cache",
+        "External flash drive"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! When a program runs, variables are allocated in RAM on the stack or heap.",
+        "Incorrect. The hard drive stores the program file itself, not runtime variables.",
+        "Incorrect. The browser cache has no relation to a C application's memory.",
+        "Incorrect. External storage drives are used for persistent data storage."
+      ]
+    },
+    {
+      "id": "it_clang_179",
+      "widget_id": null,
+      "topic": "Data Types — Primitive C Types",
+      "q": "Which of the following data kinds are basic (primitive) types in C?",
+      "hint": "Types used for storing characters, integers, and real numbers.",
+      "options": [
+        "`char`, `int`, `float`",
+        "`string`, `integer`, `double`",
+        "`text`, `number`, `decimal`",
+        "`byte`, `int`, `boolean`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `char`, `int`, and `float` are fundamental built-in C types.",
+        "Incorrect. `string` and `integer` do not exist as primitive keywords in C (strings are represented as `char` arrays).",
+        "Incorrect. The types `text`, `number`, and `decimal` do not exist in C.",
+        "Incorrect. `byte` and `boolean` did not exist in classic C89 (the `_Bool` type was introduced later in C99)."
+      ]
+    },
+    {
+      "id": "it_clang_180",
+      "widget_id": null,
+      "topic": "Variables — Mandatory Declaration",
+      "q": "Which rule is strictly followed when working with variables in C?",
+      "hint": "C is a statically typed language.",
+      "options": [
+        "Every variable must be declared with a type before it can be used",
+        "Variables can be used without prior declaration",
+        "Variable type is inferred automatically upon assignment",
+        "Only numeric variables need to be declared"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C, the compiler requires explicit type declaration for all variables before use.",
+        "Incorrect. Undeclared variables cannot be used in C (this causes a compilation error).",
+        "Incorrect. Automatic type inference upon assignment is typical for dynamically typed languages.",
+        "Incorrect. Variables of all types must be declared."
+      ]
+    },
+    {
+      "id": "it_clang_181",
+      "widget_id": null,
+      "topic": "Operators — Assignment and the x = x + 3 Expression",
+      "q": "What happens when executing the line of code `x = x + 3;` in a C program?",
+      "hint": "The right side of the expression is evaluated first, then written to the left variable.",
+      "options": [
+        "The current value of `x + 3` is calculated and saved back into variable `x`",
+        "Equality between variable `x` and expression `x + 3` is checked",
+        "A compilation error occurs due to an algebraic contradiction",
+        "The value of `x` is reset to zero and then set to 3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `=` operator evaluates the right-hand expression (`x + 3`) and assigns the result to variable `x` on the left.",
+        "Incorrect. The `==` operator is used to test equality.",
+        "Incorrect. In programming, this is a standard operation to update a variable's value.",
+        "Incorrect. The old value of `x` is not ignored; 3 is added to it."
+      ]
+    },
+    {
+      "id": "it_clang_182",
+      "widget_id": null,
+      "topic": "Standard Library — Header stdio.h",
+      "q": "Which library header must be included via `#include` to use the `printf()` formatted output function?",
+      "hint": "The name stands for Standard Input / Output.",
+      "options": [
+        "`stdio.h`",
+        "`stdlib.h`",
+        "`math.h`",
+        "`string.h`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `stdio.h` header contains declarations for I/O functions such as `printf` and `scanf`.",
+        "Incorrect. `stdlib.h` contains memory management (`malloc`), random number generation, and process control functions.",
+        "Incorrect. `math.h` contains mathematical functions (`sqrt`, `pow`).",
+        "Incorrect. `string.h` contains string processing functions (`strlen`, `strcpy`)."
+      ]
+    },
+    {
+      "id": "it_clang_183",
+      "widget_id": null,
+      "topic": "printf — Format Specifiers (%d, %f, %c)",
+      "q": "Which format specifiers in `printf` output an integer, a floating-point number, and a single character, respectively?",
+      "hint": "%d — decimal/integer, %f — float, %c — char.",
+      "options": [
+        "`%d`, `%f`, `%c`",
+        "`%i`, `%r`, `%s`",
+        "`%int`, `%flt`, `%chr`",
+        "`%d`, `%d`, `%d`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `%d` formats integers (`int`), `%f` formats floating-point numbers (`float`/`double`), and `%c` formats single characters (`char`).",
+        "Incorrect. `%s` is used for strings, and `%r` is not a standard C specifier.",
+        "Incorrect. Format specifiers consist of short letter codes.",
+        "Incorrect. Using `%d` for all types leads to improper byte interpretation."
+      ]
+    },
+    {
+      "id": "it_clang_184",
+      "widget_id": null,
+      "topic": "Escape Sequences — Newline (\\n)",
+      "q": "Which escape sequence is used to move the cursor to a new line when printing?",
+      "hint": "Represented by a backslash and the letter 'n' (newline).",
+      "options": [
+        "`\\n`",
+        "`\\t`",
+        "`\\b`",
+        "`\\\\`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `\\n` represents a line feed / newline.",
+        "Incorrect. `\\t` inserts a horizontal tab character.",
+        "Incorrect. `\\b` performs a backspace.",
+        "Incorrect. `\\\\` prints a single backslash character."
+      ]
+    },
+    {
+      "id": "it_clang_185",
+      "widget_id": null,
+      "topic": "Escape Sequences — Escaping Double Quotes",
+      "q": "How do you print a double quote character inside a string literal like `printf(\"...\");`?",
+      "hint": "Characters are escaped using a backslash.",
+      "options": [
+        "`\\\"`",
+        "`\\\\`",
+        "`\\'`",
+        "`\\q`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The escaped character `\\\"` inserts a double quote inside a string without prematurely closing it.",
+        "Incorrect. `\\\\` outputs a backslash character.",
+        "Incorrect. `\\'` escapes a single quote.",
+        "Incorrect. The sequence `\\q` does not exist in C."
+      ]
+    },
+    {
+      "id": "it_clang_186",
+      "widget_id": null,
+      "topic": "Data Input — The scanf() Function",
+      "q": "What is the correct way to call `scanf` to read an integer from keyboard input into variable `var`?",
+      "hint": "The first argument is the format string, and the second is the target variable's address.",
+      "options": [
+        "`scanf(\"%d\", &var);`",
+        "`scanf(\"%d\", var);`",
+        "`scanf(var, \"%d\");`",
+        "`input(\"%d\", &var);`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `scanf(\"%d\", &var);` reads an integer and stores it at the address of variable `var`.",
+        "Incorrect. Omitting the ampersand `&` passes the variable's value instead of its address, causing a segfault.",
+        "Incorrect. The order of arguments is reversed.",
+        "Incorrect. There is no `input` function in the standard C library."
+      ]
+    },
+    {
+      "id": "it_clang_187",
+      "widget_id": null,
+      "topic": "Pointers — Address-of Operator (&) in scanf",
+      "q": "Why is the `&` symbol placed before the variable name in `scanf(\"%d\", &var);`?",
+      "hint": "The & operator returns a pointer to the memory location.",
+      "options": [
+        "It passes the memory address to `scanf` so the function can store the input value there",
+        "It converts the input value into a string format",
+        "It checks whether the variable is empty",
+        "It performs addition of variables"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `&` (address-of) operator passes the variable's memory address, giving `scanf` a target location to write data.",
+        "Incorrect. The `&` operator does not perform type conversion.",
+        "Incorrect. Checking values is performed using comparisons.",
+        "Incorrect. The addition operator is `+`."
+      ]
+    },
+    {
+      "id": "it_clang_188",
+      "widget_id": null,
+      "topic": "Syntax — Single-line and Multi-line Comments",
+      "q": "Which symbols designate single-line and multi-line comments in C source code?",
+      "hint": "Single-line comments start with two slashes, while multi-line comments are wrapped in slash-asterisk.",
+      "options": [
+        "`//` for single-line and `/* ... */` for multi-line",
+        "`#` for single-line and `&lt;!-- ... --&gt;` for multi-line",
+        "`/*` for single-line and `// ... //` for multi-line",
+        "`--` for single-line and `{ ... }` for multi-line"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `//` creates a single-line comment (since C99), while `/* ... */` creates a multi-line comment block.",
+        "Incorrect. `#` is used in Python/Bash and C preprocessor directives, while `<!-- -->` is used in HTML.",
+        "Incorrect. The syntax is reversed.",
+        "Incorrect. `--` is used in SQL/Lua, while `{ }` defines code blocks in C."
+      ]
+    },
+    {
+      "id": "it_clang_189",
+      "widget_id": null,
+      "topic": "Constants — Difference Between Constants and Variables",
+      "q": "What is the main difference between a constant and a variable in C?",
+      "hint": "Think about the names: constant (const) vs variable (var).",
+      "options": [
+        "A constant's value cannot be changed after initialization, whereas a variable's value can change during execution",
+        "Constants occupy significantly more memory than variables",
+        "Variables can only be used for integers",
+        "Constants are stored on disk, while variables are stored only in RAM"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Constants are declared as read-only entities; reassigning a value causes a compilation error.",
+        "Incorrect. Memory size is determined by data type, not mutability status.",
+        "Incorrect. Variables can be of any type (`float`, `char`, `double`, etc.).",
+        "Incorrect. Both types of data are stored in RAM during execution."
+      ]
+    },
+    {
+      "id": "it_clang_190",
+      "widget_id": null,
+      "topic": "Constants — The const Keyword",
+      "q": "What is the correct syntax for declaring an immutable variable using the `const` qualifier?",
+      "hint": "The const qualifier is placed before the data type.",
+      "options": [
+        "`const &lt;type&gt; &lt;name&gt; = &lt;value&gt;;`",
+        "`define &lt;type&gt; &lt;name&gt; = &lt;value&gt;;`",
+        "`constant &lt;name&gt; : &lt;type&gt; = &lt;value&gt;;`",
+        "`static &lt;type&gt; &lt;name&gt; == &lt;value&gt;;`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Writing `const int MAX = 100;` declares a constant integer.",
+        "Incorrect. `#define` is used for preprocessor macros, not `define`.",
+        "Incorrect. There is no `constant` keyword in C (`const` is used).",
+        "Incorrect. `static` sets storage duration and scope, while `==` performs comparison."
+      ]
+    },
+    {
+      "id": "it_clang_191",
+      "widget_id": null,
+      "topic": "Preprocessor — Macro Definitions (#define)",
+      "q": "How is a global symbolic constant declared using a preprocessor directive?",
+      "hint": "The directive starts with a hash, requires no data type, and ends without a semicolon.",
+      "options": [
+        "`#define &lt;NAME&gt; &lt;value&gt;`",
+        "`#const &lt;NAME&gt; = &lt;value&gt;`",
+        "`define &lt;NAME&gt; (&lt;value&gt;);`",
+        "`#include &lt;NAME&gt; &lt;value&gt;`"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The directive `#define BUFFER_SIZE 1024` replaces the substring `BUFFER_SIZE` with `1024` before compilation.",
+        "Incorrect. The `#const` directive does not exist.",
+        "Incorrect. `define` without a `#` is not a preprocessor directive.",
+        "Incorrect. `#include` is used solely to include header files."
+      ]
+    },
+    {
+      "id": "it_clang_192",
+      "widget_id": null,
+      "topic": "Identifiers — Variable Naming Rules",
+      "q": "Which rule must the first character of a valid identifier (variable name) in C strictly satisfy?",
+      "hint": "An identifier cannot start with a digit.",
+      "options": [
+        "It must be a Latin letter or an underscore `_`",
+        "It can be any digit from 0 to 9",
+        "It can be a special character ($, %, @)",
+        "It must be an uppercase letter"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! A variable name in C must start with a letter (`a-z`, `A-Z`) or an underscore `_`. Digits are allowed starting from the second character.",
+        "Incorrect. Starting a variable name with a digit is forbidden by syntax rules.",
+        "Incorrect. Special characters like `$`, `%`, `@` are not allowed in variable names.",
+        "Incorrect. The case of the first letter is not restricted; lowercase letters are allowed."
+      ]
+    },
+    {
+      "id": "it_clang_193",
+      "widget_id": null,
+      "topic": "Identifiers — Case Sensitivity",
+      "q": "What does Case Sensitivity mean in C?",
+      "hint": "Think about whether variables 'myVar' and 'myvar' refer to the same memory cell.",
+      "options": [
+        "Lowercase and uppercase letters are distinguished (for instance, `count` and `Count` are two different variables)",
+        "All variable names are automatically converted to uppercase",
+        "The compiler ignores differences between characters and numbers",
+        "Identifiers can only be written in lowercase letters"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! C is case-sensitive, so `var`, `Var`, and `VAR` are three completely independent identifiers.",
+        "Incorrect. C does not convert characters to a unified case.",
+        "Incorrect. Differences are strictly taken into account by the compiler.",
+        "Incorrect. Letters of any case can be used."
+      ]
+    },
+    {
+      "id": "it_clang_194",
+      "widget_id": null,
+      "topic": "Identifiers — Restrictions and Reserved Words",
+      "q": "What is the primary restriction when choosing a variable name in C?",
+      "hint": "Language keywords (int, return, if, else) are reserved by the compiler.",
+      "options": [
+        "The name must not match language keywords (for example, `int`, `return`, `double`, `if`)",
+        "The name cannot exceed 3 characters in length",
+        "The name cannot contain digits inside",
+        "The name must match the .c source file name"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Reserved keywords in C syntax (such as `for`, `while`, `int`, `return`) cannot be used as variable names.",
+        "Incorrect. An identifier can be much longer (standards guarantee significance of the first 31 to 63 characters).",
+        "Incorrect. Digits are allowed inside and at the end of a name.",
+        "Incorrect. Variable names have no connection to source file names."
+      ]
+    },
+    {
+      "id": "it_clang_195",
+      "widget_id": null,
+      "topic": "C I/O — Behavior of scanf with the %c Specifier",
+      "q": "What will happen when executing the following code if the user enters the number 42, presses Enter, and then tries to enter character 'A'?\\n\\n```c\\nint x;\\nchar c;\\nscanf(\"%d\", &x);\\nscanf(\"%c\", &c);\\n```",
+      "hint": "Think about what happens to the newline character '\\n' in the stdin buffer after the first scanf call.",
+      "options": [
+        "Variable `c` will receive the newline character `\\n`, because `%c` does not skip whitespace characters unlike `%d`",
+        "The program will work correctly and store 'A' in variable `c`",
+        "The program will crash with a Segmentation Fault",
+        "The second `scanf` will ignore `\\n` and wait for character 'A' to be typed"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `%d` specifier skips leading whitespace (spaces, newlines), while `%c` reads the very next character, including the trailing `\\n` left in the buffer after pressing Enter.",
+        "Incorrect. Character `'A'` will not reach `c` because `scanf(\"%c\", ...)` instantly reads the leftover `\\n` in the buffer.",
+        "Incorrect. There is no addressing error; variable addresses passed are valid.",
+        "Incorrect. Skipping whitespace with `%c` only happens if a space is explicitly added beforehand in the format string: `scanf(\" %c\", &c);`."
+      ]
+    },
+    {
+      "id": "it_clang_196",
+      "widget_id": null,
+      "topic": "C Operators — Restrictions on the Modulo Operator (%)",
+      "q": "What will be the result of attempting to compile the following code?\\n\\n```c\\nfloat x = 5.5;\\nint y = 2;\\nint res = x % y;\\

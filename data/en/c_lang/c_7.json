@@ -1,0 +1,243 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_205",
+      "widget_id": "widget_clang_205",
+      "topic": "C Basics — Purpose of the main Function",
+      "q": "What role does the main() function play in a C program?",
+      "hint": "Recall which function the compiler relies on when building a program to determine the starting point.",
+      "options": [
+        "Serves as the entry point to the program, from whose body execution begins",
+        "Is an auxiliary module for loading system libraries",
+        "Is a mandatory preprocessor directive for code compression",
+        "Is called only when critical errors occur"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `main()` function is the main entry point of a C program. Execution of any C executable begins with the first instruction inside `main()`.",
+        "Incorrect. Header directives `#include` are responsible for including libraries.",
+        "Incorrect. `main()` is a C language function, not a preprocessor directive.",
+        "Incorrect. `main()` always executes upon program startup."
+      ]
+    },
+    {
+      "id": "it_clang_206",
+      "widget_id": "widget_clang_206",
+      "topic": "GCC — Default Executable File Name",
+      "q": "What is the name of the executable file created by default by the GCC compiler when running gcc main.c in Linux?",
+      "hint": "Recall the historical default executable name preserved since early Unix systems.",
+      "options": [
+        "a.out",
+        "main.exe",
+        "app.bin",
+        "output.o"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! If an output filename is not passed via the `-o` flag during compilation, GCC creates an executable named `a.out` (or `a.exe` on Windows OS).",
+        "Incorrect. By default, the name of the source `.c` file is not inherited by the binary file.",
+        "Incorrect. The name `app.bin` is not used by default.",
+        "Incorrect. Files with a `.o` extension are intermediate object files."
+      ]
+    },
+    {
+      "id": "it_clang_207",
+      "widget_id": "widget_clang_207",
+      "topic": "GCC — Purpose of the -o Flag",
+      "q": "What is the -o option used for when compiling a program with GCC?",
+      "hint": "Think about which parameter allows directing the compiler output into a target file with a custom name.",
+      "options": [
+        "To specify a custom name for the created executable file",
+        "To enable maximum code optimization",
+        "To run the file in an interactive debugger",
+        "To save compilation logs to a file"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `-o filename` flag allows explicitly setting the compiled binary name instead of the default `a.out`.",
+        "Incorrect. Optimization is handled by flags in the `-O` family (e.g., `-O2`, `-O3`).",
+        "Incorrect. Debug information is generated using the `-g` flag.",
+        "Incorrect. The `-o` flag specifies the output binary filename."
+      ]
+    },
+    {
+      "id": "it_clang_208",
+      "widget_id": "widget_clang_208",
+      "topic": "C Basics — Address-of Operator & in scanf",
+      "q": "Why is the & operator placed before the variable name var when calling scanf(\"%d\", &var)?",
+      "hint": "Think about what needs to be passed to an external function so it can directly update the variable's contents.",
+      "options": [
+        "Passes the variable's memory address to scanf so the function can store the read value there",
+        "Automatically converts text to an integer",
+        "Indicates that variable var is global",
+        "Protects the variable from modification by other threads"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `&` operator returns the variable's memory address. `scanf` uses this address to store the user-entered value into the target memory cell.",
+        "Incorrect. Type conversion is performed by the format specifier `%d` itself.",
+        "Incorrect. The `&` operator does not affect variable scope.",
+        "Incorrect. The address-of operator is unrelated to thread synchronization."
+      ]
+    },
+    {
+      "id": "it_clang_209",
+      "widget_id": "widget_clang_209",
+      "topic": "C Basics — printf Format Specifiers",
+      "q": "Which format specifier is used in printf to output float values?",
+      "hint": "Recall the specifier used to display floating-point (fractional) numbers in I/O functions.",
+      "options": [
+        "%f",
+        "%d",
+        "%c",
+        "%s"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Specifier `%f` is used for floating-point numbers (`float` or `double`), `%d` for integers (`int`), and `%c` for single characters (`char`).",
+        "Incorrect. `%d` outputs integers (`int`).",
+        "Incorrect. `%c` outputs single characters (`char`).",
+        "Incorrect. `%s` is used for string output."
+      ]
+    },
+    {
+      "id": "it_clang_210",
+      "widget_id": "widget_clang_210",
+      "topic": "C Basics — Escape Sequences",
+      "q": "Which escape sequence in a C string literal moves the cursor to a new line?",
+      "hint": "Think of a special combination with a backslash used to format multi-line text output.",
+      "options": [
+        "\\n",
+        "\\t",
+        "\\b",
+        "\\\\"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The escape sequence `\\n` performs a newline. `\\t` handles tabbing, and `\\b` handles backspacing.",
+        "Incorrect. `\\t` inserts a tab character.",
+        "Incorrect. `\\b` performs a backspace operation.",
+        "Incorrect. `\\\\` prints a single backslash character."
+      ]
+    },
+    {
+      "id": "it_clang_211",
+      "widget_id": "widget_clang_211",
+      "topic": "C Basics — Difference Between const and #define",
+      "q": "What is the main difference between declaring a constant const int N = 100 and a macro definition #define N 100?",
+      "hint": "Think about what happens to the code during preprocessor preprocessing and whether type rules are enforced.",
+      "options": [
+        "const creates a typed constant with scope, while #define performs preprocessor text substitution",
+        "#define allows changing the value during program execution, while const does not",
+        "const is used only for floating-point numbers, while #define is used only for integers",
+        "The #define directive allocates RAM on the stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `#define` directive is processed by the preprocessor through plain text substitution prior to compilation. A `const` declaration creates a named variable with a fixed data type and scope rules.",
+        "Incorrect. Neither `const` nor `#define` constants can be modified at runtime.",
+        "Incorrect. Both approaches work with any data types.",
+        "Incorrect. `#define` does not allocate memory because the preprocessor merely substitutes text."
+      ]
+    },
+    {
+      "id": "it_clang_212",
+      "widget_id": "widget_clang_212",
+      "topic": "C Basics — Rules for Identifier Creation",
+      "q": "Which of the following variable names is INVALID according to C syntax rules?",
+      "hint": "Recall C syntax rules regarding the first character of an identifier.",
+      "options": [
+        "2count",
+        "_count2",
+        "count_2",
+        "CountTwo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! An identifier in C must start with a letter or an underscore `_`. The name `2count` starts with a digit, which leads to a compilation error.",
+        "Incorrect. Starting a name with an underscore is permitted.",
+        "Incorrect. Using digits inside or at the end of a name is allowed.",
+        "Incorrect. Letters of any case are permitted."
+      ]
+    },
+    {
+      "id": "it_clang_213",
+      "widget_id": null,
+      "topic": "C Basics — Case Sensitivity",
+      "q": "Are the identifiers myVar and MyVar identical from the C compiler's perspective?",
+      "hint": "Consider whether the C compiler distinguishes between uppercase and lowercase letters when searching for variable declarations.",
+      "options": [
+        "No, C is case-sensitive, so these are two different identifiers",
+        "Yes, the compiler automatically converts all names to lowercase",
+        "Yes, if they are declared inside the same function",
+        "It depends on whether the GCC or Clang compiler is used"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! C is strictly case-sensitive: `myVar` and `MyVar` are treated by the compiler as completely distinct identifiers.",
+        "Incorrect. The compiler does not convert characters to a unified case."
+      ]
+    },
+    {
+      "id": "it_clang_214",
+      "widget_id": "widget_clang_214",
+      "topic": "C Basics — Comment Syntax",
+      "q": "Which syntax is used for multi-line comments in C?",
+      "hint": "Pay attention to syntax constructs that enclose an entire block of text on both sides.",
+      "options": [
+        "/* comment */",
+        "// comment //",
+        "<!-- comment -->",
+        "# comment"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `/* ... */` construct allows commenting out any block of text spanning multiple lines. Single-line comments use `//`.",
+        "Incorrect. `//` opens a single-line comment and does not require closing symbols.",
+        "Incorrect. `<!-- -->` is comment syntax in HTML/XML.",
+        "Incorrect. `#` is used for comments in Python/Bash or preprocessor directives in C."
+      ]
+    },
+    {
+      "id": "it_clang_215",
+      "widget_id": "widget_clang_215",
+      "topic": "C Basics — Assignment Operation",
+      "q": "How does the C compiler interpret the statement x = x + 3;?",
+      "hint": "Distinguish between logical comparison and sequential expression evaluation followed by saving the result.",
+      "options": [
+        "Evaluates the expression on the right (x + 3) and writes the result back into variable x",
+        "Checks algebraic equality and returns an error because x is not equal to x + 3",
+        "Causes an infinite loop due to self-reference",
+        "Replaces variable name x with value 3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `=` operator first evaluates the right-hand side expression by adding 3 to the current value of `x`, then overwrites the result in variable `x`'s memory cell.",
+        "Incorrect. Assignment is distinct from mathematical equality. In C, equality checking uses the `==` operator.",
+        "Incorrect. This statement executes exactly once.",
+        "Incorrect. Variable name and memory structure remain unchanged."
+      ]
+    },
+    {
+      "id": "it_clang_216",
+      "widget_id": "widget_clang_216",
+      "topic": "C Basics — Modulo Operator (%)",
+      "q": "What does the % (modulo) operator calculate in C?",
+      "hint": "Think about what remains when one integer is divided by another with a remainder.",
+      "options": [
+        "The remainder of integer division of the first operand by the second",
+        "The percentage ratio of the first number to the second",
+        "The quotient of division as a floating-point number"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `%` (modulus) operator returns the remainder of integer division. For example, `10 % 3` returns `1`.",
+        "Incorrect. The `%` operator is not related to calculating percentages.",
+        "Incorrect. The `/` operator is used to obtain the quotient."
+      ]
+    },
+    {
+      "id": "it_clang_217",
+      "widget_id": "widget_clang_217",
+      "topic": "

@@ -1,0 +1,425 @@
+{
+  "subject": "C Programming",
+  "questions": [
+    {
+      "id": "it_clang_430",
+      "widget_id": null,
+      "topic": "Type Qualifiers — Purpose of restrict Keyword",
+      "q": "What information does the restrict qualifier provide to the compiler when applied to a pointer?",
+      "hint": "Think about the pointer aliasing problem.",
+      "options": [
+        "The pointer is the sole initial means of accessing the underlying memory object during its lifetime, enabling aggressive optimization",
+        "Forbids modifying the address stored in the pointer",
+        "Forbids writes to the specified address from other threads",
+        "Restricts the scope of the pointer to the current code block"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `restrict` qualifier (introduced in C99) guarantees that the pointer is the sole means of accessing the referenced object within its scope, allowing the compiler to perform aggressive optimizations.",
+        "Incorrect. Forbidding modifications to the address stored in the pointer is specified by declaring the pointer itself constant (`type * const ptr`).",
+        "Incorrect. `restrict` is not related to multithreading synchronization or write protection from other threads.",
+        "Incorrect. Pointer scope is determined by its block of declaration and standard binding rules, not by the `restrict` qualifier."
+      ]
+    },
+    {
+      "id": "it_clang_431",
+      "widget_id": "widget_clang_431",
+      "topic": "Pointers — Pointer Subtraction (ptrdiff_t)",
+      "q": "What will the code snippet output when subtracting two pointers pointing to different array elements?",
+      "hint": "Think about the physical meaning of pointer difference p2 - p1 and what units it is measured in.",
+      "options": [
+        "2",
+        "8",
+        "1",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Subtracting two pointers of the same type (`int*`) returns the number of `int` elements between them, not bytes. `&arr[3] - &arr[1]` yields `3 - 1 = 2` (result type is `ptrdiff_t`).",
+        "Incorrect. The difference would be 8 if subtracting byte addresses (2 elements * 4 bytes), but pointer arithmetic automatically accounts for the element size.",
+        "Incorrect. The distance between indices 3 and 1 is 2 elements, not 1.",
+        "Incorrect. Subtracting pointers to elements of the same array is a completely legal operation in C."
+      ]
+    },
+    {
+      "id": "it_clang_432",
+      "widget_id": "widget_clang_432",
+      "topic": "Preprocessor Macros — Repeated Evaluation and Macro Hygiene",
+      "q": "What will the widget program output when passing an expression with an increment to the MAX macro multiple times?",
+      "hint": "Expand MAX(a++, b) manually and trace how many times a++ is evaluated.",
+      "options": [
+        "6",
+        "5",
+        "7",
+        "Undefined Behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `MAX(a++, b)` expands to `((a++) > (b) ? (a++) : (b))`. Since `5 > 3` is true, `a++` is evaluated in the condition (value 5, `a` becomes 6) and then evaluated again in the true branch of `?` (returns 6, `a` becomes 7). The result of the expression itself is 6.",
+        "Incorrect. Due to repeated evaluation of an argument with side effects (`a++`), the expression result exceeds the initial value of 5.",
+        "Incorrect. The value of variable `a` after the expression executes will be 7, but the macro itself returns the value prior to the second increment, which is 6.",
+        "Incorrect. Although passing side effects into macros is considered bad practice, this expression has a well-defined order of evaluation in the ternary operator."
+      ]
+    },
+    {
+      "id": "it_clang_433",
+      "widget_id": "widget_clang_433",
+      "topic": "Floating Point — Precision Inaccuracy in float Comparison and Type Casting",
+      "q": "Why does condition (f == 0.1) in the given code return false and output \"NOT EQUAL\"?",
+      "hint": "Recall what default type literal 0.1 has in C (float or double?).",
+      "options": [
+        "Numeric literal 0.1 has type double, and 0.1f cannot be precisely represented in binary, so their binary representations differ",
+        "The printf function does not support float type",
+        "The == operator cannot be applied to floating-point numbers in C",
+        "float variables are automatically cast to int during comparison"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Literal `0.1` has type `double`. Due to binary imprecision in representing fraction `0.1f` (float), implicitly casting it to `double` yields different lower-order bits than literal `0.1` (double). Comparison returns false.",
+        "Incorrect. The `printf` function works fine with floating-point types.",
+        "Incorrect. The `==` operator is syntactically applicable to `float` and `double`, though exact equality often fails due to rounding errors.",
+        "Incorrect. Floating-point numbers are not cast to `int` when compared with each other; `float` is promoted to `double`."
+      ]
+    },
+    {
+      "id": "it_clang_434",
+      "widget_id": "widget_clang_434",
+      "topic": "Type Limits — Signed Integer Overflow",
+      "q": "What does signed integer overflow lead to according to the C standard?",
+      "hint": "Does the behavior of signed int differ from unsigned int when exceeding INT_MAX?",
+      "options": [
+        "Undefined Behavior",
+        "Modulo wrap-around (2^N)",
+        "Automatic cast to long long",
+        "Generation of SIGFPE signal"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Overflow of a **signed** integer (`signed int`) is Undefined Behavior. In contrast, **unsigned** overflow (`unsigned int`) is strictly defined by the standard as modulo $2^N$ wrap-around.",
+        "Incorrect. Guaranteed modulo $2^N$ wrap-around exists only for `unsigned` types. For `signed int`, it is strictly Undefined Behavior.",
+        "Incorrect. The C language does not automatically expand variable type width on overflow.",
+        "Incorrect. The `SIGFPE` signal is typically generated on division by zero, not on integer overflow."
+      ]
+    },
+    {
+      "id": "it_clang_435",
+      "widget_id": "widget_clang_435",
+      "topic": "Pointers — Function Pointer with Type Casting",
+      "q": "What will happen when calling a function through a pointer with a mismatched signature?",
+      "hint": "Think about calling conventions and passing arguments via stack/registers.",
+      "options": [
+        "Undefined Behavior",
+        "Automatic argument conversion",
+        "Compilation error",
+        "Returns value 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Calling a function through a pointer whose type does not match the actual function type is Undefined Behavior (due to calling convention violation and stack frame/register mismatch).",
+        "Incorrect. The compiler does not generate adapters to convert argument types when calling through a cast pointer.",
+        "Incorrect. Explicit pointer type casting suppresses compiler errors, so the code compiles but exhibits unpredictable runtime behavior.",
+        "Incorrect. Calling an incompatible pointer does not guarantee returning zero and leads to undefined behavior."
+      ]
+    },
+    {
+      "id": "it_clang_436",
+      "widget_id": "widget_clang_436",
+      "topic": "Static Variables — Lifetime and Scope",
+      "q": "What will the code snippet output with a local static array declaration inside a loop block?",
+      "hint": "How many times is a static variable created and initialized during program execution?",
+      "options": [
+        "\"1 2 3 \"",
+        "\"1 1 1 \"",
+        "\"0 0 0 \"",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! A static variable is initialized only once at program startup. On each iteration of the loop `arr[0]++` executes, so the value is preserved and incremented: 1, then 2, then 3. Output: \"1 2 3 \".",
+        "Incorrect. Output \"1 1 1 \" would occur for a regular automatic (non-`static`) array recreated on each iteration.",
+        "Incorrect. The array is initialized with zeros, but increment operations `arr[0]++` modify its values.",
+        "Incorrect. Declaring `static` variables inside blocks and loops is completely legal in C."
+      ]
+    },
+    {
+      "id": "it_clang_437",
+      "widget_id": "widget_clang_437",
+      "topic": "Floating Point — Division by Zero in float/double (IEEE 754)",
+      "q": "What will the program output when dividing 1.0f by 0.0f according to IEEE 754 standard?",
+      "hint": "Recall how floating-point division by zero is handled compared to integer division.",
+      "options": [
+        "inf (Infinity)",
+        "Runtime error (Segmentation fault / Crash)",
+        "0.000000",
+        "nan (Not a Number)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Dividing a non-zero positive floating-point number by `0.0` under the IEEE 754 standard does not crash, but yields positive infinity (`inf`).",
+        "Incorrect. A crash (or hardware exception) occurs when dividing *integers* by zero, not IEEE 754 numbers.",
+        "Incorrect. Dividing a positive number by zero yields infinity, not zero.",
+        "Incorrect. Result `nan` is produced by indeterminate forms like `0.0 / 0.0` or `inf / inf`, but not `1.0f / 0.0f`."
+      ]
+    },
+    {
+      "id": "it_clang_438",
+      "widget_id": "widget_clang_438",
+      "topic": "Type Casting — Integer Promotions",
+      "q": "What will be the type and result of expression (a + b) for char a = 100, b = 100 on 32/64-bit systems?",
+      "hint": "To what type are char and short types automatically promoted during arithmetic operations?",
+      "options": [
+        "Type int, result 200 (no char overflow)",
+        "Type char, result -56 due to 8-bit char overflow",
+        "Type unsigned char, result 200",
+        "Compilation error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Under the Integer Promotions rule, operands of types smaller than `int` (`char`, `short`) are automatically promoted to `int` before performing arithmetic operations. No `char` overflow occurs, and the result is `200` (type `int`).",
+        "Incorrect. Overflow and signed wrapping to -56 would occur if the result were immediately cast to `char`, but operand `a + b` itself is evaluated in type `int`.",
+        "Incorrect. Promotion converts signed `char` to signed `int`, not to `unsigned char`.",
+        "Incorrect. Adding variables of type `char` is a completely valid operation in C."
+      ]
+    },
+    {
+      "id": "it_clang_439",
+      "widget_id": "widget_clang_439",
+      "topic": "Pointers — Complex Declarations (Clockwise/Spiral Rule)",
+      "q": "What does the declaration void (*signal(int sig, void (*func)(int)))(int) mean?",
+      "hint": "Use the Clockwise/Spiral Rule for reading C declarations.",
+      "options": [
+        "signal is a function accepting int and a function pointer, returning a function pointer",
+        "A pointer to function signal accepting two parameters",
+        "An array of pointers to functions returning void",
+        "Syntax error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! According to the Clockwise/Spiral Rule, `signal` is a function accepting an `int` and a function pointer `void (*)(int)`, and returning a function pointer of type `void (*)(int)`.",
+        "Incorrect. Here `signal` itself is a function declaration, not a pointer variable.",
+        "Incorrect. Square brackets `[]` denoting an array are absent in this syntax.",
+        "Incorrect. This is a classic syntactically correct declaration of standard function `signal` from `<signal.h>`."
+      ]
+    },
+    {
+      "id": "it_clang_440",
+      "widget_id": "widget_clang_440",
+      "topic": "Memory — Resizing Memory Block via realloc(ptr, 0)",
+      "q": "What behavior does standard function realloc(ptr, 0) demonstrate in modern C standards (C11/C17/C23)?",
+      "hint": "Recall updates in C11/C17 standards regarding calling realloc with size zero.",
+      "options": [
+        "Behavior is implementation-defined or deprecated (Undefined / Implementation-defined behavior)",
+        "Guaranteed equivalent to free(ptr) and returns NULL",
+        "Causes compilation error",
+        "Allocates a minimum block size of 1 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Calling `realloc(ptr, 0)` historically differed across platforms. In C11/C17 such behavior is declared Implementation-defined / deprecated, and in C23 calling `realloc` with zero size is officially classified as Undefined Behavior.",
+        "Incorrect. The C11/C17 standard explicitly declines to guarantee that `realloc(ptr, 0)` is always equivalent to `free(ptr)`.",
+        "Incorrect. This is a runtime issue/feature, not a syntax compilation error.",
+        "Incorrect. The standard does not require allocating 1 byte on a zero request."
+      ]
+    },
+    {
+      "id": "it_clang_441",
+      "widget_id": null,
+      "topic": "Strict Aliasing Rule — Accessing Memory via Different Pointer Types",
+      "q": "Does the Strict Aliasing Rule permit accessing an object of any type via a char* or unsigned char* pointer?",
+      "hint": "Recall exceptions to aliasing rules for byte-wise memory inspection.",
+      "options": [
+        "Yes, char* and unsigned char* types are permitted by standard for byte-wise access to any object",
+        "No, this causes Undefined Behavior for all types except char itself",
+        "Permitted only if object is on the stack",
+        "Permitted only if explicit void* cast was done beforehand"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The C standard makes an explicit exception for `char*`, `signed char*`, and `unsigned char*`, allowing them to alias memory of any type for byte-wise reading/writing.",
+        "Incorrect. Character types (`char*`, `unsigned char*`) are a special exception to the Strict Aliasing Rule.",
+        "Incorrect. Aliasing rules depend on pointer types, not object location (stack/heap).",
+        "Incorrect. Explicit casting to `void*` does not override Strict Aliasing rules, unlike using character types."
+      ]
+    },
+    {
+      "id": "it_clang_442",
+      "widget_id": null,
+      "topic": "Order of Evaluation — Function Argument Evaluation Order",
+      "q": "In what order are arguments evaluated when calling function f(a(), b()) in C?",
+      "hint": "Is there a sequence point or guaranteed order between argument evaluations?",
+      "options": [
+        "Order of argument evaluation is not specified by standard (Unspecified Behavior)",
+        "Strictly left to right",
+        "Strictly right to left (due to cdecl calling convention)",
+        "In parallel in arbitrary threads"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Function argument evaluation order in C is Unspecified Behavior. The compiler is free to evaluate `a()` and `b()` in any order.",
+        "Incorrect. Unlike C++17 (where argument evaluation order is strictly defined), in C the order remains Unspecified.",
+        "Incorrect. Argument passing order to stack/registers does not force the compiler to evaluate expressions right to left.",
+        "Incorrect. Arguments are evaluated sequentially within a single thread, but their relative order is not guaranteed."
+      ]
+    },
+    {
+      "id": "it_clang_443",
+      "widget_id": null,
+      "topic": "Object Lifetime — Compound Literals",
+      "q": "What is the lifetime of compound literal (int[]){1, 2, 3} created inside a function block?",
+      "hint": "Does lifetime of compound literal inside a function differ from temporary C++ objects?",
+      "options": [
+        "Matches automatic lifetime of block in which it is declared",
+        "Ends immediately after execution of current statement (expression)",
+        "Has static lifetime (until end of program execution)",
+        "Leads to compilation error if used inside functions"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! A compound literal created inside a function block has automatic storage duration associated with that block.",
+        "Incorrect. A compound literal exists until the end of its enclosing scope/block, rather than being destroyed at the end of the expression.",
+        "Incorrect. Only compound literals declared outside functions (at global scope) have static lifetime.",
+        "Incorrect. Compound literals (introduced in C99) are completely legal inside functions."
+      ]
+    },
+    {
+      "id": "it_clang_444",
+      "widget_id": null,
+      "topic": "Type Qualifiers — Purpose of volatile Qualifier",
+      "q": "What guarantee does the volatile qualifier provide to the compiler when accessing a variable?",
+      "hint": "Recall register reading optimizations and working with hardware (MMIO).",
+      "options": [
+        "Every read and write of variable is guaranteed to be performed directly to memory, forbidding compiler optimizations or register caching",
+        "Ensures atomicity of operations on variable during multithreaded access",
+        "Makes variable thread-safe and prevents Data Races",
+        "Forbids modifying variable value after initialization"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `volatile` qualifier informs the compiler that the variable value may change externally, so optimizations (caching in registers, removing redundant writes) are prohibited.",
+        "Incorrect. `volatile` provides no atomicity guarantees (for that `_Atomic` is used in C11).",
+        "Incorrect. `volatile` is not a synchronization primitive and does not prevent Data Races in multithreaded programs.",
+        "Incorrect. Forbidding value modification is enforced by `const` qualifier, not `volatile`."
+      ]
+    },
+    {
+      "id": "it_clang_445",
+      "widget_id": null,
+      "topic": "Symbol Linkage — Internal vs External Linkage",
+      "q": "What linkage does a global variable or function declared with static keyword receive?",
+      "hint": "Will this variable be accessible from other files (.c) during linking?",
+      "options": [
+        "Internal linkage — name is accessible only within given translation unit",
+        "External linkage — name is exported to all modules",
+        "No linkage",
+        "Dynamic linkage"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! The `static` keyword at file scope gives a variable or function internal linkage, restricting its visibility to the current file/translation unit.",
+        "Incorrect. External linkage is held by standard global variables and functions without `static` (or with `extern`).",
+        "Incorrect. No linkage is held by local function variables (including local `static` ones).",
+        "Incorrect. The term 'dynamic linkage' refers to linking shared libraries at load time, not language qualifiers."
+      ]
+    },
+    {
+      "id": "it_clang_446",
+      "widget_id": null,
+      "topic": "Variadic Functions — Default Argument Promotions",
+      "q": "What happens to float and char arguments when passed to a variadic function (e.g., printf or va_start)?",
+      "hint": "Recall Default Argument Promotions rules for un-prototyped parameters.",
+      "options": [
+        "float is automatically promoted to double, and char is promoted to int",
+        "Arguments are passed in their original types without changes",
+        "float and char are cast to void* type",
+        "Passing float and char types to variadic functions is forbidden by standard"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! When passing arguments to the variable part of a variadic function, Default Argument Promotions apply: `float` is converted to `double`, and integer types smaller than `int` (`char`, `short`) are promoted to `int` or `unsigned int`.",
+        "Incorrect. Automatic argument promotion is a mandatory rule of C standards for variadic calls.",
+        "Incorrect. Arguments are not cast to `void*` pointers.",
+        "Incorrect. Passing them is fully permitted, but inside the function via `va_arg` they must be retrieved considering promotion (e.g., `va_arg(ap, double)` for float)."
+      ]
+    },
+    {
+      "id": "it_clang_447",
+      "widget_id": null,
+      "topic": "Macros — do { ... } while(0) Construct",
+      "q": "Why are multi-line macro expressions wrapped in a do { ... } while(0) block?",
+      "hint": "Think about what happens when using such a macro inside an if (...) MACRO(); else ... construct.",
+      "options": [
+        "So that macro forms a single statement correctly working inside if-else and requiring a trailing semicolon",
+        "To guarantee an infinite compiler optimization loop",
+        "To forbid creating local variables inside macro",
+        "To turn macro into an atomic code block"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Wrapping in `do { ... } while(0)` syntactically turns a compound block into a single statement, preventing syntax errors in `if-else` branches (such as dangling `else`) and allowing a `;` after macro call.",
+        "Incorrect. Condition `while(0)` is false, so loop executes exactly once and never loops infinitely.",
+        "Incorrect. Local variables can freely be created inside `do { ... }` body.",
+        "Incorrect. This construct does not provide hardware-level execution atomicity."
+      ]
+    },
+    {
+      "id": "it_clang_448",
+      "widget_id": null,
+      "topic": "Multithreading (C11) — Data Race",
+      "q": "What does simultaneous access by two threads to the same non-atomic variable lead to if at least one thread performs a write?",
+      "hint": "Refer to C11 standard and the term Data Race.",
+      "options": [
+        "Data Race, leading to Undefined Behavior",
+        "Guaranteed suspension of one thread by system",
+        "Automatic application of mutex locking at compiler level",
+        "Calling SIGSEGV signal handler"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! In C11, a situation where two threads concurrently access the same memory object without synchronization and at least one performs a write is a Data Race and leads to Undefined Behavior.",
+        "Incorrect. Regular variables contain no built-in locking or thread suspension mechanisms.",
+        "Incorrect. The C compiler does not automatically add mutexes around regular variable access.",
+        "Incorrect. `SIGSEGV` signal usually occurs on invalid address access, not on a data race in valid memory."
+      ]
+    },
+    {
+      "id": "it_clang_449",
+      "widget_id": null,
+      "topic": "Optimization and Security — Dead Store Elimination and memset",
+      "q": "Why can standard function memset() be dangerous for wiping a password buffer before free()?",
+      "hint": "What does compiler do if it sees a memory write that is never read afterwards?",
+      "options": [
+        "Compiler may completely remove memset() call during optimization (Dead Store Elimination) as memory is no longer used",
+        "memset() cannot write zeros to dynamic memory",
+        "memset() overflows stack when clearing dynamic buffers",
+        "Calling free() automatically restores overwritten data"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! Compilers perform Dead Store Elimination: if memory zeroed by `memset` is not read prior to destruction/deallocation, the compiler is allowed to omit `memset`, leaving the password in memory. Thus `memset_s` or `explicit_bzero` should be used.",
+        "Incorrect. `memset` works with any addressable memory, including heap.",
+        "Incorrect. `memset` writes via passed pointer and does not affect stack itself.",
+        "Incorrect. `free` only returns memory to heap manager without restoring former values."
+      ]
+    },
+    {
+      "id": "it_clang_450",
+      "widget_id": null,
+      "topic": "Pointers — Pointer Alignment and max_align_t",
+      "q": "What memory alignment does standard call malloc(size) guaranteedly provide?",
+      "hint": "Recall basic C types and largest required alignment in system.",
+      "options": [
+        "Alignment suitable for any fundamental data type (corresponding to max_align_t)",
+        "Strictly 1-byte boundary alignment (no alignment)",
+        "Strictly page boundary alignment (4096 bytes)",
+        "Alignment equal exactly to requested block size (size)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Correct! `malloc` function guarantees returning a pointer aligned suitable for storing any standard data type (equivalent to `max_align_t` alignment).",
+        "Incorrect. Byte alignment would cause Alignment Fault on accessing types like `double` or `int` on many architectures.",
+        "Incorrect. Page alignment is guaranteed by functions like `posix_memalign` or `aligned_alloc`, not standard `malloc`.",
+        "Incorrect. Alignment depends on platform/architecture requirements, not on `size` argument."
+      ]
+    }
+  ]
+}
