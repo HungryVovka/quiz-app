@@ -1,0 +1,60 @@
+/* Контейнер под задачей */
+.question-widget-container {
+  display: none; /* По умолчанию скрыт */
+  margin: 15px 0;
+  padding: 12px;
+  
+  /* 🎨 ОЛИВКОВЫЕ НАСТРОЙКИ */
+  background-color: #2b3323; /* Тёмно-оливковый фон (вместо белого #f8f9fa) */
+  border: 2px solid #708238;  /* Мягкая оливковая рамка (вместо светлой #e9ecef) */
+  
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* 1. Блок кода */
+.question-widget-container pre {
+  margin: 0 !important; /* Убираем внешние отступы Prism */
+  padding: 12px;
+  background-color: #1e1e1e !important; /* Тёмный фон самого кода */
+  color: #d4d4d4;
+  border-radius: 6px;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 0.9em;
+  overflow-x: auto;
+  width: 100%;
+  box-sizing: border-box;
+
+  /* 👇 ДОБАВЬТЕ ЭТИ СТРОКИ */
+  white-space: pre-wrap !important; /* Учитывает переносы и переносит длинные строки */
+  word-break: break-word;          /* Предотвращает вылезание длинных слов за край */
+}
+
+/* 2. Графики и SVG-рисунки */
+.question-widget-container svg,
+.question-widget-container canvas {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* 3. Выделенный текст (для языковых тестов) */
+.question-widget-container .text-highlight-box {
+  font-size: 1.05em;
+  line-height: 1.6;
+}
+.question-widget-container mark.verb {
+  background-color: #ffeeba;
+  color: #856404;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+.question-widget-container mark.noun {
+  background-color: #c3e6cb;
+  color: #155724;
+  padding: 2px 4px;
+  border-radius: 3px;
+}

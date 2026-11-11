@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoxyQuiz Online</title>
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/widgets.css">
+
+    <!-- KaTeX (LaTeX) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"></script>
+
+    <!-- Prism.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
+
+    <!-- Socket.io Client -->
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+</head>
+<body>
+
+<!-- ОВЕРЛЕЙ ЗАГРУЗКИ -->
+<div id="loading-overlay" class="loading-overlay fade-out">
+    <div class="loading-box">
+        <div class="loading-fox-wrapper">
+            <svg viewBox="0 0 110 70" width="120" height="80">
+                <g class="fox-tail-group">
+                    <path d="M 22 36 C 12 48, 8 63, 18 67 C 28 64, 28 48, 22 36 Z" fill="#e65100"/>
+                    <path d="M 15 58 C 13 63, 18 67, 23 65 C 25 61, 22 58, 15 58 Z" fill="#ffffff"/>
+                </g>
+                <path d="M 18 36 Q 48 28 78 36 L 80 43 L 16 43 Z" fill="#f57c00"/>
+                <ellipse cx="76" cy="43" rx="5" ry="3" fill="#e65100"/>
+                <ellipse cx="63" cy="43" rx="5" ry="3" fill="#e65100"/>
+                <g class="fox-head">
+                    <polygon points="63,20 70,8 75,20" fill="#e65100"/>
+                    <polygon points="65,19 70,11 73,19" fill="#263238"/>
+                    <polygon points="77,20 84,8 89,20" fill="#e65100"/>
+                    <polygon points="79,19 84,11 87,19" fill="#263238"/>
+                    <polygon points="60,22 92,22 76,38" fill="#f57c00"/>
+                    <polygon points="64,22 76,36 60,22" fill="#ffffff"/>
+                    <polygon points="88,22 76,36 92,22" fill="#ffffff"/>
+                    <circle cx="76" cy="36" r="2.5" fill="#263238"/>
+                    <g class="fox-eye-open">
+                        <circle cx="69" cy="25" r="2" fill="#263238"/>
+                        <circle cx="83" cy="25" r="2" fill="#263238"/>
+                    </g>
+                </g>
+            </svg>
+        </div>
+        <div class="loading-text">
+            <span id="loading-title" data-i18n="loading">Загрузка</span><span class="loading-dots"></span>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- ВЕРХНЯЯ ПАНЕЛЬ АККАУНТА -->
+    <div class="user-top-bar">
+        <div class="user-profile-info" onclick="handleHeaderAuthClick()" style="cursor: pointer;">
+            <div class="user-avatar">
+                <img id="header-user-avatar-img" src="assets/icon.png" alt="Avatar">
+            </div>
+            <div class="user-details">
+                <span id="header-user-name" class="user-name-text">Гость</span>
+                <span id="header-user-xp" class="user-xp-text">0 XP</span>
+            </div>
+        </div>
+
+        <div class="top-bar-actions">
+            <button type="button" id="btn-top-chat" class="btn-top-league" onclick="toggleChatWidget()" data-i18n="onlineChatBtn">💬 Чат онлайн</button>
+            <button type="button" id="header-auth-btn" class="btn-top-auth" onclick="handleHeaderAuthClick()">Войти</button>
+            <button type="button" id="header-settings-btn" class="btn-top-settings" onclick="openStatsScreen()" title="Настройки вида">⚙️</button>
+        </div>
+    </div>
+
+    <!-- ЭКРАН 1: НАСТРОЙКИ ТЕСТА И СТАТУС СЕРВЕРА -->
+    <div id="setup-screen" class="card slide-in">
+        <div class="top-bar-status">
+            <h1 id="ui-title" data-i18n="title">FoxyQuiz Online</h1>
+            <span id="server-status-badge" class="server-badge offline">🔴 Офлайн-режим</span>
+        </div>
+
+        <div class="scrollable-content">
+            <div class="setup-top-section" style="margin-top: 10px;">
+                <div class="setup-top-left">
+                    <div class="form-group compact-group">
+                        <label id="ui-lang-label" data-i18n="lang">Язык интерфейса и тестов:</label>
+                        <div class="custom-select" id="custom-lang-dropdown">
+                            <div class="custom-select-trigger" onclick="toggleLangDropdown(event)">
+                                <span id="custom-lang-selected">Русский (RU)</span>
+                                <span class="custom-arrow"></span>
+                            </div>
+                            <div class="custom-options-container" id="custom-lang-options">
+                                <div class="custom-option selected" onclick="selectLanguage('ru', 'Русский (RU)', this)">Русский (RU)</div>
+                                <div class="custom-option" onclick="selectLanguage('it', 'Italiano (IT)', this)">Italiano (IT)</div>
+                                <div class="custom-option" onclick="selectLanguage('en', 'English (EN)', this)">English (EN)</div>
+                            </div>
+                        </div>
+
+                        <label id="ui-sec-lang-label" data-i18n="secLang">Дополнительный язык (дублирование):</label>
+                        <div class="custom-select" id="custom-sec-lang-dropdown">
+                            <div class="custom-select-trigger" onclick="toggleSecLangDropdown(event)">
+                                <span id="custom-sec-lang-selected">Отключено</span>
+                                <span class="custom-arrow"></span>
+                            </div>
+                            <div class="custom-options-container" id="custom-sec-lang-options"></div>
+                        </div>
+                        <input type="hidden" id="setting-sec-lang" value="none">
+                    </div>
+                </div>
+
+                <div class="setup-top-right">
+                    <img src="assets/icon.png" alt="Fox Mascot" class="fox-img">
+                </div>
+            </div>
+
+            <!-- ПРЕДМЕТ -->
+            <div class="form-group">
+                <label id="ui-subject-label" data-i18n="subject">Предмет / База знаний:</label>
+                <div class="custom-select" id="custom-subject-dropdown">
+                    <div class="custom-select-trigger" onclick="toggleSubjectDropdown(event)">
+                        <span id="custom-subject-selected">Загрузка...</span>
+                        <span class="custom-arrow"></span>
+                    </div>
+                    <div class="custom-options-container" id="custom-subject-options"></div>
+                </div>
+                <input type="hidden" id="setting-subject" value="">
+            </div>
+
+            <div class="form-group">
+                <label id="ui-count-label" data-i18n="count">Количество вопросов в сессии:</label>
+                <div class="stepper-container">
+                    <button type="button" class="stepper-btn" onclick="stepInput('setting-count', -1)">−</button>
+                    <input type="number" id="setting-count" value="10" min="1" max="100">
+                    <button type="button" class="stepper-btn" onclick="stepInput('setting-count', 1)">+</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="ui-timer-label" data-i18n="timer">Таймер (в минутах, 0 = без таймера):</label>
+                <div class="stepper-container">
+                    <button type="button" class="stepper-btn" onclick="stepInput('setting-timer', -1)">−</button>
+                    <input type="number" id="setting-timer" value="0" min="0" max="180">
+                    <button type="button" class="stepper-btn" onclick="stepInput('setting-timer', 1)">+</button>
+                </div>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="setting-back" checked>
+                <label for="setting-back" id="ui-back-label" data-i18n="back">Разрешить возврат к предыдущему вопросу</label>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="setting-hints" checked>
+                <label for="setting-hints" id="ui-hints-label" data-i18n="hints">Показывать подсказки</label>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn" onclick="startQuiz()" id="ui-start-btn" data-i18n="start">Начать тест</button>
+            <button class="btn btn-secondary" onclick="openStatsScreen()" id="ui-reset-btn" data-i18n="reset">Дополнительные настройки</button>
+        </div>
+    </div>
+
+    <!-- ЭКРАН 2: ТЕСТИРОВАНИЕ -->
+    <div id="quiz-screen" class="card hidden">
+        <div class="quiz-header">
+            <div>
+                <span id="ui-q-num" data-i18n="qNum">Вопрос</span> <span id="current-index">1</span>/<span id="total-count">10</span>
+                <span class="stat-badge" id="attempts-badge">Отвечено ранее: 0 раз</span>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <div id="q-stats-badge" class="stat-badge" style="display: flex; gap: 8px;">
+                    <span style="color: var(--correct-text); font-weight: bold;">✓ <span id="q-stat-correct">0</span></span>
+                    <span style="color: var(--text-muted);">|</span>
+                    <span style="color: var(--incorrect-text); font-weight: bold;">✕ <span id="q-stat-incorrect">0</span></span>
+                </div>
+                <div id="timer-display" class="stat-badge timer">--:--</div>
+            </div>
+        </div>
+
+        <div class="scrollable-content">
+            <div id="question-text" class="rich-content"></div>
+            <div id="widget-container" class="question-widget-container"></div>
+            <div class="options-list" id="options-container"></div>
+            <div id="hint-container" class="hint-box rich-content hidden"></div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-secondary" id="prev-btn" onclick="navQuestion(-1)" data-i18n="prev">Назад</button>
+            <button class="btn btn-secondary" id="exit-btn" onclick="exitQuizEarly()" data-i18n="exitBtn">Прервать</button>
+            <button class="btn" id="next-btn" onclick="navQuestion(1)" data-i18n="next">Далее</button>
+        </div>
+    </div>
+
+    <!-- ЭКРАН 3: РЕЗУЛЬТАТЫ -->
+    <div id="results-screen" class="card hidden">
+        <h1 id="ui-results-title" data-i18n="resultsTitle">Результаты тестов</h1>
+        <div class="scrollable-content">
+            <div id="results-summary"></div>
+            <div id="review-container"></div>
+            <div id="full-answers-container" class="review-answers-wrapper hidden">
+                <h2 style="margin-top: 0; margin-bottom: 14px; font-size: 16px;" data-i18n="reviewTitle">Разбор всех вопросов</h2>
+                <div id="questions-review-list"></div>
+            </div>
+        </div>
+        <div class="btn-group" style="flex-direction: column; gap: 8px;">
+            <button class="btn" onclick="restartApp()" id="ui-restart-btn" data-i18n="restart">Пройти еще раз</button>
+            <button class="btn btn-secondary" onclick="toggleReviewAnswers()" id="toggle-answers-btn" data-i18n="showAnswers">Показать ответы</button>
+        </div>
+    </div>
+
+    <!-- ЭКРАН 4: ИСТОРИЯ ОБНОВЛЕНИЙ -->
+    <div id="changelog-screen" class="card hidden">
+        <h1 id="ui-changelog-title" data-i18n="changelogTitle">История обновлений</h1>
+        <div class="scrollable-content" id="changelog-container"></div>
+        <div class="btn-group">
+            <button class="btn btn-secondary" onclick="closeChangelog()" id="ui-changelog-back" data-i18n="changelogBack">← Назад к настройкам</button>
+        </div>
+    </div>
+
+    <!-- ЭКРАН 5: НАСТРОЙКИ СТРАНИЦЫ И СЕРВЕРА -->
+    <div id="stats-settings-screen" class="card hidden">
+        <h1 id="ui-stats-title" data-i18n="statsTitle">Дополнительные настройки</h1>
+        <div class="scrollable-content" style="display: flex; flex-direction: column; gap: 12px;">
+            <div class="form-group-row">
+                <label id="ui-fontsize-label" data-i18n="fontsizeLabel">Размер шрифта интерфейса:</label>
+                <div class="stepper-container font-stepper">
+                    <button type="button" class="stepper-btn" onclick="changeFontScale(-10)">−</button>
+                    <input type="text" id="setting-fontsize-val" value="100%" readonly>
+                    <button type="button" class="stepper-btn" onclick="changeFontScale(10)">+</button>
+                </div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid var(--card-border); margin: 4px 0;">
+
+            <div class="form-group">
+                <label data-i18n="serverUrlLabel">Адрес сервера синхронизации:</label>
+                <input type="text" id="server-url-input" placeholder="http://localhost:3000">
+                <button class="btn btn-secondary" onclick="saveServerURL()" style="margin-top: 6px;">Сохранить адрес сервера</button>
+            </div>
+
+            <button class="btn" onclick="exportStatsJSON()" id="ui-export-stats-btn" data-i18n="exportStats">💾 Сохранить статистику (.JSON)</button>
+            <button class="btn btn-secondary" onclick="document.getElementById('import-stats-file').click()" id="ui-import-stats-btn" data-i18n="importStats">📥 Загрузить статистику из файла</button>
+            <input type="file" id="import-stats-file" accept=".json" style="display: none;" onchange="importStatsJSON(event)">
+
+            <button class="btn btn-secondary" onclick="resetStats()" id="ui-reset-stats-page-btn" data-i18n="resetStatsPage" style="border-color: #ef4444; color: #fca5a5; margin-top: 6px;">
+                🗑️ Сбросить статистику на сервере
+            </button>
+        </div>
+        <div class="btn-group" style="margin-top: auto; padding-top: 14px;">
+            <button class="btn btn-secondary" onclick="closeStatsScreen()" id="ui-back-to-menu-btn" data-i18n="backToMenu">← Вернуться в главное меню</button>
+        </div>
+    </div>
+
+    <!-- ФУТЕР С КНОПКОЙ ДОНАТА KO-FI -->
+    <footer class="app-footer">
+        <div class="footer-left"><span class="univ-upo">UPO</span> <span class="univ-disit">DISIT</span></div>
+        <div class="footer-center">
+            <a href="https://ko-fi.com/HungryVovka" target="_blank" rel="noopener noreferrer" class="kofi-donate-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 12.25 15.488 12.028 15.488 12.028 3.812-.04 5.084-2.228 5.084-2.228 3.821-3.642 3.287-13.827 3.287-13.827zM18.847 12h-2.592c.105-1.004.082-2.115-.082-3.136h2.729c1.623 0 2.012 1.583 1.815 3.136-.188 1.488-.868 2.001-1.87 2.001z"/>
+                </svg>
+                <span>Donate on Ko-fi</span>
+            </a>
+        </div>
+        <div class="footer-right"><span class="copyright-text">© 2026 Vladimir Rukavishnikov</span></div>
+    </footer>
+
+    <!-- ПАНЕЛЬ ВЕРСИИ -->
+    <div class="version-bar">
+        <button class="version-tag" onclick="openChangelog()">v0.0.1-beta</button>
+    </div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО ВХОДА И РЕГИСТРАЦИИ -->
+<div id="auth-modal" class="modal-overlay hidden">
+    <div class="auth-modal-card">
+        <h2 data-i18n="authTitle">Вход в аккаунт</h2>
+        <p class="auth-subtitle" data-i18n="authSubtitle">Логин: только латинские буквы (3–20 символов)</p>
+        
+        <div class="auth-modal-inputs">
+            <input type="text" id="modal-auth-login" placeholder="Логин (латиница)" data-i18n-placeholder="loginPlaceholder" autocomplete="off">
+            <input type="password" id="modal-auth-pass" placeholder="Пароль" data-i18n-placeholder="passPlaceholder">
+        </div>
+
+        <div class="auth-modal-buttons">
+            <button class="btn" onclick="submitModalLogin()" data-i18n="authLoginBtn">Войти</button>
+            <button class="btn btn-secondary" onclick="submitModalRegister()" data-i18n="authRegisterBtn">Зарегистрироваться</button>
+            <button class="btn btn-cancel" onclick="closeAuthModal()" data-i18n="authCancelBtn">Отмена</button>
+        </div>
+    </div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО АККАУНТА / ПРОФИЛЯ С ВКЛАДКАМИ -->
+<div id="account-modal" class="modal-overlay hidden">
+    <div class="auth-modal-card">
+        <h2 data-i18n="profileTitle">Профиль и Магазин</h2>
+        
+        <div class="profile-modal-tabs">
+            <button class="profile-tab-btn active" id="tab-btn-info" onclick="switchProfileTab('info')" data-i18n="tabInfo">Профиль</button>
+            <button class="profile-tab-btn" id="tab-btn-avatars" onclick="switchProfileTab('avatars')" data-i18n="tabAvatars">Аватары</button>
+            <button class="profile-tab-btn" id="tab-btn-league" onclick="switchProfileTab('league')" data-i18n="tabLeague">Лига</button>
+            <button class="profile-tab-btn hidden" id="tab-btn-admin" onclick="switchProfileTab('admin')" data-i18n="tabAdmin" style="color: #f59e0b; border-color: #f59e0b;">👑 Админ</button>
+        </div>
+
+        <div id="profile-tab-info" class="profile-tab-content">
+            <div class="account-info-block" style="margin-bottom: 12px; font-size: 0.95em;">
+                <p style="margin-bottom: 6px;"><span data-i18n="userLabel">Пользователь:</span> <strong id="acc-modal-username">-</strong></p>
+                <p style="margin-bottom: 6px;"><span data-i18n="keyLabel">Ключ профиля:</span> <strong id="acc-modal-key" style="color: var(--accent);">-</strong></p>
+                <p style="margin-bottom: 6px;"><span data-i18n="xpLabel">Накопленный опыт:</span> <strong id="acc-modal-xp" style="color: var(--correct-text);">0 XP</strong></p>
+                <p><span data-i18n="roleLabel">Роль:</span> <strong id="acc-modal-role">-</strong></p>
+            </div>
+
+            <div id="admin-hash-section" class="form-group hidden" style="margin-top: 14px; border-top: 1px dashed var(--card-border); padding-top: 10px;">
+                <label style="color: #f59e0b; font-weight: 600;" data-i18n="authAdminKeyTitle">🔑 Вход по ключу суперадминистратора:</label>
+                <div style="display: flex; gap: 6px; margin-top: 6px;">
+                    <input type="text" id="modal-admin-key-input" placeholder="FOX-ADM-9999-SUPER">
+                    <button class="btn" style="width: auto; padding: 0 14px;" onclick="submitAdminKeyLogin()" data-i18n="authLoginBtn">Войти</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="profile-tab-avatars" class="profile-tab-content hidden">
+            <div id="avatars-shop-container" class="avatar-selection-grid"></div>
+        </div>
+
+        <div id="profile-tab-league" class="profile-tab-content hidden">
+            <table class="league-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th data-i18n="leagueHeaderPlayer">Игрок</th>
+                        <th>XP</th>
+                    </tr>
+                </thead>
+                <tbody id="league-leaderboard-body"></tbody>
+            </table>
+        </div>
+
+        <div id="profile-tab-admin" class="profile-tab-content hidden"></div>
+
+        <div class="auth-modal-buttons" style="margin-top: 18px;">
+            <button class="btn btn-secondary" onclick="handleLogout()" data-i18n="authLogoutBtn">Выйти из аккаунта</button>
+            <button class="btn btn-cancel" onclick="closeAccountModal()" data-i18n="authCloseBtn">Закрыть</button>
+        </div>
+    </div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО ИМПОРТА СТАТИСТИКИ -->
+<div id="import-modal" class="modal-overlay hidden">
+  <div class="auth-modal-card">
+    <h3 data-i18n="import_modal_title">Импорт данных</h3>
+    <p data-i18n="import_modal_desc" style="font-size: 0.88em; color: var(--text-muted); margin: 8px 0 16px;">Обнаружены локальные сохранения. Выберите действие:</p>
+    
+    <div class="auth-modal-buttons">
+      <button id="btn-import-merge" class="btn" data-i18n="import_action_merge">Объединить</button>
+      <button id="btn-import-overwrite" class="btn btn-secondary" data-i18n="import_action_overwrite">Перезаписать</button>
+      <button id="btn-import-cancel" class="btn btn-cancel" data-i18n="import_action_cancel">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<!-- ПЛАВАЮЩИЙ ЧАТ -->
+<div id="chat-drawer" class="chat-drawer">
+    <div class="chat-header">
+        <span id="chat-drawer-title" data-i18n="chatHeader">Онлайн Чат</span>
+        <button class="chat-close-btn" onclick="toggleChatWidget()">✕</button>
+    </div>
+    <div id="chat-messages" class="chat-body"></div>
+    <div class="chat-footer">
+        <input type="text" id="chat-input" maxlength="150" placeholder="Сообщение (до 150 симв.)..." data-i18n-placeholder="chatPlaceholder" onkeydown="if(event.key==='Enter') sendChatMessage()">
+        <button class="btn" onclick="sendChatMessage()" style="width: auto; padding: 0 14px;">➔</button>
+    </div>
+</div>
+
+<script src="js/config/subjects-config.js"></script>
+<script src="js/data/changelog.js"></script>
+<script src="js/data/i18n.js"></script>
+<script src="js/core/storage.js"></script>
+<script src="js/core/chat.js"></script>
+<script src="js/core/algos.js"></script>
+<script src="js/core/widgets.js"></script>
+<script src="js/ui/app.js"></script>
+<script src="js/ui/app_2.js"></script>
+<script src="js/ui/app_3.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        updateAuthUserHeaderUI();
+        initChatSocket();
+        checkAdminTabVisibility();
+        checkHashAdminRoute();
+    });
+
+    window.addEventListener('hashchange', () => {
+        checkHashAdminRoute();
+    });
+
+    function checkAdminTabVisibility() {
+        const user = typeof getSavedProfile === 'function' ? getSavedProfile() : null;
+        const adminBtn = document.getElementById('tab-btn-admin');
+        if (adminBtn) {
+            if (user && user.role === 'admin') {
+                adminBtn.classList.remove('hidden');
+            } else {
+                adminBtn.classList.add('hidden');
+            }
+        }
+    }
+
+    function checkHashAdminRoute() {
+        if (window.location.hash === '#admin-login' || window.location.hash === '#admin') {
+            openAccountModal();
+            const user = typeof getSavedProfile === 'function' ? getSavedProfile() : null;
+            if (user && user.role === 'admin') {
+                switchProfileTab('admin');
+            }
+        }
+    }
+
+    function switchProfileTab(tabName) {
+        checkAdminTabVisibility();
+
+        const tabs = ['info', 'avatars', 'league', 'admin'];
+        tabs.forEach(t => {
+            const content = document.getElementById(`profile-tab-${t}`);
+            if (content) content.classList.add('hidden');
+        });
+
+        document.querySelectorAll('.profile-tab-btn').forEach(btn => btn.classList.remove('active'));
+
+        const targetContent = document.getElementById(`profile-tab-${tabName}`);
+        if (targetContent) targetContent.classList.remove('hidden');
+
+        const activeBtn = document.getElementById(`tab-btn-${tabName}`);
+        if (activeBtn) activeBtn.classList.add('active');
+
+        if (tabName === 'avatars' && typeof renderAvatarShopUI === 'function') {
+            renderAvatarShopUI();
+        } else if (tabName === 'league' && typeof renderLeagueUI === 'function') {
+            renderLeagueUI();
+        } else if (tabName === 'admin' && typeof renderAdminPanelUI === 'function') {
+            renderAdminPanelUI();
+        }
+    }
+</script>
+</body>
+</html>
