@@ -1,0 +1,597 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2501",
+      "widget_id": "widget_clang_2501",
+      "topic": "Terminazione anticipata del programma da una funzione altamente annidata",
+      "q": "Cosa succede quando viene chiamata la funzione check(-1)?",
+      "hint": "Considera se il controllo ritorna da check() a main() o se exit(2) interrompe l'intero processo.",
+      "options": [
+        "Il programma termina immediatamente con il codice 2, la stringa \"Done\" non verrà stampata",
+        "Il programma stamperà \"Done\" e terminerà con il codice 0",
+        "La funzione check() terminerà, ma main() continuerà l'esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiamata a `exit(2)` interrompe immediatamente l'intero programma da qualsiasi funzione annidata. L'istruzione `printf(\"Done\\n\")` non verrà raggiunta.",
+        "Errato. La chiamata a `exit()` interrompe l'esecuzione del processo prima del ritorno a `main()`.",
+        "Errato. `exit()` interrompe l'intero processo, non solo la funzione corrente."
+      ]
+    },
+    {
+      "id": "it_clang_2502",
+      "widget_id": null,
+      "topic": "File di intestazione per lavorare con exit()",
+      "q": "In quale file di intestazione è dichiarata la funzione exit()?",
+      "hint": "Questa funzione appartiene alla libreria standard di utilità generali di gestione dei processi.",
+      "options": [
+        "<stdlib.h>",
+        "<stdio.h>",
+        "<system.h>",
+        "<process.h>"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il prototipo della funzione `exit()` si trova nel file di intestazione `<stdlib.h>`.",
+        "Errato. In `<stdio.h>` sono dichiarate le funzioni di input/output.",
+        "Errato. Il file di intestazione `<system.h>` non esiste nello standard C.",
+        "Errato. L'intestazione `<process.h>` non è un file standard del C (viene utilizzata solo in alcuni compilatori per MS-DOS/Windows)."
+      ]
+    },
+    {
+      "id": "it_clang_2503",
+      "widget_id": "widget_clang_2503",
+      "topic": "Prevenzione degli errori critici (divisione per zero) tramite exit()",
+      "q": "Cosa succede quando si passa l'argomento 0 alla funzione compute(0)?",
+      "hint": "Traccia la condizione nella funzione compute: l'uscita di emergenza si attiverà prima dell'operazione di divisione?",
+      "options": [
+        "Il programma termina anticipatamente con il codice 1 senza che si verifichi un errore di divisione per zero",
+        "Il programma va in crash con un errore Floating Point Exception (Division by Zero)",
+        "Il programma stamperà 0",
+        "Il programma stamperà 100",
+        "Il programma entrerà in un ciclo infinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il controllo `a == 0` invocherà `exit(1)` prima dell'esecuzione della divisione `100 / a`. Il programma si arresterà in modo sicuro con il codice 1.",
+        "Errato. L'operazione di divisione per zero non verrà eseguita a causa della chiamata a `exit()`.",
+        "Errato. Il valore di `res` non viene calcolato né stampato.",
+        "Errato. La funzione termina prima dell'esecuzione della divisione.",
+        "Errato. Nel codice non sono presenti cicli."
+      ]
+    },
+    {
+      "id": "it_clang_2504",
+      "widget_id": "widget_clang_2504",
+      "topic": "Sequenza di esecuzione alla chiamata di exit() e dei gestori atexit()",
+      "q": "Quale sarà l'output esatto del programma sullo schermo?",
+      "hint": "La funzione exit() prima di terminare il programma invoca i gestori registrati in atexit(), ma interrompe il flusso principale.",
+      "options": [
+        "Start\\nClean\\n",
+        "Start\\nEnd\\nClean\\n",
+        "Start\\nEnd\\n"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Prima viene stampato `\"Start\"`. Successivamente la chiamata a `exit(0)` avvia la pulizia, stampando `\"Clean\"` da `cleanup()`, e arresta il processo. La stringa `\"End\"` non verrà mai stampata.",
+        "Errato. La riga `printf(\"End\\n\")` si trova dopo `exit(0)`, quindi non viene eseguita.",
+        "Errato. La funzione `cleanup()` verrà necessariamente invocata prima dell'uscita finale."
+      ]
+    },
+    {
+      "id": "it_clang_2505",
+      "widget_id": "widget_clang_2505",
+      "topic": "Passaggio delle costanti EXIT_SUCCESS ed EXIT_FAILURE a exit()",
+      "q": "Quale codice restituirà il programma se avviato senza parametri: ./app?",
+      "hint": "Determina il valore di argc per la chiamata senza argomenti e verifica il ramo della condizione.",
+      "options": [
+        "EXIT_FAILURE (di solito 1)",
+        "EXIT_SUCCESS (di solito 0)",
+        "0",
+        "-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Alla chiamata `./app` l'argomento `argc` è pari a 1. La condizione `1 < 2` è vera, il programma eseguirà `exit(EXIT_FAILURE)`.",
+        "Errato. `EXIT_SUCCESS` verrebbe restituito in presenza di parametri passati.",
+        "Errato. `EXIT_FAILURE` è di solito pari a 1, non a 0.",
+        "Errato. Le costanti `EXIT_` hanno valori non negativi."
+      ]
+    },
+    {
+      "id": "it_clang_2506",
+      "widget_id": null,
+      "topic": "Gestione dei file aperti e dei buffer alla chiamata di exit()",
+      "q": "La funzione standard exit() garantisce lo svuotamento dei buffer di I/O e la chiusura di tutti i file aperti (FILE*)?",
+      "hint": "Considera se exit() esegue una pulizia completa delle risorse della libreria standard, a differenza di _Exit().",
+      "options": [
+        "Sì, exit() svuota tutti i buffer I/O non scritti e chiude tutti i file aperti tramite fopen()",
+        "No, per chiudere i file occorre utilizzare esclusivamente _Exit()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza della chiamata diretta `_Exit()`, una normale chiamata a `exit()` invoca `fclose()` per tutti i flussi aperti e svuota tutti i buffer di output.",
+        "Errato. Al contrario, `_Exit()` salta la procedura di pulizia dei file e lo svuotamento dei buffer."
+      ]
+    },
+    {
+      "id": "it_clang_2507",
+      "widget_id": null,
+      "topic": "Differenza tra exit() e _Exit()",
+      "q": "Qual è la differenza principale tra la funzione _Exit() (o _exit()) e la normale exit()?",
+      "hint": "Considera se le funzioni registrate tramite atexit() e i buffer I/O vengono elaborati alla chiamata di _Exit().",
+      "options": [
+        "_Exit() termina il programma all'istante, NON invocando le funzioni atexit() e NON svuotando i buffer di input/output",
+        "_Exit() esegue la terminazione più lentamente rispetto a exit()",
+        "_Exit() può essere utilizzata solo in programmi multithread",
+        "_Exit() elimina il file eseguibile stesso dal disco dopo la terminazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `_Exit()` è un'uscita di sistema immediata. Non invoca i gestori `atexit()` e non svuota i buffer di I/O del C Runtime.",
+        "Errato. `_Exit()` viene eseguita più velocemente, poiché salta le fasi di pulizia del C Runtime.",
+        "Errato. `_Exit()` è una funzione standardizzata di C99 per l'uscita di emergenza.",
+        "Errato. Nessuna funzione standard di uscita elimina l'eseguibile."
+      ]
+    },
+    {
+      "id": "it_clang_2508",
+      "widget_id": "widget_clang_2508",
+      "topic": "Pattern di gestione degli errori di allocazione memoria o puntatori nulli",
+      "q": "Quale sarà l'output del programma all'inizializzazione ptr = NULL?",
+      "hint": "Verifica la condizione ptr == NULL e determina se la stringa Success verrà stampata.",
+      "options": [
+        "Error\\n",
+        "Success\\n",
+        "Error\\nSuccess\\n",
+        "Segmentation Fault",
+        "Non verrà stampato nulla"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La condizione `ptr == NULL` è vera. Viene stampato `\"Error\\n\"` e si attiva `exit(1)`. La stringa `\"Success\\n\"` non verrà stampata.",
+        "Errato. Il programma uscirà prima dell'esecuzione di `printf(\"Success\\n\")`.",
+        "Errato. La chiamata a `exit(1)` interrompe l'esecuzione del programma.",
+        "Errato. Non si verifica alcuna dereferenziazione del puntatore, quindi non ci sarà un errore di accesso alla memoria.",
+        "Errato. `printf(\"Error\\n\")` farà in tempo a essere eseguita prima di `exit(1)`."
+      ]
+    },
+    {
+      "id": "it_clang_2509",
+      "widget_id": "widget_clang_2509",
+      "topic": "Interruzione dei cicli tramite exit()",
+      "q": "Cosa stamperà il ciclo alla lettura dell'iteratore i == 2?",
+      "hint": "Nota: exit() non si limita a interrompere il ciclo (come break), ma arresta l'intero programma.",
+      "options": [
+        "0 1 ",
+        "0 1 2 ",
+        "0 1 3 4 ",
+        "0 1 2 3 4 ",
+        "0 1 End",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nelle iterazioni `i = 0` e `i = 1` vengono stampati `0 ` e `1 `. Quando `i = 2`, si attiva `exit(0)`, che interrompe immediatamente l'intero programma.",
+        "Errato. Con `i = 2` la chiamata a `exit(0)` avviene prima dell'istruzione `printf`.",
+        "Errato. `exit()` termina completamente il processo, anziché saltare semplicemente l'iterazione del ciclo.",
+        "Errato. Il ciclo interrompe l'esecuzione all'iterazione `i = 2`.",
+        "Errato. La parola `End` non è presente nel programma.",
+        "Errato. Il codice è scritto correttamente."
+      ]
+    },
+    {
+      "id": "it_clang_2510",
+      "widget_id": null,
+      "topic": "Tipo di argomento della funzione exit()",
+      "q": "Di che tipo è l'argomento accettato dalla funzione exit(int status)?",
+      "hint": "Considera quale tipo di dato intero primitivo standard viene passato a exit().",
+      "options": [
+        "int",
+        "char*",
+        "void*"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La firma della funzione è `void exit(int status);`. Accetta uno stato di uscita intero `int`.",
+        "Errato. La funzione non accetta messaggi di errore di testo stringa.",
+        "Errato. L'argomento di `exit()` è un codice di stato intero, non un puntatore."
+      ]
+    },
+    {
+      "id": "it_clang_2511",
+      "widget_id": "widget_clang_2511",
+      "topic": "Valore numerico tipico della macro EXIT_SUCCESS",
+      "q": "A cosa è di solito pari il valore numerico della macro EXIT_SUCCESS sulla maggior parte dei sistemi operativi standard (Linux, Windows, macOS)?",
+      "hint": "Ricorda quale numero è tradizionalmente adottato nel linguaggio C per indicare il completamento con successo della funzione main().",
+      "options": [
+        "0",
+        "1",
+        "-1",
+        "255",
+        "100"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Sulla stragrande maggioranza dei sistemi `EXIT_SUCCESS` si espande nel numero intero `0`.",
+        "Errato. Il numero 1 corrisponde più spesso alla macro `EXIT_FAILURE`.",
+        "Errato. I valori negativi non vengono usati per esprimere uno stato di uscita con successo.",
+        "Errato. Il valore 255 indica solitamente un errore sui sistemi POSIX.",
+        "Errato. Il valore standard di successo è 0."
+      ]
+    },
+    {
+      "id": "it_clang_2512",
+      "widget_id": null,
+      "topic": "File di intestazione per le macro dei codici di terminazione",
+      "q": "In quale file di intestazione sono dichiarate le macro EXIT_SUCCESS ed EXIT_FAILURE?",
+      "hint": "Queste costanti fanno parte del set standard di utilità della libreria generale C.",
+      "options": [
+        "<stdlib.h>",
+        "<stdio.h>",
+        "<stdbool.h>"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le macro `EXIT_SUCCESS` ed `EXIT_FAILURE` sono definite nel file di intestazione `<stdlib.h>`.",
+        "Errato. In `<stdio.h>` sono definite costanti di I/O (ad esempio `EOF` o `NULL`).",
+        "Errato. `<stdbool.h>` contiene le definizioni di `bool`, `true` e `false`."
+      ]
+    },
+    {
+      "id": "it_clang_2513",
+      "widget_id": "widget_clang_2513",
+      "topic": "Uso di EXIT_SUCCESS ed EXIT_FAILURE nella logica degli argomenti",
+      "q": "Cosa restituirà il programma al sistema operativo se avviato con il comando: ./app hello?",
+      "hint": "Calcola il numero di elementi in argc quando viene passato un argomento utente.",
+      "options": [
+        "EXIT_SUCCESS (di solito 0)",
+        "EXIT_FAILURE (di solito 1)",
+        "2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! All'avvio di `./app hello` il valore di `argc` è pari a 2. La condizione `argc < 2` è falsa. Viene stampato `\"hello\"` e il programma restituisce `EXIT_SUCCESS`.",
+        "Errato. `EXIT_FAILURE` verrebbe restituito all'avvio senza argomenti (`argc == 1`).",
+        "Errato. La funzione `main` restituisce la macro `EXIT_SUCCESS`, non il valore di `argc`."
+      ]
+    },
+    {
+      "id": "it_clang_2514",
+      "widget_id": null,
+      "topic": "Portabilità delle macro EXIT_SUCCESS ed EXIT_FAILURE",
+      "q": "Qual è il vantaggio principale dell'uso di EXIT_SUCCESS ed EXIT_FAILURE al posto dei numeri espliciti 0 e 1?",
+      "hint": "Considera la portabilità del codice su sistemi operativi rari o specializzati (ad esempio OpenVMS).",
+      "options": [
+        "Garantiscono la portabilità del codice (portability), assicurando la corretta mappatura sugli standard del SO specifico",
+        "Velocizzano la lavoro del programma grazie all'ottimizzazione in fase di compilazione",
+        "Liberano automaticamente la memoria dinamica al verificarsi di un errore",
+        "Prevengono le perdite di memoria RAM",
+        "Sono una condizione obbligatoria per la compilazione nei compilatori moderni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Su alcuni sistemi operativi (ad esempio VMS), il codice di terminazione con successo è diverso da 0. L'uso di `EXIT_SUCCESS` ed `EXIT_FAILURE` garantisce lo stato corretto su qualsiasi piattaforma di destinazione.",
+        "Errato. In fase di compilazione queste macro vengono semplicemente sostituite da numeri interi e non influiscono sulla velocità.",
+        "Errato. Le macro non gestiscono la memoria dinamica.",
+        "Errato. Definiscono unicamente il codice numerico di ritorno del processo.",
+        "Errato. L'uso dei numeri espliciti `0` o `1` è sintatticamente del tutto valido."
+      ]
+    },
+    {
+      "id": "it_clang_2515",
+      "widget_id": "widget_clang_2515",
+      "topic": "Interruzione del lavoro tramite exit(EXIT_FAILURE)",
+      "q": "Quale sarà lo stato di terminazione del programma alla chiamata di process(-5)?",
+      "hint": "Verifica la condizione all'interno di process(val) per val = -5.",
+      "options": [
+        "EXIT_FAILURE",
+        "EXIT_SUCCESS"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il valore `-5 <= 0` è vero, quindi all'interno di `process()` viene invocato `exit(EXIT_FAILURE)`. Il programma termina immediatamente con un codice di errore.",
+        "Errato. L'istruzione `return EXIT_SUCCESS;` in `main()` non verrà raggiunta a causa dell'uscita anticipata in `process()`."
+      ]
+    },
+    {
+      "id": "it_clang_2516",
+      "widget_id": null,
+      "topic": "Specifica della macro EXIT_FAILURE secondo lo standard C",
+      "q": "Quale tra le seguenti affermazioni sul valore di EXIT_FAILURE è rigorosamente vera secondo lo standard del linguaggio C?",
+      "hint": "Lo standard garantisce che la macro si espanda in un codice di errore intero diverso da zero.",
+      "options": [
+        "EXIT_FAILURE si espande garantito in un'espressione intera non nulla",
+        "EXIT_FAILURE è sempre rigorosamente pari a -1 su tutte le piattaforme",
+        "EXIT_FAILURE è una stringa di testo \"FAILURE\"",
+        "EXIT_FAILURE è sempre pari a 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard C garantisce che `EXIT_FAILURE` sia un numero intero non nullo (`int`). Il valore specifico è determinato dall'implementazione del compilatore per uno specifico SO (più comunemente 1).",
+        "Errato. Sulla maggior parte dei sistemi è pari a `1`, non a `-1`.",
+        "Errato. È una macro intera, non un letterale stringa.",
+        "Errato. Lo zero è tradizionalmente `EXIT_SUCCESS`."
+      ]
+    },
+    {
+      "id": "it_clang_2517",
+      "widget_id": "widget_clang_2517",
+      "topic": "Verifica del valore di EXIT_SUCCESS nelle strutture condizionali",
+      "q": "Cosa stamperà il programma sullo schermo sulle piattaforme comuni (dove EXIT_SUCCESS è pari a 0)?",
+      "hint": "Confronta la variabile status inizializzata con il valore 0.",
+      "options": [
+        "Zero",
+        "NonZero",
+        "Zero\\nNonZero",
+        "Nothing",
+        "Error",
+        "Undefined Behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `EXIT_SUCCESS` si espande in `0`, la condizione `status == 0` è vera. Viene stampato `\"Zero\\n\"`.",
+        "Errato. Il ramo `else` non si attiverà, poiché `EXIT_SUCCESS` è pari a `0`.",
+        "Errato. Verrà eseguito un solo ramo dell'operatore condizionale.",
+        "Errato. Il programma eseguirà la funzione `printf(\"Zero\\n\")`.",
+        "Errato. Il codice è completamente corretto.",
+        "Errato. Il comportamento del programma è rigorosamente definito."
+      ]
+    },
+    {
+      "id": "it_clang_2518",
+      "widget_id": "widget_clang_2518",
+      "topic": "Uso delle macro dei codici di ritorno nelle funzioni ausiliarie",
+      "q": "Cosa stamperà il programma alla verifica del puntatore f = NULL?",
+      "hint": "Traccia il valore di res: check_file(NULL) restituisce il valore EXIT_FAILURE ed viene eseguito printf?",
+      "options": [
+        "Failed",
+        "Success",
+        "Non stamperà nulla"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In `check_file(NULL)` si attiverà la condizione `f == NULL`, restituendo `EXIT_FAILURE`. La variabile `res` diventerà pari a `EXIT_FAILURE`, che non è uguale a `EXIT_SUCCESS`. Viene stampato `Failed`.",
+        "Errato. Il puntatore è pari a `NULL`, quindi `check_file` restituisce uno stato di errore.",
+        "Errato. La condizione `res != EXIT_SUCCESS` sarà vera e il messaggio verrà stampato."
+      ]
+    },
+    {
+      "id": "it_clang_2519",
+      "widget_id": null,
+      "topic": "Contesti di applicazione di EXIT_SUCCESS ed EXIT_FAILURE",
+      "q": "Dove in un programma C è ammissibile applicare le macro EXIT_SUCCESS ed EXIT_FAILURE?",
+      "hint": "Considera se sono normali espressioni intere C.",
+      "options": [
+        "Sia nell'istruzione return della funzione main() che come argomento della funzione exit() da <stdlib.h>",
+        "Solo all'interno dell'istruzione return della funzione main()",
+        "Solo come argomento della funzione exit()",
+        "Solo nelle chiamate di sistema esterne POSIX"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché queste macro si espandono in normali numeri interi di tipo `int`, possono essere liberamente passate sia in `return` all'interno di `main()`, sia alla funzione `exit()`.",
+        "Errato. Sono anche ampiamente utilizzate nelle chiamate a `exit()`.",
+        "Errato. Il loro uso in `return` in `main()` è completamente valido.",
+        "Errato. Le costanti fanno parte dello standard C e non sono legate esclusivamente a POSIX."
+      ]
+    },
+    {
+      "id": "it_clang_2520",
+      "widget_id": "widget_clang_2520",
+      "topic": "Confronto tra EXIT_SUCCESS ed EXIT_FAILURE",
+      "q": "Quale valore stamperà il programma valutando l'espressione (EXIT_SUCCESS != EXIT_FAILURE)?",
+      "hint": "Le macro di uscita con successo e di errore devono avere valori differenti. Cosa restituisce l'operatore '!=' in caso di disuguaglianza?",
+      "options": [
+        "1",
+        "0",
+        "-1",
+        "2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `EXIT_SUCCESS` ed `EXIT_FAILURE` hanno garantito valori diversi (di solito 0 e 1). L'operazione di disuguaglianza `a != b` restituisce la verità logica (`1`).",
+        "Errato. `0` verrebbe restituito se le costanti fossero uguali tra loro.",
+        "Errato. Gli operatori logici in C restituiscono `1` per il vero e `0` per il falso.",
+        "Errato. Il risultato del confronto in C è pari a `1` o `0`."
+      ]
+    },
+    {
+      "id": "it_clang_2521",
+      "widget_id": "widget_clang_2521",
+      "topic": "Estrazione del primo carattere dalla stringa dell'argomento",
+      "q": "Cosa выведет il programma all'avvio da riga di comando: ./app Hello?",
+      "hint": "L'espressione argv[1][0] accede al primo carattere del primo argomento passato.",
+      "options": [
+        "H",
+        "Hello",
+        "e",
+        "./app"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `argv[1]` memorizza la stringa `\"Hello\"`. L'indice `[0]` legge il primo carattere di questa stringa — `'H'`. Viene stampato mediante `%c`.",
+        "Errato. Lo specificatore `%c` stampa un singolo carattere `'H'`, non l'intera stringa `\"Hello\"`.",
+        "Errato. `'e'` ha indice `[1]`, non `[0]`.",
+        "Errato. Il nome del programma è contenuto in `argv[0]`, mentre qui viene stampato un carattere da `argv[1]`."
+      ]
+    },
+    {
+      "id": "it_clang_2522",
+      "widget_id": "widget_clang_2522",
+      "topic": "Determinazione della lunghezza di una stringa dagli argomenti CLI",
+      "q": "Quale risultato stamperà il programma all'avvio: ./app Programmer?",
+      "hint": "La funzione strlen() da <string.h> conta il numero di caratteri nella stringa fino al terminatore nullo '\\0'.",
+      "options": [
+        "10",
+        "11",
+        "5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La stringa `\"Programmer\"` è composta esattamente da 10 caratteri. La funzione `strlen()` restituisce il valore `10`.",
+        "Errato. La funzione `strlen()` non prende in considerazione il terminatore nullo finale `'\\0'` nel conteggio della lunghezza.",
+        "Errato. `strlen()` restituisce la lunghezza esatta dell'intera stringa."
+      ]
+    },
+    {
+      "id": "it_clang_2523",
+      "widget_id": "widget_clang_2523",
+      "topic": "Confronto delle stringhe da argv tramite strcmp()",
+      "q": "Cosa stamperà il programma se avviato con l'argomento: ./app run?",
+      "hint": "Ricorda quale valore restituisce la funzione strcmp() se le stringhe confrontate sono assolutamente identiche.",
+      "options": [
+        "Starting",
+        "Stopped",
+        "run",
+        "0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `strcmp(\"run\", \"run\")` restituisce `0`. La condizione `strcmp(...) == 0` diventa vera, viene stampata la stringa `\"Starting\"`.",
+        "Errato. La stringa `\"run\"` coincide con il modello `\"run\"`, quindi il ramo `else` non si attiverà.",
+        "Errato. Viene stampato il testo dagli operatori `printf`, non l'argomento stesso.",
+        "Errato. Il valore `0` viene restituito dalla funzione `strcmp`, ma viene stampato il messaggio `\"Starting\"`.",
+        "Errato. Il codice è completamente corretto."
+      ]
+    },
+    {
+      "id": "it_clang_2524",
+      "widget_id": "widget_clang_2524",
+      "topic": "Scansione carattere per carattere dell'argomento CLI in un ciclo",
+      "q": "Quale numero stamperà il ciclo scorrendo i caratteri del comando: ./app Test?",
+      "hint": "Il ciclo conta il numero di iterazioni fino a incontrare il terminatore nullo '\\0'.",
+      "options": [
+        "4",
+        "5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La stringa `\"Test\"` contiene 4 caratteri (`'T'`, `'e'`, `'s'`, `'t'`). Sul carattere `'\\0'` il ciclo termina, il valore di `count` è pari a 4.",
+        "Errato. Il terminatore nullo `'\\0'` causa l'uscita dal ciclo e non viene contato dallo contatore."
+      ]
+    },
+    {
+      "id": "it_clang_2525",
+      "widget_id": "widget_clang_2525",
+      "topic": "Output combinato di caratteri e stringhe da argv",
+      "q": "Cosa stamperà il programma all'avvio del comando: ./app Apple?",
+      "hint": "Osserva attentamente gli specificatori di formato: %c stampa il primo carattere, %s stampa la stringa per intero.",
+      "options": [
+        "A Apple",
+        "Apple Apple",
+        "A A",
+        "Apple A",
+        "A",
+        "Apple"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `%c` stampa il carattere `argv[1][0]` (`'A'`), poi viene stampato uno spazio, e lo specificatore `%s` stampa l'intera stringa `argv[1]` (`\"Apple\"`). Risultato: `A Apple`.",
+        "Errato. Il primo argomento di output è passato dallo specificatore `%c`, che stampa solo il primo carattere.",
+        "Errato. Il secondo specificatore `%s` stampa la stringa completa `\"Apple\"`, non il singolo carattere.",
+        "Errato. L'ordine di output è: prima il primo carattere, poi l'intera stringa.",
+        "Errato. Vengono stampati entrambi gli specificatori separati da uno spazio.",
+        "Errato. L'output include anche il singolo primo carattere iniziale."
+      ]
+    },
+    {
+      "id": "it_clang_2526",
+      "widget_id": null,
+      "topic": "Passaggio di argomenti contenenti spazi da riga di comando",
+      "q": "Come si passa a un programma C una stringa contenente spazi come SINGOLO argomento argv[1] dalla shell (bash/cmd)?",
+      "hint": "Considera quale meccanismo di delimitatori utilizza la riga di comando per unire più parole in un unico parametro.",
+      "options": [
+        "Racchiudere la stringa tra virgolette: ./app \"Hello World\"",
+        "Separare le parole con un punto e virgola: ./app Hello;World",
+        "Utilizzare i due punti: ./app Hello:World",
+        "Passare gli argomenti tramite trattino: ./app -Hello World"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le shell di comando utilizzano le virgolette (doppie o singole) per passare una stringa con spazi come singolo argomento `argv[1]`.",
+        "Errato. Il punto e virgola in Bash viene interpretato come separatore di comandi indipendenti.",
+        "Errato. I due punti verranno trasmessi come parte della stringa senza unire gli spazi.",
+        "Errato. Il trattino viene interpretato come normale carattere o flag, lo spazio dividerà comunque il comando in 2 argomenti."
+      ]
+    },
+    {
+      "id": "it_clang_2527",
+      "widget_id": "widget_clang_2527",
+      "topic": "Modifica dei caratteri all'interno delle stringhe di argv",
+      "q": "Quale valore stamperà il programma all'avvio: ./app cat?",
+      "hint": "La funzione toupper() converte il carattere in maiuscolo, modificando il primo carattere della stringa direttamente nell'array argv.",
+      "options": [
+        "Cat",
+        "CAT",
+        "cat"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `argv[1][0]` converte solo il primo carattere `'c'` in maiuscolo `'C'`. Il resto della stringa non cambia, viene stampato `Cat`.",
+        "Errato. `toupper` viene invocata solo per l'indice zero `argv[1][0]`, non per l'intera stringa.",
+        "Errato. Il carattere `'c'` viene modificato in `'C'`."
+      ]
+    },
+    {
+      "id": "it_clang_2528",
+      "widget_id": "widget_clang_2528",
+      "topic": "Gestione di una stringa vuota come argomento da riga di comando",
+      "q": "Cosa stamperà il programma se gli viene passata una stringa vuota tra virgolette: ./app \"\"?",
+      "hint": "Una stringa vuota è composta solo dal terminatore nullo finale, che si trova nella posizione zero argv[1][0].",
+      "options": [
+        "Empty",
+        "NotEmpty",
+        "Segmentation Fault",
+        "Non stamperà nulla"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il passaggio di `\"\"` trasmette un argomento (`argc == 2`), il cui primo carattere `argv[1][0]` è pari a `'\\0'`. La condizione è vera, viene stampato `Empty`.",
+        "Errato. Una stringa vuota ha il terminatore nullo proprio nella prima posizione.",
+        "Errato. La memoria per una stringa vuota viene allocata correttamente (contiene 1 byte `'\\0'`).",
+        "Errato. Il ramo `if` si attiverà e stamperà il risultato."
+      ]
+    },
+    {
+      "id": "it_clang_2529",
+      "widget_id": "widget_clang_2529",
+      "topic": "Puntatori agli elementi di argv e scrittura in memoria",
+      "q": "L'operazione ptr[0] = 'X' modificherà il valore stampato tramite argv[1]?",
+      "hint": "La variabile ptr riceve l'indirizzo della stringa da argv[1], cioè punta alla stessa area di memoria.",
+      "options": [
+        "Sì, il programma stamperà la stringa con il primo carattere modificato (ad esempio, Xello al posto di hello)",
+        "No, ptr crea una copia della stringa, quindi argv[1] rimarrà invariato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'assegnazione `char *ptr = argv[1];` copia l'indirizzo del puntatore. La modifica di `ptr[0]` modifica direttamente il buffer della stringa in `argv[1]`.",
+        "Errato. L'assegnazione di puntatori copia solo l'indirizzo, non i caratteri della stringa. La modifica avviene all'indirizzo condiviso."
+      ]
+    },
+    {
+      "id": "it_clang_2530",
+      "widget_id": null,
+      "topic": "Parsing di flag brevi a singolo carattere CLI (-v, -f)",
+      "q": "Come si verifica di norma nei programmi C il passaggio di un flag breve ad una sola lettera (ad esempio -v)?",
+      "hint": "Ricorda da quali caratteri è composta la stringa del flag: i primi sono il trattino e il carattere del flag.",
+      "options": [
+        "Si verifica che argv[i][0] == '-' e argv[i][1] == 'v'",
+        "Si confronta l'intero array argv tramite l'operatore == : argv == \"-v\"",
+        "Si verifica soltanto la lunghezza della stringa tramite strlen(argv[i]) == 1",
+        "Si converte argv[i] in int tramite atoi()",
+        "Si utilizza l'operatore sizeof(argv[i])"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La stringa `\"-v\"` contiene il carattere `'-'` alla posizione 0 e la lettera `'v'` alla posizione 1.",
+        "Errato. L'operatore `==` confronta gli indirizzi dei puntatori, non il contenuto delle stringhe. Per un confronto completo serve `strcmp`.",
+        "Errato. La lunghezza di `\"-v\"` è di 2 caratteri, non 1.",
+        "Errato. La funzione `atoi()` non è destinata al parsing dei flag di testo.",
+        "Errato. `sizeof(argv[i])` restituirà la dimensione del puntatore (4 o 8 byte), non la lunghezza della stringa."
+      ]
+    }
+  ]
+}

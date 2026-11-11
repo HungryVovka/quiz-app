@@ -1,0 +1,593 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_3041",
+      "widget_id": "widget_clang_3041",
+      "topic": "Sostituzione testuale delle macro e mancanza di parentesi",
+      "q": "Quale sarà il valore della variabile res in questo codice dopo la sostituzione della macro SQUARE(2 + 3)?",
+      "hint": "Ricorda che il preprocessore effettua una semplice sostituzione testuale prima di considerare la precedenza degli operatori matematici.",
+      "options": [
+        "11",
+        "25",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione si espande testualmente in `(2 + 3 * 2 + 3)`. Secondo le regole dell'aritmetica, viene eseguita prima la moltiplicazione: `3 * 2 = 6`, e poi l'addizione `2 + 6 + 3 = 11`. Per una macro corretta sono necessarie le parentesi: `#define SQUARE(x) ((x) * (x))`.",
+        "Errato. Il risultato 25 si otterrebbe solo in presenza di parentesi attorno a ciascun argomento `((2 + 3) * (2 + 3))`.",
+        "Errato. L'operazione non dà 0."
+      ]
+    },
+    {
+      "id": "it_clang_3042",
+      "widget_id": null,
+      "topic": "Differenza di sintassi tra #include <...> e #include \"...\"",
+      "q": "Qual è la differenza principale tra le direttive #include <header.h> e #include \"header.h\" durante la ricerca del file da parte del preprocessore?",
+      "hint": "Pensa a dove il preprocessore inizia a cercare il file in primo luogo — nella directory del sorgente corrente o nelle directory di sistema.",
+      "options": [
+        "\"header.h\" cerca prima il file nella directory del file sorgente corrente, mentre <header.h> cerca rigorosamente nelle directory di sistema",
+        "<header.h> costringe il preprocessore a compilare l'intestazione come C++, mentre \"header.h\" come C",
+        "\"header.h\" può includere solo macro, mentre <header.h> solo dichiarazioni di funzione",
+        "Entrambe le direttive sono completamente identiche e vengono scelte solo per ragioni di stile"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variante tra virgolette `\"...\"` costringe il preprocessore a iniziare la ricerca dalla directory locale in cui si trova lo stesso file `.c` (e in caso di fallimento passare a quelle di sistema). La variante `<...>` cerca il file solo nei percorsi degli include di sistema (`/usr/include`, ecc.).",
+        "Errato. Il tipo di sintassi dell'include non cambia il linguaggio di compilazione.",
+        "Errato. Entrambi i tipi di direttive possono contenere qualsiasi codice C.",
+        "Errato. L'ordine e i percorsi di ricerca dei file header differiscono."
+      ]
+    },
+    {
+      "id": "it_clang_3043",
+      "widget_id": null,
+      "topic": "Rimozione dei commenti durante la fase di preprocessamento",
+      "q": "Con cosa sostituisce il preprocessore i commenti su riga singola (//) e multiriga (/* ... */) durante la pulizia del codice sorgente?",
+      "hint": "I commenti non vengono semplicemente eliminati del tutto, ma sostituiti con un carattere di spaziatura minimo.",
+      "options": [
+        "Con un singolo carattere di spazio",
+        "Con una stringa vuota senza caratteri"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, qualsiasi commento viene sostituito dal preprocessore con un singolo carattere di spazio (`' '`), per evitare di fondere due token lessicali adiacenti in uno solo.",
+        "Errato. L'eliminazione totale senza spazio potrebbe unire erroneamente i token prima e dopo il commento (ad esempio, `int/* */a` diventerebbe `inta`)."
+      ]
+    },
+    {
+      "id": "it_clang_3044",
+      "widget_id": null,
+      "topic": "Operatori di macro # e ##",
+      "q": "Qual è lo scopo degli operatori # (stringificazione) e ## (concatenazione di token) all'interno delle macro del preprocessore?",
+      "hint": "Uno di essi trasforma l'argomento passato in un letterale stringa, mentre il secondo concatena due token in un unico identificatore.",
+      "options": [
+        "# trasforma l'argomento della macro in un letterale stringa, mentre ## unisce due token in un unico identificatore",
+        "# indica un commento del preprocessore, mentre ## indica un percorso assoluto del file",
+        "# costringe il preprocessore a valutare un'espressione, mentre ## la rimuove dal codice",
+        "# dichiara una variabile globale, mentre ## la rende statica",
+        "# viene utilizzato esclusivamente per la formattazione dell'output in printf"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `#x` trasforma il nome dell'argomento `x` nella stringa `\"x\"`. L'operatore `a ## b` concatena i token `a` e `b` in un unico token `ab`.",
+        "Errato. Il simbolo `#` non viene utilizzato per i commenti in C.",
+        "Errato. Il preprocessore valuta le espressioni con `#if`, non tramite `#`.",
+        "Errato. Le direttive macro non influiscono direttamente sui qualificatori delle variabili.",
+        "Errato. Sono operatori universali per la sostituzione delle macro."
+      ]
+    },
+    {
+      "id": "it_clang_3045",
+      "widget_id": "widget_clang_3045",
+      "topic": "Effetti collaterali nei parametri delle macro",
+      "q": "Perché passare argomenti con incremento (x++, y++) a una macro simile a una funzione come MAX(a, b) è un'operazione pericolosa?",
+      "hint": "Osserva quante volte il parametro con il valore più alto verrà sostituito ed eseguito nell'espressione ternaria (a > b ? a : b).",
+      "options": [
+        "L'argomento con il valore maggiore verrà inserito nell'espressione espansa due volte, causando l'esecuzione del suo incremento due volte durante il funzionamento del programma",
+        "L'incremento all'interno della macro causerà un errore sintattico in fase di compilazione",
+        "Il preprocessore azzererà automaticamente i valori delle variabili x e y",
+        "I valori delle variabili x e y aumenteranno rigorosamente di 1, poiché il preprocessore calcola gli argomenti in anticipo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione si espanderà in `(x++ > y++ ? x++ : y++)`. Prima verrà eseguito il confronto `5 > 10` (false), incrementando entrambe le variabili (`x=6, y=11`). Poi verrà valutato il secondo ramo `y++`, incrementando nuovamente `y` a 12. La variabile `y` aumenterà due volte!",
+        "Errato. La sintassi è assolutamente corretta, ma la logica di funzionamento contiene un bug.",
+        "Errato. Il preprocessore non modifica i valori delle variabili durante l'esecuzione.",
+        "Errato. Le macro non valutano gli argomenti in anticipo: li sostituiscono come testo."
+      ]
+    },
+    {
+      "id": "it_clang_3046",
+      "widget_id": null,
+      "topic": "Meccanismo di funzionamento della direttiva #include",
+      "q": "Cosa fa effettivamente il preprocessore C quando incontra la direttiva #include \"my_header.h\"?",
+      "hint": "Pensa a una semplice operazione testuale di inserimento del contenuto di un file in un altro.",
+      "options": [
+        "Copia letteralmente tutto il testo dal file my_header.h e lo inserisce al posto della riga con la direttiva #include",
+        "Compila my_header.h in un file oggetto separato .o",
+        "Crea un collegamento dinamico alla libreria durante l'esecuzione",
+        "Verifica la correttezza sintattica del codice all'interno di my_header.h senza inserire il testo",
+        "Converte il file header in una macro binaria",
+        "Carica il file nello spazio di indirizzamento virtuale del processo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La direttiva `#include` è un semplice comando testuale \"copia e incolla\" del contenuto del file header specificato direttamente nel file sorgente.",
+        "Errato. I file header non vengono compilati separatamente in `.o`.",
+        "Errato. Il linking dinamico avviene durante il caricamento del programma, non durante il preprocessamento.",
+        "Errato. L'analisi sintattica viene eseguita dal compilatore, non dal preprocessore.",
+        "Errato. Il testo viene inserito così com'è, senza trasformazione in formato binario.",
+        "Errato. Il caricamento del file in memoria è gestito dal sistema operativo."
+      ]
+    },
+    {
+      "id": "it_clang_3047",
+      "widget_id": "widget_clang_3047",
+      "topic": "Protezione contro la ricorsione infinita nelle macro",
+      "q": "Come reagisce il preprocessore a una definizione ciclica di macro (#define A B e #define B A)?",
+      "hint": "Il preprocessore interrompe la sostituzione della macro se il token ha già partecipato all'espansione corrente.",
+      "options": [
+        "Il preprocessore interrompe l'espansione della macro non appena rileva il riutilizzo di un token già espanso",
+        "Il preprocessore entra in un ciclo infinito e si blocca durante la compilazione",
+        "Il compilatore genera l'errore 'Cyclic Macro Fault' e annulla la build",
+        "Il preprocessore sostituisce i token ciclici con 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, il preprocessore traccia i nomi delle macro durante l'espansione. Se il nome di una macro appare nella sua stessa espansione (direttamente o indirettamente), non viene più sostituito, evitando un ciclo infinito.",
+        "Errato. Non si verificano blocchi grazie alla protezione integrata dello standard.",
+        "Errato. Questo non costituisce un errore, la sostituzione si interrompe semplicemente al token ripetuto.",
+        "Errato. Il token non viene azzerato, ma rimane con il nome originale."
+      ]
+    },
+    {
+      "id": "it_clang_3048",
+      "widget_id": null,
+      "topic": "Macro di flag e direttiva #undef",
+      "q": "A cosa serve una macro senza valore (ad esempio #define FEATURE_ENABLED) e quale direttiva ne annulla l'effetto?",
+      "hint": "Pensa alla compilazione condizionale (#ifdef) e all'annullamento di identificatori definiti in precedenza.",
+      "options": [
+        "Viene utilizzata come flag per la compilazione condizionale (#ifdef / #ifndef) e viene annullata dalla direttiva #undef",
+        "Viene utilizzata per l'allocazione di memoria nell'heap ed è annullata dalla direttiva #delete",
+        "Vieta la creazione di variabili con lo stesso nome ed è annullata tramite #clear"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le definizioni del tipo `#define FLAG` servono come marcatori di esistenza per `#ifdef` e `#ifndef`. La direttiva `#undef FLAG` rimuove una macro dichiarata in precedenza.",
+        "Errato. Il preprocessore non gestisce l'allocazione di memoria.",
+        "Errato. `#define` in questa forma non è destinato al blocco dei nomi delle variabili."
+      ]
+    },
+    {
+      "id": "it_clang_3049",
+      "widget_id": "widget_clang_3049",
+      "topic": "Commenti all'interno dei letterali stringa",
+      "q": "I caratteri /* ... */ all'interno del letterale stringa \"/* Questo è un commento */\" verranno rimossi dal preprocessore?",
+      "hint": "Ricorda come si comporta il preprocessore con il testo contenuto tra doppi apici.",
+      "options": [
+        "No, il preprocessore ignora la sintassi dei commenti all'interno dei letterali stringa e la stringa rimarrà invariata",
+        "Sì, il preprocessore rimuoverà tutto il contenuto all'interno delle virgolette e lo sostituirà con uno spazio"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il testo tra doppi apici è un letterale stringa. Il preprocessore non cerca né rimuove i commenti all'interno delle stringhe.",
+        "Errato. La rimozione dei commenti all'interno delle virgolette comprometterebbe il lavoro con i letterali stringa."
+      ]
+    },
+    {
+      "id": "it_clang_3050",
+      "widget_id": "widget_clang_3050",
+      "topic": "L'idioma do { ... } while(0) nelle macro",
+      "q": "Perché le macro multiriga in C vengono racchiuse nel costrutto do { ... } while(0)?",
+      "hint": "Fai attenzione al comportamento di una macro multiriga all'interno di una struttura condizionale if (...) con un ramo else.",
+      "options": [
+        "Per trasformare un gruppo di istruzioni in un singolo blocco sintattico che funzioni correttamente nelle strutture condizionali (if/else) e richieda il punto e virgola alla fine",
+        "Per costringere il preprocessore a eseguire la macro in un ciclo infinito durante la build",
+        "Per allocare automaticamente memoria sullo stack per le variabili locali della macro",
+        "Per velocizzare l'esecuzione del codice disabilitando i controlli di tipo",
+        "È un requisito dello standard POSIX per lavorare con le chiamate di sistema"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'idioma `do { ... } while(0)` combina più istruzioni in un'unica istruzione composta. Ciò previene errori di sintassi quando si usa la macro in `if (...) MACRO(); else ...` e richiede di inserire `;` alla fine.",
+        "Errato. Il ciclo `while(0)` viene eseguito esattamente una volta durante l'esecuzione del programma.",
+        "Errato. L'allocazione di memoria non dipende dalla presenza dell'involucro `do-while`.",
+        "Errato. Il costrutto non è legato all'ottimizzazione o ai tipi di dati.",
+        "Errato. È un pattern comune del linguaggio C stesso, non dello standard POSIX."
+      ]
+    },
+    {
+      "id": "it_clang_3051",
+      "widget_id": "widget_clang_3051",
+      "topic": "Traduzione di una semplice funzione C in Assembly",
+      "q": "In quali operazioni di base dell'architettura x86_64 viene tradotta questa funzione a livello di codice assembly?",
+      "hint": "Pensa a come vengono passati gli argomenti tramite i registri del processore e quale istruzione è responsabile dell'addizione.",
+      "options": [
+        "Caricamento degli argomenti dai registri (ad es. edi, esi), esecuzione dell'istruzione add e passaggio del risultato tramite il registro eax/rax con la chiamata a ret",
+        "Creazione di un thread dinamico del SO, allocazione dell'heap per il risultato e chiamata alla funzione system_add",
+        "Chiamata a un'interruzione di sistema del kernel int 0x80 con copia dei dati su disco rigido"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo la convenzione ABI System V, i primi argomenti utilizzano i registri `edi` e `esi`. Il compilatore traduce l'addizione nell'istruzione `add` (o `lea`) e restituisce il valore tramite `eax` con l'istruzione finale `ret`.",
+        "Errato. La semplice aritmetica viene eseguita sui registri della CPU senza allocare memoria nell'heap o chiamare thread.",
+        "Errato. L'addizione aritmetica avviene interamente nello spazio utente senza chiamate di sistema al kernel."
+      ]
+    },
+    {
+      "id": "it_clang_3052",
+      "widget_id": null,
+      "topic": "Ruolo della rappresentazione intermedia Assembly nel compilatore",
+      "q": "Perché i compilatori (GCC, Clang) traducono il codice C ad alto livello in un linguaggio assembly intermedio (.s) anziché direttamente in byte binari?",
+      "hint": "Pensa alla separazione delle responsabilità tra le ottimizzazioni indipendenti dall'architettura e la generazione specifica del codice binario.",
+      "options": [
+        "Per dividere il compilatore in un generatore di codice con ottimizzazione (frontend/middle-end) e un assembler dipendente dalla piattaforma (backend)",
+        "Affinché il programmatore possa modificare manualmente tutti i file del programma prima di ogni esecuzione",
+        "Perché gli standard C99 e C11 vietano la creazione diretta di codice macchina da parte del compilatore",
+        "Per la traduzione automatica del codice in linguaggi ad alto livello come Java o Python"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La fase assembly consente di separare l'analisi sintattica e le ottimizzazioni (lavoro sulla rappresentazione intermedia AST/IR) dalla generazione delle istruzioni macchina finali di una specifica architettura.",
+        "Errato. La modifica manuale dei file `.s` è un'attività rara di debugging, non lo scopo principale dell'architettura del compilatore.",
+        "Errato. Lo standard del linguaggio definisce la semantica dei programmi C, ma non regolamenta le fasi intermedie interne del compilatore.",
+        "Errato. Il linguaggio assembly è una rappresentazione a basso livello per l'hardware, non un linguaggio ad alta astrazione."
+      ]
+    },
+    {
+      "id": "it_clang_3053",
+      "widget_id": "widget_clang_3053",
+      "topic": "Inserimento di codice Assembly in C (Inline Assembly)",
+      "q": "Per cosa viene utilizzata la sintassi di inserimento assembly (__asm__ / asm) nel codice C?",
+      "hint": "Fai attenzione all'accesso diretto ai registri e alle istruzioni specifiche del processore.",
+      "options": [
+        "Per l'esecuzione diretta di specifiche istruzioni hardware del processore o per lavorare con i registri dal codice C",
+        "Per accelerare automaticamente l'elaborazione delle matrici matematiche senza il coinvolgimento del compilatore",
+        "Per proteggere il codice sorgente dalla decompilazione da parte dei programmi antivirus",
+        "Per costringere il preprocessore a tradurre il codice in file header",
+        "Per aggirare i limiti di memoria di sistema sui sistemi a 32 bit"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `Inline Assembly` consente di chiamare istruzioni CPU speciali (ad esempio operazioni atomiche, RDTSC, SIMD), gestire i registri e interagire direttamente con l'hardware.",
+        "Errato. L'uso di `__asm__` di per sé non garantisce un'accelerazione automatica della matematica complessa rispetto alle ottimizzazioni del compilatore.",
+        "Errato. L'inline assembly viene compilato in normale codice macchina e non nasconde il codice dai decompilatori.",
+        "Errato. Il preprocessore elaborerà le righe delle macro prima dell'inline assembly.",
+        "Errato. L'indirizzamento della memoria è dettato dall'architettura e dall'ABI del sistema operativo."
+      ]
+    },
+    {
+      "id": "it_clang_3054",
+      "widget_id": null,
+      "topic": "Convenzione di chiamata (Calling Convention / ABI)",
+      "q": "Cosa regola la convenzione di chiamata (Calling Convention) a livello di codice assembly durante la compilazione dei programmi C?",
+      "hint": "Ricorda le regole per il passaggio degli argomenti, il salvataggio dello stato dei registri e la pulizia dello stack.",
+      "options": [
+        "L'ordine di passaggio degli argomenti tramite registri/stack, la restituzione del valore e la responsabilità di salvataggio dei registri",
+        "Il formato di scrittura dei commenti e la corretta formattazione dei rientri nei file .c"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'ABI (Application Binary Interface) e le Calling Conventions definiscono quali registri vengono utilizzati per gli argomenti (ad esempio rdi, rsi, rdx), dove risiede il risultato restituito e come viene pulito lo stack.",
+        "Errato. I rientri e i commenti sono questioni di stile del codice sorgente C e vengono completamente rimossi durante la compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_3055",
+      "widget_id": "widget_clang_3055",
+      "topic": "Allocazione delle variabili locali: Registri vs Stack",
+      "q": "Come posiziona di solito un compilatore con ottimizzazione le variabili a e b durante la generazione del codice assembly con il flag -O2?",
+      "hint": "Il compilatore cerca di minimizzare l'accesso lento alla RAM (stack).",
+      "options": [
+        "Conserva le variabili esclusivamente nei registri liberi del processore, evitando gli accessi alla RAM nello stack",
+        "Alloca un blocco separato nella memoria dinamica dell'heap per ciascuna variabile tramite un malloc nascosto",
+        "Scrive obbligatoriamente ogni variabile nello stack utilizzando istruzioni mov per ciascuna operazione",
+        "Crea una sezione statica nella memoria globale .data"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Al livello di ottimizzazione `-O2`, il compilatore esegue l'allocazione dei registri (Register Allocation) e cerca di mantenere i risultati intermedi `a` e `b` nei registri CPU (ad es. `eax`, `ecx`), senza accedere alla RAM.",
+        "Errato. L'heap non viene utilizzato per le variabili automatiche temporanee di una funzione.",
+        "Errato. Il salvataggio nello stack senza ottimizzazioni avviene a livello `-O0`, ma `-O2` minimizza gli accessi superflui alla memoria.",
+        "Errato. Le variabili locali di una funzione non vengono inserite nel segmento `.data`."
+      ]
+    },
+    {
+      "id": "it_clang_3056",
+      "widget_id": null,
+      "topic": "Impatto delle ottimizzazioni del compilatore (-O2 / -O3) sul codice assembly",
+      "q": "In che modo un alto livello di ottimizzazione (-O2 o -O3) trasforma il codice C durante la generazione delle istruzioni assembly?",
+      "hint": "Pensa allo srotolamento dei cicli, all'inlining delle funzioni e al riordinamento delle istruzioni.",
+      "options": [
+        "Esegue l'inlining delle funzioni, lo srotolamento dei cicli (loop unrolling) e il riordinamento delle istruzioni per il caricamento della pipeline",
+        "Converte il programma in un linguaggio di script interpretato per velocizzare l'avvio",
+        "Rimuove forzatamente tutte le chiamate di sistema dal file eseguibile",
+        "Cifra le istruzioni assembly con l'algoritmo AES per sicurezza",
+        "Sostituisce tutte le operazioni aritmetiche con chiamate a REST API",
+        "Raddoppia la dimensione di ciascuna istruzione per l'allineamento"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I flag `-O2` e `-O3` costringono il compilatore a ristrutturare radicalmente il codice: inserire i corpi delle funzioni piccole direttamente nel punto di chiamata (inlining), srotolare i cicli e utilizzare in modo più efficiente le pipeline della CPU.",
+        "Errato. La compilazione del C produce codice macchina binario, non uno script interpretato.",
+        "Errato. Le chiamate di sistema vengono mantenute se necessarie per la logica del programma.",
+        "Errato. L'ottimizzazione del compilatore mira alle prestazioni e alla dimensione del codice, non alla cifratura.",
+        "Errato. Le chiamate API non sostituiscono le istruzioni di base del processore.",
+        "Errato. L'aumento della dimensione delle istruzioni non è l'obiettivo dell'ottimizzazione."
+      ]
+    },
+    {
+      "id": "it_clang_3057",
+      "widget_id": "widget_clang_3057",
+      "topic": "Impatto di volatile sul codice assembly di un ciclo",
+      "q": "Perché il compilatore NON rimuoverà un ciclo vuoto di ritardo durante la generazione del codice assembly in presenza di volatile?",
+      "hint": "Il qualificatore volatile segnala al compilatore che qualsiasi lettura o scrittura della variabile deve essere eseguita realmente.",
+      "options": [
+        "La parola chiave volatile vieta al compilatore di scartare le letture/scritture della variabile i dall'assembly generato, anche se il ciclo è vuoto",
+        "Il ciclo viene sostituito da una chiamata alla funzione sleep() durante la fase di preprocessamento",
+        "Il compilatore genererà l'errore 'Volatile Loop Error' durante la build con ottimizzazione -O2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Senza `volatile`, il compilatore di ottimizzazione rileverebbe che `i` non influisce sullo stato esterno e rimuoverebbe completamente il ciclo. Con `volatile`, il compilatore è obbligato a generare istruzioni di controllo e incremento in memoria a ogni iterazione.",
+        "Errato. Il preprocessore non sostituisce i cicli con chiamate a funzioni del sistema operativo.",
+        "Errato. Questo è il comportamento standard e regolare della parola chiave `volatile`."
+      ]
+    },
+    {
+      "id": "it_clang_3058",
+      "widget_id": null,
+      "topic": "Dipendenza del linguaggio Assembly dall'architettura del processore",
+      "q": "Un file assembly (.s) generato per un processore x86_64 verrebbe compilato su un sistema target con architettura ARM64?",
+      "hint": "Architetture di processori diverse hanno set di istruzioni (ISA) fondamentalmente diversi.",
+      "options": [
+        "No, poiché i set di istruzioni (ISA) e i registri di x86_64 e ARM64 sono fondamentalmente diversi",
+        "Sì, poiché il linguaggio assembly è uno standard ISO unico per tutti i processori del mondo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il linguaggio assembly è legato a una specifica architettura di processore (ISA). Le istruzioni e i registri x86_64 (`mov`, `rax`, `rbp`) non hanno un significato diretto per l'assembly ARM64 (`mov`, `x0`, `x30`).",
+        "Errato. Non esiste un linguaggio assembly unico e universale; ogni architettura ha la propria sintassi e il proprio set di comandi."
+      ]
+    },
+    {
+      "id": "it_clang_3059",
+      "widget_id": "widget_clang_3059",
+      "topic": "Prologo ed epilogo di una funzione in Assembly",
+      "q": "Quale ruolo svolgono le istruzioni indicate (push rbp; mov rbp, rsp ... pop rbp; ret) all'inizio e alla fine della rappresentazione assembly di una funzione C?",
+      "hint": "Pensa alla formazione dello stack frame per salvare il vecchio puntatore di base e ritornare dalla funzione.",
+      "options": [
+        "Formano il prologo e l'epilogo della funzione: salvano il puntatore allo stack frame del codice chiamante, allocano spazio per i dati locali e ripristinano lo stato all'uscita",
+        "Configurano i permessi di accesso alla memoria RAM nel sistema operativo",
+        "Puliscono i registri da virus e tag di debug",
+        "Commutano il processore dalla modalità a 32 bit a quella a 64 bit",
+        "Caricano le librerie dinamiche dal disco alla RAM"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Questi comandi costituiscono il prologo e l'epilogo. `push rbp` salva il limite precedente del frame dello stack, `mov rbp, rsp` imposta un nuovo limite per la funzione corrente, mentre `pop rbp` e `ret` ripristinano l'ambiente della funzione chiamante.",
+        "Errato. I diritti di accesso alla memoria sono configurati a livello di tabelle delle pagine MMU del kernel del SO.",
+        "Errato. Si tratta di istruzioni standard di gestione dello stack frame, non correlate alla protezione antivirus.",
+        "Errato. La commutazione delle modalità del processore viene eseguita dal kernel del sistema operativo all'avvio.",
+        "Errato. Il caricamento delle librerie è gestito dal linker dinamico di sistema (`ld.so`)."
+      ]
+    },
+    {
+      "id": "it_clang_3060",
+      "widget_id": null,
+      "topic": "Nomi dei simboli C in assembly (Assenza di Name Mangling)",
+      "q": "In che modo il compilatore C trasmette solitamente i nomi delle funzioni e delle variabili globali nella tabella dei simboli del file assembly?",
+      "hint": "Ricorda la differenza tra la procedura di generazione dei nomi in C e il Name Mangling in C++.",
+      "options": [
+        "Mantiene il nome originale della funzione quasi \"così com'è\" (o con un prefisso di sottolineatura _), poiché in C non esiste l'overloading delle funzioni (Name Mangling)",
+        "Cifra il nome della funzione utilizzando una funzione hash SHA-256",
+        "Aggiunge al nome della funzione i tipi di tutti gli argomenti e del valore restituito, come in C++",
+        "Rinomina forzatamente tutte le funzioni in numeri sequenziali (func1, func2)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza del C++, dove a causa del sovraccarico delle funzioni si applica la decorazione dei nomi (Name Mangling), in C il nome della funzione nel codice assembly coincide con il nome nel codice C sorgente (ad esempio, `add` diventa il simbolo `add` o `_add`).",
+        "Errato. L'hashing dei nomi dei simboli non viene applicato dal compilatore.",
+        "Errato. L'aggiunta dei tipi di argomento ai nomi dei simboli (mangling) è tipica del C++, ma non del C.",
+        "Errato. La rinominazione in simboli numerati renderebbe impossibile il linking tra moduli diversi."
+      ]
+    },
+    {
+      "id": "it_clang_3061",
+      "widget_id": "widget_clang_3061",
+      "topic": "Ruolo dell'utility assembler (as / GNU Assembler)",
+      "q": "Cosa succede quando si esegue il comando `as -o main.o main.s` durante la fase di traduzione del programma?",
+      "hint": "Fai attenzione a quale tipo di file (testuale o binario) viene fornito in input e quale viene generato in output.",
+      "options": [
+        "L'utility assembler traduce le istruzioni testuali del linguaggio assembly (main.s) in un file oggetto binario contenente comandi macchina (main.o)",
+        "Il linker unisce il file main.s con le librerie di sistema nell'eseguibile finale",
+        "Il preprocessore sostituisce le macro testuali nel file main.s e crea un file eseguibile ELF pronto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'assembler (`as`) legge il file testuale di istruzioni assembly (`.s`) e le traduce in opcode macchina binari del processore, confezionandoli in un file oggetto (`.o`).",
+        "Errato. L'unione con le librerie è gestita dal linker (`ld`), non dall'assembler.",
+        "Errato. Il preprocessamento avviene nella primissima fase di compilazione, molto prima dell'assemblaggio."
+      ]
+    },
+    {
+      "id": "it_clang_3062",
+      "widget_id": null,
+      "topic": "Essenza del processo di assemblaggio",
+      "q": "Qual è la differenza fondamentale tra il processo di assemblaggio (traduzione da .s a .o) e la traduzione del codice C in assembly (da .c a .s)?",
+      "hint": "Pensa alla relazione tra i costrutti di alto livello in C e le istruzioni macchina del processore.",
+      "options": [
+        "La traduzione da C ad assembly richiede un'analisi complessa e ottimizzazioni, mentre l'assemblaggio produce principalmente una codifica diretta delle istruzioni testuali della CPU nei loro opcode binari (Opcode)",
+        "L'assemblaggio esegue completamente il programma e salva il risultato dei calcoli su disco, mentre la compilazione C crea uno script virtuale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La conversione da C ad assembly richiede analisi sintattica, ottimizzazione e allocazione dei registri. L'assemblaggio è prevalentemente una traduzione diretta uno-a-uno di comandi testuali nei corrispondenti byte binari (opcode).",
+        "Errato. L'assemblaggio non esegue il codice, ma si limita a tradurre istruzioni testuali in comandi macchina binari."
+      ]
+    },
+    {
+      "id": "it_clang_3063",
+      "widget_id": "widget_clang_3063",
+      "topic": "Voci di rilocazione (Relocation Entries) nel file .o",
+      "q": "Cosa indica una voce di rilocazione (Relocation Entry) del tipo R_X86_64_PLT32 nella tabella delle rilocazioni del file oggetto main.o?",
+      "hint": "Fai attenzione al fatto che durante la fase di assemblaggio l'indirizzo esatto delle funzioni esterne (ad esempio puts) non è ancora noto.",
+      "options": [
+        "È un marcatore per il linker che indica che l'indirizzo della funzione esterna chiamata non è definitivo e deve essere corretto durante il linking",
+        "È un errore sintattico dell'assembler che indica un danneggiamento del file",
+        "È un comando di servizio per il compilatore Python che vieta l'uso di librerie dinamiche",
+        "È un flag che attiva la protezione della memoria del processo da blocchi dovuti alla divisione per zero",
+        "È un'indicazione per il sistema operativo di allocare memoria dinamica per un array locale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché durante la fase di assemblaggio di un singolo file `.s` gli indirizzi delle funzioni esterne sono sconosciuti, l'assembler inserisce offset temporanei e crea una voce di rilocazione che indica al linker di inserire l'indirizzo reale.",
+        "Errato. La voce di rilocazione è una parte standard della struttura dei file ELF.",
+        "Errato. Le voci di rilocazione si riferiscono alla build binaria del codice macchina e non sono legate a Python.",
+        "Errato. Le voci di rilocazione non servono come mezzo di protezione dalla divisione per zero.",
+        "Errato. Le voci di rilocazione non gestiscono l'allocazione di memoria dinamica."
+      ]
+    },
+    {
+      "id": "it_clang_3064",
+      "widget_id": null,
+      "topic": "Formato dei file .o (ELF, COFF, Mach-O)",
+      "q": "In quale formato binario l'assembler standard salva solitamente il file oggetto .o nei moderni sistemi operativi della famiglia Linux?",
+      "hint": "L'acronimo di questo formato sta per Executable and Linkable Format.",
+      "options": [
+        "ELF (Executable and Linkable Format)",
+        "PE (Portable Executable)",
+        "Mach-O (Mach Object)",
+        "COM (Command File)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il formato ELF è lo standard de facto per i file oggetto ed eseguibili in Linux e nella maggior parte dei sistemi UNIX-like.",
+        "Errato. PE (Portable Executable) viene utilizzato nei sistemi operativi Windows.",
+        "Errato. Mach-O viene utilizzato nei sistemi operativi macOS e iOS.",
+        "Errato. COM è un vecchio formato di file eseguibili dell'era MS-DOS."
+      ]
+    },
+    {
+      "id": "it_clang_3065",
+      "widget_id": "widget_clang_3065",
+      "topic": "Intestazione ELF (ELF Header) e tipo REL",
+      "q": "Perché l'intestazione readelf definisce il tipo del file oggetto .o come REL (Relocatable file)?",
+      "hint": "La proprietà relocatable indica la capacità del file di essere unito ad altre sezioni durante il linking.",
+      "options": [
+        "Perché il codice e i dati al suo interno sono organizzati in indirizzi relativi e sono destinati ad essere collegati dal linker ad altri oggetti",
+        "Perché il file è completamente pronto per essere eseguito in modo autonomo nel sistema senza l'intervento di altre utility",
+        "Perché questo file contiene codice C sorgente compresso per l'archiviazione",
+        "Perché questo file viene caricato esclusivamente nella modalità reale del processore BIOS",
+        "Perché il file è stato creato con un errore di compilazione fatale",
+        "Perché questo formato è destinato solo a lavorare con la Java Virtual Machine"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il tipo `REL` (file rilocabile) indica che questo modulo oggetto contiene sezioni di codice e dati i cui indirizzi possono essere traslati e collegati ad altri moduli durante la fase di linking.",
+        "Errato. I file eseguibili pronti per l'avvio hanno tipo `EXEC` o `DYN` (PIE).",
+        "Errato. Un file oggetto contiene dati binari compilati, non codice C sorgente.",
+        "Errato. Il tipo `REL` non è legato alla modalità di funzionamento del BIOS.",
+        "Errato. Gli errori di compilazione interrompono la build e non creano un file di tipo REL.",
+        "Errato. Il formato ELF è nativo per il codice macchina, non per la JVM."
+      ]
+    },
+    {
+      "id": "it_clang_3066",
+      "widget_id": null,
+      "topic": "Sezioni .text, .data e .bss nel file .o",
+      "q": "In quale sezione del file oggetto .o l'assembler inserisce i comandi macchina compilati (Opcode)?",
+      "hint": "Questa sezione è tradizionalmente protetta dalla scrittura a livello di SO e memorizza il codice eseguibile.",
+      "options": [
+        ".text",
+        ".data",
+        ".bss",
+        ".rodata"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sezione `.text` è destinata alla memorizzazione del codice macchina eseguibile del processore.",
+        "Errato. La sezione `.data` memorizza le variabili globali e statiche inizializzate.",
+        "Errato. La sezione `.bss` riserva spazio per le variabili globali e statiche non inizializzate.",
+        "Errato. La sezione `.rodata` contiene costanti immutabili e letterali stringa."
+      ]
+    },
+    {
+      "id": "it_clang_3067",
+      "widget_id": "widget_clang_3067",
+      "topic": "Codifica delle istruzioni e opcode (Opcode)",
+      "q": "Cosa rappresentano i byte 8d 04 37 c3 nel dump del codice macchina della funzione add?",
+      "hint": "Pensa in cosa l'assembler trasforma esattamente i comandi testuali lea e retq.",
+      "options": [
+        "Gli opcode binari e gli operandi esatti delle istruzioni del processore, letti dall'unità di controllo della CPU",
+        "Una chiave di licenza testuale cifrata del programma",
+        "Indirizzi di debug temporanei generati dal sistema operativo al momento di un crash"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Questi byte sono la rappresentazione binaria delle istruzioni x86_64: `8d 04 37` codifica il comando `lea (%rdi,%rsi,1), %eax`, mentre `c3` il comando `retq`.",
+        "Errato. Questo è codice macchina del programma, non chiavi o dati testuali.",
+        "Errato. I byte delle istruzioni vengono formati staticamente dall'assembler durante la build."
+      ]
+    },
+    {
+      "id": "it_clang_3068",
+      "widget_id": null,
+      "topic": "Tabella dei simboli (Symbol Table) nel file oggetto",
+      "q": "Perché l'assembler crea e salva all'interno del file .o una Tabella dei Simboli (Symbol Table)?",
+      "hint": "Questa tabella associa i nomi di funzioni e variabili globali ai loro offset all'interno delle sezioni.",
+      "options": [
+        "Per fornire al linker l'elenco di tutti i nomi di funzioni e variabili esportati (T) ed importati (U) con i relativi offset interni",
+        "Per velocizzare il lavoro dell'editor di testo all'apertura del file .o",
+        "Affinché il sistema operativo possa tradurre automaticamente il programma nel linguaggio assembly di un altro processore",
+        "Per ridurre le dimensioni del file finale prima dell'invio in rete",
+        "Per proteggere il codice sorgente dall'esecuzione su altri computer"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La tabella dei simboli consente al linker di comprendere quali identificatori vengono forniti all'esterno da questo modulo (ad esempio nomi di funzioni) e di quali simboli esterni necessita.",
+        "Errato. Il file oggetto è binario e non è destinato all'apertura in un editor di testo.",
+        "Errato. La tabella dei simboli non si occupa della traduzione del codice tra architetture.",
+        "Errato. La tabella dei simboli aumenta le dimensioni del file aggiungendo metadati per il linking.",
+        "Errato. I metadati dei simboli non limitano l'esecuzione del programma su altre macchine."
+      ]
+    },
+    {
+      "id": "it_clang_3069",
+      "widget_id": "widget_clang_3069",
+      "topic": "Significato di T e U nell'output dell'utility nm",
+      "q": "Cosa significano le lettere 'T' e 'U' accanto ai simboli add e puts nell'output del comando nm main.o?",
+      "hint": "Uno di questi valori è definito nella sezione codice dell'oggetto stesso, mentre l'altro si riferisce a una funzione esterna.",
+      "options": [
+        "'T' indica che il simbolo è definito nella sezione testo di questo file, mentre 'U' (Undefined) che il simbolo è esterno e richiede la risoluzione da parte del linker",
+        "'T' indica una variabile temporanea (Temporary), mentre 'U' un tipo di dati universale (Universal)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La lettera `T` (Text) mostra che il simbolo è dichiarato e si trova all'interno della sezione `.text` del file corrente. La lettera `U` (Undefined) mostra che la funzione viene chiamata ma è dichiarata in un modulo esterno.",
+        "Errato. I simboli `T` e `U` riflettono lo stato di presenza del simbolo nelle sezioni, non tipi temporanei."
+      ]
+    },
+    {
+      "id": "it_clang_3070",
+      "widget_id": null,
+      "topic": "Indirizzamento assoluto e relativo nella fase .o",
+      "q": "Perché durante la fase di assemblaggio (.s -> .o) le istruzioni di salto (ad esempio la chiamata di funzione call) utilizzano spesso offset relativi o indirizzi fittizi pari a zero?",
+      "hint": "L'assembler elabora una singola unità di traslazione in modo isolato e non sa dove si troveranno le altre funzioni nella memoria finale.",
+      "options": [
+        "L'assembler non conosce gli indirizzi assoluti finali di allocazione delle funzioni in memoria, poiché la disposizione finale viene effettuata dal linker",
+        "L'assembler danneggia intenzionalmente gli indirizzi per complicare l'hackeraggio e il reverse engineering",
+        "L'indirizzamento relativo è vietato nel moderno codice x86_64",
+        "Il processore può eseguire solo funzioni con indirizzo fisico pari a zero"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché l'assembler elabora ciascun modulo separatamente, gli indirizzi fisici o virtuali reali delle chiamate possono essere calcolati solo dal linker durante l'assemblaggio di un'unica immagine.",
+        "Errato. Gli indirizzi zero o gli offset relativi servono come segnaposto tecnici, non come mezzo di offuscamento.",
+        "Errato. L'indirizzamento relativo (RIP-relative) è utilizzato attivamente in x86_64.",
+        "Errato. Il processore può eseguire comandi a qualsiasi indirizzo di memoria valido."
+      ]
+    }
+  ]
+}

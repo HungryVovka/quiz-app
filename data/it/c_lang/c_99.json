@@ -1,0 +1,593 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_3011",
+      "widget_id": "widget_clang_3011",
+      "topic": "Inizializzazione della sezione BSS all'avvio",
+      "q": "Cosa succede alle variabili globali e statiche dichiarate senza inizializzazione esplicita (sezione BSS) al momento del caricamento del programma in memoria?",
+      "hint": "Fai attenzione allo stato iniziale standardizzato della sezione BSS all'avvio del processo.",
+      "options": [
+        "Il caricatore del SO riempie garantitamente la sezione BSS di zeri prima di trasferire il controllo al codice utente",
+        "Le variabili contengono «spazzatura» imprevedibile rimasta nella RAM da altri processi",
+        "Il sistema operativo termina forzatamente il processo con un errore di Segmentation Fault"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il segmento BSS non occupa spazio nel file su disco, ma all'avvio il SO alloca memoria per esso nella RAM e la azzera garantitamente prima dell'inizio dell'esecuzione del programma.",
+        "Errato. L'azzeramento è garantito dallo standard C e dalla sicurezza del SO (affinché i processi non leggano dati di altri dalla memoria).",
+        "Errato. È una procedura standard di caricamento, non si verifica alcun errore."
+      ]
+    },
+    {
+      "id": "it_clang_3012",
+      "widget_id": null,
+      "topic": "Ruolo del loader del sistema operativo",
+      "q": "Qual è il compito principale del caricatore del sistema operativo (System Loader) all'invocazione di un file eseguibile (ad esempio tramite execve)?",
+      "hint": "Pensa all'allocazione dello spazio di indirizzamento, alla lettura degli header ELF/PE e al mapping delle sezioni del disco nella RAM.",
+      "options": [
+        "Crea lo spazio di indirizzamento virtuale del processo, mappa le sezioni del file ELF nella RAM e imposta i permessi di accesso",
+        "Traduce il codice sorgente C direttamente in codice macchina durante l'avvio",
+        "Rimuove tutte le variabili non utilizzate dal file binario",
+        "Verifica le regole sintattiche del C e genera errori di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il loader alloca la memoria virtuale, legge gli header del formato (ELF/PE), mappa le pagine dal disco alla RAM e imposta i permessi (R, W, X).",
+        "Errato. Il loader lavora con un file binario già compilato.",
+        "Errato. La rimozione delle variabili non utilizzate avviene durante la fase di compilazione/linking.",
+        "Errato. La sintassi viene verificata dal compilatore."
+      ]
+    },
+    {
+      "id": "it_clang_3013",
+      "widget_id": "widget_clang_3013",
+      "topic": "Punto di ingresso _start e inizializzazione CRT",
+      "q": "Quale funzione è il vero punto di ingresso del programma per il SO, e quando viene eseguita la funzione init_func() contrassegnata dall'attributo constructor?",
+      "hint": "Il punto di ingresso di basso livello è _start della libreria C Runtime (CRT), che esegue l'inizializzazione di sistema prima di main().",
+      "options": [
+        "Il vero punto di ingresso è _start; la funzione con l'attributo constructor viene eseguita nella fase di inizializzazione della CRT prima di chiamare main()",
+        "Il vero punto di ingresso è sempre main(); la funzione init_func() viene eseguita subito dopo il completamento di main()",
+        "Il punto di ingresso è printf(); l'attributo constructor forza la funzione a essere chiamata in un thread separato",
+        "La funzione init_func() viene eseguita durante la compilazione del codice da parte del preprocessore",
+        "Il punto di ingresso è init_func(), mentre la funzione main() viene ignorata"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il sistema operativo trasferisce il controllo a `_start` (CRT), che inizializza l'ambiente, esegue i costruttori (chiamando `init_func`) e solo dopo chiama `main()`.",
+        "Errato. La funzione `main()` è il punto di ingresso per lo sviluppatore, ma non la prima istruzione eseguita dal SO.",
+        "Errato. `printf` è la funzione standard di output, mentre i costruttori vengono eseguiti nel thread principale prima di `main()`.",
+        "Errato. Il codice C viene eseguito durante l'esecuzione del programma, non durante il preprocessamento.",
+        "Errato. `main()` viene chiamata normalmente dopo l'esecuzione dei costruttori."
+      ]
+    },
+    {
+      "id": "it_clang_3014",
+      "widget_id": null,
+      "topic": "Linker dinamico (Dynamic Linker/Loader)",
+      "q": "Qual è il ruolo del linker dinamico (ad esempio ld-linux.so su Linux) all'avvio di un programma?",
+      "hint": "Pensa alla ricerca di librerie esterne .so/.dll su disco e alla risoluzione degli indirizzi delle funzioni esterne durante l'avvio.",
+      "options": [
+        "Carica in memoria le librerie condivise necessarie (.so/.dll) e risolve i simboli di dynamic-linking",
+        "Pulisce la memoria RAM dai vecchi file eseguibili prima di avviarne di nuovi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il linker dinamico cerca le librerie dipendenti nel sistema, le proietta in memoria e collega le chiamate di funzione ai loro indirizzi reali.",
+        "Errato. Della pulizia e gestione della memoria fisica si occupa il sottosistema di memoria virtuale del kernel del SO."
+      ]
+    },
+    {
+      "id": "it_clang_3015",
+      "widget_id": "widget_clang_3015",
+      "topic": "Struttura della memoria virtuale del processo",
+      "q": "In quali aree di memoria del processo verranno allocati gli indirizzi per la variabile stack_var e per la memoria restituita da malloc()?",
+      "hint": "Lo stack cresce verso l'heap; lo stack memorizza il contesto locale, mentre l'heap le allocazioni dinamiche.",
+      "options": [
+        "stack_var viene inserita nello Stack, mentre la memoria da malloc() viene allocata nell'Heap",
+        "stack_var viene inserita nella BSS, mentre malloc() alloca memoria nel segmento .rodata",
+        "Entrambe le variabili vengono inserite nel segmento di codice .text",
+        "stack_var viene allocata nell'Heap, mentre malloc() prende memoria dallo Stack",
+        "Entrambe le variabili vengono collocate nei registri del processore senza usare la RAM",
+        "La memoria per malloc() viene estratta dal segmento dei dati globali .data"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili locali automatiche delle funzioni sono memorizzate nello stack (`Stack`), mentre la memoria dinamica per `malloc()` viene allocata dal kernel del SO dall'heap (`Heap`).",
+        "Errato. La sezione BSS memorizza i dati globali/statici non inizializzati, mentre `.rodata` memorizza le costanti.",
+        "Errato. Il segmento `.text` contiene istruzioni eseguibili ed è protetto dalla scrittura.",
+        "Errato. L'ordine delle aree è invertito.",
+        "Errato. Le variabili di memoria del processo risiedono nella RAM.",
+        "Errato. Il segmento `.data` memorizza le variabili globali inizializzate."
+      ]
+    },
+    {
+      "id": "it_clang_3016",
+      "widget_id": null,
+      "topic": "Tabelle PLT e GOT per il lazy binding",
+      "q": "A cosa servono le tabelle PLT (Procedure Linkage Table) e GOT (Global Offset Table) durante il caricamento di un programma collegato dinamicamente?",
+      "hint": "Queste tabelle consentono di calcolare gli indirizzi reali delle funzioni delle librerie dinamiche alla prima chiamata (Lazy Binding).",
+      "options": [
+        "Per implementare la risoluzione pigra (Lazy Binding) degli indirizzi delle funzioni dalle librerie dinamiche durante l'esecuzione del programma",
+        "Per la traduzione automatica del codice del programma dal linguaggio C al linguaggio assembly",
+        "Per verificare l'autenticità della firma digitale dello sviluppatore del file binario",
+        "Per comprimere il file eseguibile durante il salvataggio su disco rigido"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le tabelle PLT/GOT evitano di collegare tutte le migliaia di funzioni dai file `.so` all'avvio, determinando invece i loro indirizzi reali alla prima chiamata effettiva nel codice.",
+        "Errato. Della traduzione in assembly si occupa il compilatore.",
+        "Errato. Questi sono meccanismi di collegamento degli indirizzi, non di verifica delle firme crittografiche.",
+        "Errato. Le tabelle non si occupano di archiviazione o compressione dei file."
+      ]
+    },
+    {
+      "id": "it_clang_3017",
+      "widget_id": "widget_clang_3017",
+      "topic": "Passaggio di argc, argv ed envp all'avvio",
+      "q": "In che modo i parametri argc, argv ed envp risultano accessibili all'interno della funzione main() all'avvio del processo?",
+      "hint": "Il loader del SO posiziona gli argomenti e le variabili d'ambiente nello stack del processo prima di trasferire il controllo.",
+      "options": [
+        "Il loader del SO e la chiamata di sistema execve scrivono le stringhe degli argomenti e dell'ambiente nella parte superiore dello stack del processo prima di avviare _start",
+        "Le variabili d'ambiente vengono lette dalla funzione main() direttamente dal disco rigido a ogni accesso a envp",
+        "Gli argomenti vengono convertiti dal preprocessore in macro di testo durante la compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiamata di sistema del kernel `execve` prepara lo stack del nuovo processo, scrivendovi il numero di argomenti, gli array di puntatori `argv` ed `envp`, nonché le stringhe stesse.",
+        "Errato. L'ambiente viene copiato nella memoria RAM del processo al momento della creazione, senza accessi al disco.",
+        "Errato. Gli argomenti della riga di comando vengono passati in fase di esecuzione (runtime), non di compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_3018",
+      "widget_id": null,
+      "topic": "Permessi delle pagine di memoria e segmento .rodata",
+      "q": "In che modo viene garantita, nella fase di caricamento, la protezione contro i tentativi di scrittura nei letterali stringa e nelle costanti (.rodata)?",
+      "hint": "Pensa alla configurazione delle tabelle delle pagine dell'hardware MMU (Memory Management Unit) da parte del sistema operativo.",
+      "options": [
+        "Il loader richiede al SO di contrassegnare le pagine di memoria del segmento .rodata con il flag Read-Only, e un tentativo di scrittura provoca un errore hardware (SIGSEGV)",
+        "Il preprocessore sostituisce tutti i tentativi di scrittura nelle costanti con operazioni vuote NOP",
+        "Il compilatore crittografa il segmento .rodata con una password durante la build",
+        "Il linker rimuove i letterali stringa dal file e li memorizza nel file di swap",
+        "La protezione funziona solo a livello di codice sorgente, mentre nel binario caricato la scrittura è consentita"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il loader configura la protezione hardware delle pagine di memoria tramite la MMU (Memory Management Unit). Le pagine con `.rodata` ottengono i permessi di \"sola lettura\", generando un `Segmentation Fault` in caso di tentativo di modifica.",
+        "Errato. Il preprocessore non è in grado di tracciare la logica di scrittura/lettura nelle espressioni.",
+        "Errato. La crittografia non viene utilizzata per proteggere le costanti in memoria.",
+        "Errato. I letterali stringa rimangono nel corpo del binario all'interno del segmento `.rodata`.",
+        "Errato. La protezione viene rigorosamente rispettata a livello hardware e di sistema operativo."
+      ]
+    },
+    {
+      "id": "it_clang_3019",
+      "widget_id": "widget_clang_3019",
+      "topic": "Gestione della conclusione del processo tramite atexit()",
+      "q": "Chi e in quale momento eseguirà la funzione cleanup(), registrata tramite atexit()?",
+      "hint": "La chiamata avviene alla normale conclusione del processo dopo l'uscita da main() o la chiamata a exit().",
+      "options": [
+        "L'ambiente C runtime (CRT) eseguirà automaticamente la funzione registrata alla normale conclusione del programma (uscita da main o exit())",
+        "Il loader del SO chiama cleanup() al momento del caricamento del programma prima di eseguire main()",
+        "La funzione verrà chiamata dal sistema operativo solo in caso di crash anomalo del programma per SIGSEGV",
+        "Il compilatore incorporerà il corpo di cleanup() all'inizio di ogni ciclo del programma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `exit()` (o il ritorno da `main`, che trasferisce il controllo alla CRT) scorre l'elenco degli handler registrati tramite `atexit()` e li chiama prima di chiudere il processo.",
+        "Errato. Prima di `main()` vengono chiamati i costruttori (`__attribute__((constructor))`), non gli handler `atexit`.",
+        "Errato. In caso di terminazione anomala (segnali `SIGSEGV`, `SIGKILL` o chiamata a `_exit()`), le funzioni `atexit` non vengono chiamate.",
+        "Errato. `atexit` funziona dinamicamente durante l'esecuzione e non viene incorporato dal compilatore nei cicli."
+      ]
+    },
+    {
+      "id": "it_clang_3020",
+      "widget_id": null,
+      "topic": "Sicurezza e tecnologia ASLR",
+      "q": "Qual è l'effetto del meccanismo di sicurezza ASLR (Address Space Layout Randomization) nella fase di caricamento del programma?",
+      "hint": "Lo scopo dell'ASLR è rendere più difficile lo sfruttamento delle vulnerabilità (ad esempio del buffer di memoria), modificando in modo casuale gli indirizzi base dei segmenti.",
+      "options": [
+        "L'ASLR sposta in modo casuale gli indirizzi base dello stack, dell'heap e delle librerie in memoria a ogni avvio del programma",
+        "L'ASLR crittografa i file sorgente C direttamente nel momento del loro caricamento nella memoria del processore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'ASLR (Address Space Layout Randomization) a ogni avvio rende casuali gli indirizzi dello stack, dell'heap e delle librerie caricate, ostacolando attacchi di tipo Buffer Overflow.",
+        "Errato. L'ASLR lavora a livello di posizionamento dei segmenti di memoria del processo nella RAM e non ha nulla a che fare con la crittografia dei sorgenti."
+      ]
+    },
+    {
+      "id": "it_clang_3021",
+      "widget_id": "widget_clang_3021",
+      "topic": "Stack frame e trabocco dello stack (Stack Overflow)",
+      "q": "Cosa accadrà durante l'esecuzione di questo programma a causa della ricorsione infinita?",
+      "hint": "Pensa a come l'allocazione illimitata di stack frame per le funzioni e i buffer locali influisca sull'area di memoria allocata.",
+      "options": [
+        "Si verificherà un trabocco dello stack (Stack Overflow) e il processo verrà terminato dal SO con un errore di Segmentation Fault",
+        "Il preprocessore bloccherà l'esecuzione del ciclo infinito ancora prima dell'avvio",
+        "La memoria verrà reindirizzata automaticamente nell'heap (Heap) senza che il programma vada in crash"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Ogni chiamata ricorsiva crea un nuovo stack frame e alloca 1 KB per il buffer. La memoria dello stack si esaurisce rapidamente, superando i limiti della pagina allocata, il che porta a uno Stack Overflow e al crash del processo.",
+        "Errato. Il preprocessore lavora sul testo e non verifica la logica delle chiamate di funzione in fase di esecuzione.",
+        "Errato. La memoria dello stack non si espande automaticamente nell'heap."
+      ]
+    },
+    {
+      "id": "it_clang_3022",
+      "widget_id": null,
+      "topic": "Differenza tra terminazione tramite exit() e _Exit()",
+      "q": "Qual è la differenza tra le chiamate exit(code) e _Exit(code) durante l'esecuzione del programma?",
+      "hint": "Presta attenzione allo svuotamento dei buffer di I/O e all'esecuzione degli handler atexit().",
+      "options": [
+        "exit() svuota i buffer di I/O e chiama le funzioni atexit(), mentre _Exit() trasferisce immediatamente il controllo al SO senza compiere questi passaggi",
+        "_Exit() riavvia i programmi con codice zero, mentre exit() chiude il sistema operativo",
+        "exit() si usa solo in C++, mentre _Exit() è l'unica funzione di terminazione standard in C",
+        "Entrambe le funzioni sono assolutamente identiche e differiscono solo per lo stile di denominazione in standard diversi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `exit()` esegue la pulizia del runtime: svuota e chiude i flussi di I/O, chiama gli handler `atexit()`. La funzione `_Exit()` termina il processo immediatamente a livello di kernel.",
+        "Errato. Nessuna di queste funzioni riavvia il programma o chiude il SO.",
+        "Errato. Entrambe le funzioni fanno parte dello standard C (C99).",
+        "Errato. Il comportamento delle funzioni differisce in modo significativo riguardo all'esecuzione delle procedure di pulizia."
+      ]
+    },
+    {
+      "id": "it_clang_3023",
+      "widget_id": "widget_clang_3023",
+      "topic": "Puntatori pendenti (Dangling Pointers)",
+      "q": "A quale problema durante l'esecuzione del programma porta la dereferenziazione del puntatore ptr restituito dalla funzione create_num()?",
+      "hint": "Il puntatore fa riferimento a un'area di memoria dinamica che è già stata liberata tramite free().",
+      "options": [
+        "Si verifica un accesso tramite puntatore pendente (Dangling Pointer Use-After-Free), che porta a un comportamento indefinito (UB)",
+        "Il compilatore genererà un errore Syntax Error durante l'esecuzione del programma",
+        "Il sistema operativo ripristinerà forzatamente il valore liberato 42",
+        "La chiamata a free() azzera automaticamente il valore del puntatore p e rende ptr uguale a NULL",
+        "La memoria verrà riallocata automaticamente per un nuovo tipo di dato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `free(p)` libera il blocco di memoria, ma l'indirizzo stesso nel puntatore rimane. La lettura tramite tale puntatore è una vulnerabilità e un errore di Use-After-Free, che porta a Undefined Behavior.",
+        "Errato. Non ci sono errori di sintassi nel codice, il problema si manifesta durante l'esecuzione.",
+        "Errato. Il SO non traccia i valori della memoria liberata.",
+        "Errato. La funzione `free()` accetta solo una copia dell'indirizzo e non azzera il puntatore `p` stesso.",
+        "Errato. La chiamata a `free()` restituisce la memoria all'allocatore, non avviene alcuna riallocazione per tipo."
+      ]
+    },
+    {
+      "id": "it_clang_3024",
+      "widget_id": null,
+      "topic": "Cambio di contesto nelle chiamate di sistema",
+      "q": "Cosa succede a livello di processore e SO durante l'esecuzione di una chiamata di sistema (ad esempio read o write) dal codice C?",
+      "hint": "Il processore modifica il livello di privilegio per accedere alle risorse hardware del kernel.",
+      "options": [
+        "Si verifica un passaggio dalla modalità utente (User Mode) alla modalità kernel (Kernel Mode) tramite un'interruzione software o un'istruzione speciale",
+        "Il garbage collector del C blocca tutti i thread fino al completamento della scrittura su disco"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le chiamate di sistema richiedono privilegi elevati per lavorare con l'hardware. Il processore passa da Ring 3 (User) a Ring 0 (Kernel) tramite un'interruzione (int 0x80 / syscall) e passa l'esecuzione al kernel.",
+        "Errato. In C non è presente un garbage collector automatico integrato."
+      ]
+    },
+    {
+      "id": "it_clang_3025",
+      "widget_id": "widget_clang_3025",
+      "topic": "Qualificatore volatile e lettura dalla memoria",
+      "q": "Perché viene utilizzata la parola chiave volatile per la variabile flag nella funzione del ciclo di attesa presentata?",
+      "hint": "Pensa a come il compilatore ottimizza le letture regolari di una variabile nei registri del processore.",
+      "options": [
+        "Forza il processore a rileggere il valore della variabile dalla memoria RAM a ogni iterazione, vietando il caching nei registri",
+        "Rende la variabile flag accessibile per la modifica da file header di altri progetti",
+        "Trasforma il ciclo locale in un mutex multithread a livello hardware",
+        "Alloca memoria per la variabile flag in un registro speciale protetto del BIOS"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Senza `volatile` il compilatore ottimizzatore potrebbe leggere `flag` in un registro del processore una volta sola e creare un ciclo infinito `while (reg == 0)`. Il qualificatore `volatile` disabilita il caching delle letture di questa variabile nei registri.",
+        "Errato. Della disponibilità tra moduli si occupa il qualificatore `extern`.",
+        "Errato. `volatile` non fornisce strumenti di atomicità o sincronizzazione tra thread.",
+        "Errato. `volatile` non funziona con il BIOS e non alloca registri hardware speciali."
+      ]
+    },
+    {
+      "id": "it_clang_3026",
+      "widget_id": null,
+      "topic": "Gestione dei segnali di sistema",
+      "q": "In che modo il sistema operativo notifica a un processo C in esecuzione gli errori critici a runtime (ad esempio accesso non valido alla memoria o divisione per zero)?",
+      "hint": "Ricorda il meccanismo asincrono di notifica dei processi nei sistemi POSIX-compatibili.",
+      "options": [
+        "Invia al processo segnali (Signals), come SIGSEGV o SIGFPE, che possono essere intercettati tramite signal() o sigaction()",
+        "Scrive un errore di testo nel file stderr.log e continua l'esecuzione dalla riga successiva",
+        "Riavvia automaticamente la funzione main() con gli argomenti originali",
+        "Converte le istruzioni errate in istruzioni NOP (No Operation)",
+        "Genera un'eccezione C++ try-catch che viene automaticamente gestita dal compilatore",
+        "Passa il processore in modalità protetta in tempo reale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In caso di guasti hardware (errore MMU, eccezione ALU), il kernel del SO invia al processo il segnale corrispondente (`SIGSEGV`, `SIGFPE`, ecc.). Di default il processo si interrompe in modo anomalo, ma lo sviluppatore può intercettare il segnale.",
+        "Errato. Un processo con un errore critico non può semplicemente saltare l'istruzione fallita.",
+        "Errato. La funzione `main()` non viene riavviata automaticamente in caso di crash.",
+        "Errato. Il kernel non sostituisce le istruzioni del processo con NOP.",
+        "Errato. Il meccanismo di eccezioni C++ (try-catch) è assente nel C-runtime.",
+        "Errato. In situazioni di emergenza non si verifica alcun cambio di modalità in tempo reale."
+      ]
+    },
+    {
+      "id": "it_clang_3027",
+      "widget_id": "widget_clang_3027",
+      "topic": "Buffering dello standard output (stdout)",
+      "q": "Perché è necessaria la chiamata a fflush(stdout) dopo una printf() senza il carattere di nuova riga '\\n'?",
+      "hint": "Lo standard output stdout per impostazione predefinita è con buffering a righe quando si stampa a terminale.",
+      "options": [
+        "Per forzare l'invio dei dati accumulati dal buffer stdout allo schermo, senza attendere il carattere '\\n' o il riempimento del buffer",
+        "Per liberare la memoria dinamica allocata per la funzione printf()",
+        "Per bloccare l'input da tastiera durante l'esecuzione di sleep()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flusso `stdout` di default ha il buffering per riga (Line Buffered). Senza `\\n` il testo rimarrà nel buffer e non apparirà sullo schermo fino alla pausa `sleep(1)`. La chiamata a `fflush(stdout)` forzatamente svuota il buffer.",
+        "Errato. `fflush` svuota i buffer di I/O, non libera la memoria dinamica.",
+        "Errato. `fflush` non influisce sulla gestione dello standard input (`stdin`)."
+      ]
+    },
+    {
+      "id": "it_clang_3028",
+      "widget_id": null,
+      "topic": "Punti di sequenza (Sequence Points)",
+      "q": "Perché un codice del tipo i = i++ + ++i porta a un comportamento indefinito (Undefined Behavior) durante l'esecuzione?",
+      "hint": "L'ordine di valutazione degli operandi all'interno di una singola espressione senza punti di sequenza non è garantito.",
+      "options": [
+        "La modifica multipla della stessa variabile all'interno di una singola espressione senza un punto di sequenza intermedio non ha un ordine regolamentato",
+        "L'operatore ++ è vietato da usare due volte nella stessa riga di codice secondo lo standard C99",
+        "Le variabili di tipo int non supportano l'incremento prefisso e postfisso simultaneo",
+        "L'operazione di addizione di due incrementi provoca un errore di sistema di overflow aritmetico nel processore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La modifica di una singola entità scalare più di una volta tra punti di sequenza adiacenti (Sequence Points) comporta un Undefined Behavior — compilatori diversi genereranno codice diverso.",
+        "Errato. Il numero di operatori `++` in una riga non è limitato, se si riferiscono a variabili diverse.",
+        "Errato. Il tipo `int` supporta entrambi i tipi di incremento.",
+        "Errato. L'addizione in sé non genera un errore di sistema, il problema è proprio nella corsa alle modifiche della variabile `i`."
+      ]
+    },
+    {
+      "id": "it_clang_3029",
+      "widget_id": "widget_clang_3029",
+      "topic": "Eccezioni nella divisione intera per zero",
+      "q": "Quale segnale invierà il sistema operativo al processo durante l'esecuzione dell'operazione di divisione per zero (int c = a / b)?",
+      "hint": "Fai attenzione all'abbreviazione che indica gli errori in virgola mobile e dell'aritmetica intera (Floating-Point Exception).",
+      "options": [
+        "SIGFPE",
+        "SIGSEGV",
+        "SIGINT",
+        "SIGKILL",
+        "SIGABRT"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nonostante il nome storico (Floating-Point Exception), il segnale `SIGFPE` viene generato dal processore e dal SO per tutti gli errori aritmetici, inclusa la divisione di un valore intero per 0.",
+        "Errato. `SIGSEGV` viene inviato in caso di errori di indirizzamento della memoria (Segmentation Fault).",
+        "Errato. `SIGINT` viene inviato in caso di interruzione da parte dell'utente (Ctrl+C).",
+        "Errato. `SIGKILL` viene utilizzato per la terminazione incondizionata del processo.",
+        "Errato. `SIGABRT` viene inviato in seguito alla chiamata di `abort()` o all'attivazione di `assert()`."
+      ]
+    },
+    {
+      "id": "it_clang_3030",
+      "widget_id": null,
+      "topic": "Errore di accesso non allineato alla memoria (Misaligned Memory Access)",
+      "q": "Che cos'è l'errore di accesso non allineato alla memoria (Misaligned Memory Access / Bus Error), che può verificarsi su alcune architetture di processori durante l'esecuzione di un programma C?",
+      "hint": "I processori leggono i dati in blocchi di dimensione multipla specifica (ad esempio, 4 o 8 byte).",
+      "options": [
+        "Un tentativo di leggere o scrivere dati a un indirizzo di memoria non multiplo della dimensione del tipo di dato (ad esempio, un int da 4 byte a un indirizzo dispari)",
+        "Un errore che si verifica quando si tenta di chiamare una funzione da una libreria statica senza privilegi di amministratore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Architetture severe (ad esempio ARM, SPARC) richiedono che i tipi da N byte si trovino a indirizzi multipli di N. L'accesso a `uint32_t` a un indirizzo dispari provoca un guasto hardware `BUS_ADRERR` (Bus Error).",
+        "Errato. L'allineamento della memoria è una specifica hardware del funzionamento del bus del processore con la RAM, non una questione di permessi di accesso."
+      ]
+    },
+    {
+      "id": "it_clang_3031",
+      "widget_id": "widget_clang_3031",
+      "topic": "File intermedio .i dopo il preprocessamento",
+      "q": "Che cos'è il file con estensione .i ottenuto nella fase intermedia di build del programma?",
+      "hint": "Ricorda quale fase di elaborazione del codice precede la traduzione in assembly.",
+      "options": [
+        "Un file di testo con codice C in cui tutte le macro sono espanse, gli header inclusi sono sostituiti e i commenti sono stati rimossi",
+        "Un file binario con istruzioni macchina del processore target",
+        "Un file con codice assembly per una specifica architettura"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il file `.i` è il risultato del lavoro del preprocessore. In esso sono espanse tutte le direttive `#include` e `#define` e sono rimossi i commenti, ma il codice rimane testo puro in C.",
+        "Errato. Il codice macchina binario appare solo dopo l'operazione dell'assembler nella fase di creazione del file `.o`.",
+        "Errato. Il codice assembly viene generato nella fase di compilazione e salvato nei file `.s`."
+      ]
+    },
+    {
+      "id": "it_clang_3032",
+      "widget_id": null,
+      "topic": "File assembly intermedio .s",
+      "q": "Qual è il contenuto all'interno di un file con estensione .s (o .asm)?",
+      "hint": "Questo file viene creato dal traduttore del compilatore prima dell'avvio dell'utility assembler (as).",
+      "options": [
+        "Testo leggibile dall'uomo contenente istruzioni del linguaggio assembly per l'architettura target",
+        "Codice eseguibile binario pronto con indirizzi di memoria fisici associati"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il file `.s` contiene istruzioni assembly (ad esempio `movl`, `addl`, `pushq`), generate dal compilatore dall'unità di traduzione.",
+        "Errato. Il codice binario finale viene formato più tardi dall'utility assembler nei file `.o` e dal linker."
+      ]
+    },
+    {
+      "id": "it_clang_3033",
+      "widget_id": "widget_clang_3033",
+      "topic": "File oggetto .o / .obj",
+      "q": "Da cosa è caratterizzato un file oggetto con estensione .o (o .obj)?",
+      "hint": "Questo file è il risultato del lavoro dell'assembler, ma non ha ancora superato la fase di linking.",
+      "options": [
+        "Contiene codice macchina binario non collegato e la tabella dei simboli, ma non contiene gli indirizzi risolti dei collegamenti esterni",
+        "Rappresenta un file di testo con le direttive originali del preprocessore",
+        "È un archivio compresso composto da diverse librerie statiche .a",
+        "Contiene codice sorgente con markup di debug sotto forma di albero XML",
+        "È un file di configurazione delle impostazioni del compilatore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il file `.o` contiene le istruzioni macchina reali del processore e le sezioni dati, ma gli indirizzi delle funzioni esterne e delle variabili globali non sono ancora associati.",
+        "Errato. Il file `.o` è binario, non di testo.",
+        "Errato. L'archivio delle librerie `.a` è esso stesso composto da molteplici file `.o`.",
+        "Errato. Il file oggetto memorizza il codice compilato e la struttura ELF/COFF, non XML.",
+        "Errato. Questo è il risultato della compilazione del sorgente, non dell'impostazione dello strumento."
+      ]
+    },
+    {
+      "id": "it_clang_3034",
+      "widget_id": null,
+      "topic": "File eseguibile .out / .exe",
+      "q": "Quale tra le seguenti affermazioni è corretta riguardo ai file finali .out (Linux) o .exe (Windows)?",
+      "hint": "Pensa al completamento del processo di build e alla prontezza del file binario per l'esecuzione.",
+      "options": [
+        "Sono file binari eseguibili completamente formati (ELF o PE), pronti per essere caricati in memoria ed eseguiti",
+        "Sono file di testo intermedio destinati esclusivamente al funzionamento del debugger",
+        "Sono archivi zip compressi contenenti file di testo .i e .s",
+        "Sono file di codice sorgente che richiedono un interprete terzo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I file `.out` (ELF su Unix) ed `.exe` (PE su Windows) sono file binari completi con indirizzi dei simboli risolti e una tabella degli header di caricamento formata.",
+        "Errato. Questi file sono destinati all'esecuzione diretta da parte del sistema operativo.",
+        "Errato. Non si tratta di archivi di sorgenti, ma di codice macchina.",
+        "Errato. I programmi C vengono compilati in codice macchina e non richiedono un interprete."
+      ]
+    },
+    {
+      "id": "it_clang_3035",
+      "widget_id": "widget_clang_3035",
+      "topic": "Flag -save-temps nei compilatori",
+      "q": "Cosa succede durante la build di un progetto utilizzando il flag gcc -save-temps?",
+      "hint": "Il nome del flag si traduce letteralmente come «salvare i file temporanei».",
+      "options": [
+        "Il compilatore salva tutti i file intermedi (.i, .s, .o) nella directory corrente, senza eliminarli al termine della build",
+        "Il compilatore salva una copia dell'intera memoria RAM al momento del completamento del programma",
+        "Il compilatore crea automaticamente una copia di backup del progetto nel cloud di sistema",
+        "Il flag annulla forzatamente la build ed elimina il file finale",
+        "Il flag velocizza la build memorizzando nella cache i file nella cartella /tmp",
+        "Il flag passa il progetto in modalità di interpretazione dinamica Python"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Di default GCC elimina i file intermedi `.i` e `.s` durante la build. Il flag `-save-temps` forza il salvataggio dei file `.i` (dopo il preprocessore), `.s` (assembly) e `.o` (oggetto) su disco.",
+        "Errato. Il flag non si occupa di dump della memoria (Core Dump).",
+        "Errato. GCC non ha alcuna interazione con i servizi cloud.",
+        "Errato. Il file eseguibile viene creato con successo, proprio come in una normale build.",
+        "Errato. Il flag viene utilizzato per l'ispezione delle fasi di build, non per velocizzarle.",
+        "Errato. Il flag non modifica in alcun modo il paradigma di compilazione C."
+      ]
+    },
+    {
+      "id": "it_clang_3036",
+      "widget_id": null,
+      "topic": "Origine del nome a.out",
+      "q": "Perché per impostazione predefinita il compilatore GCC, quando viene invocato `gcc main.c` senza il flag `-o`, crea un file chiamato a.out?",
+      "hint": "Ricorda il nome storico del formato di file (Assembler Output) nelle prime versioni di UNIX.",
+      "options": [
+        "È il nome storico predefinito (abbreviazione di 'assembler output'), ereditato dai primi sistemi Unix",
+        "La lettera 'a' significa 'Advanced', mentre 'out' sta per 'Optimal Utilitarian Text'",
+        "È un nome temporaneo che il sistema operativo rinomina al primo avvio"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il nome `a.out` sta per «assembler output» — è il nome del file di output predefinito utilizzato fin dalle prime versioni di UNIX e conservato per retrocompatibilità.",
+        "Errato. È un'abbreviazione di `assembler output`.",
+        "Errato. Il sistema operativo non rinomina i file all'avvio."
+      ]
+    },
+    {
+      "id": "it_clang_3037",
+      "widget_id": "widget_clang_3037",
+      "topic": "Differenze tra file .c e .i",
+      "q": "Qual è la trasformazione testuale chiave che avviene nel codice durante il passaggio dal file .c al file .i?",
+      "hint": "Pensa a cosa fa il preprocessore con le macro, i file header e i commenti.",
+      "options": [
+        "Le direttive #include vengono sostituite dal codice dei file, le macro #define vengono espanse in testo e i commenti vengono rimossi",
+        "Il codice viene tradotto in byte-code macchina per l'esecuzione su una macchina virtuale",
+        "Il testo sorgente viene compresso senza modificare le strutture testuali",
+        "Tutti i nomi delle variabili vengono rinominati con identificatori brevi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il file `.i` è il risultato espanso del lavoro del preprocessore: i file da `#include` sono inseriti \"così come sono\", le macro sono sostituite dai loro valori e i commenti sono stati rimossi.",
+        "Errato. La traduzione in codice macchina avviene più tardi.",
+        "Errato. La dimensione del file `.i`, al contrario, aumenta notevolmente a causa dell'inserimento dei file header.",
+        "Errato. Il preprocessore di default non rinomina le variabili (non effettua offuscamento)."
+      ]
+    },
+    {
+      "id": "it_clang_3038",
+      "widget_id": null,
+      "topic": "Strumenti di analisi dei file oggetto (binutils)",
+      "q": "Quali utility da console su Linux vengono tradizionalmente utilizzate per analizzare il contenuto e la tabella dei simboli dei file oggetto (.o)?",
+      "hint": "Le utility fanno parte del set standard GNU Binary Utilities (binutils).",
+      "options": [
+        "nm, objdump e readelf",
+        "grep, sed e awk",
+        "top, htop e systemctl",
+        "ping, traceroute e netstat",
+        "tar, gzip e zip"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `nm` mostra la tabella dei simboli, `objdump` permette di disassemblare le sezioni e `readelf` mostra informazioni strutturate sugli header del file ELF.",
+        "Errato. `grep`, `sed` e `awk` sono utility per l'elaborazione del testo.",
+        "Errato. Queste sono utility di monitoraggio dei processi e dei servizi di sistema.",
+        "Errato. Queste sono utility di rete.",
+        "Errato. Queste sono utility di archiviazione."
+      ]
+    },
+    {
+      "id": "it_clang_3039",
+      "widget_id": "widget_clang_3039",
+      "topic": "Motivo dell'impossibilità di esecuzione diretta dei file .o",
+      "q": "Perché un file oggetto .o non può essere eseguito direttamente nel sistema operativo come un normale programma?",
+      "hint": "Presta attenzione all'assenza di indirizzi associati e alla struttura incompleta degli header del formato eseguibile.",
+      "options": [
+        "Il file .o contiene indirizzi di chiamata relativi non risolti e non presenta i segmenti definitivi per il loader del SO",
+        "Il sistema operativo vieta a livello software l'esecuzione di qualsiasi file la cui dimensione sia inferiore a 1 MB"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il file oggetto `.o` è solo un frammento del programma futuro. In esso non sono risolti gli indirizzi delle funzioni esterne e mancano le tabelle di rilocazione e le sezioni di avvio per il caricamento del SO.",
+        "Errato. La dimensione del file non limita in alcun modo la possibilità di eseguire un file eseguibile."
+      ]
+    },
+    {
+      "id": "it_clang_3040",
+      "widget_id": null,
+      "topic": "Scopo del flag del compilatore -c",
+      "q": "Quale azione esegue il flag -c del compilatore GCC/Clang quando viene invocato `gcc -c main.c`?",
+      "hint": "Pensa a quale fase si interrompe la build.",
+      "options": [
+        "Interrompe il processo di build subito dopo la creazione del file oggetto main.o, senza invocare il linker",
+        "Interrompe il processo di build subito dopo il preprocessamento e crea il file di testo main.i",
+        "Compila il progetto rigorosamente secondo gli standard del linguaggio C++",
+        "Rimuove tutti i file binari temporanei dalla directory"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-c` indica al compilatore di eseguire preprocessamento, compilazione e assemblaggio producendo il file oggetto `.o`, ma salta la fase di linking.",
+        "Errato. Dell'interruzione dopo il preprocessamento si occupa il flag `-E`.",
+        "Errato. Della scelta del linguaggio C++ si occupa la scelta del compilatore `g++` o il flag `-x c++`.",
+        "Errato. Il flag `-c` crea il file `.o`, non pulisce la cartella."
+      ]
+    }
+  ]
+}

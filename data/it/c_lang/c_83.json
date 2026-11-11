@@ -1,0 +1,599 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2531",
+      "widget_id": "widget_clang_2531",
+      "topic": "Scopo dello stream di errore standard stderr",
+      "q": "In quale stream verrà inviato il messaggio \"Error occurred\" durante la chiamata fprintf(stderr, ...)?",
+      "hint": "Il primo argomento della funzione fprintf è un puntatore allo stream di file di destinazione.",
+      "options": [
+        "Nello stream di errore standard (stderr)",
+        "Nello stream di input standard (stdin)",
+        "Solo in un file su disco, ma non nella console"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il puntatore `stderr` indirizza l'output del programma verso lo stream di errore standard, separando i messaggi di diagnostica dall'output principale.",
+        "Errato. `stdin` è uno stream dedicato esclusivamente alla lettura dei dati.",
+        "Errato. Per impostazione predefinita `stderr` viene stampato a schermo (nel terminale), a meno che non venga reindirizzato separatamente."
+      ]
+    },
+    {
+      "id": "it_clang_2532",
+      "widget_id": null,
+      "topic": "Dichiarazione degli stream di input/output standard",
+      "q": "In quale file di intestazione sono dichiarati gli stream globali standard stdin, stdout e stderr?",
+      "hint": "Pensa a quale file di intestazione gestisce l'input e l'output standard (Standard Input/Output).",
+      "options": [
+        "<stdio.h>",
+        "<stdlib.h>",
+        "<unistd.h>",
+        "<string.h>",
+        "<stream.h>"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I puntatori agli stream `stdin`, `stdout` e `stderr` sono dichiarati nel file di intestazione `<stdio.h>`.",
+        "Errato. In `<stdlib.h>` si trovano funzioni di uso generale (allocazione di memoria, `exit`, ecc.).",
+        "Errato. `<unistd.h>` contiene chiamate di sistema POSIX, ma non gli stream standard del C.",
+        "Errato. `<string.h>` contiene funzioni per la manipolazione delle stringhe.",
+        "Errato. L'intestazione `<stream.h>` non fa parte dello standard C."
+      ]
+    },
+    {
+      "id": "it_clang_2533",
+      "widget_id": "widget_clang_2533",
+      "topic": "Equivalenza tra printf e fprintf(stdout)",
+      "q": "Quale delle seguenti affermazioni è corretta riguardo alla chiamata fprintf(stdout, \"Hello\\n\")?",
+      "hint": "La funzione printf(...) per impostazione predefinita invia i dati allo stream standard stdout.",
+      "options": [
+        "La chiamata è completamente equivalente a una normale chiamata printf(\"Hello\\n\")",
+        "Questa chiamata scrive solo nei file creati tramite fopen()",
+        "Questo codice causa un errore di compilazione, poiché stdout non può essere passato a fprintf",
+        "Questo codice stampa sempre il testo in colore rosso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiamata a `printf(...)` è zucchero sintattico per `fprintf(stdout, ...)`.",
+        "Errato. `stdout` è uno stream di file standard per l'output.",
+        "Errato. `stdout` ha tipo `FILE*` ed è un argomento assolutamente valido per `fprintf`.",
+        "Errato. Il colore dell'output è determinato dalle impostazioni del terminale, non dalla scelta della funzione C."
+      ]
+    },
+    {
+      "id": "it_clang_2534",
+      "widget_id": null,
+      "topic": "Bufferizzazione degli stream stdout e stderr",
+      "q": "Qual è la differenza principale nella modalità di bufferizzazione predefinita tra stdout e stderr durante l'output su terminale?",
+      "hint": "Pensa a quale stream deve stampare i dati immediatamente anche in caso di arresto anomalo del programma.",
+      "options": [
+        "stderr non è bufferizzato (unbuffered) per una stampa immediata degli errori, mentre stdout è bufferizzato per riga (line-buffered)",
+        "stdout non è bufferizzato, mentre stderr utilizza la bufferizzazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I messaggi di errore su `stderr` vengono stampati all'istante (`unbuffered`) per evitare di essere persi in caso di crash. `stdout` bufferizza le righe fino al carattere `\\n`.",
+        "Errato. Al contrario: è proprio `stderr` ad essere stampato senza ritardi."
+      ]
+    },
+    {
+      "id": "it_clang_2535",
+      "widget_id": "widget_clang_2535",
+      "topic": "Lettura dei dati dallo stream stdin",
+      "q": "Da dove legge un singolo carattere la funzione fgetc(stdin)?",
+      "hint": "Lo stream stdin è associato al dispositivo di input standard (di solito la tastiera o un file in lettura).",
+      "options": [
+        "Dallo stream di input standard (tastiera / input da terminale)",
+        "Dallo stream di errore standard",
+        "Dagli argomenti della riga di comando argv",
+        "Dal buffer di sistema della GPU",
+        "Da un settore casuale della memoria RAM",
+        "Dal file locale stderr.txt"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `stdin` collega il programma allo stream di input standard (per impostazione predefinita la tastiera del terminale).",
+        "Errato. `stderr` viene utilizzato solo per l'output degli errori.",
+        "Errato. Gli argomenti della riga di comando vengono passati tramite i parametri di `main()`, non tramite `stdin`.",
+        "Errato. `stdin` non è legato al processore grafico.",
+        "Errato. La lettura avviene rigorosamente dallo stream di input.",
+        "Errato. `stdin` non è associato a un file di errore."
+      ]
+    },
+    {
+      "id": "it_clang_2536",
+      "widget_id": null,
+      "topic": "Descrittori di file numerici POSIX (0, 1, 2)",
+      "q": "A quale descrittore di file (file descriptor) a livello di sistema operativo POSIX corrisponde lo stream stderr?",
+      "hint": "Gli stream stdin, stdout e stderr corrispondono ai numeri sequenziali 0, 1 e 2.",
+      "options": [
+        "2",
+        "0",
+        "1",
+        "3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nelle chiamate di sistema POSIX: 0 indica `stdin`, 1 indica `stdout`, 2 indica `stderr`.",
+        "Errato. `0` corrisponde all'input standard (`stdin`).",
+        "Errato. `1` corrisponde all'output standard (`stdout`).",
+        "Errato. `3` viene utilizzato per il primo file aperto dall'utente."
+      ]
+    },
+    {
+      "id": "it_clang_2537",
+      "widget_id": "widget_clang_2537",
+      "topic": "Output di stringhe tramite fputs nello stream stdout",
+      "q": "Qual è la differenza principale tra la funzione fputs(\"Data\", stdout) e puts(\"Data\")?",
+      "hint": "Fai attenzione al fatto che fputs aggiunga o meno automaticamente un carattere di nuova riga '\\n'.",
+      "options": [
+        "fputs non aggiunge il carattere di nuova riga '\\n' alla fine, mentre puts lo aggiunge",
+        "puts funziona solo con i file, mentre fputs solo con la console",
+        "fputs converte automaticamente il testo in maiuscolo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `puts()` stampa sempre un carattere finale `\\n`, mentre `fputs()` stampa solo la stringa passata senza aggiungere alcun carattere.",
+        "Errato. Entrambe le funzioni possono stampare dati sulla console, ma `fputs` accetta qualsiasi stream `FILE*`.",
+        "Errato. Nessuna delle due funzioni modifica il maiuscolo/minuscolo dei caratteri."
+      ]
+    },
+    {
+      "id": "it_clang_2538",
+      "widget_id": null,
+      "topic": "Reindirizzamento di stderr nella shell Bash",
+      "q": "Quale operatore dell'interprete di comandi Bash reindirizza lo stream di errore (stderr) nel file error.log?",
+      "hint": "Lo stream stderr ha descrittore di file pari a 2.",
+      "options": [
+        "2> error.log",
+        "> error.log",
+        "1> error.log",
+        "< error.log",
+        "&> error.log"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `2>` indica esplicitamente il numero di descrittore `2` (stderr) per il reindirizzamento su file.",
+        "Errato. `>` per impostazione predefinita reindirizza lo stream `stdout` (equivalente a `1>`).",
+        "Errato. `1>` reindirizza lo stream `stdout`.",
+        "Errato. `<` viene utilizzato per reindirizzare l'input da un file verso `stdin`.",
+        "Errato. `&>` reindirizza contemporaneamente sia `stdout` che `stderr`."
+      ]
+    },
+    {
+      "id": "it_clang_2539",
+      "widget_id": "widget_clang_2539",
+      "topic": "Tipo di dati degli stream di file in C",
+      "q": "Quale tipo di dati hanno i puntatori di sistema stdin, stdout e stderr?",
+      "hint": "Tutti gli stream nella libreria standard del C vengono gestiti come puntatori a un tipo strutturato di file.",
+      "options": [
+        "FILE *",
+        "int",
+        "char *",
+        "void *"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C tutti gli stream di file standard e utente sono descritti da un puntatore al tipo `FILE` (da `<stdio.h>`).",
+        "Errato. `int` viene utilizzato per i descrittori di file delle chiamate di sistema POSIX a basso livello (`open`/`read`/`write`), ma non per gli stream in C.",
+        "Errato. `char *` viene utilizzato per le normali stringhe di testo.",
+        "Errato. Gli stream hanno il tipo specifico `FILE *`, e non un puntatore generico `void *`."
+      ]
+    },
+    {
+      "id": "it_clang_2540",
+      "widget_id": null,
+      "topic": "Svuotamento del buffer dello stream tramite fflush()",
+      "q": "A cosa serve la funzione fflush(stdout)?",
+      "hint": "Pensa alle situazioni in cui il testo inviato in output rimane bloccato in un buffer intermedio.",
+      "options": [
+        "Per forzare la scrittura di tutti i dati presenti nel buffer sullo schermo/disco",
+        "Per pulire i dati in ingresso dalla tastiera da stdin",
+        "Per chiudere lo stream stdout e liberare le risorse",
+        "Per cancellare dal terminale il testo stampato in precedenza"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `fflush(stdout)` scrive immediatamente i dati accumulati nel buffer di output sul dispositivo di destinazione, senza attendere il carattere `\\n` o il riempimento del buffer.",
+        "Errato. La chiamata a `fflush(stdin)` sugli stream di input causa un comportamento indefinito (UB) secondo lo standard C.",
+        "Errato. Lo stream viene chiuso dalla funzione `fclose()`, non da `fflush()`.",
+        "Errato. La funzione non cancella i caratteri già stampati a schermo."
+      ]
+    },
+    {
+      "id": "it_clang_2541",
+      "widget_id": null,
+      "topic": "Persistenza del file come supporto di memorizzazione",
+      "q": "Qual è la differenza fondamentale tra la memorizzazione dei dati in un file su disco e la memorizzazione in una variabile nella memoria RAM?",
+      "hint": "Pensa a cosa succede al contenuto delle variabili in RAM dopo lo spegnimento del computer o il termine del processo.",
+      "options": [
+        "I dati nel file sono conservati in modo permanente sul disco dopo il termine del programma, mentre i dati in RAM vanno persi",
+        "La memoria RAM conserva i dati in modo più permanente e affidabile rispetto a un file su disco",
+        "I file sono memorizzati all'interno dei registri del processore e sono accessibili all'istante"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La memoria RAM è volatile e viene svuotata al termine del processo, mentre i file garantiscono una memorizzazione persistente su un supporto fisico.",
+        "Errato. La RAM si svuota quando si spegne l'alimentazione o si arresta il programma.",
+        "Errato. I file risiedono nella memoria secondaria (HDD/SSD/Flash) e non nei registri della CPU."
+      ]
+    },
+    {
+      "id": "it_clang_2542",
+      "widget_id": "widget_clang_2542",
+      "topic": "Lettura byte per byte del file come sequenza di byte",
+      "q": "Cosa calcola la funzione count_bytes(FILE *f)?",
+      "hint": "La funzione fgetc() legge in sequenza un byte dallo stream ad ogni chiamata.",
+      "options": [
+        "Il numero totale di byte nel file dalla posizione corrente fino alla fine",
+        "Il numero di righe nel file",
+        "Il numero di soli caratteri alfabetici stampabili",
+        "La dimensione del file in kilobyte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `fgetc()` legge il file byte per byte. Il ciclo viene eseguito esattamente tante volte quanti sono i byte rimasti nel file prima del segnale `EOF`.",
+        "Errato. Vengono letti assolutamente tutti i byte, e non solo i caratteri di nuova riga `\\n`.",
+        "Errato. La funzione legge tutti i byte senza filtrare il tipo di carattere.",
+        "Errato. Il contatore viene incrementato di 1 per ogni singolo byte, non per kilobyte."
+      ]
+    },
+    {
+      "id": "it_clang_2543",
+      "widget_id": null,
+      "topic": "Rappresentazione del file dal punto di vista del sistema operativo",
+      "q": "Come considerano fondamentalmente qualsiasi file su disco il sistema operativo e lo standard del linguaggio C?",
+      "hint": "Il file system a livello base non impone tipi di dati al contenuto del file.",
+      "options": [
+        "Come una sequenza continua di byte senza una struttura di tipo integrata",
+        "Come una tabella rigorosamente strutturata di un database relazionale",
+        "Come un array di pixel grafici tridimensionali",
+        "Come un elenco crittografato di variabili del linguaggio C",
+        "Come un albero binario di ricerca"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A livello di SO e di C, un file è semplicemente uno stream/sequenza di byte. Qualsiasi struttura (testo, immagine, struttura C) viene sovrapposta dal programma applicativo.",
+        "Errato. Il SO non struttura automaticamente i file come tabelle di database.",
+        "Errato. Un file non è vincolato al formato dei pixel grafici.",
+        "Errato. Un file non contiene informazioni sui tipi del C, a meno che non siano scritte manualmente.",
+        "Errato. La struttura di memorizzazione dei dati è definita dallo sviluppatore; per il SO è un array lineare di byte."
+      ]
+    },
+    {
+      "id": "it_clang_2544",
+      "widget_id": "widget_clang_2544",
+      "topic": "Determinazione della dimensione del file tramite offset del cursore in byte",
+      "q": "Cosa restituirà la funzione get_size(FILE *f) se il cursore viene spostato fino alla fine del file?",
+      "hint": "La funzione ftell() restituisce la posizione corrente del puntatore al file in byte rispetto al suo inizio.",
+      "options": [
+        "La dimensione del file in byte",
+        "Il numero di righe nel file",
+        "Il codice di errore EOF",
+        "Un puntatore all'inizio del file"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `fseek(f, 0, SEEK_END)` posiziona il cursore del file dopo l'ultimo byte. `ftell(f)` restituisce il numero di byte dall'inizio, ovvero la dimensione totale del file.",
+        "Errato. `ftell()` misura lo scostamento in byte, non il numero di caratteri `\\n`.",
+        "Errato. `ftell()` in caso di successo restituisce un numero non negativo di tipo `long`.",
+        "Errato. `ftell()` restituisce un valore numerico di tipo `long`, non un puntatore."
+      ]
+    },
+    {
+      "id": "it_clang_2545",
+      "widget_id": null,
+      "topic": "Indicazione della fine della sequenza di byte (EOF)",
+      "q": "Esiste un carattere fisico EOF necessariamente scritto alla fine di ogni file su disco?",
+      "hint": "La fine del file è considerata lo stato in cui si raggiunge il limite del numero di byte, non un byte di dati speciale.",
+      "options": [
+        "No, EOF è uno stato speciale e una costante negativa (di solito -1) restituita dalle funzioni quando si tenta di leggere oltre l'ultimo byte",
+        "Sì, alla fine di ogni file il sistema operativo scrive un byte speciale con valore 0xFF"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nei sistemi operativi moderni non esiste un byte 'marcatore EOF' nel file stesso. La fine del file è determinata dalla sua dimensione nel file system, e `EOF` è un indicatore restituito dalle funzioni di lettura.",
+        "Errato. Il byte `0xFF` può essere un valore di dato valido nei file binari."
+      ]
+    },
+    {
+      "id": "it_clang_2546",
+      "widget_id": "widget_clang_2546",
+      "topic": "Scrittura diretta di byte grezzi su file",
+      "q": "Quanti byte e con quali valori verranno scritti nel file dalla funzione write_data()?",
+      "hint": "La funzione fwrite riceve il numero di elementi e la dimensione di ciascun elemento in byte.",
+      "options": [
+        "3 byte con i valori 0x41, 0x42, 0x43 (i caratteri 'A', 'B', 'C')",
+        "1 byte",
+        "6 byte",
+        "12 byte",
+        "0 byte",
+        "256 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'array contiene 3 elementi di tipo `unsigned char` (dimensione 1 byte ciascuno). `fwrite` scriverà esattamente questi 3 byte grezzi (`0x41`, `0x42`, `0x43`).",
+        "Errato. Il conteggio degli elementi passato è `3`.",
+        "Errato. La dimensione dell'array è di 3 byte (`1 * 3`).",
+        "Errato. Il tipo `char` ha dimensione 1 byte.",
+        "Errato. La funzione eseguirà la scrittura di 3 byte.",
+        "Errato. La scrittura avviene esattamente secondo la dimensione dell'array."
+      ]
+    },
+    {
+      "id": "it_clang_2547",
+      "widget_id": null,
+      "topic": "Salvataggio di strutture dati complesse in un file binario",
+      "q": "In quale forma viene salvata una struttura C in un file binario alla chiamata di fwrite(&s, sizeof(s), 1, f)?",
+      "hint": "La funzione fwrite legge i byte della struttura dalla memoria RAM 'così come sono'.",
+      "options": [
+        "Come dump esatto dei byte di memoria della struttura, compresi i byte di allineamento (padding)",
+        "Come testo formattato in formato JSON o XML",
+        "Come elenco di nomi e tipi dei campi con i relativi valori"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `fwrite()` crea una copia binaria dell'area di memoria a cui punta la struttura. Se tra i campi sono presenti byte di allineamento (padding), anch'essi verranno scritti su file.",
+        "Errato. `fwrite()` non esegue alcuna serializzazione testuale in JSON/XML.",
+        "Errato. I nomi dei campi non vengono salvati nella rappresentazione binaria compilata."
+      ]
+    },
+    {
+      "id": "it_clang_2548",
+      "widget_id": "widget_clang_2548",
+      "topic": "Elaborazione byte per byte di un file in modalità binaria",
+      "q": "Come stamperà la funzione read_binary il contenuto di un file aperto in modalità binaria (\"rb\")?",
+      "hint": "Lo specificatore %02X stampa il valore intero di un byte come numero esadecimale a due cifre.",
+      "options": [
+        "Come una sequenza di valori esadecimali dei byte senza la loro interpretazione testuale",
+        "Come caratteri ASCII",
+        "Come numeri decimali con virgola",
+        "Il programma terminerà con un errore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il codice legge il file byte per byte e stampa ciascun byte come valore esadecimale `%02X` (ad esempio, `41 42 0A`).",
+        "Errato. Per gli ASCII verrebbe utilizzato lo specificatore `%c`.",
+        "Errato. `%02X` formatta i numeri in base esadecimale.",
+        "Errato. La chiamata è completamente corretta."
+      ]
+    },
+    {
+      "id": "it_clang_2549",
+      "widget_id": null,
+      "topic": "Differenza tra file di testo e binari a livello di byte",
+      "q": "Qual è la differenza tra un file di testo e un file binario a livello fisico di memorizzazione dei byte su disco?",
+      "hint": "Entrambi i tipi di file sono costituiti da byte; la differenza risiede nel modo in cui tali byte vengono interpretati dal programma.",
+      "options": [
+        "Fisicamente non c'è differenza — entrambi sono sequenze di byte, ma in un file di testo i byte vengono interpretati come caratteri di una codifica (ASCII, UTF-8)",
+        "I file di testo vengono salvati su disco, mentre i file binari risiedono solo nella RAM"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Sul disco rigido tutti i file sono semplicemente array di byte. Un file di testo si distingue solo perché i suoi byte corrispondono a caratteri stampabili e segni di controllo.",
+        "Errato. Sia i file di testo che quelli binari sono memorizzati fisicamente su supporto di memoria su disco."
+      ]
+    },
+    {
+      "id": "it_clang_2550",
+      "widget_id": "widget_clang_2550",
+      "topic": "Accesso casuale ai byte di un file tramite offset",
+      "q": "Quale byte legge e stampa esattamente la funzione read_at_offset(FILE *f)?",
+      "hint": "L'offset SEEK_SET con valore 5 sposta il cursore al 6° byte del file (poiché l'indicizzazione dei byte parte da 0).",
+      "options": [
+        "Il 6° byte del file (situato a offset 5 dall'inizio)",
+        "Il 5° byte del file (a offset 4)",
+        "Il 1° byte del file",
+        "L'ultimo byte del file",
+        "Un byte casuale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'offset `0` in `SEEK_SET` corrisponde al 1° byte (indice 0). L'offset `5` sposta il puntatore al 6° byte del file.",
+        "Errato. Il 5° byte ha offset `4`.",
+        "Errato. Il 1° byte ha offset `0`.",
+        "Errato. La fine del file è specificata relativamente a `SEEK_END`.",
+        "Errato. Il posizionamento avviene esattamente in base al valore 5 passato."
+      ]
+    },
+    {
+      "id": "it_clang_2551",
+      "widget_id": "widget_clang_2551",
+      "topic": "Verifica del puntatore FILE* su NULL dopo fopen()",
+      "q": "Cosa stamperà il programma se si tenta di aprire un file inesistente in modalità lettura (\"r\")?",
+      "hint": "La funzione fopen() restituisce NULL se non riesce ad aprire il file specificato.",
+      "options": [
+        "Error",
+        "0",
+        "Segmentation Fault durante la chiamata a fopen"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché il file non esiste, `fopen()` restituirà `NULL`. La condizione `f == NULL` diventa vera e il programma stamperà `Error`.",
+        "Errato. Il programma stamperà ciò che è specificato nel ramo `if (f == NULL)`.",
+        "Errato. La funzione `fopen()` è sicura e restituisce `NULL` invece di andare in crash."
+      ]
+    },
+    {
+      "id": "it_clang_2552",
+      "widget_id": null,
+      "topic": "Concetto di struttura opaca (opaque structure) FILE",
+      "q": "Cos'è il tipo di dati FILE dal punto di vista dello standard del linguaggio C?",
+      "hint": "Pensa se lo standard C garantisca la stessa composizione dei campi del tipo FILE su compilatori diversi.",
+      "options": [
+        "Una struttura opaca (opaque structure) i cui dettagli di implementazione sono nascosti e accessibili solo tramite le funzioni della libreria stdio.h",
+        "Un tipo di dati primitivo integrato standard come int o char",
+        "Un puntatore a un array di stringhe contenente il contenuto del file",
+        "Un descrittore di file di sistema di tipo int"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `FILE` è un tipo di dati strutturato i cui campi interni dipendono dalla specifica implementazione del C Runtime. Ad esso si accede esclusivamente tramite il puntatore `FILE*` e le funzioni di `<stdio.h>`.",
+        "Errato. `FILE` non è un tipo di dati primitivo del linguaggio.",
+        "Errato. `FILE` memorizza lo stato dello stream di file, non un array di testo.",
+        "Errato. Il descrittore di file `int` viene utilizzato nell'I/O POSIX (`open`/`read`), mentre `FILE` è una struttura che lo avvolge."
+      ]
+    },
+    {
+      "id": "it_clang_2553",
+      "widget_id": "widget_clang_2553",
+      "topic": "Passaggio di NULL a funzioni di input-output",
+      "q": "A cosa porterà il passaggio di un puntatore f con valore NULL alla funzione fgetc(f)?",
+      "hint": "Il passaggio di un puntatore nullo alle funzioni di I/O standard porta all'arresto anomalo.",
+      "options": [
+        "A un comportamento indefinito / errore di segmentazione (Segmentation Fault)",
+        "La funzione restituirà in modo sicuro EOF e continuerà l'esecuzione",
+        "Il compilatore bloccherà la build in fase di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `fgetc` tenta di dereferenziare il puntatore passato. Il tentativo di dereferenziare `NULL` causa il crash del programma (Segmentation Fault).",
+        "Errato. Per motivi di prestazioni, le funzioni standard della libreria C non controllano se l'argomento è `NULL` al loro interno.",
+        "Errato. Il passaggio di `NULL` è sintatticamente valido, quindi l'errore si verificherà a tempo di esecuzione (runtime)."
+      ]
+    },
+    {
+      "id": "it_clang_2554",
+      "widget_id": "widget_clang_2554",
+      "topic": "Accesso a FILE* dopo la chiamata a fclose()",
+      "q": "Cosa succederà alla chiamata fputs(\"Hello\", f) DOPO che il file è stato chiuso tramite fclose(f)?",
+      "hint": "La chiamata a fclose() libera le risorse dello stream, rendendo il puntatore f non valido (dangling pointer).",
+      "options": [
+        "Comportamento indefinito (Undefined Behavior) dovuto all'accesso a uno stream di file chiuso",
+        "Il file si riaprirà automaticamente e scriverà la stringa",
+        "La stringa verrà scritta nello stream standard stdout",
+        "La funzione restituirà 0 e ignorerà la scrittura"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Dopo `fclose(f)`, il puntatore `f` fa riferimento a memoria liberata. L'accesso a un `FILE*` chiuso costituisce un comportamento indefinito.",
+        "Errato. `fclose()` interrompe completamente la connessione con il file.",
+        "Errato. La scrittura su `stdout` avviene solo tramite funzioni di output esplicite verso `stdout`.",
+        "Errato. La funzione non garantisce di ignorare in modo sicuro un puntatore non valido."
+      ]
+    },
+    {
+      "id": "it_clang_2555",
+      "widget_id": "widget_clang_2555",
+      "topic": "Passaggio di FILE* come argomento di funzione",
+      "q": "Lo stato del file cambierà quando si passa il puntatore FILE *fp alla funzione write_header(FILE *fp)?",
+      "hint": "Il puntatore viene passato per valore (viene copiata l'indirizzo stesso), ma punta alla stessa struttura del file.",
+      "options": [
+        "Sì, la stringa verrà scritta nel file poiché viene passata una copia dell'indirizzo della stessa struttura di file",
+        "No, la funzione riceverà una copia della struttura di file e i dati andranno persi",
+        "Si verificherà un errore di compilazione poiché FILE* non può essere passato alle funzioni",
+        "La scrittura avverrà in un buffer temporaneo e verrà sovrascritta all'uscita dalla funzione",
+        "Il file verrà chiuso automaticamente all'uscita dalla funzione write_header"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `FILE *` viene passato per valore, cioè viene copiato il puntatore (indirizzo). Entrambi i puntatori fanno riferimento alla stessa struttura in memoria, quindi i dati verranno scritti con successo.",
+        "Errato. Viene copiato solo il puntatore alla struttura, non l'intera struttura.",
+        "Errato. Il passaggio di `FILE*` alle funzioni è una pratica standard in C.",
+        "Errato. La scrittura avviene direttamente nel buffer dello stream di file specificato.",
+        "Errato. La chiusura del file avviene solo con la chiamata esplicita a `fclose()`."
+      ]
+    },
+    {
+      "id": "it_clang_2556",
+      "widget_id": null,
+      "topic": "Contenuto interno della struttura FILE",
+      "q": "Quali informazioni memorizza concettualmente la struttura FILE nella libreria C?",
+      "hint": "Pensa a quali dati sono necessari alla libreria per gestire lo stato di uno stream di dati.",
+      "options": [
+        "La posizione corrente (cursore), il buffer di I/O, gli indicatori di errore/EOF e il descrittore di file di sistema",
+        "Solo il nome del file e il suo percorso nel file system",
+        "Una copia completa di tutti i byte del file nella memoria RAM",
+        "La tabella di tutte le funzioni del programma",
+        "I permessi di accesso dell'utente corrente del SO"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La struttura `FILE` contiene puntatori al buffer, l'offset corrente nel buffer e nel file, i flag `feof`/`ferror` e il descrittor di file del SO.",
+        "Errato. Di solito il nome del file non viene memorizzato nella struttura `FILE`.",
+        "Errato. Il buffer ha una dimensione fissa limitata (ad esempio 4 KB o 8 KB).",
+        "Errato. La struttura `FILE` non è correlata al codice delle funzioni del programma.",
+        "Errato. I permessi di accesso vengono controllati dal SO alla chiamata di `fopen()`."
+      ]
+    },
+    {
+      "id": "it_clang_2557",
+      "widget_id": "widget_clang_2557",
+      "topic": "Riutilizzo di una variabile di tipo FILE*",
+      "q": "È ammissibile riutilizzare la stessa variabile puntatore FILE *f per aprire un altro file dopo fclose(f)?",
+      "hint": "La funzione fclose() chiude lo stream corrente, rendendo il puntatore libero di salvare un nuovo indirizzo da fopen().",
+      "options": [
+        "Sì, è assolutamente corretto e sicuro dopo aver chiuso il file precedente",
+        "No, la variabile di tipo FILE* diventa una costante dopo il primo fopen()",
+        "Sì, ma solo se il secondo file ha esattamente lo stesso nome"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `f` è una normale variabile puntatore. Dopo aver chiuso lo stream precedente tramite `fclose(f)`, ad essa può essere assegnato il risultato di una nuova chiamata a `fopen()`.",
+        "Errato. Il puntatore `f` non è costante, a meno che non sia dichiarato con il modificatore `const`.",
+        "Errato. Il riutilizzo della variabile è consentito per qualsiasi file."
+      ]
+    },
+    {
+      "id": "it_clang_2558",
+      "widget_id": null,
+      "topic": "Gestione della memoria per la struttura FILE",
+      "q": "Chi alloca e libera la memoria per la struttura FILE durante l'utilizzo dei file in C?",
+      "hint": "Ricorda se il programmatore deve usare manualmente malloc() o free() per la struttura FILE.",
+      "options": [
+        "La memoria viene allocata dalla funzione fopen() e liberata dalla funzione fclose()",
+        "Il programmatore è tenuto ad allocare manualmente la memoria tramite malloc() prima di chiamare fopen()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Dell'allocazione e dell'inizializzazione della struttura `FILE` si occupa la funzione `fopen()`, mentre `fclose()` libera tali risorse.",
+        "Errato. Il programmatore non deve allocare memoria per `FILE` manualmente."
+      ]
+    },
+    {
+      "id": "it_clang_2559",
+      "widget_id": "widget_clang_2559",
+      "topic": "Apertura parallela dello stesso file tramite due puntatori FILE*",
+      "q": "Cosa stamperà il programma se lo stesso file viene aperto due volte in due puntatori diversi f1 e f2?",
+      "hint": "Ogni chiamata a fopen() crea un'istanza indipendente della struttura FILE con il proprio puntatore di posizione.",
+      "options": [
+        "1 0",
+        "1 1",
+        "0 0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `f1` e `f2` sono due stream diversi. La chiamata a `fgetc(f1)` sposta il cursore in `f1` di 1 byte (`ftell(f1) == 1`). Il cursore in `f2` rimane a 0 byte (`ftell(f2) == 0`).",
+        "Errato. La lettura da `f1` non modifica il cursore di file dello stream `f2`.",
+        "Errato. La posizione di `f1` si è spostata dopo la chiamata a `fgetc(f1)`.",
+        "Errato. Il codice è scritto senza errori."
+      ]
+    },
+    {
+      "id": "it_clang_2560",
+      "widget_id": null,
+      "topic": "Motivo del divieto di accesso diretto ai campi della struttura FILE",
+      "q": "Perché non si dovrebbe accedere direttamente ai campi interni della struttura FILE (ad esempio f->_ptr o f->_flags)?",
+      "hint": "La struttura FILE dipende dalla specifica implementazione del C Runtime sulla piattaforma di destinazione.",
+      "options": [
+        "Ciò viola la portabilità del codice (portability), poiché i nomi e la composizione dei campi variano tra compilatori e SO",
+        "L'accesso diretto causa un danno hardware al supporto di memoria",
+        "Il linguaggio C vieta sintatticamente di accedere ai campi delle strutture tramite puntatore",
+        "Questo elimina automaticamente il file dal disco",
+        "Questo riduce la velocità di lavoro del processore",
+        "Questo causa un errore di traduzione del compilatore in C++"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'implementazione di `FILE` varia tra glibc, MSVC CRT, Musl e altre librerie. L'uso delle funzioni API (`feof`, `ferror`, `ftell`) garantisce la portabilità.",
+        "Errato. La violazione dell'incapsulamento è un problema di compatibilità del codice, non dell'hardware.",
+        "Errato. La sintassi `->` è consentita in C, ma i campi della struttura `FILE` sono considerati privati/dettagli di implementazione.",
+        "Errato. La lettura dei campi non elimina i file.",
+        "Errato. La velocità di esecuzione non dipende da questo.",
+        "Errato. Questa regola si applica sia al C che al C++."
+      ]
+    }
+  ]
+}

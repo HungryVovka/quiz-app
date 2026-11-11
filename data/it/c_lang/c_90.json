@@ -1,0 +1,593 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2741",
+      "widget_id": "widget_clang_2741",
+      "topic": "Impostazione di un breakpoint sulla funzione main()",
+      "q": "Cosa succede quando si imposta un punto di interruzione con il comando break main e successivamente si avvia il programma con il comando run?",
+      "hint": "Pensa in quale punto del programma scatta la prima pausa automatica del debugger.",
+      "options": [
+        "L'esecuzione del programma viene sospesa alla prima riga eseguibile all'interno della funzione main()",
+        "Il programma termina immediatamente con codice 0",
+        "Il debugger riavvia il sistema operativo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `break main` imposta un punto di interruzione sulla prima istruzione del corpo di `main()`, trasferendo il controllo al debugger non appena vi si entra.",
+        "Errato. L'impostazione di un punto di interruzione non termina l'esecuzione del programma.",
+        "Errato. GDB è un'utility utente isolata e non riavvia il sistema operativo."
+      ]
+    },
+    {
+      "id": "it_clang_2742",
+      "widget_id": null,
+      "topic": "Il comando start come combinazione rapida di tbreak main + run",
+      "q": "Quale comando integrato di GDB è l'equivalente della sequenza tbreak main e run?",
+      "hint": "Questo comando consente di avviare rapidamente il programma e arrestarlo subito all'inizio della funzione main().",
+      "options": [
+        "start",
+        "init",
+        "begin",
+        "launch"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `start` crea un punto di interruzione temporaneo su `main()` e avvia il programma (`run`), arrestandosi automaticamente alla prima riga di `main()`.",
+        "Errato. Il comando `init` non esiste in GDB.",
+        "Errato. Il comando `begin` non è utilizzato nella sintassi di GDB.",
+        "Errato. `launch` non è un comando standard di GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2743",
+      "widget_id": "widget_clang_2743",
+      "topic": "Visualizzazione degli argomenti di main() all'arresto su break main",
+      "q": "Se ci si arresta su break main nel programma indicato e si esegue il comando info args, cosa mostrerà il debugger?",
+      "hint": "Questo comando mostra i valori dei parametri in ingresso della funzione corrente.",
+      "options": [
+        "I nomi e i valori correnti degli argomenti argc e argv",
+        "Solo le variabili locali dichiarate all'interno di main",
+        "L'indirizzo di memoria della funzione di sistema printf",
+        "L'elenco di tutte le librerie dinamiche collegate",
+        "La dimensione del file binario eseguibile su disco"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché il programma è sospeso nel contesto di `main(int argc, char *argv[])`, il comando `info args` mostrerà il numero di argomenti passati e il puntatore all'array di stringhe.",
+        "Errato. Le variabili locali si visualizzano con il comando `info locals`.",
+        "Errato. Gli indirizzi delle funzioni si controllano tramite `print` o `info functions`.",
+        "Errato. Le librerie si visualizzano utilmente tramite `info sharedlibrary`.",
+        "Errato. `info args` funziona esclusivamente con i parametri delle funzioni."
+      ]
+    },
+    {
+      "id": "it_clang_2744",
+      "widget_id": null,
+      "topic": "Esecuzione degli inizializzatori (constructors) PRIMA di break main",
+      "q": "Una funzione con l'attributo __attribute__((constructor)) verrà eseguita PRIMA che il programma si arresti sul punto di interruzione break main?",
+      "hint": "I costruttori di C Runtime vengono chiamati dal sistema prima di passare il controllo al punto di ingresso main().",
+      "options": [
+        "Sì, la funzione costruttore verrà eseguita prima dell'arresto su break main",
+        "No, il punto di interruzione break main blocca assolutamente tutto il codice del programma, compresa la fase di inizializzazione CRT"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le funzioni costruttore vengono chiamate dalla sezione `.init` / `.ctors` durante l'inizializzazione del C Runtime prima della chiamata a `main()`, quindi `break main` non ne interromperà l'esecuzione.",
+        "Errato. `break main` scatta solo all'ingresso di `main()`, pertanto gli inizializzatori avranno il tempo di essere eseguiti prima."
+      ]
+    },
+    {
+      "id": "it_clang_2745",
+      "widget_id": "widget_clang_2745",
+      "topic": "Differenza tra break main e tbreak main",
+      "q": "Qual è la differenza principale tra i comandi break main e tbreak main?",
+      "hint": "Fai attenzione alla lettera 't' nel nome del comando tbreak (temporary).",
+      "options": [
+        "tbreak main viene rimosso automaticamente dopo la prima attivazione, mentre break main rimane attivo a ogni successiva esecuzione di run",
+        "break main funziona solo per i programmi in C, mentre tbreak main solo per C++",
+        "tbreak main arresta il programma sull'ultima riga di main(), mentre break main sulla prima",
+        "break main richiede il flag di ottimizzazione -O3, mentre tbreak main il flag -O0",
+        "tbreak main non può essere disattivato con il comando disable",
+        "Non c'è assolutamente alcuna differenza tra di essi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `tbreak` imposta un punto di interruzione temporaneo (temporary). Quando il programma raggiunge `main()`, il punto scatta e viene immediatamente rimosso dall'elenco.",
+        "Errato. Entrambi i comandi sono universali per C e C++.",
+        "Errato. Entrambi i punti di interruzione scattano all'ingresso in `main()`.",
+        "Errato. Il funzionamento dei punti di interruzione non dipende dal livello di ottimizzazione `-O`.",
+        "Errato. `disable` funziona su qualsiasi punto di interruzione.",
+        "Errato. La differenza risiede nella rimozione automatica dopo la prima attivazione."
+      ]
+    },
+    {
+      "id": "it_clang_2746",
+      "widget_id": null,
+      "topic": "Salto del prologo della funzione nell'impostazione di break main",
+      "q": "Perché durante l'esecuzione di break main il debugger si arresta sulla prima riga del corpo di main() anziché sulla riga dell'intestazione int main(void)?",
+      "hint": "La riga di dichiarazione e l'intestazione non generano istruzioni eseguibili in codice assembly.",
+      "options": [
+        "GDB salta automaticamente il prologo della funzione e si arresta prima della prima istruzione di codice realmente eseguibile",
+        "Si tratta di un errore del compilatore GCC durante la generazione delle tabelle DWARF",
+        "GDB non è in grado di leggere le righe di intestazione dei file C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il prologo della funzione prepara il frame dello stack. GDB individua i limiti del prologo e arresta il programma prima della prima istruzione del codice sorgente dell'utente.",
+        "Errato. Si tratta di un comportamento regolare e standard per facilitare il debugging.",
+        "Errato. GDB esegue il parsing corretto delle strutture del file sorgente."
+      ]
+    },
+    {
+      "id": "it_clang_2747",
+      "widget_id": "widget_clang_2747",
+      "topic": "Comportamento di info args con la firma main(void)",
+      "q": "Se la funzione è dichiarata come int main(void), cosa restituirà il comando info args all'arresto su break main?",
+      "hint": "La parola chiave void indica esplicitamente l'assenza di parametri in ingresso.",
+      "options": [
+        "No arguments.",
+        "argc = 0, argv = NULL",
+        "Error: main has no signature",
+        "Segmentation fault"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché la funzione `main(void)` non ha argomenti, GDB mostrerà il messaggio `No arguments.`.",
+        "Errato. `argc` e `argv` non sono stati dichiarati nella firma, quindi i loro nomi non sono presenti nel frame.",
+        "Errato. Non si verificano errori di firma.",
+        "Errato. Non si verifica alcun Segmentation Fault durante questa chiamata."
+      ]
+    },
+    {
+      "id": "it_clang_2748",
+      "widget_id": null,
+      "topic": "Esecuzione del codice di avvio del C Runtime (_start) prima di main()",
+      "q": "Il punto di ingresso di sistema _start (C Runtime startup) viene eseguito all'avvio del programma se in GDB è impostato un punto di interruzione break main?",
+      "hint": "La funzione _start prepara l'ambiente del processo prima di passare il controllo alla funzione main().",
+      "options": [
+        "Sì, il punto di ingresso _start e il codice di inizializzazione CRT verranno eseguiti prima di passare il controllo a main()",
+        "No, break main costringe il programma a saltare _start e a iniziare l'esecuzione direttamente da main()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il processo viene avviato dal sistema operativo a partire dal punto `_start`. Solo dopo aver completato l'inizializzazione primaria del CRT il controllo arriva a `main()`, dove scatta il punto di interruzione.",
+        "Errato. È impossibile saltare `_start`, poiché è proprio questo codice a inizializzare lo stack e l'ambiente per `main()`."
+      ]
+    },
+    {
+      "id": "it_clang_2749",
+      "widget_id": "widget_clang_2749",
+      "topic": "Intercettazione dell'esecuzione prima di main() tramite funzioni costruttore",
+      "q": "Se nel programma è presente una funzione costruttore init, il breakpoint impostato con il comando break init scatterà PRIMA di arrivare a main?",
+      "hint": "Ricorda l'ordine di chiamata delle funzioni con l'attributo __attribute__((constructor)).",
+      "options": [
+        "Sì, il debugger arresterà il programma nella funzione init prima di passare a main()",
+        "No, GDB ignorerà il costruttore e arresterà il programma solo in main()",
+        "Il programma fallirà con un errore di collisione dei punti di interruzione",
+        "La funzione init non verrà eseguita affatto",
+        "break init rimuoverà il punto di interruzione break main"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `init` viene chiamata durante la fase di inizializzazione del CRT prima di `main()`, `break init` intercetterà con successo il controllo per primo.",
+        "Errato. GDB si arresta su qualsiasi punto di interruzione impostato a mano a mano che viene raggiunto.",
+        "Errato. Non si verificherà alcuna collisione impostando breakpoint differenti.",
+        "Errato. L'esecuzione dei costruttori da parte del codice di avvio è garantita.",
+        "Errato. L'impostazione di un punto di interruzione non influisce in alcun modo sugli altri."
+      ]
+    },
+    {
+      "id": "it_clang_2750",
+      "widget_id": null,
+      "topic": "Automazione dei comandi al raggiungimento di un breakpoint (commands)",
+      "q": "Quale comando di GDB consente di definire un elenco di azioni da eseguire automaticamente (ad esempio print x e continue) ogni volta che ci si arresta su un breakpoint?",
+      "hint": "Si utilizza una parola chiave per assegnare uno script al numero del punto di interruzione.",
+      "options": [
+        "commands <id_breakpoint>",
+        "auto <id_breakpoint>",
+        "script <id_breakpoint>"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La struttura `commands <id>` definisce un elenco di comandi GDB che verranno richiamati automaticamente subito dopo l'attivazione del punto di interruzione specificato.",
+        "Errato. Il comando `auto` per associare azioni non esiste in GDB.",
+        "Errato. `script` non è un comando per associare azioni a un breakpoint."
+      ]
+    },
+    {
+      "id": "it_clang_2751",
+      "widget_id": "widget_clang_2751",
+      "topic": "Riabilitazione di un punto di interruzione disattivato (enable)",
+      "q": "Quale comando permette di riattivare un punto di interruzione temporaneamente disattivato (disabled) con numero 2?",
+      "hint": "Il comando è opposto nel significato a disable.",
+      "options": [
+        "enable 2",
+        "activate 2",
+        "unhide 2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `enable 2` (o `en 2`) riporta il punto di interruzione con ID 2 dallo stato disabled allo stato attivo.",
+        "Errato. Il comando `activate` non esiste in GDB.",
+        "Errato. `unhide` non viene utilizzato per controllare lo stato dei punti di interruzione."
+      ]
+    },
+    {
+      "id": "it_clang_2752",
+      "widget_id": null,
+      "topic": "Ignorare le attivazioni di un punto di interruzione (ignore)",
+      "q": "Quale comando permette di far sì che il punto di interruzione con ID 1 venga ignorato dal debugger per le prime 50 volte in cui viene raggiunto?",
+      "hint": "Utilizza la parola chiave ignore specificando l'ID del punto di interruzione e il numero di volte da ignorare.",
+      "options": [
+        "ignore 1 50",
+        "skip 1 50",
+        "pass 1 50",
+        "disable 1 50",
+        "break 1 --ignore 50"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `ignore <ID> <count>` imposta un contatore di tentativi da ignorare. Il punto di interruzione scatterà solo alla 51ª volta.",
+        "Errato. Il comando `skip` serve a saltare l'esecuzione passo-passo di determinate funzioni o file.",
+        "Errato. Il comando `pass` non esiste nella sintassi di GDB.",
+        "Errato. `disable` non accetta il numero di tentativi da ignorare e disattiva completamente il punto di interruzione.",
+        "Errato. L'opzione `--ignore` non viene passata all'interno della chiamata del comando `break`."
+      ]
+    },
+    {
+      "id": "it_clang_2753",
+      "widget_id": "widget_clang_2753",
+      "topic": "Impostazione di una condizione su un breakpoint esistente (condition)",
+      "q": "Come si aggiunge la condizione x == 10 a un punto di interruzione già esistente con ID 3 senza eliminarlo e ricrearlo?",
+      "hint": "Il comando inizia con la parola condition, seguita dall'ID del punto di interruzione e dall'espressione logica.",
+      "options": [
+        "condition 3 x == 10",
+        "set condition 3 x == 10",
+        "break 3 if x == 10",
+        "modify 3 condition x == 10"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `condition <ID> <espressione>` applica una condizione logica a un punto di interruzione già esistente.",
+        "Errato. Il prefisso `set` non è richiesto per il comando `condition`.",
+        "Errato. La chiamata `break 3 if ...` tenterà di impostare un *nuovo* punto di interruzione alla riga 3 anziché modificare l'ID 3.",
+        "Errato. Il comando `modify` non esiste in GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2754",
+      "widget_id": null,
+      "topic": "Rimozione di più breakpoint tramite un intervallo di numeri",
+      "q": "Quale comando in GDB consente di eliminare contemporaneamente i punti di interruzione con ID progressivi 2, 3 e 4?",
+      "hint": "Nel comando delete è possibile specificare un intervallo di numeri tramite trattino.",
+      "options": [
+        "delete 2-4",
+        "delete 2..4",
+        "remove breakpoints 2 to 4",
+        "clear 2-4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `delete 2-4` (o `d 2-4`) accetta un intervallo ed elimina tutti i punti di interruzione da 2 a 4 inclusi.",
+        "Errato. La sintassi con i due punti `2..4` non è supportata dal comando `delete`.",
+        "Errato. La struttura `remove breakpoints` non è corretta.",
+        "Errato. Il comando `clear` richiede come argomenti numeri di riga o nomi di funzione, non gli ID della tabella `info b`."
+      ]
+    },
+    {
+      "id": "it_clang_2755",
+      "widget_id": null,
+      "topic": "Rimozione di una condizione da un punto di interruzione (condition ID)",
+      "q": "Come si rimuove e si azzera completamente una condizione impostata in precedenza sul punto di interruzione con ID 2, rendendolo di nuovo incondizionato?",
+      "hint": "Esegui il comando condition con l'ID del punto di interruzione senza specificare alcuna espressione.",
+      "options": [
+        "condition 2",
+        "uncondition 2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `condition 2` senza argomenti di espressione rimuove la condizione associata al punto di interruzione ID 2, trasformandolo in un normale breakpoint.",
+        "Errato. Il comando `uncondition` non esiste nel debugger GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2756",
+      "widget_id": "widget_clang_2756",
+      "topic": "Differenza tra delete e clear",
+      "q": "Quali sono le differenze nell'applicazione dei comandi delete 15 e clear 15?",
+      "hint": "Un comando opera sull'ID progressivo dall'elenco info breakpoints, mentre l'altro sul numero di riga del file sorgente.",
+      "options": [
+        "delete 15 rimuove il punto di interruzione con ID 15, mentre clear 15 rimuove i punti di interruzione impostati sulla riga 15 del file",
+        "clear 15 azzera il valore della variabile alla riga 15, mentre delete 15 elimina il file",
+        "Entrambi i comandi sono sinonimi assolutamente intercambiabili"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `delete` lavora con il numero di breakpoint (ID) nella tabella `info b`, mentre `clear` lavora con la posizione nel codice (numero di riga, nome della funzione).",
+        "Errato. Né `clear` né `delete` modificano file o variabili.",
+        "Errato. Gli argomenti dei comandi vengono interpretati in modo completamente diverso."
+      ]
+    },
+    {
+      "id": "it_clang_2757",
+      "widget_id": null,
+      "topic": "Salvataggio della configurazione dei punti di interruzione in un file",
+      "q": "Quale comando permette di salvare tutti i punti di interruzione impostati nella sessione corrente nel file bpts.gdb per poterli riutilizzare?",
+      "hint": "Utilizza un comando della famiglia 'save'.",
+      "options": [
+        "save breakpoints bpts.gdb",
+        "export breakpoints bpts.gdb",
+        "dump breakpoints bpts.gdb",
+        "write breakpoints bpts.gdb",
+        "store breakpoints bpts.gdb",
+        "backup breakpoints bpts.gdb"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `save breakpoints <filename>` scrive l'elenco dei comandi di impostazione dei breakpoint correnti in un file di script di testo.",
+        "Errato. Il comando `export` non viene utilizzato per salvare i punti di interruzione.",
+        "Errato. `dump` si applica per salvare i dump della memoria RAM in un file.",
+        "Errato. Il comando `write breakpoints` non esiste in GDB.",
+        "Errato. `store` non è un comando di GDB.",
+        "Errato. `backup` non viene usato in GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2758",
+      "widget_id": null,
+      "topic": "Abilitazione singola di un punto di interruzione (enable once)",
+      "q": "Quale comando abilita un punto di interruzione 1 disattivato per una sola ed esattamente successiva attivazione, dopodiché viene di nuovo disattivato (disabled) automaticamente?",
+      "hint": "Completa il comando enable con la sotto-modalità speciale once.",
+      "options": [
+        "enable once 1",
+        "enable temp 1",
+        "set enable 1 count=1",
+        "enable 1 --once"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `enable once <ID>` attiva il punto di interruzione solo fino alla sua prima attivazione, dopodiché ne ripristina lo stato a disabled.",
+        "Errato. `enable temp` si attiverà ed eliminerà per sempre il punto di interruzione (`delete`), anziché portarlo a disabled.",
+        "Errato. La struttura `set enable` non è corretta.",
+        "Errato. Il flag `--once` non viene utilizzato in questo modo."
+      ]
+    },
+    {
+      "id": "it_clang_2759",
+      "widget_id": "widget_clang_2759",
+      "topic": "Visualizzazione delle informazioni su un breakpoint specifico",
+      "q": "Quale comando mostrerà le informazioni dettagliate unicamente per il punto di interruzione con numero progressivo 4 (contatore di passaggi, condizione, funzione associata)?",
+      "hint": "Il comando info breakpoints è in grado di accettare l'ID di uno specifico punto di interruzione come argomento.",
+      "options": [
+        "info break 4",
+        "show break 4",
+        "print break 4",
+        "inspect breakpoint 4",
+        "details break 4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiamata `info break 4` (o `info b 4`) mostrerà le informazioni dettagliate esclusivamente sul punto di interruzione con ID 4.",
+        "Errato. Il comando `show` mostra i parametri del debugger GDB stesso.",
+        "Errato. `print` valuta e mostra i valori delle espressioni C.",
+        "Errato. `inspect` non si usa per visualizzare lo stato dei breakpoint.",
+        "Errato. Il comando `details` non esiste."
+      ]
+    },
+    {
+      "id": "it_clang_2760",
+      "widget_id": null,
+      "topic": "Caricamento ed esecuzione di uno script GDB con punti di interruzione",
+      "q": "Quale comando all'interno di una sessione interattiva di GDB esegue il file di comandi bpts.gdb (ad esempio per ripristinare i punti di interruzione salvati in precedenza)?",
+      "hint": "Si utilizza il comando 'source' per l'esecuzione di script GDB esterni.",
+      "options": [
+        "source bpts.gdb",
+        "load bpts.gdb",
+        "import bpts.gdb"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `source <filename>` legge ed esegue in sequenza i comandi GDB dal file specificato.",
+        "Errato. `load` viene utilizzato per il caricamento dei file binari sui dispositivi target nel debugging embedded.",
+        "Errato. Il comando `import` non è presente nella CLI standard di GDB (sebbene sia disponibile nell'interfaccia Python)."
+      ]
+    },
+    {
+      "id": "it_clang_2761",
+      "widget_id": "widget_clang_2761",
+      "topic": "Uso base del comando watch",
+      "q": "Quale comando in GDB sospende l'esecuzione del programma nel momento in cui cambia il valore della variabile counter?",
+      "hint": "Utilizza il comando per la «messa sotto osservazione» (watch) del valore di un'espressione o di una variabile.",
+      "options": [
+        "watch counter",
+        "trace counter",
+        "check counter"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `watch counter` (o `wa counter`) crea un punto di osservazione che interrompe l'esecuzione del programma ogni volta che il valore della variabile viene modificato.",
+        "Errato. Il comando `trace` viene utilizzato nel contesto del tracciamento e della raccolta dati (tracepoints).",
+        "Errato. Il comando `check` per monitorare le variabili non esiste in GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2762",
+      "widget_id": null,
+      "topic": "Punto di osservazione in lettura (rwatch)",
+      "q": "Quale comando crea un punto di osservazione che scatta non alla modifica, ma a ogni LETTURA (accesso in lettura) del valore di una variabile?",
+      "hint": "Il nome del comando inizia con la parola watch preceduta dal prefisso 'r' (read).",
+      "options": [
+        "rwatch",
+        "readwatch",
+        "watch --read",
+        "checkread",
+        "getwatch"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `rwatch` (read watchpoint) sospende l'esecuzione del programma a qualsiasi tentativo di leggere dalla memoria il valore dell'espressione indicata.",
+        "Errato. Il comando `readwatch` non esiste.",
+        "Errato. Il flag `--read` non viene utilizzato con il comando `watch`.",
+        "Errato. Il comando `checkread` non è presente in GDB.",
+        "Errato. `getwatch` non è un comando valido in GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2763",
+      "widget_id": "widget_clang_2763",
+      "topic": "Punto di osservazione a qualsiasi accesso (awatch)",
+      "q": "In cosa differisce il comando awatch dai normali watch e rwatch?",
+      "hint": "Il simbolo 'a' indica access (accesso di qualsiasi tipo).",
+      "options": [
+        "Scatta sia in lettura che in scrittura (a qualsiasi accesso alla variabile)",
+        "Funziona solo per variabili locali automatiche nello stack",
+        "Scatta solo durante le chiamate asincrone ai segnali",
+        "Elimina automaticamente la variabile dalla memoria dopo la lettura"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `awatch` (access watchpoint) arresta il programma sia durante le operazioni di lettura (`rwatch`), sia durante le operazioni di scrittura (`watch`).",
+        "Errato. `awatch` funziona con qualsiasi indirizzo di memoria a prescindere dal tipo di allocazione.",
+        "Errato. I segnali non influiscono in alcun modo sul qualificatore `awatch`.",
+        "Errato. I punti di osservazione si limitano a monitorare gli accessi alla memoria e non eliminano nulla."
+      ]
+    },
+    {
+      "id": "it_clang_2764",
+      "widget_id": null,
+      "topic": "Watchpoint hardware e software",
+      "q": "Per quale motivo i punti di osservazione hardware (Hardware Watchpoint) funzionano molto più velocemente di quelli software (Software Watchpoint)?",
+      "hint": "Il supporto hardware al debugging è integrato nell'architettura del processore stesso (ad esempio i registri di debug DR0-DR7 in x86).",
+      "options": [
+        "Utilizzano speciali registri di debug del processore per controllare gli indirizzi senza rallentare l'esecuzione",
+        "Ricompilano il codice sorgente direttamente durante l'esecuzione inserendo funzioni di controllo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I watchpoint hardware usano le funzionalità della CPU (registri di debug). Quelli software costringono invece GDB a eseguire il programma passo-passo ricontrollando l'indirizzo a ogni passo, rallentando l'esecuzione di centinaia di volte.",
+        "Errato. GDB non ricompila il codice sorgente al volo."
+      ]
+    },
+    {
+      "id": "it_clang_2765",
+      "widget_id": "widget_clang_2765",
+      "topic": "Impostazione di un watchpoint su un puntatore dereferenziato",
+      "q": "Come si imposta un punto di osservazione sul valore in memoria puntato dal puntatore ptr (*ptr)?",
+      "hint": "Nell'argomento del comando watch è possibile specificare espressioni complete in linguaggio C.",
+      "options": [
+        "watch *ptr",
+        "watch ptr->val",
+        "watch &ptr",
+        "watch deref(ptr)",
+        "set watchpoint *ptr",
+        "watch address(ptr)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `watch *ptr` indica a GDB di tracciare le modifiche al valore nella cella di memoria all'indirizzo memorizzato in `ptr`.",
+        "Errato. La sintassi `ptr->val` è applicabile soltanto a puntatori a strutture/unioni.",
+        "Errato. `watch &ptr` traccerà le modifiche all'indirizzo stesso in cui risiede la variabile `ptr`, non il valore all'indirizzo.",
+        "Errato. La funzione `deref()` non esiste nella sintassi di valutazione delle espressioni di GDB.",
+        "Errato. Il comando si chiama `watch`, non `set watchpoint`.",
+        "Errato. `address()` è un operatore non valido per GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2766",
+      "widget_id": null,
+      "topic": "Uscita di una variabile dall'ambito di visibilità (Scope)",
+      "q": "Cosa succede a un punto di osservazione (watchpoint) impostato su una variabile locale quando il programma esce dall'ambito di visibilità (scope) di tale variabile?",
+      "hint": "Il frame dello stack viene distrutto e la variabile cessa di esistere in memoria.",
+      "options": [
+        "GDB elimina automaticamente questo watchpoint poiché la variabile è uscita dal contesto",
+        "Il programma termina immediatamente con Segmentation Fault",
+        "Il watchpoint rimane per sempre su quell'indirizzo di memoria tracciando qualsiasi altra variabile"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Non appena lo stack della funzione si svuota e la variabile esce dallo scope, GDB comunica «Watchpoint deleted because the frame has left the option context» e lo elimina automaticamente.",
+        "Errato. L'uscita dall'ambito di visibilità è una situazione regolare per il programma, non si verifica alcun Segmentation Fault.",
+        "Errato. GDB controlla i limiti del frame dello stack e non lascia watchpoint non validi su dati altrui."
+      ]
+    },
+    {
+      "id": "it_clang_2767",
+      "widget_id": "widget_clang_2767",
+      "topic": "Condizione per un punto di osservazione (condition + watch)",
+      "q": "Come si fa in modo che il punto di osservazione watch val scatti non a ogni modifica, ma soltanto quando val diventa maggiore di 50?",
+      "hint": "Al punto di osservazione (come ai normali breakpoint) si applicano le regole del comando condition.",
+      "options": [
+        "Impostare watch val e successivamente definire la condizione tramite condition <ID> val > 50",
+        "Scrivere watch val if > 50 in una sola riga",
+        "Utilizzare il comando watchval --limit 50",
+        "I punti di osservazione non supportano le condizioni logiche"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I punti di osservazione vengono inseriti nella stessa tabella dei breakpoint. Una volta ottenuto l'ID del watchpoint, è possibile associargli una condizione tramite `condition <ID> val > 50`.",
+        "Errato. La sintassi `watch val if ...` non è supportata durante la chiamata stessa di `watch` (a differenza di `break`).",
+        "Errato. Il comando `watchval` non esiste.",
+        "Errato. GDB supporta pienamente l'impostazione di condizioni su qualsiasi punto di osservazione."
+      ]
+    },
+    {
+      "id": "it_clang_2768",
+      "widget_id": null,
+      "topic": "Visualizzazione dell'elenco dei punti di osservazione",
+      "q": "Quale comando mostra un elenco unico di tutti i punti di interruzione e di osservazione (watchpoint) impostati?",
+      "hint": "In GDB i punti di osservazione vengono registrati in una tabella comune insieme ai normali breakpoint.",
+      "options": [
+        "info watchpoints (или info breakpoints)",
+        "show all-watches",
+        "list monitors",
+        "display watch",
+        "get points"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I comandi `info watchpoints` e `info breakpoints` mostreranno l'elenco completo di tutti i punti di interruzione e di osservazione registrati.",
+        "Errato. Il comando `show all-watches` non esiste.",
+        "Errato. `list` mostra il codice sorgente.",
+        "Errato. `display` aggiunge la stampa automatica dei valori a ogni passo.",
+        "Errato. `get points` è un comando non corretto."
+      ]
+    },
+    {
+      "id": "it_clang_2769",
+      "widget_id": "widget_clang_2769",
+      "topic": "Gestione dei watchpoint (delete e disable)",
+      "q": "Si utilizzano i comandi standard delete e disable per annullare e disattivare i punti di osservazione (watchpoint)?",
+      "hint": "Ricorda che ogni watchpoint riceve un proprio ID progressivo nella tabella comune con i breakpoint.",
+      "options": [
+        "Sì, il watchpoint si gestisce con i comandi delete <ID> e disable <ID> tramite il suo numero progressivo dalla tabella info watchpoints",
+        "No, per i watchpoint si usano comandi del tutto unici come unwatch e stopwatch"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché i watchpoint e i breakpoint condividono lo stesso registro degli identificatori, per disattivare o rimuovere i punti di osservazione si utilizzano gli stessi comandi `delete <ID>` e `disable <ID>`.",
+        "Errato. I comandi `unwatch` e `stopwatch` non esistono in GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2770",
+      "widget_id": null,
+      "topic": "Differenza fondamentale tra Breakpoint e Watchpoint",
+      "q": "Qual è la differenza fondamentale nel meccanismo di funzionamento tra un breakpoint e un watchpoint?",
+      "hint": "Un breakpoint è associato a una specifica istruzione/riga di codice, mentre un watchpoint traccia le modifiche a una specifica cella o area di memoria.",
+      "options": [
+        "Un breakpoint arresta il programma al raggiungimento di una determinata riga/istruzione nel codice, mentre un watchpoint all'atto della modifica o dell'accesso a determinati dati in memoria",
+        "Un breakpoint funziona solo in RAM, mentre un watchpoint solo su disco",
+        "Un watchpoint si può impostare soltanto sulla funzione main(), mentre un breakpoint su qualsiasi funzione",
+        "Non c'è alcuna differenza tra i due, sono nomi diversi per lo stesso elemento"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un breakpoint si concentra sulla *posizione nel codice* (dove viene eseguito il programma), mentre un watchpoint sui *dati* (quando e dove vengono modificati/letti i valori all'indirizzo di memoria).",
+        "Errato. Entrambi i tipi funzionano esclusivamente nella memoria RAM e nei registri durante l'esecuzione del processo.",
+        "Errato. Un watchpoint può essere impostato su qualsiasi variabile o indirizzo accessibile nel programma.",
+        "Errato. Lo scopo e il meccanismo di attivazione sono fondamentalmente diversi."
+      ]
+    }
+  ]
+}

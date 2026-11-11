@@ -1,0 +1,593 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_3161",
+      "widget_id": "widget_clang_3161",
+      "topic": "Operazione hardware CALL (Push dell'indirizzo di ritorno)",
+      "q": "Cosa succede al pointer dello stack RSP e al registro delle istruzioni RIP durante l'esecuzione dell'istruzione del processore CALL 0x00401120?",
+      "hint": "Pensa a come il processore salva il punto di ritorno corrente (l'indirizzo dell'istruzione successiva 0x00401055) prima di effettuare il salto.",
+      "options": [
+        "L'indirizzo del comando successivo (0x00401055) viene inserito (push) nello stack (RSP diminuisce di 8 byte), e in RIP viene scritto l'indirizzo della funzione di destinazione (0x00401120)",
+        "RSP aumenta di 8 byte, e in RIP viene scritto l'indirizzo 0x00000000",
+        "Il valore di RIP viene salvato nell'heap, mentre il pointer RSP rimane invariato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'istruzione `CALL` esegue due passaggi: inserisce l'indirizzo dell'istruzione successiva (`0x00401055`) nello stack (riducendo `%rsp` di 8 byte), quindi modifica `%rip`, effettuando il salto all'indirizzo della funzione chiamata.",
+        "Errato. L'inserimento dell'indirizzo nello stack riduce `%rsp`, non lo aumenta.",
+        "Errato. Gli indirizzi di ritorno sono memorizzati nello stack frame di chiamata, non nell'heap."
+      ]
+    },
+    {
+      "id": "it_clang_3162",
+      "widget_id": null,
+      "topic": "Operazione hardware RET (Pop dell'indirizzo di ritorno)",
+      "q": "In che modo l'istruzione RET utilizza lo stack per restituire il controllo alla функция chiamante?",
+      "hint": "RET esegue l'operazione opposta a CALL, basata sull'estrazione dallo stack.",
+      "options": [
+        "Estrae (pop) l'indirizzo di ritorno salvato dalla cima dello stack nel registro RIP e aumenta RSP di 8 byte",
+        "Scrive il valore corrente di RIP nel registro RAX e azzera RSP",
+        "Riduce RSP di 16 byte e legge l'indirizzo dal segmento .data",
+        "Trasferisce il valore del pointer dello stack al sistema operativo per riavviare il processo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'istruzione `RET` esegue un'operazione `POP` nel counter delle istruzioni `%rip`: legge 8 byte dalla cima dello stack (`%rsp`), sposta `%rsp` verso l'alto di 8 byte e trasferisce il controllo all'indirizzo letto.",
+        "Errato. `RET` ripristina il flusso di esecuzione estraendo l'indirizzo dallo stack in `%rip`, non in `%rax`.",
+        "Errato. L'estrazione dallo stack aumenta l'indirizzo `%rsp`.",
+        "Errato. `RET` viene eseguita via hardware dal processore all'interno del contesto del processo corrente."
+      ]
+    },
+    {
+      "id": "it_clang_3163",
+      "widget_id": "widget_clang_3163",
+      "topic": "Prologo della функция e creazione dello stack frame (Push RBP & Sub RSP)",
+      "q": "Quale ruolo svolgono le prime due istruzioni del prologo di una функция (push %rbp; mov %rsp, %rbp)?",
+      "hint": "Pensa alla creazione di un punto di riferimento base (Frame Pointer) per le variabili locali della funzione corrente.",
+      "options": [
+        "Salvano il frame pointer della функция chiamante nello stack e impostano un nuovo indirizzo base del frame (RBP) per la функция corrente",
+        "Liberano tutta la memoria heap allocata prima dell'inizio dell'esecuzione della функция",
+        "Caricano gli argomenti della функция dal disco rigido nei registri della CPU",
+        "Verificano la presenza di codice malevolo nel segmento .text",
+        "Disabilitano le interruzioni hardware del processore fino al completamento dell'esecuzione della функция"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'istruzione `push %rbp` salva il vecchio frame pointer della funzione chiamante nello stack. Successivamente, `mov %rsp, %rbp` rende la cima corrente dello stack il nuovo indirizzo base fisso del frame (`Frame Pointer`).",
+        "Errato. Il prologo della функция lavora esclusivamente con gli stack frame e non influisce sull'heap.",
+        "Errato. Gli argomenti della функция vengono passati tramite registri o stack, non dal disco.",
+        "Errato. Si tratta di una sequenza standard di formazione della chiamata, non di un controllo di sicurezza.",
+        "Errato. Il prologo della функция не управляет флагами прерываний CPU (`cli`/`sti`)."
+      ]
+    },
+    {
+      "id": "it_clang_3164",
+      "widget_id": "widget_clang_3164",
+      "topic": "Epilogo della функция e distruzione dello stack frame (LEAVE / Pop RBP)",
+      "q": "Qual è l'effetto dell'istruzione LEAVE (equivalente alla combinazione mov %rbp, %rsp; pop %rbp) prima della conclusione della функция?",
+      "hint": "L'istruzione LEAVE rimuove le variabili locali del frame e ripristina il vecchio RBP.",
+      "options": [
+        "Ripristina la cima dello stack RSP al valore di RBP ed estrae (pop) il RBP salvato della функция chiamante, eliminando il frame locale",
+        "Crea una copia completa di tutte le variabili locali nella sezione .bss",
+        "Alloca uno stack frame aggiuntivo per la gestione delle eccezioni",
+        "Impedisce la sovrascrittura delle variabili globali"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'istruzione `LEAVE` annulla le azioni del prologo: ripristina `%rsp` a `%rbp` (liberando all'istante lo spazio delle variabili locali) ed estrae (`pop`) il vecchio `%rbp` della функция chiamante.",
+        "Errato. L'epilogo rimuove il frame della функция, non lo copia nelle sezioni globali.",
+        "Errato. `LEAVE` distrugge il frame corrente prima della chiamata a `ret`.",
+        "Errato. Non si verifica alcuna modifica ai permessi di accesso alle variabili."
+      ]
+    },
+    {
+      "id": "it_clang_3165",
+      "widget_id": "widget_clang_3165",
+      "topic": "Salvataggio dei registri dal lato del chiamato (Callee-Saved Registers)",
+      "q": "Perché la функция chiamata è obbligata a inserire nello stack (push) i registri RBX, R12-R15 prima di utilizzarli ed estrarli (pop) prima di uscire?",
+      "hint": "Secondo l'ABI, questi registri sono considerati «callee-saved» (salvati dalla funzione chiamata).",
+      "options": [
+        "Secondo l'ABI, questi registri devono preservare i loro valori per la функция chiamante, quindi i loro vecchi stati vengono temporaneamente salvati nello stack",
+        "Questi registri contengono istruzioni vettoriali SSE che richiedono un azzeramento",
+        "Il processore blocca via hardware i calcoli se questi registri non vengono estratti tramite pop",
+        "In essi vengono scritti automaticamente i nomi delle variabili locali per il debugging",
+        "È un requisito dello standard ISO C per l'allocazione dinamica della memoria",
+        "Ciò previene le perdite di memoria sul disco rigido"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo le regole della System V AMD64 ABI, i registri `RBX`, `RBP`, `R12-R15` sono `callee-saved`. Se una функция vuole usarli, deve salvare i loro valori originali nello stack (`push`) all'inizio e ripristinarli (`pop`) alla fine, altrimenti il codice della функция chiamante si corromperà.",
+        "Errato. Questi registri sono registri di uso generale (general-purpose), non vettoriali SSE.",
+        "Errato. Il processore non traccia i nomi dei registri in `push`/`pop`; il rispetto dell'ABI è responsabilità del compilatore.",
+        "Errato. I nomi delle variabili non vengono scritti nei registri di uso generale.",
+        "Errato. Le regole di utilizzo dei registri sono definite dalla specifica ABI della piattaforma.",
+        "Errato. I registri esistono solo all'interno del chip del processore."
+      ]
+    },
+    {
+      "id": "it_clang_3166",
+      "widget_id": null,
+      "topic": "Ordine di inserimento degli argomenti nello stack (cdecl Calling Convention)",
+      "q": "In quale ordine gli argomenti di una функция vengono inseriti (push) nello stack nella convenzione di chiamata cdecl standard, quando la loro quantità supera il numero di registri disponibili?",
+      "hint": "Pensa a far sì che il primo argomento si trovi in cima allo stack, più vicino all'indirizzo di ritorno.",
+      "options": [
+        "Da destra a sinistra (l'ultimo argomento viene inserito nello stack per primo)",
+        "Da sinistra a destra (il primo argomento viene inserito nello stack per primo)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella convenzione `cdecl` (e nella maggior parte delle convenzioni in C), gli argomenti vengono inseriti nello stack **da destra a sinistra**. Grazie a ciò, il primo argomento si trova in cima allo stack (all'indirizzo più basso), consentendo alle funzioni con numero variabile di argomenti (come `printf`) di individuare facilmente il loro primo parametro.",
+        "Errato. L'ordine «da sinistra a destra» viene utilizzato in altri linguaggi (come Pascal), ma non nel C classico con `cdecl`."
+      ]
+    },
+    {
+      "id": "it_clang_3167",
+      "widget_id": "widget_clang_3167",
+      "topic": "Ottimizzazione Red Zone (x86_64 System V ABI)",
+      "q": "In che modo l'area Red Zone (128 byte al di sotto di RSP) consente di ottimizzare l'esecuzione di funzioni brevi («leaf functions»)?",
+      "hint": "La Red Zone è garantita per non essere sovrascritta dai gestori di segnali/interruzioni del sistema operativo.",
+      "options": [
+        "Consente alle funzioni che non chiamano altre funzioni (leaf functions) di utilizzare 128 byte sotto %rsp per le variabili temporanee senza modificare %rsp (senza sub $128, %rsp)",
+        "Riserva 128 byte per la creazione automatica delle tabelle delle funzioni virtuali C++",
+        "Proibisce qualsiasi operazione di lettura dalla sezione delle costanti .rodata",
+        "Invia automaticamente una copia di backup dello stack frame al kernel Linux"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nell'AMD64 System V ABI, l'area di 128 byte al di sotto del `%rsp` corrente è llamada `Red Zone`. Le interruzioni asincrone e i segnali del SO non possono sovrascriverla. Ciò consente al compilatore di memorizzare variabili temporanee nelle leaf functions senza istruzioni `sub/add %rsp` superflue.",
+        "Errato. La Red Zone serve da ottimizzazione per l'allocazione della memoria locale sullo stack.",
+        "Errato. La Red Zone si trova sullo stack e non blocca l'accesso alla sezione `.rodata`.",
+        "Errato. La Red Zone è una convenzione ABI per lo spazio utente."
+      ]
+    },
+    {
+      "id": "it_clang_3168",
+      "widget_id": null,
+      "topic": "Corruzione dell'indirizzo di ritorno per buffer overflow (Return Address Corruption)",
+      "q": "Cosa succede durante l'esecuzione del programma se, a causa di un overflow del buffer locale, l'indirizzo di ritorno corrotto viene estratto con l'istruzione RET dalla cima dello stack?",
+      "hint": "Il processore legge cieco 8 byte dalla cima dello stack nel counter delle istruzioni RIP.",
+      "options": [
+        "Il processore tenta di trasferire il controllo all'indirizzo danneggiato, causando un Segmentation Fault o trasferendo il controllo a codice malevolo",
+        "Il programma ignorerà l'istruzione ret e ricomincerà l'esecuzione della функция dalla prima riga",
+        "Il kernel del sistema sostituisce immediatamente l'indirizzo danneggiato con l'indirizzo della funzione main()",
+        "Il compilatore interrompe la compilazione del programma nel terminale",
+        "Il processore svuota forzatamente la cache L3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'istruzione `RET` estrae semplicemente il valore dalla cima dello stack in `%rip`. Se l'indirizzo è corrotto (ad esempio a causa di un attacco Stack Smashing), il processore effettuerà un salto a un indirizzo arbitrario. Se lì non c'è codice valido, la MMU genererà un `SIGSEGV`.",
+        "Errato. Il processore non conosce l'indirizzo originale ed eseguirà il salto secondo i byte correnti.",
+        "Errato. Il SO non traccia la correttezza degli indirizzi di ritorno in tempo reale.",
+        "Errato. L'errore si verifica durante l'esecuzione (Runtime), non durante la compilazione.",
+        "Errato. Lo stato della cache non ripristinerà il flusso di controllo compromesso."
+      ]
+    },
+    {
+      "id": "it_clang_3169",
+      "widget_id": "widget_clang_3169",
+      "topic": "Allocazione della memoria del frame con una singola istruzione (sub $N, %rsp)",
+      "q": "Perché il compilatore C genera una singola istruzione sub $0x20, %rsp nel prologo invece di chiamare più push %rax sequenziali per ogni variabile?",
+      "hint": "Pensa alla velocità di esecuzione e all'offset fisso degli indirizzi delle variabili locali rispetto a RBP.",
+      "options": [
+        "L'aritmetica di sottrazione del pointer %rsp alloca immediatamente in un solo ciclo l'intero blocco di memoria del frame e mantiene invariati gli offset delle variabili",
+        "L'istruzione push non può essere utilizzata per i tipi interi",
+        "Questo è fatto esclusivamente per proteggere da attacchi di rete Man-in-the-Middle"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo spostamento singolo di `%rsp` tramite l'istruzione `sub` alloca memoria per l'intera struttura di variabili locali della функция in un singolo ciclo di clock del processore. Ciò consente di indirizzare ogni variabile tramite offset fissi del tipo `[rbp - offset]`.",
+        "Errato. L'istruzione `push` funziona perfettamente con numeri interi e registri.",
+        "Errato. È un'ottimizzazione di base per l'allocazione della memoria nello stack, non correlata alla sicurezza di rete."
+      ]
+    },
+    {
+      "id": "it_clang_3170",
+      "widget_id": null,
+      "topic": "Salti non locali tramite setjmp / longjmp e ripristino dello stack",
+      "q": "In che modo le funzioni setjmp() e longjmp() influiscono sul meccanismo standard di Push/Pop per lo srotolamento (unwinding) dello stack durante un salto non locale?",
+      "hint": "longjmp non chiama una catena di istruzioni ret, ma sovrascrive direttamente i pointer RSP e RBP.",
+      "options": [
+        "longjmp() ripristina i pointer RSP/RBP salvati in jmp_buf, scartando (pop) all'istante diversi stack frame senza chiamare ret sequenziali",
+        "setjmp() sposta automaticamente tutte le variabili locali dallo stack alla sezione .data",
+        "longjmp() costringe il sistema operativo a chiamare free() per ogni stack frame scartato",
+        "setjmp() blocca l'esecuzione di tutte le operazioni push e pop a livello hardware del processore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `setjmp()` salva lo stato dei registri del processore (inclusi `%rsp` e `%rbp`) in un buffer. Quando viene llamada `longjmp()`, questi registri vengono sovrascritti all'istante e il pointer dello stack `%rsp` viene riavvolto, saltando l'esecuzione degli epiloghi (`ret`) delle funzioni intermedie.",
+        "Errato. Le variabili non vengono spostate nella sezione `.data`.",
+        "Errato. La memoria dello stack non richiede chiamate a `free()`.",
+        "Errato. Il funzionamento hardware di `push`/`pop` non viene bloccato."
+      ]
+    },
+    {
+      "id": "it_clang_3171",
+      "widget_id": "widget_clang_3171",
+      "topic": "Indirizzamento delle variabili locali rispetto a RBP",
+      "q": "Perché le variabili locali di una функция vengono indirizzate tramite offset negativi rispetto al base pointer del frame (-0x4(%rbp), -0x8(%rbp))?",
+      "hint": "Pensa in quale direzione si sposta la cima dello stack durante l'allocazione dello spazio per il frame e dove si trova RBP.",
+      "options": [
+        "Poiché lo stack cresce verso il basso (verso indirizzi minori), la memoria allocata per le variabili locali si trova al di sotto dell'indirizzo base RBP",
+        "Gli offset negativi sono usati esclusivamente per puntare a costanti nel segmento .rodata",
+        "Questo è fatto per compatibilità con l'architettura a 16 bit di MS-DOS"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Durante la formazione del frame, `RBP` ne fissa l'inizio. Gli offset positivi rispetto a `RBP` contengono l'indirizzo di ritorno e gli argomenti (passati tramite stack), mentre le variabili locali si trovano al di sotto di `RBP`, nell'area degli offset negativi.",
+        "Errato. Le variabili locali sono memorizzate nello stack, non in `.rodata`.",
+        "Errato. Questo è un principio fondamentale dell'organizzazione dello stack frame su x86/x86_64 in generale."
+      ]
+    },
+    {
+      "id": "it_clang_3172",
+      "widget_id": null,
+      "topic": "Passaggio degli argomenti tramite registri e stack (System V AMD64 ABI)",
+      "q": "Dove vengono posizionati i parametri della функция nello stack frame su x86_64 Linux (System V ABI) se la функция accetta 8 argomenti interi?",
+      "hint": "Ricorda quanti dei primi argomenti interi vengono passati tramite i registri RDI, RSI, RDX, RCX, R8, R9.",
+      "options": [
+        "I primi 6 argomenti vengono passati tramite registri, mentre i restanti 2 vengono inseriti nello stack frame della funzione chiamante sullo stack",
+        "Tutti e 8 gli argomenti vengono obbligatoriamente inseriti nello stack tramite l'istruzione push",
+        "I primi 2 argomenti sono memorizzati nell'heap, mentre i restanti 6 nei registri del processore",
+        "Tutti gli argomenti vengono scritti nella tabella globale dei simboli .bss"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo la specifica System V AMD64 ABI, i primi 6 parametri/pointer interi vengono passati tramite registri (`RDI`, `RSI`, `RDX`, `RCX`, `R8`, `R9`). A partire dal 7° argomento, vengono inseriti nello stack dalla функция chiamante.",
+        "Errato. Su x86_64 i primi 6 parametri non utilizzano lo stack per il passaggio.",
+        "Errato. L'heap non viene utilizzato per il passaggio dei parametri.",
+        "Errato. La tabella `.bss` memorizza variabili globali/statiche non inizializzate."
+      ]
+    },
+    {
+      "id": "it_clang_3173",
+      "widget_id": "widget_clang_3173",
+      "topic": "Allineamento e padding delle variabili locali sullo stack",
+      "q": "In che modo il compilatore posiziona le variabili locali a, b e c all'interno dello stack frame per garantire l'efficienza del processore?",
+      "hint": "Il tipo double richiede un allineamento a un limite di 8 byte in memoria.",
+      "options": [
+        "Il compilatore inserisce byte di riempimento (padding) o modifica l'ordine delle variabili locali sullo stack per rispettare i limiti di allineamento dei tipi",
+        "Il compilatore posiziona le variabili esattamente l'una dopo l'altra nell'ordine di dichiarazione del codice C senza alcun gap",
+        "Tutte le variabili vengono convertite automaticamente al tipo double e occupano 8 byte ciascuna",
+        "Il compilatore genera un errore di compilazione se i tipi con allineamenti diversi sono dichiarati mescolati",
+        "La memoria viene allocata sotto forma di lista concatenata nel segmento dati"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il compilatore è libero di cambiare l'ordine delle variabili locali nello stack frame e aggiungere byte di riempimento (`padding`) affinché gli indirizzi dei tipi `double`/`int` siano multipli della loro dimensione. Ciò evita accessi alla memoria non allineati.",
+        "Errato. L'ordine delle variabili nel codice C non garantisce una disposizione analoga nello stack.",
+        "Errato. Il compilatore non modifica i tipi di dati delle variabili.",
+        "Errato. Mescolare le dichiarazioni di tipi diversi è del tutto legale.",
+        "Errato. Le variabili locali sono posizionate in un unico blocco nello stack frame."
+      ]
+    },
+    {
+      "id": "it_clang_3174",
+      "widget_id": "widget_clang_3174",
+      "topic": "Passaggio dei parametri per valore (Pass-by-Value)",
+      "q": "Perché la modifica della variabile x all'interno di update_val() non influisce sul valore della variabile a nella функция main()?",
+      "hint": "Pensa a cosa viene esattamente inserito nello stack frame della функция llamada quando si passano gli argomenti per valore.",
+      "options": [
+        "L'argomento viene passato per valore: nello stack frame (o registro) di update_val() viene copiato solo il valore della variabile a",
+        "La variabile x viene congelata dal sistema operativo durante l'esecuzione di update_val()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C gli argomenti vengono sempre passati per valore (`pass-by-value`). La функция llamada riceve una copia dei dati nel proprio stack frame. Le modifiche della copia all'interno di `update_val()` non influiscono sulla variabile originale `a` nel frame di `main()`.",
+        "Errato. Il SO non esegue il congelamento delle variabili durante l'esecuzione delle funzioni standard."
+      ]
+    },
+    {
+      "id": "it_clang_3175",
+      "widget_id": "widget_clang_3175",
+      "topic": "Variabili locali non inizializzate (Valori spazzatura)",
+      "q": "Perché leggendo una variabile locale non inizializzata x il programma restituisce un valore non definito («spazzatura»)?",
+      "hint": "L'allocazione dello spazio nello stack frame viene effettuata tramite un semplice spostamento di RSP senza azzerare i byte.",
+      "options": [
+        "La memoria per x viene allocata spostando RSP, e in essa rimangono i vecchi byte provenienti da stack frame precedentemente terminati di altre funzioni",
+        "Il sistema operativo riempie le variabili non inizializzate con numeri casuali per motivi di sicurezza",
+        "Il compilatore inserisce nelle variabili il valore NULL o 0 di default",
+        "Il valore viene letto dal disco rigido dal file di swap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili locali automatiche non vengono azzerate dal compilatore o dal SO durante la creazione del frame. La variabile `x` punta a un'area di memoria che contiene byte «spazzatura» residui di funzioni chiamate in precedenza.",
+        "Errato. Il SO non genera numeri casuali per le variabili locali sullo stack.",
+        "Errato. A differenza delle variabili globali/statiche (`.bss`), le variabili automatiche sullo stack non vengono azzerate.",
+        "Errato. La lettura avviene direttamente dall'area allocata della RAM sullo stack."
+      ]
+    },
+    {
+      "id": "it_clang_3176",
+      "widget_id": null,
+      "topic": "Passaggio di strutture di grandi dimensioni per valore",
+      "q": "Cosa succede allo stack frame se si passa una struttura da 2 KB a una функция per valore (struct BigData data)?",
+      "hint": "Quando si passa per valore, l'intera struttura deve essere copiata integralmente nello stack frame della funzione chiamata.",
+      "options": [
+        "L'intera struttura da 2 KB viene copiata integralmente sullo stack, aumentando notevolmente la dimensione dello stack frame e riducendo le prestazioni",
+        "Il compilatore trasforma automaticamente la struttura in un pointer senza modificare il codice",
+        "La struttura viene spostata nel segmento di memoria dinamica (Heap)",
+        "Il processore suddivide la struttura in 256 registri di uso generale",
+        "I dati vengono sostituiti dal loro codice hash CRC32",
+        "Il passaggio di strutture per valore è proibito dallo standard ISO C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando si passa una struttura per valore, il compilatore genera codice per copiare tutti i suoi 2 KB nello stack frame. Ciò comporta un notevole overhead di copia e consumo dello stack. Per evitare ciò, le strutture di grandi dimensioni vengono passate tramite pointer (`const struct BigData *data`).",
+        "Errato. Il C rispetta rigorosamente il passaggio per valore e non può sostituire autonomamente il tipo con un pointer.",
+        "Errato. La copia avviene sullo stack, non nell'heap.",
+        "Errato. Il numero di registri è limitato, quindi le strutture di grandi dimensioni vengono passate tramite stack.",
+        "Errato. I dati vengono copiati 'così come sono' (memcpy).",
+        "Errato. Il C supporta pienamente il passaggio di strutture per valore."
+      ]
+    },
+    {
+      "id": "it_clang_3177",
+      "widget_id": "widget_clang_3177",
+      "topic": "Esclusione delle variabili statiche dallo stack frame",
+      "q": "Qual è la differenza nella collocazione della variabile static_var rispetto a local_var nella funzione counter() mostrata?",
+      "hint": "La variabile static_var conserva il suo valore tra le chiamate ripetute alla funzione.",
+      "options": [
+        "local_var viene creata nello stack frame ad ogni chiamata, mentre static_var si trova nel segmento dati (.data/.bss) ed è assente dallo stack frame",
+        "static_var viene posizionata nella Red Zone dello stack, mentre local_var nell'heap",
+        "Entrambe le variabili vengono create nello stack frame, ma static_var è crittografata"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili con lo specificatore `static` hanno una durata statica e si trovano nelle sezioni globali di memoria (`.data` o `.bss`). Non fanno parte dello stack frame e mantengono il proprio stato tra le chiamate.",
+        "Errato. `static_var` risiede in `.data`/`.bss`, mentre `local_var` si trova sullo stack (non nell'heap).",
+        "Errato. `static` non viene memorizzata sullo stack e non viene crittografata."
+      ]
+    },
+    {
+      "id": "it_clang_3178",
+      "widget_id": null,
+      "topic": "Allocazione delle variabili locali nei registri (Ottimizzazione)",
+      "q": "Il compilatore è obbligato ad allocare uno spazio fisico nello stack frame per ciascuna variabile locale con l'ottimizzazione abilitata (-O2/-O3)?",
+      "hint": "Pensa se il compilatore può memorizzare una variabile locale usata di frequente solo in un registro (ad esempio RBX) senza scaricarla in memoria.",
+      "options": [
+        "No, con l'ottimizzazione il compilatore può memorizzare le variabili locali esclusivamente nei registri CPU liberi, senza allocare byte per esse sullo stack",
+        "Sì, lo standard C richiede l'esistenza obbligatoria di un indirizzo in RAM per ogni variabile locale, indipendentemente dalle ottimizzazioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se per una variabile locale non viene preso l'indirizzo tramite l'operatore `&`, il compilatore ottimizzatore può posizionarla completamente in un registro libero del processore (Register Allocation), senza allocare affatto spazio per essa sullo stack.",
+        "Errato. Lo standard C consente al compilatore qualsiasi ottimizzazione secondo la regola `as-if`, purché il comportamento finale del programma coincida con quello originale."
+      ]
+    },
+    {
+      "id": "it_clang_3179",
+      "widget_id": "widget_clang_3179",
+      "topic": "Allocazione di array a lunghezza variabile (VLA) nel frame",
+      "q": "Come cambia la struttura dello stack frame quando si dichiara un array a lunghezza variabile int arr[n]?",
+      "hint": "La dimensione dell'array n diventa nota solo durante l'esecuzione (Runtime).",
+      "options": [
+        "Il pointer dello stack RSP viene spostato dinamicamente durante l'esecuzione di n * sizeof(int) byte, espandendo lo stack frame corrente",
+        "L'array VLA viene creato automaticamente nella memoria dinamica (Heap) mediante una chiamata nascosta a malloc()",
+        "La dimensione dello stack frame viene calcolata in modo fisso durante la compilazione per il valore massimo di int",
+        "L'array VLA viene sostituito da un array globale nella sezione .bss"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per un VLA la dimensione non è nota in fase di compilazione. Al momento dell'esecuzione della функция, il processore sottrae dinamicamente la dimensione richiesta `n * sizeof(int)` dal registro `%rsp`, espandendo lo stack frame corrente.",
+        "Errato. Un VLA viene creato proprio sullo stack, non nell'heap tramite `malloc()`.",
+        "Errato. Il VLA è a lunghezza variabile proprio perché la sua dimensione è determinata dinamicamente.",
+        "Errato. Il VLA è locale al frame e viene rimosso all'uscita dallo scope."
+      ]
+    },
+    {
+      "id": "it_clang_3180",
+      "widget_id": "widget_clang_3180",
+      "topic": "Shadow Space (Home Space) nell'ABI Windows x64",
+      "q": "Perché nello stack frame della функция chiamante sulla piattaforma Windows x64 viene riservato lo Shadow Space (32 byte) prima di ogni chiamata call?",
+      "hint": "Anche se 4 parametri vengono passati tramite i registri (RCX, RDX, R8, R9), per essi viene allocato spazio sullo stack.",
+      "options": [
+        "Fornisce 32 byte sullo stack affinché la функция llamada possa, se necessario, salvare lì i 4 registri dei parametri (RCX, RDX, R8, R9)",
+        "Viene utilizzato per memorizzare il nome del thread Windows",
+        "Funge da firma crittografata per il controllo dell'integrità dello stack",
+        "Sostituisce l'intera sezione delle variabili globali .data",
+        "Memorizza i marker del debugger di Visual Studio"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nell'ABI Windows x64 la функция chiamante deve allocare 32 byte (4 parametri di registro * 8 byte) sullo stack direttamente sopra l'indirizzo di ritorno. La функция llamada può utilizzare questo «spazio ombra» (`Shadow Space` / `Home Space`) per salvare al suo interno i valori dei registri `RCX`, `RDX`, `R8`, `R9`.",
+        "Errato. Lo Shadow Space viene allocato per il contesto dei parametri della chiamata di funzione.",
+        "Errato. Questa è una convenzione ABI per il passaggio dei parametri, non un meccanismo crittografico.",
+        "Errato. Lo Shadow Space si riferisce esclusivamente allo stack frame corrente.",
+        "Errato. Si tratta di un requisito dell'ABI della piattaforma, utilizzato anche nelle build di release."
+      ]
+    },
+    {
+      "id": "it_clang_3181",
+      "widget_id": "widget_clang_3181",
+      "topic": "Concetto di collegamento dinamico (Dynamic Link / Saved RBP)",
+      "q": "Che cos'è il collegamento dinamico (Dynamic Link) nello stack frame di una функция?",
+      "hint": "Pensa a come viene ripristinato l'indirizzo base del frame della функция padre (caller) al termine della функция corrente.",
+      "options": [
+        "Il frame pointer salvato sullo stack (Saved Frame Pointer / RBP) della функция chiamante, che definisce la cima del frame precedente nella dinamica delle chiamate",
+        "Un pointer alla tabella globale di importazione delle funzioni di libreria (GOT / PLT)",
+        "L'indirizzo della prima istruzione nella sezione .text della funzione corrente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il collegamento dinamico (Dynamic Link / Control Link) è il vecchio valore del registro `%rbp` salvato all'ingresso della funzione. Punta allo stack frame della funzione che ha effettuato la chiamata, formando una catena dinamica di frame.",
+        "Errato. Il collegamento dinamico punta al frame della funzione chiamante sullo stack, non alle tabelle di importazione globali.",
+        "Errato. L'indirizzo delle istruzioni è memorizzato nel registro `%rip` / indirizzo di ritorno."
+      ]
+    },
+    {
+      "id": "it_clang_3182",
+      "widget_id": null,
+      "topic": "Posizionamento dell'indirizzo di ritorno durante l'esecuzione di CALL",
+      "q": "Dove salva esattamente il processore l'indirizzo di ritorno (Return Address) con l'istruzione CALL prima di entrare nella функция llamada?",
+      "hint": "Ricorda quale istruzione estrae questo indirizzo di ritorno alla fine della funzione.",
+      "options": [
+        "Direttamente in cima allo stack (nello slot di memoria a cui RSP inizia a puntare subito dopo la riduzione della dimensione dell'indirizzo)",
+        "Nel registro RAX con successivo invio alla memoria RAM del kernel del SO"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'istruzione hardware `CALL` inserisce automaticamente l'indirizzo a 64 bit (o 32 bit) del comando successivo direttamente sullo stack, dove forma l'elemento superiore dello stack frame corrente.",
+        "Errato. Il registro `RAX` viene utilizzato per restituire i valori delle funzioni, non per memorizzare l'indirizzo di ritorno sullo stack."
+      ]
+    },
+    {
+      "id": "it_clang_3183",
+      "widget_id": "widget_clang_3183",
+      "topic": "Utilizzo del collegamento dinamico per ottenere lo stack trace (Backtrace)",
+      "q": "In che modo le utility di debugging (ad esempio GDB) utilizzano la catena dei collegamenti dinamici (Dynamic Links) per ricostruire lo stack di chiamate (Backtrace)?",
+      "hint": "Ricorda come i frame pointer formano una lista semplicemente concatenata che va dalla функция corrente fino a main().",
+      "options": [
+        "Srotolano sequenzialmente la lista dei RBP salvati (Saved Frame Pointers), ripristinando il limite del frame di ciascuna функция precedente",
+        "Sovrascrivono l'indirizzo di ritorno con byte zero per motivi di sicurezza",
+        "Leggono dai collegamenti dinamici il codice sorgente C del programma",
+        "Li utilizzano per allocare memoria RAM nell'heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I `RBP` salvati formano una lista semplicemente concatenata di frame. Il debugger prende il `%rbp` corrente, legge da esso il vecchio `%rbp` salvato, quindi passa attraverso di esso al frame successivo e così via fino a `main()`.",
+        "Errato. Il debugger legge solo i collegamenti dinamici senza sovrascrivere gli indirizzi di ritorno.",
+        "Errato. Il codice sorgente è memorizzato in file su disco o nelle sezioni di debug DWARF, non negli stack frame.",
+        "Errato. I collegamenti dinamici servono esclusivamente per la navigazione nello stack di chiamate."
+      ]
+    },
+    {
+      "id": "it_clang_3184",
+      "widget_id": "widget_clang_3184",
+      "topic": "Flag del compilatore -fomit-frame-pointer",
+      "q": "Cosa succede al collegamento dinamico (Saved Frame Pointer / RBP) se si compila il codice C con il parametro -fomit-frame-pointer?",
+      "hint": "Pensa se il registro RBP si libera per le esigenze del generatore di codice per l'ottimizzazione generale.",
+      "options": [
+        "Il compilatore smette di salvare il vecchio RBP sullo stack (il collegamento dinamico è assente) e l'indirizzamento delle variabili locali avviene direttamente da RSP",
+        "Il collegamento dinamico viene trasferito automaticamente nel segmento globale .rodata",
+        "L'indirizzo di ritorno viene rimosso dallo stack e passato tramite il registro RAX",
+        "Il programma perde la capacità di eseguire operazioni di sottrazione e addizione",
+        "Il compilatore annulla l'uso dello stack e sposta tutte le chiamate nella memoria interna del processore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-fomit-frame-pointer` disabilita la generazione del prologo/epilogo con `RBP`. Il salvataggio del vecchio `RBP` (collegamento dinamico) viene interrotto e il registro `%rbp` viene liberato per i calcoli ordinari. L'accesso alle variabili avviene relativamente a `%rsp`.",
+        "Errato. Il frame smette semplicemente di contenere il `RBP` salvato, nulla viene copiato in `.rodata`.",
+        "Errato. L'indirizzo di ritorno viene comunque inserito sullo stack dall'istruzione `call`.",
+        "Errato. Le istruzioni aritmetiche del processore funzionano normalmente.",
+        "Errato. Lo stack di chiamate continua ad essere utilizzato attivamente."
+      ]
+    },
+    {
+      "id": "it_clang_3185",
+      "widget_id": null,
+      "topic": "Collegamento dinamico (Dynamic Link) vs Collegamento statico (Static Link)",
+      "q": "Qual è la differenza fondamentale tra un collegamento dinamico (Dynamic Link) e un collegamento statico (Static/Lexical Link)?",
+      "hint": "La dinamica traccia la sequenza delle chiamate (Runtime), mentre la statica traccia l'annidamento delle dichiarazioni delle funzioni (Compile-time).",
+      "options": [
+        "Il collegamento dinamico punta al frame della функция chiamante (chi ha chiamato), mentre quello statico punta al frame della функция lessicalmente contenitrice (dove è dichiarata)",
+        "Il collegamento dinamico memorizza gli indirizzi nell'heap, mentre quello statico sul disco rigido",
+        "Il collegamento statico viene utilizzato solo in C++, mentre quello dinamico solo in Assembly"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il collegamento dinamico (`Saved RBP`) dipende dall'ordine delle chiamate durante l'esecuzione. Il collegamento statico (`Static Link` / `Lexical Link`, presente nelle funzioni annidate) punta al frame della функция all'interno della quale quella corrente è stata fisicamente dichiarata nel codice sorgente.",
+        "Errato. Entrambi i collegamenti sono memorizzati negli stack frame, non nell'heap o sul disco.",
+        "Errato. Si tratta di meccanismi concettuali di organizzazione degli stack frame, indipendenti dalla sintassi specifica del C o del C++."
+      ]
+    },
+    {
+      "id": "it_clang_3186",
+      "widget_id": "widget_clang_3186",
+      "topic": "Protezione dell'indirizzo di ritorno tramite Stack Canary",
+      "q": "Dove posiziona esattamente il compilatore il valore di protezione «canarino» (Stack Canary) all'interno dello stack frame?",
+      "hint": "Il canarino deve essere controllato prima del ripristino di RBP e dell'esecuzione di RET, assorbendo l'impatto in caso di buffer overflow.",
+      "options": [
+        "Tra le variabili locali (buffer) e il RBP salvato / indirizzo di ritorno",
+        "In cima allo stack, sopra i parametri della функция llamada",
+        "Nel segmento di codice .text subito dopo l'istruzione ret",
+        "All'interno del registro delle istruzioni RIP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il «canarino» di protezione (`Stack Canary`) viene posizionato direttamente prima del `RBP` salvato e dell'`Return Address`. Se un buffer locale va in overflow, sovrascriverà prima il canarino. Prima di `ret`, la функция verificherà il suo valore e, in caso di discrepanza, interromperà immediatamente il programma (`__stack_chk_fail`).",
+        "Errato. Il posizionamento al di sopra dei parametri non proteggerà il `RBP` salvato dall'overflow delle variabili locali.",
+        "Errato. Lo `Stack Canary` è memorizzato all'interno dello stack frame.",
+        "Errato. `RIP` è il registro dell'instruction pointer, non la memoria del frame."
+      ]
+    },
+    {
+      "id": "it_clang_3187",
+      "widget_id": "widget_clang_3187",
+      "topic": "Posizione relativa dell'indirizzo di ritorno e del RBP salvato su x86_64",
+      "q": "Come sono posizionati il RBP salvato (Dynamic Link) e l'indirizzo di ritorno (Return Address) rispetto al base pointer %rbp?",
+      "hint": "Ricorda l'ordine dei comandi del prologo: prima call inserisce il Return Address, poi push %rbp inserisce il vecchio RBP, dopodiché %rsp viene copiato in %rbp.",
+      "options": [
+        "All'indirizzo 0(%rbp) si trova il RBP salvato della функция chiamante, e all'indirizzo 8(%rbp) l'indirizzo di ritorno",
+        "All'indirizzo 0(%rbp) si trova l'indirizzo di ritorno, e all'indirizzo 8(%rbp) il RBP salvato",
+        "Entrambi i valori vengono inseriti in un unico slot di memoria a 64 bit",
+        "L'indirizzo di ritorno si trova all'indirizzo -8(%rbp), mentre il RBP salvato all'indirizzo -16(%rbp)",
+        "Il RBP salvato si trova nell'heap, mentre l'indirizzo di ritorno nel registro RAX",
+        "Entrambi i valori vengono trasferiti nella sezione .bss a causa dell'allineamento"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'istruzione `call` inserisce l'indirizzo di ritorno sullo stack (`[RBP + 8]`), poi `push %rbp` inserisce il vecchio `RBP` (`[RBP + 0]`), dopodiché `%rbp` inizia a puntare a questo vecchio `RBP`.",
+        "Errato. All'indirizzo `0(%rbp)` si trova il `RBP` salvato, poiché è stato inserito sullo stack per ultimo prima di fissare `%rbp`.",
+        "Errato. Ciascuno di questi valori occupa una parola a 64 bit separata (8 byte).",
+        "Errato. Gli offset negativi da `%rbp` sono destinati alle variabili locali.",
+        "Errato. Questi elementi dello stack frame sono memorizzati sullo stack.",
+        "Errato. La sezione `.bss` non viene utilizzata per gli stack frame dinamici."
+      ]
+    },
+    {
+      "id": "it_clang_3188",
+      "widget_id": null,
+      "topic": "Corruzione del collegamento dinamico (Corrupted Saved Frame Pointer)",
+      "q": "Quale conseguenza avrà la corruzione (sovrascrittura) del SOLO RBP salvato (collegamento dinamico) senza modificare l'indirizzo di ritorno?",
+      "hint": "Ricorda: LEAVE ripristina RBP dallo stack (`pop %rbp`). Il comando RET leggerà quindi l'indirizzo di ritorno corretto.",
+      "options": [
+        "L'istruzione ret restituirà con successo il controllo alla функция chiamante, ma il suo registro RBP diventerà un valore spazzatura, il che corromperà l'accesso alle sue variabili locali",
+        "Il processore bloccherà via hardware l'esecuzione dell'istruzione ret ancora prima di uscire dalla функция corrente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché l'indirizzo di ritorno non viene alterato, `ret` restituirà il flusso alla функция chiamante. Tuttavia, a causa del `Saved RBP` corrotto, l'istruzione `pop %rbp` caricherà in `%rbp` un valore errato. Il frame della функция chiamante risulterà corrotto e il successivo accesso alle sue variabili causerà un errore.",
+        "Errato. Il processore non esegue la convalida dell'integrità dei valori del registro `%rbp` durante l'esecuzione di `pop`."
+      ]
+    },
+    {
+      "id": "it_clang_3189",
+      "widget_id": "widget_clang_3189",
+      "topic": "Ripristino del frame tramite il collegamento dinamico al termine",
+      "q": "In che modo esattamente lo stack frame utilizza il collegamento dinamico per pulire il proprio spazio e restituire il controllo?",
+      "hint": "Fai attenzione alla coincidenza del base pointer RBP del frame corrente con la cima dello stack al momento dell'uscita.",
+      "options": [
+        "L'istruzione LEAVE copia RBP in RSP (scartando le variabili locali), e poi POP RBP ripristina il base pointer della функция chiamante",
+        "Il collegamento dinamico invia un comando al sistema operativo per riallocare la RAM",
+        "Il collegamento dinamico azzera forzatamente tutti i byte del segmento .text",
+        "Il comando RET costringe il compilatore a ricompilare il file binario"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operazione dell'epilogo `leave` esegue `mov %rbp, %rsp` (rimuovendo all'istante le variabili locali del frame corrente) e `pop %rbp` (ripristinando il vecchio `RBP` dal collegamento dinamico). Successivamente `ret` legge l'indirizzo di ritorno.",
+        "Errato. Il ripristino del frame avviene a livello hardware tramite le istruzioni CPU senza chiamare le funzioni del kernel del SO.",
+        "Errato. Il segmento `.text` contiene codice ed è solitamente protetto da scrittura.",
+        "Errato. L'esecuzione del codice avviene in Runtime e non causa ricompilazione."
+      ]
+    },
+    {
+      "id": "it_clang_3190",
+      "widget_id": "widget_clang_3190",
+      "topic": "Collegamento dinamico durante le chiamate ricorsive",
+      "q": "Come si comporta la catena dei collegamenti dinamici (Dynamic Links) durante una serie di chiamate ricorsive alla функция recursive()?",
+      "hint": "Ogni chiamata ricorsiva crea un frame indipendente con il proprio indirizzo di ritorno e un riferimento al frame del passo di ricorsione precedente.",
+      "options": [
+        "Ogni chiamata ricorsiva forma un frame separato, in cui il RBP salvato punta al frame del livello di ricorsione precedente",
+        "Tutte le chiamate ricorsive riutilizzano lo stesso frame, sovrascrivendo il vecchio RBP",
+        "Il collegamento dinamico viene rimosso dal compilatore dopo il primo passo ricorsivo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Ad ogni chiamata ricorsiva viene creato un nuovo stack frame. Il collegamento dinamico di ogni nuovo frame punta al `RBP` del frame precedente della stessa funzione, formando una catena di stack frame identici fino al caso base.",
+        "Errato. Di default ogni chiamata ricorsiva crea il proprio frame sullo stack (se non viene applicata l'ottimizzazione della ricorsione finale TCO).",
+        "Errato. Il collegamento dinamico viene conservato in ogni frame per garantire il corretto ordine di ritorno."
+      ]
+    }
+  ]
+}

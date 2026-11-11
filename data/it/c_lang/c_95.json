@@ -1,0 +1,589 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2891",
+      "widget_id": "widget_clang_2891",
+      "topic": "Nome predefinito del file binario",
+      "q": "Se si esegue il comando gcc main.c senza il flag -o, quale nome predefinito riceverà il file eseguibile compilato in Unix/Linux?",
+      "hint": "Il nome predefinito del file per tradizione storica UNIX sta per «assembler output».",
+      "options": [
+        "a.out",
+        "main.exe",
+        "main.out"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Storicamente il nome del binario compilato di default nei sistemi UNIX è `a.out`.",
+        "Non corretto. L'estensione `.exe` è tipica di Windows, ma anche lì senza `-o` il nome predefinito sarebbe `a.exe`.",
+        "Non corretto. Il compilatore non sostituisce automaticamente il nome del sorgente `.c` senza un flag `-o` esplicito."
+      ]
+    },
+    {
+      "id": "it_clang_2892",
+      "widget_id": null,
+      "topic": "Estensione dei file sorgente C",
+      "q": "Qual è l'estensione standard dei file del codice sorgente in linguaggio C accettati dal compilatore?",
+      "hint": "La lettera dell'estensione coincide con la prima lettera del nome del linguaggio.",
+      "options": [
+        ".c",
+        ".cpp",
+        ".cls",
+        ".o",
+        ".h"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I file di codice sorgente in linguaggio C hanno sempre estensione `.c`.",
+        "Non corretto. L'estensione `.cpp` viene utilizzata per il codice sorgente C++.",
+        "Non corretto. `.cls` non è un'estensione per i file C.",
+        "Non corretto. `.o` è l'estensione dei file oggetto compilati.",
+        "Non corretto. `.h` viene utilizzato per i file di intestazione (header files)."
+      ]
+    },
+    {
+      "id": "it_clang_2893",
+      "widget_id": "widget_clang_2893",
+      "topic": "Compilazione di un progetto multifile con un singolo comando",
+      "q": "Nel progetto sono presenti due file sorgente: main.c e utils.c. Quale comando li compilerà insieme in un unico file eseguibile app?",
+      "hint": "Elenca tutti i file .c negli argomenti di gcc prima di specificare il flag -o.",
+      "options": [
+        "gcc main.c utils.c -o app",
+        "gcc main.c + utils.c -> app",
+        "gcc -o app main.c --include utils.c",
+        "gcc compile main.c utils.c as app"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! GCC accetta l'elenco di tutti i file di codice sorgente separati da spazi e li assembla in un unico file eseguibile `app`.",
+        "Non corretto. Gli operatori `+` e `->` non vengono usati nella sintassi da console di GCC.",
+        "Non corretto. `--include` serve per l'inclusione via preprocessore degli header, non per la compilazione dei moduli.",
+        "Non corretto. Le parole chiave `compile` e `as` non sono parametri di GCC."
+      ]
+    },
+    {
+      "id": "it_clang_2894",
+      "widget_id": null,
+      "topic": "Esecuzione di un file eseguibile in sistemi Unix-like",
+      "q": "In che modo si esegue il file eseguibile ottenuto myprogram dalla directory di lavoro corrente nel terminale Linux/macOS?",
+      "hint": "In UNIX è necessario indicare esplicitamente la directory corrente tramite punto e slash.",
+      "options": [
+        "./myprogram",
+        "run myprogram",
+        "exec myprogram",
+        "start myprogram",
+        "myprogram.exe",
+        "open myprogram"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per motivi di sicurezza la cartella corrente `.` di default non è inclusa nella variabile `$PATH`, quindi il file si avvia con `./myprogram`.",
+        "Non corretto. L'utility `run` non è tra i comandi standard della shell per chiamare binari locali.",
+        "Non corretto. `exec` sostituisce la shell corrente con il processo in esecuzione.",
+        "Non corretto. `start` è un comando della riga di comando di Windows (CMD).",
+        "Non corretto. Gli eseguibili nei sistemi POSIX di solito non richiedono l'estensione `.exe`.",
+        "Non corretto. `open` (su macOS) apre un file nell'applicazione GUI associata."
+      ]
+    },
+    {
+      "id": "it_clang_2895",
+      "widget_id": "widget_clang_2895",
+      "topic": "Errore per mancanza del punto di ingresso (main)",
+      "q": "Cosa succede se si tenta di compilare questo codice in un file eseguibile con il comando gcc main.c -o app?",
+      "hint": "Rifletti se il linker sarà in grado di trovare il punto di ingresso principale del programma.",
+      "options": [
+        "Errore del linker (linker error) per punto di ingresso main non trovato (undefined reference to `main`)",
+        "Il file verrà compilato ed eseguito con successo, iniziando l'esecuzione dalla funzione start_program",
+        "Errore sintattico del compilatore (syntax error) sulla prima riga"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La libreria standard del C richiede la presenza del punto di ingresso `main`. Nella fase di linking, il linker (ld) restituirà l'errore `undefined reference to main`.",
+        "Non corretto. Il compilatore non sceglie funzioni casuali come punto di partenza.",
+        "Non corretto. La sintassi della funzione `start_program` è del tutto corretta."
+      ]
+    },
+    {
+      "id": "it_clang_2896",
+      "widget_id": null,
+      "topic": "Ruolo del linker",
+      "q": "Qual è il compito principale del linker (ad esempio ld) nella fase finale di creazione di un file eseguibile?",
+      "hint": "Il linker collega i file oggetto e le librerie esterne in un unico file binario.",
+      "options": [
+        "Collega i file oggetto (.o) e le librerie, associando le chiamate di funzione ai loro indirizzi effettivi",
+        "Converte il codice testuale in file di intestazione .h",
+        "Verifica la sintassi del linguaggio C e rimuove il codice inutilizzato",
+        "Ottimizza la velocità di esecuzione dei cicli e sposta le variabili nei registri"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il linker prende i moduli oggetto (`.o`), risolve i riferimenti tra di essi e li collega alle librerie C per creare il file binario finale.",
+        "Non corretto. Il linker non crea file di intestazione.",
+        "Non corretto. La verifica della sintassi è gestita dall'analizzatore sintattico del compilatore.",
+        "Non corretto. L'ottimizzazione è effettuata dall'ottimizzatore del compilatore durante la fase di traduzione."
+      ]
+    },
+    {
+      "id": "it_clang_2897",
+      "widget_id": "widget_clang_2897",
+      "topic": "Specifica del percorso dei file di intestazione (-I)",
+      "q": "Il file di intestazione custom_header.h si trova nella directory ./include. Quale comando di compilazione indicherà a GCC il percorso di ricerca per questo header?",
+      "hint": "Il flag dell'include path è specificato dalla lettera maiuscola I.",
+      "options": [
+        "gcc -I./include main.c -o app",
+        "gcc -H./include main.c -o app",
+        "gcc --path ./include main.c -o app",
+        "gcc main.c -o app -dir ./include",
+        "gcc -lib ./include main.c -o app"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-I` (Include) aggiunge la directory specificata all'elenco dei percorsi di ricerca per le direttive `#include` del preprocessore.",
+        "Non corretto. `-H` stampa i nomi dei file di intestazione utilizzati, senza aggiungere un percorso.",
+        "Non corretto. L'opzione `--path` non è usata in GCC.",
+        "Non corretto. L'opzione `-dir` non esiste.",
+        "Non corretto. `-lib` non è un parametro valido."
+      ]
+    },
+    {
+      "id": "it_clang_2898",
+      "widget_id": null,
+      "topic": "Permessi di esecuzione del file",
+      "q": "Se dopo la compilazione il tentativo di eseguire il file ./app restituisce l'errore Permission denied, quale comando del sistema Linux imposterà il flag di esecuzione?",
+      "hint": "Il comando chmod è responsabile della modifica dei permessi di accesso (Change Mode).",
+      "options": [
+        "chmod +x app",
+        "chown exec app"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `chmod +x app` aggiunge i permessi di esecuzione (`executable bit`) per il file binario.",
+        "Non corretto. `chown` modifica il proprietario del file, non i bit di esecuzione."
+      ]
+    },
+    {
+      "id": "it_clang_2899",
+      "widget_id": "widget_clang_2899",
+      "topic": "Differenza tra errori di compilazione e di linking",
+      "q": "Nel codice è dichiarata la funzione print_result(), ma manca il suo corpo. In quale fase si verificherà l'errore tentata la build dell'eseguibile?",
+      "hint": "La sintassi C è corretta, ma l'implementazione della funzione non viene trovata nella fase di linking.",
+      "options": [
+        "Nella fase di linking (collegamento), poiché il compilatore genererà la chiamata, ma il linker non troverà l'implementazione di print_result",
+        "Nella fase di preprocessing",
+        "Nella fase di analisi sintattica del compilatore",
+        "Il codice verrà assemblato con successo, l'errore si verificherà solo durante l'esecuzione (runtime)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La dichiarazione (prototipo) consente al compilatore di generare il codice oggetto, ma il linker restituirà l'errore `undefined reference` non trovando il corpo della funzione.",
+        "Non corretto. Il preprocessore lavora solo con le direttive `#`.",
+        "Non corretto. La sintassi di dichiarazione e chiamata di funzione è perfettamente valida in C.",
+        "Non corretto. Il programma non verrà compilato in un binario a causa di un simbolo non risolto."
+      ]
+    },
+    {
+      "id": "it_clang_2900",
+      "widget_id": null,
+      "topic": "Compilazione separata (build passo-passo)",
+      "q": "Quale sequenza di comandi implementa il corretto processo di compilazione separata di due file (f1.c e f2.c) con successivo linking nel programma program?",
+      "hint": "Prima compila ciascun file in .o con il flag -c, poi collegali insieme.",
+      "options": [
+        "gcc -c f1.c && gcc -c f2.c && gcc f1.o f2.o -o program",
+        "gcc -o f1.o f1.c && gcc -o f2.o f2.c && gcc program -link f1.o f2.o",
+        "gcc f1.c -o f1.o && gcc f2.c -o f2.o && gcc --join f1.o f2.o program"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Prima `gcc -c` crea i file oggetto `f1.o` e `f2.o`, poi il comando finale `gcc f1.o f2.o -o program` li collega insieme.",
+        "Non corretto. I primi comandi creerebbero subito file eseguibili (senza `-c`), e la chiave `-link` non è supportata.",
+        "Non corretto. Senza l'opzione `-c`, il flag `-o f1.o` tenterà di assemblare immediatamente un file eseguibile da codice incompleto."
+      ]
+    },
+    {
+      "id": "it_clang_2901",
+      "widget_id": "widget_clang_2901",
+      "topic": "Errore sintattico di compilazione",
+      "q": "Nel codice manca un punto e virgola dopo l'inizializzazione di una variabile. Cosa succede se si tenta di compilare questo file?",
+      "hint": "La violazione delle regole sintattiche del linguaggio blocca la build del file binario.",
+      "options": [
+        "Il compilatore interromperà l'esecuzione con un errore (error) e non creera il file eseguibile",
+        "Il compilatore mostrerà un avviso (warning), ma creerà comunque con successo il file",
+        "Il codice verrà compilato senza alcun messaggio di errore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un separatore `;` mancante è un errore sintattico (syntax error). In presenza di errori, il file compilato non viene creato.",
+        "Non corretto. Gli avvisi vengono emessi per codice sintatticamente valido ma sospetto. La mancanza di `;` è un errore critico.",
+        "Non corretto. Il compilatore non sarà in grado di analizzare la grammatica della struttura."
+      ]
+    },
+    {
+      "id": "it_clang_2902",
+      "widget_id": null,
+      "topic": "Differenza fondamentale tra Warning ed Error",
+      "q": "Qual è la differenza fondamentale tra un avviso (warning) e un errore (error) dal punto di vista del funzionamento del compilatore?",
+      "hint": "Rifletti se il file eseguibile finale viene generato o meno su disco.",
+      "options": [
+        "In presenza di un avviso il file eseguibile viene creato, mentre con un errore il processo di traduzione si interrompe e il file non viene creato",
+        "Gli avvisi si verificano durante l'esecuzione (runtime), mentre gli errori durante la compilazione",
+        "Gli errori sono gestiti dal compilatore, mentre gli avvisi solo dal preprocessore",
+        "Un avviso viene generato solo al massimo livello di ottimizzazione -O3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un warning segnala un codice scritto in modo rischioso ma consente di completare la build. Un error interrompe criticamente il processo di compilazione.",
+        "Non corretto. Sia gli avvisi sia gli errori del compilatore si verificano in fase di compilazione (compile time).",
+        "Non corretto. Il preprocessore gestisce le direttive `#`, mentre gli avvisi sono analizzati dal compilatore.",
+        "Non corretto. Gli avvisi vengono mostrati indipendentemente dal livello di ottimizzazione."
+      ]
+    },
+    {
+      "id": "it_clang_2903",
+      "widget_id": "widget_clang_2903",
+      "topic": "Incompatibilità di tipo nel formato printf",
+      "q": "Una variabile di tipo int viene passata allo specificatore %s. Cosa mostrerà il compilatore di default durante la compilazione di questo frammento?",
+      "hint": "Il passaggio di un argomento di tipo errato per la stringa di formato non viola la grammatica C, ma porta a potenziali bug.",
+      "options": [
+        "Un avviso (warning) per l'incompatibilità tra il tipo di argomento e il formato %s, ma il binario verrà creato",
+        "Un errore critico (error) di compilazione che blocca la build",
+        "Un errore del preprocessore (preprocessor error)",
+        "Un errore di linking (linker error)",
+        "La build verrà completata senza alcun messaggio"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! GCC verifica le stringhe di formato di `printf` e restituisce `warning: format '%s' expects argument of type 'char *', but argument has type 'int'`. Il file eseguibile verrà comunque creato.",
+        "Non corretto. Il codice è sintatticamente valido, quindi non è un errore di compilazione.",
+        "Non corretto. Il preprocessore non analizza i tipi nelle chiamate di funzione.",
+        "Non corretto. Il simbolo `printf` si trova in stdio, non c'è alcun errore di linking.",
+        "Non corretto. I compilatori moderni generano un warning per queste chiamate."
+      ]
+    },
+    {
+      "id": "it_clang_2904",
+      "widget_id": null,
+      "topic": "Modalità di build rigorosa (-Werror)",
+      "q": "Quale flag di compilazione impone a GCC di interpretare qualsiasi avviso (warning) come errore critico (error)?",
+      "hint": "Il flag unisce le parole Warning ed Error.",
+      "options": [
+        "-Werror",
+        "-Wall"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-Werror` interrompe la compilazione se viene rilevato anche un solo avviso.",
+        "Non corretto. `-Wall` abilita un'ampia gamma di avvisi, ma non li trasforma in errori."
+      ]
+    },
+    {
+      "id": "it_clang_2905",
+      "widget_id": "widget_clang_2805",
+      "topic": "Uso di una variabile non inizializzata",
+      "q": "La variabile val viene usata nei calcoli senza essere stata inizializzata. Come reagirà il compilatore con il flag -Wall?",
+      "hint": "Si tratta di una lettura di «spazzatura» dalla memoria: il codice verrà compilato, ma il compilatore emetterà un avviso.",
+      "options": [
+        "Emetterà un avviso (warning: 'val' is used uninitialized in this function)",
+        "Emetterà un errore critico (error) e interromperà la build",
+        "Assegnerà automaticamente a val il valore 0 e proseguirà la compilazione senza notifica",
+        "Emetterà un errore di linking"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'uso di un valore non inizializzato genera un avviso su un potenziale bug, anche se il codice è sintatticamente valido.",
+        "Non corretto. Non è considerato un errore sintattico (error).",
+        "Non corretto. Lo standard C e il compilatore non inizializzano automaticamente a zero le variabili locali.",
+        "Non corretto. Il linker non controlla l'inizializzazione delle variabili locali."
+      ]
+    },
+    {
+      "id": "it_clang_2906",
+      "widget_id": null,
+      "topic": "Soppressione degli avvisi (-w)",
+      "q": "Quale effetto ha il passaggio del flag -w al compilatore GCC?",
+      "hint": "La lettera minuscola w è usata per disabilitare i messaggi.",
+      "options": [
+        "Sopprime completamente l'output di qualsiasi avviso del compilatore nella console",
+        "Trasforma tutti gli avvisi in errori",
+        "Mostra solo gli avvisi relativi alla gestione della memoria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'opzione `-w` (a differenza di `-Wall`) disabilita l'output di tutti gli avvisi.",
+        "Non corretto. La conversione è effettuata dal flag `-Werror`.",
+        "Non corretto. Il flag sopprime indistintamente tutti gli avvisi."
+      ]
+    },
+    {
+      "id": "it_clang_2907",
+      "widget_id": "widget_clang_2907",
+      "topic": "Mancanza dell'istruzione return in una funzione non void",
+      "q": "La funzione calculate è dichiarata con tipo di ritorno int, ma nel suo corpo manca l'istruzione return. Cosa mostrerà il compilatore con -Wall?",
+      "hint": "Presta attenzione al messaggio relativo al flusso di controllo che raggiunge la fine della funzione.",
+      "options": [
+        "warning: control reaches end of non-void function",
+        "error: missing return statement",
+        "linker error: undefined return value",
+        "warning: variable x is not defined",
+        "error: calculate function cannot be compiled",
+        "fatal error: missing semicolon in function"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'assenza di `return` in una funzione che restituisce un valore è fonte di comportamento indefinito (UB), di cui GCC avvisa con il messaggio `control reaches end of non-void function`.",
+        "Non corretto. In C questo è un avviso (warning), non un errore di compilazione.",
+        "Non corretto. Il linker si occupa del collegamento dei simboli, non del controllo del corpo delle funzioni.",
+        "Non corretto. La variabile `x` è dichiarata nei parametri.",
+        "Non corretto. La funzione verrà compilata.",
+        "Non corretto. Non ci sono errori sintattici nel codice."
+      ]
+    },
+    {
+      "id": "it_clang_2908",
+      "widget_id": null,
+      "topic": "Errore del linker vs Errore del compilatore",
+      "q": "A quale categoria appartiene il messaggio di errore «undefined reference to 'main'» o «undefined reference to 'some_function'»?",
+      "hint": "Questo errore si verifica quando tutti i file sono compilati, ma è impossibile collegare le chiamate ai corpi delle funzioni.",
+      "options": [
+        "Errore del linker (linker error)",
+        "Errore sintattico del compilatore (compiler syntax error)",
+        "Avviso del preprocessore (preprocessor warning)",
+        "Eccezione in tempo di esecuzione (runtime exception)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I messaggi del tipo `undefined reference to ...` sono generati dal linker (ld) quando un simbolo è dichiarato ma il suo corpo non si trova in alcun file oggetto o libreria.",
+        "Non corretto. La sintassi della chiamata di funzione può essere perfettamente valida per il compilatore.",
+        "Non corretto. Il preprocessore lavora prima della traduzione del codice.",
+        "Non corretto. L'errore si verifica prima dell'avvio del programma, durante la fase di build."
+      ]
+    },
+    {
+      "id": "it_clang_2909",
+      "widget_id": "widget_clang_2909",
+      "topic": "Assegnazione al posto del confronto nelle condizioni",
+      "q": "Perché l'espressione if (status = 1) genera un avviso del compilatore durante la build con -Wall?",
+      "hint": "Presta attenzione alla differenza tra l'operatore di assegnazione e quello di confronto.",
+      "options": [
+        "All'interno della condizione viene usato l'operatore di assegnazione = invece del confronto ==",
+        "La variabile status non può essere modificata all'interno delle condizioni",
+        "La condizione if deve obbligatoriamente содержать il ramo else"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'assegnazione `=` all'interno di un `if` è un refuso comune (al posto di `==`). GCC avvisa: `suggest parentheses around assignment used as truth value`.",
+        "Non corretto. In C l'assegnazione all'interno di espressioni è consentita, ma è spesso accidentale.",
+        "Non corretto. La presenza di `else` non è obbligatoria."
+      ]
+    },
+    {
+      "id": "it_clang_2910",
+      "widget_id": null,
+      "topic": "Pratica di eliminazione degli avvisi",
+      "q": "Perché nello sviluppo software professionale è consuetudine compilare il codice con i flag -Wall -Wextra -Werror?",
+      "hint": "Rifletti sull'affidabilità del codice e sulla prevenzione dei bug nascosti.",
+      "options": [
+        "Gli avvisi nascondono spesso potenziale bug, memory leak e comportamenti indefiniti (UB)",
+        "La presenza anche di un solo warning riduce le prestazioni del programma del 50%"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli avvisi del compilatore evidenziano codice scritto in modo rischioso che ha un'alta probabilità di causare bug o errori di esecuzione.",
+        "Non corretto. Gli avvisi in sé non influiscono sulla velocità del codice binario compilato."
+      ]
+    },
+    {
+      "id": "it_clang_2911",
+      "widget_id": "widget_clang_2911",
+      "topic": "Scopo dell'opzione -o",
+      "q": "Quale ruolo svolge il flag -o durante la chiamata al compilatore GCC?",
+      "hint": "La lettera o sta per output.",
+      "options": [
+        "Specifica il nome e il percorso del file finale generato (file di output)",
+        "Abilita il massimo livello di ottimizzazione del codice",
+        "Costringe il compilatore a ottimizzare il codice solo in base alla dimensione di memoria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-o <filename>` imposta il nome e il percorso del file di output generato (eseguibile, oggetto o assembly).",
+        "Non corretto. Il livello di ottimizzazione è gestito dalla famiglia di flag `-O` (`-O1`, `-O2`, `-O3`).",
+        "Non corretto. L'ottimizzazione per dimensione è impostata con il flag `-Os`."
+      ]
+    },
+    {
+      "id": "it_clang_2912",
+      "widget_id": null,
+      "topic": "Posizione del flag -o nel comando",
+      "q": "Quale tra i seguenti comandi da riga di comando è corretto per compilare il file app da main.c?",
+      "hint": "Il flag -o con l'argomento può essere posizionato sia prima sia dopo i file sorgente.",
+      "options": [
+        "Entrambi i comandi: gcc -o app main.c e gcc main.c -o app sono corretti",
+        "Solo gcc main.c -o app",
+        "Solo gcc -o app main.c",
+        "Nessuno dei due, poiché il nome del file di output deve essere sempre l'ultimo parametro senza flag"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il compilatore GCC accetta il flag `-o` con il nome del file in qualsiasi punto del comando, l'importante è che l'argomento segua immediatamente `-o`.",
+        "Non corretto. La variante `gcc -o app main.c` è altrettanto valida.",
+        "Non corretto. Anche la variante `gcc main.c -o app` è corretta.",
+        "Non corretto. L'ordine dei flag in GCC è sufficientemente flessibile."
+      ]
+    },
+    {
+      "id": "it_clang_2913",
+      "widget_id": "widget_clang_2913",
+      "topic": "Uso di -o insieme a -c",
+      "q": "Quale nome riceverà il file oggetto generato quando si esegue il comando gcc -c math.c -o custom_math.o?",
+      "hint": "Presta attenzione al valore passato direttamente dopo il flag -o.",
+      "options": [
+        "custom_math.o",
+        "math.o",
+        "a.out"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Di default senza `-o` si otterrebbe `math.o`, ma grazie a `-o custom_math.o` specificato esplicitamente, il file oggetto viene rinominato.",
+        "Non corretto. Il nome `math.o` verrebbe creato solo in assenza del flag `-o`.",
+        "Non corretto. `a.out` viene creato compilando direttamente in un eseguibile senza `-o`."
+      ]
+    },
+    {
+      "id": "it_clang_2914",
+      "widget_id": null,
+      "topic": "Salvataggio del file di output in una sottodirectory",
+      "q": "Come si usa il flag -o per salvare il binario compilato con nome server direttamente in una cartella esistente build/?",
+      "hint": "Passa il percorso relativo al file nell'argomento del flag -o.",
+      "options": [
+        "gcc main.c -o build/server",
+        "gcc main.c -o server --dir build/",
+        "gcc -dir build/ main.c -o server",
+        "gcc main.c > build/server",
+        "gcc -path build/ -o server main.c"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-o` accetta non solo il nome del file ma anche il percorso, ad esempio `-o build/server`.",
+        "Non corretto. L'opzione `--dir` non esiste tra i parametri di GCC.",
+        "Non corretto. L'opzione `-dir` non esiste.",
+        "Non corretto. Ridirezionare l'output con `>` corromperà il file binario.",
+        "Non corretto. Il flag `-path` non viene utilizzato."
+      ]
+    },
+    {
+      "id": "it_clang_2915",
+      "widget_id": "widget_clang_2915",
+      "topic": "Comportamento di GCC in assenza del flag -o su Linux",
+      "q": "Quale nome di file sceglierà GCC di default nel sistema operativo Linux se si compila questo codice con il comando gcc main.c senza specificare -o?",
+      "hint": "Nome predefinito del file binario in UNIX.",
+      "options": [
+        "a.out",
+        "main.out"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Di default, in assenza di `-o` nei sistemi POSIX, l'eseguibile finale si chiama `a.out`.",
+        "Non corretto. GCC non usa di default il nome del file `.c` sorgente con l'estensione `.out`."
+      ]
+    },
+    {
+      "id": "it_clang_2916",
+      "widget_id": null,
+      "topic": "Errore per mancanza di argomento dopo -o",
+      "q": "Cosa succede se si esegue il comando di compilazione gcc main.c -o senza specificare il nome del file di output?",
+      "hint": "Pensa a come reagirà il compilatore se il parametro richiede un argomento ma il comando è terminato.",
+      "options": [
+        "Il compilatore si interromperà con un errore (fatal error: missing filename after '-o')",
+        "Al file di output verrà assegnato automaticamente il nome '-o'",
+        "Al file di output verrà assegnato il nome main",
+        "Il file verrà compilato con il nome a.out"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-o` richiede strettamente l'argomento successivo. Se manca, GCC restituirà un errore critico e interromperà l'esecuzione.",
+        "Non corretto. `-o` non viene considerato come un nome di file.",
+        "Non corretto. Il nome `main` non viene inserito automaticamente.",
+        "Non corretto. Un errore nei parametri annulla la build."
+      ]
+    },
+    {
+      "id": "it_clang_2917",
+      "widget_id": "widget_clang_2917",
+      "topic": "Rischio di sovrapposizione tra nome di output e sorgente",
+      "q": "A quale conseguenza critica porterà l'esecuzione accidentale del comando gcc main.c -o main.c?",
+      "hint": "Il flag -o indica DOVE scrivere il risultato binario.",
+      "options": [
+        "Il codice sorgente nel file main.c verrà distrutto e sovrascritto con il contenuto binario compilato",
+        "Il compilatore emetterà un errore di sicurezza e rinominerà il file in main.c.bak",
+        "Il codice sorgente rimarrà al sicuro e il file binario verrà scritto in a.out"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! GCC aprirà il file `main.c` in scrittura per generare l'eseguibile finale, causando la perdita totale del codice sorgente.",
+        "Non corretto. GCC non crea backup automatici `.bak`.",
+        "Non corretto. Il flag `-o` forza l'apertura del percorso specificato in scrittura."
+      ]
+    },
+    {
+      "id": "it_clang_2918",
+      "widget_id": null,
+      "topic": "Formattazione del nome su SO Windows",
+      "q": "Se uno sviluppatore compila un programma su Windows con il comando gcc main.c -o myapp, quale nome completo del file verrà creato dal compilatore?",
+      "hint": "Windows aggiunge automaticamente l'estensione per i file eseguibili.",
+      "options": [
+        "myapp.exe",
+        "myapp.out",
+        "myapp.c",
+        "myapp.dll",
+        "a.exe",
+        "a.out"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Su Windows il port di GCC (come MinGW) aggiunge automaticamente l'estensione `.exe` al nome fornito, creando il file `myapp.exe`.",
+        "Non corretto. L'estensione `.out` non è tipica per gli eseguibili Windows.",
+        "Non corretto. `.c` è il file sorgente.",
+        "Non corretto. `.dll` è una libreria dinamica, non un eseguibile binario.",
+        "Non corretto. `a.exe` viene creato solo in assenza del flag `-o`.",
+        "Non corretto. `a.out` viene creato dalla build su Linux/macOS senza `-o`."
+      ]
+    },
+    {
+      "id": "it_clang_2919",
+      "widget_id": "widget_clang_2919",
+      "topic": "Uso di -o insieme al flag di assemblaggio -S",
+      "q": "Quale risultato esatto genererà il comando gcc -S main.c -o assembly_code.s?",
+      "hint": "Il flag -S interrompe la compilazione alla fase dell'assembler.",
+      "options": [
+        "Un file di testo assembly_code.s contenente codice in linguaggio assembly",
+        "Un file eseguibile binario pronto all'uso assembly_code.s",
+        "Un file oggetto assembly_code.s in codice macchina"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-S` genera un file di testo con le istruzioni assembly, e `-o` gli assegna il nome specificato `assembly_code.s`.",
+        "Non corretto. Il flag `-S` annulla le fasi di assemblaggio e linking.",
+        "Non corretto. Il codice macchina oggetto viene generato con il flag `-c`."
+      ]
+    },
+    {
+      "id": "it_clang_2920",
+      "widget_id": null,
+      "topic": "Linking di più file in un unico file di output",
+      "q": "Qual è il modo corretto di scrivere il comando per compilare tre moduli (a.c, b.c, c.c) in un unico binario final_app?",
+      "hint": "Indica tutti i file sorgente e una sola volta il flag -o con il nome del file finale.",
+      "options": [
+        "gcc a.c b.c c.c -o final_app",
+        "gcc -o final_app a.c -o final_app b.c -o final_app c.c",
+        "gcc a.c + b.c + c.c -o final_app",
+        "gcc -o final_app [a.c, b.c, c.c]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Tutti i file sorgente vengono elencati separati da uno spazio, mentre l'unico flag `-o final_app` imposta il nome del file finale collegato.",
+        "Non corretto. Ripetere `-o final_app` per ciascun file non ha senso ed è un errore.",
+        "Non corretto. Il simbolo `+` non viene usato per elencare i file nella CLI di GCC.",
+        "Non corretto. Le parentesi quadre non sono supportate nella sintassi dei parametri di GCC."
+      ]
+    }
+  ]
+}

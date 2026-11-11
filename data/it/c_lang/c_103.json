@@ -1,0 +1,587 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_3131",
+      "widget_id": "widget_clang_3131",
+      "topic": "Scopo e crescita dell'Heap (Heap Layout)",
+      "q": "Che cos'è l'Heap nella memoria di un programma C e in quale direzione cresce nell'impaginazione classica della memoria virtuale?",
+      "hint": "L'Heap si trova al di sopra delle sezioni .data/.bss e cresce verso indirizzi virtuali più alti, andando incontro allo Stack che cresce verso il basso.",
+      "options": [
+        "Area per l'allocazione dinamica della memoria durante l'esecuzione (tramite malloc), che cresce verso l'alto (indirizzi più alti)",
+        "Area in sola lettura dove sono memorizzate le istruzioni compilate delle funzioni, che cresce verso il basso",
+        "Uno Stack di chiamate fisso la cui dimensione viene stabilita al momento della compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'Heap viene utilizzato per allocare blocchi di memoria di dimensioni arbitrarie durante l'esecuzione del programma. Nella mappa di memoria classica si trova sopra le sezioni `.bss`/`.data` e cresce verso l'alto, verso gli indirizzi più alti.",
+        "Errato. Le istruzioni delle funzioni sono memorizzate nella sezione protetta `.text`.",
+        "Errato. Lo Stack viene utilizzato per le variabili locali automatiche e cresce dall'alto verso il basso."
+      ]
+    },
+    {
+      "id": "it_clang_3132",
+      "widget_id": null,
+      "topic": "Perdite di memoria (Memory Leaks)",
+      "q": "Cosa succede a un blocco di memoria allocato nell'Heap se il puntatore ad esso esce dallo scope senza aver prima chiamato free()?",
+      "hint": "A differenza dello Stack, la memoria nell'Heap non viene liberata automaticamente all'uscita da una функция.",
+      "options": [
+        "Si verifica una perdita di memoria (Memory Leak): il blocco rimane allocato nell'Heap, ma l'accesso ad esso viene perso fino alla fine del processo",
+        "Il sistema operativo chiamerà automaticamente free() al termine del blocco {} corrente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il linguaggio C non dispone di un garbage collector integrato. Se il puntatore alla memoria dinamica viene perso senza chiamare `free()`, tale memoria rimane bloccata nell'Heap finché l'intero processo non viene terminato dal SO.",
+        "Errato. Vengono liberate automaticamente solo le variabili locali sullo Stack."
+      ]
+    },
+    {
+      "id": "it_clang_3133",
+      "widget_id": "widget_clang_3133",
+      "topic": "Differenza tra malloc() e calloc()",
+      "q": "Qual è la differenza fondamentale tra le funzioni di allocazione di memoria malloc() e calloc()?",
+      "hint": "Pensa allo stato in cui si trovano i byte di memoria allocata prima che vi vengano scritti dei dati.",
+      "options": [
+        "malloc() lascia la memoria allocata non inizializzata («spazzatura»), mentre calloc() azzera garantitamente tutti i byte allocati",
+        "malloc() alloca memoria nell'Heap, mentre calloc() alloca memoria nello Stack Frame",
+        "calloc() può allocare memoria solo per un array di stringhe, mentre malloc() solo per numeri interi",
+        "malloc() chiama automaticamente free() dopo 60 secondi dall'allocazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `malloc(size)` restituisce un puntatore alla memoria allocata con contenuto non inizializzato (spazzatura). `calloc(num, size)` riempie inoltre l'intera area allocata con byte pari a zero.",
+        "Errato. Entrambe le funzioni lavorano esclusivamente con la memoria dell'Heap.",
+        "Errato. Entrambe le funzioni lavorano con byte grezzi e non sono legate ai tipi di dati.",
+        "Errato. Nessuna delle due funzioni libera la memoria a tempo."
+      ]
+    },
+    {
+      "id": "it_clang_3134",
+      "widget_id": null,
+      "topic": "Chiamate di sistema dell'allocatore (brk/sbrk vs mmap)",
+      "q": "In che modo l'allocatore standard del C (ad es. ptmalloc in glibc) richiede memoria aggiuntiva per l'Heap al kernel del sistema operativo?",
+      "hint": "L'allocatore sposta il limite dell'Heap per blocchi piccoli e usa il mapping anonimo di memoria per grandi allocazioni.",
+      "options": [
+        "Per blocchi piccoli sposta il limite dell'Heap tramite brk/sbrk, mentre per blocchi grandi richiede frammenti tramite mmap",
+        "Scrive i dati direttamente nel controller fisico della RAM, bypassando il kernel del sistema operativo",
+        "Reindirizza le richieste di allocazione di memoria ai file header degli standard POSIX",
+        "Crea file temporanei sull'hard disk per ogni chiamata a malloc()",
+        "Utilizza le chiamate di sistema socket() e connect() per ricevere byte dalla rete"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per soddisfare le richieste di `malloc()`, gli allocatori utilizzano `brk()`/`sbrk()` (spostando il limite superiore del segmento Heap `program break` per piccole allocazioni) e `mmap()` (creando pagine indipendenti di memoria virtuale per grandi allocazioni, di solito a partire da 128 KB).",
+        "Errato. L'accesso alla RAM è controllato fisicamente dalla MMU e dal kernel del SO; la scrittura diretta è vietata.",
+        "Errato. I file header riguardano il codice in fase di compilazione, non le chiamate di sistema del kernel.",
+        "Errato. La memoria dinamica funziona strettamente nella RAM senza il passaggio intermedio su disco.",
+        "Errato. Le chiamate di rete non hanno nulla a che fare con l'allocazione della RAM locale."
+      ]
+    },
+    {
+      "id": "it_clang_3135",
+      "widget_id": "widget_clang_3135",
+      "topic": "Uso della memoria dopo la liberazione (Use-After-Free)",
+      "q": "Quale pericoloso errore di gestione della memoria è presente nel codice del widget e a cosa porta?",
+      "hint": "Fai attenzione a cosa succede alla memoria puntata da data dopo la chiamata a free(data).",
+      "options": [
+        "Use-After-Free (Uso dopo la liberazione): la scrittura tramite il puntatore data dopo free() porta a Comportamento Indefinito (UB) o alla corruzione delle strutture di servizio dell'Heap",
+        "Stack Overflow (Overflow dello Stack): la funzione riempie lo Stack con elementi locali",
+        "Deadlock (Blocco vicendevole): il thread si blocca indefinitamente in attesa di un mutex",
+        "Compilation Error: il compilatore vieta l'uso dell'operatore di dereferenziazione * dopo free"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'accesso alla memoria dopo la chiamata a `free()` è un classico caso di `Use-After-Free`. Tale area di memoria può essere riutilizzata dall'allocatore per altri compiti, e la scrittura `*data = 100` corromperà i nuovi dati o i metadati dell'allocatore.",
+        "Errato. L'errore si verifica nell'Heap, non nello Stack.",
+        "Errato. Nel codice non ci sono thread o mutex.",
+        "Errato. Il compilatore non traccia lo stato dinamico dei puntatori a runtime, quindi il codice verrà compilato correttamente."
+      ]
+    },
+    {
+      "id": "it_clang_3136",
+      "widget_id": null,
+      "topic": "Frammentazione dell'Heap (Heap Fragmentation)",
+      "q": "Che cos'è la frammentazione esterna dell'Heap (External Fragmentation) e a cosa porta con un uso intensivo di malloc() e free()?",
+      "hint": "Pensa a una situazione in cui la memoria libera totale è sufficiente, ma è suddivisa in molti piccoli frammenti distinti.",
+      "options": [
+        "Una situazione in cui la quantità totale di memoria libera nell'Heap è sufficiente, ma è suddivisa in piccoli frammenti non contigui, rendendo impossibile l'allocazione di un unico blocco continuo di grandi dimensioni",
+        "Un arresto anomalo in cui il sistema operativo rimuove completamente il segmento di codice .text",
+        "Un errore che si verifica quando si tenta di chiamare malloc() da una macro del preprocessore",
+        "Unione automatica di tutti i file C in un unico file oggetto",
+        "Danneggiamento hardware dei banchi di memoria RAM a causa di letture frequenti",
+        "Una situazione in cui tutte le variabili dello Stack vengono spostate nel registro di Windows"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La frammentazione esterna si verifica quando tra i blocchi occupati rimangono buchi sparsi di memoria libera. Se il programma richiede l'allocazione di un ampio spazio continuo, `malloc` potrebbe restituire `NULL`, anche se la memoria libera totale è sufficiente.",
+        "Errato. La frammentazione avviene esclusivamente nel segmento Heap e non influisce sul segmento di codice.",
+        "Errato. La chiamata a `malloc` è consentita in qualsiasi punto del programma C a runtime.",
+        "Errato. L'unione dei file è un compito del linker.",
+        "Errato. La frammentazione è un problema logico di allocazione degli indirizzi nella memoria virtuale, non un guasto hardware fisico.",
+        "Errato. Lo Stack e i registri del SO funzionano indipendentemente dalla frammentazione dell'Heap."
+      ]
+    },
+    {
+      "id": "it_clang_3137",
+      "widget_id": "widget_clang_3137",
+      "topic": "Metadati dei chunk dell'Heap (Heap Chunk Overhead)",
+      "q": "Perché gli allocatori di memoria (ad es. ptmalloc) scrivono dati di servizio nascosti (dimensione del chunk, flag) direttamente PRIMA dell'indirizzo restituito da malloc()?",
+      "hint": "Quando passi un puntatore a free(ptr), l'allocatore deve sapere esattamente quanti byte restituire al pool di sistema.",
+      "options": [
+        "Affinché la funzione free(ptr) possa conoscere la dimensione del blocco da liberare e lo stato dei chunk adiacenti senza che l'utente debba passare la dimensione",
+        "Per impedire la lettura di dati dalla memoria video",
+        "Per crittografare il contenuto del blocco tramite una chiave hardware della CPU"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `malloc(N)` alloca un po' più di memoria rispetto a `N`. Nell'intestazione (Chunk Header) prima dell'indirizzo restituito, l'allocatore memorizza la dimensione del chunk e i flag. Quando viene chiamata `free(ptr)`, l'allocatore legge questi metadati nascosti all'indirizzo `ptr - overhead`.",
+        "Errato. L'Heap risiede nella RAM del processore e non è legato alla memoria video.",
+        "Errato. Le intestazioni servono per la tracciabilità della memoria, non per la crittografia."
+      ]
+    },
+    {
+      "id": "it_clang_3138",
+      "widget_id": "widget_clang_3138",
+      "topic": "Riallocazione sicura della memoria tramite realloc()",
+      "q": "Qual è il pericolo critico nell'assegnare direttamente il risultato ptr = realloc(ptr, new_size) in caso di fallimento della funzione?",
+      "hint": "Pensa a cosa succede al vecchio puntatore ptr se realloc() restituisce NULL.",
+      "options": [
+        "Se realloc() restituisce NULL a causa di un errore, il vecchio puntatore ptr verrà sovrascritto e la memoria allocata in precedenza andrà persa (leak), poiché è impossibile ripristinarne il riferimento",
+        "In caso di errore, realloc() formatta automaticamente l'hard disk",
+        "Assegnando NULL, il programma viene istantaneamente ricompilato in modalità protetta",
+        "Gli errori di realloc() non possono essere intercettati poiché la funzione non restituisce valori"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In caso di fallimento `realloc()` restituisce `NULL`, ma il vecchio blocco di memoria RIMANE allocato. Se si scrive `ptr = realloc(ptr, new_size)`, l'indirizzo originale viene perso, provocando un'immancabile perdita di memoria.",
+        "Errato. Un errore di allocazione di memoria restituisce `NULL` e non influisce sul file system.",
+        "Errato. Non si verifica alcuna ricompilazione del codice durante l'esecuzione.",
+        "Errato. `realloc()` restituisce `void*` e il suo stato si verifica confrontandolo con `NULL`."
+      ]
+    },
+    {
+      "id": "it_clang_3139",
+      "widget_id": null,
+      "topic": "Permessi sulle pagine dell'Heap (Heap Permissions)",
+      "q": "Quali permessi di accesso standard (Permissions) hanno le pagine di memoria virtuale assegnate all'Heap?",
+      "hint": "Nell'Heap è necessario poter leggere e scrivere liberamente i dati, ma l'esecuzione del codice è bloccata secondo la protezione W^X.",
+      "options": [
+        "Read + Write (Lettura e Scrittura, rw-) senza permesso di Esecuzione (NX/No-Execute)",
+        "Read + Execute (Lettura ed Esecuzione, r-x) senza permesso di Scrittura"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La memoria dell'Heap è destinata ad ospitare strutture dati modificabili. Per questo ha bisogno dei permessi `rw-`. Per motivi di sicurezza (protezione dall'esecuzione di shellcode in caso di buffer overflow), il permesso di esecuzione `x` è disabilitato a livello di pagine MMU.",
+        "Errato. L'Heap ha necessariamente bisogno del permesso di scrittura `w`, mentre il permesso di esecuzione `x` è bloccato."
+      ]
+    },
+    {
+      "id": "it_clang_3140",
+      "widget_id": "widget_clang_3140",
+      "topic": "Overflow del buffer nell'Heap (Heap Buffer Overflow)",
+      "q": "Quali sono le conseguenze dell'esecuzione del codice unsafe_copy(input) se la lunghezza della stringa input supera i 16 byte?",
+      "hint": "La funzione strcpy inizierà a scrivere i byte in eccesso oltre i limiti del blocco allocato malloc(16).",
+      "options": [
+        "Heap Buffer Overflow: i byte in eccesso sovrascriveranno i dati adiacenti o i metadati di servizio dei chunk dell'Heap, causando un crash o una vulnerabilità di sicurezza",
+        "Il sistema operativo espanderà automaticamente il blocco malloc(16) alla dimensione necessaria",
+        "La funzione strcpy troncherà la stringa input a 16 caratteri",
+        "Il compilatore genererà un avviso e bloccherà l'esecuzione del programma",
+        "La memoria libera dell'Heap si pulirà automaticamente e riavvierà la funzione main()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strcpy()` non controlla i limiti del buffer allocato. La scrittura oltre i 16 byte sovrascriverà i byte dei blocchi dell'Heap adiacenti o le intestazioni di servizio dell'allocatore (Heap Overflow), il che può portare a un crash durante la chiamata a `free()` o all'esecuzione di codice malevolo.",
+        "Errato. In C i buffer non si ridimensionano automaticamente quando scritti con funzioni di copia grezze.",
+        "Errato. `strcpy` copia i dati fino al carattere nullo finale `\\0`, ignorando la dimensione del buffer.",
+        "Errato. La dimensione di `input` non è nota al compilatore durante la fase di runtime.",
+        "Errato. L'overflow danneggia i byte strutturati della RAM senza alcuna pulizia automatica."
+      ]
+    },
+    {
+      "id": "it_clang_3141",
+      "widget_id": "widget_clang_3141",
+      "topic": "Direzione di crescita dello Stack e Stack Frame",
+      "q": "In quale direzione cresce lo Stack di chiamate nella memoria virtuale sull'architettura x86/x86_64 e come si formano i frame delle funzioni (Stack Frame)?",
+      "hint": "Pensa alla variazione dell'indirizzo nel registro del puntatore di stack (%rsp) quando si inseriscono nuovi dati (push/sub).",
+      "options": [
+        "Lo Stack cresce dall'alto verso il basso (da indirizzi più alti a indirizzi più bassi), e il frame di una nuova funzione viene aggiunto dal lato degli indirizzi minori",
+        "Lo Stack cresce dal basso verso l'alto (da indirizzi più bassi a indirizzi più alti), in parallelo alla sezione di codice .text",
+        "Lo Stack non si sposta nella memoria virtuale ed è un array statico circolare"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Sull'architettura x86/x86_64 lo Stack cresce verso indirizzi di memoria virtuale decrescenti (verso il basso). Quando si chiama una функция, il registro `%rsp` viene decrementato, riservando spazio per un nuovo frame (Stack Frame).",
+        "Errato. Dal basso verso l'alto, a partire dagli indirizzi più bassi, cresce l'Heap e non lo Stack.",
+        "Errato. Lo Stack si espande e si contrae dinamicamente tramite gli spostamenti del puntatore di stack."
+      ]
+    },
+    {
+      "id": "it_clang_3142",
+      "widget_id": null,
+      "topic": "Velocità di allocazione della memoria sullo Stack",
+      "q": "Perché l'allocazione della memoria per le variabili locali sullo Stack avviene quasi istantaneamente rispetto a malloc() nell'Heap?",
+      "hint": "Pensa al numero di istruzioni del processore necessarie per riservare spazio alle variabili sullo Stack.",
+      "options": [
+        "L'allocazione di memoria sullo Stack consiste in un'unica istruzione aritmetica di spostamento del puntatore di stack (sub $size, %rsp)",
+        "Lo Stack si trova nella memoria flash integrata del processore, bypassando il bus RAM comune"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per allocare memoria sullo Stack per tutte le variabili locali di una функция, al processore basta eseguire una singola istruzione di sottrazione dal registro `%rsp`. A differenza di `malloc()`, qui non occorre cercare chunk liberi né aggiornare elenchi di metadati.",
+        "Errato. La memoria dello Stack risiede nella stessa RAM dell'Heap."
+      ]
+    },
+    {
+      "id": "it_clang_3143",
+      "widget_id": "widget_clang_3143",
+      "topic": "Ritorno di un puntatore a una variabile locale (Dangling Pointer)",
+      "q": "A quale errore porta la restituzione di un puntatore &val a una variabile locale dalla funzione get_value()?",
+      "hint": "Cosa succede allo Stack Frame della функция get_value() al termine del suo lavoro e all'esecuzione di ret?",
+      "options": [
+        "Puntatore pendente (Dangling Pointer): lo Stack Frame della функция get_value() viene distrutto al ritorno e l'indirizzo &val diventerà non valido",
+        "Memory Leak: la variabile locale val rimarrà bloccata a lungo nell'Heap",
+        "Compilation Error: il compilatore vieta l'istruzione return per i puntatori",
+        "Deadlock: il programma si bloccherà durante l'esecuzione dell'operazione printf",
+        "Il codice verrà eseguito in modo assolutamente sicuro, poiché la memoria dello Stack è riservata per sempre"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili locali vengono create sullo Stack e hanno una durata di vita automatica. All'uscita da una funzione, il suo Stack Frame viene annullato. Il puntatore `ptr` diventa pendente (`dangling pointer`) e l'accesso a `*ptr` porta a Comportamento Indefinito (UB).",
+        "Errato. La variabile è creata sullo Stack, non nell'Heap, quindi non si verifica alcuna perdita di memoria nell'Heap.",
+        "Errato. Il compilatore può generare un avviso (`warning`), ma il codice verrà compilato.",
+        "Errato. La restituzione di un puntatore non causa blocchi tra thread (Deadlock).",
+        "Errato. La memoria dello Stack viene riutilizzata dalle successive chiamate di funzione."
+      ]
+    },
+    {
+      "id": "it_clang_3144",
+      "widget_id": "widget_clang_3144",
+      "topic": "Overflow dello Stack (Stack Overflow)",
+      "q": "Cosa succede a livello hardware quando si esegue una ricorsione infinita che porta a un errore di Stack Overflow?",
+      "hint": "Pensa al superamento dei limiti di memoria assegnati allo Stack del processo da parte del puntatore %rsp.",
+      "options": [
+        "Il puntatore %rsp supera la dimensione allocata per lo Stack e cade su una pagina protetta (Guard Page), causando un Segmentation Fault",
+        "Il processore rimuove automaticamente i vecchi frame dello Stack per fare spazio a nuove chiamate",
+        "Il sistema operativo alloca 100 Gigabyte di memoria nell'Heap per prolungare la ricorsione",
+        "Il programma entra in un loop e continua a funzionare all'infinito senza errori"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Ogni chiamata ricorsiva aggiunge un nuovo Stack Frame. Quando il puntatore di stack `%rsp` supera il limite assegnato, entra in una speciale pagina di memoria non mappata (`Guard Page`). La MMU genera un'eccezione e il SO termina il processo con `SIGSEGV`.",
+        "Errato. Il processore non può rimuovere i vecchi frame dello Stack senza l'esecuzione dell'istruzione `ret`.",
+        "Errato. La dimensione dello Stack è rigidamente limitata e non si espande a spese dell'Heap.",
+        "Errato. La memoria dello Stack si esaurisce rapidamente, portando a un arresto anomalo."
+      ]
+    },
+    {
+      "id": "it_clang_3145",
+      "widget_id": "widget_clang_3145",
+      "topic": "Protezione dello Stack mediante i canarini (Stack Canaries / SSP)",
+      "q": "Perché il compilatore inserisce un valore di controllo speciale (Stack Canary / %fs:0x28) nel frame della funzione prima delle variabili locali e lo verifica prima di ret?",
+      "hint": "Il canarino protegge l'indirizzo di ritorno dalla sovrascrittura in caso di buffer overflow sullo Stack.",
+      "options": [
+        "Per rilevare un buffer overflow sullo Stack (Stack Buffer Overflow) e prevenire il dirottamento dell'indirizzo di ritorno",
+        "Per pulire automaticamente la memoria dell'Heap in caso di arresto anomalo della funzione",
+        "Per velocizzare i calcoli delle funzioni a virgola mobile"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il «canarino» (Stack Canary) è un numero casuale posizionato tra il buffer locale e l'indirizzo di ritorno. Se a causa di un buffer overflow il canarino viene sovrascritto, la chiamata a `__stack_chk_fail` arresta immediatamente il programma prima dell'esecuzione di `ret`.",
+        "Errato. I canarini proteggono lo Stack e non gestiscono la memoria dell'Heap.",
+        "Errato. Si tratta di un meccanismo di sicurezza che non influisce sui calcoli matematici."
+      ]
+    },
+    {
+      "id": "it_clang_3146",
+      "widget_id": "widget_clang_3146",
+      "topic": "Pericolo degli Array a Lunghezza Variabile (VLA) e alloca()",
+      "q": "Qual è il pericolo principale nell'usare gli Array a Lunghezza Variabile (VLA) e la funzione alloca() quando si gestisce l'input utente user_size?",
+      "hint": "Pensa a cosa succederebbe se l'utente fornisse un valore user_size troppo grande.",
+      "options": [
+        "Il passaggio di un user_size elevato causerà un istantaneo Stack Overflow senza possibilità di intercettare l'errore (nessuna restituzione di NULL)",
+        "alloca() e VLA causano una forte frammentazione dell'Heap",
+        "La memoria allocata tramite alloca() deve essere obbligatoriamente liberata con free()",
+        "Il compilatore vieta l'uso di VLA nel codice C",
+        "La dimensione di un VLA può essere modificata solo a condizione di usare funzioni virtuali",
+        "alloca() alloca memoria esclusivamente nei registri della scheda video"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I `VLA` e `alloca()` allocano la memoria direttamente sullo Stack. A differenza di `malloc()`, l'allocatore di stack non può restituire `NULL` in caso di memoria insufficiente. Se `user_size` è grande, si verificherà un crash immediato per `Stack Overflow`.",
+        "Errato. `alloca()` e i `VLA` utilizzano lo Stack, non l'Heap.",
+        "Errato. La memoria viene liberata automaticamente all'uscita dalla funzione (per `alloca`) o dal blocco (per i `VLA`). Una chiamata a `free()` causerà un errore.",
+        "Errato. I VLA sono supportati dallo standard C99 (e opzionalmente da C11/C17).",
+        "Errato. Il concetto di VLA non ha nulla a che fare con le funzioni virtuali del C++.",
+        "Errato. La memoria viene allocata nella RAM di sistema dello Stack."
+      ]
+    },
+    {
+      "id": "it_clang_3147",
+      "widget_id": null,
+      "topic": "Permessi sulle pagine dello Stack (NX Bit)",
+      "q": "Quali permessi di accesso standard (Permissions) vengono impostati per le pagine di memoria virtuale dello Stack nei sistemi operativi moderni (Linux/Windows)?",
+      "hint": "Ricordando la protezione W^X: nello Stack sono memorizzate le variabili (serve la scrittura), ma l'esecuzione del codice è vietata.",
+      "options": [
+        "Read + Write (Lettura e Scrittura, rw-) senza permesso di Esecuzione (NX / Executive Disable)",
+        "Read + Write + Execute (Lettura, Scrittura ed Esecuzione, rwx)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La memoria dello Stack deve supportare la lettura e la scrittura delle variabili locali (`rw-`). Tuttavia, il permesso di esecuzione `x` è disabilitato per impostazione predefinita (NX-bit), per impedire agli aggressori di eseguire shellcode binario inserito in un buffer dello Stack.",
+        "Errato. Lo Stack eseguibile (`rwx`) è disabilitato per motivi di sicurezza in tutti i sistemi moderni."
+      ]
+    },
+    {
+      "id": "it_clang_3148",
+      "widget_id": "widget_clang_3148",
+      "topic": "Limiti sulla dimensione dello Stack del processo (ulimit)",
+      "q": "Qual è il limite standard di dimensione dello Stack per thread impostato di default nella maggior parte dei sistemi Linux (vedi ulimit -s)?",
+      "hint": "Il valore nell'output di ulimit -s è specificato in Kilobyte.",
+      "options": [
+        "8 Megabyte (8192 KB)",
+        "4 Gigabyte (4194304 KB)",
+        "64 Kilobyte (64 KB)",
+        "Nessun limite impostato di default"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il valore `8192` nell'output di `ulimit -s` indica un limite di dimensione dello Stack di 8192 Kilobyte (8 MB). Questa è la dimensione standard dello Stack del thread principale in molte distribuzioni Linux.",
+        "Errato. 4 GB è la dimensione dell'intero spazio di indirizzamento virtuale a 32 bit.",
+        "Errato. 64 KB è un limite troppo ridotto per la maggior parte delle applicazioni.",
+        "Errato. Il limite dello Stack è definito dalla politica predefinita del SO."
+      ]
+    },
+    {
+      "id": "it_clang_3149",
+      "widget_id": "widget_clang_3149",
+      "topic": "Ruolo dei registri RSP e RBP nel prologo della функция",
+      "q": "Quale ruolo svolgono i registri RSP (Stack Pointer) e RBP (Base / Frame Pointer) durante la creazione dello Stack Frame di una funzione?",
+      "hint": "RBP indica l'inizio dello Stack Frame corrente, mentre RSP definisce la cima mobile dello Stack.",
+      "options": [
+        "RBP fissa l'indirizzo base dell'inizio dello Stack Frame della funzione corrente, mentre RSP indica la cima variabile dello Stack",
+        "RSP memorizza il codice di ritorno della функция, mentre RBP l'indirizzo dell'istruzione successiva nella sezione .text",
+        "RBP e RSP vengono utilizzati solo per lavorare con i numeri a virgola mobile"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel prologo classico di una funzione, `RBP` memorizza l'indirizzo base del frame corrente (per facilitare l'indirizzamento di argomenti e variabili locali tramite `[rbp - N]`), mentre `RSP` traccia il punto più basso (la cima) dello Stack.",
+        "Errato. Il codice di ritorno è memorizzato nei registri `%rax`/`%eax`, mentre l'indirizzo dell'istruzione successiva è in `%rip`.",
+        "Errato. I registri dello Stack strutturano i frame delle funzioni per qualsiasi tipo di dato."
+      ]
+    },
+    {
+      "id": "it_clang_3150",
+      "widget_id": null,
+      "topic": "Stato della memoria dello Stack dopo l'uscita da una funzione",
+      "q": "Cosa succede ai byte fisici delle variabili locali nella memoria dello Stack dopo il completamento della функция e lo spostamento di RSP?",
+      "hint": "Pensa se il processore impiega tempo per azzerare il vecchio Stack Frame.",
+      "options": [
+        "I byte rimangono invariati («spazzatura») in memoria finché non vengono sovrascritti dal frame della funzione successiva",
+        "I byte fisici vengono istantaneamente azzerati da un processo speciale del kernel del SO",
+        "Lo Stack viene trasferito in un file temporaneo di swap della memoria virtuale",
+        "Il processore crittografa questi byte con una chiave casuale a 256 bit",
+        "Lo Stack Frame viene salvato nel segmento immutabile .rodata"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! All'uscita da una funzione, il registro `%rsp` viene semplicemente ripristinato. La memoria non viene azzerata per ragioni di prestazioni. Il contenuto del vecchio frame rimane nella RAM come \"spazzatura\" e verrà sovrascritto solo con la chiamata di nuove funzioni.",
+        "Errato. Non si verifica alcun azzeramento automatico dei byte fisici allo spostamento del puntatore di stack.",
+        "Errato. La normale rimozione di un frame non trasferisce dati nello swap.",
+        "Errato. La crittografia non viene eseguita.",
+        "Errato. Il segmento `.rodata` è immutabile e non viene utilizzato per i frame di chiamata dinamici."
+      ]
+    },
+    {
+      "id": "it_clang_3151",
+      "widget_id": "widget_clang_3151",
+      "topic": "Principio LIFO nelle chiamate di funzione",
+      "q": "In che modo la disciplina LIFO (Last-In-First-Out) determina l'ordine di creazione e distruzione dei frame delle funzioni con le chiamate main() -> alpha() -> beta()?",
+      "hint": "Pensa a quale frame di chiamata si trova in cima allo Stack per ultimo e termina per primo.",
+      "options": [
+        "Il frame della функция beta() viene creato per ultimo e distrutto per primo, dopodiché il controllo torna ad alpha() e poi a main()",
+        "Il frame della функция main() viene distrutto per primo, poiché è stato inserito nello Stack prima di tutti gli altri",
+        "Tutti e tre i frame vengono creati contemporaneamente e distrutti in ordine arbitrario dal sistema operativo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con la disciplina LIFO (\"l'ultimo ad entrare è il primo ad uscire\"), il frame della funzione `beta()`, chiamata per ultima, si trova in cima allo Stack e termina per primo. Solo dopo aver rimosso il suo frame dallo Stack potrà riprendere e terminare `alpha()`, e infine `main()`.",
+        "Errato. `main()` viene chiamata per prima, quindi il suo frame si trova in fondo allo Stack e viene distrutto per ultimo.",
+        "Errato. I frame dello Stack vengono creati e rimossi in sequenza man mano che si entra ed esce dalle funzioni."
+      ]
+    },
+    {
+      "id": "it_clang_3152",
+      "widget_id": null,
+      "topic": "Modifica della cima dello Stack con l'operazione PUSH",
+      "q": "Cosa succede all'indirizzo della cima dello Stack (registro Stack Pointer / RSP) quando si aggiungono (PUSH) nuovi dati sull'architettura x86_64?",
+      "hint": "Ricorda in quale direzione rispetto agli indirizzi di memoria virtuale cresce lo Stack nel modello classico x86.",
+      "options": [
+        "Il valore numerico dell'indirizzo in RSP diminuisce in base alla dimensione dei dati inseriti",
+        "Il valore numerico dell'indirizzo in RSP aumenta in base alla dimensione dei dati inseriti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Sull'architettura x86_64 lo Stack cresce dall'alto verso il basso (verso indirizzi più bassi). Ogni operazione `push` o inserimento di un frame decrementa il valore numerico nel registro `%rsp`.",
+        "Errato. L'aumento dell'indirizzo avviene quando si rimuovono dati dallo Stack (operazione `pop` / `add $size, %rsp`)."
+      ]
+    },
+    {
+      "id": "it_clang_3153",
+      "widget_id": "widget_clang_3153",
+      "topic": "Simmetria delle операции PUSH e POP nello Stack",
+      "q": "Quale проблема critico si verificherà in caso di sbilanciamento delle операции PUSH e POP all'interno di una chiamata di функция, come mostrato nell'esempio?",
+      "hint": "L'istruzione ret preleva l'indirizzo di ritorno dalla cima attuale dello Stack, indicata da RSP.",
+      "options": [
+        "Lo spostamento della cima dello Stack farà sì che l'istruzione ret legga da RSP un indirizzo di ritorno errato, provocando il crash del programma",
+        "Il compilatore correggerà automaticamente il valore di RSP proprio durante l'esecuzione dell'istruzione ret",
+        "I dati del registro %rax verranno semplicemente trasferiti nel registro %rbx senza impatti negativi sull'indirizzo di ritorno",
+        "Il programma ignorerà l'istruzione ret e continuerà ad eseguire in ordine le istruzioni della функция successiva"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'istruzione `ret` preleva dalla cima dello Stack (`%rsp`) l'indirizzo dell'istruzione di ritorno. Se prima di `ret` lo sbilanciamento `push`/`pop` non viene compensato, `%rsp` punterà a dati estranei. `ret` effettuerà un salto a un indirizzo errato, generando un `SIGSEGV`.",
+        "Errato. Il processore legge ciecamente l'indirizzo dal `%rsp` corrente senza correggere dinamicamente gli errori.",
+        "Errato. L'inserimento di un valore aggiuntivo senza la sua rimozione sposta l'indirizzo di ritorno.",
+        "Errato. L'istruzione `ret` funzionerà, ma eseguirà un salto a un indirizzo non corretto."
+      ]
+    },
+    {
+      "id": "it_clang_3154",
+      "widget_id": "widget_clang_3154",
+      "topic": "Struttura del record di attivazione (Activation Record)",
+      "q": "Quale ruolo fondamentale svolge l'indirizzo di ritorno (Return Address) all'interno del record di attivazione (Activation Record) sullo Stack?",
+      "hint": "Pensa a come il processore scopre a quale istruzione nel segmento .text ritornare dopo l'esecuzione di una функция.",
+      "options": [
+        "Salva l'indirizzo dell'istruzione successiva alla chiamata call per restituire il controllo alla funzione chiamante dopo l'esecuzione di ret",
+        "Indica l'indirizzo nell'Heap in cui sono memorizzate le variabili globali della функция corrente",
+        "Contiene un puntatore al nome del file C per la gestione degli errori",
+        "Viene utilizzato dal sistema operativo per allocare RAM aggiuntiva",
+        "Determina la velocità fisica di funzionamento del processore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Alla chiamata `call`, il processore salva automaticamente nel record di attivazione l'indirizzo dell'istruzione successiva (Return Address). Al termine della funzione, il comando `ret` estrae questo indirizzo e ripristina il flusso di esecuzione.",
+        "Errato. Le variabili globali sono memorizzate in `.data`/`.bss`, non nell'indirizzo di ritorno.",
+        "Errato. I nomi dei file sono memorizzati nei simboli di debug, non nell'indirizzo di ritorno.",
+        "Errato. L'indirizzo di ritorno è un puntatore nella sezione di codice `.text`.",
+        "Errato. Si tratta di un elemento della logica di controllo del flusso di esecuzione, che non influisce sulla frequenza di clock."
+      ]
+    },
+    {
+      "id": "it_clang_3155",
+      "widget_id": null,
+      "topic": "Stack Unwinding e sequenza rigida delle chiamate",
+      "q": "Perché la disciplina LIFO rende impossibile un ritorno arbitrario da una funzione profondamente annidata direttamente all'inizio del programma senza srotolare i frame intermedi (senza funzioni speciali come longjmp)?",
+      "hint": "Lo Stack di chiamate traccia la catena dei ritorni: la rimozione di un frame è possibile solo dalla cima.",
+      "options": [
+        "Ogni Stack Frame memorizza lo stato della функция precedente, e il ritorno richiede la rimozione passo dopo passo dei frame superiori per ripristinare i contesti",
+        "Il processore blocca fisicamente le chiamate a qualsiasi функция se in essa non è presente l'istruzione goto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I frame delle chiamate formano una catena concatenata. Il processore non può \"saltare\" i frame intermedi senza ripristinare i valori dei registri salvati (`%rbp` e altri) e dei puntatori di stack di ciascun frame.",
+        "Errato. L'uso di `goto` non influisce sulle regole architetturali di funzionamento del processore con lo Stack."
+      ]
+    },
+    {
+      "id": "it_clang_3156",
+      "widget_id": "widget_clang_3156",
+      "topic": "Blocchi di codice annidati e ciclo di vita delle variabili locali",
+      "q": "In che modo la semantica LIFO influisce sull'ordine di allocazione e liberazione della memoria per le variabili locali a, b e c nei blocchi di codice annidati?",
+      "hint": "Presta attenzione alla sequenza di ingresso ed uscita dai blocchi annidati { ... }.",
+      "options": [
+        "La variabile c viene liberata per prima all'uscita dal blocco interno, poi b, e per ultima a",
+        "La variabile a viene liberata per prima, poiché è stata dichiarata nel codice prima di tutte le altre",
+        "Tutte e tre le variabili vengono create e liberate rigorosamente allo stesso tempo all'uscita dalla функция",
+        "La memoria per le variabili nei diversi blocchi viene allocata nell'Heap, quindi l'ordine di uscita dai blocchi non ha importanza"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `c` viene inserita nello Stack per ultima nel blocco interno. In base al principio LIFO, all'uscita dal blocco interno viene annullato per primo il contesto di `c`, poi all'uscita da quello intermedio `b`, e al termine della функция `a`.",
+        "Errato. `a` è dichiarata per prima, il che significa che risiede alla base del frame e viene rimossa per ultima.",
+        "Errato. Le variabili nei blocchi annidati cessano di esistere man mano che si esce dai rispettivi scope `{}`.",
+        "Errato. Le variabili locali sono create sullo Stack, non nell'Heap."
+      ]
+    },
+    {
+      "id": "it_clang_3157",
+      "widget_id": null,
+      "topic": "Convenzioni di chiamata e pulizia dello Stack (cdecl vs stdcall)",
+      "q": "Qual è la differenza nella pulizia dei parametri dallo Stack tra le convenzioni di chiamata cdecl e stdcall?",
+      "hint": "Pensa a chi è responsabile del ripristino del puntatore di stack dopo il passaggio degli argomenti — la funzione chiamante (caller) o la funzione chiamata (callee).",
+      "options": [
+        "In cdecl la pulizia dello Stack dagli argomenti viene eseguita dalla функция chiamante (caller), mentre in stdcall dalla funzione chiamata stessa (callee)",
+        "In cdecl gli argomenti sono salvati nell'Heap, mentre in stdcall nella sezione .rodata",
+        "In stdcall i parametri vengono puliti dal sistema operativo durante il riavvio"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella convenzione `cdecl` lo Stack viene pulito dal chiamante (consentendo alla funzione di accettare un numero variabile di argomenti `va_list`, ad esempio `printf`). In `stdcall` la pulizia viene effettuata dalla функция chiamata stessa prima di `ret`.",
+        "Errato. Entrambe le convenzioni lavorano con lo Stack di chiamate.",
+        "Errato. La pulizia dello Stack avviene istantaneamente durante l'esecuzione dell'istruzione a runtime."
+      ]
+    },
+    {
+      "id": "it_clang_3158",
+      "widget_id": "widget_clang_3158",
+      "topic": "Ottimizzazione della ricorsione in coda (Tail Call Optimization)",
+      "q": "In che modo l'ottimizzazione della ricorsione in coda (TCO) modifica il comportamento standard del frame LIFO per la funzione factorial_tail?",
+      "hint": "Pensa se sia necessario creare un nuovo Stack Frame se la функция corrente restituisce direttamente il risultato della chiamata ricorsiva senza ulteriori elaborazioni.",
+      "options": [
+        "Il compilatore riutilizza lo Stack Frame corrente (sostituendo call con jmp), evitando la crescita dello Stack e il rischio di Stack Overflow",
+        "Il compilatore sposta l'esecuzione dell'intera ricorsione nel segmento di memoria dinamica (Heap)",
+        "Il compilatore crea un singolo Stack Frame per ciascuna chiamata, ma li azzera tramite memset",
+        "TCO duplica i frame delle funzioni nel segmento .data per velocizzare le chiamate successive",
+        "TCO costringe il processore a passare alla modalità a thread singolo",
+        "TCO disabilita completamente l'uso del registro del puntatore di stack RSP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se la chiamata ricorsiva è l'ultima operazione della функция (chiamata in coda), il compilatore sovrascrive gli argomenti nello Stack Frame corrente ed effettua un salto incondizionato `jmp` anziché `call`. Non vengono generati nuovi frame, prevenendo lo `Stack Overflow`.",
+        "Errato. TCO riutilizza lo Stack Frame esistente e non accede all'Heap.",
+        "Errato. TCO elimina la creazione stessa di nuovi frame.",
+        "Errato. Gli Stack Frame non vengono copiati in `.data`.",
+        "Errato. TCO è un'ottimizzazione locale delle istruzioni effettuata dal generatore di codice del compilatore.",
+        "Errato. Il registro `RSP` continua a utilizzare il suo indirizzo corrente."
+      ]
+    },
+    {
+      "id": "it_clang_3159",
+      "widget_id": "widget_clang_3159",
+      "topic": "Allineamento dello Stack a 16 byte (Stack Alignment ABI)",
+      "q": "Perché negli standard ABI (ad es. System V AMD64 ABI) occorre allineare il puntatore di stack RSP a un limite di 16 byte prima dell'istruzione call?",
+      "hint": "Le moderne istruzioni vettoriali (SSE/AVX) richiedono indirizzi in memoria rigorosamente allineati per eseguire операции ad alta velocità.",
+      "options": [
+        "Per garantire il funzionamento delle istruzioni vettoriali (SSE/AVX), la cui esecuzione su indirizzi non allineati causerebbe un'eccezione hardware (General Protection Fault)",
+        "Per proteggere lo Stack dall'infiltrazione di malware e virus",
+        "Per visualizzare il corretto carico della CPU nel task manager",
+        "È una raccomandazione obsoleta, completamente ignorata dai compilatori"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard ABI richiede l'allineamento dello Stack a 16 byte prima di `call`. Ciò garantisce che all'interno delle funzioni le istruzioni SSE/AVX (come `movaps`), che lavorano con registri a 128 bit/256 bit, non vadano in crash a causa di un indirizzo di memoria non allineato.",
+        "Errato. L'allineamento ottimizza il lavoro delle istruzioni hardware del core del processore, non la protezione dai virus.",
+        "Errato. L'allineamento non ha a che fare con la logica del gestore attività (task manager) del SO.",
+        "Errato. I compilatori seguono rigorosamente questa regola e generano istruzioni `sub $0x8, %rsp` per compensare l'indirizzo di ritorno."
+      ]
+    },
+    {
+      "id": "it_clang_3160",
+      "widget_id": null,
+      "topic": "Isolamento degli Stack in ambiente multithread (Thread-Local Stacks)",
+      "q": "Perché la creazione di uno Stack individuale per ciascun thread garantisce la thread-safety (Thread Safety) delle variabili locali?",
+      "hint": "Pensa se le aree di Stack dei diversi thread si sovrappongono nello spazio di indirizzamento di un singolo processo.",
+      "options": [
+        "Ogni thread ottiene un proprio intervallo isolato di indirizzi per lo Stack e un RSP indipendente, per cui le variabili locali non si sovrappongono",
+        "Il sistema operativo costringe tutti i thread ad eseguire le funzioni rigorosamente in sequenza tramite un mutex globale",
+        "Le variabili locali di ciascun thread vengono automaticamente copiate nel segmento comune .bss"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Alla creazione di un thread (`pthread_create`), il SO gli assegna un segmento di Stack separato e indipendente. Poiché ogni thread ha il proprio `%rsp` e il proprio intervallo di indirizzi, i loro record di attivazione sono isolati, proteggendo le variabili locali dalle race condition (`Data Race`).",
+        "Errato. I thread vengono eseguiti in parallelo senza blocchi globali durante il lavoro con i propri Stack locali.",
+        "Errato. Le variabili rimangono nello Stack locale del thread e non finiscono in `.bss`."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,595 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2981",
+      "widget_id": "widget_clang_2981",
+      "topic": "Operatore di stringificazione # nelle macro",
+      "q": "Cosa stamperà il programma come risultato dell'esecuzione della macro con l'operatore #?",
+      "hint": "L'operatore # trasforma il suo argomento in un letterale stringa senza valutarlo matematicamente.",
+      "options": [
+        "100 + 200",
+        "300",
+        "300\\n"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `#` nelle macro trasforma l'argomento passato in un letterale stringa \"così com'è\", quindi l'espressione `100 + 200` diventerà la stringa \"100 + 200\".",
+        "Non corretto. Il preprocessore lavora solo con il testo e non calcola il valore di `100 + 200` durante la stringificazione.",
+        "Non corretto. Il carattere `\\n` si trova all'interno di `printf`, mentre la macro stessa restituirà solo la stringa originale dell'espressione."
+      ]
+    },
+    {
+      "id": "it_clang_2982",
+      "widget_id": null,
+      "topic": "Macro predefinite del preprocessore",
+      "q": "Quali macro predefinite del preprocessore C consentono di ottenere il nome del file corrente e il numero di riga nel codice?",
+      "hint": "I nomi di queste macro iniziano e terminano con due caratteri di sottolineatura (underscore).",
+      "options": [
+        "__FILE__ e __LINE__",
+        "__FILENAME__ e __ROW__",
+        "FILE_NAME e LINE_NUM",
+        "__SRC__ e __POS__"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `__FILE__` viene espanso in una stringa contenente il nome del file sorgente, mentre `__LINE__` in un numero intero che indica il numero della riga corrente.",
+        "Non corretto. Le macro `__FILENAME__` e `__ROW__` non esistono nello standard C.",
+        "Non corretto. Le macro standard devono essere racchiuse da doppi underscore.",
+        "Non corretto. I nomi `__SRC__` e `__POS__` non vengono utilizzati per questi scopi."
+      ]
+    },
+    {
+      "id": "it_clang_2983",
+      "widget_id": "widget_clang_2983",
+      "topic": "Effetti collaterali nella sostituzione degli argomenti delle macro",
+      "q": "Cosa stamperà questo codice con la macro MAX(x++, y) durante l'esecuzione?",
+      "hint": "Le macro eseguono una sostituzione testuale. Espandi la macro e traccia la doppia valutazione di x++.",
+      "options": [
+        "res=6, x=7",
+        "res=5, x=6",
+        "res=5, x=7",
+        "res=6, x=6",
+        "res=5, x=5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione viene espansa in `((x++) > (y) ? (x++) : (y))`. Il primo `x++` confronta `5 > 3` (vero) e incrementa `x` a 6. Quindi il punto di sequenza `?` passa al ramo vero `(x++)`, che restituisce 6 e incrementa `x` a 7.",
+        "Non corretto. Questo accadrebbe se `MAX` fosse una normale funzione C, in cui i parametri vengono valutati esattamente una volta.",
+        "Non corretto. Il valore di `res` viene preso dalla seconda valutazione di `x++`, che è pari a 6.",
+        "Non corretto. La variabile `x` viene incrementata due volte.",
+        "Non corretto. I valori delle variabili verranno modificati a causa dell'operazione di incremento."
+      ]
+    },
+    {
+      "id": "it_clang_2984",
+      "widget_id": null,
+      "topic": "Fase di elaborazione delle direttive del preprocessore",
+      "q": "In quale fase del ciclo di build avvengono l'elaborazione delle direttive #define, #ifdef e la sostituzione del testo delle macro?",
+      "hint": "Questa fase viene eseguita prima dell'analisi sintattica principale e della traduzione in assembly.",
+      "options": [
+        "Nella fase di preprocessing (Preprocessing)",
+        "Nella fase di linking (Linking)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il preprocessing è la preparazione testuale del codice sorgente prima di passarlo al compilatore.",
+        "Non corretto. Nella fase di linking vengono collegati file oggetto e librerie; a questo punto le direttive testuali sono già state rimosse da tempo."
+      ]
+    },
+    {
+      "id": "it_clang_2985",
+      "widget_id": "widget_clang_2985",
+      "topic": "Direttive di compilazione condizionale",
+      "q": "Cosa finirà nell'unità di conversione finale dopo l'elaborazione del preprocessore con le direttive di compilazione condizionale fornite?",
+      "hint": "Il preprocessore lascerà solo il ramo della direttiva condizionale per cui la condizione risulta vera.",
+      "options": [
+        "Solo la chiamata a printf(\"Mode 2\\n\");",
+        "Tutte e tre le chiamate a printf(), ma quelle non attive saranno commentate",
+        "Tutte e tre le chiamate a printf() senza alcuna modifica",
+        "Il codice terminerà con un errore di compilazione a causa dell'uso di #elif"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `MODE` è pari a 2, il preprocessore taglierà i rami `#if` e `#else`, lasciando al compilatore solo il corpo del blocco `#elif MODE == 2`.",
+        "Non corretto. I rami non attivi vengono rimossi completamente, non commentati.",
+        "Non corretto. Le direttive `#if`/`#elif`/`#endif` controllano quale codice passerà alla fase di compilazione.",
+        "Non corretto. La direttiva `#elif` è completamente valida nello standard C."
+      ]
+    },
+    {
+      "id": "it_clang_2986",
+      "widget_id": null,
+      "topic": "Direttiva #pragma once",
+      "q": "Qual è la differenza principale tra la direttiva #pragma once e i tradizionali Header Guard (#ifndef / #define / #endif)?",
+      "hint": "Rifletti sulla standardizzazione in ISO C e sulla comodità di scrittura.",
+      "options": [
+        "#pragma once si scrive in una singola riga all'inizio del file ed è supportata dalla maggior parte dei compilatori, ma formalmente non fa parte dello standard ISO C",
+        "#pragma once fa parte dello standard C99 e sostituisce completamente la direttiva #include",
+        "#pragma once vieta l'uso della memoria dinamica all'interno del file header"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `#pragma once` è un'estensione ampiamente supportata dai compilatori che semplifica la protezione contro la ri-inclusione, tuttavia le classiche protezioni `#ifndef` rimangono l'unica soluzione completamente standardizzata.",
+        "Non corretto. `#pragma once` non fa parte dello standard C99 e non sostituisce `#include`.",
+        "Non corretto. La direttiva non limita in alcun modo il lavoro con la memoria."
+      ]
+    },
+    {
+      "id": "it_clang_2987",
+      "widget_id": "widget_clang_2987",
+      "topic": "Operatore di concatenazione di token ##",
+      "q": "Cosa fa l'operatore di concatenazione di token ## nella macro DECLARE_VAR?",
+      "hint": "L'operatore ## unisce due token (lessemi) in un unico identificatore durante il preprocessing.",
+      "options": [
+        "Unisce i token 'val_' e '5' nel nome di variabile val_5 e la inizializza con il valore 50",
+        "Converte l'argomento num nel letterale stringa \"val_5\"",
+        "Divide il valore di num per 10 durante l'esecuzione",
+        "Causa un errore di sintassi a causa dell'uso dei caratteri ##",
+        "Crea un array di 5 elementi di tipo int",
+        "Dichiara un puntatore a funzione con nome val_5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'operatore `##` unisce `val_` e `5`, formando il nome di variabile `val_5`. L'istruzione viene espansa in `int val_5 = 5 * 10;`.",
+        "Non corretto. Per la conversione in letterale stringa si utilizza un singolo carattere `#`.",
+        "Non corretto. `##` esegue l'unione di token testuali, non operazioni aritmetiche.",
+        "Non corretto. `##` è un operatore standard del preprocessore C.",
+        "Non corretto. Il codice crea una normale variabile scalare di tipo `int`.",
+        "Non corretto. Viene creata una variabile di tipo `int`, non un puntatore a funzione."
+      ]
+    },
+    {
+      "id": "it_clang_2988",
+      "widget_id": null,
+      "topic": "Scopo della direttiva #error",
+      "q": "Qual è lo scopo della direttiva del preprocessore #error?",
+      "hint": "Rifletti sull'interruzione forzata del processo di build al verificarsi di condizioni indesiderate.",
+      "options": [
+        "Interrompe forzatamente il processo di compilazione e visualizza il messaggio di errore specificato dall'utente",
+        "Ignora tutti gli errori di sintassi nel file e prosegue la build",
+        "Scrive gli errori di runtime nel file error.log durante l'esecuzione del programma",
+        "Reindirizza l'output della funzione printf allo stream di errore standard stderr"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La direttiva `#error \"message\"` forza il preprocessore a interrompere la build con un errore ed emettere un messaggio (spesso usata per verificare la versione del compilatore o l'architettura).",
+        "Non corretto. Genera un errore, non lo ignora.",
+        "Non corretto. La direttiva funziona esclusivamente in fase di compilazione.",
+        "Non corretto. La direttiva non è correlata alla funzione `printf`."
+      ]
+    },
+    {
+      "id": "it_clang_2989",
+      "widget_id": "widget_clang_2989",
+      "topic": "Costrutto do { ... } while(0) nelle macro",
+      "q": "Perché le macro multilinea vengono spesso racchiuse nel wrapper do { ... } while(0)?",
+      "hint": "Rifletti sull'uso sicuro della macro con il punto e virgola nei rami if-else.",
+      "options": [
+        "Per unire più istruzioni in un unico blocco composto ed evitare errori di sintassi nella struttura if-else a causa del punto e virgola",
+        "Per forzare l'esecuzione del codice della macro in un ciclo infinito durante l'esecuzione del programma",
+        "Per vietare il passaggio di parametri alla macro",
+        "Per spostare forzatamente il codice della macro in un file oggetto separato",
+        "Per velocizzare l'esecuzione del codice saltando il controllo condizionale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il costrutto `do { ... } while(0)` richiede un punto e virgola finale `;` ed è sintatticamente una singola istruzione, garantendo una corretta espansione nei rami `if () MACRO(); else`.",
+        "Non corretto. La condizione `while(0)` è vera 0 volte, il ciclo viene eseguito esattamente una volta.",
+        "Non corretto. Le macro con questo wrapper accettano perfettamente qualsiasi parametro.",
+        "Non corretto. Il preprocessore inserisce il testo direttamente al posto della chiamata.",
+        "Non corretto. Il compilatore di ottimizzazione rimuove completamente l'overhead di tale costrutto."
+      ]
+    },
+    {
+      "id": "it_clang_2990",
+      "widget_id": null,
+      "topic": "Congiunzione di righe con backslash \\",
+      "q": "Cosa fa il carattere backslash \\ alla fine di una riga all'interno di una direttiva del preprocessore #define?",
+      "hint": "Questo carattere comunica al preprocessore che la macro prosegue nella riga successiva.",
+      "options": [
+        "Unisce la riga corrente con la successiva (Line Splicing), consentendo di scrivere macro multilinea",
+        "Esegue l'escape del carattere successivo e lo trasforma in un'espressione regolare"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il preprocessore rimuove il backslash insieme al successivo carattere di nuova riga `\\n`, unendo le righe fisiche in un'unica riga logica.",
+        "Non corretto. Le espressioni regolari non sono supportate a livello di preprocessore C."
+      ]
+    },
+    {
+      "id": "it_clang_2991",
+      "widget_id": "widget_clang_2991",
+      "topic": "Analisi sintattica e ottimizzazione Constant Folding",
+      "q": "Cosa succede all'espressione a * 4 + 0 durante la fase di analisi sintattica e ripiegamento delle costanti (Constant Folding) nella compilazione?",
+      "hint": "Rifletti su come il compilatore di ottimizzazione semplifica le espressioni matematiche con costanti note.",
+      "options": [
+        "L'analizzatore sintattico costruisce un albero (AST) e l'ottimizzatore semplifica l'espressione in uno scorrimento a sinistra di 2 bit (a << 2), escludendo l'addizione di zero",
+        "Il compilatore calcola il valore della variabile 'a' durante il preprocessing e sostituisce l'intera istruzione con 0",
+        "L'ottimizzatore genera un'istruzione di divisione per ottimizzare l'operazione di moltiplicazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il compilatore costruisce l'albero sintattico astratto (AST), rimuove l'operazione neutrale `+ 0` e ottimizza la moltiplicazione per una potenza di due (4) in un'efficiente operazione di scorrimento bit a bit `a << 2`.",
+        "Non corretto. Il preprocessore calcola solo le macro e non conosce i valori delle variabili locali C.",
+        "Non corretto. La moltiplicazione per 4 viene ottimizzata con uno scorrimento a sinistra, non con una divisione."
+      ]
+    },
+    {
+      "id": "it_clang_2992",
+      "widget_id": null,
+      "topic": "Obiettivo principale della fase di compilazione",
+      "q": "Qual è il compito chiave della fase di compilazione (Compilation) in senso stretto (dopo il completamento del preprocessore)?",
+      "hint": "Ricorda quale tipo di codice/file viene creato all'uscita della fase di compilazione prima di essere passato all'assembler.",
+      "options": [
+        "Conversione del codice C elaborato (unità di conversione) in codice assembly per un'architettura specifica",
+        "Unione di più file oggetto in un unico file eseguibile binario"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La fase di compilazione traduce il codice C ad alto livello dell'unità di conversione in istruzioni a basso livello del linguaggio assembly per l'architettura target.",
+        "Non corretto. Dell'unione dei file oggetto si occupa il linker nella fase di linking."
+      ]
+    },
+    {
+      "id": "it_clang_2993",
+      "widget_id": "widget_clang_2993",
+      "topic": "Ottimizzazioni Constant Propagation e Constant Folding",
+      "q": "Quale ottimizzazione eseguirà il compilatore con le variabili intermedie a, b e c quando è attivo il flag di ottimizzazione (ad esempio -O2)?",
+      "hint": "Tutti i valori delle variabili sono definiti al momento della build del programma.",
+      "options": [
+        "Ripiegherà i calcoli in un'unica costante e genererà codice assembly che restituisce direttamente 30",
+        "Allocherà 3 variabili nello stack ed eseguirà l'addizione nei registri durante l'esecuzione del programma",
+        "Trasformerà la funzione in ricorsiva per risparmiare i registri del processore",
+        "Causerà un errore di compilazione a causa della mancanza della chiamata a free()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il compilatore applicherà la Constant Propagation (propagazione delle costanti) e la Constant Folding (ripiegamento delle costanti), sostituendo tutte le variabili con l'istruzione di ritorno finale `return 30`.",
+        "Non corretto. Nel codice ottimizzato non sarà necessario allocare memoria nello stack per le variabili costanti.",
+        "Non corretto. L'uso della ricorsione per operazioni costanti non ha senso.",
+        "Non corretto. Il codice non alloca memoria dinamica, non è richiesto `free()`."
+      ]
+    },
+    {
+      "id": "it_clang_2994",
+      "widget_id": null,
+      "topic": "Interruzione della build alla fase di compilazione (flag GCC -S)",
+      "q": "Quale flag del compilatore GCC indica di interrompere il processo di build subito dopo la fase di compilazione e salvare il codice assembly generato in un file .s?",
+      "hint": "Il nome del flag è composto da una singola lettera maiuscola S.",
+      "options": [
+        "-S",
+        "-c",
+        "-E",
+        "-o",
+        "-g"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-S` forza GCC a tradurre il codice C in assembly (`file.s`) e a terminare immediatamente senza eseguire l'assembler né il linker.",
+        "Non corretto. Il flag `-c` interrompe la build dopo la creazione del file oggetto (`file.o`).",
+        "Non corretto. Il flag `-E` interrompe la build dopo il preprocessing.",
+        "Non corretto. Il flag `-o` specifica il nome del file di output.",
+        "Non corretto. Il flag `-g` genera le informazioni di debug DWARF."
+      ]
+    },
+    {
+      "id": "it_clang_2995",
+      "widget_id": "widget_clang_2995",
+      "topic": "Analisi semantica e controllo dei tipi",
+      "q": "In quale fase della compilazione verrà rilevato un errore o avviso quando viene passata una stringa char* al posto di un numero int alla funzione add()?",
+      "hint": "La fase in cui il compilatore controlla i tipi di dati e le regole di corrispondenza degli schemi sintattici.",
+      "options": [
+        "Analisi semantica (Semantic Analysis / Type Checking)",
+        "Analisi lessicale (Lexing / Tokenization)",
+        "Preprocessing",
+        "Linking"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'analizzatore semantico controlla la correttezza concettuale della struttura, compresa la corrispondenza dei tipi degli argomenti nella chiamata di funzione.",
+        "Non corretto. L'analizzatore lessicale suddivide il testo in token e non conosce ancora i tipi delle funzioni.",
+        "Non corretto. Il preprocessore si occupa solo della sostituzione del testo.",
+        "Non corretto. L'errore di mancata corrispondenza dei tipi viene rilevato prima della creazione del codice oggetto."
+      ]
+    },
+    {
+      "id": "it_clang_2996",
+      "widget_id": null,
+      "topic": "Livelli di ottimizzazione del compilatore (-O2 vs -O3)",
+      "q": "In cosa differisce il livello di ottimizzazione -O3 dal livello -O2 nei compilatori GCC e Clang?",
+      "hint": "Rifletti su tecniche più aggressive (vettorializzazione, srotolamento dei cicli) che aumentano la dimensione del file binario.",
+      "options": [
+        "-O3 include ottimizzazioni più aggressive (ad esempio l'ottimizzazione vettoriale e l'auto-unrolling dei cicli), che possono aumentare le dimensioni del file binario",
+        "-O3 disabilita tutte le ottimizzazioni per velocizzare la build del progetto",
+        "-O2 ottimizza il codice per lo stack di sistema, mentre -O3 esclusivamente per il lavoro con lo heap",
+        "-O3 compila il codice solo per sistemi ARM a 64 bit, mentre -O2 per x86",
+        "-O2 include la generazione dei simboli di debug DWARF, mentre -O3 li rimuove completamente",
+        "-O3 vieta l'uso dei puntatori nel codice sorgente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-O3` attiva ottimizzazioni trasformative aggressive (Loop Unrolling, Loop Vectorization, Inlining), il che può ridurre il tempo di esecuzione ma aumentare le dimensioni del codice finale.",
+        "Non corretto. La disattivazione delle ottimizzazioni viene effettuata con il flag `-O0`.",
+        "Non corretto. I livelli `-O` non sono legati allo stack o allo heap.",
+        "Non corretto. I livelli di ottimizzazione sono neutrali rispetto all'architettura del processore target.",
+        "Non corretto. Delle informazioni di debug è responsabile il flag `-g`.",
+        "Non corretto. Il flag di ottimizzazione non impone vincoli alla sintassi del C."
+      ]
+    },
+    {
+      "id": "it_clang_2997",
+      "widget_id": "widget_clang_2997",
+      "topic": "Inlining delle funzioni (Function Inlining)",
+      "q": "In che modo il compilatore gestirà la chiamata alla funzione square() con la parola chiave inline quando l'ottimizzazione è attiva?",
+      "hint": "L'inlining della funzione elimina l'overhead dell'istruzione di chiamata call.",
+      "options": [
+        "Il corpo della funzione square() verrà inserito direttamente nel punto di chiamata all'interno di compute(), eliminando la chiamata alla funzione (call)",
+        "La funzione square() si trasformerà in una macro del preprocessore prima della fase di analisi sintattica",
+        "Il compilatore sposterà la chiamata alla funzione square() in una libreria dinamica .so separata"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il modificatore `inline` suggerisce al compilatore di inserire le istruzioni macchina del corpo della funzione direttamente nel punto di chiamata, eliminando l'overhead per la formazione dello stack frame e l'istruzione `call`.",
+        "Non corretto. Il preprocessore non si occupa dell'elaborazione della parola chiave `inline`.",
+        "Non corretto. Lo spostamento nelle librerie non è legato alla parola chiave `inline`."
+      ]
+    },
+    {
+      "id": "it_clang_2998",
+      "widget_id": null,
+      "topic": "Eliminazione del codice morto (Dead Code Elimination)",
+      "q": "In cosa consiste l'ottimizzazione \"Eliminazione del codice non raggiungibile\" (Dead Code Elimination) nella fase di compilazione?",
+      "hint": "Fai attenzione ai frammenti di codice a cui il flusso di controllo garantisce che non passerà mai.",
+      "options": [
+        "Rimozione di istruzioni e rami di codice la cui esecuzione è notoriamente impossibile o i cui risultati non vengono utilizzati in alcun modo",
+        "Rimozione di commenti e spazi superflui dal file di testo sorgente",
+        "Rilascio automatico della memoria dinamica in caso di rilevamento di memory leak",
+        "Rimozione dei file header non utilizzati dal sistema standard"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La DCE analizza il grafo del flusso di controllo (CFG) e rimuove completamente dal codice macchina le variabili non utilizzate e i costrutti non raggiungibili (ad esempio `if (0) { ... }`).",
+        "Non corretto. La rimozione dei commenti avviene nella fase di preprocessing.",
+        "Non corretto. La DCE non si occupa della gestione della memoria dinamica durante l'esecuzione.",
+        "Non corretto. I file header vengono elaborati dal preprocessore."
+      ]
+    },
+    {
+      "id": "it_clang_2999",
+      "widget_id": "widget_clang_2999",
+      "topic": "Ottimizzazione basata su Undefined Behavior",
+      "q": "Perché un compilatore C di ottimizzazione può rimuovere completamente la condizione (x + 1 < x) per il tipo int quando si compila con il flag -O2?",
+      "hint": "Secondo lo standard C, l'overflow di un intero con segno (signed integer overflow) è un comportamento indefinito (UB).",
+      "options": [
+        "L'overflow di signed int in C è considerato UB, pertanto il compilatore presuppone che x + 1 > x sia sempre vero e rimuove il ramo",
+        "Il preprocessore sostituisce l'espressione x + 1 con la costante 0 prima dell'inizio dell'analisi sintattica",
+        "L'operatore < non è supportato per variabili di tipo int a partire dallo standard C99",
+        "La funzione check_overflow viene eseguita dal compilatore durante la fase di linking",
+        "Il tipo int viene convertito automaticamente in unsigned long long"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché l'overflow di `signed int` in C è un Undefined Behavior (UB), il compilatore si basa sull'assunzione che l'overflow non si verificherà mai. Da ciò segue che `x + 1` è sempre maggiore di `x` e il controllo può essere ottimizzato a 0.",
+        "Non corretto. Il preprocessore non si occupa del calcolo delle variabili.",
+        "Non corretto. L'operatore `<` è supportato per tutti i tipi numerici.",
+        "Non corretto. Non avviene alcuna esecuzione di codice C nella fase di linking.",
+        "Non corretto. Non vi è alcuna conversione implicita di tipo a `unsigned long long` in questa condizione."
+      ]
+    },
+    {
+      "id": "it_clang_3000",
+      "widget_id": null,
+      "topic": "Differenza tra i tipi di errore di build",
+      "q": "Quale tra i seguenti errori si verificherà esattamente nella fase di compilazione (Compilation Error), e non nelle fasi di preprocessing o linking?",
+      "hint": "Il compilatore sarà responsabile della violazione delle regole di grammatica e sintassi del codice C.",
+      "options": [
+        "Errore di sintassi: punto e virgola ';' mancante o parentesi graffa '}' non chiusa",
+        "Errore di file mancante: #include <missing.h>: No such file or directory",
+        "Errore di riferimento non trovato: undefined reference to 'main'"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le violazioni della sintassi C (`;`, `{}` dimenticati, ecc.) vengono rilevate dal parser direttamente durante la fase di compilazione.",
+        "Non corretto. L'errore di file `#include` mancante si verifica nella fase di preprocessing.",
+        "Non corretto. L'errore `undefined reference` viene generato dal linker quando un simbolo non viene trovato durante la build."
+      ]
+    },
+    {
+      "id": "it_clang_3001",
+      "widget_id": "widget_clang_3001",
+      "topic": "Errore undefined reference",
+      "q": "Tentando di compilare questo file con gcc main.c si verificano errori del linker. Qual è la causa?",
+      "hint": "Fai attenzione se il corpo della funzione compute è definito in qualche punto nei file passati.",
+      "options": [
+        "La funzione compute è dichiarata, ma la sua definizione (corpo) è assente nei file compilati, causando un errore undefined reference",
+        "La funzione main non ha il diritto di chiamare funzioni con argomento int",
+        "Il file header stdio.h non contiene la dichiarazione della funzione compute",
+        "La chiamata a compute(42) porta a un overflow dello stack durante il preprocessing"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il prototipo comunica al compilatore che `compute` esiste, ma nella fase di linking il linker non trova il corpo della funzione, generando l'errore `undefined reference to 'compute'`.",
+        "Non corretto. La funzione `main` può chiamare qualsiasi funzione correttamente dichiarata.",
+        "Non corretto. L'header `stdio.h` si occupa di I/O e non deve contenere funzioni utente.",
+        "Non corretto. La chiamata di funzione avviene durante l'esecuzione del programma, non durante il preprocessing."
+      ]
+    },
+    {
+      "id": "it_clang_3002",
+      "widget_id": null,
+      "topic": "Compiti principali del linker",
+      "q": "Quali sono i due compiti fondamentali del linker durante la creazione di un file eseguibile a partire da file oggetto?",
+      "hint": "Rifletti sul collegamento delle chiamate di funzione ai loro indirizzi e sull'unione delle sezioni di codice e dati.",
+      "options": [
+        "Risoluzione dei simboli (Symbol Resolution) e rilocazione degli indirizzi (Relocation)",
+        "Analisi sintattica del codice C e costruzione dell'albero AST",
+        "Espansione delle macro e rimozione dei commenti dai sorgenti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il linker collega le dichiarazioni di funzioni/variabili alle loro definizioni (Symbol Resolution) e assegna gli indirizzi virtuali alle istruzioni e ai dati nel file binario finale (Relocation).",
+        "Non corretto. Della costruzione dell'AST si occupa il compilatore nella fase di analisi sintattica.",
+        "Non corretto. Dell'espansione delle macro e della rimozione dei commenti si occupa il preprocessore."
+      ]
+    },
+    {
+      "id": "it_clang_3003",
+      "widget_id": "widget_clang_3003",
+      "topic": "Errore multiple definition durante la compilazione",
+      "q": "Perché la definizione di una variabile globale int global_counter = 0; in un file header senza la parola chiave extern causerà un errore del linker?",
+      "hint": "Rifletti su quante volte la definizione compilata della variabile finirà in file oggetto diversi.",
+      "options": [
+        "Ogni unità di conversione creerà un simbolo globale global_counter, portando a un errore di multiple definition durante il linking",
+        "Il linker azzererà forzatamente la variabile in entrambi i file",
+        "Il file header.h verrà automaticamente bloccato dal sistema operativo",
+        "L'errore si verificherà nella fase di preprocessing a causa della mancanza della direttiva #pragma once",
+        "Una variabile di tipo int non può essere inizializzata a zero nei file header"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Includendo `header.h` sia in `main.c` che in `utils.c`, in entrambi i file oggetto comparirà il simbolo forte `global_counter`. Nella fase di linking si verificherà un conflitto di `multiple definition`.",
+        "Non corretto. Il linker non azzera le variabili in caso di conflitti di nomi.",
+        "Non corretto. Il file system del SO non blocca i file header durante il linking.",
+        "Non corretto. La protezione `#pragma once` previene la duplicazione all'interno di *un'unica* unità di conversione, ma non aiuta con l'inclusione in file `.c` diversi.",
+        "Non corretto. L'inizializzazione di interi a zero è sintatticamente corretta."
+      ]
+    },
+    {
+      "id": "it_clang_3004",
+      "widget_id": null,
+      "topic": "Linking con librerie statiche (.a)",
+      "q": "In che modo il linker gestisce le funzioni non utilizzate da un archivio di libreria statica (.a / .lib) durante la creazione dell'eseguibile?",
+      "hint": "Il linker cerca di ottimizzare le dimensioni dell'eseguibile finale.",
+      "options": [
+        "Il linker estrae dall'archivio solo i moduli oggetto i cui simboli sono effettivamente utilizzati nel programma, ignorando i restanti",
+        "Il linker copia sempre tutto il contenuto del file di libreria senza eccezioni nel binario finale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza dei normali file `.o`, le librerie statiche sono archivi da cui il linker estrae esclusivamente le sezioni oggetto utilizzate.",
+        "Non corretto. L'inclusione dell'intera libreria senza necessità causerebbe un aumento eccessivo delle dimensioni dell'eseguibile."
+      ]
+    },
+    {
+      "id": "it_clang_3005",
+      "widget_id": "widget_clang_3005",
+      "topic": "Linkage interno (Internal Linkage) e static",
+      "q": "Perché la compilazione di questi due file in un singolo progetto non causa un errore di multiple definition of 'process'?",
+      "hint": "Fai attenzione al modificatore di visibilità static prima della dichiarazione delle funzioni.",
+      "options": [
+        "La parola chiave static assegna alla funzione un linkage interno (Internal Linkage), rendendo il suo simbolo invisibile al linker al di fuori del proprio file .c",
+        "Il linker rinomina automaticamente la seconda funzione process in process_2",
+        "L'errore si verificherà solo durante l'esecuzione del programma alla prima chiamata della funzione",
+        "La parola chiave static rimuove la funzione dalla memoria subito dopo la compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `static` a livello di file limita la visibilità del simbolo solo alla corrente unità di conversione, eliminando il conflitto globale dei nomi durante il linking.",
+        "Non corretto. Il linker non rinomina mai autonomamente le funzioni del codice utente.",
+        "Non corretto. Il collegamento dei simboli avviene completamente nella fase di build, non durante l'esecuzione.",
+        "Non corretto. Il codice delle funzioni rimane nel file binario ed è disponibile per la chiamata all'interno del rispettivo modulo."
+      ]
+    },
+    {
+      "id": "it_clang_3006",
+      "widget_id": null,
+      "topic": "Ordine di chiamata delle librerie durante il linking in GCC",
+      "q": "Perché durante la build del progetto tramite gcc main.o -lfoo l'ordine di specifica dei file oggetto e delle librerie ha un'importanza fondamentale per il linker?",
+      "hint": "Il linker esamina le librerie da sinistra a destra e cerca in esse solo i simboli che sono stati precedentemente contrassegnati come non risolti.",
+      "options": [
+        "Il linker esamina i file da sinistra a destra; se la libreria -lfoo viene specificata prima di main.o che vi fa riferimento, il linker non troverà i simboli necessari",
+        "L'ordine influisce esclusivamente sulla velocità di compilazione, ma non sulla build finale",
+        "I flag delle librerie devono sempre essere specificati rigorosamente prima dei nomi dei file .c sorgente",
+        "Il flag -lfoo viene automaticamente spostato all'inizio del comando dal preprocessore di sistema",
+        "Un ordine errato dei file crea una libreria dinamica anziché un file eseguibile",
+        "L'ordine di chiamata del compilatore è importante solo sui sistemi operativi Windows"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'utility `ld` scorre l'elenco degli argomenti da sinistra a destra. Il file oggetto `main.o` registra i requisiti dei simboli, e l'opzione `-lfoo` successiva li soddisfa. Scambiandoli di posto, i simboli della libreria verranno scartati in quanto ritenuti \"non necessari\".",
+        "Non corretto. Un ordine errato delle librerie causerà un errore di build `undefined reference`.",
+        "Non corretto. Al contrario, le dipendenze (librerie) vanno inserite *dopo* i moduli che le utilizzano.",
+        "Non corretto. Il preprocessore non gestisce l'ordine degli argomenti della riga di comando.",
+        "Non corretto. Il formato del file finale è stabilito da altri flag (ad esempio `-shared`).",
+        "Non corretto. Questo principio di funzionamento del linker `ld` è valido per tutti i sistemi POSIX."
+      ]
+    },
+    {
+      "id": "it_clang_3007",
+      "widget_id": "widget_clang_3007",
+      "topic": "Dichiarazione extern e ricerca del simbolo",
+      "q": "Cosa succederà nella fase di linking di questo codice se la variabile max_limit non è definita in nessun altro file .c del progetto?",
+      "hint": "La parola chiave extern informa solo dell'esistenza della variabile, ma non alloca memoria per essa.",
+      "options": [
+        "Il linker restituirà un errore undefined reference to 'max_limit', poiché l'allocazione di memoria per questa variabile è assente",
+        "La variabile max_limit verrà creata automaticamente con valore 0",
+        "Il codice verrà compilato con successo, ma stamperà un valore casuale dallo stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `extern int max_limit;` è solo una dichiarazione (declaration). Se la definizione (definition) `int max_limit = ...;` manca in tutti i file `.o`, il linker si interromperà con un errore.",
+        "Non corretto. Il linker non può allocare autonomamente memoria per una variabile non isolata senza che ne sia specificata la definizione.",
+        "Non corretto. La build si interromperà con un errore prima della generazione del file eseguibile."
+      ]
+    },
+    {
+      "id": "it_clang_3008",
+      "widget_id": null,
+      "topic": "Unione delle sezioni nel formato ELF",
+      "q": "Cosa fa il linker con le sezioni con lo stesso nome (.text, .data, .rodata) di più file oggetto di input durante la creazione del file binario finale?",
+      "hint": "Ricorda come il linker forma la struttura di un singolo file eseguibile.",
+      "options": [
+        "Unisce le sezioni dello stesso tipo di file diversi in sezioni monolitiche uniche (.text con .text, .data con .data) e ricalcola gli indirizzi",
+        "Sposta la sezione .text nella RAM del BIOS e rimuove .data",
+        "Lascia isolate le sezioni di ciascun file .o, creando più intestazioni ELF all'interno di un singolo file eseguibile",
+        "Trasforma la sezione di testo .text in dati BSS per risparmiare spazio"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il linker unisce tutte le sezioni di codice eseguibile `.text` da tutti i file `.o` in un'unica sezione `.text` comune, le sezioni dati `.data` in `.data`, ecc., aggiornando gli indirizzi relativi delle istruzioni.",
+        "Non corretto. Le sezioni rimangono parte del file eseguibile e vengono caricate in RAM dal sistema operativo.",
+        "Non corretto. Il file eseguibile ELF ha una struttura unica di segmenti e sezioni.",
+        "Non corretto. La sezione `.text` contiene codice macchina e non può trasformarsi in un'area di dati non inizializzati `.bss`."
+      ]
+    },
+    {
+      "id": "it_clang_3009",
+      "widget_id": "widget_clang_3009",
+      "topic": "Risoluzione dei conflitti tra simboli static ed extern",
+      "q": "Si verificherà un errore di conflitto dei simboli nella fase di linking quando si compilano insieme module_a.c e module_b.c?",
+      "hint": "La variabile shared_val in module_b.c è dichiarata con la parola chiave static.",
+      "options": [
+        "Non ci sarà alcun conflitto: la variabile static è nascosta all'interno di module_b.c, mentre quella globale è accessibile ai moduli esterni",
+        "Si verificherà l'errore multiple definition of 'shared_val'",
+        "La variabile globale da module_a.c sovrascriverà il valore della variabile da module_b.c",
+        "L'errore si verificherà nella fase di preprocessing a causa della corrispondenza dei nomi",
+        "Il linker unirà entrambe le variabili in un unico indirizzo di memoria comune"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché in `module_b.c` la variabile `shared_val` è dichiarata come `static`, il suo simbolo ha linkage interno (internal linkage) e non entra nella tabella dei simboli globale per il linking.",
+        "Non corretto. Il conflitto non si verifica a causa dell'ambito di visibilità locale del simbolo `static`.",
+        "Non corretto. Le variabili risiederanno in aree di memoria completamente diverse.",
+        "Non corretto. Il preprocessore non conosce i nomi delle variabili.",
+        "Non corretto. Si tratta di due variabili fisiche isolate."
+      ]
+    },
+    {
+      "id": "it_clang_3010",
+      "widget_id": null,
+      "topic": "Conversione dell'argomento del flag -l da parte del linker",
+      "q": "In che modo il linker interpreta ed espande il nome della libreria quando gli viene passato il flag -lm?",
+      "hint": "Rifletti su quale prefisso standard (lib) ed estensione cerca il linker nei sistemi POSIX.",
+      "options": [
+        "Cerca un file denominato libm.so (per le dinamiche) o libm.a (per le statiche) nelle directory delle librerie",
+        "Cerca il file header m.h nella directory corrente del progetto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-l<name>` aggiunge automaticamente il prefisso `lib` e cerca i file `lib<name>.so` o `lib<name>.a` nei percorsi di ricerca delle librerie di sistema.",
+        "Non corretto. La ricerca dei file header `.h` viene effettuata nella fase di preprocessing tramite la direttiva `#include`."
+      ]
+    }
+  ]
+}

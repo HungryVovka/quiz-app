@@ -1,0 +1,607 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2471",
+      "widget_id": "widget_clang_2471",
+      "topic": "Restituzione dello zero come segnale di terminazione con successo del programma",
+      "q": "Cosa significa il valore 0 restituito dalla funzione main() al sistema operativo?",
+      "hint": "Nella maggior parte dei sistemi operativi, un codice di uscita pari a zero è uno standard comunemente accettato.",
+      "options": [
+        "Esecuzione del programma completata con successo e senza errori",
+        "Al programma è mancata la memoria RAM",
+        "Il programma è terminato con un errore critico",
+        "Il programma è in attesa di un nuovo inserimento di dati"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il valore `0` restituito da `main()` informa l'ambiente chiamante (riga di comando o SO) del completamento con successo del programma.",
+        "Errato. La mancanza di memoria viene indicata da un codice di errore non nullo.",
+        "Errato. Qualsiasi errore o guasto viene tradizionalmente indicato con codici di uscita non nulli (non-zero exit codes).",
+        "Errato. Il codice di uscita viene trasmesso al sistema operativo solo dopo il completo termine del processo."
+      ]
+    },
+    {
+      "id": "it_clang_2472",
+      "widget_id": "widget_clang_2472",
+      "topic": "Macro standard EXIT_SUCCESS e EXIT_FAILURE",
+      "q": "Da quale file di intestazione vengono importate le macro standard EXIT_SUCCESS e EXIT_FAILURE?",
+      "hint": "Fai attenzione alla libreria che contiene le utilità di gestione del processo e di uscita.",
+      "options": [
+        "<stdlib.h>",
+        "<stdio.h>",
+        "<string.h>",
+        "<stdbool.h>",
+        "<limits.h>"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le macro `EXIT_SUCCESS` (di solito 0) e `EXIT_FAILURE` (di solito 1) sono dichiarate nel file di intestazione `<stdlib.h>`.",
+        "Errato. In `<stdio.h>` sono contenute le funzioni di input/output.",
+        "Errato. In `<string.h>` sono dichiarate le funzioni per lavorare con le stringhe.",
+        "Errato. `<stdbool.h>` gestisce il tipo booleano `bool` e i valori `true`/`false`.",
+        "Errato. In `<limits.h>` sono memorizzate le costanti degli intervalli dei tipi di dati."
+      ]
+    },
+    {
+      "id": "it_clang_2473",
+      "widget_id": "widget_clang_2473",
+      "topic": "Comportamento predefinito in C99/C11 in assenza di return in main()",
+      "q": "Cosa succede nello standard C99/C11 se si raggiunge la fine di main() senza una chiamata esplicita a return?",
+      "hint": "Ricorda la novità dello standard C99 riguardante l'esecuzione della funzione main().",
+      "options": [
+        "Il compilatore inserirà automaticamente return 0 alla fine di main()",
+        "Il programma restituirà un valore non definito dallo stack (Undefined Behavior)",
+        "Il programma verrà compilato con un errore (Compilation Error)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A partire dallo standard C99, se il controllo raggiunge la parentesi graffa di chiusura di `main()`, viene eseguito automaticamente l'equivalente di `return 0;`.",
+        "Errato. Negli standard più vecchi (C89) questo causava un comportamento non definito, ma a partire da C99 è garantita la sostituzione con `return 0`.",
+        "Errato. Lo standard consente l'assenza di un `return` esplicito specificamente nella funzione `main()`."
+      ]
+    },
+    {
+      "id": "it_clang_2474",
+      "widget_id": "widget_clang_2474",
+      "topic": "Restituzione di un codice di errore non nullo da main()",
+      "q": "Quale codice di uscita (status code) restituirà il programma se avviato senza argomenti: ./app?",
+      "hint": "Traccia il valore di argc (pari a 1 per ./app) e verifica la condizione (argc < 2).",
+      "options": [
+        "2",
+        "0",
+        "1",
+        "-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Durante la chiamata `./app`, il parametro `argc` è pari a 1. La condizione `1 < 2` è vera, quindi viene eseguito `return 2;`.",
+        "Errato. `return 0;` viene eseguito solo se viene passato almeno un argomento utente.",
+        "Errato. Il programma restituisce esplicitamente il valore 2.",
+        "Errato. Il codice di uscita è definito nel codice del programma come 2."
+      ]
+    },
+    {
+      "id": "it_clang_2475",
+      "widget_id": "widget_clang_2475",
+      "topic": "Terminazione anticipata del programma tramite exit()",
+      "q": "Il programma stamperà la stringa \"End\" alla chiamata della funzione check(-5)?",
+      "hint": "La funzione exit() della libreria stdlib.h interrompe l'esecuzione dell'intero processo immediatamente.",
+      "options": [
+        "No, la chiamata exit(1) interrompe immediatamente il processo prima dell'esecuzione di printf",
+        "Sì, il programma stamperà End e terminerà con il codice 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiamata a `exit(1)` interrompe l'esecuzione dell'intero programma da qualsiasi funzione annidata, senza restituire il controllo a `main()`. L'istruzione `printf(\"End\\n\")` non verrà eseguita.",
+        "Errato. La funzione `exit()` interrompe il processo all'istante."
+      ]
+    },
+    {
+      "id": "it_clang_2476",
+      "widget_id": null,
+      "topic": "Verifica del codice di uscita nella riga di comando Bash",
+      "q": "Quale comando nella riga di comando Unix/Linux (bash) permette di conoscere il codice di uscita dell'ultimo programma eseguito?",
+      "hint": "Per visualizzare il codice di uscita viene utilizzata una speciale variabile d'ambiente con un punto interrogativo.",
+      "options": [
+        "echo $?",
+        "echo %ERRORLEVEL%",
+        "get --status",
+        "return --code",
+        "print $status",
+        "show last_exit"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella shell Bash, la variabile speciale `$?` memorizza il codice di uscita dell'ultimo comando eseguito.",
+        "Errato. `%ERRORLEVEL%` viene utilizzato negli interpreti dei comandi Windows (cmd.exe).",
+        "Errato. Non esiste il comando `get --status` per questo scopo.",
+        "Errato. `return --code` non è un comando valido della shell.",
+        "Errato. `$status` si usa nelle shell Zsh/Fish, ma il comando standard universale in Bash è `echo $?`.",
+        "Errato. Questo comando non esiste in Bash."
+      ]
+    },
+    {
+      "id": "it_clang_2477",
+      "widget_id": "widget_clang_2477",
+      "topic": "Limitazione dell'intervallo dei codici di uscita sui sistemi POSIX",
+      "q": "Quale valore effettivo del codice di uscita (8 bit) riceverà il sistema operativo POSIX/Linux con l'esecuzione di return 257?",
+      "hint": "Nei sistemi POSIX, il codice di uscita viene troncato agli 8 bit meno significativi (maschera 0xFF o resto della divisione per 256).",
+      "options": [
+        "1",
+        "257",
+        "0",
+        "256",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In Linux/POSIX il processo padre riceve solo gli 8 bit meno significativi dello stato di uscita: `257 & 0xFF = 1` (o `257 % 256 = 1`).",
+        "Errato. Il valore 257 supera l'intervallo a 8 bit (0-255) dei codici di uscita dei processi POSIX.",
+        "Errato. Il resto della divisione di 257 per 256 è 1, non 0.",
+        "Errato. Con l'applicazione della maschera a 8 bit, 256 diventerebbe 0.",
+        "Errato. L'espressione `return 257;` è sintatticamente corretta."
+      ]
+    },
+    {
+      "id": "it_clang_2478",
+      "widget_id": "widget_clang_2478",
+      "topic": "Conversione dei codici di uscita negativi in unsigned char",
+      "q": "Come interpretano di norma i sistemi operativi della famiglia POSIX/Linux il codice di uscita return -1?",
+      "hint": "Un numero negativo, quando convertito in unsigned char a 8 bit, rientra nell'intervallo 0-255.",
+      "options": [
+        "Lo convertono nel numero senza segno 255 (256 - 1)",
+        "Terminano il sistema con un errore critico",
+        "Lo convertono sempre esattamente in 0",
+        "Generano un segnale SIGSEGV"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In Linux il codice di uscita viene memorizzato come un intero senza segno a 8 bit (`unsigned char`). Il passaggio di `-1` porta al valore `255`.",
+        "Errato. Il codice di uscita di un singolo processo non influisce sulla stabilità dell'intero sistema operativo.",
+        "Errato. I valori negativi non vengono azzerati.",
+        "Errato. Il segnale `SIGSEGV` si verifica in caso di errore di segmentazione della memoria, non con il ritorno di `-1`."
+      ]
+    },
+    {
+      "id": "it_clang_2479",
+      "widget_id": "widget_clang_2479",
+      "topic": "Isolamento dei valori restituiti dalle funzioni ausiliarie",
+      "q": "Il valore 5 restituito dalla funzione foo() influisce sul codice di uscita dell'intero programma?",
+      "hint": "Verifica se il risultato della chiamata a foo() viene utilizzato come valore di ritorno di main().",
+      "options": [
+        "No, il programma restituirà 0, poiché è proprio 0 a essere specificato nel return della funzione main()",
+        "Sì, il programma restituirà 5, poiché foo() è stata chiamata per ultima",
+        "Sì, si verificherà la somma dei codici di ritorno (risultato 5)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il valore restituito dalla funzione `foo()` viene ignorato. Il codice di uscita del programma è determinato esclusivamente dall'istruzione esplicita `return 0;` in `main()`.",
+        "Errato. La chiamata di funzioni all'interno di `main` non sovrascrive il `return` finale da `main`.",
+        "Errato. I codici di ritorno delle funzioni chiamate non si sommano automaticamente."
+      ]
+    },
+    {
+      "id": "it_clang_2480",
+      "widget_id": null,
+      "topic": "Pulizia delle risorse durante la chiamata a return 0 ed exit(0)",
+      "q": "Quale tra le seguenti affermazioni sulla chiamata a exit(0) e sull'istruzione return 0 nella funzione main() è corretta?",
+      "hint": "Pensa allo srotolamento dello stack e alla chiamata dei gestori registrati tramite la funzione atexit().",
+      "options": [
+        "Entrambi i metodi terminano il programma, invocando le funzioni registrate tramite atexit() e svuotando i buffer I/O",
+        "return 0 termina il processo, mentre exit(0) sospende soltanto il thread",
+        "exit(0) non causa la pulizia dei buffer I/O, a differenza di return 0",
+        "return 0 può essere chiamato da qualsiasi funzione annidata, mentre exit(0) solo da main()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiamata a `return 0` dalla funzione `main` invoca implicitamente `exit(0)`. In questo modo vengono svuotati tutti i buffer di input/output (ad esempio con `fflush`) e vengono chiamati i gestori `atexit()`.",
+        "Errato. La funzione `exit(0)` termina completamente il processo.",
+        "Errato. `exit()` esegue la corretta chiusura dei file e lo svuotamento dei buffer I/O.",
+        "Errato. Al contrario: `return` restituisce il controllo dalla funzione corrente, mentre `exit()` può essere chiamato da qualsiasi punto del programma."
+      ]
+    },
+    {
+      "id": "it_clang_2481",
+      "widget_id": "widget_clang_2481",
+      "topic": "Differenza tra il codice 0 e un codice di uscita non nullo",
+      "q": "Cosa restituirà il programma se avviato senza parametri aggiuntivi (./app) e come viene interpretato questo risultato dal sistema operativo?",
+      "hint": "L'avvio di ./app passa argc == 1. Fai attenzione alla condizione all'interno del ramo if.",
+      "options": [
+        "Codice 1, che segnala un errore (argomenti insufficienti)",
+        "Codice 0, che segnala il completamento con successo",
+        "Codice 1, che segnala il completamento con successo",
+        "Codice 0, che segnala un errore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Alla chiamata `./app`, il parametro `argc` è pari a 1. La condizione `argc == 1` è soddisfatta, il programma restituisce `1`, informando il SO dell'errore.",
+        "Errato. Il codice `0` verrebbe restituito se venissero passati dei parametri (`argc > 1`).",
+        "Errato. Nel SO il codice `1` indica la presenza di un errore, non il successo.",
+        "Errato. Il codice `0` secondo lo standard indica un'esecuzione completata con successo."
+      ]
+    },
+    {
+      "id": "it_clang_2482",
+      "widget_id": null,
+      "topic": "Convenzione comune sui codici di uscita nei SO",
+      "q": "Qual è lo standard comunemente accettato per l'interpretazione del valore 0 e dei codici di uscita non nulli di un processo?",
+      "hint": "Ricorda quale valore viene restituito se il programma ha completato tutto il percorso senza errori.",
+      "options": [
+        "0 indica un'esecuzione con successo, mentre qualsiasi valore non nullo (1-255) indica un guasto o un errore",
+        "0 indica un errore, mentre 1 indica il completamento con successo",
+        "Qualsiasi numero positivo indica successo, mentre un numero negativo indica errore",
+        "I codici di uscita non hanno valore e vengono completamente ignorati dal sistema operativo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella maggior parte dei sistemi operativi (Linux, macOS, Windows) il codice `0` indica un'uscita corretta con successo, mentre i numeri da `1` a `255` rappresentano diversi tipi di errori.",
+        "Errato. È la logica opposta: 0 — successo, non-zero — errore.",
+        "Errato. Anche i valori positivi non nulli indicano errori.",
+        "Errato. I codici di uscita vengono utilizzati attivamente da script e shell di comando."
+      ]
+    },
+    {
+      "id": "it_clang_2483",
+      "widget_id": "widget_clang_2483",
+      "topic": "Uso delle macro EXIT_SUCCESS e EXIT_FAILURE",
+      "q": "Quale codice restituirà il programma se chiamato con l'argomento: ./app test?",
+      "hint": "Verifica il numero di parametri argc per la chiamata ./app test e il ramo della condizione if.",
+      "options": [
+        "EXIT_SUCCESS (di solito pari a 0), che segnala il successo",
+        "EXIT_FAILURE (di solito pari a 1), che segnala un errore",
+        "Il numero 2",
+        "-1",
+        "Segmentation Fault"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'avvio di `./app test` passa 2 argomenti (`argc == 2`). La condizione `argc > 1` è vera, il programma restituisce `EXIT_SUCCESS` (0).",
+        "Errato. `EXIT_FAILURE` verrebbe restituito se i parametri fossero assenti.",
+        "Errato. La macro `EXIT_SUCCESS` non è uguale a 2.",
+        "Errato. `EXIT_SUCCESS` è una costante pari a zero.",
+        "Errato. Il codice è corretto e viene eseguito senza errori."
+      ]
+    },
+    {
+      "id": "it_clang_2484",
+      "widget_id": null,
+      "topic": "Uso dei codici di errore nelle catene di comandi Bash (&& e ||)",
+      "q": "Come reagiscono gli operatori && e || nella riga di comando Bash al codice di uscita di un programma C?",
+      "hint": "L'operatore && esegue il comando successivo in caso di successo (codice 0), mentre || in caso di errore (codice non nullo).",
+      "options": [
+        "&& esegue il comando successivo solo con il codice 0; || solo con un codice non nullo",
+        "&& esegue il comando successivo con il codice 1; || con il codice 0",
+        "Entrambi gli operatori eseguono il comando successivo indipendentemente dal codice di uscita",
+        "&& e || reagiscono solo all'output in stdout, e non al codice di uscita di main()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'interprete di comandi considera l'esecuzione riuscita quando riceve il codice `0`. Pertanto `cmd1 && cmd2` avvierà `cmd2` solo se `cmd1` restituisce `0`, mentre `cmd1 || cmd2` avvierà `cmd2` con uno stato non nullo.",
+        "Errato. L'AND logico (`&&`) nella Shell è legato allo stato di successo (0).",
+        "Errato. Sono operatori di esecuzione condizionale basati sul codice di uscita.",
+        "Errato. La reazione avviene rigorosamente in base al valore dell'exit status del processo."
+      ]
+    },
+    {
+      "id": "it_clang_2485",
+      "widget_id": "widget_clang_2485",
+      "topic": "Differenziazione dei codici di errore per diversi scenari di guasto",
+      "q": "Quale codice di uscita restituirà il programma se avviato con: ./app apple?",
+      "hint": "Traccia le due condizioni nel codice: il numero di argomenti argc e il primo carattere dell'argomento argv[1][0].",
+      "options": [
+        "2",
+        "1",
+        "0",
+        "3",
+        "-1",
+        "255"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! All'avvio di `./app apple`, il valore di `argc` è pari a 2 (il controllo `argc < 2` viene ignorato). L'argomento `argv[1]` è `\"apple\"`, il suo primo carattere è `'a'`. Viene eseguita la seconda condizione `return 2;`.",
+        "Errato. Il codice `1` viene restituito solo se non viene passato alcun argomento.",
+        "Errato. L'esecuzione non raggiunge la riga `return 0;`.",
+        "Errato. Questo valore non è presente nel codice.",
+        "Errato. I codici di uscita sono definiti da numeri positivi espliciti.",
+        "Errato. Viene restituito il valore esplicito 2."
+      ]
+    },
+    {
+      "id": "it_clang_2486",
+      "widget_id": "widget_clang_2486",
+      "topic": "Overflow del valore a 8 bit di exit code in POSIX",
+      "q": "Cosa riceverà effettivamente il sistema operativo come codice di uscita alla restituzione del valore 256?",
+      "hint": "I sistemi POSIX conservano solo gli 8 bit meno significativi dello stato restituito (da 0 a 255).",
+      "options": [
+        "0 (poiché viene preso il byte meno significativo: 256 & 0xFF)",
+        "256",
+        "1",
+        "-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In POSIX gli stati di uscita del processo vengono troncati con la maschera `0xFF` (8 bit). Il numero `256` in formato binario è `100000000`, i cui 8 bit meno significativi sono pari a `00000000` (cioè `0`).",
+        "Errato. Il valore 256 non rientra nel campo dello stato di uscita a 8 bit in Linux.",
+        "Errato. 256 è un multiplo di 256, quindi il resto della divisione è 0, non 1.",
+        "Errato. Con l'applicazione della maschera non si generano valori negativi."
+      ]
+    },
+    {
+      "id": "it_clang_2487",
+      "widget_id": null,
+      "topic": "Scopo dei vari codici di errore non nulli",
+      "q": "Per quale scopo gli sviluppatori definiscono diversi codici di uscita non nulli (1, 2, 3, ecc.) in un programma?",
+      "hint": "Pensa a come gli script di autorun o il SO comprendono la causa esatta dell'arresto anomalo del programma.",
+      "options": [
+        "Affinché lo script chiamante o il SO possano determinare la causa specifica dell'errore",
+        "Per velocizzare automaticamente la pulizia della memoria dopo un guasto",
+        "Per segnalare al processore la necessità di riavviare il programma",
+        "È un requisito rigoroso dello standard C: non si può usare lo stesso codice di errore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Diversi codici di uscita (ad esempio, 1 — file non trovato, 2 — argomento non valido, 3 — permessi insufficienti) consentono agli script esterni di gestire in modo mirato le cause del guasto.",
+        "Errato. La pulizia della memoria da parte del sistema operativo avviene allo stesso modo indipendentemente dal codice.",
+        "Errato. Il processore non reagisce ai codici di uscita dei programmi.",
+        "Errato. Lo standard C non vieta l'uso dello stesso codice di errore per tutti i casi."
+      ]
+    },
+    {
+      "id": "it_clang_2488",
+      "widget_id": "widget_clang_2488",
+      "topic": "Passaggio del codice di errore tramite la funzione exit()",
+      "q": "Quale codice di uscita riceverà il processo padre alla chiamata della funzione process(0)?",
+      "hint": "La funzione exit(10) interrompe immediatamente l'esecuzione del programma e trasmette il codice di uscita specificato.",
+      "options": [
+        "10",
+        "0",
+        "1",
+        "Segmentation Fault",
+        "Undefined Behavior"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiamata a `process(0)` invoca `exit(10)`. Il processo si interrompe immediatamente e trasmette al SO lo stato di uscita `10`.",
+        "Errato. L'istruzione `return 0;` nella funzione `main` non farà in tempo a essere eseguita.",
+        "Errato. Nella chiamata a `exit` viene passato il valore esplicito `10`.",
+        "Errato. La chiamata a `exit()` è un mezzo standard per terminare un programma.",
+        "Errato. Il comportamento della chiamata a `exit(10)` è rigorosamente definito."
+      ]
+    },
+    {
+      "id": "it_clang_2489",
+      "widget_id": null,
+      "topic": "Garanzie della macro EXIT_FAILURE secondo lo standard C",
+      "q": "A cosa è garantito che NON corrisponda il valore della macro EXIT_FAILURE secondo lo standard del linguaggio C?",
+      "hint": "Ricorda quale valore è rigorosamente riservato al successo assoluto dell'esecuzione.",
+      "options": [
+        "A zero (0)",
+        "A uno (1)",
+        "A qualsiasi numero positivo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard del linguaggio C garantisce che `EXIT_FAILURE` si espanda sempre in un valore intero non nullo (diverso da 0).",
+        "Errato. Sulla maggior parte delle piattaforme `EXIT_FAILURE` è esattamente pari a `1`.",
+        "Errato. `EXIT_FAILURE` di solito è un numero intero positivo."
+      ]
+    },
+    {
+      "id": "it_clang_2490",
+      "widget_id": "widget_clang_2490",
+      "topic": "Condizione per la restituzione del codice di successo pari a zero",
+      "q": "Con quale delle seguenti opzioni di avvio il programma restituirà il codice di successo (0)?",
+      "hint": "Calcola il valore totale di argc per ciascuna opzione: nome del programma + numero di argomenti.",
+      "options": [
+        "./app file.txt out.txt",
+        "./app",
+        "./app file.txt",
+        "./app a b c"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! All'avvio di `./app file.txt out.txt` vengono passati 1 elemento di esecuzione e 2 argomenti, il che dà `argc == 3`. La condizione `argc != 3` è falsa, quindi il programma eseguirà `return 0;`.",
+        "Errato. Per `./app` il valore è `argc == 1`, il programma restituirà 1.",
+        "Errato. Per `./app file.txt` il valore è `argc == 2`, il programma restituirà 1.",
+        "Errato. Per `./app a b c` il valore è `argc == 4`, il programma restituirà 1."
+      ]
+    },
+    {
+      "id": "it_clang_2491",
+      "widget_id": "widget_clang_2491",
+      "topic": "Differenza tra return in una funzione ordinaria e return in main()",
+      "q": "L'istruzione return 5 all'interno della funzione func() terminerà l'esecuzione dell'intero programma?",
+      "hint": "L'istruzione return restituisce il controllo alla funzione chiamante, mentre la terminazione di main() restituisce il codice al sistema operativo.",
+      "options": [
+        "No, il controllo tornerà a main() e il programma continuerà l'esecuzione fino a return 0",
+        "Sì, il programma terminerà e trasmetterà il codice 5 al sistema operativo",
+        "Sì, si verificherà un arresto anomalo del programma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `return` in una funzione ausiliaria restituisce soltanto il suo valore al punto di chiamata in `main()`. Il programma continuerà l'esecuzione e terminerà con il codice `0`.",
+        "Errato. `return` all'interno delle funzioni ordinarie non causa l'uscita dall'intero processo.",
+        "Errato. La restituzione di un valore da una funzione è un'operazione standard e sicura."
+      ]
+    },
+    {
+      "id": "it_clang_2492",
+      "widget_id": "widget_clang_2492",
+      "topic": "Svuotamento dei buffer I/O all'esecuzione di return in main()",
+      "q": "L'esecuzione di return 0; svuoterà il buffer di output di printf sullo schermo se alla fine della stringa non c'è il carattere di nuova riga ('\\n')?",
+      "hint": "La terminazione di main() garantisce la corretta procedura di chiusura dei file e lo svuotamento dei flussi I/O standard.",
+      "options": [
+        "Sì, l'uscita corretta da main() svuota tutti i buffer di input/output accumulati",
+        "No, senza il carattere '\\n' i dati nel buffer andranno persi per sempre"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Alla terminazione di `main()` tramite `return` viene invocata la procedura di terminazione del processo C runtime, che esegue automaticamente `fflush()` su tutti i flussi di output aperti.",
+        "Errato. Il carattere `\\n` provoca solo uno svuotamento intermedio della riga, ma all'uscita da `main()` lo svuotamento avviene in ogni caso."
+      ]
+    },
+    {
+      "id": "it_clang_2493",
+      "widget_id": null,
+      "topic": "Destinatario del codice di uscita di main()",
+      "q": "A chi viene trasmesso esattamente il valore numerico specificato nell'istruzione return della funzione main()?",
+      "hint": "Pensa a quale entità avvia il programma in esecuzione e riceve da esso lo stato di esecuzione.",
+      "options": [
+        "Al processo padre / al sistema operativo",
+        "Alla funzione printf()",
+        "Al compilatore durante la build del codice",
+        "Al flusso standard di errore stderr",
+        "Alla riga successiva del codice sorgente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il valore da `return` in `main()` viene trasmesso al sistema operativo o al processo padre chiamante (ad esempio l'interprete di comandi Bash/Cmd).",
+        "Errato. `printf` è una funzione di output di testo, non riceve lo stato di esecuzione del programma.",
+        "Errato. Il compilatore opera in fase di compilazione, mentre `return` trasmette il valore durante l'esecuzione.",
+        "Errato. `stderr` è il flusso di output degli errori, non un meccanismo per trasmettere il codice di uscita.",
+        "Errato. Dopo il `return` da `main()`, l'esecuzione del programma viene completamente interrotta."
+      ]
+    },
+    {
+      "id": "it_clang_2494",
+      "widget_id": "widget_clang_2494",
+      "topic": "Più istruzioni return in base alle condizioni",
+      "q": "Quale codice di uscita riceverà il sistema operativo all'avvio del comando: ./app hello world?",
+      "hint": "Calcola il valore totale di argc (nome del programma + 2 argomenti) e verifica la sequenza delle condizioni if.",
+      "options": [
+        "1",
+        "0",
+        "3",
+        "2",
+        "-1",
+        "255"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'avvio di `./app hello world` crea `argc == 3`. La prima condizione `argc > 3` (3 > 3) è falsa. La seconda condizione `argc > 1` (3 > 1) è vera, quindi viene eseguito `return 1;`.",
+        "Errato. Il codice 0 verrebbe restituito solo in assenza di argomenti (`argc == 1`).",
+        "Errato. La prima condizione richiede `argc > 3` (minimo 4 elementi), mentre ne sono stati passati 3.",
+        "Errato. Nel codice non è presente un ramo che restituisce 2.",
+        "Errato. Il programma restituirà il valore dal primo ramo `return` attivato.",
+        "Errato. Il ramo con il ritorno di `1` funzionerà normalmente."
+      ]
+    },
+    {
+      "id": "it_clang_2495",
+      "widget_id": "widget_clang_2495",
+      "topic": "Invocazione dei gestori atexit() al ritorno da main()",
+      "q": "La funzione cleanup(), registrata tramite atexit(), verrà invocata all'uscita da main() tramite return 0;?",
+      "hint": "La terminazione della funzione main() tramite return è sintatticamente e funzionalmente equivalente alla chiamata di exit().",
+      "options": [
+        "Sì, le funzioni registrate tramite atexit() vengono automaticamente invocate all'uscita da main()",
+        "No, atexit() si attiva soltanto con una chiamata esplicita alla funzione exit()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ritorno da `main()` invoca implicitamente `exit()`, che esegue tutte le funzioni di pulizia precedentemente registrate tramite `atexit()`.",
+        "Errato. Lo standard del linguaggio C garantisce l'invocazione dei gestori `atexit()` con il ritorno regolare da `main()`."
+      ]
+    },
+    {
+      "id": "it_clang_2496",
+      "widget_id": null,
+      "topic": "Differenza tra return da main() e la chiamata di sistema _Exit()",
+      "q": "Qual è la differenza principale tra l'istruzione return in main() e la chiamata di sistema diretta _Exit()?",
+      "hint": "Pensa al fatto se le funzioni di pulizia atexit() e lo svuotamento dei buffer vengano eseguiti durante un'uscita di sistema d'emergenza.",
+      "options": [
+        "return in main() esegue la procedura di pulizia (atexit, svuotamento buffer I/O), mentre _Exit() termina immediatamente il processo senza di essa",
+        "_Exit() chiude correttamente le risorse, mentre return causa perdite di memoria",
+        "return può restituire solo 0, mentre _Exit() qualsiasi numero",
+        "Tra return in main() e _Exit() non c'è assolutamente alcuna differenza"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `return` da `main()` esegue la regolare terminazione del C Runtime (svuotamento dei buffer, invocazione di `atexit`), mentre `_Exit()` o `_exit()` trasferisce immediatamente il controllo al kernel del SO, saltando le funzioni di pulizia della libreria C.",
+        "Errato. Al contrario, `return` esegue una pulizia completa dei buffer I/O.",
+        "Errato. `return` può restituire qualsiasi valore intero di tipo `int`.",
+        "Errato. La differenza risiede nell'esecuzione dei gestori di terminazione utente e di libreria."
+      ]
+    },
+    {
+      "id": "it_clang_2497",
+      "widget_id": "widget_clang_2497",
+      "topic": "Codice non raggiungibile (Unreachable code) dopo return",
+      "q": "La chiamata printf(\"Unreachable\\n\"), situata dopo l'istruzione return 0;, verrà eseguita?",
+      "hint": "L'istruzione return interrompe il flusso di esecuzione della funzione e trasferisce immediatamente il controllo all'ambiente chiamante.",
+      "options": [
+        "No, poiché return 0 termina immediatamente l'esecuzione di main()",
+        "Sì, la stringa verrà stampata poco prima dell'uscita dal programma",
+        "Il programma non verrà compilato a causa della presenza di una riga non raggiungibile",
+        "Il programma entrerà in un ciclo infinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'istruzione `return` effettua il trasferimento del controllo dalla funzione. Qualsiasi codice situato subito dopo di essa nello stesso blocco è non raggiungibile e non viene eseguito.",
+        "Errato. L'esecuzione del programma si arresta all'istruzione `return`.",
+        "Errato. Il compilatore potrebbe generare un avviso (warning), ma il codice verrà compilato con successo.",
+        "Errato. Non si verifica alcun ciclo infinito."
+      ]
+    },
+    {
+      "id": "it_clang_2498",
+      "widget_id": "widget_clang_2498",
+      "topic": "Errore dell'istruzione return vuota nella funzione main con tipo int",
+      "q": "A cosa porterà l'uso dell'istruzione return; senza espressione all'interno di int main(void)?",
+      "hint": "La firma int main() indica che la funzione è tenuta a restituire un valore di tipo int.",
+      "options": [
+        "A un errore di compilazione (o un avviso con errore in modalità rigorosa), poiché la funzione deve restituire int",
+        "Il programma verrà compilato e restituirà sempre automaticamente 0",
+        "Il programma verrà compilato e restituirà sempre automaticamente -1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In una funzione con tipo di ritorno non void (`int main`), l'istruzione `return;` senza argomento non è consentita dallo standard C e causa un errore di compilazione.",
+        "Errato. La sostituzione automatica di `0` funziona solo in totale assenza di `return` prima della parentesi di chiusura `}`, ma non quando si usa un `return;` vuoto.",
+        "Errato. Il compilatore bloccherà la build in presenza di un `return;` non valido."
+      ]
+    },
+    {
+      "id": "it_clang_2499",
+      "widget_id": "widget_clang_2499",
+      "topic": "Equivalenza tra la chiamata esplicita a exit() e return da main()",
+      "q": "Quale codice di uscita trasmetterà al sistema operativo questo programma?",
+      "hint": "Fai attenzione al fatto che la chiamata exit(5) termina il programma prima che l'esecuzione raggiunga return 0;.",
+      "options": [
+        "5",
+        "0",
+        "-5",
+        "1",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `exit(5)` interrompe immediatamente il flusso di esecuzione e restituisce al SO il codice `5`. La riga `return 0;` non viene eseguita.",
+        "Errato. La chiamata a `exit(5)` termina il processo immediatamente, senza permettere di raggiungere `return 0`.",
+        "Errato. Viene restituito l'argomento passato direttamente a `exit(5)`.",
+        "Errato. Il codice di uscita è pari a 5.",
+        "Errato. Il codice è valido e si compila senza errori."
+      ]
+    },
+    {
+      "id": "it_clang_2500",
+      "widget_id": null,
+      "topic": "Meccanismo CRT all'uscita dalla funzione main()",
+      "q": "Cosa succede a basso livello nell'ambiente di esecuzione C (C Runtime / CRT) quando la funzione main() esegue return val?",
+      "hint": "main() viene in realtà invocata dalla funzione di avvio dell'ambiente di esecuzione C (ad esempio _start/crt0).",
+      "options": [
+        "Il controllo torna al codice di avvio C Runtime, che trasmette implicitamente il valore val alla chiamata exit(val)",
+        "Il processore esegue all'istante l'istruzione di arresto completo (hlt)",
+        "Il sistema operativo riavvia forzatamente l'eseguibile",
+        "La memoria del programma viene trasferita alla successiva utilità avviata senza essere pulita"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `main()` viene invocata dalla procedura di inizializzazione CRT (`_start`). Quando `main` esegue `return val`, il CRT riceve `val` e invoca subito `exit(val)`.",
+        "Errato. L'istruzione `hlt` si usa nel kernel del SO e non è accessibile ai normali programmi utente.",
+        "Errato. Il SO riceve lo stato di uscita e termina il processo, anziché riavviarlo.",
+        "Errato. La memoria del processo viene isolata e restituita al sistema operativo."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,589 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2621",
+      "widget_id": "widget_clang_2621",
+      "topic": "Tipo di dato per memorizzare il risultato di fgetc() e il confronto con EOF",
+      "q": "Perché la variabile ch per salvare il risultato di fgetc() è dichiarata come int anziché char?",
+      "hint": "La costante EOF deve essere distinta da tutti i possibili valori di byte validi (0..255).",
+      "options": [
+        "Il tipo int è in grado di contenere tutti i valori di unsigned char (0..255) più il valore negativo della costante EOF (di solito -1)",
+        "La funzione fgetc() accetta solo argomenti di tipo int",
+        "Il tipo char в C non può memorizzare caratteri letti da un file di testo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `fgetc()` restituisce un `int` per garantire la distinzione tra un byte reale con valore `255` (`0xFF`) e lo speciale marcatore di errore/EOF (`-1`).",
+        "Errato. `fgetc()` accetta un argomento `FILE*` e restituisce un `int`.",
+        "Errato. Il tipo `char` è progettato proprio per i caratteri, ma non può distinguere in modo affidabile il byte `0xFF` da `EOF`."
+      ]
+    },
+    {
+      "id": "it_clang_2622",
+      "widget_id": "widget_clang_2622",
+      "topic": "Errore logico nell'uso di while (!feof(f))",
+      "q": "Se il file \"test.txt\" contiene esattamente un carattere 'A', cosa stamperà questo programma?",
+      "hint": "Il flag feof() viene impostato SOLO DOPO che un'operazione di lettura ha tentato di leggere oltre la fine del file.",
+      "options": [
+        "Il carattere 'A' verrà stampato due volte (oppure verrà stampato 'A' e un valore EOF non valido)",
+        "Il carattere 'A' verrà stampato esattamente una volta",
+        "Il programma entrerà in un ciclo infinito",
+        "Non verrà stampato nulla"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La prima iterazione legge `'A'`, `feof(f)` è ancora `false`. Alla seconda iterazione `feof(f)` è ancora `false` (poiché non si è ancora tentato di superare la fine del file), `fgetc()` restituisce `EOF`, che viene stampato incondizionatamente tramite `printf`.",
+        "Errato. `while(!feof(f))` è un errore comune in C che porta a elaborare l'ultimo elemento due volte.",
+        "Errato. Il ciclo terminerà dopo che `fgetc()` avrà tentato di leggere oltre la fine del file e imposterà il flag `feof`.",
+        "Errato. La prima iterazione legge con successo `'A'`."
+      ]
+    },
+    {
+      "id": "it_clang_2623",
+      "widget_id": null,
+      "topic": "Definizione della costante EOF nel file di intestazione stdio.h",
+      "q": "Cos'è la macrocostante EOF nella libreria standard del C?",
+      "hint": "Ricorda il valore numerico restituito dalle funzioni di lettura al raggiungimento della fine del file.",
+      "options": [
+        "Un numero intero negativo di tipo int (di solito -1), definito in <stdio.h>",
+        "Un puntatore NULL",
+        "Un carattere '\\0' (byte zero)",
+        "Un numero positivo 255 (0xFF)",
+        "Un flag booleano false"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `EOF` è una macrocostante intera (di solito `-1`), dichiarata in `<stdio.h>` e usata per indicare la fine del file o un errore.",
+        "Errato. `NULL` si usa per i puntatori, mentre `EOF` per lo stato intero delle funzioni di I/O.",
+        "Errato. Il carattere `'\\0'` (codice 0) indica la fine di una stringa in C, non la fine di un file.",
+        "Errato. Il valore `255` è un byte di dati valido.",
+        "Errato. `EOF` è un `int` numerico, non un `bool`."
+      ]
+    },
+    {
+      "id": "it_clang_2624",
+      "widget_id": "widget_clang_2624",
+      "topic": "Momento di impostazione dell'indicatore di fine file feof()",
+      "q": "Cosa stamperà il programma lavorando con un file vuoto \"empty.txt\"?",
+      "hint": "L'indicatore feof() viene impostato subito all'apertura del file vuoto o solo dopo un tentativo di lettura?",
+      "options": [
+        "0 1",
+        "1 1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! All'apertura del file `feof(f)` è uguale a `0`. Solo dopo che `fgetc(f)` ha tentato di leggere un byte dal file vuoto ed è fallito, il flag passa a un valore diverso da zero (`1`).",
+        "Errato. Prima di eseguire un'operazione di lettura fallita, l'indicatore `feof()` non viene impostato, anche se il file è vuoto."
+      ]
+    },
+    {
+      "id": "it_clang_2625",
+      "widget_id": null,
+      "topic": "Differenza tra le funzioni feof() e ferror()",
+      "q": "Qual è la differenza principale tra le funzioni feof(f) e ferror(f)?",
+      "hint": "Entrambe le funzioni controllano le cause di una lettura fallita, ma rispondono a stati diversi dello stream.",
+      "options": [
+        "feof() verifica se è stata raggiunta la fine del file, mentre ferror() verifica se si è verificato un errore hardware o di sistema durante l'I/O",
+        "feof() funziona con i file di testo, mentre ferror() solo con i file binari",
+        "feof() chiude automaticamente il file, mentre ferror() svuota il buffer"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `feof()` indica il raggiungimento della fine del file (EOF), mentre `ferror()` segnala un errore dell'operazione (ad esempio un guasto al disco o la revoca dei permessi di accesso).",
+        "Errato. Entrambe le funzioni si applicano a qualsiasi stream di file.",
+        "Errato. Nessuna delle due funzioni chiude il file né svuota i buffer."
+      ]
+    },
+    {
+      "id": "it_clang_2626",
+      "widget_id": "widget_clang_2626",
+      "topic": "Pericolo di salvare fgetc() in una variabile char",
+      "q": "A quale potenziale problema può portare la dichiarazione della variabile c come char anziché int in questo ciclo?",
+      "hint": "Rifletti su cosa accadrebbe se un byte del file avesse valore 0xFF (255) e il tipo char fosse signed per impostazione predefinita.",
+      "options": [
+        "Se char è signed, il byte con valore 255 viene convertito in -1, interrompendo erroneamente e prematuramente la lettura del file",
+        "Il programma non verrà compilato a causa del controllo rigido dei tipi in C",
+        "La chiamata a putchar() causerà un arresto anomalo del programma",
+        "Il file \"data.txt\" verrà automaticamente svuotato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il valore `255` (`0xFF`) convertito a `signed char` diventa `-1`, che coincide con il valore di `EOF` e interrompe il ciclo prima della reale fine del file.",
+        "Errato. Il compilatore C consente il cast implicito dei tipi e compilerà il codice.",
+        "Errato. `putchar()` accetta correttamente un `int`.",
+        "Errato. La funzione di lettura non modifica il file."
+      ]
+    },
+    {
+      "id": "it_clang_2627",
+      "widget_id": "widget_clang_2627",
+      "topic": "Ripristino degli indicatori di file tramite clearerr()",
+      "q": "Cosa stamperà il programma dopo la chiamata alla funzione clearerr(f)?",
+      "hint": "La funzione clearerr() azzera gli indicatori di fine file (EOF) e di errore dello stream.",
+      "options": [
+        "0",
+        "1",
+        "EOF",
+        "-1",
+        "Segmentation Fault",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiamata a `clearerr(f)` azzera completamente gli indicatori di flag `EOF` e di errore. Di conseguenza, la successiva chiamata a `feof(f)` restituisce `0`.",
+        "Errato. Il flag `feof` è stato azzerato dalla funzione `clearerr`.",
+        "Errato. `feof()` restituisce uno stato intero (`0` o diverso da zero), non `EOF`.",
+        "Errato. `feof()` non restituisce valori negativi.",
+        "Errato. L'operazione è completamente valida.",
+        "Errato. Il codice si compila senza ошибок."
+      ]
+    },
+    {
+      "id": "it_clang_2628",
+      "widget_id": null,
+      "topic": "Reazione di fgets() al raggiungimento della fine del file (EOF)",
+      "q": "Cosa restituisce la funzione fgets() se all'atto della chiamata incontra subito la fine del file (EOF) e nessun carattere è stato letto?",
+      "hint": "Ricorda come fgets() segnala l'assenza di dati letti.",
+      "options": [
+        "Un puntatore NULL",
+        "Il numero EOF (-1)",
+        "Una stringa vuota \"\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Al raggiungimento di `EOF` senza aver letto alcun carattere, `fgets()` restituisce `NULL`.",
+        "Errato. `fgets()` restituisce un `char*`, non un `int` numerico (`EOF`).",
+        "Errato. Il contenuto del buffer non viene modificato e la funzione restituisce `NULL`."
+      ]
+    },
+    {
+      "id": "it_clang_2629",
+      "widget_id": "widget_clang_2629",
+      "topic": "Gestione della prima lettura da un file vuoto",
+      "q": "Cosa stamperà il programma tentata la prima lettura da un file completamente vuoto?",
+      "hint": "Leggendo da un file vuoto fgetc() restituisce immediatamente il valore della costante EOF.",
+      "options": [
+        "EOF reached",
+        "Non stamperà nulla",
+        "0",
+        "Segmentation Fault",
+        "Errore di I/O"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La primissima chiamata a `fgetc()` incontra la fine del file vuoto e restituisce `EOF`. La condizione `ch == EOF` è vera, viene stampato `EOF reached`.",
+        "Errato. Il ramo `if` si attiva poiché `ch` è uguale a `EOF`.",
+        "Errato. `fgetc()` restituirà `EOF` (`-1`), non `0`.",
+        "Errato. L'accesso a un file vuoto non corrompe la memoria.",
+        "Errato. Il raggiungimento della fine del file è una situazione normale, non un errore."
+      ]
+    },
+    {
+      "id": "it_clang_2630",
+      "widget_id": null,
+      "topic": "Valore di ritorno di fscanf() al riscontro di EOF",
+      "q": "È vero che la funzione fscanf() restituisce il valore EOF se il tentativo di lettura avviene quando è stata già raggiunta la fine del file?",
+      "hint": "Rifletti su come fscanf() distingua la lettura riuscita di 0 argomenti dall'impossibilità di leggere a causa della fine del file.",
+      "options": [
+        "Sì, se il fallimento dell'input avviene prima che qualsiasi specificatore corrisponda, fscanf() restituisce EOF",
+        "No, fscanf() restituisce sempre 0 per qualsiasi errore e alla fine del file"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se lo stream si trova alla fine del file prima che `fscanf()` possa convertire anche un solo campo, la funzione restituisce `EOF`.",
+        "Errato. Il valore `0` viene restituito se ci sono dati nel file ma non corrispondono allo specificatore di formato richiesto (ad esempio testo alfabetico con `%d`)."
+      ]
+    },
+    {
+      "id": "it_clang_2631",
+      "widget_id": "widget_clang_2631",
+      "topic": "Lettura di base di numeri interi tramite fscanf()",
+      "q": "Se il file \"num.txt\" contiene il testo \"123\", cosa stamperà questo programma?",
+      "hint": "fscanf legge una sequenza di cifre e salva il numero convertito all'indirizzo della variabile.",
+      "options": [
+        "123",
+        "0",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `fscanf` analizza la stringa di testo `\"123\"`, la converte in un numero intero e ne salva il valore all'indirizzo `&val`.",
+        "Errato. La variabile `val` aggiornerà il suo valore iniziale `0` con il numero letto `123`.",
+        "Errato. La sintassi del codice è corretta."
+      ]
+    },
+    {
+      "id": "it_clang_2632",
+      "widget_id": null,
+      "topic": "Valore di ritorno della funzione fscanf()",
+      "q": "Cosa restituisce la funzione fscanf() in caso di successo?",
+      "hint": "Pensa a come determinare quante variabili dagli specificatori di formato (%d, %s, ecc.) sono state riconosciute e assegnate con successo.",
+      "options": [
+        "Il numero di elementi (argomenti) letti e assegnati con successo",
+        "Il numero totale di byte/caratteri letti dal file",
+        "Sempre il numero 0",
+        "Un puntatore alla struttura FILE",
+        "Un valore booleano true"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `fscanf()` restituisce il numero di argomenti di input che sono stati accoppiati e assegnati con successo alle variabili.",
+        "Errato. Il numero di caratteri è restituito da `fprintf()`, non da `fscanf()`.",
+        "Errato. Il numero 0 viene restituito solo se nessun argomento corrisponde al formato.",
+        "Errato. La funzione restituisce un valore di tipo `int`.",
+        "Errato. La funzione restituisce un contatore numerico di formattazione."
+      ]
+    },
+    {
+      "id": "it_clang_2633",
+      "widget_id": "widget_clang_2633",
+      "topic": "Passaggio di un valore anziché di un indirizzo a fscanf()",
+      "q": "Quale conseguenza avrà il passaggio di val anziché dell'indirizzo &val alla funzione fscanf()?",
+      "hint": "fscanf richiede puntatori ad aree di memoria per scrivere i risultati della lettura.",
+      "options": [
+        "Comportamento indefinito / errore di segmentazione (Segmentation Fault) a causa della scrittura a un indirizzo errato",
+        "Il compilatore inserirà automaticamente l'operatore di indirizzo",
+        "Il valore val non cambierà, ma il programma continuerà a funzionare in modo sicuro"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione interpreta il valore di `val` (il numero `10`) come puntatore in memoria (`0x0000000A`) e tenterà di scrivervi i dati, causando un errore di memoria.",
+        "Errato. Il C non inserisce automaticamente `&` per i tipi di dati semplici.",
+        "Errato. La scrittura a un indirizzo casuale causerà un Segmentation Fault in fase di esecuzione."
+      ]
+    },
+    {
+      "id": "it_clang_2634",
+      "widget_id": "widget_clang_2634",
+      "topic": "Lettura di stringhe con lo specificatore %s in fscanf()",
+      "q": "Se il file \"text.txt\" contiene la stringa \"Hello World\", cosa stamperà a schermo il programma?",
+      "hint": "Lo specificatore %s interrompe la lettura al primo carattere di spaziatura incontrato (spazio, tabulazione, a capo).",
+      "options": [
+        "Hello",
+        "Hello World",
+        "World",
+        "H"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `%s` legge una singola parola fino al primo carattere di spaziatura. Lo spazio tra \"Hello\" e \"World\" terminerà la lettura della prima parola.",
+        "Errato. Per leggere l'intera stringa inclusi gli spazi `%s` non è adatto.",
+        "Errato. La parola \"World\" rimarrà nello stream di file per le successive letture.",
+        "Errato. Lo specificatore `%s` legge l'intera parola, non un singolo carattere."
+      ]
+    },
+    {
+      "id": "it_clang_2635",
+      "widget_id": null,
+      "topic": "Protezione dal buffer overflow in fscanf()",
+      "q": "Come prevenire il buffer overflow durante la lettura di una stringa con lo specificatore %s in fscanf()?",
+      "hint": "La larghezza dello specificatore di formato limita il numero massimo di caratteri scritti nell'array di destinazione.",
+      "options": [
+        "Specificare la larghezza massima nello specificatore di formato (ad esempio %19s per un array di 20 byte)",
+        "Usare la parola chiave const durante la dichiarazione dell'array di stringhe"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Specificare la larghezza (ad esempio `%19s`) limita il numero di caratteri letti a 19, lasciando spazio per il terminatore nullo `\\0`.",
+        "Errato. Il modificatore `const` rende l'array immutabile, il che causerà un errore di compilazione durante il tentativo di scrittura."
+      ]
+    },
+    {
+      "id": "it_clang_2636",
+      "widget_id": "widget_clang_2636",
+      "topic": "Uso di fscanf() nella condizione di un ciclo",
+      "q": "Se il file \"data.txt\" contiene la sequenza \"10 20 30 ABC\", cosa stamperà il programma?",
+      "hint": "Non sarà possibile leggere un numero dalla sottostringa \"ABC\" con lo specificatore %d, il che farà scendere il valore di ritorno di fscanf da 1 a 0.",
+      "options": [
+        "3",
+        "4",
+        "0",
+        "102030"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `fscanf` leggerà con successo i numeri `10`, `20`, `30` (3 iterazioni riuscite). Sulla sottostringa `ABC` lo specificatore `%d` restituirà `0`, la condizione `== 1` diventerà falsa e il ciclo terminerà.",
+        "Errato. L'elemento `ABC` non è un numero e non verrà conteggiato.",
+        "Errato. I primi tre numeri verranno letti con successo.",
+        "Errato. La variabile `count` conta il numero di iterazioni, non stampa dati."
+      ]
+    },
+    {
+      "id": "it_clang_2637",
+      "widget_id": null,
+      "topic": "Equivalenza tra scanf() e fscanf()",
+      "q": "Quale chiamata alla funzione fscanf() è assolutamente equivalente a scanf(\"%d\", &x)?",
+      "hint": "La funzione scanf() esegue di default la lettura dallo stream di input standard.",
+      "options": [
+        "fscanf(stdin, \"%d\", &x)",
+        "fscanf(stdout, \"%d\", &x)",
+        "fscanf(stderr, \"%d\", &x)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `scanf(...)` è un wrapper attorno a `fscanf(stdin, ...)`.",
+        "Errato. Lo stream `stdout` è destinato all'output, non all'input.",
+        "Errato. Lo stream `stderr` è destinato all'output degli errori."
+      ]
+    },
+    {
+      "id": "it_clang_2638",
+      "widget_id": "widget_clang_2638",
+      "topic": "Parsing dell'input formattato con separatori (CSV)",
+      "q": "Se il file \"data.txt\" contiene la stringa \"10,20\", cosa stamperà questo programma?",
+      "hint": "Il carattere virgola nella stringa di formato corrisponde alla virgola nel file, consentendo di leggere con successo entrambi i numeri interi.",
+      "options": [
+        "2 10 20",
+        "1 10 0",
+        "0 0 0",
+        "2 0 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `fscanf` legge `10`, salta la virgola `,`, legge `20`. Entrambi gli argomenti corrispondono, quindi `res` è uguale a `2`, `x = 10`, `y = 20`.",
+        "Errato. La virgola separatrice è indicata nel modello di formato, quindi il secondo numero corrisponderà con successo.",
+        "Errato. Il primo numero viene letto con successo.",
+        "Errato. Le variabili `x` e `y` ricevono i valori letti."
+      ]
+    },
+    {
+      "id": "it_clang_2639",
+      "widget_id": "widget_clang_2639",
+      "topic": "Comportamento dello stream in caso di errore di corrispondenza dello specificatore (Matching Failure)",
+      "q": "Se il file \"data.txt\" contiene il testo \"ABC\", cosa stamperà questo programma?",
+      "hint": "In caso di errore di corrispondenza dello specificatore, i caratteri non vengono rimossi dallo stream e rimangono disponibili per la lettura successiva.",
+      "options": [
+        "0 'A'",
+        "0 'B'",
+        "65 'A'",
+        "-1 ' '"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il primo `fscanf(..., \"%d\", &a)` fallirà (la lettera `'A'` non è un numero) lasciando il carattere `'A'` nello stream, e `a` rimarrà `0`. Il secondo `fscanf(..., \"%c\", &b)` leggerà il carattere `'A'` intatto. Output: `0 'A'`.",
+        "Errato. Il carattere `'A'` non viene scartato al fallimento del primo `fscanf`.",
+        "Errato. Il valore di `a` non cambierà.",
+        "Errato. L'errore di corrispondenza non imposta lo stream su EOF."
+      ]
+    },
+    {
+      "id": "it_clang_2640",
+      "widget_id": null,
+      "topic": "Specificatore del set di scansione (scanset) in fscanf()",
+      "q": "Quale specificatore di formato in fscanf() consente di leggere una stringa con spazi fino al primo carattere di a capo '\\n'?",
+      "hint": "Si utilizza la sintassi del set di scansione (scanset) con l'inversione dei caratteri tramite il simbolo '^'.",
+      "options": [
+        "%[^\\n]",
+        "%s",
+        "%c",
+        "%line",
+        "%str",
+        "%*s"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `%[^\\n]` configura la lettura multipla di qualsiasi carattere fino all'incontro del carattere a capo `\\n`.",
+        "Errato. `%s` si ferma al primissimo spazio.",
+        "Errato. `%c` legge un singolo carattere.",
+        "Errato. Tale specificatore non esiste in C.",
+        "Errato. Lo specificatore `%str` non è supportato in C.",
+        "Errato. L'asterisco `%*s` indica di scartare la parola letta senza assegnarla a una variabile."
+      ]
+    },
+    {
+      "id": "it_clang_2641",
+      "widget_id": "widget_clang_2641",
+      "topic": "Scopo della funzione rewind()",
+      "q": "Se il file \"test.txt\" contiene la stringa \"ABC\", cosa stamperà questo programma?",
+      "hint": "La funzione rewind() ripristina l'indicatore di posizione del file all'inizio.",
+      "options": [
+        "A A",
+        "A B",
+        "A EOF"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il primo `fgetc` legge il carattere `'A'` e sposta il puntatore di 1 byte. `rewind(f)` riporta il puntatore all'inizio del file, quindi il secondo `fgetc` legge di nuovo `'A'`.",
+        "Errato. `'A B'` verrebbe stampato senza la chiamata a `rewind(f)`.",
+        "Errato. Il file non si trova alla fine, poiché `rewind()` ha riportato il cursore alla posizione 0."
+      ]
+    },
+    {
+      "id": "it_clang_2642",
+      "widget_id": null,
+      "topic": "Tipo del valore di ritorno di rewind()",
+      "q": "Qual è il tipo del valore di ritorno della funzione rewind()?",
+      "hint": "A differenza di fseek(), la funzione rewind() non segnala codici di errore tramite il suo valore di ritorno.",
+      "options": [
+        "void",
+        "int",
+        "FILE*",
+        "long"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il prototipo della funzione in `<stdio.h>` è `void rewind(FILE *stream);`. Non restituisce nulla.",
+        "Errato. Il tipo `int` è restituito dalla funzione `fseek()`.",
+        "Errato. I puntatori sono restituiti da funzioni come `fopen()` o `freopen()`.",
+        "Errato. Il tipo `long` è restituito da `ftell()`."
+      ]
+    },
+    {
+      "id": "it_clang_2643",
+      "widget_id": "widget_clang_2643",
+      "topic": "Azzeramento dei flag di errore e di EOF con rewind()",
+      "q": "Cosa stamperà il programma dopo aver raggiunto la fine del file e aver successivamente chiamato rewind(f)?",
+      "hint": "Oltre a spostare il cursore all'inizio, rewind() azzera automaticamente gli indicatori feof e ferror.",
+      "options": [
+        "1 0",
+        "1 1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Prima della chiamata a `rewind` il flag `feof` era impostato (`1`). La funzione `rewind()` azzera automaticamente l'indicatore di fine file e di errore, quindi `feof` dopo la chiamata diventa uguale a `0`.",
+        "Errato. `rewind()` pulisce garantito lo stato di fine file."
+      ]
+    },
+    {
+      "id": "it_clang_2644",
+      "widget_id": null,
+      "topic": "Confronto tra rewind(f) e fseek(f, 0L, SEEK_SET)",
+      "q": "Qual è il vantaggio o la differenza nell'usare rewind(f) rispetto all'equivalente fseek(f, 0L, SEEK_SET)?",
+      "hint": "Rifletti sui flag aggiuntivi di stato dello stream (error indicator).",
+      "options": [
+        "rewind(f) azzera in più gli indicatori di errore (ferror) e di fine file (feof), in modo equivalente alla chiamata clearerr(f)",
+        "rewind(f) funziona solo per i file di testo, mentre fseek solo per quelli binari",
+        "fseek restituisce void, mentre rewind restituisce int",
+        "rewind sposta il puntatore alla fine del file, mentre fseek all'inizio",
+        "Non c'è assolutamente alcuna differenza tra loro in nessuna circostanza"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, la chiamata a `rewind(f)` è identica alla sequenza `(void)fseek(f, 0L, SEEK_SET); clearerr(f);`.",
+        "Errato. Entrambe le funzioni si applicano sia a stream di testo sia a stream binari.",
+        "Errato. Al contrario: `fseek` restituisce `int`, mentre `rewind` restituisce `void`.",
+        "Errato. Entrambe le funzioni spostano il puntatore all'inizio del file.",
+        "Errato. `fseek` non azzera l'indicatore di errore `ferror`."
+      ]
+    },
+    {
+      "id": "it_clang_2645",
+      "widget_id": null,
+      "topic": "Concetto di offset di file (File Offset / Position Indicator)",
+      "q": "Che cos'è l'offset di posizione del file (file offset/position indicator) nella struttura FILE?",
+      "hint": "È un contatore interno in byte che indica il punto corrente di lettura o scrittura.",
+      "options": [
+        "Un indicatore interno della posizione in byte nel file, che punta al punto della successiva operazione di lettura/scrittura",
+        "L'indirizzo fisico del settore sul disco rigido in cui sono memorizzati i dati del file",
+        "Un contatore del numero di chiamate alla funzione fopen() nel programma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'indicatore di posizione del file è un contatore (offset in byte dall'inizio) che determina da dove verrà letto o scritto il byte successivo.",
+        "Errato. Il puntatore di posizione lavora a livello logico di astrazione della libreria C, non a livello di settori del disco.",
+        "Errato. La variabile memorizza l'offset corrente in byte, non il numero di chiamate a `fopen`."
+      ]
+    },
+    {
+      "id": "it_clang_2646",
+      "widget_id": "widget_clang_2646",
+      "topic": "Lettura dopo scrittura con rewind() in modalità \"a+\"",
+      "q": "Se il file \"data.txt\" conteneva inizialmente il testo \"AB\", quale carattere verrà letto e stampato dal programma?",
+      "hint": "La modalità \"a+\" consente di leggere il file da qualsiasi posizione dopo una chiamata esplicita a una funzione di posizionamento.",
+      "options": [
+        "A",
+        "X",
+        "B",
+        "EOF"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il codice aggiunge `'X'` alla fine (il file diventa `'ABX'`). Quindi `rewind(f)` sposta il puntatore di lettura alla primissima posizione (byte 0), da cui viene letto il carattere `'A'`.",
+        "Errato. Il carattere `'X'` è stato scritto alla fine del file, ma `rewind` ha riportato il cursore di lettura all'inizio.",
+        "Errato. Il secondo carattere `'B'` si trova alla posizione con indice 1.",
+        "Errato. Il file non è vuoto e il puntatore è impostato all'inizio."
+      ]
+    },
+    {
+      "id": "it_clang_2647",
+      "widget_id": "widget_clang_2647",
+      "topic": "Passaggio dalla scrittura alla lettura tramite rewind() in modalità \"w+\"",
+      "q": "Cosa stamperà questo programma che utilizza la modalità \"w+\"?",
+      "hint": "La funzione rewind() funge da separatore tra le operazioni di scrittura e lettura per le modalità combinate.",
+      "options": [
+        "123",
+        "Una stringa vuota",
+        "Comportamento indefinito (Undefined Behavior)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `fputs` scrive `\"123\"`. `rewind(f)` svuota i buffer e posiziona il cursore all'inizio. Il successivo `fgets` legge con successo la stringa precedentemente scritta `\"123\"`.",
+        "Errato. I dati non sono andati persi, poiché il cursore è tornato all'inizio dello stream aperto.",
+        "Errato. Secondo lo standard, tra le operazioni di output e input in una modalità con il più (`+`) è obbligatoria la chiamata a una funzione di posizionamento (`rewind`, `fseek`, `fsetpos`) o a `fflush`."
+      ]
+    },
+    {
+      "id": "it_clang_2648",
+      "widget_id": null,
+      "topic": "Effetto della lettura sequenziale sull'offset del file",
+      "q": "In che modo un'operazione di lettura di un singolo byte tramite fgetc() influisce sull'offset di posizione nel file?",
+      "hint": "Ogni lettura di un elemento sposta il cursore in avanti della sua dimensione.",
+      "options": [
+        "L'offset di posizione del file viene automaticamente incrementato di 1 byte in avanti",
+        "L'offset viene automaticamente azzerato a 0",
+        "L'offset viene immediatamente spostato alla fine del file",
+        "L'offset di posizione rimane invariato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Ogni operazione riuscita di lettura o scrittura di un singolo byte sposta l'indicatore di posizione del file in avanti di 1 byte.",
+        "Errato. L'azzeramento a 0 avviene solo alla chiamata di `rewind()`.",
+        "Errato. Lo spostamento alla fine avviene utilizzando operazioni in modalità append o chiamando `fseek(f, 0, SEEK_END)`.",
+        "Errato. Se l'offset non cambiasse, chiamate ripetute a `fgetc()` leggerebbero lo stesso byte."
+      ]
+    },
+    {
+      "id": "it_clang_2649",
+      "widget_id": "widget_clang_2649",
+      "topic": "Passaggio di NULL a rewind()",
+      "q": "Cosa accadrà tentando di chiamare rewind(f) per f == NULL?",
+      "hint": "La libreria standard C non esegue controlli del puntatore a NULL all'interno di rewind.",
+      "options": [
+        "Comportamento indefinito / errore di accesso alla memoria (Segmentation Fault)",
+        "rewind() ignorerà NULL e il programma terminerà in modo sicuro",
+        "Verrà automaticamente creato un nuovo file vuoto sul disco",
+        "Si verificherà un errore in fase di compilazione",
+        "Il programma sospenderà l'esecuzione in attesa dell'input dell'utente",
+        "Verrà azzerato lo stream degli errori standard stderr"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il passaggio di un puntatore nullo `NULL` a `rewind()` causa il dereferenziamo di `NULL` all'interno della funzione della libreria C e il crash del programma con `Segmentation Fault`.",
+        "Errato. `rewind()` non ha un controllo per `NULL` (a differenza di `free(NULL)`).",
+        "Errato. `rewind()` non può creare file.",
+        "Errato. Il codice si compila senza errori poiché i tipi di dati sono corretti.",
+        "Errato. La funzione non attende l'input di dati.",
+        "Errato. Lo stream `stderr` non viene minimamente interessato."
+      ]
+    },
+    {
+      "id": "it_clang_2650",
+      "widget_id": null,
+      "topic": "Vantaggio dell'uso di rewind() rispetto alla riapertura del file",
+      "q": "Qual è il vantaggio principale nell'utilizzare rewind(f) rispetto all'esecuzione di fclose(f) seguita da fopen(f, ...)?",
+      "hint": "Rifletti sul sovraccarico del sistema operativo per la riapertura di un file.",
+      "options": [
+        "Risparmio di risorse del SO: si evitano le chiamate di sistema per l'apertura/chiusura e la ricontrollo dei permessi di accesso al file",
+        "rewind() consente di modificare i file protetti da scrittura",
+        "rewind() rinomina automaticamente il file sul disco rigido"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La riapertura di un file comporta costose operazioni di sistema (ricerca del file nel file system, verifica del descrittore e dei permessi di accesso). `rewind()` azzera semplicemente il contatore di posizione in uno stream già aperto.",
+        "Errato. `rewind()` non modifica i permessi di accesso né la modalità dello stream.",
+        "Errato. La rinominazione dei file è eseguita da altre funzioni (ad esempio `rename()`)."
+      ]
+    }
+  ]
+}

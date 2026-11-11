@@ -1,0 +1,597 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2861",
+      "widget_id": "widget_clang_2861",
+      "topic": "Comando base di ispezione della memoria (examine)",
+      "q": "Quale comando specializzato di GDB viene utilizzato per esaminare (ispezionare) direttamente il contenuto grezzo della memoria RAM a un determinato indirizzo?",
+      "hint": "Il nome del comando deriva dalla parola inglese examine.",
+      "options": [
+        "x",
+        "mem",
+        "ram"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `x` (examine) è lo strumento principale di GDB per effettuare il dump e l'ispezione di aree di memoria generiche.",
+        "Non corretto. Il comando `mem` serve a gestire gli attributi delle regioni di memoria, non a effettuare il dump del contenuto.",
+        "Non corretto. Il comando `ram` non esiste in GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2862",
+      "widget_id": null,
+      "topic": "Ottenere l'indirizzo di una variabile",
+      "q": "Come si scopre l'indirizzo virtuale di memoria RAM in cui si trova attualmente la variabile data?",
+      "hint": "Ricorda l'operatore standard per l'indirizzo in C.",
+      "options": [
+        "print &data",
+        "print *data",
+        "where data",
+        "find data"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `print &data` restituisce l'indirizzo di memoria della variabile `data`.",
+        "Non corretto. `*data` tenta di dereferenziare la variabile come puntatore.",
+        "Non corretto. `where` mostra lo stack di chiamata corrente delle funzioni (backtrace).",
+        "Non corretto. `find` viene utilizzato per cercare sequenze di byte nella memoria."
+      ]
+    },
+    {
+      "id": "it_clang_2863",
+      "widget_id": "widget_clang_2863",
+      "topic": "Analisi del formato x/FMT",
+      "q": "Cosa significa il comando x/4xw &num durante l'ispezione della memoria in GDB?",
+      "hint": "Il numero 4 specifica la quantità, 'x' indica il formato esadecimale, 'w' la dimensione dell'elemento (word, 4 byte).",
+      "options": [
+        "Leggere e stampare 4 elementi della dimensione di una parola (word, 4 byte) in formato esadecimale a partire dall'indirizzo &num",
+        "Stampare 4 byte in formato testo/carattere",
+        "Moltiplicare il valore di num per 4 e convertirlo in esadecimale",
+        "Trovare 4 variabili con nome w nel modulo corrente",
+        "Scrivere 4 word con valore 0x00 all'indirizzo &num"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella sintassi `x/NFU`: `N=4` (quantità), `F=x` (formato hex), `U=w` (dimensione dell'unità = word / 4 byte).",
+        "Non corretto. Il formato carattere è specificato dal flag `/c` o `/s`.",
+        "Non corretto. Il comando `x` non esegue operazioni aritmetiche di moltiplicazione sul contenuto.",
+        "Non corretto. `x` lavora con gli indirizzi di memoria e non cerca simboli per nome.",
+        "Non corretto. `x` è un comando di sola lettura (read-only), non di scrittura."
+      ]
+    },
+    {
+      "id": "it_clang_2864",
+      "widget_id": null,
+      "topic": "Specificatori della dimensione dell'unità di memoria (Unit size)",
+      "q": "Quale flag alfabetico nel formato del comando x/FMT imposta la dimensione dell'unità di memoria visualizzata esattamente a 1 byte?",
+      "hint": "Viene utilizzata la prima lettera della parola inglese byte.",
+      "options": [
+        "b",
+        "h",
+        "w",
+        "g"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `b` indica byte (1 byte). Per confronto: `h` — halfword (2 byte), `w` — word (4 byte), `g` — giant (8 byte).",
+        "Non corretto. `h` imposta la dimensione a 2 byte (halfword).",
+        "Non corretto. `w` imposta la dimensione a 4 byte (word).",
+        "Non corretto. `g` imposta la dimensione a 8 byte (giant word)."
+      ]
+    },
+    {
+      "id": "it_clang_2865",
+      "widget_id": "widget_clang_2865",
+      "topic": "Dereferenziazione di un puntatore nullo nel debugger",
+      "q": "Cosa succede se si esegue il comando print *ptr in GDB se ptr è uguale a NULL (0x0)?",
+      "hint": "Il debugger intercetta il tentativo di leggere un indirizzo protetto per evitare il crash della sessione.",
+      "options": [
+        "GDB intercetta l'errore e mostra il messaggio «Cannot access memory at address 0x0»",
+        "Il debugger e il programma sottoposto a debug terminano immediatamente in modo anomalo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! GDB tenta di leggere l'indirizzo in modo sicuro e, se la lettura non è possibile, restituisce un messaggio di errore di accesso alla memoria senza far fallire il debugger stesso.",
+        "Non corretto. GDB isola le operazioni di lettura della memoria e non va in crash quando si tenta di visualizzare l'indirizzo 0x0."
+      ]
+    },
+    {
+      "id": "it_clang_2866",
+      "widget_id": null,
+      "topic": "Determinazione della posizione di un simbolo",
+      "q": "Quale comando permette di scoprire esattamente dove in memoria o nei registri è memorizzato un simbolo/variabile (ad esempio, l'offset nello stack, nei registri o nella sezione .data)?",
+      "hint": "Un comando della famiglia info che richiede l'address del simbolo.",
+      "options": [
+        "info address <symbol>",
+        "locate <symbol>",
+        "show memory <symbol>",
+        "find symbol <symbol>",
+        "whereis <symbol>",
+        "check location <symbol>"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `info address <symbol>` fornisce dettagli sul tipo di archiviazione della variabile (ad esempio, `a local variable at frame offset -12` o `a variable in static storage at address 0x...`).",
+        "Non corretto. `locate` non è un comando di GDB.",
+        "Non corretto. `show memory` non esiste.",
+        "Non corretto. `find symbol` ha una sintassi errata.",
+        "Non corretto. `whereis` è assente in GDB.",
+        "Non corretto. `check location` non è un comando valido."
+      ]
+    },
+    {
+      "id": "it_clang_2867",
+      "widget_id": "widget_clang_2867",
+      "topic": "Aritmetica dei puntatori nella console del debugger",
+      "q": "Hai un puntatore p che punta al primo elemento di un array di int (4 byte per elemento). Quale sarà il risultato del comando print p + 1?",
+      "hint": "GDB tiene conto del tipo di dati del puntatore nelle operazioni aritmetiche.",
+      "options": [
+        "Restituirà un indirizzo spostato di sizeof(int) (ovvero +4 byte rispetto a p originale)",
+        "Restituirà un indirizzo spostato strettamente di +1 byte",
+        "Genererà un errore, poiché l'aritmetica dei puntatori non è supportata nella CLI"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! GDB rispetta le regole dell'aritmetica del C: l'incremento `p + 1` sposta l'indirizzo della dimensione del tipo puntato da `p` (per `int` sono +4 byte).",
+        "Non corretto. Lo spostamento di +1 byte avviene solo per puntatori `char*` o `void*`.",
+        "Non corretto. L'aritmetica dei puntatori è pienamente supportata in GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2868",
+      "widget_id": null,
+      "topic": "Visualizzazione delle stringhe in memoria (x/s)",
+      "q": "Quale comando permette di stampare una sequenza di byte all'indirizzo str come una stringa C standard terminata da zero?",
+      "hint": "Il formato /s deriva dalla parola string.",
+      "options": [
+        "x/s str",
+        "x/c str",
+        "print /str str",
+        "read string str",
+        "x/10b str"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il formato `/s` interpreta i byte di memoria all'indirizzo specificato come stringa ASCII fino al terminatore zero `\\0`.",
+        "Non corretto. `x/c` stamperà solo un singolo carattere `char`.",
+        "Non corretto. Il modificatore `/str` non esiste.",
+        "Non corretto. `read string` è un comando inesistente.",
+        "Non corretto. `x/10b` stamperà 10 byte singoli sotto forma numerica."
+      ]
+    },
+    {
+      "id": "it_clang_2869",
+      "widget_id": "widget_clang_2869",
+      "topic": "Cast dei tipi per indirizzi di memoria grezzi",
+      "q": "Conosci un indirizzo di memoria esadecimale grezzo (ad esempio 0x602010). In che modo in GDB è possibile convertire questo indirizzo nel tipo della struttura Item e stamparne il contenuto?",
+      "hint": "Viene utilizzata la sintassi standard del casting dei tipi in C: *(Tipo *)indirizzo.",
+      "options": [
+        "print *(Item *)0x602010",
+        "print Item@0x602010",
+        "cast Item 0x602010",
+        "x/Item 0x602010"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il cast `(Item *)0x602010` converte l'indirizzo numerico in un puntatore a struttura, e l'asterisco esterno `*` lo dereferenzia per l'output.",
+        "Non corretto. L'operatore `@` serve a specificare la lunghezza degli array dinamici, non per il cast di tipo.",
+        "Non corretto. Il comando `cast` non esiste in GDB.",
+        "Non corretto. Nel comando `x` non è possibile specificare nomi di tipi personalizzati C al posto dei flag di formato."
+      ]
+    },
+    {
+      "id": "it_clang_2870",
+      "widget_id": null,
+      "topic": "Disassemblaggio dalla memoria per indirizzo (x/i)",
+      "q": "Quale comando permette di leggere le istruzioni macchina del processore a un determinato indirizzo e mostrarle come codice assembly?",
+      "hint": "Il flag /i sta per instruction.",
+      "options": [
+        "x/i <address>",
+        "print /asm <address>"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il formato `/i` (instruction) nel comando `x` disassembla i byte di memoria a partire dall'indirizzo specificato.",
+        "Non corretto. `print /asm` non è una sintassi valida in GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2871",
+      "widget_id": "widget_clang_2871",
+      "topic": "Entrare in una funzione durante il debug passo-passo",
+      "q": "Il programma è interrotto sulla riga int result = calculate_sum(limit); in main(). Quale comando del debugger permette di entrare nella funzione calculate_sum e fermarsi alla sua prima riga?",
+      "hint": "Pensa al comando di ingresso istruzione per istruzione (step into).",
+      "options": [
+        "step (o s)",
+        "next (o n)",
+        "continue (o c)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `step` entra nella funzione chiamata, consentendo di eseguirne il debug riga per riga.",
+        "Non corretto. Il comando `next` eseguirà l'intera funzione `calculate_sum` senza entrarvi.",
+        "Non corretto. Il comando `continue` proseguirà l'esecuzione del programma fino al breakpoint successivo."
+      ]
+    },
+    {
+      "id": "it_clang_2872",
+      "widget_id": null,
+      "topic": "Saltare l'ingresso in una funzione durante il debug passo-passo",
+      "q": "Ti trovi prima della riga con la chiamata alla funzione int val = compute_data(x);. Sei sicuro del corretto funzionamento di questa funzione e vuoi eseguirla per intero senza passare passo-passo al suo interno. Quale comando dovresti usare?",
+      "hint": "Usa il comando «scavalcamento» (step over).",
+      "options": [
+        "next",
+        "step",
+        "finish",
+        "return"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `next` («step over») esegue la riga corrente insieme a tutte le chiamate di funzione presenti su di essa e si ferma alla riga successiva del contesto corrente.",
+        "Non corretto. `step` entrerebbe all'interno di `compute_data`.",
+        "Non corretto. `finish` completa la funzione CORRENTE, non scavalca la chiamata alla successiva.",
+        "Non corretto. `return` forza la restituzione di un valore dalla funzione corrente prima dell'esecuzione."
+      ]
+    },
+    {
+      "id": "it_clang_2873",
+      "widget_id": "widget_clang_2873",
+      "topic": "Localizzazione di un bug in un ciclo usando un breakpoint condizionale",
+      "q": "In un ciclo di 100 iterazioni si verifica un errore solo quando i == 50. Quale comando imposterà un punto di interruzione sulla riga sum += i; fermandosi esattamente alla 50ª iterazione?",
+      "hint": "Usa la sintassi break con la parola chiave if.",
+      "options": [
+        "break 6 if i == 50",
+        "break 6 --when i=50",
+        "condition 50 break",
+        "break if i = 50",
+        "set breakpoint 6 condition i == 50"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `break <riga> if <condizione>` crea un breakpoint che scatta solo se l'espressione è vera.",
+        "Non corretto. L'opzione `--when` non è usata in GDB.",
+        "Non corretto. `condition` si applica a un numero di breakpoint già esistente.",
+        "Non corretto. Nella condizione in C si usa l'operatore di confronto `==`, non l'assegnazione `=`.",
+        "Non corretto. `set breakpoint` non è un comando valido."
+      ]
+    },
+    {
+      "id": "it_clang_2874",
+      "widget_id": null,
+      "topic": "Uscita rapida da una funzione chiamata accidentalmente",
+      "q": "Hai premuto accidentalmente step e ti trovi all'interno di una funzione di libreria (ad esempio dentro printf o strlen). Qual è il modo più veloce per terminare l'esecuzione di questa funzione e tornare al tuo codice?",
+      "hint": "Usa il comando finish.",
+      "options": [
+        "Eseguire il comando finish",
+        "Eseguire il comando step out"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `finish` (o `fin`) esegue la parte restante della funzione corrente fino al suo ritorno e stampa il valore restituito.",
+        "Non corretto. Il comando `step out` non esiste nella CLI di GDB (si usa `finish`)."
+      ]
+    },
+    {
+      "id": "it_clang_2875",
+      "widget_id": "widget_clang_2875",
+      "topic": "Monitoraggio continuo degli elementi di un array durante il debug",
+      "q": "Quale combinazione di azioni ti permetterà di vedere automaticamente il valore corrente della variabile arr[i] a ogni passo next all'interno del ciclo process_data?",
+      "hint": "Il comando display imposta la visualizzazione automatica delle espressioni ad ogni passo.",
+      "options": [
+        "Impostare il comando display arr[i] ed effettuare i passi con next",
+        "Chiamare una sola volta print arr[i] prima dell'inizio del ciclo",
+        "Usare set var arr[i] prima di ogni passo",
+        "Chiamare info args ad ogni passo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `display arr[i]` registra l'espressione e il debugger mostra il valore di `arr[i]` ad ogni arresto dopo `next`.",
+        "Non corretto. Un `print` singolo mostrerà il valore solo una volta e non si aggiornerà nei passaggi.",
+        "Non corretto. `set var` modifica il valore, non lo monitora.",
+        "Non corretto. `info args` mostra solo gli argomenti della funzione all'ingresso, non le espressioni mutevoli nel ciclo."
+      ]
+    },
+    {
+      "id": "it_clang_2876",
+      "widget_id": null,
+      "topic": "Ispezione delle variabili della funzione chiamante (frame dello stack)",
+      "q": "Ti trovi in profondità nelle chiamate all'interno della funzione process(). La variabile limit è dichiarata in main(). In che modo puoi conoscere il valore di limit senza uscire dalla sessione di debug?",
+      "hint": "Per spostarsi tra i frame dello stack di chiamata si usano i comandi frame o up.",
+      "options": [
+        "Passare al frame della funzione main usando il comando frame <N> (o up) ed eseguire print limit",
+        "Usare il comando show global limit",
+        "Usare fetch main.limit",
+        "Eseguire get frame main limit",
+        "È impossibile: le variabili degli altri frame sono del tutto inaccessibili",
+        "Usare inspect --parent limit"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Puoi passare da un frame all'altro nello stack di chiamata con il comando `frame <numero_frame>` (o `up`/`down`) ed ispezionare le variabili locali di qualsiasi frame attivo.",
+        "Non corretto. `show global` non è un comando valido per le variabili locali.",
+        "Non corretto. `fetch` non viene usato in GDB.",
+        "Non corretto. `get frame` è una sintassi inesistente.",
+        "Non corretto. Le variabili dei frame padri sono accessibili dopo aver cambiato il frame dello stack.",
+        "Non corretto. Il flag `--parent` non è supportato in `inspect`."
+      ]
+    },
+    {
+      "id": "it_clang_2877",
+      "widget_id": "widget_clang_2877",
+      "topic": "Diagnostica delle variabili non inizializzate",
+      "q": "La variabile count non è stata inizializzata prima del ciclo. Cosa mostrerà il comando print count al primo passo di esecuzione della funzione main()?",
+      "hint": "Le variabili locali non inizializzate contengono lo stato della cella di memoria dello stack.",
+      "options": [
+        "Un valore casuale (spazzatura) presente nella porzione di memoria allocata sullo stack",
+        "Il valore 0, poiché GDB azzera sempre automaticamente la memoria",
+        "L'errore di esecuzione UninitializedVariableException"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In C le variabili locali (automatiche) senza inizializzazione esplicita contengono «spazzatura» indefinita presente nella memoria dello stack.",
+        "Non corretto. Il linguaggio C e il debugger GDB non azzerano automaticamente le variabili locali sullo stack.",
+        "Non corretto. In C e GDB non esiste un'eccezione integrata UninitializedVariableException."
+      ]
+    },
+    {
+      "id": "it_clang_2878",
+      "widget_id": null,
+      "topic": "Saltare le iterazioni del ciclo usando il comando until",
+      "q": "Quale comando permette al debugger di proseguire l'esecuzione del programma fino alla riga specificata (ad esempio per uscire da un ciclo ripetuto più volte) senza impostare un breakpoint permanente?",
+      "hint": "Si usa il comando until (abbreviato u).",
+      "options": [
+        "until <numero_riga>",
+        "jump <numero_riga>",
+        "skip <numero_riga>",
+        "runto <numero_riga>"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `until <riga>` esegue il codice fino a quando il programma non raggiunge la riga specificata (o una riga con un indirizzo superiore), utile per scorrere rapidamente i cicli.",
+        "Non corretto. `jump` trasferisce forzatamente il controllo all'indirizzo senza eseguire il codice intermedio (il che può danneggiare lo stack e le variabili).",
+        "Non corretto. `skip` viene usato per saltare determinate funzioni durante i passi `step`.",
+        "Non corretto. `runto` non è un comando standard della CLI di GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2879",
+      "widget_id": "widget_clang_2879",
+      "topic": "Verifica dei rami di codice alternativi tramite set var",
+      "q": "Il programma si è fermato prima dell'istruzione condizionale if (is_admin). In che modo è possibile testare l'esecuzione del ramo Access granted senza ricompilare il file?",
+      "hint": "Modifica il valore della variabile usando set var prima del passo next.",
+      "options": [
+        "Eseguire set var is_admin = 1 e poi fare un passo next",
+        "Eseguire force branch true",
+        "Digitare change if condition true",
+        "Digitare skip else",
+        "Digitare goto line 6"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'assegnazione `set var is_admin = 1` modifica il flag in memoria subito prima del controllo `if`, indirizzando il flusso di esecuzione nel ramo `then`.",
+        "Non corretto. Non esiste alcun comando `force branch` in GDB.",
+        "Non corretto. `change if condition` è una sintassi non valida.",
+        "Non corretto. `skip else` non viene usato per le ramificazioni.",
+        "Non corretto. `goto` non è un comando standard di GDB (si usa `jump`, ma non modificherà il valore della variabile)."
+      ]
+    },
+    {
+      "id": "it_clang_2880",
+      "widget_id": null,
+      "topic": "Flag del compilatore necessari per un debug agevole",
+      "q": "Con quale flag obbligatorio è necessario compilare il file sorgente in C tramite GCC affinché il debugger mostri il codice sorgente, i nomi delle variabili e i numeri di riga?",
+      "hint": "Flag per la generazione delle informazioni di debug (debug symbols).",
+      "options": [
+        "-g",
+        "-O3",
+        "-Wall",
+        "-std=c11"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-g` abilita la generazione delle tabelle dei simboli di debug (DWARF/DWARF2), senza le quali GDB vede solo indirizzi anonimi e istruzioni assembly.",
+        "Non corretto. `-O3` abilita la massima ottimizzazione, che può rendere difficile il debug a causa del taglio e del riordinamento delle istruzioni.",
+        "Non corretto. `-Wall` abilita gli avvisi del compilatore, ma non aggiunge simboli di debug.",
+        "Non corretto. `-std=c11` specifica lo standard del linguaggio C, non genera simboli di debug."
+      ]
+    },
+    {
+      "id": "it_clang_2881",
+      "widget_id": "widget_clang_2881",
+      "topic": "Sintassi base di compilazione e file di output (-o)",
+      "q": "Quale comando del compilatore GCC compilerà il file main.c e creerà un file eseguibile pronto con il nome app?",
+      "hint": "Il flag specifica il nome del file di output.",
+      "options": [
+        "gcc main.c -o app",
+        "gcc -c main.c app",
+        "gcc main.c --out app"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-o` (output) indica a GCC di chiamare il file binario risultante `app`.",
+        "Non corretto. Il flag `-c` genera solo il file oggetto (`.o`), senza eseguire la build finale.",
+        "Non corretto. La chiave `--out` non esiste tra i parametri standard di GCC."
+      ]
+    },
+    {
+      "id": "it_clang_2882",
+      "widget_id": null,
+      "topic": "Fase di preprocessamento (-E)",
+      "q": "Quale flag costringe GCC a eseguire solo la fase di preprocessamento (espansione di #include, #define) e a mostrare subito il codice ottenuto senza compilazione?",
+      "hint": "La lettera del flag corrisponde alla parola Expansion / Preprocessor.",
+      "options": [
+        "-E",
+        "-S",
+        "-c",
+        "-O"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-E` interrompe il processo di compilazione dopo la fase del preprocessore e invia il sorgente testuale elaborato sullo stdout.",
+        "Non corretto. `-S` traduce il codice in un file assembly.",
+        "Non corretto. `-c` crea un file oggetto.",
+        "Non corretto. `-O` specifica il livello di ottimizzazione."
+      ]
+    },
+    {
+      "id": "it_clang_2883",
+      "widget_id": "widget_clang_2883",
+      "topic": "Generazione di codice assembly (-S)",
+      "q": "Quale comando compila un file C in un file leggibile dall'uomo contenente codice assembly (con estensione .s)?",
+      "hint": "Il flag per la generazione del file Assembly è scritto con una sola lettera maiuscola S.",
+      "options": [
+        "gcc -S main.c",
+        "gcc -asm main.c"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-S` chiede a GCC di compilare il sorgente C in un file assembly `main.s`.",
+        "Non corretto. Il flag `-asm` è assente nel compilatore GCC."
+      ]
+    },
+    {
+      "id": "it_clang_2884",
+      "widget_id": null,
+      "topic": "Generazione di file oggetto (-c)",
+      "q": "A cosa serve il flag -c durante la compilazione di un file (ad esempio gcc -c main.c)?",
+      "hint": "Il flag significa Compile without linking.",
+      "options": [
+        "Per compilare il file sorgente in un file oggetto main.o senza la fase di collegamento (linking)",
+        "Per la pulizia automatica (clean) di tutti i file temporanei dopo la build",
+        "Per un controllo rigoroso della conformità del codice allo standard C11",
+        "Per comprimere le dimensioni del file binario finale",
+        "Per compilare il codice in una libreria dinamica (.so)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-c` dice al compilatore di creare solo il file oggetto (`main.o`) e non avviare il linker.",
+        "Non corretto. Il flag non si occupa della pulizia delle directory.",
+        "Non corretto. Per specificare lo standard si usa il flag `-std=`.",
+        "Non corretto. Per la compressione e l'ottimizzazione si usano i flag `-O`.",
+        "Non corretto. Per creare librerie condivise (shared) si applica `-shared`."
+      ]
+    },
+    {
+      "id": "it_clang_2885",
+      "widget_id": "widget_clang_2885",
+      "topic": "Ottimizzazione delle dimensioni del file (-Os)",
+      "q": "Quale livello di ottimizzazione di GCC è progettato appositamente per ridurre il più possibile le dimensioni fisiche del file binario finale?",
+      "hint": "Codice di ottimizzazione speciale che deriva dalla parola size.",
+      "options": [
+        "-Os",
+        "-O3",
+        "-O1",
+        "-O2",
+        "-Ofast",
+        "-O0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-Os` abilita tutte le ottimizzazioni `-O2` che non aumentano la dimensione del codice, oltre a tecniche aggiuntive di compressione del binario.",
+        "Non corretto. `-O3` può aumentare la dimensione del file a causa dello srotolamento aggressivo dei cicli (loop unrolling) e dell'inlining.",
+        "Non corretto. `-O1` è il livello base di ottimizzazione.",
+        "Non corretto. `-O2` è orientato alla velocità senza un aumento critico delle dimensioni, ma `-Os` comprime in modo più aggressivo.",
+        "Non corretto. `-Ofast` ignora alcuni standard IEEE per la velocità.",
+        "Non corretto. `-O0` disabilita completamente le ottimizzazioni."
+      ]
+    },
+    {
+      "id": "it_clang_2886",
+      "widget_id": "widget_clang_2886",
+      "topic": "Abilitazione degli avvisi del compilatore (-Wall)",
+      "q": "Quale flag è consigliato passare sempre a GCC per abilitare la visualizzazione della maggior parte degli avvisi su potenziali bug (ad esempio variabili non utilizzate)?",
+      "hint": "Il nome del flag si traduce come Warning All.",
+      "options": [
+        "-Wall",
+        "-Werror",
+        "-w"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-Wall` abilita il set di base di avvisi costruttivi del compilatore.",
+        "Non corretto. `-Werror` trasforma gli avvisi in errori, ma non ne espande l'elenco.",
+        "Non corretto. Il flag `-w` disabilita (sopprime) completamente tutti gli avvisi."
+      ]
+    },
+    {
+      "id": "it_clang_2887",
+      "widget_id": null,
+      "topic": "Trasformazione degli avvisi in errori (-Werror)",
+      "q": "Come influisce sul processo di build il flag di compilazione -Werror?",
+      "hint": "Unisce i concetti di Warning ed Error.",
+      "options": [
+        "Interpreta qualsiasi avviso (warning) del compilatore come errore critico di build, interrompendo il processo",
+        "Ignora gli errori e tenta di completare la build a tutti i costi",
+        "Registra tutti gli avvisi trovati in un file di log speciale",
+        "Disabilita l'output dei messaggi di errore nella console"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `-Werror` abilitato, la compilazione fallirà se si verifica anche un solo avviso.",
+        "Non corretto. Il flag non ignora gli errori.",
+        "Non corretto. Il flag non reindirizza il log su file.",
+        "Non corretto. Gli errori continuano ad essere mostrati nella console stderr."
+      ]
+    },
+    {
+      "id": "it_clang_2888",
+      "widget_id": null,
+      "topic": "Specifica dello standard del linguaggio C (-std=...)",
+      "q": "Con quale flag è possibile indicare esplicitamente al compilatore GCC di seguire lo standard del linguaggio C11?",
+      "hint": "Il flag inizia con l'abbreviazione della parola standard.",
+      "options": [
+        "-std=c11",
+        "--version=c11"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'opzione `-std=c11` (o `-std=gnu11`) imposta il dialetto corrispondente dello standard C.",
+        "Non corretto. `--version` mostra la versione del compilatore GCC stesso."
+      ]
+    },
+    {
+      "id": "it_clang_2889",
+      "widget_id": "widget_clang_2889",
+      "topic": "Collegamento di librerie di terze parti e di sistema (-l)",
+      "q": "Nel codice viene usata la funzione sqrt() da <math.h>. Quale flag del linker è obbligatorio passare a GCC durante la build su Linux?",
+      "hint": "Il flag di collegamento della libreria libm è espresso da una sola lettera m.",
+      "options": [
+        "-lm",
+        "-lmath",
+        "-include math",
+        "-lib math",
+        "-M"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La libreria matematica di sistema si chiama `libm.so`, quindi al linker viene passata la chiave `-lm`.",
+        "Non corretto. La libreria `libmath` con il nome `-lmath` non è presente di default nei sistemi UNIX.",
+        "Non corretto. `-include` include un file header, non collega una libreria binaria.",
+        "Non corretto. `-lib` è una sintassi non valida.",
+        "Non corretto. `-M` genera regole di dipendenza per Makefile."
+      ]
+    },
+    {
+      "id": "it_clang_2890",
+      "widget_id": null,
+      "topic": "Definizione di macro dalla riga di comando (-D)",
+      "q": "Quale opzione di GCC permette di definire la macro del preprocessore DEBUG con valore 1 direttamente nel comando di compilazione?",
+      "hint": "Il flag inizia con la lettera maiuscola D (Define).",
+      "options": [
+        "-DDEBUG=1",
+        "-define DEBUG=1",
+        "--macro DEBUG=1",
+        "-set DEBUG=1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiave `-DDEBUG=1` è equivalente alla riga `#define DEBUG 1` all'inizio del codice sorgente.",
+        "Non corretto. Il flag `-define` non è supportato in GCC.",
+        "Non corretto. Il flag `--macro` non esiste in GCC.",
+        "Non corretto. `-set` non si usa per le macro del preprocessore."
+      ]
+    }
+  ]
+}

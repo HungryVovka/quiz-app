@@ -1,0 +1,599 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_3101",
+      "widget_id": "widget_clang_3101",
+      "topic": "Permessi di accesso al segmento di codice (.text)",
+      "q": "Quale combinazione di permessi di accesso (permissions) imposta il sistema operativo per il segmento di codice (.text) nella memoria virtuale?",
+      "hint": "Pensate se il processore deve leggere ed eseguire le istruzioni e se ne è consentita la modifica.",
+      "options": [
+        "Read + Execute (Lettura ed Esecuzione, r-x) senza permesso di Scrittura (w)",
+        "Read + Write + Execute (Lettura, Scrittura ed Esecuzione, rwx)",
+        "Write Only (Solo Scrittura, -w-)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il segmento di codice viene contrassegnato con i flag `r-x` (Read, Execute). Questo consente al processore di prelevare le istruzioni da eseguire, ma blocca qualsiasi tentativo di scrittura nell'area di codice per prevenire errori accidentali e attacchi.",
+        "Errato. La presenza del permesso di scrittura `w` nel segmento di codice viola il principio di protezione della memoria W^X e crea una minaccia alla sicurezza.",
+        "Errato. Un segmento di sola scrittura non consentirebbe al processore di leggere ed eseguire le istruzioni."
+      ]
+    },
+    {
+      "id": "it_clang_3102",
+      "widget_id": "widget_clang_3102",
+      "topic": "Protezione del segmento di codice dalla modifica",
+      "q": "Cosa succede durante l'esecuzione del programma se si tenta di scrivere un byte all'indirizzo di una funzione nel segmento .text (*ptr = 0xC3)?",
+      "hint": "Il tentativo di scrittura in una memoria con flag 'read-only' viene intercettato dal modulo hardware MMU.",
+      "options": [
+        "Il sistema operativo genererà un'eccezione hardware di protezione della memoria (Segmentation Fault / Access Violation) e interromperà in modo anomalo il processo",
+        "Il codice della funzione cambierà all'istante e il programma proseguirà l'esecuzione con la nuova istruzione",
+        "Il compilatore ignorerà questa operazione e la sostituirà con un'istruzione vuota NOP",
+        "Il sistema operativo reindirizzerà la scrittura in un buffer temporaneo nell'heap (Heap)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché le pagine del segmento `.text` sono protette dalla scrittura a livello di MMU, il processore genererà un trap hardware (Page Fault) e il kernel del SO invierà al processo il segnale `SIGSEGV` (Segmentation Fault).",
+        "Errato. L'automodifica del codice è disabilitata di default dalla protezione hardware della memoria virtuale.",
+        "Errato. La protezione interviene durante l'esecuzione del programma (Runtime), non in fase di compilazione.",
+        "Errato. Il sistema operativo non crea buffer nascosti in caso di violazione dei permessi di accesso."
+      ]
+    },
+    {
+      "id": "it_clang_3103",
+      "widget_id": null,
+      "topic": "Condivisione del segmento di codice tra processi (Shared Code Segment)",
+      "q": "Se lo stesso programma viene eseguito contemporaneamente in 10 processi diversi nel sistema, in che modo il SO ottimizza l'uso della RAM per il segmento di codice (.text)?",
+      "hint": "Poiché il segmento `.text` è immutabile (read-only), può essere riutilizzato in modo sicuro.",
+      "options": [
+        "Carica la sezione fisica del codice nella RAM in un'unica istanza e la mappa nella memoria virtuale di tutti e 10 i processi",
+        "Duplica il segmento di codice nella RAM fisica 10 volte, un'istanza per ciascun processo avviato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché il segmento di codice è protetto dalla scrittura e non cambia durante l'esecuzione, il SO mappa la stessa area di memoria fisica negli spazi virtuali di tutti i processi, risparmiando notevolmente la RAM.",
+        "Errato. La copia del codice per ciascun processo non è necessaria grazie alla protezione da scrittura della pagina."
+      ]
+    },
+    {
+      "id": "it_clang_3104",
+      "widget_id": "widget_clang_3104",
+      "topic": "Puntatori a funzione e spazio di indirizzamento .text",
+      "q": "A cosa punta esattamente il valore di un puntatore a funzione (void (*fn_ptr)(void) = print_msg)?",
+      "hint": "Il puntatore contiene l'indirizzo nella memoria virtuale in cui si trovano le istruzioni macchina di tale funzione.",
+      "options": [
+        "All'indirizzo iniziale della prima istruzione macchina della funzione, situata all'interno del segmento .text",
+        "A un blocco nella memoria dinamica (Heap), allocato per i parametri della funzione",
+        "Alla cima dello stack delle chiamate del thread corrente",
+        "Al file header .h in cui è dichiarato il prototipo della funzione",
+        "A una copia della funzione all'interno della tabella globale delle chiamate di sistema"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il puntatore a funzione memorizza l'indirizzo virtuale della prima istruzione di tale funzione, compilata e residente nella sezione `.text`.",
+        "Errato. Il codice eseguibile della funzione si trova nel segmento `.text`, non nell'heap.",
+        "Errato. Lo stack memorizza argomenti, variabili locali e indirizzi di ritorno, ma non il codice macchina vero e proprio della funzione.",
+        "Errato. I file header esistono solo prima della compilazione e non si trovano nella memoria del processo.",
+        "Errato. La funzione del programma si trova nello spazio utente del segmento di codice."
+      ]
+    },
+    {
+      "id": "it_clang_3105",
+      "widget_id": "widget_clang_3105",
+      "topic": "Letterali stringa e memoria protetta (.rodata / .text)",
+      "q": "Perché un tentativo di modificare un letterale stringa (str[0] = 'r') provoca un errore di Segmentation Fault?",
+      "hint": "I letterali stringa vengono inseriti in sezioni protette dalla scrittura (.rodata o .text).",
+      "options": [
+        "I letterali stringa vengono inseriti dal compilatore in un segmento di memoria protetto dalla scrittura (.rodata / .text)",
+        "I letterali stringa vengono crittografati automaticamente dal sistema operativo all'avvio",
+        "Il puntatore char* può fare riferimento solo a indirizzi di memoria dispari",
+        "La funzione printf blocca la scrittura nei letterali stringa a livello di libreria standard"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I letterali stringa creati tramite `char *str = \"...\"` sono collocati in sezioni di sola lettura (`.rodata` o `.text`). Un tentativo di scrittura a questo indirizzo provoca l'arresto anomalo del processo.",
+        "Errato. La crittografia dei letterali stringa da parte del sistema operativo non viene eseguita.",
+        "Errato. L'indirizzamento dei caratteri non è limitato dalla parità degli indirizzi.",
+        "Errato. La protezione è implementata a livello di MMU e SO, non dalla funzione `printf`."
+      ]
+    },
+    {
+      "id": "it_clang_3106",
+      "widget_id": null,
+      "topic": "Principio hardware W^X (Write XOR Execute)",
+      "q": "Qual è il significato del principio di sicurezza W^X (Write XOR Execute / NX-bit) applicato al segmento di codice e ad altre aree di memoria?",
+      "hint": "Il nome 'Write XOR Execute' indica che una pagina di memoria può avere O il permesso di scrittura O il permesso di esecuzione, ma non entrambi contemporaneamente.",
+      "options": [
+        "Una pagina di memoria può essere accessibile in scrittura (W) oppure in esecuzione (X), ma mai contemporaneamente",
+        "Una pagina di memoria deve essere obbligatoriamente crittografata con l'operazione XOR prima di ogni scrittura su disco",
+        "Il processore esegue i comandi solo se la loro dimensione è un multiplo di 2 byte",
+        "Tutte le istruzioni nel segmento di codice devono contenere l'operazione logica XOR",
+        "La memoria dello stack viene copiata automaticamente nel segmento di codice durante le chiamate di funzione",
+        "I permessi di esecuzione del codice vengono concessi solo ai processi con privilegi di superutente (root)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il principio W^X garantisce che le pagine modificabili (Stack, Heap, Dati) non possano essere eseguite e che le pagine eseguibili (`.text`) non possano essere modificate. Questo protegge il sistema dall'esecuzione di codice malevolo iniettato.",
+        "Errato. Il nome W^X si riferisce all'OR esclusivo logico sui permessi di accesso (Writable XOR Executable), non alla crittografia.",
+        "Errato. La granularità delle istruzioni dipende dall'architettura ISA, non dal principio W^X.",
+        "Errato. È una regola di protezione della memoria, non un requisito per il set di istruzioni.",
+        "Errato. Lo stack e il segmento di codice sono isolati l'uno dall'altro.",
+        "Errato. W^X si applica a tutti i processi indipendentemente dai privilegi."
+      ]
+    },
+    {
+      "id": "it_clang_3107",
+      "widget_id": null,
+      "topic": "Dimensione fissa del segmento di codice durante l'esecuzione",
+      "q": "La dimensione del segmento di codice (.text) cambia durante l'esecuzione del programma in caso di allocazione attiva di memoria tramite malloc() o mappatura di file tramite mmap()?",
+      "hint": "Pensate se la quantità di istruzioni macchina compilate sia fissa al momento del caricamento del programma.",
+      "options": [
+        "No, la dimensione del segmento di codice è fissa durante la build/caricamento del binario e non cambia in base all'allocazione dinamica della memoria",
+        "Sì, ogni chiamata a malloc() espande automaticamente il segmento .text della quantità numerica specificata",
+        "Sì, il segmento .text si contrae quando si libera memoria tramite free()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il segmento `.text` contiene il codice binario compilato del programma. La sua dimensione è determinata in fase di build e rimane invariata durante l'esecuzione. `malloc()` e `free()` lavorano con un'area completamente diversa: l'Heap.",
+        "Errato. `malloc()` incrementa l'area dell'heap, non il segmento di codice.",
+        "Errato. Il rilascio della memoria dinamica non ha alcun effetto sulla dimensione del codice eseguibile."
+      ]
+    },
+    {
+      "id": "it_clang_3108",
+      "widget_id": "widget_clang_3108",
+      "topic": "Impatto delle funzioni inline sulla dimensione del segmento .text",
+      "q": "In che modo l'inlining di una funzione inline durante la compilazione influisce sulla dimensione finale del segmento di codice (.text) nel file eseguibile?",
+      "hint": "Ricordate cosa succede al codice della funzione quando viene eseguito l'inlining nei punti in cui viene chiamata.",
+      "options": [
+        "La dimensione del segmento .text può aumentare poiché il codice macchina della funzione viene duplicato in ogni punto di chiamata",
+        "La dimensione del segmento .text diminuisce poiché la funzione viene completamente rimossa dal file",
+        "La dimensione del segmento .text non cambia poiché le funzioni inline vengono eseguite all'interno della scheda video",
+        "Il segmento .text si sposta automaticamente nell'area dello stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il modificatore `inline` suggerisce al compilatore di inserire il corpo della funzione direttamente nel punto di chiamata. In caso di chiamate frequenti, ciò porta a un aumento del codice macchina (Code Bloat) e all'espansione della sezione `.text`.",
+        "Errato. Il codice della funzione non viene rimosso, ma si moltiplica nei punti di chiamata.",
+        "Errato. Le funzioni inline in C vengono eseguite dalla CPU e influiscono direttamente sulla quantità di istruzioni macchina.",
+        "Errato. Il segmento `.text` mantiene la sua posizione e i suoi permessi di accesso."
+      ]
+    },
+    {
+      "id": "it_clang_3109",
+      "widget_id": "widget_clang_3109",
+      "topic": "Modifica dinamica dei permessi delle pagine di memoria (mprotect)",
+      "q": "Perché i compilatori JIT (ad esempio nelle macchine virtuali JS/Java) utilizzano la chiamata di sistema mprotect() durante la generazione del codice in memoria?",
+      "hint": "La memoria viene prima allocata come scrivibile (per generare il codice) e poi i suoi permessi vengono modificati prima dell'esecuzione.",
+      "options": [
+        "Per scrivere prima il codice macchina generato nella pagina di memoria (PROT_WRITE) e poi renderla eseguibile (PROT_EXEC)",
+        "Per svuotare forzatamente la cache della CPU dai virus",
+        "Per convertire le chiamate a funzioni C nel formato assembler Java",
+        "Per bloccare il funzionamento del sistema operativo durante la generazione del codice",
+        "Per comprimere della metà la dimensione delle istruzioni generate"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A causa della regola W^X, la memoria non può essere contemporaneamente scritta ed eseguita. Il compilatore JIT alloca la memoria, scrive le istruzioni macchina (`PROT_WRITE`) e poi chiama `mprotect()`, rimuovendo il flag di scrittura e aggiungendo il flag di esecuzione (`PROT_EXEC`).",
+        "Errato. `mprotect()` gestisce i flag della memoria virtuale dell'MMU, non la pulizia antivirus.",
+        "Errato. `mprotect()` non si occupa della traduzione dei linguaggi di programmazione.",
+        "Errato. La chiamata a `mprotect()` modifica i permessi per il processo senza bloccare il SO.",
+        "Errato. La modifica dei permessi di accesso alle pagine di memoria non comprime la dimensione dei dati."
+      ]
+    },
+    {
+      "id": "it_clang_3110",
+      "widget_id": null,
+      "topic": "Meccanismo ASLR e codice indipendente dalla posizione (PIE)",
+      "q": "In che modo il meccanismo ASLR (Address Space Layout Randomization) protegge il segmento di codice (.text) da attacchi di tipo ROP (Return-Oriented Programming)?",
+      "hint": "L'ASLR rende casuali gli indirizzi di allocazione dei segmenti a ogni avvio del programma.",
+      "options": [
+        "Carica il segmento di codice a un indirizzo virtuale di base casuale a ogni avvio del programma, rendendo gli indirizzi delle istruzioni imprevedibili per un malintenzionato",
+        "Crittografa tutte le istruzioni nel segmento .text utilizzando una password utente fissa"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Grazie all'ASLR e alla build in modalità PIE (Position-Independent Executable), l'indirizzo di base di caricamento del segmento `.text` viene scelto in modo casuale a ogni avvio. Ciò priva gli attacchi della possibilità di utilizzare indirizzi fissi di istruzioni (gadget).",
+        "Errato. L'ASLR rende casuali gli indirizzi in memoria, ma non si occupa della crittografia del codice con password."
+      ]
+    },
+    {
+      "id": "it_clang_3111",
+      "widget_id": null,
+      "topic": "Scopo della sezione .rodata",
+      "q": "In quale sezione della memoria virtuale il compilatore e il sistema operativo inseriscono di norma i dati costanti globali e i letterali stringa?",
+      "hint": "Notare che il nome di questa sezione sta per Read-Only Data.",
+      "options": [
+        ".rodata (o segmento immutabile .text)",
+        ".bss",
+        ".heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sezione `.rodata` (Read-Only Data) è destinata specificamente alla collocazione di costanti immutabili, tabelle di chiamate virtuali e letterali stringa. Le pagine di questa sezione sono contrassegnate dal flag 'sola lettura'.",
+        "Errato. La sezione `.bss` memorizza le variabili globali modificabili non inizializzate.",
+        "Errato. L'heap (`.heap`) è destinato alla memoria allocata dinamicamente con permessi di scrittura."
+      ]
+    },
+    {
+      "id": "it_clang_3112",
+      "widget_id": "widget_clang_3112",
+      "topic": "Differenza tra char *ptr e char arr[] per le stringhe",
+      "q": "Qual è la differenza fondamentale nella memorizzazione dei dati quando si dichiara char *ptr = \"Hello\" e char arr[] = \"Hello\"?",
+      "hint": "Pensate a dove viene allocata la memoria per i caratteri della stringa e se ne è consentita la modifica.",
+      "options": [
+        "ptr punta a un letterale stringa nella memoria protetta .rodata (non modificabile), mentre arr copia i caratteri nello stack (modificabili)",
+        "Entrambe le opzioni creano array identici nella sezione .data con permessi di scrittura",
+        "ptr colloca i caratteri nella memoria dinamica (Heap), mentre arr nei registri del processore",
+        "arr crea un puntatore in sola lettura, mentre ptr consente di modificare la stringa originale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `char *ptr` il letterale stesso risiede in `.rodata` e la modifica di `ptr[0]` causerà un Segmentation Fault. Con `char arr[]` il letterale stringa viene copiato sullo stack della funzione come un normale array locale, quindi gli elementi `arr[0]` possono essere modificati.",
+        "Errato. Il puntatore `ptr` fa riferimento alla memoria non scrivibile `.rodata`, a differenza dell'array locale `arr`.",
+        "Errato. Nessuna di queste strutture fa ricorso a `malloc` (Heap).",
+        "Errato. È esattamente il contrario: gli elementi dell'array `arr` sono modificabili, mentre i dati puntati da `ptr` non lo sono."
+      ]
+    },
+    {
+      "id": "it_clang_3113",
+      "widget_id": null,
+      "topic": "Collocazione di variabili const globali e locali",
+      "q": "Dove colloca il compilatore una costante globale const int g = 5 rispetto a una costante locale const int l = 5 all'interno di una funzione?",
+      "hint": "Una costante globale ha durata di memorizzazione statica, mentre una locale risiede nello stack frame della funzione.",
+      "options": [
+        "La globale g viene inserita nella sezione protetta .rodata, mentre la locale l nello stack (Stack) o ottimizzata nei registri",
+        "Entrambe le costanti vengono obbligatoriamente collocate nella memoria dinamica (Heap)",
+        "La globale g viene inserita nella sezione .bss, mentre la locale l nel segmento di codice .text",
+        "La costante locale l viene inserita nel file di swap, mentre la globale g nella RAM",
+        "Entrambe le costanti vengono rimosse dal preprocessore e non occupano memoria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `const` globale esiste per tutta la durata del programma ed è collocata nella sezione protetta dalla scrittura `.rodata`. La variabile `const` locale viene posizionata nello stack frame (o mantenuta dal compilatore in un registro), ma ad essa si applicano le regole di scope della funzione.",
+        "Errato. L'heap non viene utilizzato per variabili `const` automatiche e globali.",
+        "Errato. La sezione `.bss` memorizza solo dati modificabili non inizializzati.",
+        "Errato. Il file di swap non gestisce la separazione tra costanti locali e globali.",
+        "Errato. La parola chiave `const` viene elaborata dal compilatore, non dal preprocessore."
+      ]
+    },
+    {
+      "id": "it_clang_3114",
+      "widget_id": "widget_clang_3114",
+      "topic": "Unione di letterali stringa identici (String Pooling)",
+      "q": "Perché l'espressione str1 == str2 restituirà molto probabilmente 1 (true) quando si compila con l'ottimizzazione abilitata?",
+      "hint": "Il compilatore di ottimizzazione unisce i letterali stringa duplicati in un unico indirizzo di memoria.",
+      "options": [
+        "Il compilatore esegue la deduplicazione delle stringhe (String Pooling) in .rodata, allocando un unico indirizzo per letterali identici",
+        "L'operatore == confronta automaticamente il contenuto delle stringhe carattere per carattere invece di confrontare gli indirizzi",
+        "La funzione printf converte automaticamente tutti i puntatori a stringa a un unico valore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il meccanismo di `String Pooling` (o String Merging) consente al compilatore e al linker di salvare i letterali stringa identici in `.rodata` in un'unica istanza per risparmiare spazio nel file binario.",
+        "Errato. L'operatore `==` per i puntatori confronta sempre i loro indirizzi virtuali, non il contenuto (per il contenuto occorre `strcmp`).",
+        "Errato. La funzione `printf` accetta il valore dell'espressione e non modifica la logica di confronto dei puntatori."
+      ]
+    },
+    {
+      "id": "it_clang_3115",
+      "widget_id": null,
+      "topic": "Memorizzazione di letterali in virgola mobile e composti",
+      "q": "In che modo il compilatore memorizza i numeri in virgola mobile (ad esempio double val = 3.14159265) o i letterali composti se non rientrano direttamente nell'opcode dell'istruzione macchina?",
+      "hint": "Le costanti di grandi dimensioni vengono estratte dall'istruzione macchina in un blocco di memoria separato in sola lettura.",
+      "options": [
+        "Li salva come valori anonimi costanti nella sezione .rodata e li carica nei registri tramite indirizzo",
+        "Li converte in commenti stringa alla fine del file eseguibile"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se una costante (ad esempio un `double` a 64 bit o un array letterale) non può essere codificata all'interno dell'istruzione CPU stessa (immediate value), il compilatore inserisce il suo pattern binario in `.rodata` e genera un'istruzione di caricamento a tale indirizzo.",
+        "Errato. I dati vengono convertiti in formato binario per il processore, non in commenti."
+      ]
+    },
+    {
+      "id": "it_clang_3116",
+      "widget_id": "widget_clang_3116",
+      "topic": "Modifica di una variabile const globale tramite puntatore",
+      "q": "Cosa succede durante l'esecuzione del programma se si tenta di modificare il valore di global_val tramite casting di tipo (int *)&global_val?",
+      "hint": "Le variabili const globali sono posizionate nella sezione .rodata, protetta dalla scrittura a livello di MMU hardware.",
+      "options": [
+        "Il sistema operativo interromperà l'esecuzione del programma con un errore di Segmentation Fault (Access Violation)",
+        "La variabile global_val cambierà con successo il suo valore in 200",
+        "Il valore cambierà solo all'interno della funzione main, ma rimarrà quello vecchio nelle altre funzioni",
+        "Il compilatore ignorerà il comando di scrittura e continuerà l'esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `global_val` si trova nella sezione `.rodata`, la pagina di memoria ha permessi `r--`. Un tentativo di scrittura tramite puntatore causerà un'eccezione di protezione hardware dell'MMU e l'arresto anomalo del processo.",
+        "Errato. La protezione delle pagine di memoria a livello di MMU impedisce la scrittura in `.rodata`.",
+        "Errato. La violazione della protezione della memoria si verifica all'istante durante l'istruzione di scrittura.",
+        "Errato. Il casting di tipo aggira l'avviso del compilatore, ma il guasto si verifica in fase di esecuzione a livello hardware."
+      ]
+    },
+    {
+      "id": "it_clang_3117",
+      "widget_id": "widget_clang_3117",
+      "topic": "Modifica di una variabile const locale tramite puntatore",
+      "q": "Perché un tentativo di modificare una const int locale local_val tramite puntatore potrebbe NON causare un Segmentation Fault, pur essendo un Comportamento Indefinito (Undefined Behavior)?",
+      "hint": "La costante locale risiede nello stack (in memoria scrivibile), ma il compilatore presuppone che il suo valore non cambi.",
+      "options": [
+        "La variabile locale risiede nello stack frame con permessi di scrittura (rw), ma l'ottimizzatore del compilatore sostituirà il vecchio valore 10 dal contesto costante",
+        "Lo stack è completamente protetto dalla scrittura, quindi il programma si arresterà chiamando abort()",
+        "Le costanti locali vengono spostate automaticamente nella memoria della scheda video",
+        "Il casting del puntatore (int *) annulla lo stato const a livello dell'hardware del processore",
+        "Il sistema operativo vieta la stampa di qualsiasi dato tramite printf dopo la modifica dello stack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo stack ha permessi di scrittura (`rw-`), quindi non si verifica alcun errore hardware dell'MMU. Tuttavia, lo standard C considera la modifica di qualsiasi oggetto `const` come Undefined Behavior. Il compilatore di ottimizzazione potrebbe inserire direttamente il valore `10` nella chiamata a `printf`, ignorando le modifiche in memoria.",
+        "Errato. Lo stack deve supportare la scrittura per il funzionamento delle normali variabili locali.",
+        "Errato. La memoria dello stack risiede nella RAM.",
+        "Errato. Il casting esplicito rimuove l'avviso del compilatore, ma non modifica le regole dello standard C relative all'UB.",
+        "Errato. La modifica dello stack non blocca le chiamate di sistema di output."
+      ]
+    },
+    {
+      "id": "it_clang_3118",
+      "widget_id": null,
+      "topic": "Macro #define vs const nel contesto della memoria",
+      "q": "Qual è la differenza principale dal punto di vista della memoria tra la dichiarazione di una costante `#define MAX 100` e `const int MAX = 100`?",
+      "hint": "La macro viene sostituita dal preprocessore come testo, senza richiedere l'allocazione di una variabile o di un indirizzo di memoria.",
+      "options": [
+        "#define viene sostituita dal preprocessore come testo e non occupa spazio nelle sezioni dati, mentre const int ha un tipo e un indirizzo in memoria",
+        "const int viene eseguita più velocemente poiché i dati sono memorizzati nel BIOS",
+        "#define crea un oggetto fisico nella sezione .data, mentre const int nella sezione .bss",
+        "const int blocca l'esecuzione di tutti gli altri thread del programma",
+        "#define può essere utilizzata solo per numeri in virgola mobile",
+        "const int alloca sempre 1 Kilobyte di memoria nell'Heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `#define` viene sostituita dal preprocessore con il letterale puro `100` direttamente nel codice prima della fase di compilazione (non ha tipo né indirizzo). `const int` crea una costante tipizzata con un indirizzo in memoria (`.rodata` o stack).",
+        "Errato. Il BIOS non viene utilizzato per memorizzare le costanti dell'applicazione utente.",
+        "Errato. `#define` non crea oggetti nelle sezioni dati.",
+        "Errato. Le costanti `const int` non influiscono in alcun modo sul flusso di esecuzione.",
+        "Errato. `#define` sostituisce qualsiasi sequenza di caratteri.",
+        "Errato. La dimensione di `const int` è pari a quella del tipo `int` (di solito 4 byte)."
+      ]
+    },
+    {
+      "id": "it_clang_3119",
+      "widget_id": null,
+      "topic": "Durata di memorizzazione dei letterali stringa (Static Storage Duration)",
+      "q": "Quale durata di memorizzazione (Storage Duration) hanno i letterali stringa in C collocati in memoria immutabile?",
+      "hint": "Il letterale stringa è accessibile per tutta la durata del programma.",
+      "options": [
+        "Estatica (Static Storage Duration): esistono in memoria per tutta la durata dell'esecuzione del programma",
+        "Automatica (Automatic Storage Duration): vengono distrutti all'uscita dal blocco corrente {}",
+        "Dinamica (Allocated Storage Duration): richiedono il rilascio manuale tramite free()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Tutti i letterali stringa in C hanno una durata di memorizzazione statica (`static storage duration`). Vengono caricati all'avvio del processo nella sezione `.rodata` e rimangono accessibili fino al termine del programma.",
+        "Errato. Le normali variabili locali sullo stack hanno una durata di memorizzazione automatica.",
+        "Errato. Il rilascio manuale è richiesto solo per la memoria allocata tramite `malloc`."
+      ]
+    },
+    {
+      "id": "it_clang_3120",
+      "widget_id": "widget_clang_3120",
+      "topic": "Analisi della sezione .rodata tramite utility di sistema",
+      "q": "Quale utility di sistema in Linux consente di estrarre e visualizzare tutti i letterali stringa stampabili dalla sezione .rodata di un file binario?",
+      "hint": "Il nome dell'utility si traduce dall'inglese come 'stringhe'.",
+      "options": [
+        "strings",
+        "strip",
+        "valgrind",
+        "gdb"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'utility `strings` scansiona il file binario (ELF) e stampa tutte le sequenze di caratteri stampabili presenti nelle sezioni dati e `.rodata`.",
+        "Errato. L'utility `strip` rimuove i simboli di debug e la tabella dei simboli dal binario.",
+        "Errato. `valgrind` è uno strumento di debug della memoria e ricerca di leak durante l'esecuzione.",
+        "Errato. `gdb` è un debugger di codice interattivo."
+      ]
+    },
+    {
+      "id": "it_clang_3121",
+      "widget_id": "widget_clang_3121",
+      "topic": "Separazione delle variabili globali tra .data e .bss",
+      "q": "In quali sezioni di memoria finiscono le variabili global_a e global_b dell'esempio?",
+      "hint": "Pensate se nella dichiarazione della variabile viene utilizzata un'inizializzazione esplicita con un valore diverso da zero.",
+      "options": [
+        "global_a finisce nella sezione .data, mentre global_b nella sezione .bss",
+        "Entrambe le variabili finiscono nello stack delle funzioni (Stack)",
+        "global_a finisce nell'heap (Heap), mentre global_b nella sezione .rodata"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili globali e statiche inizializzate con valori diversi da zero sono collocate nella sezione `.data`. Le variabili non inizializzate (o inizializzate a zero) vengono inviate alla sezione `.bss`.",
+        "Errato. Le variabili globali sono memorizzate nella memoria statica, non negli stack frame.",
+        "Errato. L'heap viene utilizzato solo per l'allocazione dinamica tramite `malloc`, mentre `.rodata` per le costanti immutabili."
+      ]
+    },
+    {
+      "id": "it_clang_3122",
+      "widget_id": null,
+      "topic": "Inizializzazione automatica della sezione .bss",
+      "q": "Con quale valore vengono garantite le inizializzazioni delle variabili globali e statiche della sezione .bss prima della chiamata a main() secondo lo standard C?",
+      "hint": "A differenza delle variabili locali sullo stack, i dati statici hanno sempre un valore iniziale predefinito.",
+      "options": [
+        "Zero (tutti i bit vengono riempiti con byte 0 / NULL per i puntatori)",
+        "Un valore casuale dalla memoria ('spazzatura')"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, tutte le variabili con durata di memorizzazione statica (sezione `.bss`) non inizializzate esplicitamente vengono azzerate dal loader del SO o dal codice di avvio CRT prima dell'esecuzione di `main()`.",
+        "Errato. Solo le variabili locali (automatiche) non inizializzate sullo stack ricevono valori spazzatura."
+      ]
+    },
+    {
+      "id": "it_clang_3123",
+      "widget_id": "widget_clang_3123",
+      "topic": "Impatto di .data e .bss sulla dimensione del file binario su disco",
+      "q": "In che modo la dichiarazione degli array initialized_arr e uninitialized_arr influisce sulla dimensione fisica del file eseguibile compilato su disco rigido?",
+      "hint": "Pensate se sia necessario salvare fisicamente centinaia di migliaia di zeri all'interno del file ELF su disco.",
+      "options": [
+        "initialized_arr aumenterà la dimensione del file su disco (~400 KB), mentre uninitialized_arr quasi non modificherà la dimensione del file, poiché .bss memorizza solo la dimensione dell'array",
+        "Entrambi gli array aumenteranno la dimensione del file eseguibile su disco di esattamente 400 KB ciascuno",
+        "uninitialized_arr aumenterà la dimensione del file su disco, mentre initialized_arr verrà compresso dall'archiver del compilatore",
+        "Nessuno degli array occuperà spazio su disco, poiché tutta la memoria viene allocata al momento della chiamata a malloc()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sezione `.data` memorizza i byte effettivi di inizializzazione, pertanto l'array è scritto interamente nel file eseguibile. La sezione `.bss` ha tipo `NOBITS`: nel file viene conservata solo un'intestazione che indica quanta memoria (400 KB) il SO deve allocare nella RAM all'avvio.",
+        "Errato. L'array della sezione `.bss` non occupa spazio nel file ELF su disco.",
+        "Errato. Gli array della sezione `.bss` non causano un aumento delle dimensioni su disco del binario.",
+        "Errato. Gli array globali non utilizzano `malloc()`."
+      ]
+    },
+    {
+      "id": "it_clang_3124",
+      "widget_id": "widget_clang_3124",
+      "topic": "Permessi di accesso ai segmenti dati (WA - Writable/Alloc)",
+      "q": "Quali permessi di accesso alla memoria imposta il sistema operativo per i segmenti .data e .bss nello spazio di indirizzamento virtuale del processo?",
+      "hint": "Il flag W indica Writable, mentre A indica Allocatable nella memoria virtuale.",
+      "options": [
+        "Read + Write (Lettura e Scrittura, rw-) senza permesso di Esecuzione",
+        "Read + Execute (Lettura ed Esecuzione, r-x) senza permesso di Scrittura",
+        "Execute Only (Solo Esecuzione, --x)",
+        "Write + Execute (Scrittura ed Esecuzione, -wx) senza permesso di Lettura",
+        "Assenza totale di permessi di accesso (---) fino alla prima chiamata a malloc()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I segmenti dati memorizzano variabili modificabili, pertanto richiedono permessi di lettura e scrittura (`rw-`). Nell'ambito della protezione W^X, il diritto di esecuzione (`x`) per i segmenti dati è bloccato.",
+        "Errato. Il permesso di scrittura è obbligatorio per lavorare con le variabili globali.",
+        "Errato. Senza permesso di lettura, il processore non potrà leggere i valori delle variabili.",
+        "Errato. I permessi di esecuzione sui segmenti dati creano minacce alla sicurezza e sono bloccati.",
+        "Errato. Le pagine `.data` e `.bss` vengono allocate e diventano accessibili subito all'avvio del processo."
+      ]
+    },
+    {
+      "id": "it_clang_3125",
+      "widget_id": "widget_clang_3125",
+      "topic": "Variabili locali statiche (static inside functions)",
+      "q": "Dove si trova in memoria la variabile locale count con modificatore static dichiarata all'interno della funzione counter()?",
+      "hint": "Il modificatore static cambia la durata di memorizzazione della variabile da automatica a statica.",
+      "options": [
+        "Nella sezione di memoria statica (.bss o .data), conservando il suo valore tra le chiamate di funzione",
+        "Nello stack frame (Stack) della funzione counter(), venendo distrutta all'uscita da essa",
+        "Nella memoria dinamica (Heap) con chiamata automatica a free()",
+        "Nei registri della CPU senza allocazione di un indirizzo nella RAM",
+        "Nel segmento di codice (.text) accanto alle istruzioni della funzione",
+        "Nella tabella dei simboli del linker senza allocare byte reali"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La parola chiave `static` in una variabile locale ne cambia l'area di memorizzazione: viene collocata in `.data` (o `.bss`), esiste per tutto il periodo di esecuzione del programma e conserva lo stato tra le chiamate, sebbene sia visibile solo all'interno della sua funzione.",
+        "Errato. Le normali variabili locali sono memorizzate nello stack, ma le variabili `static` vengono spostate nella memoria statica.",
+        "Errato. La memoria dinamica viene utilizzata solo con chiamate manuali a `malloc`.",
+        "Errato. La variabile ha un indirizzo fisso in memoria, il che consente di modificarla tra le chiamate.",
+        "Errato. Il segmento `.text` è protetto dalla scrittura, quindi una variabile `static` modificabile non può trovarsi lì.",
+        "Errato. La variabile occupa byte reali nella RAM."
+      ]
+    },
+    {
+      "id": "it_clang_3126",
+      "widget_id": null,
+      "topic": "Durata di memorizzazione delle variabili globali (Static Storage Duration)",
+      "q": "In quale momento viene allocata e rilasciata la memoria per le variabili globali in un programma C?",
+      "hint": "Le variabili globali hanno una durata di memorizzazione statica (Static Storage Duration).",
+      "options": [
+        "La memoria viene allocata al caricamento del processo nella RAM e viene rilasciata dal sistema operativo solo al termine del processo",
+        "La memoria viene allocata al primo accesso alla variabile nel codice e rilasciata all'uscita dalla funzione main()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili globali hanno una durata di memorizzazione statica (`static storage duration`): la memoria viene riservata all'avvio del programma (al momento della mappatura del file ELF nella RAM) e rimane fino al termine del processo.",
+        "Errato. L'allocazione avviene durante l'inizializzazione del processo, non 'su richiesta' o al momento dell'accesso."
+      ]
+    },
+    {
+      "id": "it_clang_3127",
+      "widget_id": "widget_clang_3127",
+      "topic": "Linkage dei simboli: static global vs extern global",
+      "q": "Qual è la differenza tra una variabile globale statica static int hidden_x e una normale variabile globale int global_x?",
+      "hint": "Pensate alla visibilità del nome della variabile per il linker durante la build da più file.",
+      "options": [
+        "hidden_x ha linkage interno (Internal Linkage) ed è visibile solo in file1.c, mentre global_x è accessibile da altri file tramite extern",
+        "hidden_x è collocata nello stack, mentre global_x nell'heap",
+        "hidden_x è protetta dalla scrittura a livello di processore, mentre global_x no"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il modificatore `static` a livello di file limita lo scope del simbolo alla sola unità di traduzione corrente (`Internal Linkage`). Una normale variabile globale ha `External Linkage` e può collegarsi ad altri file `.o`.",
+        "Errato. Entrambe le variabili risiedono nella memoria statica (`.data`/`.bss`).",
+        "Errato. Entrambe le variabili sono modificabili e hanno permessi di scrittura (`rw-`)."
+      ]
+    },
+    {
+      "id": "it_clang_3128",
+      "widget_id": null,
+      "topic": "Meccanismo di allocazione delle pagine per .bss all'avvio (Zero-filled pages)",
+      "q": "In che modo il sistema operativo alloca la memoria fisica RAM per la sezione .bss all'avvio del processo?",
+      "hint": "Per risparmiare tempo di caricamento, il SO utilizza speciali pagine azzerate di memoria virtuale.",
+      "options": [
+        "Mappa le cosiddette 'pagine azzerate' (Zero-filled pages / anonymous mapping), fornendo memoria fisica con zeri su richiesta",
+        "Legge byte per byte gli zeri dal file del disco rigido alla velocità del dispositivo di archiviazione",
+        "Costringe il processore a eseguire un ciclo for scrivendo 0 in ciascun byte di memoria prima di eseguire main()",
+        "Alloca la memoria all'interno della cache L1 senza mappatura nella RAM"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Alla chiamata di `execve`, il kernel del SO mappa nello spazio di indirizzamento del processo un'area di memoria anonima legata alla 'pagina azzerata' del sistema. Le pagine fisiche RAM reali vengono allocate e azzerate dal gestore di memoria del kernel.",
+        "Errato. Nel file ELF su disco non ci sono zeri della sezione `.bss`.",
+        "Errato. L'azzeramento viene eseguito dal kernel del SO a livello di gestione delle pagine MMU, non con un semplice ciclo in C.",
+        "Errato. La sezione `.bss` è indirizzata nella memoria RAM di sistema."
+      ]
+    },
+    {
+      "id": "it_clang_3129",
+      "widget_id": "widget_clang_3129",
+      "topic": "Limitazione all'inizializzazione delle variabili globali in C",
+      "q": "Perché un tentativo di inizializzare una variabile globale tramite chiamata di funzione (int my_global = get_initial_val();) causerà un errore di compilazione in C?",
+      "hint": "In C i valori per l'inizializzazione della sezione .data devono essere noti in fase di compilazione/linking.",
+      "options": [
+        "Nello standard C il valore iniziale di una variabile globale deve essere un'espressione costante nota in fase di compilazione",
+        "La funzione get_initial_val() deve essere obbligatoriamente contrassegnata dalla parola chiave inline",
+        "Le variabili globali possono essere inizializzate solo tramite macro del preprocessore",
+        "La chiamata di funzioni prima di main() è consentita solo se scritte in C++",
+        "L'inizializzazione delle variabili globali tramite funzioni è vietata dalle protezioni antivirus"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza del C++, il linguaggio C richiede che gli inizializzatori per gli oggetti con durata di memorizzazione statica siano espressioni costanti (`Compile-time constants`), in quanto i valori vengono scritti direttamente nella sezione `.data` del file.",
+        "Errato. Il modificatore `inline` non rende la chiamata a funzione un'espressione costante in fase di compilazione.",
+        "Errato. È possibile inizializzare con qualsiasi espressione costante (numeri, shift, indirizzi), non solo con le macro.",
+        "Errato. La limitazione è un requisito dello standard del linguaggio C.",
+        "Errato. Questa è una regola fondamentale della sintassi e della struttura di memoria in C."
+      ]
+    },
+    {
+      "id": "it_clang_3130",
+      "widget_id": "widget_clang_3130",
+      "topic": "Variabili globali in un ambiente multithread (Data Race)",
+      "q": "Quale problema si verifica se si modifica contemporaneamente da thread diversi (pthread) una variabile globale misurata shared_counter senza sincronizzazione?",
+      "hint": "Pensate alla Data Race e alla non atomicità dell'operazione di incremento ++ a livello di istruzioni del processore.",
+      "options": [
+        "Data Race: l'incremento shared_counter++ è composto da più istruzioni (Read-Modify-Write), il che porterà alla corruzione del valore finale",
+        "Il sistema operativo bloccherà forzatamente il secondo thread con un errore di Segmentation Fault",
+        "Il compilatore racchiuderà automaticamente l'incremento in un mutex durante la build",
+        "La variabile globale viene duplicata automaticamente per ogni thread in una sezione .bss separata",
+        "Il processore passerà l'esecuzione del programma in modalità single-core",
+        "Il valore della variabile rimarrà bloccato nella cache L1 e non cambierà mai"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili globali modificabili risiedono nella memoria condivisa del processo, accessibile a tutti i thread. L'operazione `shared_counter++` a livello assembly si compone di tre passaggi: lettura dalla RAM, incremento nel registro, scrittura nella RAM. Senza operazioni atomiche (`_Atomic`) o mutex, si verifica una Data Race.",
+        "Errato. La data race porta a un valore imprevedibile in memoria, ma non causa un Segmentation Fault.",
+        "Errato. Il compilatore C non aggiunge automaticamente i mutex.",
+        "Errato. Per creare una copia della variabile per ogni thread occorre specificare esplicitamente lo qualificatore `_Thread_local` / `__thread`.",
+        "Errato. Il processore continua l'esecuzione parallela dei thread.",
+        "Errato. Le cache aggiornano i dati secondo i protocolli di coerenza della cache, ma la mancanza di sincronizzazione porta alla sovrascrittura dei valori."
+      ]
+    }
+  ]
+}

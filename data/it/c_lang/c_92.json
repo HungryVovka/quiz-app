@@ -1,0 +1,585 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2801",
+      "widget_id": "widget_clang_2801",
+      "topic": "Scopo del comando continue",
+      "q": "Cosa succede quando si invoca il comando continue (o c) nel debugger GDB mentre il programma è in pausa?",
+      "hint": "Pensa al ripristino dell'esecuzione continua del processo.",
+      "options": [
+        "Il programma riprende la normale esecuzione a piena velocità fino al successivo breakpoint, segnale o completamento",
+        "Il programma viene ripristinato e inizia l'esecuzione dalla prima istruzione di main()",
+        "Il programma avanza esattamente di una riga di codice sorgente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `continue` riprende il processo dalla pausa e prosegue la sua normale esecuzione finché non incontra un altro breakpoint, si verifica un errore o il programma termina.",
+        "Errato. Il riavvio del programma dall'inizio viene eseguito dal comando `run`.",
+        "Errato. L'esecuzione di una singola riga viene effettuata dai comandi `step` o `next`."
+      ]
+    },
+    {
+      "id": "it_clang_2802",
+      "widget_id": null,
+      "topic": "Forma abbreviata del comando continue",
+      "q": "Qual è il carattere che rappresenta il più breve alias standard per invocare il comando continue nella console interattiva di GDB?",
+      "hint": "Viene utilizzata la prima lettera della parola inglese continue.",
+      "options": [
+        "c",
+        "cont",
+        "go",
+        "resume",
+        "run"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il singolo carattere `c` è l'abbreviazione più comune del comando `continue`.",
+        "Errato. Anche `cont` funziona come abbreviazione, ma non è l'alias più breve possibile.",
+        "Errato. Il comando `go` non esiste nella CLI standard di GDB.",
+        "Errato. `resume` è un comando non valido.",
+        "Errato. `run` ripristina e riavvia il processo da capo."
+      ]
+    },
+    {
+      "id": "it_clang_2803",
+      "widget_id": "widget_clang_2803",
+      "topic": "Passaggio di un contatore a continue (continue N)",
+      "q": "Quale azione eseguirà il debugger inserendo il comando continue 5 (o c 5) quando il programma è fermo a un breakpoint?",
+      "hint": "Il parametro numerico specifica il numero di volte in cui ignorare il breakpoint corrente.",
+      "options": [
+        "Ignora il breakpoint corrente 5 volte e si fermerà solo alla sesta attivazione",
+        "Riprende l'esecuzione del programma per esattamente 5 secondi, dopodiché lo mette in pausa",
+        "Esegue 5 righe di codice in modalità step over",
+        "Passa al breakpoint con ID pari a 5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'argomento `N` in `continue N` imposta il contatore di ignoramenti: il breakpoint corrente verrà ignorato `N-1` volte e fermerà il programma alla sua `N`-esima occorrenza.",
+        "Errato. Il comando non è legato a un timer in tempo reale espresso in secondi.",
+        "Errato. Il passo riga per riga con un argomento numerico viene eseguito da `next N` o `step N`.",
+        "Errato. Il passaggio a uno specifico ID di breakpoint non si effettua in questo modo."
+      ]
+    },
+    {
+      "id": "it_clang_2804",
+      "widget_id": null,
+      "topic": "Comportamento di continue in presenza di più breakpoint",
+      "q": "Se nel programma sono impostati più breakpoint in funzioni diverse, fino a che punto continuerà l'esecuzione quando viene invocato continue?",
+      "hint": "Il processo prosegue continuamente fino alla prima istruzione di interruzione incontrata.",
+      "options": [
+        "Fino al primo breakpoint incontrato lungo il flusso di esecuzione del programma",
+        "Fino al primo breakpoint avente l'ID numerico più basso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `continue` esegue il codice in sequenza nel tempo; la fermata avverrà nel punto in cui il flusso di controllo (Control Flow) arriva per primo.",
+        "Errato. L'ID sequenziale del breakpoint nella tabella non influisce sull'ordine cronologico di attivazione nel codice."
+      ]
+    },
+    {
+      "id": "it_clang_2805",
+      "widget_id": null,
+      "topic": "Comportamento di continue in caso di arresto da segnale (Signal)",
+      "q": "Il programma ha sospeso l'esecuzione a causa di un segnale del sistema operativo (ad esempio SIGINT premendo Ctrl+C). Cosa succede se subito dopo si inserisce il comando continue?",
+      "hint": "Per impostazione predefinita, GDB inoltra il segnale ricevuto al processo sottoposto a debugging.",
+      "options": [
+        "GDB riprenderà l'esecuzione e trasmetterà il segnale ricevuto al programma per la sua normale gestione",
+        "GDB eliminerà forzatamente il segnale e continuerà l'esecuzione come se non si fosse verificato",
+        "Il programma terminerà immediatamente con codice di errore 1",
+        "GDB bloccherà la gestione di tutti i segnali futuri"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per impostazione predefinita, `continue` rinvia il segnale intercettato al processo. Per continuare SENZA trasmettere il segnale si usa il comando `signal 0`.",
+        "Errato. `continue` non cancella automaticamente il segnale ricevuto.",
+        "Errato. La conclusione dipende da come il programma gestisce quel determinato segnale.",
+        "Errato. Il comportamento dei segnali futuri si configura separatamente tramite il comando `handle`."
+      ]
+    },
+    {
+      "id": "it_clang_2806",
+      "widget_id": "widget_clang_2806",
+      "topic": "Differenza tra continue e step/next",
+      "q": "Qual è la differenza principale tra il comando continue e i comandi di debugging passo-passo (step / next)?",
+      "hint": "Rifletti sulla velocità e sulle limitazioni al numero di istruzioni eseguite.",
+      "options": [
+        "continue esegue il codice alla massima velocità fino al successivo evento/breakpoint, mentre step/next compiono un passo controllato di una riga",
+        "continue funziona solo per programmi multithread, mentre step/next solo per programmi single-thread",
+        "continue modifica i valori delle variabili, mentre step/next si limita a leggerli"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `continue` avvia l'esecuzione libera del programma senza soste passo-passo fino all'incontro con un ostacolo (breakpoint, segnale, exit).",
+        "Errato. Tutti questi comandi sono applicabili sia in programmi single-thread che multithread.",
+        "Errato. Nessuno di questi comandi altera di per sé i valori delle variabili."
+      ]
+    },
+    {
+      "id": "it_clang_2807",
+      "widget_id": null,
+      "topic": "Esecuzione di continue in modalità asincrona / in background (continue &)",
+      "q": "Cosa comporta l'aggiunta del carattere e commerciale & alla fine del comando continue (continue &) durante il debugging in GDB?",
+      "hint": "Nei sistemi Unix-like l'e commerciale viene tradizionalmente usata per avviare compiti in background.",
+      "options": [
+        "Avvia il proseguimento del programma in background, liberando la console di GDB per l'inserimento di altri comandi",
+        "Reindirizza l'indirizzo della funzione corrente in un file",
+        "Avvia il programma in modalità di profilazione multithread",
+        "Attiva il debugging tramite protocollo di rete",
+        "Duplica l'output del processo nel file di log standard",
+        "Disattiva automaticamente tutti i breakpoint"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `continue &` esegue il comando in modo asincrono (Target Async Mode), restituendo il controllo alla CLI di GDB prima che il processo si fermi.",
+        "Errato. `&` non reindirizza gli indirizzi delle funzioni.",
+        "Errato. Per la profilazione si utilizzano altre utility specializzate.",
+        "Errato. Il debugging via rete si configura tramite `target remote`.",
+        "Errato. Il reindirizzamento dei log si imposta tramite `set logging`.",
+        "Errato. I breakpoint rimangono attivi."
+      ]
+    },
+    {
+      "id": "it_clang_2808",
+      "widget_id": null,
+      "topic": "Ripresa dell'esecuzione per tutti i thread (all-stop mode)",
+      "q": "Come si comporta di default il comando continue in un'applicazione multithread nella modalità standard all-stop?",
+      "hint": "Pensa allo sblocco dei thread di esecuzione quando si preme continue.",
+      "options": [
+        "Riprende l'esecuzione di TUTTI i thread del programma sottoposto a debugging simultaneamente",
+        "Riprende l'esecuzione SOLO del thread corrente selezionato, lasciando gli altri in pausa"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Di default, in modalità `all-stop`, la chiamata a `continue` sblocca dalla pausa tutti i thread esistenti dell'applicazione.",
+        "Errato. La ripresa del solo thread corrente si imposta passando alla modalità `non-stop` o tramite `set scheduler-locking`."
+      ]
+    },
+    {
+      "id": "it_clang_2809",
+      "widget_id": "widget_clang_2809",
+      "topic": "Esecuzione automatica di continue all'attivazione di un breakpoint (commands)",
+      "q": "Tramite quale meccanismo di GDB è possibile fare in modo che, al raggiungimento di un determinato breakpoint, vengano stampate informazioni e successivamente il programma prosegua AUTOMATICAMENTE senza l'intervento dell'utente?",
+      "hint": "A un breakpoint è possibile associare una lista di comandi (commands) che termina con continue.",
+      "options": [
+        "Definire un elenco di comandi per il breakpoint tramite commands <ID>, inserendo le azioni desiderate e il comando continue",
+        "Impostare il flag globale set breakpoint auto-continue on",
+        "Passare un flag speciale durante la creazione del punto: break --auto-continue",
+        "In GDB è vietato proseguire automaticamente l'esecuzione dopo essere arrivati a un breakpoint"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiamata `commands <ID>` permette di collegare uno script a un breakpoint. Includendo `continue` come ultima riga, il programma stamperà i dati e proseguirà l'esecuzione senza fermarsi.",
+        "Errato. Il flag `set breakpoint auto-continue` non esiste.",
+        "Errato. Il comando `break` non supporta tale opzione.",
+        "Errato. Questo è un pattern comune per il logging senza modificare il codice sorgente."
+      ]
+    },
+    {
+      "id": "it_clang_2810",
+      "widget_id": null,
+      "topic": "Stato del programma prima dell'invocazione di run",
+      "q": "Cosa succede se si inserisce il comando continue in una sessione GDB PRIMA che il programma sia stato avviato con il comando run?",
+      "hint": "Il processo di debugging non esiste ancora nella memoria del sistema operativo.",
+      "options": [
+        "GDB mostrerà il messaggio «The program is not being run» e si rifiuterà di eseguire il comando",
+        "GDB invocherà automaticamente il comando run e avvierà il programma",
+        "GDB si chiuderà in modo anomalo con un errore di segmentazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché il processo non è ancora stato creato, è impossibile continuarne l'esecuzione: GDB informerà che il programma non è in esecuzione (`The program is not being run.`).",
+        "Errato. GDB non sostituisce automaticamente `continue` con `run`.",
+        "Errato. L'assenza di un processo avviato non causa il crash del debugger stesso."
+      ]
+    },
+    {
+      "id": "it_clang_2811",
+      "widget_id": "widget_clang_2811",
+      "topic": "Scopo base del comando finish",
+      "q": "Cosa succede all'esecuzione del comando finish (o fin) nel debugger GDB quando l'esecuzione è interrotta all'interno di una funzione?",
+      "hint": "Pensa al completamento dello stack frame corrente della funzione e al ritorno al contesto esterno.",
+      "options": [
+        "GDB esegue la funzione corrente fino alla fine, stampa il suo valore di ritorno e ferma il programma subito dopo il punto di rientro",
+        "GDB interrompe forzatamente l'esecuzione della funzione e restituisce un valore zero",
+        "GDB riavvia la funzione dalla sua prima riga"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `finish` esegue tutto il codice rimanente della funzione corrente, stampa il risultato (se presente) e si mette in pausa sulla prima istruzione dopo il ritorno alla funzione chiamante.",
+        "Errato. L'interruzione forzata dell'esecuzione senza eseguire il codice rimanente viene effettuata dal comando `return`.",
+        "Errato. `finish` non riavvia la funzione da capo."
+      ]
+    },
+    {
+      "id": "it_clang_2812",
+      "widget_id": null,
+      "topic": "Visualizzazione del valore di ritorno",
+      "q": "Quali informazioni aggiuntive mostra GDB nella console subito dopo il completamento con successo del comando finish per una funzione non-void?",
+      "hint": "GDB intercetta il registro o la cella di memoria con il risultato del calcolo della subroutine.",
+      "options": [
+        "Il valore di ritorno finale della funzione (Value returned is ...)",
+        "Un dump completo della memoria RAM dello stack frame",
+        "L'elenco di tutte le variabili locali della funzione chiamante",
+        "Il tempo di esecuzione della funzione in millisecondi",
+        "Il numero di istruzioni del processore eseguite"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Dopo l'esecuzione di `finish`, GDB riporta il risultato di sistema, ad esempio: `Value returned is $1 = 20`.",
+        "Errato. Il dump della memoria non viene stampato automaticamente.",
+        "Errato. Per visualizzare le variabili si utilizza `info locals`.",
+        "Errato. Per impostazione predefinita GDB non misura il profilo temporale delle funzioni.",
+        "Errato. Il numero esatto di istruzioni assembly non viene mostrato."
+      ]
+    },
+    {
+      "id": "it_clang_2813",
+      "widget_id": "widget_clang_2813",
+      "topic": "Esecuzione di finish nella funzione main",
+      "q": "Cosa succede se si invoca il comando finish mentre ci si trova su un breakpoint all'interno della funzione main()?",
+      "hint": "La funzione main è lo stack frame di livello più alto di un programma C.",
+      "options": [
+        "Il programma eseguirà le righe rimanenti di main() fino alla fine e terminerà il suo processo",
+        "GDB ripristinerà l'esecuzione alla prima riga di main()",
+        "GDB restituirà l'errore «Cannot finish outer frame»",
+        "Il programma entrerà in un ciclo infinito di attesa"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `main` conclude l'esecuzione del programma (restituendo l'exit code al sistema operativo), il comando `finish` eseguirà la parte restante di `main()` e terminerà il processo sottoposto a debugging.",
+        "Errato. Il ripristino e il riavvio vengono effettuati da `run`.",
+        "Errato. `finish` funziona perfettamente in `main` e porta il processo fino alla completa uscita.",
+        "Errato. Non si verifica alcun ciclo infinito."
+      ]
+    },
+    {
+      "id": "it_clang_2814",
+      "widget_id": null,
+      "topic": "Abbreviazione del comando finish",
+      "q": "Qual è il comando alias minimo che sostituisce l'immissione completa di finish nella console GDB?",
+      "hint": "Notare che la singola lettera 'f' è riservata al comando frame.",
+      "options": [
+        "fin",
+        "f",
+        "fi",
+        "finishout"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il prefisso unico minimo per `finish` è `fin` (`f` è usato per `frame`).",
+        "Errato. La lettera `f` è riservata per lavorare con gli stack frame (`frame`).",
+        "Errato. `fi` è un'abbreviazione ambigua in alcune versioni e richiede chiarimenti.",
+        "Errato. `finishout` è un comando inesistente."
+      ]
+    },
+    {
+      "id": "it_clang_2815",
+      "widget_id": "widget_clang_2815",
+      "topic": "Differenza fondamentale tra finish e return",
+      "q": "Qual è la differenza fondamentale tra il comando finish e il comando return in GDB?",
+      "hint": "Un comando esegue realmente il codice della funzione fino all'uscita, mentre l'altro ne interrompe IMMEDIATAMENTE l'esecuzione.",
+      "options": [
+        "finish esegue le istruzioni rimanenti della funzione fino alla fine, mentre return interrompe immediatamente l'esecuzione della funzione senza eseguire il codice rimanente",
+        "return esegue la funzione fino alla fine, mentre finish la rimuove forzatamente dalla memoria senza calcoli"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `finish` prosegue la reale esecuzione del corpo della funzione da parte del processore fino al return. `return` rimuove forzatamente lo frame dallo stack, inserendo il valore desiderato e saltando tutte le righe non eseguite.",
+        "Errato. I ruoli e i meccanismi dei comandi sono invertiti."
+      ]
+    },
+    {
+      "id": "it_clang_2816",
+      "widget_id": null,
+      "topic": "Incontro con un breakpoint durante finish",
+      "q": "Hai invocato il comando finish all'interno di una funzione, ma nella parte non ancora eseguita della stessa funzione è presente un breakpoint attivo. Come si comporterà GDB?",
+      "hint": "I breakpoint hanno priorità assoluta di interruzione.",
+      "options": [
+        "Il programma si metterà in pausa su quel breakpoint senza completare l'esecuzione della funzione",
+        "GDB ignorerà il breakpoint e completerà la funzione fino alla fine",
+        "GDB eliminerà quel breakpoint e concluderà la funzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Come nel caso di `continue` o `next`, l'incontro con un breakpoint interrompe immediatamente l'esecuzione, anche se è stato dato il comando `finish`.",
+        "Errato. I breakpoint non vengono ignorati durante `finish`.",
+        "Errato. `finish` non modifica la tabella dei breakpoint."
+      ]
+    },
+    {
+      "id": "it_clang_2817",
+      "widget_id": "widget_clang_2817",
+      "topic": "Comportamento di finish nelle chiamate ricorsive",
+      "q": "Se il programma è entrato nel 3° livello di ricorsione nella funzione factorial(n) e si inserisce finish, dove si fermerà il debugger?",
+      "hint": "Ogni chiamata ricorsiva crea il proprio stack frame separato.",
+      "options": [
+        "Nello stack frame precedente della stessa funzione (al 2° livello di ricorsione) subito dopo il punto della chiamata ricorsiva",
+        "Nella funzione main(), saltando tutti i livelli di ricorsione in un colpo solo",
+        "Sulla prima riga dello stesso 3° livello di ricorsione",
+        "Il programma restituirà un errore di frame ricorsivo",
+        "GDB rimuoverà automaticamente tutti i breakpoint",
+        "Il programma passerà all'uscita dalla funzione main()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `finish` completa il lavoro SOLO dello stack frame corrente (quello più profondo) e passa il controllo al frame genitore (2° livello di ricorsione).",
+        "Errato. Per uscire completamente da tutte le ricorsioni fino a `main` bisognerebbe invocare `finish` più volte o avanzare tramite `until`.",
+        "Errato. `finish` procede in avanti verso l'uscita dallo frame.",
+        "Errato. I frame ricorsivi vengono gestiti correttamente.",
+        "Errato. I breakpoint vengono conservati.",
+        "Errato. L'uscita da `main` non avviene immediatamente."
+      ]
+    },
+    {
+      "id": "it_clang_2818",
+      "widget_id": null,
+      "topic": "Uso di finish per funzioni void",
+      "q": "È possibile applicare il comando finish a funzioni che hanno come tipo di ritorno void?",
+      "hint": "Le funzioni void non hanno un valore di ritorno, ma hanno un punto di uscita.",
+      "options": [
+        "Sì, il comando eseguirà la funzione void fino all'uscita e restituirà il controllo al contesto chiamante",
+        "No, finish funziona rigorosamente solo con funzioni che restituiscono uno specifico tipo di dati"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `finish` funziona con successo per le funzioni di tipo `void`, portandole fino all'ultima istruzione/istruzione `return;`.",
+        "Errato. La presenza di un valore di ritorno non è una condizione obbligatoria per `finish`."
+      ]
+    },
+    {
+      "id": "it_clang_2819",
+      "widget_id": "widget_clang_2819",
+      "topic": "Uso di finish dopo aver invocato accidentalmente step",
+      "q": "Hai premuto accidentalmente step anziché next e sei entrato all'interno di una lunga subroutine internal_helper(). Quale comando ti permetterà di tornare il più rapidamente possibile a main()?",
+      "hint": "Questo comando completerà rapidamente lo frame corrente.",
+      "options": [
+        "finish",
+        "step 100",
+        "run",
+        "restart"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'invocazione di `finish` è il pattern standard per uscire da una funzione in cui si è entrati per errore (`step into`).",
+        "Errato. `step 100` effettuerà 100 soste passo-passo e potrebbe portare ancora più in profondità.",
+        "Errato. `run` ripristinerà l'intero processo dall'inizio.",
+        "Errato. Il comando `restart` non esiste in GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2820",
+      "widget_id": null,
+      "topic": "Differenza tra finish e until",
+      "q": "Qual è la differenza principale tra il completamento di un frame (finish) e il passaggio a righe/cicli specificati (until)?",
+      "hint": "Finish esce sempre dalla funzione corrente, mentre until funziona all'interno dello stesso frame (se non diversamente specificato).",
+      "options": [
+        "finish porta a termine l'esecuzione dell'intero frame della funzione corrente ed esce da essa, mentre until viene solitamente usato per uscire da un ciclo locale senza uscire dalla funzione",
+        "until termina il programma, mentre finish lo mette in pausa",
+        "finish funziona con l'assembly, mentre until solo con il C",
+        "until elimina le variabili locali, mentre finish quelle globali",
+        "Entrambi i comandi sono completamente identici"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `finish` abbandona lo stack frame della funzione corrente. `until` esegue il codice finché la riga non supera quella corrente (il che è ideale per uscire dai cicli `for/while` all'interno della funzione CORRENTE).",
+        "Errato. Nessuno dei due termina il programma con la forza.",
+        "Errato. Entrambi i comandi funzionano al livello di astrazione di GDB.",
+        "Errato. I comandi non si occupano di eliminare variabili.",
+        "Errato. Il loro scopo e comportamento differiscono."
+      ]
+    },
+    {
+      "id": "it_clang_2821",
+      "widget_id": "widget_clang_2821",
+      "topic": "Scopo del comando quit",
+      "q": "A cosa serve il comando quit nella modalità interattiva del debugger GDB?",
+      "hint": "Pensa alla conclusione della sessione di debugging e all'uscita dalla console del debugger.",
+      "options": [
+        "Termina la sessione di lavoro di GDB e restituisce il controllo alla shell del sistema operativo",
+        "Sospende il programma senza chiudere il debugger",
+        "Ricompila il codice sorgente del programma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `quit` chiude completamente il debugger GDB e riporta l'utente al terminale del sistema operativo.",
+        "Errato. Per sospendere l'esecuzione del programma si utilizzano i breakpoint o i segnali di interruzione.",
+        "Errato. GDB non compila il codice."
+      ]
+    },
+    {
+      "id": "it_clang_2822",
+      "widget_id": null,
+      "topic": "Forma abbreviata del comando quit",
+      "q": "Quale comando di una sola lettera rappresenta l'alias più breve per invocare quit?",
+      "hint": "Viene utilizzata la prima lettera della parola inglese quit.",
+      "options": [
+        "q",
+        "exit",
+        "bye",
+        "end",
+        "kill"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il singolo carattere `q` è l'abbreviazione standard per il comando `quit`.",
+        "Errato. `exit` non è un alias standard nella CLI base di GDB.",
+        "Errato. `bye` è un comando inesistente.",
+        "Errato. `end` viene utilizzato per terminare blocchi di comandi e script in GDB.",
+        "Errato. `kill` termina il processo sottoposto a debugging, ma non chiude GDB stesso."
+      ]
+    },
+    {
+      "id": "it_clang_2823",
+      "widget_id": null,
+      "topic": "Richiesta di conferma in presenza di un processo attivo",
+      "q": "Come si comporterà GDB se si inserisce il comando quit mentre il programma sottoposto a debugging è in esecuzione (in pausa su un breakpoint)?",
+      "hint": "Il debugger avvisa l'utente della terminazione o del distacco forzato del processo attivo.",
+      "options": [
+        "Richiederà una conferma all'utente (A debugging session is active. Quit anyway? (y or n))",
+        "Terminerà immediatamente e senza avvisi, lasciando il processo in background"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Di default GDB impedisce la distruzione accidentale di una sessione attiva e richiede una conferma interattiva `(y or n)`.",
+        "Errato. GDB avvisa sempre della presenza di un sottoprocesso (inferior) attivo."
+      ]
+    },
+    {
+      "id": "it_clang_2824",
+      "widget_id": null,
+      "topic": "Scorciatoia da tastiera per terminare la sessione (EOF)",
+      "q": "Quale combinazione standard di tasti del terminale invia il carattere EOF e porta a un'uscita analoga da GDB?",
+      "hint": "La combinazione standard per il carattere di fine file nei sistemi Unix.",
+      "options": [
+        "Ctrl + D",
+        "Ctrl + C",
+        "Ctrl + Z",
+        "Ctrl + X"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La combinazione `Ctrl + D` invia uno stream EOF alla CLI di GDB, in modo equivalente all'invocazione del comando `quit`.",
+        "Errato. `Ctrl + C` invia il segnale `SIGINT` e interrompe l'esecuzione del programma, ma non chiude GDB.",
+        "Errato. `Ctrl + Z` sospende il processo del debugger e lo invia in background alla Shell (SIGTSTP).",
+        "Errato. `Ctrl + X` viene utilizzato nelle combinazioni della modalità TUI di GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2825",
+      "widget_id": null,
+      "topic": "Passaggio dell'exit code da GDB (quit EXPR)",
+      "q": "Quale comportamento provocherà l'immissione del comando quit 1?",
+      "hint": "GDB permette di restituire uno stato di uscita numerico al sistema operativo.",
+      "options": [
+        "GDB terminerà il suo lavoro e restituirà l'exit code 1 alla Shell padre",
+        "GDB passerà il valore 1 alla funzione main() del programma sottoposto a debugging",
+        "Il comando genererà un errore sintattico in quanto quit non accetta argomenti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `quit <espressione>` calcola il valore dell'argomento e lo utilizza come stato di uscita del processo del debugger stesso (exit code).",
+        "Errato. L'argomento non viene reindirizzato all'interno del processo sottoposto a debugging.",
+        "Errato. La sintassi `quit EXPR` è perfettamente corretta in GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2826",
+      "widget_id": "widget_clang_2826",
+      "topic": "Differenza tra quit e kill",
+      "q": "Qual è la differenza fondamentale tra i comandi quit e kill nel contesto del debugging?",
+      "hint": "Un comando chiude solo il processo sottoposto a debugging, mentre l'altro chiude l'intera shell del debugger.",
+      "options": [
+        "quit chiude il debugger GDB stesso, mentre kill termina solo il processo eseguibile del programma, lasciando aperto GDB",
+        "kill chiude GDB, mentre quit ripristina il processo alla prima riga di main()",
+        "Questi comandi sono assoluti sinonimi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `kill` termina l'esecuzione del programma sottoposto a debugging, ma mantiene attiva la sessione di GDB per un eventuale nuovo `run`. `quit` chiude completamente il debugger stesso.",
+        "Errato. I ruoli dei comandi sono scambiati.",
+        "Errato. I comandi svolgono compiti diversi e hanno ambiti di azione differenti."
+      ]
+    },
+    {
+      "id": "it_clang_2827",
+      "widget_id": null,
+      "topic": "Disattivazione delle richieste di conferma (set confirm off)",
+      "q": "Come configurare GDB affinché all'esecuzione di quit con un processo attivo il debugger NON chieda la conferma (y/n), ma esca immediatamente?",
+      "hint": "Utilizza l'impostazione del flag delle conferme (confirm).",
+      "options": [
+        "set confirm off",
+        "quit --force",
+        "set quit confirm 0",
+        "disable prompts"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `set confirm off` disabilita tutte le richieste di conferma interattive in GDB, inclusa la richiesta all'uscita da una sessione attiva.",
+        "Errato. Il comando `quit` nella CLI di GDB non possiede l'opzione `--force`.",
+        "Errato. La sintassi `set quit confirm` non è corretta.",
+        "Errato. `disable prompts` non è un comando valido."
+      ]
+    },
+    {
+      "id": "it_clang_2828",
+      "widget_id": null,
+      "topic": "Uscita da GDB in presenza di un processo collegato (attach)",
+      "q": "Cosa succede al processo del sistema operativo a cui il debugger era stato collegato tramite il comando attach quando si termina GDB con il comando quit?",
+      "hint": "GDB cerca di non distruggere processi terzi preesistenti senza un'indicazione esplicita.",
+      "options": [
+        "GDB si scollega dal processo (detach), lasciandolo continuare a funzionare nel sistema operativo, oppure richiede la scelta di un'azione",
+        "GDB termina sempre garantendo l'interruzione anomala di qualsiasi processo collegato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando si lavora con un processo collegato (`attach`), GDB chiederà all'utente se scollegarsi da esso (`detach`), consentendo al processo di proseguire il suo normale funzionamento nel sistema.",
+        "Errato. I processi collegati per impostazione predefinita non vengono distrutti forzatamente senza conferma."
+      ]
+    },
+    {
+      "id": "it_clang_2829",
+      "widget_id": null,
+      "topic": "Salvataggio della cronologia dei comandi all'uscita",
+      "q": "Quale delle seguenti azioni viene eseguita automaticamente da GDB al regolare termine della sessione tramite quit?",
+      "hint": "GDB memorizza l'elenco delle righe inserite dall'utente per la comodità delle sessioni successive.",
+      "options": [
+        "Viene salvata la cronologia dei comandi immessi in un file di cronologia (ad esempio ~/.gdb_history)",
+        "Vengono salvati tutti i breakpoint correnti direttamente nei file sorgente C",
+        "Viene ricompilato automaticamente il file eseguibile",
+        "Vengono ripristinate le impostazioni di sistema del terminale dell'utente",
+        "Tutte le variabili d'ambiente della Shell vengono sovrascritte dalla sessione GDB",
+        "Vengono eliminati i file temporanei del codice sorgente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! All'uscita, GDB scrive la cronologia dei comandi console della sessione corrente nel file `.gdb_history` (se il salvataggio della cronologia è abilitato).",
+        "Errato. I breakpoint non vengono scritti nel codice sorgente (per salvarli si usa `save breakpoints`).",
+        "Errato. GDB non si occupa della compilazione.",
+        "Errato. Le impostazioni del terminale vengono ripristinate allo stato originale, non azzerate.",
+        "Errato. Le variabili d'ambiente della Shell esterna non vengono modificate.",
+        "Errato. Il codice sorgente non viene toccato."
+      ]
+    },
+    {
+      "id": "it_clang_2830",
+      "widget_id": "widget_clang_2830",
+      "topic": "Interruzione di un ciclo infinito per un successivo quit",
+      "q": "Il programma è bloccato in un ciclo infinito while(1) e la console di GDB non reagisce all'immissione di testo. Come restituire correttamente il controllo alla console per inserire quit?",
+      "hint": "Utilizza il segnale di interruzione di sistema da tastiera.",
+      "options": [
+        "Premere Ctrl+C per intercettare il controllo da parte del debugger, quindi inserire quit",
+        "Premere Ctrl+C per chiudere immediatamente GDB senza inserire comandi",
+        "Digitare il comando stop alla cieca",
+        "Terminare il lavoro del terminale tramite il comando di sistema killall"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La combinazione `Ctrl+C` invia il segnale `SIGINT`, sospendendo l'esecuzione del programma bloccato e restituendo il prompt di input di GDB `(gdb)`, in cui è possibile digitare tranquillamente `quit`.",
+        "Errato. `Ctrl+C` non chiude il debugger stesso, ma sospende soltanto l'esecuzione del programma sottoposto a debugging.",
+        "Errato. Quando il programma è in esecuzione senza pause, la CLI di GDB non elabora comandi di testo.",
+        "Errato. La chiusura forzata del terminale non è un modo regolare per terminare la sessione."
+      ]
+    }
+  ]
+}

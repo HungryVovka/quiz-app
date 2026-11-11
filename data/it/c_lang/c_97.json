@@ -1,0 +1,591 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2951",
+      "widget_id": "widget_clang_2951",
+      "topic": "Concetto di analisi statica del codice",
+      "q": "Quale potenziale problema rileverà un analizzatore statico nel codice presentato senza eseguire realmente il programma?",
+      "hint": "Traccia il ramo di esecuzione del codice sotto la condizione size > 100.",
+      "options": [
+        "Perdita di memoria (memory leak) a condizione che size > 100 a causa di un'uscita anticipata senza liberare ptr",
+        "Errore di segmentazione (segmentation fault) alla chiamata di free(ptr)",
+        "Errore di overflow dello stack a causa dell'allocazione di memoria dinamica"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'analizzatore statico controlla tutti i grafi di esecuzione. Con `size > 100`, la funzione termina tramite `return` senza chiamare `free(ptr)`, causando una perdita di memoria.",
+        "Non corretto. La chiamata a `free(ptr)` in sé è corretta.",
+        "Non corretto. La funzione `malloc` alloca memoria nello heap, non nello stack."
+      ]
+    },
+    {
+      "id": "it_clang_2952",
+      "widget_id": null,
+      "topic": "Analizzatore statico integrato in GCC (-fanalyzer)",
+      "q": "Quale flag del compilatore GCC attiva l'analizzatore statico del codice integrato nel compilatore?",
+      "hint": "Il nome del flag contiene la parola analyzer.",
+      "options": [
+        "-fanalyzer",
+        "-Wstatic-analysis"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A partire da GCC 10, l'opzione `-fanalyzer` attiva l'analizzatore statico del codice interprocedurale integrato.",
+        "Non corretto. Il flag `-Wstatic-analysis` non esiste in GCC."
+      ]
+    },
+    {
+      "id": "it_clang_2953",
+      "widget_id": "widget_clang_2953",
+      "topic": "Rilevamento della dereferenziazione di un puntatore nullo",
+      "q": "Quale difetto critico troverà un analizzatore statico (ad esempio, Cppcheck o Clang Static Analyzer) nella funzione print_value?",
+      "hint": "Fai attenzione a cosa succede dopo il blocco if (p == NULL).",
+      "options": [
+        "Dereferenziazione di un puntatore nullo (null pointer dereference) quando viene passato p == NULL, poiché l'esecuzione del codice prosegue",
+        "Perdita di memoria durante l'accesso al puntatore passato",
+        "Errore di allineamento della memoria nella funzione printf",
+        "Tentativo di liberare un puntatore non presente nello heap"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se `p` è uguale a `NULL`, il codice stamperà un messaggio ma non interromperà l'esecuzione (manca `return`). Nella riga successiva si verificherà la dereferenziazione `*p = 42`, causando un crash.",
+        "Non corretto. Non ci sono operazioni di allocazione di memoria qui.",
+        "Non corretto. La funzione `printf` viene chiamata con una stringa corretta.",
+        "Non corretto. Non c'è alcuna liberazione di memoria (`free`) nel codice."
+      ]
+    },
+    {
+      "id": "it_clang_2954",
+      "widget_id": null,
+      "topic": "Concetti di Falso Positivo e Falso Negativo",
+      "q": "Cosa si intende per falso positivo (False Positive) nel contesto dell'analisi statica del codice?",
+      "hint": "Pensa a una situazione in cui l'analizzatore «dà l'allarme» su un codice completamente corretto.",
+      "options": [
+        "Una situazione in cui l'analizzatore segnala un errore in un punto del codice in cui in realtà non c'è alcun errore",
+        "Una situazione in cui l'analizzatore trascura un vero errore critico nel codice",
+        "Un arresto anomalo dello strumento analizzatore durante la compilazione del progetto",
+        "Una situazione in cui un errore viene rilevato solo durante l'esecuzione del programma",
+        "Un errore di sintassi nel file di configurazione dell'analizzatore stesso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un Falso Positivo (falso allarme) si verifica quando lo strumento indica un bug che in realtà non esiste o è impossibile dato il contesto.",
+        "Non corretto. Ignorare un vero errore viene chiamato Falso Negativo (False Negative).",
+        "Non corretto. Un crash dello strumento non riguarda i termini di accuratezza dell'analisi.",
+        "Non corretto. Gli errori a tempo di esecuzione riguardano l'analisi dinamica.",
+        "Non corretto. Si tratta di un errore di configurazione, non del risultato dell'analisi."
+      ]
+    },
+    {
+      "id": "it_clang_2955",
+      "widget_id": "widget_clang_2955",
+      "topic": "Doppia liberazione della memoria (Double Free)",
+      "q": "Quale vulnerabilità di sicurezza verrà immediatamente evidenziata da uno strumento di analisi statica nella funzione cleanup?",
+      "hint": "Osserva il numero di chiamate a free() per lo stesso puntatore.",
+      "options": [
+        "Doppia liberazione della memoria (Double Free)",
+        "Uso della memoria dopo la liberazione (Use-After-Free)",
+        "Overflow del buffer sullo stack (Stack Buffer Overflow)",
+        "Scrittura oltre i limiti dell'array allocato",
+        "Perdita di risorse del sistema operativo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Chiamare `free(arr)` due volte per lo stesso indirizzo senza un'assegnazione intermedia a `NULL` porta a una vulnerabilità di Double Free.",
+        "Non corretto. Use-after-free implica la lettura/scrittura a un indirizzo liberato, mentre qui si verifica proprio una seconda chiamata a `free`.",
+        "Non corretto. Nel codice non ci sono buffer sullo stack.",
+        "Non corretto. Gli elementi dell'array non vengono letti né scritti.",
+        "Non corretto. La memoria viene liberata, ma in modo scorretto."
+      ]
+    },
+    {
+      "id": "it_clang_2956",
+      "widget_id": null,
+      "topic": "Differenza tra analisi statica e dinamica",
+      "q": "Qual è la differenza principale tra l'analisi statica del codice (Static Analysis) e l'analisi dinamica (Dynamic Analysis)?",
+      "hint": "Rifletti se sia necessario eseguire l'eseguibile compilato per effettuare la verifica.",
+      "options": [
+        "L'analisi statica controlla il codice sorgente senza eseguirlo, mentre l'analisi dinamica analizza il comportamento del programma durante la sua esecuzione",
+        "L'analisi statica funziona solo con linguaggi di alto livello, mentre quella dinamica solo con l'assembly",
+        "L'analisi statica viene eseguita solo dallo sviluppatore, mentre quella dinamica da tester automatizzati"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli analizzatori statici (Cppcheck, Clang SA, SonarQube) esaminano il codice sorgente o l'AST senza eseguirlo. Quelli dinamici (Valgrind, AddressSanitizer) analizzano il binario in esecuzione.",
+        "Non corretto. Entrambi i tipi di analisi sono applicabili a C, C++ e altri linguaggi.",
+        "Non corretto. Entrambi i tipi di analisi si integrano facilmente nei sistemi di build automatizzati (CI/CD)."
+      ]
+    },
+    {
+      "id": "it_clang_2957",
+      "widget_id": "widget_clang_2957",
+      "topic": "Ritorno di un puntatore a una variabile locale",
+      "q": "Quale comportamento pericoloso rileverà un analizzatore statico durante l'analisi della funzione get_value?",
+      "hint": "La variabile local_var viene distrutta all'uscita dalla funzione get_value.",
+      "options": [
+        "Ritorno dell'indirizzo di una variabile locale sullo stack, la cui memoria viene liberata all'uscita dalla funzione",
+        "Errore di cast dal tipo int a int*"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le variabili locali vivono sullo stack solo fino al termine dell'esecuzione della funzione. Restituire `&local_var` porta a un puntatore pendente (dangling pointer) e a un comportamento indefinito.",
+        "Non corretto. Nel codice viene preso l'indirizzo `&local_var`, quindi il tipo corrisponde (`int*`)."
+      ]
+    },
+    {
+      "id": "it_clang_2958",
+      "widget_id": null,
+      "topic": "Vantaggi dell'uso dell'analisi statica in CI/CD",
+      "q": "Perché l'integrazione di un analizzatore statico nella pipeline di integrazione continua (CI/CD) è considerata una best practice?",
+      "hint": "Rifletti sul costo della correzione di un bug nelle prime fasi rispetto alla fase di produzione.",
+      "options": [
+        "Consente di trovare bug e vulnerabilità nelle prime fasi (Shift-Left) prima ancora che il codice arrivi nel ramo principale",
+        "Garantisce l'assenza al 100% di qualsiasi errore durante l'esecuzione del programma",
+        "Corregge automaticamente gli errori logici negli algoritmi del programma senza l'intervento dello sviluppatore",
+        "Aumenta le prestazioni del codice compilato di diverse volte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il concetto di Shift-Left afferma: prima viene individuato un bug (nella fase di scrittura/merge request), meno costa la sua correzione.",
+        "Non corretto. Nessun analizzatore garantisce la totale assenza di bug.",
+        "Non corretto. Gli analizzatori evidenziano i problemi, ma raramente apportano modifiche complesse alla logica al posto del programmatore.",
+        "Non corretto. L'analisi statica non influisce sull'ottimizzazione del file binario."
+      ]
+    },
+    {
+      "id": "it_clang_2959",
+      "widget_id": "widget_clang_2959",
+      "topic": "Verifica degli standard di sicurezza (MISRA C / CERT C)",
+      "q": "Perché gli standard di analisi statica (ad esempio, MISRA C o CERT C) vietano l'uso della funzione strcpy dell'esempio?",
+      "hint": "La funzione strcpy non controlla la dimensione del buffer di destinazione.",
+      "options": [
+        "strcpy non controlla i limiti del buffer di destinazione, creando un rischio di buffer overflow (Buffer Overflow)",
+        "strcpy funziona notevolmente più lentamente rispetto a un ciclo manuale di copia degli elementi",
+        "strcpy non alloca automaticamente memoria dinamica per il risultato",
+        "strcpy è una funzione obsoleta, rimossa dallo standard C11",
+        "strcpy causa un errore di compilazione nei sistemi a 64 bit",
+        "strcpy funziona solo con stringhe costanti nella memoria di sola lettura"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `strcpy` copia i dati finché non incontra `\\0`. Se `src` è più lungo di 15 caratteri, si verificherà un overflow di `buffer`, motivo per cui gli standard di sicurezza richiedono di sostituirla con alternative sicure (ad esempio, `strncpy` o `strcpy_s`).",
+        "Non corretto. `strcpy` è ottimizzata a livello assembly.",
+        "Non corretto. `strcpy` accetta un buffer già allocato.",
+        "Non corretto. La funzione rimane parte di C11/C17.",
+        "Non corretto. La funzione funziona su qualsiasi architettura a bit.",
+        "Non corretto. `strcpy` funziona con qualsiasi stringa C valida."
+      ]
+    },
+    {
+      "id": "it_clang_2960",
+      "widget_id": null,
+      "topic": "Concetto di Taint Analysis (analisi di contaminazione dei dati)",
+      "q": "Cosa esamina il metodo specializzato di analisi statica chiamato Taint Analysis (analisi della propagazione dei dati contaminati)?",
+      "hint": "Rifletti sui dati provenienti da fonti esterne non affidabili (input dell'utente, rete).",
+      "options": [
+        "Traccia il percorso dei dati non verificati da fonti esterne (socket, input) verso funzioni pericolose (system, exec, malloc)",
+        "Verifica il grado di frammentazione della memoria RAM durante l'esecuzione del programma",
+        "Analizza la presenza di variabili globali e costanti non utilizzate",
+        "Calcola la complessità ciclomatica delle funzioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Taint Analysis cerca i percorsi attraverso i quali l'input non filtrato dell'utente può raggiungere punti vulnerabili (ad esempio, causare una Command Injection in `system()` o un Buffer Overflow in `memcpy()`).",
+        "Non corretto. La frammentazione della memoria viene studiata dai profiler dinamici.",
+        "Non corretto. L'analisi delle variabili non utilizzate è un controllo base di `-Wunused`.",
+        "Non corretto. Il calcolo della complessità ciclomatica è una metrica del codice (Complexity Analysis)."
+      ]
+    },
+    {
+      "id": "it_clang_2961",
+      "widget_id": "widget_clang_2961",
+      "topic": "Differenza tra virgolette e parentesi angolari in #include",
+      "q": "Qual è la differenza principale tra le direttive #include <stdio.h> e #include \"my_header.h\"?",
+      "hint": "Rifletti su dove il compilatore inizia prima di tutto la ricerca del file header.",
+      "options": [
+        "Con le virgolette \"\" la ricerca viene prima eseguita nella directory corrente del file sorgente, mentre con le parentesi <> si passa direttamente alle directory di sistema",
+        "Le parentesi angolari <> sono destinate solo ai file C11, mentre le virgolette \"\" allo standard C99",
+        "Le virgolette \"\" includono il file con compressione automatica del contenuto da parte del preprocessore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variante con virgolette `\"\"` cerca prima il file nella directory locale del progetto. Se il file non viene trovato, la ricerca prosegue nei percorsi di sistema, dove la sintassi `<>` cerca direttamente.",
+        "Non corretto. La sintassi di inclusione non è legata agli standard del linguaggio C.",
+        "Non corretto. Il preprocessore esegue una normale sostituzione di testo senza alcuna compressione."
+      ]
+    },
+    {
+      "id": "it_clang_2962",
+      "widget_id": null,
+      "topic": "Ordine di ricerca dei file header di sistema",
+      "q": "Dove cerca il preprocessore i file header inclusi tramite le parentesi angolari #include <header.h>?",
+      "hint": "Ricorda le directory di sistema predefinite (ad esempio /usr/include) e le opzioni speciali del compilatore.",
+      "options": [
+        "Nelle directory di sistema predefinite e nelle directory passate tramite il flag del compilatore -I",
+        "Esclusivamente nella cartella corrente contenente il file .c sorgente",
+        "Solo nella directory radice del sistema operativo",
+        "Il compilatore scansiona l'intero file system in modo casuale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I file header tra `<>` vengono cercati nei percorsi standard (come `/usr/include`, `/usr/local/include`) e nelle directory specificate esplicitamente con l'opzione `-I`.",
+        "Non corretto. Nella directory corrente vengono cercati in primo luogo i file racchiusi tra virgolette `\"\"`.",
+        "Non corretto. Non viene effettuata alcuna scansione della directory radice senza specificare il percorso.",
+        "Non corretto. L'ordine di ricerca è strettamente deterministico."
+      ]
+    },
+    {
+      "id": "it_clang_2963",
+      "widget_id": "widget_clang_2963",
+      "topic": "Problema dell'inclusione multipla dei file header",
+      "q": "A cosa porterà la ri-inclusione del file header struct_data.h fornito senza macro di protezione in più file .c di una singola build?",
+      "hint": "Il compilatore vedrà la definizione della stessa struttura due volte.",
+      "options": [
+        "A un errore di ridefinizione del tipo (redefinition of 'struct Data')",
+        "All'eliminazione automatica della struttura da parte del compilatore",
+        "A un errore di overflow del buffer del preprocessore",
+        "A un errore del linker undefined reference to 'Data'"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Senza macro di protezione (Header Guards), la definizione di `struct Data` finirà due volte nell'unità di conversione, causando un errore di ridefinizione del tipo.",
+        "Non corretto. Il compilatore non ha il diritto di eliminare i tipi definiti dall'utente.",
+        "Non corretto. Il buffer del preprocessore non va in overflow per questo motivo.",
+        "Non corretto. Questo errore si verifica nella fase di compilazione, non di linking."
+      ]
+    },
+    {
+      "id": "it_clang_2964",
+      "widget_id": null,
+      "topic": "Meccanismo di funzionamento del preprocessore con #include",
+      "q": "Cosa fa fisicamente il preprocessore C quando incontra la riga #include?",
+      "hint": "Rifletti su una semplice sostituzione di testo.",
+      "options": [
+        "Copia testualmente tutto il contenuto del file specificato e lo inserisce direttamente nel punto di chiamata della direttiva",
+        "Compila il file in codice binario e lo collega nella fase di linking"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `#include` è un'istruzione diretta al preprocessore per sostituire la riga `#include ...` con il testo del file header stesso.",
+        "Non corretto. Il preprocessore lavora esclusivamente con il testo e non genera codice binario."
+      ]
+    },
+    {
+      "id": "it_clang_2965",
+      "widget_id": "widget_clang_2965",
+      "topic": "Pericolo dell'uso di #include per i file .c",
+      "q": "Perché la direttiva diretta #include \"helper.c\" è considerata una cattiva pratica e porta a errori durante la build di progetti di grandi dimensioni?",
+      "hint": "Ricorda cosa succede se helper.c viene compilato separatamente e contemporaneamente incluso tramite #include.",
+      "options": [
+        "Causerà un errore di definizione multipla delle funzioni (multiple definition) nella fase di linking se helper.c viene compilato come modulo separato",
+        "Ridurrà la velocità di esecuzione del programma a causa dell'ottimizzazione forzata",
+        "Trasformerà tutte le funzioni all'interno di helper.c in macro del preprocessore",
+        "Porterà a un errore di sintassi 'invalid file extension' nella fase di preprocessing",
+        "Causerà un crash immediato della memoria alla prima chiamata di run_helper"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se `helper.c` è incluso tramite `#include` in `main.c` e allo stesso tempo viene passato al compilatore separatamente (`gcc main.c helper.c`), le funzioni di `helper.c` verranno compilate due volte, causando l'errore `multiple definition` nella fase di linking.",
+        "Non corretto. La velocità di esecuzione del codice binario non diminuisce per questo motivo.",
+        "Non corretto. Le funzioni rimangono funzioni.",
+        "Non corretto. Al preprocessore non importa l'estensione del file.",
+        "Non corretto. Il formato di inclusione non influisce sull'esecuzione in memoria."
+      ]
+    },
+    {
+      "id": "it_clang_2966",
+      "widget_id": null,
+      "topic": "Flag GCC -I per specificare i percorsi di ricerca dei file header",
+      "q": "A cosa serve il flag -I (ad esempio -I./include) quando si chiama il compilatore GCC?",
+      "hint": "Il flag è legato alla posizione dei file `.h`.",
+      "options": [
+        "Aggiunge la directory specificata all'elenco dei percorsi di ricerca dei file header per #include",
+        "Specifica il percorso di una libreria statica con estensione .a",
+        "Ignora tutti gli avvisi in tutti i file header",
+        "Attiva l'ottimizzazione dell'I/O per le librerie standard"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'opzione `-I<path>` comunica al compilatore e al preprocessore directory aggiuntive in cui cercare i file inclusi tramite `#include`.",
+        "Non corretto. Il percorso delle librerie viene impostato con il flag `-L`.",
+        "Non corretto. L'ignorare gli avvisi viene impostato con altri flag (ad esempio `-isystem`).",
+        "Non corretto. L'opzione `-I` non ha alcuna relazione con l'ottimizzazione dell'I/O."
+      ]
+    },
+    {
+      "id": "it_clang_2967",
+      "widget_id": "widget_clang_2967",
+      "topic": "Separazione tra header e libreria (-lm)",
+      "q": "Durante la compilazione di questo codice con gcc main.c si verificano errori del linker 'undefined reference to pow'. Qual è la causa?",
+      "hint": "#include <math.h> fornisce solo le dichiarazioni delle funzioni, ma non contiene il loro codice binario.",
+      "options": [
+        "La direttiva #include <math.h> contiene solo la dichiarazione della funzione, mentre la realizzazione binaria si trova nella libreria libm, che deve essere collegata tramite -lm",
+        "È stato utilizzato un file header errato, è richiesto #include <cmath.h>",
+        "La funzione pow non accetta costanti di tipo double come parametri",
+        "Il file <math.h> non è supportato nelle versioni moderne di GCC",
+        "È necessario chiamare la funzione pow tramite una dichiarazione preventiva extern",
+        "Il preprocessore non è riuscito ad analizzare gli argomenti 2.0 e 3.0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'header `<math.h>` fornisce la firma di `pow`, ma il corpo della funzione si trova nella libreria C `libm`. Al linker deve essere esplicitamente specificato il flag `-lm`.",
+        "Non corretto. L'header `<cmath>` viene utilizzato in C++, mentre in C si usa `<math.h>`.",
+        "Non corretto. La firma `pow(double, double)` corrisponde perfettamente agli argomenti.",
+        "Non corretto. `<math.h>` è un header C standard.",
+        "Non corretto. La dichiarazione è già presente all'interno di `<math.h>`.",
+        "Non corretto. Il preprocessore non convalida i tipi degli argomenti."
+      ]
+    },
+    {
+      "id": "it_clang_2968",
+      "widget_id": null,
+      "topic": "Linking statico e dinamico delle librerie",
+      "q": "Qual è la differenza principale tra l'utilizzo di una libreria statica (.a / .lib) e una dinamica (.so / .dll)?",
+      "hint": "Rifletti sul momento in cui il codice della libreria viene incluso nel file binario del programma.",
+      "options": [
+        "Il codice della libreria statica viene completamente copiato nell'eseguibile durante la build, mentre quella dinamica viene caricata durante l'esecuzione del programma",
+        "La libreria statica viene collocata in file separati accanto all'.exe, mentre quella dinamica viene incorporata all'interno",
+        "La libreria statica si include tramite #include, mentre quella dinamica tramite la direttiva #pragma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con il linking statico, il codice della libreria diventa parte del vostro eseguibile/binario. La libreria dinamica viene invece collegata durante il caricamento o l'esecuzione da parte del sistema operativo.",
+        "Non corretto. L'affermazione è invertita.",
+        "Non corretto. Entrambe le librerie si collegano nella fase di linking, non di preprocessing."
+      ]
+    },
+    {
+      "id": "it_clang_2969",
+      "widget_id": "widget_clang_2969",
+      "topic": "Protezione dei file header (Header Guards)",
+      "q": "Quale ruolo svolgono le direttive #ifndef MY_HEADER_H, #define MY_HEADER_H e #endif in un file header?",
+      "hint": "Queste direttive impediscono la rilettura del file da parte del preprocessore.",
+      "options": [
+        "Servono come protezione contro la ri-inclusione (Header Guard) del contenuto del file in una singola unità di conversione",
+        "Limitano l'ambito di visibilità della funzione do_something solo al file corrente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se il file è già stato incluso in precedenza, la macro `MY_HEADER_H` è già definita e `#ifndef` salterà tutto il contenuto del file alla successiva `#include`.",
+        "Non corretto. L'ambito di visibilità di una funzione è gestito da specificatori come `static`, non dalle macro del preprocessore."
+      ]
+    },
+    {
+      "id": "it_clang_2970",
+      "widget_id": null,
+      "topic": "Flag GCC -L per specificare i percorsi delle librerie",
+      "q": "Di cosa si occupa il flag -L (ad esempio -L./libs) quando si chiama il compilatore GCC?",
+      "hint": "Il flag imposta la directory di ricerca dei file di libreria per il linker.",
+      "options": [
+        "Indica al linker la directory in cui cercare i file di libreria",
+        "Include i file header a livello di preprocessore",
+        "Attiva la modalità di compilazione con supporto al linguaggio Lua",
+        "Crea un listato esteso del codice assembly"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'opzione `-L` specifica directory aggiuntive in cui il linker cerca le librerie statiche (`.a`) e dinamiche (`.so`) indicate dai flag `-l`.",
+        "Non corretto. Dei file header si occupa il flag `-I`.",
+        "Non corretto. L'opzione non ha alcuna relazione con il linguaggio Lua.",
+        "Non corretto. Il codice assembly viene generato dal flag `-S`."
+      ]
+    },
+    {
+      "id": "it_clang_2971",
+      "widget_id": "widget_clang_2971",
+      "topic": "Punto di ingresso e file sorgente .c",
+      "q": "Da cosa è composto un file sorgente .c minimo, pronto per una build riuscita in un programma eseguibile, e quale funzione deve essere presente in esso in un normale SO?",
+      "hint": "Rifletti sul nome della funzione da cui inizia l'esecuzione del codice utente.",
+      "options": [
+        "Il file sorgente è composto da codice C e il punto di ingresso standard è la funzione main()",
+        "Il file deve содержать solo direttive del preprocessore senza funzioni di sistema",
+        "La funzione obbligatoria è _start(), scritta in linguaggio C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il file di testo `.c` contiene il codice sorgente e la funzione `main()` è il punto di ingresso standard per la logica dell'utente nei sistemi operativi.",
+        "Non corretto. Senza funzioni o dichiarazioni, le direttive del preprocessore non creano un file eseguibile.",
+        "Non corretto. La funzione `_start()` fornisce il codice di inizializzazione dell'ambiente (CRT) ed è chiamata dal SO, ma lo sviluppatore in C scrive la funzione `main()`."
+      ]
+    },
+    {
+      "id": "it_clang_2972",
+      "widget_id": null,
+      "topic": "Concetto di Unità di Conversione (Translation Unit)",
+      "q": "Che cos'è un'«unità di conversione» (Translation Unit) nel contesto dell'elaborazione di un file sorgente .c?",
+      "hint": "Rifletti su cosa diventa un file .c dopo l'espansione di tutte le inclusioni del preprocessore.",
+      "options": [
+        "È un singolo file .c con tutti i file header inclusi tramite #include dopo l'elaborazione del preprocessore",
+        "È il file eseguibile binario finale con le librerie dinamiche",
+        "È un singolo file header specifico con estensione .h",
+        "È un file oggetto compilato con estensione .o o .obj"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un'unità di conversione è lo stream di input per il compilatore stesso, rappresentato da un file `.c` dopo l'applicazione di tutte le direttive del preprocessore (`#include`, `#define`, ecc.).",
+        "Non corretto. Il file binario finale viene creato nella fase di linking.",
+        "Non corretto. I file header di per sé raramente costituiscono unità di conversione.",
+        "Non corretto. Il file oggetto è il *risultato* della compilazione di un'unità di conversione."
+      ]
+    },
+    {
+      "id": "it_clang_2973",
+      "widget_id": "widget_clang_2973",
+      "topic": "Prototipazione delle funzioni in un file .c",
+      "q": "Perché in un file .c prima della funzione main() viene inserita la dichiarazione void display(void); (prototipo)?",
+      "hint": "Il compilatore C legge il codice dall'alto verso il basso e deve conoscere i tipi di argomenti e del valore restituito prima della chiamata.",
+      "options": [
+        "Per informare il compilatore sulla firma della funzione prima della sua prima chiamata, consentendo di verificare la correttezza della chiamata",
+        "Per allocare memoria dinamica per le variabili locali della funzione display()",
+        "Perché il preprocessore crittograffi il corpo della funzione prima della build",
+        "Per rendere forzatamente la funzione display() globale per tutte le DLL",
+        "Per rendere automaticamente la funzione inline"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il prototipo informa il compilatore sul tipo di valore restituito e sui parametri accettati, consentendo di verificare la correttezza della chiamata a `display()` prima di trovarne il corpo.",
+        "Non corretto. La memoria viene allocata sullo stack al momento della chiamata della funzione durante l'esecuzione.",
+        "Non corretto. Il preprocessore non crittografa le funzioni.",
+        "Non corretto. L'esportazione nelle DLL è regolata da parole chiave/attributi, non dalla dichiarazione del prototipo.",
+        "Non corretto. Per questo scopo si usa la parola chiave `inline`."
+      ]
+    },
+    {
+      "id": "it_clang_2974",
+      "widget_id": null,
+      "topic": "Separazione delle funzioni tra i file .c e .h",
+      "q": "Qual è la regola architetturale principale per la separazione del codice tra i file .c e .h nei progetti in C?",
+      "hint": "Nei file header si inseriscono le dichiarazioni (interfaccia), mentre nei .c le definizioni (implementazione).",
+      "options": [
+        "I file header (.h) contengono le dichiarazioni (interfacce), mentre i file di codice sorgente (.c) le definizioni (implementazione)",
+        "I file .c contengono solo costanti, mentre nei .h viene scritto tutto il codice eseguibile del programma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I file `.h` descrivono «cosa fa il modulo» (prototipi, tipi, macro), mentre i file `.c` implementano «come lo fa» (corpi delle funzioni, variabili).",
+        "Non corretto. Inserire codice eseguibile nei file `.h` causerà errori di duplicazione di simboli quando inclusi in più moduli."
+      ]
+    },
+    {
+      "id": "it_clang_2975",
+      "widget_id": "widget_clang_2975",
+      "topic": "Firme standard della funzione main()",
+      "q": "Quali varianti di dichiarazione di main() sono conformi allo standard del linguaggio C in un ambiente con sistema operativo (Hosted environment)?",
+      "hint": "Lo standard C regolamenta chiaramente i parametri di main: senza argomenti oppure con argc e argv.",
+      "options": [
+        "int main(void) e int main(int argc, char *argv[]) (o i loro equivalenti)",
+        "void main(void) e void main(int argc)",
+        "float main(int argc, char **argv)",
+        "int main(string[] args)",
+        "main(void argc)",
+        "bool main(int argc)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! ISO C garantisce la standardizzazione di due forme di `main`: `int main(void)` e `int main(int argc, char *argv[])` (o `char **argv`). Il tipo restituito deve essere sempre `int`.",
+        "Non corretto. `void main()` è un'estensione non standard ed è rifiutata dai compilatori con controlli rigidi.",
+        "Non corretto. Il tipo di ritorno deve essere `int`, non `float`.",
+        "Non corretto. Il tipo `string[]` non esiste nel linguaggio C.",
+        "Non corretto. Dichiarazione sintatticamente errata degli argomenti.",
+        "Non corretto. `main` deve restituire `int`."
+      ]
+    },
+    {
+      "id": "it_clang_2976",
+      "widget_id": null,
+      "topic": "Nomi dei file e distinzione tra maiuscole e minuscole",
+      "q": "Come gestisce il compilatore C la distinzione tra maiuscole e minuscole nel nome del file sorgente (.c / .C) e all'interno del codice stesso?",
+      "hint": "Il linguaggio C è sensibile alle maiuscole e minuscole (case-sensitive).",
+      "options": [
+        "Il linguaggio C è sensibile alle maiuscole/minuscole (Case-sensitive); l'estensione del file .C in alcuni SO può essere interpretata come file C++",
+        "Il linguaggio C ignora completamente la distinzione tra maiuscole e minuscole sia nel codice che nei nomi dei file",
+        "La distinzione è importante solo per le parole chiave, mentre i nomi di funzioni e file non sono sensibili alle maiuscole/minuscole"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il linguaggio C distingue rigorosamente le lettere maiuscole e minuscole (`Main` != `main`). L'estensione con la maiuscola `.C` nei sistemi POSIX/GCC è spesso riservata ai file C++.",
+        "Non corretto. Il C distingue rigorosamente minuscole e maiuscole.",
+        "Non corretto. Anche i nomi di funzioni, variabili e file sono strettamente sensibili al maiuscolo/minuscolo."
+      ]
+    },
+    {
+      "id": "it_clang_2977",
+      "widget_id": "widget_clang_2977",
+      "topic": "Rimosso dei commenti nella fase di preprocessing",
+      "q": "Cosa succede a tutti i commenti in un file .c durante la sua preparazione per la compilazione?",
+      "hint": "I commenti sono destinati solo agli umani e non dovrebbero arrivare alla fase di compilazione.",
+      "options": [
+        "Il preprocessore rimuove completamente i commenti, sostituendo ciascuno di essi con un singolo spazio",
+        "Il preprocessore converte i commenti in codice assembly speciale con istruzioni NOP",
+        "I commenti vengono conservati nel file oggetto .o sotto forma di stringhe di testo per il debugging",
+        "I commenti vengono passati al linker per verificare la correttezza della documentazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, il preprocessore sostituisce qualsiasi commento (a riga singola o multilinea) con un singolo spazio prima della fase di analisi sintattica.",
+        "Non corretto. I commenti non vengono tradotti in codice assembly.",
+        "Non corretto. Nei file oggetto i commenti non sono presenti (ad eccezione delle informazioni di debug DWARF create separatamente dai sorgenti).",
+        "Non corretto. Il linker lavora con simboli e byte, senza leggere i commenti."
+      ]
+    },
+    {
+      "id": "it_clang_2978",
+      "widget_id": null,
+      "topic": "Ottenere l'output del preprocessore (flag -E)",
+      "q": "Con quale comando/flag di GCC è possibile interrompere la build subito dopo aver completato il passaggio di preprocessing e visualizzare l'unità di conversione risultante?",
+      "hint": "Questo flag invia il risultato dell'elaborazione del testo allo stdout.",
+      "options": [
+        "gcc -E file.c",
+        "gcc -S file.c",
+        "gcc -c file.c",
+        "gcc -O3 file.c",
+        "gcc -g file.c"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-E` forza GCC a eseguire solo il preprocessing (espandere `#include`, `#define`, sostituire le macro, rimuovere i commenti) e mostrare il risultato.",
+        "Non corretto. `-S` interrompe la build dopo la generazione del codice assembly.",
+        "Non corretto. `-c` compila il sorgente in un file oggetto (`.o`), saltando il linking.",
+        "Non corretto. `-O3` attiva l'ottimizzazione massima.",
+        "Non corretto. `-g` aggiunge le informazioni di debug."
+      ]
+    },
+    {
+      "id": "it_clang_2979",
+      "widget_id": "widget_clang_2979",
+      "topic": "Sviluppo per ambiente autonomo (Free-standing environment)",
+      "q": "In cosa differisce lo sviluppo di un file sorgente .c per un ambiente autonomo (Freestanding, ad esempio firmware per un microcontrollore) rispetto a uno normale (Hosted)?",
+      "hint": "Rifletti sulla presenza della libreria C standard (glibc) e della funzione standard main().",
+      "options": [
+        "In un ambiente Freestanding il sistema operativo è assente, quindi la libreria standard C è limitata e il punto di ingresso può differire da main()",
+        "In un ambiente Freestanding è vietato utilizzare strutture e puntatori"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nei sistemi autonomi (embedded, kernel di SO) non c'è il supporto all'intera libreria standard (ad esempio `printf` senza configurazione) e il punto di ingresso è determinato dal vettore di reset del processore.",
+        "Non corretto. La sintassi del linguaggio C (strutture, puntatori, cicli) è completamente disponibile in tutti gli ambienti."
+      ]
+    },
+    {
+      "id": "it_clang_2980",
+      "widget_id": null,
+      "topic": "Fasi della build di un programma in C",
+      "q": "Disponi nell'ordine corretto le fasi di build di un file sorgente .c in un file binario eseguibile finito.",
+      "hint": "Prima viene elaborato il testo, poi viene generato l'assembly, vengono creati i byte del file oggetto e infine si collegano i riferimenti.",
+      "options": [
+        "Preprocessing -> Compilazione in assembly -> Assemblaggio in codice oggetto -> Linking",
+        "Linking -> Assemblaggio -> Compilazione -> Preprocessing",
+        "Compilazione -> Preprocessing -> Linking -> Assemblaggio",
+        "Preprocessing -> Linking -> Compilazione -> Assemblaggio"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! 1) Il preprocessore prepara il testo. 2) Il compilatore crea il codice assembly. 3) L'assembler crea i file oggetto macchina (`.o`). 4) Il linker li unisce nell'eseguibile.",
+        "Non corretto. L'ordine è completamente opposto.",
+        "Non corretto. Il preprocessing avviene sempre per primo.",
+        "Non corretto. Il linking è sempre l'ultima fase della build."
+      ]
+    }
+  ]
+}

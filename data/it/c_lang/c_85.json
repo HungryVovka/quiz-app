@@ -1,0 +1,591 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2591",
+      "widget_id": "widget_clang_2591",
+      "topic": "Comportamento della modalità \"r\" in assenza del file",
+      "q": "Cosa stamperà il programma se prova ad aprire un file inesistente \"missing.txt\" in modalità \"r\"?",
+      "hint": "La modalità di lettura richiede la presenza obbligatoria del file sul disco.",
+      "options": [
+        "Failed",
+        "Opened",
+        "Segmentation Fault"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se il file non esiste, `fopen` con la modalità `\"r\"` restituisce `NULL`, quindi la condizione `f == NULL` sarà vera e il programma stamperà `Failed`.",
+        "Errato. Il file non verrà aperto poiché non esiste.",
+        "Errato. La funzione `fopen` restituisce `NULL` in assenza del file, invece di causare un'interruzione anomala."
+      ]
+    },
+    {
+      "id": "it_clang_2592",
+      "widget_id": null,
+      "topic": "Troncamento del file in modalità \"w\"",
+      "q": "Cosa succede al contenuto di un file esistente quando viene aperto in modalità \"w\" (write)?",
+      "hint": "Ricorda il concetto di troncamento (truncation) del file durante la scrittura.",
+      "options": [
+        "Il file viene completamente svuotato (la sua dimensione diventa di 0 byte)",
+        "I nuovi dati vengono scritti sopra i vecchi mantenendo i byte non sovrascritti",
+        "Il cursore viene posizionato alla fine del file per preservare la cronologia",
+        "Si verifica un errore di accesso se il file non è vuoto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La modalità `\"w\"` tronca (truncate) il file a lunghezza zero al momento dell'apertura, rimuovendo completamente il vecchio contenuto.",
+        "Errato. La sovrascrittura byte per byte senza troncamento avviene in modalità `\"r+\"`.",
+        "Errato. L'aggiunta di dati alla fine avviene in modalità `\"a\"`.",
+        "Errato. La presenza di dati non blocca l'apertura del file in modalità `\"w\"`."
+      ]
+    },
+    {
+      "id": "it_clang_2593",
+      "widget_id": "widget_clang_2593",
+      "topic": "Aggiunta di dati in modalità \"a\"",
+      "q": "Se il file \"data.txt\" conteneva il testo \"12\", cosa ci sarà nel file dopo l'esecuzione della funzione in modalità \"a\"?",
+      "hint": "La modalità append non sovrascrive i vecchi dati, ma posiziona il cursore alla fine.",
+      "options": [
+        "123",
+        "3",
+        "312",
+        "12",
+        "Errore di esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La modalità `\"a\"` posiziona il cursore di scrittura alla fine del file. Il carattere `'3'` viene aggiunto al testo esistente `'12'`, formando `'123'`.",
+        "Errato. Il valore `'3'` si otterrebbe utilizzando la modalità `\"w\"`.",
+        "Errato. I dati vengono aggiunti alla fine, non all'inizio del file.",
+        "Errato. Il carattere `'3'` farà in tempo a essere scritto prima della chiusura del file.",
+        "Errato. La chiamata delle funzioni è corretta."
+      ]
+    },
+    {
+      "id": "it_clang_2594",
+      "widget_id": null,
+      "topic": "Limitazione della modalità di lettura \"r\"",
+      "q": "È consentito eseguire operazioni di scrittura (ad esempio fputs o fprintf) su uno stream di file aperto esclusivamente in modalità \"r\"?",
+      "hint": "La modalità 'r' sta per read-only (sola lettura).",
+      "options": [
+        "No, l'operazione di scrittura restituirà un errore o causerà un errore dello stream",
+        "Sì, la scrittura passerà il file in modalità di sovrascrittura"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La modalità `\"r\"` apre il file in sola lettura. Un tentativo di scrittura su questo stream terminerà con un errore della funzione di output.",
+        "Errato. Le operazioni di scrittura in modalità `\"r\"` sono proibite dallo standard C."
+      ]
+    },
+    {
+      "id": "it_clang_2595",
+      "widget_id": "widget_clang_2595",
+      "topic": "Riapertura di un file in modalità \"w\"",
+      "q": "Quale sarà il contenuto finale del file \"test.txt\" dopo riaperture successive in modalità \"w\"?",
+      "hint": "Ogni nuova chiamata a fopen con la modalità 'w' azzera il contenuto del file.",
+      "options": [
+        "C",
+        "ABC",
+        "AB",
+        "CAB"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La prima chiamata crea il file e scrive `\"AB\"`. La seconda `fopen(..., \"w\")` svuota completamente il file da `\"AB\"` e scrive solo `\"C\"`.",
+        "Errato. `\"ABC\"` si otterrebbe aprendo il secondo stream con la modalità `\"a\"`.",
+        "Errato. Il primo contenuto viene sovrascritto alla riapertura in modalità `\"w\"`.",
+        "Errato. I dati scritti nella prima chiamata vengono distrutti."
+      ]
+    },
+    {
+      "id": "it_clang_2596",
+      "widget_id": null,
+      "topic": "Creazione automatica del file con le modalità di fopen()",
+      "q": "Quali delle modalità base di apertura file (\"r\", \"w\", \"a\") creano automaticamente un nuovo file se il file specificato non esiste sul disco?",
+      "hint": "Pensa a quali modalità non vengono ostacolate dall'assenza del file.",
+      "options": [
+        "Solo \"w\" e \"a\"",
+        "Solo \"r\"",
+        "Solo \"w\"",
+        "Tutte e tre le modalità: \"r\", \"w\", \"a\"",
+        "Nessuna di esse crea il file automaticamente",
+        "Solo \"r\" e \"a\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le modalità di scrittura (`\"w\"`) e aggiunta (`\"a\"`) creano un nuovo file se inesistente. La modalità di lettura (`\"r\"`) restituisce `NULL` se il file manca.",
+        "Errato. `\"r\"` fallisce con un errore se il file non esiste.",
+        "Errato. Anche la modalità `\"a\"` crea il file in sua assenza.",
+        "Errato. `\"r\"` non può creare file.",
+        "Errato. `\"w\"` e `\"a\"` creano i file inesistenti.",
+        "Errato. `\"r\"` non crea il file."
+      ]
+    },
+    {
+      "id": "it_clang_2597",
+      "widget_id": "widget_clang_2597",
+      "topic": "Limitazioni della modalità di scrittura \"w\"",
+      "q": "Cosa succede quando si tenta di leggere un carattere usando fgetc() da uno stream aperto esclusivamente in modalità di scrittura \"w\"?",
+      "hint": "Uno stream aperto in modalità 'w' è destinato solo all'output di dati.",
+      "options": [
+        "La funzione restituirà EOF (segnalando un errore di lettura)",
+        "Il programma stamperà il carattere 'a'",
+        "Il programma bloccherà l'esecuzione dello stream"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In modalità `\"w\"` lo stream è aperto rigorosamente in scrittura. Un tentativo di lettura tramite `fgetc()` fallisce e restituisce `EOF` (e l'indicatore `ferror` viene impostato su errore).",
+        "Errato. La lettura da un file aperto solo in scrittura è impossibile.",
+        "Errato. La funzione termina immediatamente restituendo `EOF`."
+      ]
+    },
+    {
+      "id": "it_clang_2598",
+      "widget_id": null,
+      "topic": "Limitazione della lettura in modalità \"a\"",
+      "q": "È possibile leggere dati da un file se è stato aperto con la modalità \"a\" (senza il segno '+')?",
+      "hint": "Nota l'assenza del segno più, che aggiunge l'accesso combinato.",
+      "options": [
+        "No, la modalità \"a\" è destinata solo alla scrittura (aggiunta) di dati alla fine",
+        "Sì, la lettura inizierà dall'inizio del file",
+        "Sì, la lettura inizierà dalla fine del file",
+        "Sì, ma solo se il file è vuoto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La modalità pura `\"a\"` vieta la lettura. Per leggere e aggiungere contemporaneamente si usa la modalità `\"a+\"`.",
+        "Errato. Senza il segno `+` la lettura dallo stream `\"a\"` è impossibile.",
+        "Errato. La modalità `\"a\"` è disponibile solo per operazioni di output.",
+        "Errato. La lettura è vietata indipendentemente dalla dimensione del file."
+      ]
+    },
+    {
+      "id": "it_clang_2599",
+      "widget_id": "widget_clang_2599",
+      "topic": "Scritture successive in uno stream aperto in modalità \"a\"",
+      "q": "Se il file \"append_test.txt\" era inizialmente vuoto, quale sarà il suo contenuto dopo l'esecuzione del codice in modalità \"a\"?",
+      "hint": "La funzione fputs aggiunge in sequenza i dati allo stream aperto.",
+      "options": [
+        "12",
+        "2",
+        "1",
+        "21",
+        "File vuoto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le chiamate a `fputs` vengono eseguite in sequenza: prima viene scritto `'1'`, poi viene aggiunto `'2'`. Il file conterrà `'12'`.",
+        "Errato. La seconda chiamata a `fputs` non sovrascrive la precedente all'interno della stessa sessione di lavoro sul file.",
+        "Errato. Verrà scritta anche la seconda chiamata a `fputs(\"2\", f)`.",
+        "Errato. La scrittura avviene rigorosamente nell'ordine di chiamata delle funzioni.",
+        "Errato. I dati fanno in tempo a essere scritti prima di `fclose(f)`."
+      ]
+    },
+    {
+      "id": "it_clang_2600",
+      "widget_id": null,
+      "topic": "Confronto fondamentale tra le modalità \"w\" e \"a\"",
+      "q": "Qual è la differenza fondamentale tra le modalità di scrittura \"w\" e di aggiunta \"a\"?",
+      "hint": "Confronta la posizione iniziale del cursore e la conservazione dei byte esistenti.",
+      "options": [
+        "\"w\" svuota il file a 0 byte all'apertura, mentre \"a\" conserva i dati e scrive alla fine",
+        "\"w\" apre il file solo in lettura, mentre \"a\" in scrittura",
+        "\"w\" funziona solo con file di testo, mentre \"a\" solo con file binari"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La modalità `\"w\"` cancella tutti i vecchi dati, mentre `\"a\"` mantiene il vecchio contenuto e garantisce il posizionamento della scrittura alla fine.",
+        "Errato. Entrambe le modalità servono per la scrittura dei dati.",
+        "Errato. Entrambe le modalità possono funzionare sia con file di testo che binari (aggiungendo `b`)."
+      ]
+    },
+    {
+      "id": "it_clang_2601",
+      "widget_id": "widget_clang_2601",
+      "topic": "Verifica della corretta chiusura di un file tramite fclose()",
+      "q": "Cosa significa un valore di ritorno pari a 0 quando si chiama la funzione fclose(f)?",
+      "hint": "La funzione fclose() restituisce zero al positivo completamento dell'operazione.",
+      "options": [
+        "Il file è stato chiuso con successo, i buffer di output sono stati svuotati sul disco e le risorse di sistema liberate",
+        "Si è verificato un errore durante la scrittura dei dati non bufferizzati",
+        "Il file è chiuso, ma il buffer di output non è stato svuotato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ritorno di `0` indica che tutti i dati bufferizzati sono stati scritti sul supporto, il file è chiuso e la struttura `FILE` insieme al descrittore di sistema sono stati liberati.",
+        "Errato. In caso di errore la funzione restituirà `EOF`.",
+        "Errato. La funzione `fclose()` garantisce lo svuotamento forzato del buffer prima della chiusura."
+      ]
+    },
+    {
+      "id": "it_clang_2602",
+      "widget_id": "widget_clang_2602",
+      "topic": "Chiamata ripetuta di fclose() sullo stesso puntatore",
+      "q": "A cosa porta una chiamata ripetuta di fclose(f) per un file già chiuso?",
+      "hint": "La liberazione ripetuta delle risorse porta a un tentativo di operare su memoria già liberata.",
+      "options": [
+        "A un comportamento indefinito (Undefined Behavior) e al possibile arresto anomalo del programma",
+        "La seconda chiamata verrà ignorata e restituirà in modo sicuro 0",
+        "La seconda chiamata riaprirà il file precedentemente chiuso",
+        "Il compilatore genererà un errore durante la compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Una chiamata ripetuta a `fclose()` passando un puntatore pendente (double free) porta a un comportamento indefinito (Undefined Behavior).",
+        "Errato. La libreria standard del C non controlla le chiamate ripetute e tenterà di liberare nuovamente la memoria.",
+        "Errato. `fclose()` non può aprire file.",
+        "Errato. L'errore si verifica durante l'esecuzione (runtime); sintatticamente la chiamata è corretta."
+      ]
+    },
+    {
+      "id": "it_clang_2603",
+      "widget_id": null,
+      "topic": "Valore di fclose() in caso di errore",
+      "q": "Quale valore restituisce la funzione fclose() se si verifica un errore durante lo svuotamento del buffer o la chiusura del file?",
+      "hint": "In caso di guasto la funzione restituisce una costante speciale di stdio.h che indica un errore di output o la fine del file.",
+      "options": [
+        "La costante EOF (di solito -1)",
+        "Il valore NULL"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se si verifica un errore di scrittura su disco o un errore nella chiusura del descrittore, `fclose()` restituisce `EOF`.",
+        "Errato. `NULL` viene restituito dalle funzioni di apertura o lettura di stringhe (`fopen`, `fgets`), mentre `fclose()` restituisce un `int`."
+      ]
+    },
+    {
+      "id": "it_clang_2604",
+      "widget_id": "widget_clang_2604",
+      "topic": "Svuotamento automatico del buffer (flush) alla chiamata di fclose()",
+      "q": "Cosa succede ai dati contenuti nel buffer di scrittura del file quando si chiama fclose(f)?",
+      "hint": "Uno dei compiti principali di fclose è lo svuotamento dei dati bufferizzati accumulati sul disco fisico.",
+      "options": [
+        "Il buffer viene automaticamente scritto (svuotato) sul disco prima della chiusura del file",
+        "Il buffer viene immediatamente pulito senza scrivere i dati rimanenti sul disco",
+        "Il buffer viene trasmesso allo stream di errore standard stderr",
+        "Il buffer rimane nella memoria RAM fino al riavvio del sistema",
+        "La scrittura del buffer avviene solo se è stato precedentemente chiamato fflush()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiamata a `fclose()` esegue automaticamente `fflush()`, garantendo il salvataggio su disco rigido di tutti i byte non ancora scritti dal buffer.",
+        "Errato. I dati del buffer non vanno persi, ma vengono scritti.",
+        "Errato. Non si verifica alcun reindirizzamento verso `stderr`.",
+        "Errato. La memoria del buffer viene liberata.",
+        "Errato. `fclose()` esegue autonomamente l'operazione di svuotamento dei buffer."
+      ]
+    },
+    {
+      "id": "it_clang_2605",
+      "widget_id": null,
+      "topic": "Conseguenze della mancata chiamata a fclose() (perdita di risorse)",
+      "q": "A quali conseguenze nei processi a lungo termine può portare il mancato utilizzo della chiamata a fclose() per i file aperti?",
+      "hint": "I descrittori di file sono una risorsa limitata del sistema operativo.",
+      "options": [
+        "A una perdita (leak) di descrittori di file e memoria, che col tempo bloccherà l'apertura di nuovi file nel sistema",
+        "A un aumento eccessivo della frequenza della CPU e al surriscaldamento dell'hardware",
+        "Alla cancellazione automatica dei file non chiusi al riavvio del programma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Ogni file aperto consuma un descrittore del SO e memoria per `FILE`. Il loro accumulo farà sì che `fopen` smetta di aprire nuovi file.",
+        "Errato. Un file non chiuso non influisce sul carico della CPU.",
+        "Errato. I dati del file rimangono; non si verifica alcuna cancellazione del file."
+      ]
+    },
+    {
+      "id": "it_clang_2606",
+      "widget_id": "widget_clang_2606",
+      "topic": "Passaggio di NULL alla funzione fclose()",
+      "q": "Cosa succede durante l'esecuzione della chiamata fclose(f) se f è uguale a NULL?",
+      "hint": "Il passaggio di un puntatore nullo alle funzioni I/O della libreria standard non viene controllato all'interno di fclose.",
+      "options": [
+        "Comportamento indefinito / errore di segmentazione (Segmentation Fault)",
+        "La funzione restituirà EOF e il programma continuerà l'esecuzione",
+        "La funzione ignorerà in modo sicuro la chiamata e restituirà 0",
+        "La variabile f inizierà a puntare a stdin"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il passaggio di `NULL` a `fclose()` porta al dereferenziamento di un indirizzo nullo all'interno della funzione della libreria C e al crash del programma.",
+        "Errato. La funzione non controlla internamente se il puntatore è `NULL`.",
+        "Errato. Non si verifica alcuna ignoranza della chiamata (a differenza di `free(NULL)`).",
+        "Errato. Nessun riposizionamento del puntatore a `stdin` viene eseguito."
+      ]
+    },
+    {
+      "id": "it_clang_2607",
+      "widget_id": null,
+      "topic": "Chiusura automatica dei file al termine del programma",
+      "q": "Lo standard C garantisce lo svuotamento dei buffer e la chiusura di tutti i file aperti durante la normale terminazione del programma (tramite exit() o return da main)?",
+      "hint": "Durante la normale terminazione di un processo, la libreria standard del C esegue la pulizia di tutti gli stream aperti.",
+      "options": [
+        "Sì, al momento della normale terminazione del programma tutti gli stream aperti svuotano automaticamente i buffer e vengono chiusi",
+        "No, i dati nei buffer vanno garantitamente persi se fclose non viene chiamato manualmente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La normale terminazione del processo (`exit()` o return da `main()`) svuota correttamente tutti i buffer di output e chiude gli stream rimasti aperti.",
+        "Errato. Lo svuotamento avviene automaticamente al positivo termine ordinario dell'applicazione."
+      ]
+    },
+    {
+      "id": "it_clang_2608",
+      "widget_id": "widget_clang_2608",
+      "topic": "Accesso a un puntatore FILE* chiuso (dangling pointer)",
+      "q": "Cosa succede quando si chiama fputc('A', f) dopo che il file è stato chiuso?",
+      "hint": "Il puntatore f diventa non valido dopo la chiamata a fclose.",
+      "options": [
+        "Comportamento indefinito a causa dell'uso di un puntatore non valido (dangling pointer)",
+        "Il carattere 'A' verrà scritto nello stream di output standard stdout",
+        "Il file si riaprirà automaticamente per la scrittura",
+        "Il carattere 'A' verrà aggiunto a una cache temporanea di sistema",
+        "La funzione restituirà 0 e ignorerà il carattere",
+        "Si verificherà un ripristino di emergenza delle impostazioni del SO"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Dopo `fclose(f)` la struttura `FILE` viene liberata. La chiamata a funzioni con questo puntatore rappresenta un accesso a un indirizzo di memoria non valido.",
+        "Errato. Non viene eseguito alcun reindirizzamento dell'output verso `stdout`.",
+        "Errato. Un file chiuso non viene riaperto automaticamente.",
+        "Errato. L'operazione è considerata del tutto non valida.",
+        "Errato. `fputc` si comporta in modo imprevedibile quando lavora con un indirizzo liberato.",
+        "Errato. Il guasto è limitato al processo del programma e non intacca le impostazioni dell'intero SO."
+      ]
+    },
+    {
+      "id": "it_clang_2609",
+      "widget_id": null,
+      "topic": "Chiusura degli stream standard di I/O (stdin, stdout, stderr)",
+      "q": "È ammissibile chiamare fclose() per gli stream standard come stdin o stdout?",
+      "hint": "Gli stream stdin, stdout e stderr sono normali puntatori di tipo FILE*.",
+      "options": [
+        "Sì, è ammissibile, ma lo stream standard chiuso diventerà inaccessibile per le successive operazioni di I/O",
+        "No, la chiusura degli stream standard genera un errore di compilazione",
+        "Sì, la chiusura di stdout reindirizza automaticamente tutto l'output su stderr",
+        "No, la funzione fclose restituirà un errore e non chiuderà lo stream di sistema"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli stream standard possono essere chiusi con `fclose()`, ma successivamente le chiamate a `printf()`, `scanf()`, ecc., termineranno con un errore.",
+        "Errato. È consentito dal punto di vista sintattico.",
+        "Errato. Non avviene alcun reindirizzamento dello stream.",
+        "Errato. `fclose()` chiuderà lo stream e il suo descrittore di sistema."
+      ]
+    },
+    {
+      "id": "it_clang_2610",
+      "widget_id": "widget_clang_2610",
+      "topic": "Gestione degli errori di scrittura alla chiamata di fclose()",
+      "q": "Perché è importante verificare il risultato della funzione fclose(), specialmente durante la scrittura su file?",
+      "hint": "Con il buffering ritardato, la scrittura effettiva sul dispositivo fisico può avvenire proprio al momento della chiamata a fclose().",
+      "options": [
+        "Gli errori di scrittura (ad esempio disco pieno) possono verificarsi durante lo svuotamento del buffer nella chiamata a fclose()",
+        "Senza verificare la chiamata a fclose(), il file non verrà fisicamente eliminato dal disco",
+        "La verifica del valore di ritorno velocizza la velocità fisica del supporto di memorizzazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché i dati si accumulano nel buffer della RAM, la scrittura fisica reale avviene durante `fclose()`. Se il disco è pieno, l'errore si manifesterà proprio qui.",
+        "Errato. La funzione `fclose` non elimina il file.",
+        "Errato. La verifica del valore di ritorno nel codice non influisce sulla velocità fisica del disco."
+      ]
+    },
+    {
+      "id": "it_clang_2611",
+      "widget_id": "widget_clang_2611",
+      "topic": "Sintassi e uso base di fprintf()",
+      "q": "Cosa succederà a seguito dell'esecuzione di questo programma?",
+      "hint": "Il primo argomento di fprintf indica lo stream di file di destinazione per l'output formattato.",
+      "options": [
+        "Nel file \"out.txt\" verrà scritta la stringa \"Score: 100\\n\"",
+        "I dati verranno stampati in console invece che nel file",
+        "Il programma terminerà con un errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `fprintf` sostituisce il valore di `score` (100) al posto di `%d` e prepara l'output formattato, che viene scritto nello stream di file `f`.",
+        "Errato. L'output è diretto al file `out.txt`, non allo stream standard `stdout`.",
+        "Errato. Il codice è scritto senza errori sintattici."
+      ]
+    },
+    {
+      "id": "it_clang_2612",
+      "widget_id": null,
+      "topic": "Valore di ritorno della funzione fprintf()",
+      "q": "Cosa restituisce la funzione fprintf() al positivo completamento dell'operazione di scrittura?",
+      "hint": "Pensa a come valutare la dimensione effettiva della stringa formattata generata e scritta.",
+      "options": [
+        "Il numero di caratteri (byte) scritti con successo",
+        "Un puntatore al file chiuso FILE*",
+        "Sempre il numero 0",
+        "Il numero di argomenti/variabili sostituiti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `fprintf()` restituisce, in caso di successo, il numero totale di caratteri (byte) emessi. In caso di errore restituisce un numero negativo.",
+        "Errato. `fprintf` restituisce un tipo `int`, non un puntatore.",
+        "Errato. Il valore zero viene restituito molto raramente (ad esempio se la stringa di formattazione è vuota).",
+        "Errato. La funzione conta il numero di caratteri e byte di output, non il numero di specificatori o variabili."
+      ]
+    },
+    {
+      "id": "it_clang_2613",
+      "widget_id": "widget_clang_2613",
+      "topic": "Scrittura sullo stream di errore standard stderr",
+      "q": "Dove stamperà la stringa la funzione fprintf() nel codice fornito?",
+      "hint": "stderr è lo stream di errore standard predefinito, che per impostazione predefinita è diretto al terminale.",
+      "options": [
+        "Nello stream di errore standard stderr (mostrato di default nella console)",
+        "In un file di testo chiamato \"stderr.txt\"",
+        "Nello stream di input standard stdin",
+        "Da nessuna parte, la chiamata causerà un errore di segmentazione",
+        "Scriverà nel registro di sistema del sistema operativo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `stderr` è un puntatore di tipo `FILE*`. Il passaggio di `stderr` a `fprintf` invia i dati allo stream di errore standard del processo.",
+        "Errato. `stderr` è il nome di una variabile stream, non di un file su disco.",
+        "Errato. `stdin` è destinato solo alla lettura.",
+        "Errato. `stderr` è sempre inizializzato dalla libreria standard del C.",
+        "Errato. La scrittura nei log di sistema richiede chiamate di sistema speciali."
+      ]
+    },
+    {
+      "id": "it_clang_2614",
+      "widget_id": "widget_clang_2614",
+      "topic": "Formattazione dei numeri a virgola mobile in fprintf()",
+      "q": "Quale valore esatto verrà scritto nel file \"out.txt\"?",
+      "hint": "Lo specificatore %.2f arrotonda il numero a virgola mobile a due cifre decimali.",
+      "options": [
+        "3.14",
+        "3.14159",
+        "3.1",
+        "3",
+        "3.15",
+        "3.141590"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `%.2f` limita l'output a due cifre decimali. Il numero `3.14159` viene arrotondato a `3.14`.",
+        "Errato. Senza indicatore di precisione `%f` stamperebbe 6 cifre decimali.",
+        "Errato. `%.1f` stamperebbe `3.1`.",
+        "Errato. `%.0f` stamperebbe `3`.",
+        "Errato. L'arrotondamento avviene secondo le regole matematiche verso il numero più vicino (`3.14`).",
+        "Errato. La precisione predefinita non si applica a causa dell'esplicito `.2`."
+      ]
+    },
+    {
+      "id": "it_clang_2615",
+      "widget_id": null,
+      "topic": "Differenza tra fprintf() e fputs()",
+      "q": "Qual è la differenza chiave tra la funzione fprintf() e fputs()?",
+      "hint": "Ricorda quale di queste funzioni può sostituire le variabili tramite gli specificatori di formato %d, %s, ecc.",
+      "options": [
+        "fprintf() supporta la sostituzione delle variabili tramite specificatori di formato, mentre fputs() emette solo una stringa statica già pronta",
+        "fputs() funziona solo con file binari, mentre fprintf() solo con file di testo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `fprintf()` esegue la formattazione della stringa in modo analogo a `printf()`, mentre `fputs()` è progettata per una scrittura rapida e semplice di stringhe di testo immutabili.",
+        "Errato. Entrambe le funzioni sono funzioni di output di testo/stream dello standard C."
+      ]
+    },
+    {
+      "id": "it_clang_2616",
+      "widget_id": "widget_clang_2616",
+      "topic": "Passaggio di un puntatore nullo a fprintf()",
+      "q": "Cosa succede quando si tenta di eseguire il codice passando NULL a fprintf()?",
+      "hint": "fprintf non esegue controlli interni per verificare se FILE* è NULL.",
+      "options": [
+        "Comportamento indefinito / errore di segmentazione (Segmentation Fault)",
+        "La scrittura verrà automaticamente reindirizzata su stdout",
+        "La funzione restituirà 0 e continuerà l'esecuzione",
+        "Verrà creato un file temporaneo sul disco"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `fprintf()` tenterà di accedere ai campi della struttura all'indirizzo nullo `NULL`, il che causerà un Segmentation Fault.",
+        "Errato. `fprintf` non sostituisce `NULL` con `stdout`.",
+        "Errato. L'errore di accesso alla memoria interromperà l'esecuzione del programma.",
+        "Errato. I file temporanei non vengono creati automaticamente."
+      ]
+    },
+    {
+      "id": "it_clang_2617",
+      "widget_id": null,
+      "topic": "Equivalenza tra printf() e fprintf()",
+      "q": "La chiamata printf(\"Hello %s\", name) è equivalente a fprintf(stdout, \"Hello %s\", name)?",
+      "hint": "La funzione standard printf() è un wrapper attorno all'output su uno stream specifico e predefinito.",
+      "options": [
+        "Sì, printf(...) è assolutamente equivalente a fprintf(stdout, ...)",
+        "No, printf non esegue il buffering dell'output",
+        "No, printf funziona esclusivamente con lo stream di errore standard"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard del linguaggio C `printf(...)` è identico a `fprintf(stdout, ...)`.",
+        "Errato. Il buffering dell'output su `stdout` funziona esattamente allo stesso modo per entrambe le funzioni.",
+        "Errato. Con lo stream di errore lavora `stderr`, non `printf`."
+      ]
+    },
+    {
+      "id": "it_clang_2618",
+      "widget_id": "widget_clang_2618",
+      "topic": "Scrittura formattata in modalità di aggiunta (\"a\")",
+      "q": "Se il file \"log.txt\" conteneva già la stringa \"Start\\n\", cosa ci sarà al suo interno dopo l'esecuzione del programma?",
+      "hint": "La modalità di apertura 'a' conserva i dati esistenti e imposta la posizione di scrittura alla fine.",
+      "options": [
+        "La stringa \"Start\\n\", seguita dalla stringa \"Line\\n\"",
+        "Solo la stringa \"Line\\n\"",
+        "Solo la stringa \"Start\\n\"",
+        "Il file verrà svuotato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché il file è aperto in modalità `\"a\"`, `fprintf` aggiungerà la stringa formattata `\"Line\\n\"` alla fine del file.",
+        "Errato. La vecchia stringa `\"Start\\n\"` non verrà eliminata.",
+        "Errato. La nuova registrazione `\"Line\\n\"` verrà aggiunta con successo.",
+        "Errato. Lo svuotamento avverrebbe in modalità `\"w\"`."
+      ]
+    },
+    {
+      "id": "it_clang_2619",
+      "widget_id": "widget_clang_2619",
+      "topic": "Formattazione di dati tabellari/CSV tramite fprintf()",
+      "q": "Quale stringa esatta verrà scritta nel file \"data.csv\"?",
+      "hint": "Fai attenzione ai separatori virgola esatti e al formato del numero a virgola mobile %.1f.",
+      "options": [
+        "Alice,25,85.5",
+        "Alice 25 85.5",
+        "Alice,25,85.500000",
+        "\"Alice\",25,85.5",
+        "Alice, 25, 85.5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `%s` viene sostituito con `Alice`, `%d` con `25` e `%.1f` arrotonda `85.5` a una cifra decimale. I separatori sono le virgole indicate nella stringa senza spazi: `Alice,25,85.5`.",
+        "Errato. Nel formato sono indicate esplicitamente le virgole tra gli elementi.",
+        "Errato. `%.1f` imposta una sola cifra decimale, non 6.",
+        "Errato. Le virgolette attorno alla stringa non sono state aggiunte nella stringa di formattazione.",
+        "Errato. Dopo le virgole nella stringa di formattazione non ci sono spazi."
+      ]
+    },
+    {
+      "id": "it_clang_2620",
+      "widget_id": null,
+      "topic": "Verifica degli errori di scrittura di fprintf()",
+      "q": "Come determinare, utilizzando il valore di ritorno di fprintf(), che si è verificato un errore durante l'output dei dati?",
+      "hint": "Una scrittura riuscita restituisce un numero positivo (il numero di byte scritti).",
+      "options": [
+        "Verificando se il valore di ritorno è un numero negativo",
+        "Verificando se il valore di ritorno è uguale a NULL"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se si verifica un guasto durante la formattazione o l'output, `fprintf()` restituisce un numero negativo (di solito `-1`).",
+        "Errato. `fprintf()` restituisce un tipo `int`, quindi la comparazione con `NULL` non si usa."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,591 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2831",
+      "widget_id": "widget_clang_2831",
+      "topic": "Uso base del comando print",
+      "q": "Cosa restituirà il comando print score (o p score) in GDB se il programma è fermo alla riga return 0 nel codice del widget?",
+      "hint": "Il comando mostra il valore corrente di una variabile nel campo di visibilità (scope).",
+      "options": [
+        "Il valore 42 (ad esempio, $1 = 42)",
+        "L'indirizzo di memoria in cui è memorizzata la variabile score",
+        "Il tipo di dato della variabile score (int)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `print` legge la variabile dal contesto corrente e ne restituisce il valore attuale, salvandolo in una variabile della cronologia `$N`.",
+        "Errato. La visualizzazione dell'indirizzo di memoria si effettua tramite l'operatore di indirizzo `print &score`.",
+        "Errato. Per ottenere il tipo di dato di una variabile si utilizza il comando `ptype score` o `whatis score`."
+      ]
+    },
+    {
+      "id": "it_clang_2832",
+      "widget_id": null,
+      "topic": "Forma abbreviata del comando print",
+      "q": "Quale breve abbreviazione di una sola lettera viene utilizzata in GDB per invocare il comando print?",
+      "hint": "Si usa la prima lettera della parola print.",
+      "options": [
+        "p",
+        "pr",
+        "v",
+        "out"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La lettera `p` è l'alias standard per `print`.",
+        "Errato. `pr` non è un alias minimo standard.",
+        "Errato. `v` non è un comando valido per ispezionare i valori.",
+        "Errato. `out` non viene utilizzato nella CLI di GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2833",
+      "widget_id": "widget_clang_2833",
+      "topic": "Specificatori di formato dell'output (print /FMT)",
+      "q": "Quale comando bisogna usare in GDB per stampare il valore della variabile number in formato esadecimale (hex)?",
+      "hint": "In GDB il formato si specifica tramite uno slash dopo il comando print (la lettera x indica hex).",
+      "options": [
+        "print /x number",
+        "print /h number",
+        "print /b number",
+        "print --hex number",
+        "format hex number"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `print /x` formatta un numero intero in sistema esadecimale (ad esempio, `$1 = 0xff`).",
+        "Errato. Il flag `/h` non esiste (per l'esadecimale si usa `/x`).",
+        "Errato. `/b` si usa per il formato binario (binary) o la rappresentazione in byte.",
+        "Errato. L'opzione `--hex` non è supportata in `print`.",
+        "Errato. `format hex` è un comando inesistente."
+      ]
+    },
+    {
+      "id": "it_clang_2834",
+      "widget_id": null,
+      "topic": "Modifica dei valori delle variabili al volo",
+      "q": "È possibile utilizzare il comando print per modificare il valore di una variabile direttamente durante una sessione di debug?",
+      "hint": "Print può valutare qualsiasi espressione C, comprese le operazioni di assegnazione.",
+      "options": [
+        "Sì, un'espressione del tipo print count = 100 assegnerà un nuovo valore alla variabile count",
+        "No, print funziona solo in lettura, mentre per la modifica si usa esclusivamente il comando set variable"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `print` valuta espressioni C complete. L'assegnazione `print count = 100` modificherà il valore della variabile in memoria e stamperà immediatamente il risultato.",
+        "Errato. Sebbene si possa usare anche `set variable count = 100`, `print` esegue perfettamente le assegnazioni."
+      ]
+    },
+    {
+      "id": "it_clang_2835",
+      "widget_id": "widget_clang_2835",
+      "topic": "Dereferenziazione dei puntatori con print",
+      "q": "Hai un puntatore int *ptr. Cosa restituirà il comando print *ptr durante il debug?",
+      "hint": "L'operatore * esegue l'operazione di dereferenziazione del puntatore.",
+      "options": [
+        "Il valore della variabile a cui punta ptr (ovvero 100)",
+        "L'indirizzo di memoria del puntatore ptr stesso",
+        "L'indirizzo di memoria della variabile a cui punta ptr",
+        "La dimensione del puntatore in byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La dereferenziazione `*ptr` restituisce il valore memorizzato all'indirizzo di memoria (100).",
+        "Errato. L'indirizzo del puntatore stesso si ottiene con `print &ptr`.",
+        "Errato. L'indirizzo della variabile di destinazione si mostra semplicemente con `print ptr`.",
+        "Errato. La dimensione viene restituita da `print sizeof(ptr)`."
+      ]
+    },
+    {
+      "id": "it_clang_2836",
+      "widget_id": null,
+      "topic": "Chiamata di funzioni all'interno di print",
+      "q": "Cosa succede se si esegue il comando print add(2, 3), supponendo che add sia una funzione C personalizzata?",
+      "hint": "GDB è in grado di eseguire il codice del programma direttamente dal debugger.",
+      "options": [
+        "GDB eseguirà effettivamente la funzione add con gli argomenti 2 e 3 e stamperà il valore restituito",
+        "GDB restituirà un errore, poiché non è possibile chiamare funzioni dalla riga di comando del debugger",
+        "GDB stamperà solo l'indirizzo della funzione add in memoria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `print` costringe il debugger a generare una chiamata temporanea a funzione (Inferior Function Call) nel contesto del processo e a stampare il risultato.",
+        "Errato. La chiamata di funzioni è pienamente supportata in GDB.",
+        "Errato. L'indirizzo viene stampato se si passa il nome della funzione senza parentesi `print add`."
+      ]
+    },
+    {
+      "id": "it_clang_2837",
+      "widget_id": "widget_clang_2837",
+      "topic": "Visualizzazione di array dinamici (operatore @)",
+      "q": "In che modo in GDB è possibile stampare i primi 5 elementi dell'array dinamico arr utilizzando il comando print?",
+      "hint": "Si usa una sintassi speciale per array artificiali con il simbolo @.",
+      "options": [
+        "print *arr@5",
+        "print arr[0..5]",
+        "print arr len 5",
+        "print arr:5",
+        "print sizeof(arr)*5",
+        "print arr -> 5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `*ptr@N` crea un array artificiale di lunghezza `N` elementi a partire dal puntatore `ptr` e ne stampa tutti gli elementi.",
+        "Errato. La struttura `[0..5]` non è supportata nel contesto C di GDB.",
+        "Errato. La parola chiave `len` non viene utilizzata qui.",
+        "Errato. I due punti `:5` non creano una sezione di array in GDB.",
+        "Errato. `sizeof(arr)` su un puntatore restituirà la dimensione del puntatore stesso.",
+        "Errato. La freccia `->` si usa solo per accedere ai campi delle strutture tramite puntatore."
+      ]
+    },
+    {
+      "id": "it_clang_2838",
+      "widget_id": null,
+      "topic": "Variabili della cronologia dei calcoli ($)",
+      "q": "Dopo ogni chiamata a print, GDB mostra il risultato nella forma $1 = val, $2 = val2. Come fare in seguito per fare riferimento al risultato dell'ULTIMO calcolo di print?",
+      "hint": "Si utilizza il simbolo speciale del dollaro.",
+      "options": [
+        "Tramite il simbolo $",
+        "Tramite $$",
+        "Tramite $last",
+        "Tramite $ans"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il singolo simbolo `$` nelle espressioni di GDB si riferisce all'ultima variabile della cronologia dei calcoli. `$$` si riferisce alla penultima.",
+        "Errato. `$$` restituisce il penultimo valore della cronologia.",
+        "Errato. La variabile `$last` non esiste per impostazione predefinita.",
+        "Errato. `$ans` non è una variabile di sistema di GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2839",
+      "widget_id": "widget_clang_2839",
+      "topic": "Ispezione di strutture dati",
+      "q": "Cosa restituirà il comando print p1 se p1 è un'istanza della struttura struct Point { int x; int y; }?",
+      "hint": "GDB è in grado di visualizzare tipi di dati composti per intero con i relativi campi.",
+      "options": [
+        "Tutti i campi della struttura con i loro valori correnti, ad esempio: {x = 10, y = 20}",
+        "Solo l'indirizzo della prima variabile nella struttura (x)",
+        "Un messaggio di errore, poiché le strutture possono essere stampate solo campo per campo (p1.x)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! GDB legge il tipo della struttura dai simboli di debug e stampa il valore composto di tutti i suoi campi.",
+        "Errato. Viene stampato l'intero oggetto, non i singoli indirizzi dei campi.",
+        "Errato. La stampa dell'intera struttura è supportata in modo standard."
+      ]
+    },
+    {
+      "id": "it_clang_2840",
+      "widget_id": null,
+      "topic": "Formattazione dell'output delle strutture (set print pretty)",
+      "q": "Quale comando abilita un formato elegante su più righe per la visualizzazione di strutture nidificate e array quando vengono stampati tramite print?",
+      "hint": "Utilizza l'impostazione pretty-print.",
+      "options": [
+        "set print pretty on",
+        "set format pretty",
+        "set print struct-indent on",
+        "enable pretty-print"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `set print pretty on` costringe GDB a formattare le strutture stampate con a capo e rientri invece di stamparle su una sola riga.",
+        "Errato. `set format pretty` non è un comando valido.",
+        "Errato. `set print struct-indent` non esiste in GDB.",
+        "Errato. `enable pretty-print` è una sintassi errata."
+      ]
+    },
+    {
+      "id": "it_clang_2841",
+      "widget_id": "widget_clang_2841",
+      "topic": "Scopo del comando display",
+      "q": "Qual è lo scopo principale del comando display counter nel debugger GDB?",
+      "hint": "Pensa alla visualizzazione automatica e regolare dei valori a ogni passo del debug.",
+      "options": [
+        "Mostrare automaticamente il valore della variabile counter a ogni arresto del programma (nei passaggi step, next, breakpoint)",
+        "Stampare una sola volta il valore della variabile counter senza ripetere la visualizzazione",
+        "Creare un nuovo pannello grafico con un grafico delle modifiche della variabile counter"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `display` inserisce l'espressione nell'elenco di auto-visualizzazione: viene calcolata e mostrata automaticamente a ogni passo o arresto del debugger.",
+        "Errato. La stampa singola viene eseguita dal comando `print`.",
+        "Errato. `display` funziona all'interno dell'interfaccia a riga di comando (CLI) e non crea diagrammi grafici."
+      ]
+    },
+    {
+      "id": "it_clang_2842",
+      "widget_id": null,
+      "topic": "Disattivazione temporanea dell'auto-visualizzazione (disable display)",
+      "q": "Quale comando permette di sospendere temporaneamente l'auto-visualizzazione dell'elemento numero 1 senza rimuoverlo completamente dall'elenco?",
+      "hint": "Si usa la parola chiave disable per portare l'espressione in uno stato inattivo.",
+      "options": [
+        "disable display 1",
+        "stop display 1",
+        "pause display 1",
+        "hide display 1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `disable display <numero>` disattiva temporaneamente l'auto-visualizzazione dell'espressione. In seguito può essere riattivata con il comando `enable display <numero>`.",
+        "Errato. Il comando `stop display` non esiste in GDB.",
+        "Errato. `pause display` è una sintassi inesistente.",
+        "Errato. `hide display` non si usa per gestire le visualizzazioni."
+      ]
+    },
+    {
+      "id": "it_clang_2843",
+      "widget_id": null,
+      "topic": "Rimozione degli elementi di auto-visualizzazione (undisplay)",
+      "q": "Quali comandi consentono di rimuovere completamente e definitivamente l'espressione numero 2 dall'elenco di visualizzazione automatica?",
+      "hint": "Esiste un comando speciale undisplay, oltre a una variante del comando delete.",
+      "options": [
+        "undisplay 2 o delete display 2",
+        "remove display 2",
+        "clear display 2",
+        "drop display 2",
+        "erase display 2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Sia `undisplay <numero>` che `delete display <numero>` rimuovono completamente l'espressione specificata dall'elenco di auto-visualizzazione.",
+        "Errato. `remove display` non è una sintassi di GDB.",
+        "Errato. `clear display` non si applica a questo elenco.",
+        "Errato. `drop display` è un comando non valido.",
+        "Errato. `erase display` non è presente nella CLI di GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2844",
+      "widget_id": "widget_clang_2844",
+      "topic": "Visualizzazione dell'elenco di tutti i display registrati",
+      "q": "Con quale comando è possibile visualizzare l'elenco completo di tutte le espressioni di auto-visualizzazione impostate, i loro numeri d'ordine e lo stato (enabled/disabled)?",
+      "hint": "Per visualizzare le informazioni di servizio sugli elementi di debug si usa la famiglia di comandi info.",
+      "options": [
+        "info display",
+        "show display"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `info display` mostra una tabella di tutti i display registrati, i loro numeri, lo stato di attività e le espressioni stesse.",
+        "Errato. `show display` restituisce i parametri di configurazione di sistema del debugger, non l'elenco delle espressioni attive dell'utente."
+      ]
+    },
+    {
+      "id": "it_clang_2845",
+      "widget_id": null,
+      "topic": "Specificatori di formato nei comandi display (display/FMT)",
+      "q": "Quale comando farà in modo che GDB mostri automaticamente il valore della variabile val in formato binario (binary) a ogni arresto?",
+      "hint": "La formattazione dell'output viene impostata con lo specificatore /b (o /t per binary) dopo il comando display.",
+      "options": [
+        "display/t val (o display/b val a seconda della versione)",
+        "display --bin val",
+        "display/binary val",
+        "set display format binary val"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Come per `print`, anche il comando `display` supporta i modificatori di formato: `/t` (binario, binary) o `/x` (esadecimale).",
+        "Errato. La sintassi `--bin` non è supportata.",
+        "Errato. Non si usano parole intere come `/binary`, ma flag di una sola lettera.",
+        "Errato. `set display format` è un comando inesistente."
+      ]
+    },
+    {
+      "id": "it_clang_2846",
+      "widget_id": "widget_clang_2846",
+      "topic": "Comportamento di display quando una variabile esce dallo scope",
+      "q": "Nella funzione calculate è stato impostato display temp. Cosa succederà alla colonna di auto-visualizzazione quando il programma completerà calculate() e tornerà a main()?",
+      "hint": "Una variabile locale cessa di esistere nel frame corrente dello stack.",
+      "options": [
+        "GDB segnalerà che la variabile temp non si trova più nell'ambito di visibilità (No symbol 'temp' in current context) e nasconderà/disattiverà temporaneamente il calcolo",
+        "GDB interromperà in modo anomalo l'esecuzione del programma con un errore di segmentazione",
+        "GDB stamperà dati spazzatura letti casualmente dallo stack al posto di temp"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `temp` non esiste al di fuori di `calculate()`, GDB gestirà correttamente il contesto e notificherà che il simbolo non è accessibile nello scope corrente.",
+        "Errato. Il debugger traccia la visibilità delle variabili e non causa il blocco del programma.",
+        "Errato. GDB controlla le tabelle dei simboli e non mostra 'spazzatura' sotto il nome di una variabile inesistente."
+      ]
+    },
+    {
+      "id": "it_clang_2847",
+      "widget_id": null,
+      "topic": "Auto-visualizzazione delle istruzioni del processore (display/i $pc)",
+      "q": "Quale comando viene utilizzato dai debugger per visualizzare automaticamente la successiva istruzione assembly del processore da eseguire a ogni passo?",
+      "hint": "Il registro $pc indica il Program Counter, e il modificatore /i significa instruction.",
+      "options": [
+        "display/i $pc",
+        "display/a $rip",
+        "display asm current",
+        "show next instruction",
+        "display/code main",
+        "trace $pc"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `display/i $pc` (dove `$pc` è l'indicatore delle istruzioni) istruisce GDB a disassemblare e stampare automaticamente l'istruzione corrente del processore a ogni passo.",
+        "Errato. Il flag `/a` mostra l'indirizzo, non disassembla l'istruzione.",
+        "Errato. `display asm current` non è un comando valido.",
+        "Errato. `show next instruction` non esiste in GDB.",
+        "Errato. `display/code` non è un modificatore di formato valido.",
+        "Errato. `trace` si usa per il tracciamento dei punti, non per l'auto-visualizzazione."
+      ]
+    },
+    {
+      "id": "it_clang_2848",
+      "widget_id": null,
+      "topic": "Confronto tra print e display",
+      "q": "Qual è la differenza fondamentale tra il comando display e print?",
+      "hint": "Pensa alla differenza tra una chiamata singola e l'iscrizione ad aggiornamenti regolari.",
+      "options": [
+        "print calcola e mostra un'espressione esattamente una volta al momento dell'inserimento, mentre display salva l'espressione per una visualizzazione regolare a ogni passo",
+        "display può modificare i valori delle variabili, mentre print li legge soltanto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `print` è una richiesta singola di un valore, mentre `display` è un'iscrizione alla visualizzazione automatica del valore dell'espressione a ogni successivo arresto.",
+        "Errato. Entrambi i comandi possono valutare espressioni con assegnazione (sebbene l'uso di `display` con modifiche non sia consigliato)."
+      ]
+    },
+    {
+      "id": "it_clang_2849",
+      "widget_id": "widget_clang_2849",
+      "topic": "Dinamica della modifica delle variabili nel debug passo-passo con display",
+      "q": "Nel codice del widget è impostato display total. Fai diversi passaggi con il comando next in un ciclo for. In quale momento viene aggiornato il valore nella console?",
+      "hint": "L'output di display avviene in modo sincrono con l'evento di arresto (stop) del debugger.",
+      "options": [
+        "Subito dopo ogni passo (next/step) insieme all'output della riga di codice attualmente in esecuzione",
+        "Solo all'uscita definitiva dal ciclo for",
+        "Solo con il reinserimento esplicito del comando display",
+        "Al termine dell'esecuzione della funzione main()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A ogni passo `next`, GDB interrompe il processo, stampa la nuova riga di codice corrente e subito sotto mostra tutte le espressioni `display` attive.",
+        "Errato. `display` si attiva a ogni passo, senza attendere il completamento del ciclo.",
+        "Errato. Non è necessario reinserire il comando: l'auto-visualizzazione funziona automaticamente.",
+        "Errato. La visualizzazione avviene regolarmente durante l'esecuzione, non alla fine di main."
+      ]
+    },
+    {
+      "id": "it_clang_2850",
+      "widget_id": null,
+      "topic": "Chiamata di undisplay senza argomenti",
+      "q": "Cosa succede se si inserisce il comando undisplay (senza specificare un numero di elemento concreto)?",
+      "hint": "GDB richiederà una conferma prima di eseguire un'azione di massa su tutto l'elenco.",
+      "options": [
+        "GDB richiederà una conferma e, se confermato, eliminerà TUTTE le espressioni dall'elenco di auto-visualizzazione",
+        "GDB eliminerà solo l'ultimo display aggiunto",
+        "GDB restituirà un errore per argomento obbligatorio mancante"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'inserimento di `undisplay` senza parametri viene interpretato come l'intenzione di svuotare l'intero elenco di auto-visualizzazione, pertanto GDB richiede la conferma `Delete all auto-display expressions? (y or n)`.",
+        "Errato. `undisplay` senza argomenti non elimina un solo elemento, ma l'intero elenco.",
+        "Errato. L'argomento in questo comando è opzionale."
+      ]
+    },
+    {
+      "id": "it_clang_2851",
+      "widget_id": "widget_clang_2851",
+      "topic": "Modifica dei valori delle variabili tramite set var",
+      "q": "Come modificare il valore della variabile status_code portandolo a 1 durante una pausa nel debugger, in modo che il programma prenda il ramo Error occurred!?",
+      "hint": "Utilizza il sotto-comando var del comando set con la sintassi di assegnazione C.",
+      "options": [
+        "set var status_code = 1",
+        "update status_code 1",
+        "change status_code = 1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `set var status_code = 1` sovrascrive il valore della variabile nella memoria del processo direttamente durante il debug.",
+        "Errato. Non esiste un comando `update` per modificare le variabili in GDB.",
+        "Errato. Il comando `change` non esiste nella CLI di GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2852",
+      "widget_id": null,
+      "topic": "Perché usare set var invece di set",
+      "q": "Perché quando si modificano le variabili di un programma in GDB si consiglia di scrivere set var name = val (o set variable), e non semplicemente set name = val?",
+      "hint": "Pensa a una possibile coincidenza tra il nome della tua variabile e i nomi delle opzioni integrate di GDB.",
+      "options": [
+        "Per evitare conflitti di nomi con i comandi interni e i parametri di configurazione del debugger GDB stesso",
+        "Perché la singola parola set senza var non è supportata dalla sintassi di GDB",
+        "Per forzare il salvataggio delle modifiche nei file sorgente C su disco",
+        "Questo è richiesto solo nel debug di C++, ma non nel linguaggio C",
+        "set var valuta l'espressione più velocemente rispetto a set"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se una variabile si chiama come un parametro di GDB (ad esempio `height`, `width`, `args`), il comando `set height = 10` modificherà il parametro del debugger, non la variabile del programma. La chiave esplicita `var` o `variable` previene questa collisione.",
+        "Errato. Il semplice `set name = val` funziona se il nome non entra in conflitto con le chiavi di GDB.",
+        "Errato. GDB modifica i dati solo nella RAM del processo in esecuzione e non modifica mai i file sorgente.",
+        "Errato. Questa regola è ugualmente importante sia per il C che per il C++.",
+        "Errato. La velocità di esecuzione è assolutamente identica."
+      ]
+    },
+    {
+      "id": "it_clang_2853",
+      "widget_id": "widget_clang_2853",
+      "topic": "Modifica degli elementi di un array tramite set",
+      "q": "Quale comando consentirà di modificare il primo elemento dell'array numbers da 10 a 99 durante una pausa del debugger?",
+      "hint": "Per l'indicizzazione degli elementi dell'array si usa la sintassi standard con parentesi quadre del C.",
+      "options": [
+        "set var numbers[0] = 99",
+        "set numbers.1 = 99",
+        "write numbers[0] 99",
+        "set array numbers 0 99"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le espressioni all'interno di `set var` seguono le regole del linguaggio C, quindi `numbers[0] = 99` modifica correttamente il primo elemento.",
+        "Errato. La sintassi con il punto `numbers.1` non si usa per gli array in C.",
+        "Errato. Non esiste il comando `write` per scrivere nelle variabili.",
+        "Errato. `set array` è un comando non valido."
+      ]
+    },
+    {
+      "id": "it_clang_2854",
+      "widget_id": "widget_clang_2854",
+      "topic": "Modifica dei dati tramite puntatore",
+      "q": "La variabile val è accessibile tramite il puntatore p. Quale comando modificherà il valore di val a 42 tramite dereferenziazione del puntatore p?",
+      "hint": "Utilizza l'operazione di dereferenziazione standard *.",
+      "options": [
+        "set var *p = 42",
+        "set var &p = 42",
+        "set var p->value = 42",
+        "set var p = 42",
+        "set ptr p = 42",
+        "assign *p = 42"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `set var *p = 42` dereferenzia il puntatore `p` e scrive il numero `42` nell'area di memoria a cui punta (ovvero in `val`).",
+        "Errato. `&p` punta all'indirizzo del puntatore stesso.",
+        "Errato. `->value` si applica alle strutture, ma non ai puntatori semplici a tipi base.",
+        "Errato. `set var p = 42` modificherà l'indirizzo stesso memorizzato in `p`, non la variabile di destinazione.",
+        "Errato. `set ptr` è un comando inesistente.",
+        "Errato. Non esiste la parola chiave `assign` in GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2855",
+      "widget_id": null,
+      "topic": "Impostazione degli argomenti della riga di comando (set args)",
+      "q": "Quale comando viene utilizzato in GDB per passare argomenti della riga di comando al programma da sottoporsi a debug prima di avviarlo tramite run?",
+      "hint": "Il parametro si imposta con il comando set args.",
+      "options": [
+        "set args arg1 arg2",
+        "set params arg1 arg2",
+        "run --args arg1 arg2",
+        "set argv arg1 arg2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `set args arg1 arg2` imposta i parametri che verranno passati all'array `argv` della funzione `main()` al successivo avvio di `run`.",
+        "Errato. `set params` non è un comando valido in GDB.",
+        "Errato. Il comando `run` accetta gli argomenti direttamente (ad esempio `run arg1 arg2`), ma il flag `--args` non si scrive all'interno della CLI di GDB.",
+        "Errato. `set argv` non si usa per passare parametri."
+      ]
+    },
+    {
+      "id": "it_clang_2856",
+      "widget_id": null,
+      "topic": "Impostazione delle variabili d'ambiente (set environment)",
+      "q": "A cosa serve il comando set environment VAR=VALUE (o set env) nel debugger?",
+      "hint": "Il comando influisce sull'ambiente delle variabili d'ambiente (Environment Variables) del processo creato.",
+      "options": [
+        "Per impostare una variabile d'ambiente che verrà trasmessa al processo di debug all'avvio",
+        "Per modificare una variabile globale nella memoria del programma C",
+        "Per commutare il sistema operativo in una modalità speciale di debug"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `set environment VAR=VALUE` consente di impostare o ridefinire le variabili d'ambiente (`env`) con cui GDB avvierà il sottoprocesso.",
+        "Errato. Per modificare le variabili interne del programma si usa `set var`.",
+        "Errato. Il comando non modifica le modalità globali di funzionamento del sistema operativo."
+      ]
+    },
+    {
+      "id": "it_clang_2857",
+      "widget_id": "widget_clang_2857",
+      "topic": "Modifica diretta dei registri del processore",
+      "q": "È possibile utilizzare il comando set per modificare direttamente il valore di un registro del processore (ad esempio $rax o $eax)?",
+      "hint": "I nomi dei registri del processore in GDB sono preceduti dal segno $.",
+      "options": [
+        "Sì, tramite un comando del tipo set $rax = 0",
+        "No, i registri del processore sono accessibili solo in lettura tramite info registers"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! GDB consente di sovrascrivere liberamente i registri hardware del processore tramite il segno `$`, ad esempio: `set $rax = 0` o `set $eax = 0`.",
+        "Errato. I registri sono completamente accessibili sia in lettura che in scrittura."
+      ]
+    },
+    {
+      "id": "it_clang_2858",
+      "widget_id": null,
+      "topic": "Modifica dei caratteri nelle stringhe",
+      "q": "Hai un array di caratteri (stringa) char str[] = \"hello\";. Quale comando sostituirà il primo carattere della stringa con la maiuscola 'H'?",
+      "hint": "Presta attenzione all'uso dei singoli apici per i singoli caratteri C.",
+      "options": [
+        "set var str[0] = 'H'",
+        "set str = \"Hello\"",
+        "replace str[0] 'H'",
+        "set string str[0] = 'H'",
+        "set var *str = \"H\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `str[0] = 'H'` modifica correttamente il byte zero dell'array di caratteri.",
+        "Errato. Agli array C non si possono assegnare valori letterali stringa interi dopo l'inizializzazione.",
+        "Errato. Non esiste il comando `replace` in GDB.",
+        "Errato. `set string` è una sintassi non valida.",
+        "Errato. `*str = \"H\"` tenterà di assegnare un puntatore a stringa anziché un singolo carattere `char`."
+      ]
+    },
+    {
+      "id": "it_clang_2859",
+      "widget_id": null,
+      "topic": "Annullamento delle modifiche apportate",
+      "q": "Quale comando annulla tutte le modifiche alle variabili apportate durante la sessione di debug tramite set e le riporta automaticamente ai valori originali?",
+      "hint": "Pensa se il debugger mantenga o meno la cronologia di tutti i patch apportati alla RAM.",
+      "options": [
+        "In GDB non esiste un comando per l'annullamento automatico delle modifiche alle variabili; è possibile ripristinare il valore solo tramite una nuova riassegnazione o un riavvio (run)",
+        "set undo",
+        "rollback variables",
+        "reset var all"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! GDB modifica la memoria reale del processo al volo e non conserva uno storico degli stati precedenti per il rollback. È possibile annullare una modifica manualmente riscrivendo il valore o eseguendo `run`.",
+        "Errato. Non esiste il comando `set undo` in GDB.",
+        "Errato. `rollback variables` è un comando inesistente.",
+        "Errato. `reset var all` è assente in GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2860",
+      "widget_id": null,
+      "topic": "Modifica dei registri di controllo del flusso ($pc)",
+      "q": "Cosa succede se si esegue il comando set var $pc = 0x401122 (dove $pc è il Program Counter)?",
+      "hint": "Il registro PC (o RIP/EIP) indica la successiva istruzione da eseguire.",
+      "options": [
+        "L'indicatore dell'istruzione corrente in esecuzione nel processore verrà forzatamente modificato all'indirizzo di memoria specificato",
+        "Il valore verrà scritto nella variabile $pc, ma l'ordine di esecuzione del programma non cambierà",
+        "GDB restituirà un errore di accesso al registro di sistema $pc"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La modifica di `$pc` sposta il focus del processore sull'indirizzo specificato (equivalente a chiamare `jump *0x401122`).",
+        "Errato. Il registro `$pc` controlla direttamente il flusso di esecuzione (Control Flow).",
+        "Errato. GDB consente di modificare il registro $pc."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,593 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2561",
+      "widget_id": "widget_clang_2561",
+      "topic": "Flag delle modalità di apertura dei file in fopen()",
+      "q": "Cosa significa l'uso del flag \"rb\" nella funzione fopen()?",
+      "hint": "La lettera 'r' indica la lettura, mentre 'b' indica il formato di gestione del contenuto.",
+      "options": [
+        "Apertura di un file esistente per la lettura in modalità binaria",
+        "Apertura di un file per la scrittura in modalità binaria",
+        "Apertura di un file in modalità aggiunta (append) di testo alla fine"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `r` significa lettura (read) e `b` indica la modalità binaria (binary). Il file viene aperto solo in lettura senza traduzione dei caratteri speciali.",
+        "Errato. La scrittura viene indicata con la lettera `w` (`\"wb\"`).",
+        "Errato. L'aggiunta viene indicata con la lettera `a` (`\"ab\"`)."
+      ]
+    },
+    {
+      "id": "it_clang_2562",
+      "widget_id": null,
+      "topic": "Traduzione dei caratteri di nuova riga in modalità testo",
+      "q": "Cosa succede al carattere di nuova riga '\\n' durante la scrittura su file su piattaforma Windows in modalità TESTO (\"w\")?",
+      "hint": "Ricorda la differenza tra gli standard di fine riga dei sistemi Unix (LF) e Windows (CRLF).",
+      "options": [
+        "Viene convertito automaticamente nella sequenza a due byte \\r\\n (CRLF)",
+        "Viene scritto esattamente come un singolo byte \\n senza modifiche",
+        "Viene completamente rimosso dal file di output",
+        "La chiamata causa un errore di esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In modalità testo su Windows, il C Runtime sostituisce automaticamente il singolo `\\n` con la combinazione `\\r\\n`. In modalità binaria questa sostituzione non avviene.",
+        "Errato. La scrittura del singolo byte `\\n` avverrebbe in modalità binaria (`\"wb\"`) o su sistemi Unix.",
+        "Errato. Il carattere di nuova riga non viene rimosso.",
+        "Errato. Si tratta del comportamento standard della modalità testo."
+      ]
+    },
+    {
+      "id": "it_clang_2563",
+      "widget_id": "widget_clang_2563",
+      "topic": "Dimensione del file binario con il salvataggio di numeri interi",
+      "q": "Quanti byte occuperà su disco il file \"num.bin\" dopo la scrittura (assumendo sizeof(int) == 4)?",
+      "hint": "La funzione fwrite legge e scrive dalla memoria esattamente il numero di byte occupato dal tipo della variabile.",
+      "options": [
+        "4 byte",
+        "5 byte (in base al numero di caratteri in '12345')",
+        "2 byte",
+        "10 byte",
+        "1 byte",
+        "8 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `fwrite()` scrive il numero `12345` come rappresentazione binaria in memoria di un `int`. Con `sizeof(int) == 4`, il file occuperà esattamente 4 byte.",
+        "Errato. La conversione in una stringa di testo di 5 caratteri avverrebbe con la chiamata a `fprintf()`, non a `fwrite()`.",
+        "Errato. La dimensione è determinata dal tipo `int` (4 byte).",
+        "Errato. Viene scritto esattamente un elemento di tipo `int`.",
+        "Errato. Un `int` occupa più di 1 byte.",
+        "Errato. `sizeof(int)` è pari a 4 byte."
+      ]
+    },
+    {
+      "id": "it_clang_2564",
+      "widget_id": null,
+      "topic": "Vantaggi dei file binari rispetto ai file di testo",
+      "q": "Qual è il vantaggio principale del salvataggio dei dati numerici in un file binario rispetto a un file di testo?",
+      "hint": "Pensa alla velocità di I/O (assenza di parsing) e alla conservazione dell'esatta precisione dei numeri in virgola mobile.",
+      "options": [
+        "Risparmio di memoria, assenza di perdita di precisione per i numeri in virgola mobile e velocità di lettura/scrittura più elevata senza parsing del testo",
+        "I file binari sono facili da leggere e modificare per un essere umano in qualsiasi editor di testo",
+        "I file binari vengono compressi automaticamente dall'archiviatore del sistema operativo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La scrittura binaria del dump di memoria è più veloce (non c'è conversione numero-testo) e mantiene la precisione di tutti i bit di `float`/`double` senza arrotondamenti.",
+        "Errato. Al contrario, i file binari non sono destinati alla lettura umana senza un editor esadecimale (Hex editor) specializzato.",
+        "Errato. Il sistema operativo non comprime automaticamente i file binari."
+      ]
+    },
+    {
+      "id": "it_clang_2565",
+      "widget_id": "widget_clang_2565",
+      "topic": "Differenze tra le modalità \"w\" e \"wb\" durante la scrittura di testo",
+      "q": "Qual è la differenza tra la chiamata fopen(\"out.txt\", \"w\") e fopen(\"out.txt\", \"wb\") in questo programma su OS Windows?",
+      "hint": "La lettera 'b' disabilita la traduzione automatica dei caratteri speciali di nuova riga.",
+      "options": [
+        "In modalità \"w\" i caratteri \\n vengono convertiti in \\r\\n, mentre in modalità \"wb\" vengono scritti rigorosamente come singolo byte \\n",
+        "In modalità \"w\" il programma terminerà con un errore",
+        "Non c'è assolutamente alcuna differenza su nessun OS"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La modalità `\"wb\"` disabilita la traduzione `\\n` -> `\\r\\n` su Windows, scrivendo i byte ASCII grezzi.",
+        "Errato. Entrambe le modalità sono completamente valide.",
+        "Errato. Su POSIX (Linux/macOS) potrebbe non esserci differenza, ma su Windows la differenza è sostanziale."
+      ]
+    },
+    {
+      "id": "it_clang_2566",
+      "widget_id": null,
+      "topic": "Modalità di apertura file predefinita",
+      "q": "Quale modalità di lavoro con il file viene scelta per impostazione predefinita se nella stringa della modalità di fopen() non è specificato il flag 'b' (ad esempio, \"r\" o \"w\")?",
+      "hint": "Se il carattere 'b' è assente, il sistema considera che il file contenga testo.",
+      "options": [
+        "Modalità testo",
+        "Modalità binaria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, in assenza della lettera `b`, lo specificatore di modalità viene considerato testuale (`\"r\"` == `\"rt\"`).",
+        "Errato. Per la modalità binaria è richiesta l'indicazione esplicita della `b` (`\"rb\"`, `\"wb\"`)."
+      ]
+    },
+    {
+      "id": "it_clang_2567",
+      "widget_id": "widget_clang_2567",
+      "topic": "Calcolo della dimensione finale di un file binario",
+      "q": "Quale sarà la dimensione finale del file data.bin su disco (se sizeof(double) è pari a 8 byte)?",
+      "hint": "Calcola il prodotto tra il numero di elementi nell'array e la dimensione di un singolo elemento.",
+      "options": [
+        "24 byte",
+        "3 byte",
+        "8 byte",
+        "12 byte",
+        "32 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un array di 3 elementi di tipo `double` viene moltiplicato per la dimensione di un singolo elemento: `3 * 8 byte = 24 byte`.",
+        "Errato. 3 è il numero di elementi, non la dimensione in byte.",
+        "Errato. 8 byte è la dimensione di un solo elemento di tipo `double`.",
+        "Errato. Per 3 elementi di tipo `int` (da 4 byte ciascuno) sarebbero 12 byte, ma qui abbiamo `double`.",
+        "Errato. La dimensione totale è di 24 byte."
+      ]
+    },
+    {
+      "id": "it_clang_2568",
+      "widget_id": null,
+      "topic": "Uso del tipo int per salvare il risultato di fgetc()",
+      "q": "Perché durante la lettura byte per byte di un file binario tramite fgetc() il valore restituito viene salvato in un int e non in un char?",
+      "hint": "La costante EOF ha un valore negativo (di solito -1), che deve essere distinto da un byte con valore 255 (0xFF).",
+      "options": [
+        "Per distinguere correttamente un byte letto con valore 0xFF (255) dal valore di errore/fine file EOF (-1)",
+        "Perché fgetc restituisce sempre solo numeri negativi",
+        "Il tipo char è vietato dallo standard per il salvataggio dei caratteri",
+        "Per convertire automaticamente il byte in maiuscolo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se un file binario contiene il byte `0xFF`, quando salvato in un `unsigned char` è pari a `255`. Facendo il cast a `char` coinciderebbe con `EOF (-1)`. Il tipo `int` permette di restituire l'intervallo `0..255` per i byte e `-1` per `EOF`.",
+        "Errato. `fgetc` in caso di lettura riuscita restituisce valori positivi da 0 a 255.",
+        "Errato. `char` è consentito, ma causerà un errore se si incontra il byte `0xFF`.",
+        "Errato. Il maiuscolo/minuscolo non viene modificato da questo."
+      ]
+    },
+    {
+      "id": "it_clang_2569",
+      "widget_id": "widget_clang_2569",
+      "topic": "Conversione del byte letto 0xFF in fgetc()",
+      "q": "Cosa stamperà il programma in caso di lettura riuscita del primo byte di un file binario con valore 0xFF?",
+      "hint": "In caso di lettura riuscita, fgetc esegue il cast del byte a unsigned char e poi lo estende a int.",
+      "options": [
+        "255",
+        "-1",
+        "0",
+        "1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il byte `0xFF` viene letto come `unsigned char` con valore `255`, e poi restituito come `int 255`. Il programma stamperà `255`.",
+        "Errato. `-1` viene restituito solo al raggiungimento di `EOF` o in caso di errore di lettura.",
+        "Errato. Il valore `0` corrisponde al byte `0x00`.",
+        "Errato. Il valore `1` corrisponde al byte `0x01`."
+      ]
+    },
+    {
+      "id": "it_clang_2570",
+      "widget_id": null,
+      "topic": "Scopo dei file di testo e dei file binari",
+      "q": "Quale delle seguenti affermazioni sui file di testo e binari è corretta?",
+      "hint": "Ricorda quale tipo di file è destinato alla visualizzazione e modifica diretta da parte dell'utente.",
+      "options": [
+        "I file di testo memorizzano i dati sotto forma di caratteri codificati per la lettura humana, mentre i file binari li memorizzano nel formato macchina della rappresentazione interna della memoria",
+        "I file binari contengono solo caratteri ASCII stampabili",
+        "I file di testo non possono essere aperti in C tramite fopen()",
+        "I file binari sono supportati solo nei sistemi operativi della famiglia Linux"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I file di testo sono codificati secondo standard testuali (ASCII, UTF-8) e leggibili dall'uomo, mentre i file binari memorizzano strutture, byte e istruzioni 'così come sono'.",
+        "Errato. I file di testo sono composti da caratteri ASCII/UTF-8, mentre quelli binari contengono qualsiasi valore di byte da 0 a 255.",
+        "Errato. `fopen()` supporta il lavoro sia con file di testo che con file binari.",
+        "Errato. I file binari sono supportati da assolutamente tutti i sistemi operativi."
+      ]
+    },
+    {
+      "id": "it_clang_2571",
+      "widget_id": "widget_clang_2571",
+      "topic": "Spostamento automatico del puntatore di posizione durante la lettura sequenziale",
+      "q": "Se il file \"text.txt\" contiene la stringa \"AB\", cosa stamperà questo programma?",
+      "hint": "Ogni chiamata riuscita a fgetc() sposta automaticamente il cursore interno del file in avanti di 1 byte.",
+      "options": [
+        "AB",
+        "AA",
+        "BB"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La prima chiamata a `fgetc()` legge `'A'` e sposta il cursore sul secondo carattere. La seconda chiamata a `fgetc()` legge `'B'`. Viene stampato `AB`.",
+        "Errato. Il puntatore di posizione nel file si sposta automaticamente, quindi la seconda chiamata legge il carattere successivo e non rilegge il primo.",
+        "Errato. La prima chiamata legge il carattere `'A'`, non `'B'`."
+      ]
+    },
+    {
+      "id": "it_clang_2572",
+      "widget_id": "widget_clang_2572",
+      "topic": "Lettura riga per riga di un file di testo tramite fgets()",
+      "q": "Fino a quando la funzione fgets() legge i caratteri da un file in presenza di una capacità del buffer sufficiente?",
+      "hint": "Pensa a quale carattere speciale funge da limite di riga nei file di testo.",
+      "options": [
+        "Fino al primo carattere di nuova riga '\\n' incontrato, alla fine del file EOF o fino al riempimento del buffer (dimensione - 1)",
+        "Esattamente fino al primo carattere di spazio",
+        "Sempre fino alla fine del file (EOF), ignorando i caratteri di nuova riga",
+        "Fino al riempimento di esattamente metà del buffer allocato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `fgets()` interrompe la lettura quando incontra il carattere `'\\n'` (includendolo nel buffer), raggiunge `EOF` o legge `size - 1` caratteri.",
+        "Errato. Il carattere spazio non interrompe la lettura della funzione `fgets()` (a differenza di `%s` in `fscanf`).",
+        "Errato. `fgets()` legge una riga alla volta per chiamata, non l'intero file in una volta sola.",
+        "Errato. Il volume di lettura è limitato dal parametro di dimensione `size - 1`, non dalla sua metà."
+      ]
+    },
+    {
+      "id": "it_clang_2573",
+      "widget_id": null,
+      "topic": "Struttura logica di un file di testo",
+      "q": "Cosa rappresenta un file di testo dal punto di vista della sua struttura logica?",
+      "hint": "Un file di testo è composto da righe di caratteri separate da speciali caratteri di controllo.",
+      "options": [
+        "Una sequenza di righe di caratteri a lunghezza variabile, separate da caratteri di nuova riga ('\\n' o '\\r\\n')",
+        "Un array fisso di strutture dati di uguale dimensione da 64 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza dei file binari con record fissi, un file di testo si suddivide in righe di lunghezza arbitraria separate da delimitatori `'\\n'`.",
+        "Errato. Le righe in un file di testo hanno di solito lunghezze diverse."
+      ]
+    },
+    {
+      "id": "it_clang_2574",
+      "widget_id": "widget_clang_2574",
+      "topic": "Limitazione della dimensione del buffer in fgets()",
+      "q": "Cosa stamperà il programma se il file \"text.txt\" inizia con la parola \"Hello\\n\"?",
+      "hint": "La funzione fgets(buf, N, f) legge al massimo N - 1 caratteri, lasciando l'ultima cella per il terminatore nullo '\\0'.",
+      "options": [
+        "Hel",
+        "Hell",
+        "Hello",
+        "H",
+        "Segmentation Fault"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `sizeof(buf) == 4`, la funzione `fgets()` legge al massimo 3 caratteri (`'H'`, `'e'`, `'l'`) e aggiunge il terminatore nullo `'\\0'`. Stamperà `Hel`.",
+        "Errato. Per leggere `Hell` sarebbe necessario un buffer di almeno 5 byte.",
+        "Errato. L'intera stringa `Hello` non entra in un buffer di 4 byte.",
+        "Errato. La funzione legge più di un carattere.",
+        "Errato. Non si verifica alcun overflow del buffer, poiché `fgets()` garantisce la scrittura del `\\0` entro la dimensione passata."
+      ]
+    },
+    {
+      "id": "it_clang_2575",
+      "widget_id": "widget_clang_2575",
+      "topic": "Conteggio del numero di righe in un file di testo",
+      "q": "Quale algoritmo utilizza il codice fornito per contare le righe?",
+      "hint": "Osserva la condizione all'interno del ciclo while.",
+      "options": [
+        "Legge in sequenza ogni carattere e incrementa il contatore quando rileva il carattere '\\n'",
+        "Legge direttamente la dimensione del file e la divide per 80",
+        "Utilizza la funzione seek per spostarsi tra le righe",
+        "Conta il numero di chiamate alla funzione fopen"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il programma esegue una scansione sequenziale (sequential scan) del file carattere per carattere e conta il numero di caratteri di nuova riga `'\\n'` incontrati.",
+        "Errato. Il file viene letto byte per byte, non dividendo la dimensione totale.",
+        "Errato. Nel codice non ci sono chiamate a funzioni di posizionamento come `fseek`.",
+        "Errato. `fopen` viene chiamata una sola volta."
+      ]
+    },
+    {
+      "id": "it_clang_2576",
+      "widget_id": null,
+      "topic": "Limitazioni dell'accesso sequenziale nei file di testo",
+      "q": "Perché non è possibile passare istantaneamente alla riga n. 100 in un file di testo senza leggere in sequenza le precedenti 99 righe?",
+      "hint": "Pensa se la lunghezza in byte di ciascuna riga in un file di testo arbitrario sia la stessa.",
+      "options": [
+        "Le righe in un file di testo hanno lunghezza variabile, quindi lo scostamento esatto in byte fino alla 100ª riga non è noto a priori",
+        "La funzione fseek() è totalmente vietata sui file di testo",
+        "Il sistema operativo rilegge da capo l'intero disco rigido ad ogni accesso al file"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché ogni riga può contenere un numero diverso di caratteri, per conoscere l'offset in byte della 100ª riga è necessario leggere tutti i caratteri di nuova riga precedenti.",
+        "Errato. `fseek()` può essere utilizzata sui file di testo (ad esempio con `SEEK_SET` e offset ottenuti in precedenza da `ftell()`).",
+        "Errato. Il SO memorizza in cache i dati del disco e non rilegge l'intero supporto."
+      ]
+    },
+    {
+      "id": "it_clang_2577",
+      "widget_id": "widget_clang_2577",
+      "topic": "Parsing di un file di testo in token tramite fscanf()",
+      "q": "Cosa stamperà il programma se il file contiene il testo \"One Two Three\"?",
+      "hint": "Lo specificatore %s in fscanf() legge una sequenza di caratteri fino al primo carattere di spaziatura (spazio, tabulazione, \\n).",
+      "options": [
+        "One",
+        "One Two Three",
+        "Two",
+        "Three",
+        "1",
+        "Errore di esecuzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `fscanf` con lo specificatore `%s` legge la prima parola fino allo spazio. Di conseguenza, la variabile `word` conterrà la stringa `\"One\"`.",
+        "Errato. `%s` si arresta al primo spazio e non legge l'intera riga.",
+        "Errato. La parola `\"Two\"` verrà letta solo alla successiva chiamata a `fscanf`.",
+        "Errato. `\"Three\"` è la terza parola nel file.",
+        "Errato. Il valore restituito `1` indica il successo della lettura, ma viene stampato il valore di `word`.",
+        "Errato. Il codice funziona regolarmente."
+      ]
+    },
+    {
+      "id": "it_clang_2578",
+      "widget_id": null,
+      "topic": "Principio di funzionamento dell'indicatore di posizione del file",
+      "q": "Lo stato della posizione corrente nel file cambia ad ogni operazione di lettura (fgetc, fgets, fscanf)?",
+      "hint": "Ricorda come funziona l'accesso sequenziale (sequential access).",
+      "options": [
+        "Sì, l'indicatore di posizione si sposta automaticamente in avanti del numero di byte letti",
+        "No, l'indicatore rimane all'inizio del file finché non viene spostato manualmente tramite fseek()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Qualsiasi funzione di lettura fa avanzare la posizione corrente nel file esattamente del numero di byte letti con successo.",
+        "Errato. Lo spostamento manuale tramite `fseek()` è necessario solo per l'accesso casuale (random access); durante la lettura sequenziale il cursore si muove automaticamente."
+      ]
+    },
+    {
+      "id": "it_clang_2579",
+      "widget_id": "widget_clang_2579",
+      "topic": "Scrittura sequenziale alla fine del file in modalità append (\"a\")",
+      "q": "Dove verrà scritta la stringa \"NEW_LINE\\n\" quando si apre un file esistente con il flag \"a\"?",
+      "hint": "La modalità 'a' sta per append (aggiunta).",
+      "options": [
+        "Rigorosamente alla fine del file, preservando il contenuto precedente",
+        "All'inizio del file, sovrascrivendo i dati preesistenti",
+        "Il file verrà completamente svuotato prima della scrittura",
+        "In una posizione casuale del file"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La modalità `\"a\"` posiziona l'indicatore di scrittura alla fine del file. Tutti i nuovi dati vengono aggiunti sequenzialmente in coda senza cancellare i vecchi.",
+        "Errato. La scrittura all'inizio del file con sovrascrittura avviene in modalità `\"r+\"`.",
+        "Errato. Lo svuotamento completo del file prima della scrittura avviene in modalità `\"w\"`.",
+        "Errato. La scrittura avviene sempre in modo strettamente sequenziale alla fine."
+      ]
+    },
+    {
+      "id": "it_clang_2580",
+      "widget_id": "widget_clang_2580",
+      "topic": "Ripristino del cursore all'inizio del file tramite rewind()",
+      "q": "Cosa mostrerà il programma se il file \"text.txt\" contiene il testo \"ABC\"?",
+      "hint": "La funzione rewind() ripristina l'indicatore di posizione corrente del file esattamente al primo byte (inizio del file).",
+      "options": [
+        "A",
+        "B",
+        "C",
+        "EOF",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il primo `fgetc()` legge `'A'` e sposta il cursore su `'B'`. La chiamata a `rewind(f)` riporta il cursore al primissimo byte (`'A'`). Il secondo `fgetc()` legge di nuovo `'A'`. Viene stampato `A`.",
+        "Errato. Il carattere `'B'` verrebbe letto se non ci fosse stata la chiamata a `rewind(f)`.",
+        "Errato. Il cursore non raggiunge il carattere `'C'`.",
+        "Errato. Ci sono ancora dati da leggere nel file.",
+        "Errato. Il codice è scritto correttamente."
+      ]
+    },
+    {
+      "id": "it_clang_2581",
+      "widget_id": "widget_clang_2581",
+      "topic": "Troncamento (truncation) del file in modalità scrittura \"w\"",
+      "q": "Se il file \"file.txt\" conteneva in precedenza il testo \"Hello World\", cosa rimarrà al suo interno dopo l'esecuzione del codice?",
+      "hint": "Pensa a cosa succede al contenuto del file quando viene aperto in modalità \"w\" (write) prima dell'esecuzione delle funzioni di scrittura.",
+      "options": [
+        "Solo la stringa \"Hi\"",
+        "La stringa \"Hi World\"",
+        "La stringa \"Hello WorldHi\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'apertura del file in modalità `\"w\"` svuota automaticamente (tronca a 0 byte) il file esistente. In esso verrà scritta solo la stringa `\"Hi\"`.",
+        "Errato. Il vecchio contenuto non viene preservato, quindi non c'è sovrascrittura carattere per carattere.",
+        "Errato. I nuovi dati non vengono aggiunti in coda in modalità `\"w\"` (per questo si usa `\"a\"`)."
+      ]
+    },
+    {
+      "id": "it_clang_2582",
+      "widget_id": "widget_clang_2582",
+      "topic": "Comportamento di fopen() in assenza del file in modalità \"r\"",
+      "q": "Cosa stamperà il programma se il file \"non_existing_file.txt\" non esiste sul disco?",
+      "hint": "La modalità \"r\" richiede la presenza obbligatoria del file per un'apertura con successo.",
+      "options": [
+        "NULL",
+        "OK",
+        "Segmentation Fault alla chiamata di fopen()",
+        "Il file verrà creato automaticamente e verrà stampato OK"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se il file non esiste, la modalità `\"r\"` restituisce `NULL`. Il programma eseguirà il ramo `if (f == NULL)` e stamperà `NULL`.",
+        "Errato. Il ramo `else` viene eseguito solo in caso di apertura con successo del file.",
+        "Errato. La chiamata a `fopen()` non causa un crash, ma restituisce in modo sicuro `NULL`.",
+        "Errato. La modalità `\"r\"` non crea nuovi file su disco (a differenza di `\"w\"` o `\"a\"`)."
+      ]
+    },
+    {
+      "id": "it_clang_2583",
+      "widget_id": "widget_clang_2583",
+      "topic": "Escape del carattere barra rovesciata (backslash) nei percorsi dei file",
+      "q": "Perché nella stringa del percorso del file \"C:\\\\data\\\\test.txt\" si utilizzano doppie barre rovesciate?",
+      "hint": "Ricorda come il compilatore C interpreta il singolo carattere barra rovesciata '\\' all'interno dei letterali stringa.",
+      "options": [
+        "La barra rovesciata '\\' è un carattere di escape di controllo, quindi per passare una singola barra reale nel percorso occorre '\\\\'",
+        "Questo è un requisito del file system NTFS",
+        "La seconda barra indica che la directory è di sistema",
+        "La doppia barra è richiesta solo per le unità di rete",
+        "È la sintassi del compilatore per indicare un file binario"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il singolo `\\` inizia una sequenza di escape (ad es. `\\n`, `\\t`). Per scrivere il carattere `\\` in una stringa, occorre farlo precedere da un altro `\\` (`\\\\`).",
+        "Errato. Il file system di Windows accetta la barra singola, ma è il letterale stringa in C a richiedere l'escape.",
+        "Errato. Lo stato della directory non dipende dal numero di barre.",
+        "Errato. In C l'escape è necessario per qualsiasi percorso locale contenente `\\`.",
+        "Errato. Il formato del file non dipende dalla sintassi della stringa del percorso."
+      ]
+    },
+    {
+      "id": "it_clang_2584",
+      "widget_id": null,
+      "topic": "Confronto tra le modalità di apertura \"r+\" e \"w+\"",
+      "q": "Qual è la differenza principale tra le modalità di apertura \"r+\" e \"w+\"?",
+      "hint": "Pensa a quale di queste modalità cancella i dati esistenti nel file all'apertura.",
+      "options": [
+        "\"r+\" apre un file esistente per la lettura e la scrittura senza cancellare i dati, mentre \"w+\" cancella tutto il contenuto del file o ne crea uno nuovo",
+        "\"r+\" consente solo la lettura, mentre \"w+\" consente solo la scrittura"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Entrambe le modalità consentono sia la lettura che la scrittura, ma `\"w+\"` distrugge i vecchi dati (azzera il file) o crea il file, mentre `\"r+\"` richiede che il file esista e ne preserva i dati.",
+        "Errato. Il simbolo `+` in entrambi i casi aggiunge l'operazione opposta (sia lettura che scrittura)."
+      ]
+    },
+    {
+      "id": "it_clang_2585",
+      "widget_id": "widget_clang_2585",
+      "topic": "Aggiunta di dati a un file in modalità \"a\"",
+      "q": "Quale comportamento garantisce la modalità di apertura \"a\" (append)?",
+      "hint": "Il termine 'append' si traduce come 'aggiunta in coda'.",
+      "options": [
+        "Se il file esiste, tutti i nuovi dati vengono aggiunti in coda, mentre se non esiste il file viene creato",
+        "Il file viene aperto solo per la lettura dalla fine",
+        "Il contenuto del file viene sempre completamente svuotato prima della scrittura",
+        "La scrittura avviene all'inizio del file sovrascrivendo i byte esistenti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La modalità `\"a\"` preserva i dati esistenti, imposta l'indicatore di scrittura alla fine e crea automaticamente il file se assente.",
+        "Errato. La modalità `\"a\"` è destinata alla scrittura di dati, non solo alla lettura.",
+        "Errato. Lo svuotamento del file è tipico della modalità `\"w\"`.",
+        "Errato. La sovrascrittura dell'inizio del file avviene con `\"r+\"`."
+      ]
+    },
+    {
+      "id": "it_clang_2586",
+      "widget_id": "widget_clang_2586",
+      "topic": "Caratteristiche della modalità \"a+\" (lettura e aggiunta)",
+      "q": "Se il file \"file.txt\" conteneva il carattere \"A\", cosa stamperà questo programma?",
+      "hint": "La modalità \"a+\" consente di leggere il file dall'inizio dopo rewind(), ma la scrittura di 'X' aggiunge il byte in coda.",
+      "options": [
+        "A",
+        "X",
+        "AX",
+        "XA",
+        "EOF",
+        "Errore di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il carattere `'X'` viene aggiunto in coda (il file diventa `\"AX\"`). Successivamente `rewind(f)` sposta il cursore all'inizio. `fgetc(f)` legge il primo carattere `'A'`. Viene stampato `A`.",
+        "Errato. La chiamata a `rewind(f)` imposta il cursore sul primissimo carattere del file (`'A'`), non su quello appena aggiunto (`'X'`).",
+        "Errato. La funzione `fgetc()` legge un singolo carattere, non l'intera stringa.",
+        "Errato. Il carattere `'A'` si trovava all'inizio del file.",
+        "Errato. Il file contiene dati.",
+        "Errato. La sintassi del programma è completamente corretta."
+      ]
+    },
+    {
+      "id": "it_clang_2587",
+      "widget_id": null,
+      "topic": "Numero massimo di file aperti contemporaneamente",
+      "q": "Quale macrocostante di sistema in <stdio.h> definisce il minimo garantito di file aperti contemporaneamente?",
+      "hint": "Cerca il nome della costante contenente il nome della funzione fopen e le parole Maximum/Max.",
+      "options": [
+        "FOPEN_MAX",
+        "MAX_FILES",
+        "OPEN_FILE_LIMIT"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La macro `FOPEN_MAX` in `<stdio.h>` imposta il numero minimo di file che un programma può garantire di tenere aperti contemporaneamente (solitamente almeno 8).",
+        "Errato. La costante `MAX_FILES` non fa parte dello standard ANSI C / POSIX `<stdio.h>`.",
+        "Errato. Non esiste una macro con questo nome nel C standard."
+      ]
+    },
+    {
+      "id": "it_clang_2588",
+      "widget_id": null,
+      "topic": "Possibili cause di errore nell'esecuzione di fopen()",
+      "q": "Per quale dei seguenti motivi la funzione fopen() può restituire NULL?",
+      "hint": "Pensa ai permessi di accesso, all'esistenza delle directory e ai limiti del sistema operativo.",
+      "options": [
+        "Tutte le opzioni elencate descrivono correttamente le possibili cause di errore",
+        "Il processo non dispone dei permessi di accesso per la lettura o scrittura nel file/directory specificato",
+        "Il percorso specificato contiene directory inesistenti",
+        "È stato raggiunto il limite del sistema operativo sul numero di file aperti",
+        "Spazio su disco insufficiente durante il tentativo di creazione del file"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La mancanza di permessi, un percorso non valido, l'esaurimento dei descrittori di file e la mancanza di spazio su disco sono tutti fattori che causano l'errore di `fopen()`.",
+        "Errato. Questa è solo una delle possibili cause.",
+        "Errato. Si tratta di un caso particolare di errore nel percorso.",
+        "Errato. È solo uno dei motivi di sistema.",
+        "Errato. La mancanza di spazio è anch'essa solo una delle cause."
+      ]
+    },
+    {
+      "id": "it_clang_2589",
+      "widget_id": "widget_clang_2589",
+      "topic": "Formato dei flag in fopen() per file binari con aggiornamento",
+      "q": "La stringa di modalità \"rb+\" è un equivalente corretto della stringa \"r+b\" nella funzione fopen()?",
+      "hint": "Lo standard del linguaggio C consente qualsiasi ordine tra il carattere '+' e il carattere 'b' nella stringa di modalità.",
+      "options": [
+        "Sì, le descrizioni \"rb+\" e \"r+b\" sono assolutamente equivalenti secondo lo standard C",
+        "No, il carattere 'b' deve sempre trovarsi solo alla fine della stringa di modalità",
+        "No, il carattere '+' deve necessariamente precedere 'b'",
+        "La modalità \"rb+\" apre il file solo in lettura"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, l'ordine dei caratteri `b` e `+` nell'argomento della modalità non ha importanza: `\"rb+\"` e `\"r+b\"` funzionano in modo identico.",
+        "Errato. Il carattere `b` può stare sia prima che dopo il `+`.",
+        "Errato. Entrambi i dettagli sono validi e corretti.",
+        "Errato. Il carattere `+` abilita sia la lettura che la scrittura."
+      ]
+    },
+    {
+      "id": "it_clang_2590",
+      "widget_id": null,
+      "topic": "Flag di creazione esclusiva dei file \"x\" (C11)",
+      "q": "A cosa serve il flag 'x' nella stringa di modalità di fopen() (ad esempio, \"wx\" o \"w+x\"), introdotto nello standard C11?",
+      "hint": "La lettera 'x' sta per exclusive (creazione esclusiva).",
+      "options": [
+        "La chiamata fallirà (restituendo NULL) se il file esiste già, prevenendo sovrascritture accidentali",
+        "Il file viene automaticamente crittografato durante la creazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo specificatore `x` forza `fopen()` ad agire in modo esclusivo: se il file esiste già, la funzione restituirà `NULL` invece di azzerarne il contenuto.",
+        "Errato. Il flag `x` non esegue alcuna crittografia dei file."
+      ]
+    }
+  ]
+}

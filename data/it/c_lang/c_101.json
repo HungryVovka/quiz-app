@@ -1,0 +1,593 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_3071",
+      "widget_id": "widget_clang_3071",
+      "topic": "Risoluzione dei simboli (Symbol Resolution)",
+      "q": "Cosa fa esattamente il linker durante la fase di risoluzione dei simboli (Symbol Resolution)?",
+      "hint": "Pensate a come i nomi delle funzioni non risolti da un file oggetto vengono collegati alle loro definizioni in altri file.",
+      "options": [
+        "Associa ogni simbolo non risolto (Undefined Symbol) di un file oggetto alla corrispondente definizione presente in un altro file o libreria",
+        "Verifica la corrispondenza dei tipi di argomenti delle funzioni rispetto alla sintassi dello standard C99",
+        "Rimuove tutte le chiamate di funzione e le sostituisce con istruzioni vuote NOP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La fase di risoluzione dei simboli consiste nel trovare la corrispondenza tra tutti i riferimenti esterni (simboli con flag `U`) e i loro effettivi indirizzi di dichiarazione nelle sezioni `.text` o `.data` di altri file.",
+        "Errato. La verifica della sintassi e dei tipi degli argomenti viene eseguita dal compilatore nelle prime fasi, non dal linker.",
+        "Errato. Il linker collega le chiamate alle funzioni reali, non le rimuove."
+      ]
+    },
+    {
+      "id": "it_clang_3072",
+      "widget_id": null,
+      "topic": "Fase di rilocazione (Relocation Phase)",
+      "q": "Qual è l'essenza della fase di rilocazione (Relocation) durante il linking di un programma?",
+      "hint": "Ricordate come il linker modifica gli offset relativi nelle istruzioni macchina dopo aver unito tutte le sezioni.",
+      "options": [
+        "Il linker unisce sezioni dello stesso tipo (.text, .data) di tutti i file .o e applica le patch agli indirizzi finali di funzioni e variabili nelle istruzioni di chiamata",
+        "Il linker riscrive i file sorgente C sul disco rigido con nuovi nomi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Durante la rilocazione, il linker raccoglie le sezioni identiche di tutti i file `.o` in singoli segmenti continui e riscrive gli indirizzi nel codice macchina in base alla tabella di rilocazione.",
+        "Errato. Il linker lavora con i file binari oggetto e non modifica i file sorgente `.c`."
+      ]
+    },
+    {
+      "id": "it_clang_3073",
+      "widget_id": null,
+      "topic": "Linking statico vs dinamico (.a vs .so)",
+      "q": "Qual è la differenza principale tra il linking statico (.a / .lib) e quello dinamico (.so / .dll) delle librerie?",
+      "hint": "Fate attenzione a quando esattamente il codice macchina della libreria viene inserito nel file binario o nella memoria RAM.",
+      "options": [
+        "Nel linking statico, il codice della libreria viene completamente copiato nel binario durante la build, mentre nel linking dinamico viene caricato in memoria durante l'esecuzione del programma",
+        "Il linking statico è possibile solo su sistemi a 32 bit, mentre quello dinamico solo su sistemi a 64 bit",
+        "Il linking dinamico elimina la necessità di utilizzare un compilatore",
+        "Il linking statico viene eseguito dal preprocessore, mentre quello dinamico da una macchina virtuale integrata",
+        "Le librerie dinamiche sono crittografate, mentre quelle statiche sono conservate in formato testo in chiaro"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il linking statico incorpora direttamente il codice binario delle funzioni nel file eseguibile finale. Il linking dinamico conserva solo i riferimenti, mentre la libreria stessa viene caricata dal loader del SO all'avvio.",
+        "Errato. Entrambi i tipi di linking sono supportati su tutte le architetture moderne (32 e 64 bit).",
+        "Errato. Il compilatore è richiesto in entrambi i casi per generare il codice oggetto.",
+        "Errato. Il linking viene eseguito dal linker e dal SO, non dal preprocessore o da una macchina virtuale.",
+        "Errato. Entrambi i formati sono file binari standard non crittografati."
+      ]
+    },
+    {
+      "id": "it_clang_3074",
+      "widget_id": "widget_clang_3074",
+      "topic": "Errore di definizione multipla (Multiple Definition Error)",
+      "q": "Da cosa è causato l'errore del linker 'multiple definition of ...' durante la build di un progetto?",
+      "hint": "Pensate alla presenza di più entità globali con lo stesso nome in diverse unità di traduzione.",
+      "options": [
+        "Una funzione o variabile globale con lo stesso nome è definita più di una volta in diverse unità di traduzione senza il qualificatore static o inline",
+        "Nel codice viene utilizzata una funzione che è stata rimossa dalla memoria RAM",
+        "Il compilatore ha trovato un commento contenente il nome di una funzione dichiarata in precedenza",
+        "Un file header header.h ha una dimensione superiore a 10 Megabyte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo la One Definition Rule (ODR) in C, un simbolo globale con collegamento esterno (external linkage) deve avere una sola definizione in tutto il progetto. Se una funzione è dichiarata in un file header senza `inline` o `static` e inclusa in due file `.c`, si verifica un errore.",
+        "Errato. Questo errore si verifica durante la fase di build, quando il programma non è ancora in esecuzione nella RAM.",
+        "Errato. I commenti vengono rimossi durante la fase di preelaborazione.",
+        "Errato. La dimensione del file header non influisce sul collegamento dei simboli."
+      ]
+    },
+    {
+      "id": "it_clang_3075",
+      "widget_id": "widget_clang_3075",
+      "topic": "Errore di riferimento non risolto (Undefined Reference Error)",
+      "q": "Cosa significa l'errore del linker 'undefined reference to symbol'?",
+      "hint": "La funzione è stata dichiarata in un file header ed è stata chiamata nel codice, ma dove si trova la sua implementazione?",
+      "options": [
+        "Una funzione o variabile è dichiarata (ad esempio in .h), ma il linker non ha trovato la sua implementazione (definizione) in alcun file .o o libreria",
+        "Nel codice è stato commesso un errore di sintassi durante la dichiarazione di un ciclo for",
+        "Il sistema operativo ha vietato l'accesso al disco rigido"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Questo errore si verifica quando il codice fa riferimento a un simbolo, ma il suo corpo (implementazione) è assente in tutti i file `.o` e le librerie passate per la build.",
+        "Errato. Gli errori di sintassi dei cicli vengono rilevati durante la fase di compilazione, non di linking.",
+        "Errato. L'errore è legato all'assenza di simboli negli oggetti di build, non ai permessi di accesso al disco."
+      ]
+    },
+    {
+      "id": "it_clang_3076",
+      "widget_id": "widget_clang_3076",
+      "topic": "Ordine delle librerie nella riga di comando del linker",
+      "q": "Perché nel linker classico (GNU ld) è importante l'ordine con cui vengono passati file e librerie (perché la chiamata `gcc -lmath main.o` può causare un errore)?",
+      "hint": "Il linker elabora i file di input sequenzialmente da sinistra a destra.",
+      "options": [
+        "Il linker esamina i file da sinistra a destra e risolve i simboli non risolti solo dalle librerie specificate DOPO i file che richiedono tali simboli",
+        "Il linker legge i file da destra a sinistra in ordine alfabetico",
+        "Le librerie con il flag -l costringono il compilatore a ripristinare le opzioni di ottimizzazione -O2",
+        "L'ordine è importante solo quando si compilano progetti per la piattaforma Android"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `GNU ld` esamina gli argomenti da sinistra a destra. Se la libreria `-lmath` viene specificata PRIMA di `main.o`, l'elenco dei simboli non risolti è ancora vuoto e il linker scarta la libreria. L'ordine corretto è: `gcc main.o -lmath`.",
+        "Errato. L'ordine è strettamente da sinistra a destra, l'ordine alfabetico non viene preso in considerazione.",
+        "Errato. Il flag `-l` indica una libreria da collegare e non annulla i flag di ottimizzazione.",
+        "Errato. Questo comportamento è ereditato da tutti i linker UNIX classici."
+      ]
+    },
+    {
+      "id": "it_clang_3077",
+      "widget_id": null,
+      "topic": "Simboli deboli e forti (Weak vs Strong Symbols)",
+      "q": "Come risolve il linker una collisione se incontra un simbolo forte (Strong) e uno debole (Weak, __attribute__((weak))) con lo stesso nome?",
+      "hint": "I simboli deboli vengono spesso usati per creare funzioni predefinite che possono essere sovrascritte.",
+      "options": [
+        "Il simbolo forte sovrascrive sempre il simbolo debole con lo stesso nome senza generare un errore di linking",
+        "Il simbolo debole elimina automaticamente il simbolo forte e provoca un errore di segmentazione",
+        "La presenza di un simbolo debole forza un errore di 'multiple definition'",
+        "Il linker sceglie casualmente uno dei simboli a ogni avvio del programma",
+        "I simboli deboli possono essere usati solo all'interno delle funzioni di gestione dei segnali",
+        "Un simbolo forte non può fare riferimento a variabili globali"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La definizione di una funzione o variabile senza attributi è un simbolo forte. Un simbolo con `__attribute__((weak))` è debole. In presenza di entrambi, il linker sceglie silenziosamente il simbolo forte.",
+        "Errato. Il simbolo forte sostituisce quello debole; non si verifica alcun errore di segmentazione.",
+        "Errato. L'errore 'multiple definition' si verifica allo scontro di due simboli *forti*.",
+        "Errato. La scelta è determinata dallo standard di comportamento del linker.",
+        "Errato. I simboli deboli sono ampiamente usati nei driver e nelle librerie di sistema CRT.",
+        "Errato. I simboli forti possono lavorare con qualsiasi variabile."
+      ]
+    },
+    {
+      "id": "it_clang_3078",
+      "widget_id": null,
+      "topic": "Script del linker (Linker Scripts / .ld)",
+      "q": "Quale ruolo svolge uno script di linking (Linker Script, file .ld) durante la build di programmi per microcontrollori e sistemi embedded?",
+      "hint": "Pensate alla distribuzione precisa delle sezioni di codice e dati sugli indirizzi fisici della memoria Flash e RAM.",
+      "options": [
+        "Definisce la mappa di memoria del dispositivo, specificando gli indirizzi fisici esatti per la collocazione delle sezioni (.text, .data, .bss) in Flash e RAM",
+        "Traduce automaticamente il codice C nel linguaggio di descrizione hardware Verilog/VHDL"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nello sviluppo embedded non c'è un SO standard, quindi il `linker script` indica al linker a quali specifici indirizzi di memoria (ROM/RAM) posizionare le sezioni di codice, le tabelle dei vettori di interruzione e lo stack.",
+        "Errato. Lo script del linker lavora con le sezioni ELF del codice C e non genera schemi Verilog/VHDL."
+      ]
+    },
+    {
+      "id": "it_clang_3079",
+      "widget_id": "widget_clang_3079",
+      "topic": "Rimozione delle sezioni non utilizzate (Dead Code Stripping)",
+      "q": "Perché nell'ottimizzazione della dimensione del file binario si usa la combinazione dei flag -ffunction-sections -fdata-sections e -Wl,--gc-sections?",
+      "hint": "I flag del compilatore inseriscono ogni funzione in una sezione separata, mentre il flag del linker abilita la rimozione del codice morto (Garbage Collection) per sezioni.",
+      "options": [
+        "Per collocare ciascuna funzione e variabile in una sezione isolata e consentire al linker di eliminare il codice non utilizzato (Dead Code)",
+        "Per impacchettare automaticamente il binario finale in un archivio zip",
+        "Per disabilitare il controllo dei tipi di dati durante l'esecuzione del programma",
+        "Per convertire una libreria statica .a in un file header .h"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Di default tutte le funzioni finiscono in un'unica sezione comune `.text`, e il linker non può rimuovere una singola funzione non utilizzata. I flag `-ffunction-sections` creano sezioni separate (ad es. `.text.foo`), e `--gc-sections` rimuove le sezioni non chiamate.",
+        "Errato. I flag riducono la dimensione del binario rimuovendo i byte di codice inutilizzati, ma non lo archiviano.",
+        "Errato. Queste opzioni non influiscono sui controlli dei tipi del compilatore.",
+        "Errato. I formati degli archivi `.a` e dei file `.h` non vengono modificati da questo flag."
+      ]
+    },
+    {
+      "id": "it_clang_3080",
+      "widget_id": null,
+      "topic": "Linker di build (ld) vs Loader dinamico (ld.so)",
+      "q": "Qual è la differenza fondamentale tra il linker statico (ld) e il loader dinamico (ld.so / ld-linux.so)?",
+      "hint": "Uno funziona durante la build sulla macchina dello sviluppatore, mentre il secondo funziona al momento dell'avvio del programma sul SO di destinazione.",
+      "options": [
+        "Il linker ld funziona durante la compilazione del progetto, mentre il loader dinamico ld.so viene invocato dal kernel del SO all'avvio del programma per il collegamento con le librerie .so",
+        "ld funziona solo su SO Windows, mentre ld.so solo su macOS",
+        "ld.so sostituisce il sistema operativo durante l'esecuzione del binario"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `ld` è un'utilità del momento della build (Build-time Linker). `ld.so` (Runtime Dynamic Linker) è uno speciale loader di sistema eseguito dal kernel del SO al momento dell'avvio del programma per mappare le librerie `.so` nello spazio di indirizzamento del processo.",
+        "Errato. Le utilità `ld` e `ld.so` sono componenti standard dei sistemi Linux/UNIX.",
+        "Errato. `ld.so` è una libreria/loader utente che funziona al di sopra del kernel del SO."
+      ]
+    },
+    {
+      "id": "it_clang_3081",
+      "widget_id": "widget_clang_3081",
+      "topic": "Loader di programmi e segmenti LOAD in ELF",
+      "q": "In che modo il loader del sistema operativo (Exec loader) mappa le sezioni del file eseguibile ELF nella memoria RAM del processo?",
+      "hint": "Pensate a come i Program Headers indicano i tipi di segmenti LOAD e i permessi di accesso (R, W, E).",
+      "options": [
+        "Il loader legge i Program Headers del binario e, tramite chiamate di sistema, mappa i segmenti LOAD nello spazio di indirizzamento virtuale",
+        "Il loader copia completamente il codice nella memoria video dell'acceleratore grafico per l'invio diretto alla CPU",
+        "Il loader decomprime l'intero file ELF in un file di testo e invoca l'interprete Bash"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il loader legge le tabelle `Program Headers` dall'intestazione del file ELF, trova i segmenti di tipo `LOAD` e, tramite la mappatura della memoria (`mmap`), li distribuisce sugli indirizzi virtuali con i relativi permessi (Read, Write, Execute).",
+        "Errato. Il caricamento del programma avviene nella RAM (memoria di sistema), non nella memoria video.",
+        "Errato. Il codice binario compilato viene eseguito direttamente dal processore, non dall'interprete."
+      ]
+    },
+    {
+      "id": "it_clang_3082",
+      "widget_id": null,
+      "topic": "Ruolo dell'MMU e della memoria virtuale",
+      "q": "Quale ruolo svolgono l'unità di gestione della memoria (MMU) e le tabelle delle pagine (Page Tables) durante l'esecuzione di un programma da parte del processore?",
+      "hint": "Fate attenzione alla traduzione degli indirizzi virtuali usati dal programma in indirizzi fisici reali della RAM.",
+      "options": [
+        "L'MMU traduce al volo gli indirizzi di memoria virtuale del processo in indirizzi fisici della RAM e controlla i permessi di accesso",
+        "L'MMU corregge automaticamente gli errori logici nel codice della funzione main prima della chiamata alla CPU"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il processore lavora con indirizzi virtuali. L'MMU, via hardware e mediante le tabelle delle pagine, li converte in indirizzi fisici della RAM e genera un'eccezione (Page Fault / Segmentation Fault) in caso di violazione dei permessi.",
+        "Errato. L'MMU è un modulo hardware di indirizzamento; non analizza né corregge la logica del codice C."
+      ]
+    },
+    {
+      "id": "it_clang_3083",
+      "widget_id": "widget_clang_3083",
+      "topic": "Punto di ingresso _start e inizializzazione di CRT",
+      "q": "Qual è il vero punto di ingresso (Entry Point) in un file eseguibile binario a livello di SO prima della chiamata alla funzione utente main()?",
+      "hint": "Etichetta di sistema che configura l'ambiente C Runtime (CRT) e passa gli argomenti argc/argv.",
+      "options": [
+        "L'etichetta di sistema _start, che inizializza l'ambiente di esecuzione C Runtime (CRT) e successivamente chiama la funzione main()",
+        "L'esecuzione diretta dell'istruzione return 0 dal codice C",
+        "Il loader del BIOS, che esegue un salto diretto alla prima riga del file sorgente main.c",
+        "La direttiva del preprocessore #include <stdio.h>",
+        "La funzione virtuale std::launch della libreria standard C++"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La prima istruzione a cui il SO passa il controllo è `_start` (fornita da `crt1.o`). Configura gli argomenti della riga di comando, l'ambiente, chiama i costruttori e infine passa l'esecuzione a `main()`.",
+        "Errato. L'istruzione `return` termina la funzione, non avvia l'esecuzione del programma.",
+        "Errato. Il BIOS carica il kernel del SO, non esegue righe di file sorgente C.",
+        "Errato. La direttiva `#include` viene elaborata dal preprocessore durante la build.",
+        "Errato. I programmi C/C++ si avviano tramite l'etichetta di sistema `_start`."
+      ]
+    },
+    {
+      "id": "it_clang_3084",
+      "widget_id": null,
+      "topic": "Ciclo del processore (Fetch-Decode-Execute)",
+      "q": "In cosa consiste il ciclo fondamentale di lettura-decodifica-esecuzione (Fetch-Decode-Execute) del processore durante l'esecuzione di istruzioni dalla RAM?",
+      "hint": "Il processore legge l'istruzione all'indirizzo presente nel registro puntatore alle istruzioni (RIP/EIP), la decodifica e la esegue.",
+      "options": [
+        "La CPU preleva l'istruzione dalla memoria all'indirizzo nel registro RIP, decodifica il comando e lo esegue, dopodiché incrementa RIP",
+        "La CPU compila il codice sorgente C prima di eseguire ciascun singolo comando",
+        "La CPU carica l'intera memoria RAM nella cache L1 prima di avviare l'esecuzione del primo thread",
+        "La CPU ripristina l'alimentazione della scheda madre a ogni passaggio tra funzioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella fase Fetch la CPU legge i byte dell'istruzione dalla memoria all'indirizzo `RIP`. Nella fase Decode si riconoscono opcode e operandi, e nella fase Execute l'ALU o un'altra unità esegue il calcolo, spostando `RIP` al passaggio successivo.",
+        "Errato. La compilazione avviene prima dell'avvio del programma.",
+        "Errato. La cache L1 carica i dati a blocchi (linee di cache) in base alla necessità.",
+        "Errato. I passaggi tra funzioni avvengono in nanosecondi mediante istruzioni dello stack senza riavvii dell'alimentazione."
+      ]
+    },
+    {
+      "id": "it_clang_3085",
+      "widget_id": "widget_clang_3085",
+      "topic": "Mappa di memoria del processo (Process Memory Layout)",
+      "q": "Come sono disposti i segmenti principali di memoria di un processo nello spazio di indirizzamento virtuale dagli indirizzi più bassi a quelli più alti?",
+      "hint": "Pensate alla collocazione dei segmenti di codice (.text), dati (.data/.bss), memoria dinamica (Heap) e stack (Stack).",
+      "options": [
+        "Indirizzi più bassi: Code (.text) -> Data (.data/.bss) -> Heap (cresce verso l'alto) ... Stack (cresce verso il basso dagli indirizzi più alti)",
+        "Indirizzi più bassi: Stack -> Heap -> Code -> Data",
+        "Indirizzi più bassi: Heap -> Stack -> Data -> Code",
+        "Indirizzi più bassi: Data -> Stack -> Code -> Heap",
+        "Tutti i segmenti si trovano in ordine del tutto casuale e si sovrappongono in memoria",
+        "La memoria è divisa in blocchi di testo uguali senza divisione in segmenti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il layout di memoria standard prevede in basso (indirizzi bassi) la sezione `.text` e i dati, seguiti dall'area Heap che cresce verso l'alto. Lo Stack è collocato al confine dello spazio utente e cresce verso il basso verso gli indirizzi più bassi.",
+        "Errato. Lo Stack si trova nella regione superiore della memoria virtuale, non all'inizio.",
+        "Errato. L'Heap si trova tra la sezione dati e lo Stack.",
+        "Errato. I dati si trovano subito dopo il codice `.text`.",
+        "Errato. La collocazione è strettamente segmentata, sebbene gli indirizzi possano essere traslati dal meccanismo di protezione ASLR.",
+        "Errato. La memoria ha una precisa segmentazione strutturata."
+      ]
+    },
+    {
+      "id": "it_clang_3086",
+      "widget_id": "widget_clang_3086",
+      "topic": "Funzionamento dello stack durante le chiamate di funzione (Call/Ret)",
+      "q": "Cosa succede allo stack delle chiamate (Call Stack) nella memoria RAM quando il processore esegue l'istruzione call?",
+      "hint": "Ricordate come il processore memorizza il punto a cui tornare dopo l'esecuzione dell'istruzione ret.",
+      "options": [
+        "Il processore inserisce (push) l'indirizzo dell'istruzione successiva nello stack e aggiorna il registro RIP con l'indirizzo della funzione chiamata",
+        "Il processore pulisce l'intero stack e azzera i registri di uso generale",
+        "Il processore alloca 1 Gigabyte di RAM nell'heap per le variabili locali"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'istruzione `call` inserisce automaticamente nello stack l'indirizzo di ritorno corrente (l'indirizzo del comando successivo a `call`), mentre l'istruzione `ret` successivamente lo estrae (`pop`) riportandolo nel registro `RIP`.",
+        "Errato. Svuotare lo stack e azzerare tutti i registri ad ogni chiamata distruggerebbe i dati del programma.",
+        "Errato. `call` interagisce con lo stack delle chiamate, non con l'allocazione di memoria nell'heap."
+      ]
+    },
+    {
+      "id": "it_clang_3087",
+      "widget_id": null,
+      "topic": "Gerarchia delle cache della CPU (I-Cache e D-Cache)",
+      "q": "Perché un processore moderno utilizza cache separate per istruzioni (I-Cache) e dati (D-Cache) di primo livello (L1) durante l'esecuzione di un programma?",
+      "hint": "La separazione consente di leggere simultaneamente le istruzioni eseguibili ed elaborare i dati senza conflitti di accesso.",
+      "options": [
+        "Per il prelievo parallelo delle istruzioni (I-Cache) e la lettura/scrittura dei dati (D-Cache) senza ritardi e conflitti hardware del bus",
+        "Per conservare copie di backup del sistema operativo in caso di interruzione dell'alimentazione",
+        "La I-Cache viene usata solo per C++, mentre la D-Cache è esclusivamente per il linguaggio C",
+        "Per crittografare il traffico tra il processore e la scheda di rete"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'architettura Harvard separata a livello di cache L1 (Instruction Cache + Data Cache) consente al processore di prelevare contemporaneamente le istruzioni di codice e leggere/scrivere le variabili dalla memoria.",
+        "Errato. La cache L1 è una memoria volatile ad alta velocità all'interno del core della CPU.",
+        "Errato. Le cache lavorano con codice macchina e byte di dati indipendentemente dal linguaggio sorgente.",
+        "Errato. La cache del processore non è legata alla crittografia di rete."
+      ]
+    },
+    {
+      "id": "it_clang_3088",
+      "widget_id": null,
+      "topic": "Cambio di contesto (Context Switch)",
+      "q": "Cosa succede durante un cambio di contesto (Context Switch) tra processi a livello di processore e RAM?",
+      "hint": "Il sistema operativo salva lo stato dei registri del processo corrente e carica lo stato del successivo.",
+      "options": [
+        "Il SO salva lo stato dei registri CPU e del puntatore alle pagine (CR3) del processo corrente e carica lo stato di un altro processo",
+        "Il SO sovrascrive completamente l'intera memoria RAM con zeri e ricarica il binario dal disco"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Durante un cambio di contesto, lo scheduler del kernel del SO salva il valore di tutti i registri (RIP, RSP, registri di uso generale, CR3) nella struttura del processo e ripristina i registri salvati di un altro thread/processo.",
+        "Errato. La memoria degli altri processi viene conservata nella RAM; non viene eseguita alcuna sovrascrittura con zeri."
+      ]
+    },
+    {
+      "id": "it_clang_3089",
+      "widget_id": "widget_clang_3089",
+      "topic": "Allocazione di memoria su richiesta (Demand Paging)",
+      "q": "Cosa succede a livello fisico nella RAM al momento della prima chiamata a memset su memoria allocata tramite malloc?",
+      "hint": "Le pagine fisiche di RAM non vengono allocate dal SO immediatamente all'invocazione di malloc, ma al primo vero accesso.",
+      "options": [
+        "Alla prima scrittura si verifica un'interruzione Page Fault e il sistema operativo alloca una pagina fisica di RAM reale per l'indirizzo virtuale",
+        "Il programma termina immediatamente con un arresto anomalo perché malloc vieta la scrittura nella memoria allocata",
+        "Il processore trasmette la scrittura direttamente alla memoria flash del BIOS",
+        "Il sistema operativo sostituisce il blocco di memoria allocato con una libreria statica .so",
+        "La chiamata a memset annulla l'effetto di malloc e libera la memoria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Grazie al meccanismo di Demand Paging, la funzione `malloc` richiede solo indirizzi virtuali. Al momento della prima scrittura (`memset`), il processore genera un'interruzione Page Fault, il kernel del SO alloca una pagina fisica di memoria RAM e riprende l'esecuzione.",
+        "Errato. La memoria restituita da `malloc` è destinata proprio alla lettura e alla scrittura.",
+        "Errato. La memoria allocata opera esclusivamente nell'ambito della RAM.",
+        "Errato. Le librerie dinamiche non hanno a che fare con la logica di funzionamento di `memset`.",
+        "Errato. `memset` riempie la memoria allocata con byte."
+      ]
+    },
+    {
+      "id": "it_clang_3090",
+      "widget_id": null,
+      "topic": "Terminazione del processo e rilascio delle risorse",
+      "q": "Cosa succede alle risorse del processo nella RAM dopo la chiamata a exit(0) o il ritorno da main()?",
+      "hint": "Il sistema operativo libera lo spazio di indirizzamento virtuale e restituisce il codice di uscita al genitore.",
+      "options": [
+        "Il SO libera tutta la memoria virtuale allocata al processo, chiude i descrittori aperti e passa il codice di ritorno al processo padre",
+        "La memoria del processo rimane bloccata nella RAM fino al riavvio completo del computer",
+        "Il codice sorgente del programma viene automaticamente cancellato dal disco rigido",
+        "Il file binario viene ricompilato con i flag di debug"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Alla terminazione del processo, il kernel del sistema operativo distrugge la sua mappa di tabelle delle pagine, liberando tutta la RAM fisica occupata, chiude file e socket e invia il codice di stato di terminazione.",
+        "Errato. Il SO recupera forzatamente tutta la RAM allocata al termine del processo.",
+        "Errato. I file sorgente e binari sul disco rimangono inalterati.",
+        "Errato. Non si verifica alcuna ricompilazione durante l'esecuzione del programma."
+      ]
+    },
+    {
+      "id": "it_clang_3091",
+      "widget_id": "widget_clang_3091",
+      "topic": "Essenza della compilazione incrementale (Incremental Compilation)",
+      "q": "Qual è il vantaggio principale della build incrementale al riavvio dell'utilità make dopo la modifica di un singolo file?",
+      "hint": "Pensate a quali fasi della build vengono rieseguite e quali risultati delle compilazioni precedenti vengono riutilizzati.",
+      "options": [
+        "Viene ricompilato in .o solo il file sorgente modificato, dopodiché il linker lo collega con i file .o precedentemente compilati",
+        "Tutti i file sorgente del progetto vengono forzatamente ricompilati da zero per prevenire errori",
+        "Il programma viene eseguito direttamente dal file di testo senza chiamare il compilatore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La compilazione incrementale fa risparmiare tempo: vengono ricompilati solo i file `.c` modificati (o dipendenti dai file modificati). I restanti file `.o` vengono presi già pronti e viene eseguito solo il linking finale.",
+        "Errato. La ricompilazione completa di tutti i file avverrebbe in assenza di un sistema di build o eseguendo `make clean`.",
+        "Errato. Il linguaggio C è compilato e la fase di creazione degli oggetti binari è obbligatoria."
+      ]
+    },
+    {
+      "id": "it_clang_3092",
+      "widget_id": "widget_clang_3092",
+      "topic": "Impatto della modifica dei file header sulla ricostruzione",
+      "q": "Perché la modifica di un singolo file header config.h costringe il sistema di build a ricompilare TUTTI i file .c che lo includono?",
+      "hint": "Ricordate come il preprocessore inserisce i file header in ciascuna unità di traduzione.",
+      "options": [
+        "Il preprocessore inserisce il codice di config.h in ciascun file .c, rendendoli sintatticamente nuove unità di traduzione",
+        "Il compilatore blocca i vecchi file .o a causa della violazione dei permessi di accesso al file header",
+        "I file header vengono compilati in file .o separati che vanno in conflitto con i moduli",
+        "Questo è un errore dell'utilità make che dovrebbe essere corretto rimuovendo config.h"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I file header non si compilano da soli. Il preprocessore inserisce il contenuto di `config.h` direttamente in ciascun file `.c`. La modifica del file header cambia il codice finale di tutte le unità di traduzione che lo hanno incluso.",
+        "Errato. La modifica dell'header non altera i permessi nel file system.",
+        "Errato. I file header `.h` non vengono compilati separatamente in file `.o`.",
+        "Errato. È un meccanismo standard e corretto per il tracciamento delle dipendenze."
+      ]
+    },
+    {
+      "id": "it_clang_3093",
+      "widget_id": null,
+      "topic": "Ricostruzione completa (Clean Build)",
+      "q": "In quale dei seguenti scenari il developer DEVE eseguire una ricostruzione completa del progetto (make clean && make)?",
+      "hint": "Pensate alle situazioni in cui le impostazioni globali di build o i flag del compilatore cambiano, ma il testo del sorgente `.c` non è stato modificato.",
+      "options": [
+        "Quando si modificano i flag del compilatore nel Makefile (ad esempio aggiungendo -O2 o cambiando l'architettura target)",
+        "Quando si aggiunge un nuovo commento alla fine della funzione main()",
+        "Quando si corregge un refuso in una stringa letterale all'interno di un file .c",
+        "Quando si rinomina una variabile locale all'interno di una funzione",
+        "Quando si formattano spazi e rientri in un file"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le utilità di build spesso tracciano solo le date di modifica dei file, ma non le modifiche ai flag di compilazione. Se si passa da `-O0` a `-O2` o si cambia l'architettura target nel `Makefile`, i file `.o` precedentemente compilati rimarranno con i vecchi parametri se non si esegue `clean`.",
+        "Errato. Per tracciare le modifiche al testo di un file è sufficiente una normale build incrementale.",
+        "Errato. La modifica di una stringa in un singolo file `.c` ricompila solo quel file.",
+        "Errato. Le modifiche locali in una funzione sono gestite correttamente dalla build incrementale.",
+        "Errato. La modifica della spaziatura influenzerà solo quel determinato file."
+      ]
+    },
+    {
+      "id": "it_clang_3094",
+      "widget_id": null,
+      "topic": "Header precompilati (Precompiled Headers / PCH)",
+      "q": "In che modo l'applicazione della tecnologia degli header precompilati (Precompiled Headers) velocizza i cicli di compilazione successivi?",
+      "hint": "Pensate a come si evita di rianalizzare ripetutamente giganteschi file header di sistema.",
+      "options": [
+        "Il compilatore salva in anticipo l'albero sintattico astratto (AST) dei grandi header in un formato binario interno, evitandone il re-parsing",
+        "PCH rimuove automaticamente le funzioni non utilizzate dalla memoria RAM del computer"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli header di sistema (ad esempio `<stdio.h>`, `<stdlib.h>`) contengono migliaia di righe di codice. PCH consente di analizzarli una volta sola e salvare la rappresentazione AST su disco, riducendo notevolmente il tempo di build di ciascun file `.c`.",
+        "Errato. PCH velocizza la fase di analisi sintattica durante la build, non gestisce la RAM durante l'esecuzione."
+      ]
+    },
+    {
+      "id": "it_clang_3095",
+      "widget_id": "widget_clang_3095",
+      "topic": "Caching della compilazione tramite ccache",
+      "q": "Qual è il principio di funzionamento dello strumento ccache nel caso di frequenti ripetizioni della build dello stesso codice?",
+      "hint": "Lo strumento confronta l'hash del codice sorgente e degli argomenti di compilazione con i risultati salvati in precedenza.",
+      "options": [
+        "ccache calcola l'hash del testo del file sorgente tenendo conto di macro e flag; se coincide con la cache, restituisce immediatamente il file .o pronto",
+        "ccache disabilita il controllo della sintassi per velocizzare la generazione del binario",
+        "ccache riscrive il codice C in C++ per utilizzare un compilatore più veloce",
+        "ccache esegue il programma in una macchina virtuale senza creare file .o",
+        "ccache archivia i file sorgente in un archivio tar.gz prima di ogni build",
+        "ccache rimuove tutti i file oggetto dopo ogni linking riuscito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `ccache` agisce da intermedio prima del compilatore. Calcola l'hash del codice preelaborato e dei parametri di chiamata. Se lo stesso hash viene trovato in cache, la compilazione viene saltata e il file oggetto pronto viene fornito all'istante.",
+        "Errato. `ccache` mantiene il 100% di precisione della build e non disabilita l'analisi sintattica.",
+        "Errato. Non si verifica alcuna traduzione di linguaggio.",
+        "Errato. `ccache` lavora proprio con il caching dei file oggetto `.o`.",
+        "Errato. La creazione di archivi non rientra nei compiti del cacher di compilazione.",
+        "Errato. L'eliminazione dei file `.o` vanificherebbe l'idea del riutilizzo."
+      ]
+    },
+    {
+      "id": "it_clang_3096",
+      "widget_id": "widget_clang_3096",
+      "topic": "Interruzione precoce della compilazione in caso di errori",
+      "q": "Perché il compilatore interrompe la build del file corrente quando rileva un errore sintattico critico?",
+      "hint": "Pensate a cosa succede all'albero sintattico (AST) dopo un guasto sintattico.",
+      "options": [
+        "Un albero sintattico compromesso porta alla generazione di una cascata di errori falsi nelle righe successive",
+        "Il compilatore cancella il file .c sorgente al primo errore per proteggere da codice non valido",
+        "Il sistema operativo blocca l'accesso al compilatore per 60 secondi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se la sintassi è violata, il parser perde il contesto (ad esempio manca una parentesi o un punto e virgola). Proseguire l'analisi porta a una 'valanga' di errori fantasma insensati che confondono lo sviluppatore.",
+        "Errato. I file sorgente non vengono mai cancellati dal compilatore in caso di errore.",
+        "Errato. Il SO non impone alcun ritardo artificiale né blocco."
+      ]
+    },
+    {
+      "id": "it_clang_3097",
+      "widget_id": "widget_clang_3097",
+      "topic": "Generazione automatica dei file di dipendenza (-MMD -MP)",
+      "q": "A cosa serve aggiungere i flag `-MMD -MP` a GCC/Clang durante la build regolare dei progetti?",
+      "hint": "Fate attenzione a come il sistema di build scopre da quali file `.h` dipende uno specifico file `.c`.",
+      "options": [
+        "Affinché il compilatore generi automaticamente file .d con le regole di dipendenza da tutti i file header inclusi",
+        "Affinché il compilatore corregga automaticamente gli errori sintattici nel codice",
+        "Per vietare l'uso di librerie dinamiche .so",
+        "Per tradurre tutti i commenti del codice in lingua inglese"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I flag `-MMD -MP` costringono il compilatore a creare, durante la build, file `.d` in cui sono elencati tutti i file header effettivamente inclusi nel `.c`. Ciò consente a `make` di sapere esattamente quando ricompilare un file se uno qualsiasi degli header cambia.",
+        "Errato. I flag di generazione delle dipendenze non modificano il codice sorgente né correggono errori.",
+        "Errato. Questi flag non influiscono sul tipo di linking.",
+        "Errato. Il compilatore non si occupa della traduzione dei commenti."
+      ]
+    },
+    {
+      "id": "it_clang_3098",
+      "widget_id": null,
+      "topic": "Dichiarazioni anticipate (Forward Declarations) e velocizzazione della ricostruzione",
+      "q": "In che modo l'uso delle dichiarazioni anticipate (Forward Declarations) delle strutture al posto dell'inclusione del file header velocizza la ricostruzione?",
+      "hint": "Pensate alla riduzione del numero di dipendenze fatali tra i file header.",
+      "options": [
+        "Riduce il numero di file interessati dalle modifiche alla struttura interna della struct, interrompendo le dipendenze a cascata",
+        "Consente al compilatore di eseguire il programma senza la fase di linking",
+        "Aumenta la quantità di memoria RAM disponibile nella fase di esecuzione",
+        "Sostituisce le chiamate di funzione con salti diretti al BIOS",
+        "Trasforma le strutture in tipi di dati atomici"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se in un file header viene usato solo un puntatore a una struttura (`struct Node;`), non è necessario includere l'intero `node.h`. Se i campi di `struct Node` cambiano, i file che usano solo la dichiarazione anticipata non richiederanno la ricompilazione.",
+        "Errato. La fase di linking rimane obbligatoria.",
+        "Errato. Le dichiarazioni anticipate sono una tecnica di ottimizzazione dei tempi di compilazione e della struttura del codice, non della memoria del programma.",
+        "Errato. Le dichiarazioni anticipate non cambiano il meccanismo di chiamata delle funzioni.",
+        "Errato. Il tipo di dato rimane una struttura."
+      ]
+    },
+    {
+      "id": "it_clang_3099",
+      "widget_id": null,
+      "topic": "Ottimizzazione in fase di linking (LTO) e tempo di build",
+      "q": "Come influisce l'abilitazione dell'opzione Link Time Optimization (-flto) sul tempo di ricostruzione del progetto?",
+      "hint": "Pensate al lavoro che deve svolgere il linker quando analizza l'intero codice del progetto nel suo insieme.",
+      "options": [
+        "Rallenta notevolmente la fase di collegamento (linking), poiché il compilatore deve analizzare e ottimizzare nuovamente tutto il codice intermodulare",
+        "Velocizza il linking di 10 volte disabilitando i controlli sui tipi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `-flto`, i file oggetto non contengono il codice macchina definitivo, ma una rappresentazione intermedia (GIMPLE/LLVM IR). Tutto il lavoro pesante di inlining delle funzioni e ottimizzazione viene spostato alla fase di linking, rallentandola notevolmente.",
+        "Errato. LTO richiede un'analisi su larga scala dell'intero grafo di chiamata del programma, il che aumenta il tempo di linking."
+      ]
+    },
+    {
+      "id": "it_clang_3100",
+      "widget_id": "widget_clang_3100",
+      "topic": "Verifica dei timestamp (mtime) da parte dell'utilità Make",
+      "q": "In base a quale criterio l'utilità Make determina se è necessario eseguire nuovamente la regola di build di un target dai sorgenti?",
+      "hint": "Viene confrontata l'ora dell'ultima modifica (mtime) del file target e dei file da cui dipende.",
+      "options": [
+        "Confronta l'ora dell'ultima modifica (mtime) del file target con l'ora di modifica di tutti i suoi file di dipendenza",
+        "Calcola l'hash matematico di tutti i commenti testuali nel file",
+        "Verifica la dimensione del file: se la dimensione in byte è pari, la ricostruzione viene eseguita di nuovo",
+        "Interroga il sistema operativo sulla disponibilità di core del processore liberi",
+        "Legge il numero di righe nel file Makefile",
+        "Confronta l'indirizzo IP di rete corrente con l'indirizzo del server di build"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'utilità `make` controlla i timestamp del file system (`mtime`). Se anche un solo file di dipendenza (ad esempio `main.c` o `header.h`) ha una data di modifica più recente del file target creato in precedenza (`main.o`), il comando di ricostruzione viene avviato.",
+        "Errato. Il `make` classico si affida ai timestamp del file system, non all'hashing dei file.",
+        "Errato. La parità della dimensione del file non ha alcuna relazione con la logica di funzionamento dei sistemi di build.",
+        "Errato. Il controllo delle risorse CPU viene usato per il parallelismo (`-j`), non per determinare la necessità di ricostruzione.",
+        "Errato. Il numero di righe nel Makefile non determina la validità degli oggetti compilati.",
+        "Errato. Gli indirizzi di rete non partecipano alla logica locale di tracciamento dei file."
+      ]
+    }
+  ]
+}

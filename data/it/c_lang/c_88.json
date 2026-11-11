@@ -1,0 +1,603 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2681",
+      "widget_id": "widget_clang_2681",
+      "topic": "Punti di interruzione (Breakpoint) nel debugger GDB",
+      "q": "Cosa fa il comando break 6 (o b 6) durante il debugging di un programma nel debugger interattivo GDB?",
+      "hint": "I punti di interruzione sospendono l'esecuzione del programma subito prima dell'esecuzione della riga indicata.",
+      "options": [
+        "Imposta un punto di interruzione alla riga 6, sospendendo l'esecuzione del programma prima della sua esecuzione",
+        "Rimuove la sesta riga dal codice sorgente del programma",
+        "Esegue forzatamente il programma 6 volte di seguito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `break 6` imposta un breakpoint alla riga 6. Il controllo passa al debugger subito prima che la riga venga eseguita.",
+        "Errato. Il debugger non modifica il codice sorgente del programma.",
+        "Errato. Il numero di esecuzioni del programma è gestito da altri meccanismi della suite di test."
+      ]
+    },
+    {
+      "id": "it_clang_2682",
+      "widget_id": null,
+      "topic": "Flag di compilazione per il debugging (-g)",
+      "q": "Quale flag del compilatore (GCC/Clang) è necessario passare durante la compilazione per includere le informazioni di debugging (tabella dei simboli, nomi delle variabili e numeri di riga) nel file binario?",
+      "hint": "Questo flag genera informazioni simboliche di debugging nel formato DWARF.",
+      "options": [
+        "-g",
+        "-O3",
+        "-Wall",
+        "-std=c11",
+        "-c"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-g` genera simboli di debugging, consentendo ai debugger (GDB/LLDB) di associare le istruzioni macchina al codice sorgente `.c`.",
+        "Errato. Il flag `-O3` abilita un'ottimizzazione aggressiva del codice, il che spesso complica il debugging.",
+        "Errato. Il flag `-Wall` abilita la visualizzazione della maggior parte dei warning del compilatore.",
+        "Errato. Il flag `-std=c11` specifica lo standard del linguaggio C.",
+        "Errato. Il flag `-c` esegue la compilazione senza la fase di linking."
+      ]
+    },
+    {
+      "id": "it_clang_2683",
+      "widget_id": "widget_clang_2683",
+      "topic": "Utilizzo della macro assert() da <assert.h>",
+      "q": "Cosa accadrà durante l'esecuzione di questo programma quando viene chiamata process(-5)?",
+      "hint": "La macro assert verifica l'espressione booleana passata ad essa durante l'esecuzione.",
+      "options": [
+        "Terminazione anomala del programma (abort) con stampa di un messaggio diagnostico su stderr",
+        "La funzione process restituirà il valore -1 e continuerà l'esecuzione",
+        "Il programma ignorerà il controllo e stamperà -5",
+        "Si verificherà un errore in fase di compilazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'espressione `-5 > 0` è falsa (`0`). La macro `assert` stampa il nome del file, il numero di riga e il testo della verifica su `stderr`, per poi chiamare `abort()`.",
+        "Errato. `assert` non restituisce uno stato di errore, ma interrompe immediatamente il programma.",
+        "Errato. Se i controlli sono abilitati, una condizione falsa fermerà l'esecuzione prima della chiamata a `printf`.",
+        "Errato. L'espressione viene valutata durante l'esecuzione del programma (runtime), quindi il codice verrà compilato con successo."
+      ]
+    },
+    {
+      "id": "it_clang_2684",
+      "widget_id": null,
+      "topic": "Disabilitazione dei controlli assert tramite NDEBUG",
+      "q": "In che modo è possibile disabilitare tutte le macro assert() nel codice per una build di release senza rimuoverle dal codice sorgente?",
+      "hint": "Esiste una macro del preprocessore speciale che disabilita l'espansione di assert.",
+      "options": [
+        "Definire la macro NDEBUG (ad esempio, passando il flag -DNDEBUG al compilatore)",
+        "Definire la macro DEBUG_OFF=1 all'inizio di ogni file"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, se la macro `NDEBUG` (No Debug) viene definita prima dell'inclusione di `<assert.h>`, tutte le macro `assert(...)` si trasformano in espressioni vuote `((void)0)`.",
+        "Errato. La macro `DEBUG_OFF` non è standardizzata per la libreria `<assert.h>`."
+      ]
+    },
+    {
+      "id": "it_clang_2685",
+      "widget_id": "widget_clang_2685",
+      "topic": "Rilevamento degli errori di memoria tramite AddressSanitizer (ASan)",
+      "q": "Quale tipo di errore nel codice fornito verrà rilevato con certezza dall'analizzatore dinamico AddressSanitizer (compilazione con -fsanitize=address)?",
+      "hint": "Nel codice viene eseguita una scrittura all'indice arr[10] in un array di 5 elementi.",
+      "options": [
+        "Scrittura oltre i limiti del blocco di memoria allocato (Heap buffer overflow)",
+        "Blocco del programma in un ciclo infinito a causa di una chiamata ricorsiva infinita",
+        "Divisione per zero durante i calcoli matematici",
+        "Errore sintattico di incompatibilità dei tipi di dati",
+        "Overflow di un valore intero di tipo int",
+        "Assenza del valore di ritorno nella funzione main"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'array contiene 5 elementi (indici 0..4). L'accesso ad `arr[10]` è un'uscita dai limiti del blocco di memoria allocato nell'heap (`Heap buffer overflow`), che viene immediatamente intercettato da ASan.",
+        "Errato. La ricorsione infinita viene rilevata dall'overflow dello stack, non da ASan.",
+        "Errato. Per controllare la divisione per zero si usa UndefinedBehaviorSanitizer (`-fsanitize=undefined`).",
+        "Errato. Gli errori di tipo vengono individuati dagli analizzatori statici e dal compilatore.",
+        "Errato. L'overflow di `int` viene verificato tramite `-fsanitize=signed-integer-overflow`.",
+        "Errato. La verifica del valore di ritorno viene eseguita dal compilatore."
+      ]
+    },
+    {
+      "id": "it_clang_2686",
+      "widget_id": "widget_clang_2686",
+      "topic": "Stampa delle informazioni di debugging tramite fprintf(stderr, ...)",
+      "q": "Perché durante il debugging a mezzo stampa è preferibile inviare i messaggi allo stream stderr anziché a stdout?",
+      "hint": "Rifletti sulla bufferizzazione degli stream di output in caso di arresto anomalo (crash) imprevisto del programma.",
+      "options": [
+        "stderr non è bufferizzato per impostazione predefinita, quindi il messaggio viene stampato all'istante e non va perso in caso di crash anomalo del programma",
+        "stderr scrive automaticamente tutti i messaggi nel file di log del sistema operativo",
+        "stdout non supporta la stampa formattata tramite gli specificatori %d e %s",
+        "L'output su stderr è 10 volte più veloce rispetto a stdout"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il buffer di `stdout` potrebbe non fare in tempo a svuotarsi sullo schermo prima di una terminazione anomala (`Segmentation fault`), mentre i messaggi dallo stream `stderr` (non bufferizzato) vengono mostrati immediatamente.",
+        "Errato. L'indirizzamento dell'output nei file di log dipende dalle impostazioni di reindirizzamento della shell del SO.",
+        "Errato. `stdout` supporta tutti gli specificatori di formato.",
+        "Errato. L'assenza di bufferizzazione in `stderr` lo rende leggermente più oneroso in termini di chiamate, ma garantisce la consegna dei messaggi."
+      ]
+    },
+    {
+      "id": "it_clang_2687",
+      "widget_id": null,
+      "topic": "Debugging passo-passo: step (s) vs next (n) in GDB",
+      "q": "Qual è la differenza principale tra i comandi step e next durante l'esecuzione passo-passo di un programma in GDB?",
+      "hint": "Pensa a come si comportano questi comandi quando incontrano una riga contenente una chiamata a una funzione.",
+      "options": [
+        "step entra all'interno della funzione chiamata, mentre next esegue interamente la funzione e passa alla riga successiva del contesto corrente",
+        "next entra all'interno della funzione chiamata, mentre step la scavalca",
+        "Non c'è alcuna differenza tra i comandi step e next"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `step` (\"step into\") entra all'interno del corpo della funzione chiamata. Il comando `next` (\"step over\") esegue la funzione in background e si arresta alla riga successiva del file corrente.",
+        "Errato. Al contrario: è proprio il comando `step` a entrare nella funzione.",
+        "Errato. La differenza è fondamentale durante il debugging delle funzioni di librerie terze rispetto al proprio codice."
+      ]
+    },
+    {
+      "id": "it_clang_2688",
+      "widget_id": "widget_clang_2688",
+      "topic": "Analisi dei leak di memoria tramite Valgrind",
+      "q": "Quale strumento di analisi della memoria dinamica consente di individuare un leak di memoria nel programma fornito senza ricompilare il file?",
+      "hint": "Questo strumento esegue il file binario in un ambiente virtuale e traccia tutte le operazioni con l'heap.",
+      "options": [
+        "Valgrind (strumento Memcheck)",
+        "GDB",
+        "Make",
+        "GCC",
+        "AutoCAD"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `valgrind --leak-check=full ./app` traccia le chiamate a `malloc`/`free` e segnala i 100 byte allocati che non sono stati liberati prima dell'uscita da `main`.",
+        "Errato. `GDB` è un debugger interattivo, non traccia automaticamente le perdite di memoria.",
+        "Errato. `Make` è un sistema di automazione della build di progetti.",
+        "Errato. `GCC` è un compilatore.",
+        "Errato. `AutoCAD` è un software CAD/disegno tecnico."
+      ]
+    },
+    {
+      "id": "it_clang_2689",
+      "widget_id": null,
+      "topic": "Visualizzazione dello stack di chiamate (Backtrace) in GDB",
+      "q": "Quale comando del debugger GDB consente di visualizzare la catena di chiamate a funzione (stack di chiamate) che ha causato l'arresto anomalo del programma?",
+      "hint": "Il comando genera un elenco di frame dalla funzione corrente fino a main().",
+      "options": [
+        "backtrace (o bt)",
+        "run (o r)",
+        "list (o l)",
+        "print (o p)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `backtrace` (abbreviato in `bt`) mostra l'elenco di tutti i frame dello stack attivi, indicando l'ordine di chiamata delle funzioni e i relativi argomenti.",
+        "Errato. Il comando `run` avvia l'esecuzione del programma dall'inizio.",
+        "Errato. Il comando `list` mostra il codice sorgente attorno alla riga corrente.",
+        "Errato. Il comando `print` mostra il valore di una specifica variabile o espressione."
+      ]
+    },
+    {
+      "id": "it_clang_2690",
+      "widget_id": "widget_clang_2690",
+      "topic": "Macro predefinite __FILE__ e __LINE__ per il logging",
+      "q": "Quale ruolo svolgono le macro predefinite __FILE__ e __LINE__ durante la generazione dei log di debugging?",
+      "hint": "Il preprocessore sostituisce questi valori direttamente al momento della compilazione.",
+      "options": [
+        "__FILE__ viene espansa in un valore letterale stringa contenente il nome del file corrente, mentre __LINE__ in un numero intero contenente il numero della riga corrente",
+        "__FILE__ crea un nuovo file di log sul disco, mentre __LINE__ legge la riga successiva dallo standard input",
+        "__FILE__ memorizza la dimensione del file eseguibile, mentre __LINE__ il numero totale di righe nel progetto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Si tratta di macro predefinite del preprocessore C. Sostituiscono il nome del file del codice sorgente e il numero di riga corrente in fase di compilazione.",
+        "Errato. Queste macro non eseguono operazioni di I/O o di creazione file.",
+        "Errato. Si riferiscono solo al punto di chiamata corrente all'interno di uno specifico file sorgente."
+      ]
+    },
+    {
+      "id": "it_clang_2691",
+      "widget_id": "widget_clang_2691",
+      "topic": "Avvio del programma con argomenti in GDB",
+      "q": "Quale comando in GDB consente di avviare il programma e passargli gli argomenti della riga di comando (ad esempio la stringa \"hello\")?",
+      "hint": "Gli argomenti vengono passati subito dopo il comando di avvio del programma.",
+      "options": [
+        "run hello",
+        "start --args hello",
+        "set argv hello"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `run hello` (o `r hello`) avvia il programma sottoposto a debugging e passa `\"hello\"` come primo argomento della riga di comando `argv[1]`.",
+        "Errato. La sintassi `--args` viene usata all'avvio iniziale di `gdb` dalla shell (ad esempio `gdb --args ./app hello`).",
+        "Errato. Il comando `set argv` non esiste all'interno di una sessione GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2692",
+      "widget_id": "widget_clang_2692",
+      "topic": "Ispezione di valori e strutture tramite puntatore (print / p)",
+      "q": "In GDB, come si dereferenzia il puntatore ptr per stampare l'intero contenuto della struttura Point?",
+      "hint": "Utilizza il classico operatore di dereferenziazione del linguaggio C insieme al comando di stampa di GDB.",
+      "options": [
+        "print *ptr",
+        "print ptr->all",
+        "display ptr.x",
+        "inspect &ptr"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `print *ptr` (o `p *ptr`) dereferenzia il puntatore `ptr` e mostra tutti i campi della struttura nel formato `{x = 10, y = 20}`.",
+        "Errato. La sintassi `ptr->all` non esiste né in C né in GDB.",
+        "Errato. `display ptr.x` non funziona perché `ptr` è un puntatore, non una struttura.",
+        "Errato. `inspect` non è il comando principale per stampare valori e `&ptr` restituirebbe l'indirizzo del puntatore stesso."
+      ]
+    },
+    {
+      "id": "it_clang_2693",
+      "widget_id": null,
+      "topic": "Punti di interruzione condizionali (Conditional Breakpoint)",
+      "q": "Quale sintassi viene utilizzata in GDB per impostare un punto di interruzione alla riga 15 che si scateni solo quando è verificata la condizione i == 100?",
+      "hint": "La condizione viene specificata tramite la parola chiave if subito dopo il numero di riga.",
+      "options": [
+        "break 15 if i == 100",
+        "break 15 --when i==100",
+        "break 15 ? i == 100",
+        "set breakpoint 15 where i == 100",
+        "if (i == 100) break 15"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `break <riga> if <condizione>` crea un punto di interruzione che arresta l'esecuzione solo quando l'espressione è vera.",
+        "Errato. Il flag `--when` non viene usato durante l'impostazione dei breakpoint.",
+        "Errato. L'operatore ternario `?` non si usa nei comandi per l'impostazione dei breakpoint.",
+        "Errato. Il comando `set breakpoint` ha una sintassi del tutto diversa.",
+        "Errato. L'ordine del comando deve iniziare con la parola chiave `break`."
+      ]
+    },
+    {
+      "id": "it_clang_2694",
+      "widget_id": null,
+      "topic": "Ripresa dell'esecuzione del programma (continue)",
+      "q": "Quale comando in GDB riprende la normale esecuzione del programma fino al breakpoint successivo o fino al suo completamento?",
+      "hint": "Il comando principale per riprendere il processo dopo una pausa (abbreviato in 'c').",
+      "options": [
+        "continue",
+        "step",
+        "next",
+        "finish"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `continue` (o `c`) toglie il programma dalla pausa e riprende l'esecuzione alla massima velocità fino al breakpoint successivo o al termine del programma.",
+        "Errato. `step` esegue solo l'istruzione successiva entrando nelle funzioni.",
+        "Errato. `next` esegue l'istruzione successiva del contesto corrente.",
+        "Errato. `finish` esegue la funzione corrente fino al return e poi si arresta."
+      ]
+    },
+    {
+      "id": "it_clang_2695",
+      "widget_id": "widget_clang_2695",
+      "topic": "Ispezione di array dinamici (p *arr@N)",
+      "q": "In GDB, come si stampano i primi 5 elementi dell'array arr se si conoce soltanto il puntatore al suo inizio?",
+      "hint": "Per specificare il numero di elementi dell'array da stampare si usa l'operatore '@'.",
+      "options": [
+        "print *arr@5",
+        "print arr[0..5]",
+        "print arr->length(5)",
+        "show arr 5",
+        "display arr[5]",
+        "get arr 0 to 5"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `print *arr@5` indica a GDB di interpretare `arr` come un array e stampare 5 elementi a partire dal primo.",
+        "Errato. La sintassi di intervallo `0..5` non è supportata da GDB.",
+        "Errato. La chiamata a metodi come `length()` non è applicabile ai classici array del C.",
+        "Errato. Il comando `show` serve a visualizzare le impostazioni del debugger GDB stesso.",
+        "Errato. `display arr[5]` stamperà soltanto un singolo elemento, ovvero il 6° dell'array.",
+        "Errato. In GDB non esiste un comando `get` per gli array."
+      ]
+    },
+    {
+      "id": "it_clang_2696",
+      "widget_id": null,
+      "topic": "Analisi dei file di dump di memoria (Core Dump)",
+      "q": "È possibile utilizzare GDB per analizzare la causa del crash di un programma tramite un file di dump di memoria (core dump)?",
+      "hint": "Il dump di memoria registra lo stato esatto del processo e dello stack al momento del crash (Segmentation Fault).",
+      "options": [
+        "Sì, eseguendo gdb <eseguibile> <core_file>, è possibile esaminare lo stack delle chiamate e lo stato delle variabili al momento del crash",
+        "No, GDB è in grado di lavorare solo con programmi in tempo reale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `gdb ./app core` carica lo stato salvato del processo interrotto, consentendo di eseguire `bt` (backtrace) ed esaminare le variabili.",
+        "Errato. Il debugging post-mortem tramite core dump è una delle funzionalità chiave di GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2697",
+      "widget_id": "widget_clang_2697",
+      "topic": "Ispezione delle variabili della funzione corrente (info locals / info args)",
+      "q": "Quale comando GDB mostra i valori di tutte le variabili locali (sum, diff) all'interno della funzione calculate?",
+      "hint": "I comandi della famiglia 'info' mostra informazioni di riepilogo sull'ambiente corrente.",
+      "options": [
+        "info locals",
+        "info args",
+        "print all"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `info locals` mostra i nomi e i valori correnti di tutte le variabili locali nel frame di stack corrente.",
+        "Errato. `info args` mostrerà solo gli argomenti in ingresso della funzione (`a` e `b`).",
+        "Errato. Il comando `print all` non esiste in GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2698",
+      "widget_id": null,
+      "topic": "Punti di osservazione (Watchpoint)",
+      "q": "A cosa serve il comando watch <variable> in GDB?",
+      "hint": "Questa funzione sospende il programma non su una riga specifica, ma quando i dati in memoria cambiano.",
+      "options": [
+        "Per arrestare il programma ogni volta che il valore della variabile <variable> viene modificato",
+        "Per stampare continuamente a schermo il valore della variabile a ogni passaggio",
+        "Per proteggere la variabile da modifiche (rendendola in sola lettura)",
+        "Per tracciare le perdite di memoria associate alla variabile",
+        "Per chiamare una funzione di intercettazione al momento dell'eliminazione della variabile"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un punto di osservazione (`watchpoint`) sospende l'esecuzione del programma nell'istante esatto in cui il valore memorizzato nella variabile cambia.",
+        "Errato. Per mostrare continuamente i valori a ogni passo si utilizza il comando `display`.",
+        "Errato. `watch` non impedisce la modifica della memoria.",
+        "Errato. `watch` non misura le quantità di memoria allocata e liberata.",
+        "Errato. Il programma passa semplicemente il controllo al debugger, senza chiamare funzioni definite dall'utente."
+      ]
+    },
+    {
+      "id": "it_clang_2699",
+      "widget_id": null,
+      "topic": "Navigazione tra i frame dello stack di chiamate (up / down)",
+      "q": "Quale comando GDB consente di salire di un livello nello stack di chiamate (verso il contesto che ha chiamato la funzione corrente)?",
+      "hint": "Nelle chiamate di stack, la direzione verso la funzione main() è considerata il livello superiore.",
+      "options": [
+        "up",
+        "down",
+        "back",
+        "top"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `up` sposta il contesto del debugger sul frame chiamante (più in alto nello stack, verso `main`).",
+        "Errato. `down` sposta il contesto verso il basso nello stack (più a fondo verso il punto di errore).",
+        "Errato. Il comando `back` non si usa per navigare nello stack.",
+        "Errato. Per passare a uno specifico frame si usa `frame` seguito dal relativo numero."
+      ]
+    },
+    {
+      "id": "it_clang_2700",
+      "widget_id": "widget_clang_2700",
+      "topic": "Modifica dei valori delle variabili direttamente durante il debugging (set var)",
+      "q": "Durante il debugging, come si modifica il valore della variabile num a 100 prima della valutazione della condizione per stampare \"Success\"?",
+      "hint": "Utilizza il comando per la modifica delle variabili 'set var'.",
+      "options": [
+        "set var num = 100",
+        "change num = 100",
+        "let num = 100",
+        "assign num = 100",
+        "update num = 100",
+        "edit num = 100"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `set var num = 100` modifica al volo il valore della variabile nella memoria del processo, consentendo di deviare il flusso nella rami `if`.",
+        "Errato. In GDB non esiste il comando `change`.",
+        "Errato. La parola chiave `let` non si usa in GDB.",
+        "Errato. Il comando `assign` non è supportato.",
+        "Errato. `update` non è un comando di assegnazione di valori in GDB.",
+        "Errato. Il comando `edit` serve per aprire il file sorgente in un editor esterno."
+      ]
+    },
+    {
+      "id": "it_clang_2701",
+      "widget_id": "widget_clang_2701",
+      "topic": "Compilazione con generazione delle informazioni di debugging",
+      "q": "Quale comando consente di compilare il file main.c tramite GCC per includere i simboli di debugging e generare l'eseguibile app?",
+      "hint": "Per includere le tabelle dei simboli di debugging si usa il flag -g.",
+      "options": [
+        "gcc -g main.c -o app",
+        "gcc -O3 main.c -o app",
+        "gcc -c main.c -o app"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-g` genera simboli di debugging (formato DWARF), mentre `-o app` definisce il nome dell'eseguibile di output.",
+        "Errato. Il flag `-O3` abilita il massimo livello di ottimizzazione per la release e non le informazioni di debugging.",
+        "Errato. Il flag `-c` esegue soltanto la compilazione in file oggetto (`.o`) senza la fase di linking."
+      ]
+    },
+    {
+      "id": "it_clang_2702",
+      "widget_id": null,
+      "topic": "Influenza del flag -g sulla logica di funzionamento del programma",
+      "q": "La logica di funzionamento e il comportamento algoritmico di un programma C cambiano quando viene compilato con l'opzione -g?",
+      "hint": "L'opzione -g aggiunge tabelle di metadati per il debugger.",
+      "options": [
+        "No, l'opzione -g aggiunge solo metadati (simboli di debugging) e non altera la logica di funzionamento del codice compilato",
+        "Sì, l'opzione -g mette il programma in modalità emulazione e modifica l'ordine delle chiamate di funzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'opzione `-g` inserisce sezioni di debugging aggiuntive nel file binario (nomi delle variabili, numeri di riga) senza modificare la logica di esecuzione o l'ordine delle istruzioni.",
+        "Errato. L'esecuzione del programma rimane nativa; cambia solo la presenza dei metadati destinati alle utility esterne."
+      ]
+    },
+    {
+      "id": "it_clang_2703",
+      "widget_id": "widget_clang_2703",
+      "topic": "Interazione di -g con i flag di ottimizzazione (-O0 vs -O2)",
+      "q": "Perché durante lo sviluppo e il debugging del codice è preferibile utilizzare la combinazione di flag -O0 -g anziché -O2 -g?",
+      "hint": "Le ottimizzazioni del compilatore possono riordinare le istruzioni o eliminare le variabili temporanee.",
+      "options": [
+        "Con -O2 il compilatore potrebbe ottimizzare o eliminare variabili temporanee (ad esempio temp) e fare l'inlining di funzioni, complicando il debugging passo-passo",
+        "La combinazione -O2 -g impedisce di lavorare con il debugger GDB",
+        "Il flag -O0 risolve automaticamente i leak di memoria nel codice",
+        "Con il flag -O2 il compilatore restituisce un errore di compilazione se viene aggiunto -g"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'ottimizzazione `-O2` elimina le variabili \"superflue\" e riordina le istruzioni. Di conseguenza, il cursore del debugger potrebbe saltare in modo caotico tra le righe (`<optimized out>`). `-O0` disabilita le ottimizzazioni.",
+        "Errato. GDB funziona anche con eseguibili ottimizzati (`-O2 -g`), sebbene il debugging diventi più complesso.",
+        "Errato. Il flag `-O0` disabilita le ottimizzazioni, ma non risolve gli errori relativi alla memoria.",
+        "Errato. Le opzioni `-O2` e `-g` sono assolutamente compatibili in fase di compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_2704",
+      "widget_id": null,
+      "topic": "Livelli di informazioni di debugging (-g1, -g2, -g3)",
+      "q": "In cosa differisce il livello di informazioni di debugging -g3 rispetto al livello standard -g (equivalente a -g2)?",
+      "hint": "Questo livello include informazioni generate già nella fase del preprocessore.",
+      "options": [
+        "-g3 include informazioni aggiuntive, come le macro del preprocessore (#define), rendendole accessibili nel debugger",
+        "-g3 abilita automaticamente la massima ottimizzazione del codice -O3",
+        "-g3 velocizza la compilazione del programma di 3 volte",
+        "-g3 avvia automaticamente GDB subito dopo il completamento della compilazione",
+        "-g3 vieta l'uso dei punti di interruzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il livello `-g3` include il massimo volume di informazioni, comprese le tabelle delle macro `#define`, consentendo di valutarne i valori in GDB (`print MACRO`).",
+        "Errato. I livelli `-g` non sono in alcun modo legati all'ottimizzazione `-O`.",
+        "Errato. Al contrario, la generazione di tabelle di debugging aggiuntive aumenta leggermente il tempo di compilazione.",
+        "Errato. Il compilatore si limita a generare il file e non avvia il debugger.",
+        "Errato. I punti di interruzione sono disponibili su tutti i livelli da `-g1` a `-g3`."
+      ]
+    },
+    {
+      "id": "it_clang_2705",
+      "widget_id": null,
+      "topic": "Flag specifico per GDB -ggdb",
+      "q": "Quali sono le particolarità nell'usare il flag del compilatore -ggdb al posto dello standard -g?",
+      "hint": "Questo flag attiva le estensioni di debugging supportate nello specifico dal debugger di GNU.",
+      "options": [
+        "-ggdb genera informazioni di debugging in un formato il più esteso e ottimizzato possibile per GDB",
+        "-ggdb forza il programma ad eseguirsi solo su ambienti Linux",
+        "-ggdb rende impossibile l'esecuzione del programma su architetture a 32 bit"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-ggdb` produce dati di debugging nel formato più adatto a GDB (comprese le estensioni specifiche se supportate dal sistema).",
+        "Errato. Il flag `-ggdb` è disponibile su qualsiasi piattaforma supportata da GCC/Clang (inclusi macOS e Windows).",
+        "Errato. L'architettura dell'ampiezza di parola è determinata da altri flag del compilatore."
+      ]
+    },
+    {
+      "id": "it_clang_2706",
+      "widget_id": "widget_clang_2706",
+      "topic": "Impatto di -g sulla dimensione del file eseguibile",
+      "q": "In che modo la compilazione con l'opzione -g influisce sulla dimensione fisica del file binario compilato su disco?",
+      "hint": "Al file vengono aggiunte tabelle di nomi, tipi, numeri di riga e file.",
+      "options": [
+        "La dimensione del file aumenta poiché vi vengono scritte le tabelle dei simboli di debugging",
+        "La dimensione del file diminuisce grazie alla compressione del codice",
+        "La dimensione del file rimane del tutto invariata"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A causa dell'aggiunta delle sezioni di debugging DWARF, il file binario può aumentare di dimensioni di diversi ordini rispetto a una build di release.",
+        "Errato. Le tabelle di debugging aggiungono dati al binario invece di comprimerlo.",
+        "Errato. Senza `-g` le tabelle di debugging sono assenti, di conseguenza i file differiscono per dimensione."
+      ]
+    },
+    {
+      "id": "it_clang_2707",
+      "widget_id": "widget_clang_2707",
+      "topic": "Rimozione dei simboli di debugging tramite la utility strip",
+      "q": "Quale utility di sistema consente di rimuovere completamente i simboli di debugging da un eseguibile già compilato prima della distribuzione?",
+      "hint": "Il nome dell'utility in inglese significa \"spogliare / rimuovere\".",
+      "options": [
+        "strip",
+        "clean",
+        "remove-debug",
+        "gdb --clean"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `strip ./app` rimuove le tabelle dei simboli di debugging dal file eseguibile, riducendone notevolmente le dimensioni prima della pubblicazione.",
+        "Errato. `clean` è di solito un target personalizzato nel `Makefile` (`make clean`) e non un'utility per rimuovere i simboli.",
+        "Errato. Non esiste un'utility standard con questo nome nei sistemi POSIX.",
+        "Errato. Il debugger GDB non si usa per modificare e ripulire gli eseguibili compilati."
+      ]
+    },
+    {
+      "id": "it_clang_2708",
+      "widget_id": "widget_clang_2708",
+      "topic": "Debugging delle macro del preprocessore e il flag -g3",
+      "q": "Durante il debugging in GDB, il comando print MAX_BUFFER_SIZE restituisce l'errore «No symbol in current context». Con quale flag occorre compilare il codice affinché il debugger veda la macro?",
+      "hint": "Il livello standard -g2 non salva le macro testuali del preprocessore nelle tabelle di debugging.",
+      "options": [
+        "-g3",
+        "-g0",
+        "-Wall",
+        "-O1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le macro `#define` vengono sostituite prima della compilazione e poi \"dimenticate\". Solo il livello `-g3` conserva le definizioni delle macro nel file di debugging.",
+        "Errato. `-g0` disabilita completamente le informazioni di debugging.",
+        "Errato. `-Wall` abilita i warning del compilatore.",
+        "Errato. `-O1` gestisce l'ottimizzazione."
+      ]
+    },
+    {
+      "id": "it_clang_2709",
+      "widget_id": null,
+      "topic": "Uso combinato di -g e sanitizer dinamici",
+      "q": "Perché durante l'analisi dinamica tramite sanitizer (ad esempio -fsanitize=address) si raccomanda di passare anche il flag -g?",
+      "hint": "Rifletti su come il sanitizer segnala la posizione dell'errore nel suo report.",
+      "options": [
+        "Affinché nello stack trace e nei report del sanitizer siano indicati esattamente i nomi dei file sorgente e i numeri di riga",
+        "Affinché il sanitizer funzioni senza utilizzare la memoria RAM",
+        "Senza il flag -g i sanitizer disabilitano completamente tutti i controlli",
+        "Il flag -g velocizza l'esecuzione dei controlli del sanitizer"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Senza `-g`, AddressSanitizer mostrerà solo gli indirizzi delle istruzioni in memoria (ad esempio `0x400684`), mentre con `-g` fornirà un report leggibile con il nome del file e il numero di riga (`main.c:12`).",
+        "Errato. Il flag `-g` non influisce sulla quantità di memoria allocata dal sanitizer.",
+        "Errato. Il sanitizer funziona anche senza `-g`, ma il report di crash conterrà solo gli indirizzi di memoria.",
+        "Errato. La presenza dei simboli di debugging non influisce sulla velocità di esecuzione del sanitizer."
+      ]
+    },
+    {
+      "id": "it_clang_2710",
+      "widget_id": null,
+      "topic": "Impatto delle sezioni DWARF sul consumo di RAM all'avvio",
+      "q": "Le sezioni di debugging del file binario create dal flag -g influiscono sul consumo di memoria RAM durante la normale esecuzione del programma senza debugger?",
+      "hint": "Fai attenzione al fatto che le sezioni di debugging del file vengano caricate o meno nello spazio di indirizzamento del processo del SO all'avvio.",
+      "options": [
+        "No, le sezioni di debugging non vengono caricate in memoria RAM durante l'esecuzione normale e non aumentano il consumo di RAM",
+        "Sì, tutte le tabelle di debugging vengono lette nella RAM all'avvio del processo, aumentandone il consumo",
+        "Sì, questo causa leak di memoria durante la chiamata a qualsiasi funzione",
+        "Il consumo di RAM aumenta esattamente di 3 volte",
+        "Il programma va in crash con l'errore Out Of Memory",
+        "L'avvio del file diventa possibile solo con i permessi di amministratore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel formato ELF/PE le sezioni di debugging (DWARF) non sono contrassegnate come caricabili (`ALLOC`). Il sistema operativo le ignora durante il mapping del file in RAM, quindi non c'è consumo di memoria.",
+        "Errato. Le sezioni di debugging vengono lette da disco solo quando un debugger si collega al processo.",
+        "Errato. I simboli di debugging sono dati passivi memorizzati su disco.",
+        "Errato. Queste sezioni non hanno alcun impatto sulla quantità di memoria virtuale del processo.",
+        "Errato. Non si verifica alcun esaurimento della memoria.",
+        "Errato. I permessi di esecuzione non sono in alcun modo collegati alla presenza delle tabelle di debugging."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,587 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2711",
+      "widget_id": "widget_clang_2711",
+      "topic": "Avvio di GDB per il debugging di un file binario",
+      "q": "Come si avvia correttamente il debugger GDB dal terminale Linux per eseguire il debugging del file binario compilato app?",
+      "hint": "Il nome dell'utility del debugger viene passato insieme al percorso dell'eseguibile.",
+      "options": [
+        "gdb ./app",
+        "run gdb app",
+        "debug ./app"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `gdb ./app` avvia il debugger e carica la tabella dei simboli del binario specificato.",
+        "Errato. `run` è un comando interno di GDB, non della shell del sistema operativo.",
+        "Errato. L'utility di debugging standard di GNU si chiama `gdb`, non `debug`."
+      ]
+    },
+    {
+      "id": "it_clang_2712",
+      "widget_id": null,
+      "topic": "Ciclo di vita base di una sessione di debugging",
+      "q": "Qual è la sequenza standard di passaggi di una sessione di lavoro base in GDB?",
+      "hint": "Il debugging inizia con l'avvio del debugger fornendo il binario, seguito dall'impostazione dei breakpoint, l'avvio del programma e l'analisi passo-passo.",
+      "options": [
+        "Avvio di GDB con il file -> impostazione dei breakpoint -> avvio del programma (run) -> esecuzione passo-passo/ispezione -> uscita (quit)",
+        "Avvio del programma -> impostazione dei breakpoint durante l'esecuzione -> riavvio del compilatore -> uscita"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Questo è l'ordine standard del flusso di lavoro: prima si carica il file nel debugger, si impostano i punti di interruzione, si avvia l'esecuzione con `run` e si analizza lo stato, per poi terminare la sessione.",
+        "Errato. L'impostazione dei breakpoint in GDB avviene prima dell'avvio dell'esecuzione del programma o durante una sua pausa, mentre il riavvio del compilatore non viene eseguito all'interno di GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2713",
+      "widget_id": null,
+      "topic": "Chiusura della sessione del debugger GDB",
+      "q": "Quale comando (o la sua abbreviazione) viene utilizzato per terminare la sessione di lavoro con GDB e ritornare al terminale?",
+      "hint": "Il comando deriva dal verbo inglese «uscire/abbandonare» (to quit).",
+      "options": [
+        "quit (o q)",
+        "exit (o e)",
+        "close (o c)",
+        "stop (o s)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `quit` (o la sua abbreviazione `q`) termina il processo del debugger e restituisce il controllo alla riga di comando.",
+        "Errato. `exit` non è un comando standard di GDB.",
+        "Errato. `c` è l'abbreviazione per `continue`.",
+        "Errato. `s` è l'abbreviazione per `step`."
+      ]
+    },
+    {
+      "id": "it_clang_2714",
+      "widget_id": "widget_clang_2714",
+      "topic": "Differenza tra i comandi run e start in GDB",
+      "q": "Qual è la differenza principale tra i comandi run e start all'avvio di un programma in GDB?",
+      "hint": "Il comando start imposta automaticamente un breakpoint temporaneo al punto di ingresso della funzione principale.",
+      "options": [
+        "run esegue il programma fino al primo breakpoint o fino al termine, mentre start imposta un breakpoint temporaneo su main() e vi si arresta immediatamente",
+        "start ricompila il codice, mentre run esegue solo il file già pronto",
+        "run funziona solo con gli argomenti, mentre start funziona senza argomenti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `start` è equivalente alla sequenza `break main` + `run`. Sospende l'esecuzione sulla prima riga della funzione `main()`.",
+        "Errato. GDB non ricompila il codice sorgente.",
+        "Errato. Entrambi i comandi possono accettare argomenti della riga di comando."
+      ]
+    },
+    {
+      "id": "it_clang_2715",
+      "widget_id": "widget_clang_2715",
+      "topic": "Visualizzazione del codice sorgente (list / l)",
+      "q": "Quale comando consente di visualizzare il codice sorgente del programma attorno alla riga corrente durante una sessione di debugging in GDB?",
+      "hint": "Il comando deriva dalla parola inglese list («elenco»).",
+      "options": [
+        "list (o l)",
+        "show",
+        "code",
+        "view",
+        "cat"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `list` (o `l`) mostra 10 righe del codice sorgente attorno alla posizione corrente di esecuzione.",
+        "Errato. `show` mostra i parametri di configurazione di GDB stesso.",
+        "Errato. Il comando `code` non esiste in GDB.",
+        "Errato. `view` non è un comando per stampare il codice sorgente in GDB.",
+        "Errato. `cat` è un'utility Linux e non un comando integrato di GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2716",
+      "widget_id": null,
+      "topic": "Collegamento a un processo in esecuzione (Attach)",
+      "q": "Quale comando o flag permette di collegare GDB a un processo già in esecuzione nel sistema tramite il suo ID di processo (PID)?",
+      "hint": "Per fare questo si usa il comando attach all'interno di GDB o il flag -p all'avvio da console.",
+      "options": [
+        "gdb -p <PID> da console oppure attach <PID> all'interno di GDB",
+        "gdb --connect <PID> da console",
+        "bind <PID> all'interno di GDB",
+        "gdb --PID <PID> da console"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-p <PID>` o il comando interno `attach <PID>` consentono di collegarsi a un processo già in esecuzione nel SO.",
+        "Errato. La sintassi `--connect` non è supportata per specificare il PID.",
+        "Errato. Il comando `bind` si riferisce alle scorciatoie da tastiera della shell Readline.",
+        "Errato. Il flag `--PID` non esiste; la sintassi corretta è `-p` o `--pid`."
+      ]
+    },
+    {
+      "id": "it_clang_2717",
+      "widget_id": null,
+      "topic": "Ricompilazione del programma durante una sessione GDB",
+      "q": "Cosa succede se durante una sessione attiva di GDB il codice sorgente viene ricompilato da un terminale esterno e l'utente inserisce il comando run?",
+      "hint": "GDB controlla automaticamente la data di ultima modifica del file eseguibile su disco.",
+      "options": [
+        "GDB rileva automaticamente le modifiche al binario, ricarica la tabella dei simboli e avvia la versione aggiornata",
+        "GDB restituisce un errore di accesso e si chiude forzatamente",
+        "GDB continua a eseguire la vecchia versione dalla memoria cache finché il debugger non viene riavviato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando si invoca `run`, GDB controlla il timestamp del file su disco. Se il file è stato aggiornato, GDB ricarica automaticamente le tabelle dei simboli prima del nuovo avvio.",
+        "Errato. Non si verificano errori di accesso in seguito a una corretta ricompilazione.",
+        "Errato. GDB svuota dinamicamente la cache dei simboli quando rileva modifiche al file binario."
+      ]
+    },
+    {
+      "id": "it_clang_2718",
+      "widget_id": "widget_clang_2718",
+      "topic": "Attivazione della modalità pseudografica TUI",
+      "q": "Come si attiva la modalità pseudografica TUI (Text User Interface) in GDB per visualizzare contemporaneamente il codice sorgente e la console del debugger?",
+      "hint": "Utilizza il comando layout oppure la combinazione di tasti Ctrl+X A.",
+      "options": [
+        "layout src oppure la combinazione Ctrl+X A",
+        "gui enable",
+        "set interface tui",
+        "enable window",
+        "view code --split",
+        "tui start"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `layout src` (o la combinazione `Ctrl+X A`) suddivide la finestra del terminale in riquadri, mostrando il codice sorgente e la console integrata di GDB.",
+        "Errato. Il comando `gui enable` non esiste in GDB.",
+        "Errato. Il comando `set interface tui` non esiste.",
+        "Errato. `enable window` non attiva l'interfaccia pseudografica.",
+        "Errato. `view code` non fa parte della sintassi di GDB.",
+        "Errato. `tui start` non è un nome di comando valido."
+      ]
+    },
+    {
+      "id": "it_clang_2719",
+      "widget_id": null,
+      "topic": "Ripetizione dell'ultimo comando premendo Invio",
+      "q": "Cosa succede premendo il tasto <Invio> su una riga di input vuota nella modalità console interattiva di GDB?",
+      "hint": "È un'utilissima funzionalità del debugger per avanzare passo-passo senza dover digitare nuovamente l'ultimo comando.",
+      "options": [
+        "Viene ripetuto il comando eseguito precedentemente (ad esempio next o step)",
+        "Viene forzato l'arresto del processo sottoposto a debugging"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'input vuoto `<Invio>` fa sì che GDB ripeta automaticamente il comando precedente, il che è molto comodo durante il debugging passo-passo con `n` o `s`.",
+        "Errato. Per arrestare il processo si utilizza la combinazione `Ctrl+C`."
+      ]
+    },
+    {
+      "id": "it_clang_2720",
+      "widget_id": "widget_clang_2720",
+      "topic": "Impostazione degli argomenti del programma tramite set args",
+      "q": "Quale comando all'interno di una sessione interattiva di GDB consente di impostare in anticipo gli argomenti della riga di comando per le successive chiamate a run?",
+      "hint": "Si utilizza un comando della famiglia 'set'.",
+      "options": [
+        "set args <argomenti>",
+        "config argv <argomenti>",
+        "param set <argomenti>",
+        "options <argomenti>"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `set args <argomenti>` salva i parametri che verranno automaticamente passati ad `argv` a ogni successiva esecuzione di `run`.",
+        "Errato. Il comando `config argv` non esiste.",
+        "Errato. Il comando `param set` non è presente in GDB.",
+        "Errato. Il comando `options` non viene utilizzato per configurare gli argomenti."
+      ]
+    },
+    {
+      "id": "it_clang_2721",
+      "widget_id": "widget_clang_2721",
+      "topic": "Impostazione di un breakpoint tramite numero di riga",
+      "q": "Quale comando consente di impostare un punto di interruzione alla riga 6 del file attualmente aperto in GDB?",
+      "hint": "Utilizza la parola chiave base per i punti di interruzione e il numero della riga desiderata.",
+      "options": [
+        "break 6",
+        "stop at 6",
+        "pause 6"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `break 6` (o la forma breve `b 6`) imposta un punto di interruzione alla riga numero 6.",
+        "Errato. La sintassi `stop at` non si usa in GDB.",
+        "Errato. Il comando `pause` non viene usato per impostare punti di interruzione."
+      ]
+    },
+    {
+      "id": "it_clang_2722",
+      "widget_id": null,
+      "topic": "Punto di interruzione in uno specifico file del progetto",
+      "q": "Se un progetto è composto da più file (main.c, utils.c), come si imposta correttamente un punto di interruzione alla riga 25 del file utils.c?",
+      "hint": "Il nome del file e il numero di riga sono separati da due punti.",
+      "options": [
+        "break utils.c:25",
+        "break 25 in utils.c",
+        "set breakpoint utils.c line 25",
+        "break utils.c -> 25",
+        "break file=utils.c line=25"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `break nome_file:numero_riga` indica chiaramente in quale file del codice sorgente sospendere l'esecuzione del programma.",
+        "Errato. La preposizione `in` non si usa per specificare il file quando si imposta un breakpoint.",
+        "Errato. Il comando `set breakpoint` ha uno scopo completamente diverso.",
+        "Errato. L'operatore `->` non fa parte della sintassi di GDB.",
+        "Errato. Il formato con le chiavi esplicite `file=`/`line=` non è supportato dal debugger."
+      ]
+    },
+    {
+      "id": "it_clang_2723",
+      "widget_id": "widget_clang_2723",
+      "topic": "Visualizzazione dell'elenco dei punti di interruzione",
+      "q": "Quale comando mostra l'elenco di tutti i punti di interruzione attivi e non attivi con i relativi numeri identificativi e righe?",
+      "hint": "Un comando del gruppo 'info' che restituisce informazioni sui breakpoint.",
+      "options": [
+        "info breakpoints",
+        "show breaks",
+        "list breakpoints",
+        "display breakpoints"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `info breakpoints` (o `info b`) mostra una tabella con tutti i punti di interruzione creati, i loro ID progressivi, lo stato e le righe associate.",
+        "Errato. Il comando `show` riguarda le impostazioni dell'ambiente GDB.",
+        "Errato. Il comando `list` mostra il codice sorgente.",
+        "Errato. `display` serve a mostrare continuamente il valore delle espressioni ad ogni passo."
+      ]
+    },
+    {
+      "id": "it_clang_2724",
+      "widget_id": null,
+      "topic": "Rimozione di un punto di interruzione tramite il suo ID",
+      "q": "Cosa rimuove il comando delete 2 in GDB?",
+      "hint": "Fai attenzione se il numero si riferisce al numero di riga del codice sorgente oppure all'ID del punto di interruzione nella tabella info breakpoints.",
+      "options": [
+        "Il punto di interruzione con l'ID 2 dall'elenco info breakpoints",
+        "Il punto di interruzione situato alla riga numero 2 del file sorgente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'argomento del comando `delete` è l'ID del punto di interruzione dall'elenco `info breakpoints`, non il numero di riga nel file.",
+        "Errato. Il numero di riga non viene usato come argomento del comando `delete`. Per rimuoverlo occorre conoscerne l'ID tramite `info b`."
+      ]
+    },
+    {
+      "id": "it_clang_2725",
+      "widget_id": null,
+      "topic": "Disattivazione temporanea di un punto di interruzione (disable)",
+      "q": "Quale comando permette di disattivare temporaneamente il punto di interruzione con ID 1 senza rimuoverlo dall'elenco di GDB?",
+      "hint": "Il comando disabilita il controllo del punto di interruzione mantenendone la posizione salvata.",
+      "options": [
+        "disable 1",
+        "turn off 1",
+        "deactivate 1",
+        "mute 1",
+        "pause breakpoint 1",
+        "ignore 1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `disable 1` rende non attivo il punto di interruzione numero 1. In seguito può essere riattivato con `enable 1`.",
+        "Errato. Il comando `turn off` non esiste in GDB.",
+        "Errato. Il termine `deactivate` non viene usato nella sintassi del debugger.",
+        "Errato. Il comando `mute` non è presente in GDB.",
+        "Errato. `pause breakpoint` è una sintassi non valida.",
+        "Errato. Il comando `ignore` imposta il numero di volte da ignorare un breakpoint, non lo disattiva completamente."
+      ]
+    },
+    {
+      "id": "it_clang_2726",
+      "widget_id": "widget_clang_2726",
+      "topic": "Punti di interruzione temporanei (tbreak)",
+      "q": "Qual è la particolarità del comando tbreak 6 quando si imposta un punto di interruzione per riga?",
+      "hint": "Fai attenzione al prefisso 't' (temporary).",
+      "options": [
+        "Si attiva esattamente una sola volta sulla riga indicata e subito dopo viene rimosso automaticamente",
+        "Viene impostato con un ritardo e viene eliminato dopo 10 secondi di tempo reale",
+        "Si attiva soltanto nel caso in cui si verifichi un errore alla riga 6"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `tbreak` (temporary breakpoint) sospende l'esecuzione sulla riga una volta sola, dopodiché viene eliminato automaticamente.",
+        "Errato. Il tempo reale non influisce in alcun modo sul funzionamento di `tbreak`.",
+        "Errato. Gli errori o le eccezioni non influiscono sull'attivazione di `tbreak`."
+      ]
+    },
+    {
+      "id": "it_clang_2727",
+      "widget_id": null,
+      "topic": "Offset relativo di riga (break +N)",
+      "q": "Dove verrà impostato un punto di interruzione se durante una pausa alla riga 10 si esegue il comando break +5?",
+      "hint": "Il segno più indica un offset relativo in avanti rispetto alla riga corrente.",
+      "options": [
+        "Alla riga 15 (10 + 5)",
+        "Alla riga 5",
+        "Alla 5a riga dalla fine del file",
+        "Nella funzione chiamata '+5'"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `break +N` conta `N` righe in avanti rispetto alla riga corrente in cui si è arrestato il debugger (10 + 5 = 15).",
+        "Errato. L'offset `-5` avrebbe contato le righe all'indietro (fino alla riga 5).",
+        "Errato. Il conteggio dalla fine del file non si effettua con questa sintassi.",
+        "Errato. Si tratta di un indirizzamento relativo per righe di codice."
+      ]
+    },
+    {
+      "id": "it_clang_2728",
+      "widget_id": null,
+      "topic": "Punti di interruzione in sospeso (Pending Breakpoints)",
+      "q": "È possibile impostare in GDB un punto di interruzione su una riga di un file non ancora caricato in memoria (ad esempio da una libreria dinamica)?",
+      "hint": "GDB è in grado di rinviare l'attivazione del punto di interruzione fino al caricamento dei simboli in memoria.",
+      "options": [
+        "Sì, GDB proporrà di creare un «pending breakpoint» (punto di interruzione in sospeso) che si attiverà al caricamento del codice",
+        "No, GDB terminerà immediatamente con un errore critico se il file non è presente nella memoria corrente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se il file sorgente o la libreria non sono ancora stati caricati, GDB chiede: «Make breakpoint pending on future shared library load?». Accettando, viene creato un breakpoint in sospeso.",
+        "Errato. GDB gestisce correttamente questi casi fornendo il meccanismo dei pending breakpoint."
+      ]
+    },
+    {
+      "id": "it_clang_2729",
+      "widget_id": "widget_clang_2729",
+      "topic": "Momento della pausa rispetto alla riga in esecuzione",
+      "q": "Se il programma si è arrestato su un punto di interruzione impostato sulla riga count += 5;, l'espressione in quella riga è già stata eseguita in quel momento?",
+      "hint": "Pensa a quando il debugger rileva il controllo: PRIMA o DOPO l'esecuzione dell'istruzione alla riga corrente.",
+      "options": [
+        "No, il programma si arresta immediatamente prima dell'esecuzione di quella riga",
+        "Sì, la riga è già stata completamente eseguita e il debugger mostra il risultato",
+        "La riga è stata eseguita a metà"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il punto di interruzione passa sempre il controllo al debugger *prima* che l'istruzione della riga corrispondente venga eseguita dal processore.",
+        "Errato. Se la riga fosse già stata eseguita, il valore di `count` sarebbe già cambiato prima della pausa.",
+        "Errato. A livello atomico di riga di codice, il debugger sospende l'esecuzione strettamente prima di iniziare l'intera riga."
+      ]
+    },
+    {
+      "id": "it_clang_2730",
+      "widget_id": null,
+      "topic": "Rimozione di tutti i punti di interruzione",
+      "q": "Quale comando senza argomenti azzera ed elimina completamente tutti i punti di interruzione creati nella sessione corrente?",
+      "hint": "Il comando richiederà una conferma del tipo 'Delete all breakpoints? (y or n)'.",
+      "options": [
+        "delete (o d)",
+        "clear all",
+        "remove *",
+        "reset breakpoints"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `delete` senza parametri richiede conferma e rimuove completamente la tabella di tutti i punti di interruzione impostati.",
+        "Errato. Il comando `clear` richiede di specificare una riga o una funzione concreta.",
+        "Errato. La sintassi `remove *` non si usa per rimuovere i punti di interruzione.",
+        "Errato. Il comando `reset breakpoints` non esiste in GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2731",
+      "widget_id": "widget_clang_2731",
+      "topic": "Impostazione di un breakpoint per nome di funzione",
+      "q": "Con quale comando in GDB è possibile impostare un punto di interruzione esattamente al momento dell'ingresso nella funzione process?",
+      "hint": "Indica il nome della funzione subito dopo il comando base del breakpoint.",
+      "options": [
+        "break process",
+        "break entry process",
+        "set break process"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `break nome_funzione` (o `b process`) imposta un punto di interruzione sulla prima istruzione eseguibile all'interno della funzione indicata.",
+        "Errato. La parola chiave `entry` non viene usata per associare il breakpoint al nome della funzione.",
+        "Errato. La sintassi `set break` non esiste in GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2732",
+      "widget_id": null,
+      "topic": "Punto di interruzione su una funzione in uno specifico file",
+      "q": "Come si imposta correttamente un punto di interruzione sulla funzione compute definita nel file math_utils.c per evitare collisioni con funzioni omonime in altri moduli?",
+      "hint": "Il nome del file e il nome della funzione sono separati da due punti.",
+      "options": [
+        "break math_utils.c:compute",
+        "break compute in math_utils.c",
+        "break math_utils.c->compute",
+        "set breakpoint math_utils.c/compute",
+        "break file:math_utils.c func:compute"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi `break file:funzione` indica univocamente a GDB in quale contesto di file sorgente deve essere associato il punto di interruzione.",
+        "Errato. La preposizione `in` non viene usata per associare la funzione al file.",
+        "Errato. Il simbolo `->` non viene applicato nella sintassi delle posizioni in GDB.",
+        "Errato. La barra `/` si usa per parametri di formattazione nei comandi di stampa, non nei percorsi delle funzioni.",
+        "Errato. I prefissi espliciti `file:` e `func:` in questo contesto non sono corretti."
+      ]
+    },
+    {
+      "id": "it_clang_2733",
+      "widget_id": "widget_clang_2733",
+      "topic": "Punto di interruzione su funzioni della libreria standard C",
+      "q": "È possibile impostare un punto di interruzione sulla funzione della libreria standard malloc usando il comando break malloc?",
+      "hint": "Le funzioni di libreria risiedono in librerie dinamiche, ma possiedono un simbolo nella tabella dei simboli.",
+      "options": [
+        "Sì, GDB interromperà l'esecuzione del programma a ogni chiamata della funzione malloc",
+        "No, GDB vieta l'impostazione di punti di interruzione su funzioni appartenenti alla libreria dinamica C di sistema"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `break malloc` funzionerà perfettamente: il debugger intercetterà il simbolo `malloc` dalla libreria collegata `libc` e sospenderà il programma alla sua chiamata.",
+        "Errato. GDB è perfettamente in grado di impostare breakpoint su qualsiasi simbolo caricato dinamicamente nel sistema."
+      ]
+    },
+    {
+      "id": "it_clang_2734",
+      "widget_id": null,
+      "topic": "Impostazione di massa di punti di interruzione tramite espressioni regolari (rbreak)",
+      "q": "Quale azione esegue il comando rbreak ^test_ nel debugger GDB?",
+      "hint": "La lettera 'r' prima di 'break' indica l'uso di meccanismi Regex.",
+      "options": [
+        "Imposta punti di interruzione su tutte le funzioni il cui nome inizia con test_",
+        "Rimuove tutti i punti di interruzione nelle funzioni che iniziano con test_",
+        "Riavvia l'esecuzione del programma a partire dalla funzione test_",
+        "Azzera il valore di tutte le variabili nelle funzioni con prefisso test_"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `rbreak` accetta un'espressione regolare e imposta un breakpoint su tutte le funzioni del progetto i cui nomi corrispondono al modello.",
+        "Errato. Per rimuovere i punti di interruzione si usa il comando `delete`.",
+        "Errato. `rbreak` non modifica l'ordine o il punto di avvio del programma.",
+        "Errato. Le variabili non vengono modificate dal comando di impostazione dei breakpoint."
+      ]
+    },
+    {
+      "id": "it_clang_2735",
+      "widget_id": "widget_clang_2735",
+      "topic": "Stato del prologo di una funzione all'arresto su un breakpoint",
+      "q": "Il programma si è arrestato al punto di interruzione break add. Qual è lo stato degli argomenti a e b al momento della pausa?",
+      "hint": "Il punto di interruzione su una funzione scatta dopo il prologo, subito prima dell'esecuzione della prima istruzione del corpo.",
+      "options": [
+        "Gli argomenti a e b sono già stati passati e sono disponibili per l'ispezione, ma la prima riga del corpo della funzione non è ancora stata eseguita",
+        "Gli argomenti non sono ancora stati copiati nello stack e contengono dati casuali non inizializzati",
+        "La funzione add è già terminata completamente ed ha generato il risultato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! GDB salta il prologo in assembly della funzione, quindi al momento della pausa i parametri in ingresso sono già formati e pari ai valori passati, mentre il codice del corpo non è ancora stato eseguito.",
+        "Errato. I parametri passati sono già inizializzati nel frame della funzione.",
+        "Errato. Il programma si arresta all'ingresso della funzione, non al suo completamento."
+      ]
+    },
+    {
+      "id": "it_clang_2736",
+      "widget_id": null,
+      "topic": "Punto di interruzione tramite indirizzo diretto di memoria",
+      "q": "Quale comando GDB permette di impostare un punto di interruzione direttamente sull'indirizzo macchina di un'istruzione (ad esempio 0x401126)?",
+      "hint": "Per specificare che si lavora con un indirizzo di memoria esplicito si usa un asterisco (*) prima del numero.",
+      "options": [
+        "break *0x401126",
+        "break addr 0x401126",
+        "set break 0x401126",
+        "break @0x401126",
+        "goto 0x401126",
+        "breakpoint 0x401126"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il simbolo `*` nella sintassi di GDB indica che l'argomento deve essere valutato come indirizzo diretto di memoria (`break *0x401126`).",
+        "Errato. La parola chiave `addr` non è richiesta.",
+        "Errato. `set break` non è un comando valido.",
+        "Errato. Il simbolo `@` viene usato per specificare la lunghezza di un array, non per l'indirizzo.",
+        "Errato. `goto` effettua un salto incondizionato dell'esecuzione e non imposta un breakpoint.",
+        "Errato. Il comando si chiama `break` o `b`."
+      ]
+    },
+    {
+      "id": "it_clang_2737",
+      "widget_id": "widget_clang_2737",
+      "topic": "Punti di interruzione per nome di funzione senza simboli di debugging (-g)",
+      "q": "Il comando break internal_init funzionerà se il file eseguibile è stato compilato senza il flag di debugging -g, ma i simboli non sono stati rimossi (not stripped)?",
+      "hint": "I nomi delle funzioni globali e statiche sono conservati nella tabella dei simboli standard (ELF Symbol Table).",
+      "options": [
+        "Sì, GDB sarà in grado di trovare l'indirizzo della funzione tramite la normale tabella dei simboli del linker",
+        "No, senza il flag -g GDB non conosce in alcun modo i nomi delle funzioni",
+        "Sì, ma il debugger riavvierà automaticamente il compilatore con l'opzione -g",
+        "No, l'impostazione di un punto di interruzione per nome senza -g è possibile solo per la funzione main"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Anche senza i simboli DWARF di debugging, il nome della funzione è conservato nella tabella dei simboli di base del linker, pertanto `break internal_init` imposterà il breakpoint al suo indirizzo.",
+        "Errato. Senza `-g` si perdono i tipi di dati e i numeri di riga, ma i nomi delle funzioni esportate rimangono disponibili.",
+        "Errato. GDB non può riavviare la compilazione del codice.",
+        "Errato. Qualsiasi simbolo di funzione pubblico o statico supporta l'impostazione di un punto di interruzione."
+      ]
+    },
+    {
+      "id": "it_clang_2738",
+      "widget_id": null,
+      "topic": "Esecuzione fino all'uscita dalla funzione corrente (finish)",
+      "q": "Quale comando, durante una pausa all'interno di una funzione su un breakpoint, permette di eseguire il resto della funzione corrente alla massima velocità e di arrestarsi subito dopo il ritorno al contesto chiamante?",
+      "hint": "Il comando significa «terminare/finire» la funzione corrente.",
+      "options": [
+        "finish",
+        "return",
+        "stepout",
+        "exit"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `finish` esegue tutte le istruzioni rimanenti della funzione corrente e sospende il debugger sulla riga subito successiva alla sua chiamata.",
+        "Errato. Il comando `return` interrompe immediatamente la funzione senza eseguire il codice rimanente.",
+        "Errato. `stepout` non è un comando integrato di GDB.",
+        "Errato. `exit` termina la sessione di debugging o il processo."
+      ]
+    },
+    {
+      "id": "it_clang_2739",
+      "widget_id": "widget_clang_2739",
+      "topic": "Attivazioni ripetute di un punto di interruzione su funzione",
+      "q": "Nel codice, la funzione print_message viene chiamata due volte. Quante volte si attiverà il punto di interruzione break print_message durante l'esecuzione del programma tramite run?",
+      "hint": "I punti di interruzione sono permanenti (se non sono stati creati tramite tbreak) e si attivano a ogni ingresso.",
+      "options": [
+        "2 volte (una volta a ciascuna chiamata della funzione)",
+        "1 volta (solo alla prima chiamata)",
+        "3 volte (a ogni chiamata e all'uscita da main)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un normale punto di interruzione rimane attivo durante tutta la sessione, per cui l'esecuzione verrà interrotta a *ciascuna* delle 2 chiamate a `print_message`.",
+        "Errato. Per un'attivazione singola si utilizza il comando `tbreak`.",
+        "Errato. Il punto di interruzione si attiva solo all'ingresso nella funzione specificata."
+      ]
+    },
+    {
+      "id": "it_clang_2740",
+      "widget_id": null,
+      "topic": "Differenza tra i comandi finish e return in GDB",
+      "q": "Qual è la differenza fondamentale tra i comandi finish e return durante il debugging all'interno di una funzione?",
+      "hint": "Uno dei comandi porta a termine regolarmente il codice della funzione, mentre l'altro forza il ritorno di un valore senza eseguire il corpo rimanente.",
+      "options": [
+        "finish esegue le istruzioni rimanenti della funzione fino alla fine, mentre return interrompe forzatamente l'esecuzione della funzione in quel punto e restituisce il valore specificato",
+        "return completa la funzione fino alla fine, mentre finish svuota lo stack delle chiamate",
+        "finish funziona solo nella funzione main(), mentre return funziona in qualsiasi altra",
+        "Non c'è alcuna differenza tra i due comandi, sono sinonimi",
+        "return riavvia la funzione dalla prima riga"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `finish` lascia che la funzione arrivi all'istruzione `return` in modo naturale, mentre il comando `return <val>` forza immediatamente l'uscita dalla funzione ignorando il codice rimanente.",
+        "Errato. Al contrario: è proprio il comando `finish` a portare a termine la funzione.",
+        "Errato. Entrambi i comandi funzionano in qualsiasi funzione del programma.",
+        "Errato. Il comportamento è fondamentalmente diverso.",
+        "Errato. Nessuno di questi comandi riavvia la funzione dall'inizio."
+      ]
+    }
+  ]
+}

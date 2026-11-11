@@ -1,0 +1,580 @@
+{
+  "subject": "Programmazione в C",
+  "questions": [
+    {
+      "id": "it_clang_2921",
+      "widget_id": "widget_clang_2921",
+      "topic": "Significato e decodifica del flag -Wall",
+      "q": "Cosa significa il flag -Wall durante la compilazione di un programma C con GCC?",
+      "hint": "Presta attenzione alle prime lettere del nome: Warning All.",
+      "options": [
+        "Abilita un ampio set degli avvisi del compilatore più importanti e comuni",
+        "Abilita gli avvisi esclusivamente per il lavoro con le librerie standard",
+        "Forzatamente ottimizza il codice per lavorare con tutti gli stack di memoria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-Wall` attiva il gruppo base di avvisi del compilatore per la maggior parte degli errori tipici e delle strutture sospette.",
+        "Non corretto. Il flag analizza tutto il codice utente, non solo le chiamate alle librerie.",
+        "Non corretto. I flag di avviso (`-W...`) non ottimizzano il codice binario."
+      ]
+    },
+    {
+      "id": "it_clang_2922",
+      "widget_id": null,
+      "topic": "Copertura completa del flag -Wall",
+      "q": "Il flag -Wall abilita assolutamente TUTTI i possibili avvisi esistenti in GCC?",
+      "hint": "Rifletti se esistono altri flag come -Wextra.",
+      "options": [
+        "No, -Wall include solo i principali avvisi più comuni; per quelli aggiuntivi esistono altri flag (ad esempio, -Wextra)",
+        "Sì, il flag -Wall attiva assolutamente il 100% degli avvisi supportati dal compilatore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A dispetto del nome «All», il flag non include affatto tutti gli avvisi. Per abilitare controlli più specifici si usano i flag `-Wextra`, `-Wpedantic` e altri.",
+        "Non corretto. Non tutti gli avvisi rientrano nel gruppo `-Wall`, poiché alcuni di essi potrebbero causare troppi falsi positivi."
+      ]
+    },
+    {
+      "id": "it_clang_2923",
+      "widget_id": "widget_clang_2923",
+      "topic": "Avvisi sulle variabili non utilizzate (-Wunused-variable)",
+      "q": "Quale avviso genererà GCC con il flag -Wall per la funzione process_data dell'esempio?",
+      "hint": "Presta attenzione alla variabile locale temp.",
+      "options": [
+        "Un avviso per variabile non utilizzata (unused variable 'temp')",
+        "Un avviso di overflow dello stack di chiamata",
+        "Un errore di tipo di argomento nella chiamata a printf",
+        "Un errore per valore di ritorno mancante in main"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `temp` viene calcolata ma mai letta in seguito. Il flag `-Wall` abilita il controllo `-Wunused-variable` ed emetterà un avviso.",
+        "Non corretto. Lo stack non va in overflow in questo esempio.",
+        "Non corretto. La chiamata a `printf(\"Done\\n\")` è corretta.",
+        "Non corretto. La funzione `main` contiene `return 0`."
+      ]
+    },
+    {
+      "id": "it_clang_2924",
+      "widget_id": null,
+      "topic": "Combinazione di flag di avviso e ottimizzazione",
+      "q": "Perché per un tracciamento efficace delle variabili non inizializzate (-Wuninitialized all'interno di -Wall) è spesso necessario specificare un flag di ottimizzazione (ad esempio, -O1 o -O2)?",
+      "hint": "L'analisi del flusso di dati viene eseguita durante il lavoro dell'ottimizzatore di codice.",
+      "options": [
+        "L'analisi del flusso di dati (data-flow analysis) per la ricerca di variabili non inizializzate avviene durante l'esecuzione dell'ottimizzatore",
+        "Senza ottimizzazione, GCC ignora completamente qualsiasi flag di warning",
+        "Il flag -O1 azzera forzatamente tutte le variabili non inizializzate",
+        "Questo è necessario solo nel sistema operativo Windows",
+        "Senza il flag -O1 il compilatore mostra un messaggio di errore di build"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! GCC costruisce il grafo del flusso di controllo e dei dati quando l'ottimizzazione è abilitata, quindi gli avvisi come `-Wuninitialized` funzionano con maggiore precisione con le opzioni `-O1`/`-O2`.",
+        "Non corretto. Il compilatore tiene conto dei flag di avviso anche senza ottimizzazione.",
+        "Non corretto. L'ottimizzatore non riempie le variabili di zeri contrariamente allo standard C.",
+        "Non corretto. Il comportamento del compilatore GCC è identico sui diversi SO.",
+        "Non corretto. La build senza `-O1` viene completata con successo."
+      ]
+    },
+    {
+      "id": "it_clang_2925",
+      "widget_id": "widget_clang_2925",
+      "topic": "Controllo delle stringhe di formato di printf (-Wformat)",
+      "q": "Quale avviso genererà GCC con il flag -Wall durante la compilazione di questo codice?",
+      "hint": "Confronta il tipo della variabile val e lo specificatore di formato %d.",
+      "options": [
+        "Un avviso per mancata corrispondenza tra il tipo double e lo specificatore %d (expects argument of type 'int', but argument 2 has type 'double')",
+        "Un errore di divisione per zero nel preprocessore",
+        "Un avviso di errore sintattico nel nome della funzione main"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-Wall` include `-Wformat`, che confronta gli specificatori nella stringa di formato con i tipi degli argomenti passati.",
+        "Non corretto. Non c'è alcuna divisione per zero nel codice.",
+        "Non corretto. La firma `int main(void)` è corretta."
+      ]
+    },
+    {
+      "id": "it_clang_2926",
+      "widget_id": null,
+      "topic": "Avviso sui tipi dei valori di ritorno (-Wreturn-type)",
+      "q": "Come reagisce il flag -Wall all'assenza dell'istruzione return in una funzione con tipo di ritorno diverso da void?",
+      "hint": "Rifletti se l'esecuzione raggiunge la fine della funzione.",
+      "options": [
+        "Restituisce l'avviso 'control reaches end of non-void function'",
+        "Aggiunge automaticamente return 0 alla fine della funzione senza mostrare messaggi",
+        "Interrompe il processo con un errore di sintassi 'missing return keyword'",
+        "Modifica il tipo del valore di ritorno della funzione in void",
+        "Trasforma tutte le variabili all'interno della funzione in globali",
+        "Causa un errore del linker undefined reference"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il controllo `-Wreturn-type` fa parte di `-Wall` e avvisa lo sviluppatore se il controllo raggiunge la fine della funzione senza una chiamata a `return`.",
+        "Non corretto. Il compilatore non inserisce i valori automaticamente.",
+        "Non corretto. In C l'assenza di return non è considerata un errore sintattico (error).",
+        "Non corretto. La firma della funzione non viene modificata.",
+        "Non corretto. L'ambito di visibilità delle variabili rimane invariato.",
+        "Non corretto. Non si verifica alcun errore di linking qui."
+      ]
+    },
+    {
+      "id": "it_clang_2927",
+      "widget_id": "widget_clang_2927",
+      "topic": "Avviso sulle parentesi durante l'assegnazione (-Wparentheses)",
+      "q": "Di cosa avviserà esattamente il compilatore GCC con il flag -Wall nella condizione if (flag = 1)?",
+      "hint": "Presta attenzione alla sostituzione del confronto con un'assegnazione.",
+      "options": [
+        "Di un possibile uso accidentale dell'operatore di assegnazione '=' al posto del confronto '==' (suggest parentheses around assignment used as truth value)",
+        "Dell'inammissibilità dell'uso di variabili intere nella condizione if",
+        "Del fatto che il valore di flag debba essere solo con segno meno",
+        "Della mancanza della parola chiave else"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'assegnazione in una condizione di ramificazione è un refuso comune, di cui `-Wall` informa lo sviluppatore.",
+        "Non corretto. L'uso di numeri interi come vero/falso è standard in C.",
+        "Non corretto. Il segno del numero non ha importanza.",
+        "Non corretto. La presenza del ramo `else` non è richiesta."
+      ]
+    },
+    {
+      "id": "it_clang_2928",
+      "widget_id": null,
+      "topic": "Differenza tra -Wall e -Wextra",
+      "q": "In cosa il flag -Wextra differisce dal flag -Wall?",
+      "hint": "Extra indica controlli aggiuntivi che non rientrano nel set base All.",
+      "options": [
+        "-Wextra include un set di avvisi aggiuntivi (ad esempio, il confronto tra signed/unsigned) non presenti nel gruppo standard -Wall",
+        "-Wextra annulla l'effetto di -Wall e lascia solo gli errori critici",
+        "-Wextra è un sinonimo obsoleto del flag -Werror"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `-Wextra` (in precedenza `-W`) estende l'elenco dei controlli di `-Wall`, aggiungendo regole più specifiche (ad esempio, controlli sui parametri di funzione non utilizzati).",
+        "Non corretto. `-Wextra` integra `-Wall`, non lo annulla.",
+        "Non corretto. `-Wextra` emette avvisi, non li trasforma in errori."
+      ]
+    },
+    {
+      "id": "it_clang_2929",
+      "widget_id": null,
+      "topic": "Uso di più flag di avviso",
+      "q": "Quale combinazione di flag è consigliata nello sviluppo C moderno per garantire la massima qualità e sicurezza del codice?",
+      "hint": "Abilitare gli avvisi principali, quelli aggiuntivi e bloccare la build in loro presenza.",
+      "options": [
+        "-Wall -Wextra -Werror",
+        "-Wall -w -O3",
+        "-w -Werror",
+        "-Wall -std=c89 -w",
+        "-Wextra -w"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La combinazione `-Wall -Wextra -Werror` attiva la massima gamma di controlli utili e garantisce che il programma non venga compilato in presenza anche di un solo punto sospetto.",
+        "Non corretto. Il flag `-w` sopprime gli avvisi, annullando il significato di `-Wall`.",
+        "Non corretto. `-w` sopprime gli avvisi, quindi `-Werror` non si attiverà.",
+        "Non corretto. La presenza di `-w` zittisce i messaggi del compilatore.",
+        "Non corretto. Il flag `-w` disabilita l'output degli avvisi."
+      ]
+    },
+    {
+      "id": "it_clang_2930",
+      "widget_id": "widget_clang_2930",
+      "topic": "Rilevamento del comportamento indefinito tramite -Wall",
+      "q": "Cosa mostrerà GCC con il flag -Wall -O2 durante la build della funzione calculate dell'esempio?",
+      "hint": "Presta attenzione all'inizializzazione della variabile y.",
+      "options": [
+        "Un avviso per l'uso della variabile non inizializzata 'y' ('y' is used uninitialized)",
+        "Un messaggio che indica che il codice è completamente sicuro e compilato senza avvertenze"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La variabile `y` è dichiarata ma non inizializzata, dopodiché viene letta in `x + y`. `-Wall` evidenzierà questo problema.",
+        "Non corretto. La lettura del valore di una variabile locale non inizializzata causa un comportamento indefinito (UB)."
+      ]
+    },
+    {
+      "id": "it_clang_2931",
+      "widget_id": "widget_clang_2931",
+      "topic": "Avviso su parametro non utilizzato (-Wunused-parameter)",
+      "q": "Il parametro y viene passato alla funzione calculate_sum, ma non viene utilizzato nel suo corpo. Quale avviso genererà GCC abilitando il flag -Wextra?",
+      "hint": "Presta attenzione agli argomenti delle funzioni non utilizzati.",
+      "options": [
+        "warning: unused parameter 'y' [-Wunused-parameter]",
+        "error: parameter 'y' must be used",
+        "warning: missing return statement in function"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-Wextra` include l'avviso `-Wunused-parameter`, indicando che l'argomento `y` ricevuto dalla funzione non viene utilizzato in alcun modo.",
+        "Non corretto. Un argomento non utilizzato non è un errore sintattico (error).",
+        "Non corretto. La presenza dell'istruzione `return` nella funzione annulla questo controllo."
+      ]
+    },
+    {
+      "id": "it_clang_2932",
+      "widget_id": null,
+      "topic": "Scopo del flag -Wextra",
+      "q": "Qual è lo scopo principale del flag -Wextra nel compilatore GCC?",
+      "hint": "Questo flag abilita controlli aggiuntivi non coperti dal flag -Wall.",
+      "options": [
+        "Abilita avvisi utili aggiuntivi che non rientrano nel gruppo standard -Wall",
+        "Sostituisce tutti gli avvisi con errori fatali di compilazione",
+        "Abilita una modalità extra di ottimizzazione per la velocità di esecuzione del programma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-Wextra` attiva un secondo livello di controlli utili (ad esempio, confronti signed/unsigned, parametri non utilizzati e corpi vuoti di cicli/condizioni).",
+        "Non corretto. Il flag responsabile della conversione degli avvisi in errori è `-Werror`.",
+        "Non corretto. I flag della famiglia `-W` si occupano dell'analisi del codice, non dell'ottimizzazione."
+      ]
+    },
+    {
+      "id": "it_clang_2933",
+      "widget_id": "widget_clang_2933",
+      "topic": "Confronto tra tipi con e senza segno (-Wsign-compare)",
+      "q": "Nel codice vengono confrontate una variabile di tipo int (con segno) e unsigned int (senza segno). Di cosa avviserà il compilatore con il flag -Wextra?",
+      "hint": "Le operazioni di confronto tra tipi signed e unsigned possono portare a risultati inaspettati a causa della conversione di tipo.",
+      "options": [
+        "warning: comparison of integer expressions of different signedness: 'int' and 'unsigned int' [-Wsign-compare]",
+        "error: cannot compare signed and unsigned types",
+        "warning: variable 'b' is uninitialized"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il confronto tra un `int` con segno e un `unsigned int` senza segno porta a una conversione implicita del numero negativo in un numero positivo molto grande. `-Wextra` avvisa di questo tramite `-Wsign-compare`.",
+        "Non corretto. Il linguaggio C consente tali confronti, quindi si tratta di un warning e non di un error.",
+        "Non corretto. La variabile `b` è esplicitamente inizializzata con il valore `10`."
+      ]
+    },
+    {
+      "id": "it_clang_2934",
+      "widget_id": null,
+      "topic": "Soppressione degli avvisi sui parametri non utilizzati",
+      "q": "Se un argomento di funzione non viene temporaneamente utilizzato, ma il flag -Wextra genera un avviso, come è possibile sopprimerlo correttamente direttamente nel codice C?",
+      "hint": "Il cast dell'argomento al tipo void comunica al compilatore l'ignoramento consapevole.",
+      "options": [
+        "Utilizzare il cast (void)param; all'interno del corpo della funzione o l'attributo __attribute__((unused))",
+        "Rimuovere il nome della variabile dagli argomenti, lasciando solo il tipo (come in C++)",
+        "Inserire la chiamata di funzione in un blocco speciale pragma ignore",
+        "Sostituire il tipo dell'argomento con auto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La struttura `(void)param;` o l'attributo `__attribute__((unused))` comunicano esplicitamente al compilatore che la variabile è deliberatamente non utilizzata.",
+        "Non corretto. In C standard (a differenza del C++) non è possibile omettere il nome del parametro nella definizione (non nel prototipo) della funzione.",
+        "Non corretto. Non esiste una direttiva `pragma ignore` per questo caso.",
+        "Non corretto. La parola chiave `auto` in C ha un significato diverso e non viene utilizzata per i parametri."
+      ]
+    },
+    {
+      "id": "it_clang_2935",
+      "widget_id": "widget_clang_2935",
+      "topic": "Avviso su corpo di condizione vuoto (-Wempty-body)",
+      "q": "Presta attenzione al punto e virgola subito dopo if (status == 1);. Quale avviso emetterà GCC con il flag -Wextra?",
+      "hint": "Il punto e virgola forma un corpo vuoto dell'istruzione condizionale.",
+      "options": [
+        "warning: suggest braces around empty body in an 'if' statement [-Wempty-body]",
+        "error: unexpected semicolon after 'if'",
+        "warning: uninitialized variable 'status'"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Inserendo `;` subito dopo `if(...)`, il programmatore rende vuoto il corpo dell'`if`. Il flag `-Wextra` rileva questo sospetto corpo vuoto della condizione.",
+        "Non corretto. Sintatticamente il punto e virgola è consentito, quindi non si tratta di un error.",
+        "Non corretto. La variabile `status` è inizializzata con il valore `1`."
+      ]
+    },
+    {
+      "id": "it_clang_2936",
+      "widget_id": null,
+      "topic": "Relazione tra i flag -Wall e -Wextra",
+      "q": "Il flag -Wextra include automaticamente il flag -Wall?",
+      "hint": "Rifletti se questi gruppi costituiscono flag indipendenti.",
+      "options": [
+        "No, -Wextra e -Wall sono gruppi di flag indipendenti; per la massima copertura del codice si raccomanda di specificarli insieme",
+        "Sì, -Wextra include automaticamente assolutamente tutti gli avvisi del flag -Wall"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `-Wextra` non include `-Wall`. Si tratta di due gruppi distinti di avvisi, pertanto un ottimo standard è il loro uso congiunto: `-Wall -Wextra`.",
+        "Non corretto. Abilitare solo `-Wextra` tralascerà alcuni avvisi del gruppo `-Wall`."
+      ]
+    },
+    {
+      "id": "it_clang_2937",
+      "widget_id": "widget_clang_2937",
+      "topic": "Avvisi sui limiti dei tipi (-Wtype-limits)",
+      "q": "La condizione count >= 0 controlla una variabile senza segno unsigned int. Quale avviso mostrerà -Wextra?",
+      "hint": "I numeri senza segno non могут mai essere minori di zero.",
+      "options": [
+        "warning: comparison is always true due to limited range of data type [-Wtype-limits]",
+        "error: unsigned types cannot be compared with zero",
+        "warning: implicit type conversion from int to unsigned int"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `count` è di tipo `unsigned int`, la condizione `>= 0` sarà sempre vera. `-Wextra` avviserà della condizione insensata tramite `-Wtype-limits`.",
+        "Non corretto. Il confronto con lo zero è completamente corretto dal punto vista sintattico.",
+        "Non corretto. La conversione implicita di tipo in questa espressione non causa problemi."
+      ]
+    },
+    {
+      "id": "it_clang_2938",
+      "widget_id": null,
+      "topic": "Nome storico del flag -Wextra",
+      "q": "Quale nome più breve aveva il flag -Wextra nelle vecchie версии del compilatore GCC?",
+      "hint": "Il flag consisteva in una sola lettera maiuscola W.",
+      "options": [
+        "-W",
+        "-We",
+        "-Wmore",
+        "-Wext",
+        "-Wx"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nelle vecchie версии di GCC l'opzione `-Wextra` si chiamava semplicemente `-W`. Per maggiore chiarezza è stato successivamente aggiunto l'alias `-Wextra`.",
+        "Non corretto. Le opzioni `-We`, `-Wmore`, `-Wext` o `-Wx` non sono sinonimi storici."
+      ]
+    },
+    {
+      "id": "it_clang_2939",
+      "widget_id": "widget_clang_2939",
+      "topic": "Inizializzatori mancanti dei campi delle strutture (-Wmissing-field-initializers)",
+      "q": "Nella struttura struct Point è inizializzato solo il campo x. Quale avviso genererà -Wextra con questa inizializzazione?",
+      "hint": "Gli altri campi della struttura y e z non hanno ricevuto valori espliciti.",
+      "options": [
+        "warning: missing initializer for field 'y' of 'struct Point' [-Wmissing-field-initializers]",
+        "error: incomplete struct assignment",
+        "warning: struct alignment padding added"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Durante l'assegnazione degli elementi della struttura tramite designated initializers, `-Wextra` può emettere un avviso indicando che i campi `y` e `z` non sono stati inizializzati esplicitamente.",
+        "Non corretto. Non c'è alcun errore di assegnazione incompleta qui, la sintassi è valida.",
+        "Non corretto. Il padding (allineamento) della struttura non causa questo avviso."
+      ]
+    },
+    {
+      "id": "it_clang_2940",
+      "widget_id": null,
+      "topic": "Funzionamento congiunto dei flag -Wall, -Wextra e -Werror",
+      "q": "Quale comportamento mostrerà GCC durante la build di un progetto con la combinazione di opzioni gcc -Wall -Wextra -Werror main.c -o app se nel codice è presente un parametro di funzione non utilizzato?",
+      "hint": "Rifletti su come la combinazione di -Wextra (che trova il parametro non utilizzato) e -Werror influisca sulla build.",
+      "options": [
+        "Il flag -Wextra rileverà il parametro non utilizzato, mentre -Werror trasformerà questo avviso in un errore e interromperà la build senza creare app",
+        "Il compilatore ignorerà l'avviso e compilerà con successo il file app",
+        "Il flag -Werror rimuoverà automaticamente il parametro non utilizzato dal codice",
+        "Il compilatore mostrerà l'avviso, ma il file app verrà comunque creato con successo",
+        "Si verificherà un errore del preprocessore a causa di un conflitto tra i flag",
+        "La build si fermerà solo nella fase del linker"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `-Wextra` genera `warning: unused parameter`, e `-Werror` lo interpreta immediatamente come errore critico, annullando la generazione del file `app`.",
+        "Non corretto. L'avviso non viene ignorato.",
+        "Non corretto. Il compilatore non modifica mai il codice sorgente in modo automatico.",
+        "Non corretto. Il flag `-Werror` impedisce la creazione del file eseguibile con qualsiasi warning.",
+        "Non corretto. I flag non entrano in conflitto tra loro.",
+        "Non corretto. Il processo si interromperà già nella fase di compilazione."
+      ]
+    },
+    {
+      "id": "it_clang_2941",
+      "widget_id": "widget_clang_2941",
+      "topic": "Conversione implicita da numero reale a intero",
+      "q": "Cosa succederà durante la compilazione di questo codice utilizzando l'opzione -Wconversion?",
+      "hint": "Rifletti sul passaggio di un valore di tipo double a una variabile di tipo int e sulla perdita della parte frazionaria.",
+      "options": [
+        "Il compilatore mostrerà un avviso sulla conversione implicita da double a int con possibile perdita di dati (conversion from 'double' to 'int' alter its value)",
+        "Il compilatore interromperà la build con un errore fatale di sintassi",
+        "Il codice verrà compilato assolutamente senza avvisi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'assegnazione di un `double` a una variabile di tipo `int` scarta la parte frazionaria. Il flag `-Wconversion` traccia tali conversioni implicite con perdita di precisione.",
+        "Non corretto. La conversione implicita dei tipi è consentita dallo standard C, quindi non ci sarà alcun errore (error).",
+        "Non corretto. Senza `-Wconversion` non ci sarebbe infatti alcun avviso, ma con esso GCC emette un warning."
+      ]
+    },
+    {
+      "id": "it_clang_2942",
+      "widget_id": null,
+      "topic": "Presenza di -Wconversion nei meta-gruppi di flag",
+      "q": "Il flag -Wconversion rientra per impostazione predefinita nei gruppi di avviso -Wall o -Wextra?",
+      "hint": "Ricorda se le conversioni implicite di tipo causano troppi avvisi nel vecchio codice.",
+      "options": [
+        "No, -Wconversion non fa parte né di -Wall né di -Wextra e viene impostato separatamente",
+        "Sì, -Wconversion fa parte del gruppo -Wextra",
+        "Sì, -Wconversion fa parte del gruppo -Wall"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A causa dell'enorme quantità di conversioni implicite nel codice C, il flag `-Wconversion` è stato separato e non rientra né in `-Wall` né in `-Wextra` per non appesantire il log di build.",
+        "Non corretto. Questo flag non è presente nei gruppi `-Wall` e `-Wextra`.",
+        "Non corretto. Il flag `-Wall` non include controlli sulle conversioni implicite dei tipi."
+      ]
+    },
+    {
+      "id": "it_clang_2943",
+      "widget_id": "widget_clang_2943",
+      "topic": "Troncamento della dimensione degli interi (Integer Truncation)",
+      "q": "L'assegnazione di una variabile di tipo long long a una variabile di tipo int comporta un troncamento delle dimensioni. Di cosa avviserà -Wconversion?",
+      "hint": "Confronta la dimensione dei tipi long long e int.",
+      "options": [
+        "warning: conversion from 'long long int' to 'int' may alter its value [-Wconversion]",
+        "error: type mismatch between long long and int",
+        "warning: variable 'small_num' is not used",
+        "warning: overflow in preprocessor expression"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `long long` (64 bit) non entra interamente in un `int` (32 bit), causando il troncamento del valore. `-Wconversion` informa della potenziale perdita di dati.",
+        "Non corretto. Questo non è un errore critico di compilazione.",
+        "Non corretto. La variabile `small_num` viene passata a `printf`.",
+        "Non corretto. L'espressione viene valutata durante l'esecuzione, non nel preprocessore."
+      ]
+    },
+    {
+      "id": "it_clang_2944",
+      "widget_id": null,
+      "topic": "Modo per eliminare l'avviso -Wconversion",
+      "q": "Come può uno sviluppatore eliminare l'avviso -Wconversion se la conversione implicita di tipo viene eseguita in modo consapevole?",
+      "hint": "Ricorda la sintassi del cast esplicito (explicit casting) nel linguaggio C.",
+      "options": [
+        "Utilizzare un cast esplicito (explicit cast), ad esempio (int)my_double_var",
+        "Aggiungere la parola chiave volatile alla variabile",
+        "Utilizzare la parola chiave auto nella dichiarazione",
+        "Avvolgere l'assegnazione in una macro #define",
+        "Inserire l'assegnazione in un blocco if separato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il cast esplicito `(tipo_destinazione)valore` comunica al compilatore che il programmatore comprende i rischi di perdita di precisione, quindi l'avviso viene soppresso.",
+        "Non corretto. `volatile` si limita a disabilitare l'ottimizzazione dell'accesso alla memoria.",
+        "Non corretto. `auto` non influisce sugli avvisi di conversione di tipo.",
+        "Non corretto. Le macro non nascondono le conversioni implicite dall'analizzatore di tipo.",
+        "Non corretto. Il blocco `if` non influisce in alcun modo sulle regole di conversione dei tipi."
+      ]
+    },
+    {
+      "id": "it_clang_2945",
+      "widget_id": "widget_clang_2945",
+      "topic": "Modifica del segno durante il passaggio a una funzione",
+      "q": "La funzione richiede un parametro unsigned int, ma le viene passato un valore negativo di tipo int. Come reagirà il compilatore con il flag -Wconversion?",
+      "hint": "Il passaggio di un numero negativo dove è previsto un tipo senza segno modifica l'interpretazione del segno.",
+      "options": [
+        "Emetterà un avviso sulla conversione di un tipo con segno in uno senza segno (conversion to 'unsigned int' from 'int' may change the sign of the result)",
+        "Sostituirà automaticamente -10 con 0 senza mostrare messaggi",
+        "Interromperà la build con l'errore 'invalid argument type'"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'assegnazione o il passaggio di un `int` negativo a un `unsigned int` cambia il segno e porta a un numero positivo molto grande. Il flag `-Wconversion` avvisa di questo problema.",
+        "Non corretto. Il compilatore non modifica il valore passato in 0.",
+        "Non corretto. La conversione dei tipi di segno è consentita dallo standard C."
+      ]
+    },
+    {
+      "id": "it_clang_2946",
+      "widget_id": null,
+      "topic": "Relazione tra i flag -Wconversion e -Wsign-conversion",
+      "q": "Quali sono le differenze tra i flag -Wconversion e -Wsign-conversion?",
+      "hint": "Uno di questi flag è altamente specializzato e risponde solo del cambio di segno durante la conversione.",
+      "options": [
+        "-Wconversion controlla i cambiamenti di dimensione e segno, mentre -Wsign-conversion controlla solo i cambiamenti del segno (signed/unsigned)",
+        "-Wsign-conversion è un flag obsoleto e non è supportato nelle versioni moderne di GCC",
+        "-Wconversion funziona solo con i numeri a virgola mobile, mentre -Wsign-conversion funziona con gli interi",
+        "-Wsign-conversion trasforma gli errori di segno in errori di linking"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `-Wconversion` copre il troncamento delle dimensioni (bit) e le modifiche del segno. Il flag `-Wsign-conversion` consente di abilitare separatamente solo gli avvisi relativi al cambio di segno.",
+        "Non corretto. Il flag `-Wsign-conversion` è attivamente supportato.",
+        "Non corretto. `-Wconversion` funziona con tutti i tipi di dati (sia interi che a virgola mobile).",
+        "Non corretto. Nessuno di questi flag interagisce con il linker."
+      ]
+    },
+    {
+      "id": "it_clang_2947",
+      "widget_id": "widget_clang_2947",
+      "topic": "Overflow durante l'assegnazione di una costante di dimensione inferiore",
+      "q": "Il valore 300 supera i limiti dell'intervallo signed char (-128..127). Quale avviso mostrerà -Wconversion?",
+      "hint": "Il numero 300 supera il valore massimo possibile per il tipo char a 8 bit.",
+      "options": [
+        "warning: conversion from 'int' to 'char' alters its value [-Wconversion]",
+        "error: integer constant 300 is illegal in C",
+        "warning: value 300 is rounded to 255",
+        "error: array index out of bounds",
+        "warning: missing semicolon at the end of statement",
+        "warning: char type cannot hold numeric values"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La costante `300` è di tipo `int`. La sua assegnazione a un `char` causa l'overflow dell'intervallo e il troncamento dei bit, cosa segnalata da `-Wconversion`.",
+        "Non corretto. Il numero 300 è una costante di tipo `int` del tutto valida.",
+        "Non corretto. Non viene effettuato un arrotondamento a 255, si verifica un troncamento del byte.",
+        "Non corretto. Nel codice non vengono usati array.",
+        "Non corretto. La sintassi dei punti e virgola è rispettata.",
+        "Non corretto. Il tipo `char` in C è un tipo numerico intero."
+      ]
+    },
+    {
+      "id": "it_clang_2948",
+      "widget_id": null,
+      "topic": "Conversione tra tipi interi della stessa dimensione",
+      "q": "-Wconversion avvisa della conversione implicita tra tipi della stessa dimensione ma di diversa segno (ad esempio, da int a unsigned int)?",
+      "hint": "Rifletti se il cambio di segno con lo stesso numero di bit possa portare a un cambio di valore.",
+      "options": [
+        "Sì, avvisa, poiché i valori negativi in int cambieranno il loro valore se interpretati come unsigned int",
+        "No, non avvisa, poiché la dimensione dei tipi in byte è la stessa"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Sebbene la dimensione in byte sia uguale, il valore semantico dei numeri negativi cambia, quindi `-Wconversion` (tramite `-Wsign-conversion`) emette un avviso.",
+        "Non corretto. La modifica dell'interpretazione del bit più significativo cambia il valore (value), che è controllato da questo flag."
+      ]
+    },
+    {
+      "id": "it_clang_2949",
+      "widget_id": "widget_clang_2949",
+      "topic": "Conversione da double a float",
+      "q": "L'assegnazione di un valore di tipo double a una variabile di tipo float può essere accompagnata da una perdita di precisione. Cosa genererà -Wconversion?",
+      "hint": "Double ha 64 bit, mentre float ne ha 32.",
+      "options": [
+        "warning: conversion from 'double' to 'float' changes value [-Wfloat-conversion]",
+        "error: cannot assign double to float without cast",
+        "warning: double value is automatically cast to long double",
+        "warning: uninitialized float variable 'f'"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La conversione da un `double` più preciso a un `float` meno preciso viene tracciata dalla sotto-sezione `-Wfloat-conversion` (che fa parte di `-Wconversion`).",
+        "Non corretto. Lo standard C consente tale assegnazione implicita, quindi non ci sarà alcun errore (error).",
+        "Non corretto. Non si verifica alcuna conversione in `long double`.",
+        "Non corretto. La variabile `f` è inizializzata con il valore `d`."
+      ]
+    },
+    {
+      "id": "it_clang_2950",
+      "widget_id": null,
+      "topic": "Valore pratico del flag -Wconversion",
+      "q": "Perché nel software critico (sistemi embedded, medicina, aviazione) viene abilitato il flag -Wconversion?",
+      "hint": "Il troncamento implicito del tipo o la modifica del segno porta spesso a bug nascosti ed errori di overflow.",
+      "options": [
+        "Per prevenire bug impercettibili legati all'overflow del buffer, al troncamento dei dati e alla misurazione errata dei valori",
+        "Per accelerare automaticamente l'esecuzione delle operazioni aritmetiche da parte del processore",
+        "Affinché il compilatore converta automaticamente il codice a 32 bit in codice a 64 bit"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il troncamento implicito (truncation) e i cambi di segno (sign change) sono tra le principali fonti di bug difficili da individuare e di vulnerabilità di sicurezza.",
+        "Non corretto. Gli avvisi del compilatore non influiscono sulla velocità di esecuzione del codice binario.",
+        "Non corretto. Il flag non modifica la dimensione in bit dell'architettura di destinazione."
+      ]
+    }
+  ]
+}

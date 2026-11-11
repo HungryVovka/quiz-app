@@ -1,0 +1,581 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2651",
+      "widget_id": "widget_clang_2651",
+      "topic": "Comportamento base di fgets() in presenza del carattere di nuova riga",
+      "q": "Se il file \"test.txt\" contiene come prima riga il testo \"Hello\\nWorld\", cosa salverà nel buffer la funzione fgets()?",
+      "hint": "A differenza della maggior parte delle altre funzioni di input di stringhe, fgets salva il carattere di nuova riga nel buffer.",
+      "options": [
+        "La stringa \"Hello\\n\" con il byte nullo finale '\\0'",
+        "La stringa \"Hello\" senza il carattere di nuova riga",
+        "L'intera stringa \"Hello\\nWorld\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `fgets()` legge i caratteri fino al primo `\\n` incluso (se la dimensione del buffer lo consente) e aggiunge automaticamente `\\0` alla fine.",
+        "Errato. `fgets()` non scarta il carattere `\\n`, ma lo lascia all'interno del buffer.",
+        "Errato. La lettura si interrompe al riscontro del primissimo carattere di nuova riga `\\n`."
+      ]
+    },
+    {
+      "id": "it_clang_2652",
+      "widget_id": null,
+      "topic": "Salvataggio del carattere di nuova riga (\\n) in fgets()",
+      "q": "La funzione fgets() salva il carattere di nuova riga '\\n' nel buffer di destinazione se questo viene incontrato prima del limite di lunghezza?",
+      "hint": "Ricorda la differenza tra fgets() e la funzione obsoleta gets().",
+      "options": [
+        "Sì, il carattere '\\n' viene letto e salvato nell'array prima del terminatore nullo '\\0'",
+        "No, il carattere '\\n' viene scartato e non entra nella stringa finale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, la funzione `fgets()` legge e scrive il carattere `\\n` nel buffer, dopodiché inserisce il terminatore nullo `\\0`.",
+        "Errato. Lo scarto di `\\n` avveniva nella vecchia e pericolosa funzione `gets()`, ma non in `fgets()`."
+      ]
+    },
+    {
+      "id": "it_clang_2653",
+      "widget_id": "widget_clang_2653",
+      "topic": "Limitazione della dimensione del buffer (N - 1) in fgets()",
+      "q": "Se il file \"test.txt\" contiene la stringa \"123456789\", cosa stamperà questo frammento di codice?",
+      "hint": "Il secondo argomento di fgets(buf, N, f) specifica il numero massimo di byte da leggere, incluso il '\\0' finale.",
+      "options": [
+        "1234",
+        "12345",
+        "123456789",
+        "123",
+        "Comportamento indefinito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `N = 5`, la funzione legge al massimo `5 - 1 = 4` caratteri (`\"1234\"`) e aggiunge il quinto byte `\\0`.",
+        "Errato. Se venissero scritti 5 caratteri di dati, per il `\\0` sarebbe necessario un sesto byte, causando un buffer overflow.",
+        "Errato. La lettura è strettamente limitata dal secondo parametro `5`.",
+        "Errato. `fgets` legge `N - 1` caratteri, cioè 4 caratteri.",
+        "Errato. Il codice è completamente sicuro e non causa buffer overflow."
+      ]
+    },
+    {
+      "id": "it_clang_2654",
+      "widget_id": null,
+      "topic": "Valore di ritorno di fgets() in caso di errore o EOF",
+      "q": "Cosa restituisce la funzione fgets() al raggiungimento della fine del file (EOF) prima di leggere anche un solo carattere o in caso di errore di input?",
+      "hint": "In caso di lettura riuscita, la funzione restituisce un puntatore al buffer. Cosa restituisce in caso di fallimento?",
+      "options": [
+        "Un puntatore NULL",
+        "La costante EOF (-1)",
+        "Il numero 0",
+        "Un puntatore a una stringa vuota \"\""
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se alla chiamata di `fgets()` si incontra subito la fine del file o si verifica un errore di lettura, la funzione restituisce `NULL`.",
+        "Errato. `EOF` viene restituito da funzioni di lettura carattere per carattere (come `fgetc`), mentre `fgets` restituisce un puntatore (`char*`).",
+        "Errato. Il tipo di ritorno è `char*`, non `int`.",
+        "Errato. Il buffer non viene modificato in modo garantito e viene restituito proprio il puntatore nullo `NULL`."
+      ]
+    },
+    {
+      "id": "it_clang_2655",
+      "widget_id": "widget_clang_2655",
+      "topic": "Lettura riga per riga di un file con while (fgets() != NULL)",
+      "q": "Se il file \"lines.txt\" contiene esattamente 3 righe da 5 caratteri ciascuna (che terminano con '\\n'), cosa stamperà il programma?",
+      "hint": "fgets() restituisce un puntatore non NULL a ogni iterazione di lettura riuscita di una riga.",
+      "options": [
+        "3",
+        "15",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per ciascuna delle 3 righe, `fgets()` restituisce il puntatore `buf`, incrementando `count`. Al quarto tentativo incontra EOF, `fgets` restituisce `NULL`, il ciclo termina e viene stampato `3`.",
+        "Errato. Il ciclo conta il numero di righe lette, non il numero totale di byte.",
+        "Errato. La variabile `count` si incrementerà con successo a ogni iterazione."
+      ]
+    },
+    {
+      "id": "it_clang_2656",
+      "widget_id": null,
+      "topic": "Sicurezza di fgets() rispetto a gets()",
+      "q": "Perché la funzione fgets() è considerata un'alternativa sicura alla funzione gets() rimossa dallo standard?",
+      "hint": "La principale vulnerabilità di gets() era l'impossibilità di limitare il numero di byte letti dallo stream.",
+      "options": [
+        "fgets() accetta la dimensione massima del buffer come argomento, prevenendo il buffer overflow",
+        "fgets() è più veloce perché non inserisce il terminatore nullo '\\0' alla fine"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'indicazione esplicita della dimensione massima del buffer impedisce la scrittura oltre i limiti dell'array di memoria allocato (Buffer Overflow).",
+        "Errato. `fgets()` inserisce sempre il terminatore nullo alla fine dei dati letti."
+      ]
+    },
+    {
+      "id": "it_clang_2657",
+      "widget_id": "widget_clang_2657",
+      "topic": "Lettura di una riga lunga con chiamate multiple a fgets()",
+      "q": "Se il file \"data.txt\" contiene 6 caratteri \"ABCDEF\" senza caratteri di nuova riga, cosa stamperà questo programma?",
+      "hint": "Con un buffer limitato, la prima chiamata legge tutti i caratteri possibili, e la seconda continuerà la lettura dal punto di arresto.",
+      "options": [
+        "[ABC][DEF]",
+        "[ABCD][EF]",
+        "[ABCDEF][]",
+        "[ABC][DEF\\n]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'array ha dimensione 4. Il primo `fgets` legge `4 - 1 = 3` caratteri (`ABC`) + `\\0`. Il secondo `fgets` legge i restanti 3 caratteri (`DEF`) + `\\0`. Output: `[ABC][DEF]`.",
+        "Errato. Il primo `fgets` con dimensione 4 non può leggere 4 caratteri di dati, poiché necessita di 1 byte per il `\\0`.",
+        "Errato. La prima chiamata riempirà il suo limite e non leggerà l'intera riga subito.",
+        "Errato. Il carattere `\\n` non è presente nel file."
+      ]
+    },
+    {
+      "id": "it_clang_2658",
+      "widget_id": "widget_clang_2658",
+      "topic": "Rimozione dell'a capo dal buffer dopo fgets()",
+      "q": "Quale compito svolge l'idioma buf[strcspn(buf, \"\\n\")] = '\\0'; dopo la chiamata a fgets()?",
+      "hint": "La funzione strcspn trova l'indice della prima occorrenza di uno qualsiasi dei caratteri specificati.",
+      "options": [
+        "Rimuove il carattere di nuova riga '\\n' dalla fine della stringa letta, sostituendolo con il terminatore nullo",
+        "Converte tutti i caratteri della stringa in minuscolo",
+        "Conta il numero totale di righe nel file",
+        "Aggiunge il carattere '\\n' alla fine della stringa",
+        "Svuota completamente la memoria del buffer",
+        "Verifica se la stringa contiene spazi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `strcspn(buf, \"\\n\")` restituisce l'indice del carattere `\\n` (o l'indice del `\\0` se `\\n` non c'è). Scrivere `\\0` a quell'indice rimuove in modo sicuro il carattere di nuova riga indesiderato.",
+        "Errato. Per cambiare il registro si usano altre funzioni (ad esempio `tolower`).",
+        "Errato. L'espressione lavora solo con un singolo array `buf`.",
+        "Errato. L'espressione sostituisce `\\n` con il terminatore nullo `\\0`.",
+        "Errato. La memoria del buffer non viene svuotata completamente.",
+        "Errato. Il controllo degli spazi non viene eseguito."
+      ]
+    },
+    {
+      "id": "it_clang_2659",
+      "widget_id": null,
+      "topic": "Firma e parametri della funzione fgets()",
+      "q": "Quanti argomenti e di che tipo accetta la funzione fgets()?",
+      "hint": "Ricorda i parametri: dove scrivere, quanto scrivere e da dove leggere.",
+      "options": [
+        "3 argomenti: char *str, int n, FILE *stream",
+        "2 argomenti: char *str, FILE *stream",
+        "1 argomento: char *str",
+        "4 argomenti: char *str, int n, FILE *stream, int mode"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La firma della funzione è: `char *fgets(char *str, int n, FILE *stream);`.",
+        "Errato. Manca l'argomento della dimensione massima `n`.",
+        "Errato. La funzione con un solo argomento era `gets(str)`.",
+        "Errato. Il quarto parametro di modalità non esiste."
+      ]
+    },
+    {
+      "id": "it_clang_2660",
+      "widget_id": "widget_clang_2660",
+      "topic": "Comportamento di fgets() durante la lettura da un file vuoto",
+      "q": "Cosa stamperà questo programma se il file \"test.txt\" è completamente vuoto?",
+      "hint": "Se la lettura dal file fallisce immediatamente (EOF), fgets() restituisce NULL e il buffer originale rimane inalterato.",
+      "options": [
+        "Default",
+        "NULL",
+        "Una stringa vuota"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché il file è vuoto, `fgets()` restituisce `NULL`. La condizione `== NULL` è vera e il programma stampa il contenuto iniziale del buffer: `\"Default\"`.",
+        "Errato. `printf(\"%s\")` stamperà la stringa `buf`, non il valore letterale `\"NULL\"`.",
+        "Errato. Il contenuto dell'array `buf` in caso di errore di `fgets` rimane invariato (`\"Default\"`)."
+      ]
+    },
+    {
+      "id": "it_clang_2661",
+      "widget_id": "widget_clang_2661",
+      "topic": "Lettura sequenziale di più righe consecutive",
+      "q": "Se il file \"data.txt\" contiene le righe \"First\\n\" e \"Second\\n\", cosa stamperà il programma?",
+      "hint": "Dopo la prima chiamata a fgets(), il puntatore nel file si ferma subito dopo il carattere di nuova riga letto.",
+      "options": [
+        "First\\nSecond\\n",
+        "First\\nFirst\\n",
+        "Second\\nSecond\\n"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il primo `fgets` legge la riga `\"First\\n\"` e sposta la posizione di lettura. Il secondo `fgets` legge la riga successiva `\"Second\\n\"`.",
+        "Errato. Il puntatore di posizionamento si sposta automaticamente in avanti a ogni chiamata di lettura.",
+        "Errato. La prima riga non viene saltata."
+      ]
+    },
+    {
+      "id": "it_clang_2662",
+      "widget_id": "widget_clang_2662",
+      "topic": "Conteggio delle righe in un file con fgets()",
+      "q": "Se il file contiene 5 righe lunghe fino a 30 caratteri, cosa stamperà questo programma?",
+      "hint": "La condizione del ciclo si interrompe solo quando fgets() restituisce NULL alla fine del file.",
+      "options": [
+        "5",
+        "4",
+        "6",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un buffer di dimensione 100 è abbastanza grande da contenere ogni riga per intero in una singola chiamata a `fgets`. L'iterazione verrà eseguita 5 volte e il programma stamperà `5`.",
+        "Errato. Anche l'ultima riga viene letta e conteggiata.",
+        "Errato. Non si verifica una chiamata aggiuntiva a EOF, poiché `fgets` restituirà `NULL`.",
+        "Errato. Il ciclo eseguirà 5 iterazioni riuscite."
+      ]
+    },
+    {
+      "id": "it_clang_2663",
+      "widget_id": null,
+      "topic": "Gestione dell'ultima riga del file senza carattere \\n",
+      "q": "La funzione fgets() legge l'ultima riga del file se questa non termina con il carattere di nuova riga '\\n'?",
+      "hint": "fgets() termina la lettura non solo su '\\n', ma anche quando rileva EOF.",
+      "options": [
+        "Sì, fgets() leggerà con successo i caratteri rimanenti fino alla fine del file e restituisce un puntatore al buffer",
+        "No, se alla fine della riga non c'è '\\n', fgets() restituirà NULL e ignorerà i dati"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `fgets()` si arresta su `\\n` o al raggiungimento della fine del file `EOF`. Se sono stati letti dei caratteri, la chiamata restituisce un puntatore valido.",
+        "Errato. `fgets()` restituisce `NULL` solo se `EOF` si è verificato PRIMA di aver letto almeno un carattere."
+      ]
+    },
+    {
+      "id": "it_clang_2664",
+      "widget_id": "widget_clang_2664",
+      "topic": "Conteggio delle righe per carattere '\\n' tramite fgetc()",
+      "q": "Qual è il potenziale svantaggio di questo metodo di conteggio delle righe per un file che non termina con un carattere '\\n'?",
+      "hint": "Verifica se la condizione c == '\\n' conterà l'ultima riga di testo se l'autore del file ha dimenticato di inserire l'a capo alla fine.",
+      "options": [
+        "L'ultima riga del file non verrà conteggiata se dopo di essa non c'è il carattere '\\n'",
+        "Il programma entrerà in un ciclo infinito durante la chiamata a fgetc()",
+        "Il contatore lines andrà in overflow alla primissima riga",
+        "Il codice produrrà un errore di compilazione a causa del confronto con '\\n'",
+        "I caratteri di nuova riga non vengono letti dalla funzione fgetc()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se l'ultima riga del file termina direttamente con `EOF` (senza `\\n`), la condizione `c == '\\n'` per essa non si verificherà e il contatore risulterà inferiore di 1 rispetto al numero effettivo di righe.",
+        "Errato. Il ciclo terminerà correttamente al sopraggiungere di `EOF`.",
+        "Errato. L'overflow della variabile `int` non si verificherà.",
+        "Errato. Il codice è sintatticamente del tutto corretto.",
+        "Errato. `fgetc()` legge tutti i byte del file, incluso `\\n`."
+      ]
+    },
+    {
+      "id": "it_clang_2665",
+      "widget_id": null,
+      "topic": "Idiom di combinazione di fgets() e sscanf()",
+      "q": "Perché la lettura riga per riga con fgets() seguita dall'analisi tramite sscanf() è considerata un approccio più affidabile rispetto a fscanf() diretto?",
+      "hint": "In caso di errore di formato, fscanf() lascia i dati non validi nello stream di file, bloccando le letture successive.",
+      "options": [
+        "fgets() garantisce la lettura dell'intera riga, evitando che lo stream si blocchi su dati non validi",
+        "sscanf() è significativamente più veloce della lettura fisica da disco",
+        "La chiamata diretta a fscanf() è vietata dallo standard C11"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se la riga ha un formato errato, `fscanf()` si arresta e il carattere rimane nel file, il che porta spesso a cicli infiniti. `fgets()` estrae prima l'intera riga in memoria, isolando l'errore.",
+        "Errato. La velocità di parsing delle stringhe in memoria non è la ragione principale della sicurezza di questo idioma.",
+        "Errato. `fscanf()` è una funzione standardizzata del linguaggio C."
+      ]
+    },
+    {
+      "id": "it_clang_2666",
+      "widget_id": "widget_clang_2666",
+      "topic": "Frammentazione della riga con buffer piccolo in fgets()",
+      "q": "Se il file \"data.txt\" contiene una sola riga lunga \"12345678\", cosa stamperà questo programma?",
+      "hint": "Con una dimensione del buffer di 5, fgets() legge alla volta non più di 4 caratteri.",
+      "options": [
+        "[1234][5678]",
+        "[12345678]",
+        "[1234]",
+        "[1234][5678][]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Alla prima iterazione `fgets` leggerà 4 caratteri (`\"1234\"`) + `\\0`. Alla seconda iterazione continuerà la lettura dalla stessa riga prendendo i restanti 4 caratteri (`\"5678\"`) + `\\0`. Risultato: `[1234][5678]`.",
+        "Errato. Un buffer di 5 elementi non può contenere fisicamente 8 caratteri in una sola volta.",
+        "Errato. Il ciclo `while` continuerà e leggerà la parte restante della riga.",
+        "Errato. Dopo aver letto l'intera riga, la chiamata a `fgets` restituirà `NULL` e la terza iterazione non verrà eseguita."
+      ]
+    },
+    {
+      "id": "it_clang_2667",
+      "widget_id": null,
+      "topic": "Verifica della completezza della riga letta tramite '\\n'",
+      "q": "Come determinare tramite le funzioni C se una riga dal file è stata letta nel buffer completamente in una sola chiamata a fgets()?",
+      "hint": "Se la riga è entrata per intero, in essa sarà presente il carattere di nuova riga (a condizione che fosse presente nel file).",
+      "options": [
+        "Verificare la presenza del carattere '\\n' nel buffer ottenuto (ad esempio tramite strchr(buf, '\\n'))",
+        "Confrontare il numero di byte letti con la costante EOF",
+        "Verificare se il carattere successivo nel file è NULL",
+        "Verificare il valore della funzione feof(f) subito dopo la chiamata",
+        "Chiamare ferror(f) per verificare lo stato di overflow",
+        "Misurare il tempo di esecuzione della funzione fgets()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se nel buffer è presente il carattere `\\n` (o è stato raggiunto `feof`), significa che la riga è stata letta completamente fino alla sua fine.",
+        "Errato. `fgets()` restituisce un puntatore, non il numero di byte letti.",
+        "Errato. Il carattere `NULL` non viene usato nei file come marcatore di fine riga.",
+        "Errato. La fine del file `feof` si verifica solo all'ultima riga, non a ogni riga completa.",
+        "Errato. L'overflow del buffer in `fgets` non genera un errore `ferror`.",
+        "Errato. Il tempo di esecuzione della funzione non fornisce informazioni sul contenuto del buffer."
+      ]
+    },
+    {
+      "id": "it_clang_2668",
+      "widget_id": "widget_clang_2668",
+      "topic": "Salto di righe nella lettura riga per riga di un file",
+      "q": "Se il file \"lines.txt\" contiene tre righe (\"Line1\\n\", \"Line2\\n\", \"Line3\\n\"), cosa stamperà il programma?",
+      "hint": "La prima chiamata a fgets() legge e scarta la prima riga dal file.",
+      "options": [
+        "Line2\\n",
+        "Line1\\n",
+        "Line3\\n"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il primo `fgets` legge `Line1\\n` in `buf` (senza stampare). Il secondo `fgets` sovrascrive `buf` con la riga `Line2\\n`, che viene quindi stampata a schermo.",
+        "Errato. La prima riga è stata letta e ignorata dalla prima chiamata a `fgets`.",
+        "Errato. La terza riga rimarrà non letta."
+      ]
+    },
+    {
+      "id": "it_clang_2669",
+      "widget_id": null,
+      "topic": "Effetto della modalità testo sui caratteri a capo (da CRLF a LF)",
+      "q": "Come gestisce la libreria di I/O del C i caratteri di a capo di Windows (\\r\\n) quando si apre un file in modalità testo (\"r\") su piattaforme Windows?",
+      "hint": "La modalità testo in C traduce automaticamente i caratteri di a capo specifici del sistema operativo.",
+      "options": [
+        "La coppia di caratteri '\\r\\n' viene tradotta automaticamente in un singolo carattere '\\n' durante la lettura nel buffer",
+        "I caratteri '\\r' e '\\n' rimangono inalterati ed entrano entrambi nel buffer"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In modalità testo, la libreria C nasconde le differenze tra piattaforme e converte la sequenza `\\r\\n` nel singolo carattere `\\n`.",
+        "Errato. La conservazione di `\\r\\n` senza modifiche avviene quando il file viene aperto in modalità binaria (`\"rb\"`)."
+      ]
+    },
+    {
+      "id": "it_clang_2670",
+      "widget_id": "widget_clang_2670",
+      "topic": "Filtraggio delle righe di un file secondo una condizione (salto dei commenti)",
+      "q": "Se il file \"config.txt\" contiene le righe \"#Comment\\n\" e \"Option=1\\n\", cosa stamperà il programma?",
+      "hint": "La condizione buf[0] == '#' controlla il primissimo carattere della riga letta.",
+      "options": [
+        "Option=1\\n",
+        "#Comment\\nOption=1\\n",
+        "#Comment\\n",
+        "Non stamperà nulla"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per la riga `\"#Comment\\n\"` l'espressione `buf[0] == '#'` è vera, si attiva `continue` e la stampa viene saltata. Per `\"Option=1\\n\"` la condizione è falsa e la riga viene stampata.",
+        "Errato. La riga di commento viene saltata dall'istruzione `continue`.",
+        "Errato. I commenti vengono filtrati.",
+        "Errato. La riga `Option=1\\n` supererà il filtro e verrà stampata."
+      ]
+    },
+    {
+      "id": "it_clang_2671",
+      "widget_id": "widget_clang_2671",
+      "topic": "Valore di ritorno di fputc()",
+      "q": "Cosa stamperà questo programma in caso di scrittura riuscita del carattere 'A' nel file?",
+      "hint": "La funzione fputc() in caso di successo restituisce il carattere scritto (convertito al tipo int).",
+      "options": [
+        "A",
+        "1",
+        "0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In caso di esecuzione corretta `fputc()` restituisce il carattere scritto (sotto forma di codice `unsigned char` convertito a `int`), quindi `%c` stamperà `'A'`.",
+        "Errato. La funzione restituisce il carattere stesso scritto, non il codice logico di successo `1`.",
+        "Errato. La restituzione di `0` avverrebbe se venisse scritto un carattere con codice `0` (`'\\0'`)."
+      ]
+    },
+    {
+      "id": "it_clang_2672",
+      "widget_id": null,
+      "topic": "Differenza tra fputs() e puts()",
+      "q": "Qual è la differenza di comportamento tra le funzioni fputs(str, stream) e puts(str) riguardo al carattere di nuova riga?",
+      "hint": "Fai attenzione se ciascuna funzione aggiunge o meno automaticamente il carattere '\\n' alla fine della stringa in output.",
+      "options": [
+        "puts() aggiunge automaticamente il carattere '\\n' alla fine dell'output, mentre fputs() stampa solo la stringa passata",
+        "fputs() aggiunge automaticamente il carattere '\\n', mentre puts() stampa la stringa senza modifiche"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `puts()` aggiunge sempre l'a capo `'\\n'`, mentre `fputs()` non aggiunge nulla di propria iniziativa e scrive esattamente ciò che è contenuto in `str`.",
+        "Errato. Al contrario: `fputs()` non aggiunge automaticamente l'a capo, a differenza di `puts()`."
+      ]
+    },
+    {
+      "id": "it_clang_2673",
+      "widget_id": "widget_clang_2673",
+      "topic": "Copia di un file carattere per carattere tramite fgetc() e fputc()",
+      "q": "Quale compito svolge questo ciclo di lettura e scrittura tramite fgetc() e fputc()?",
+      "hint": "Esamina la direzione del trasferimento dati: il carattere viene letto da src e subito scritto in dst.",
+      "options": [
+        "Copia carattere per carattere del contenuto dal file in.txt al file out.txt",
+        "Confronto di due file per verificarne l'uguaglianza",
+        "Eliminazione del file in.txt dopo la lettura",
+        "Conteggio del numero di caratteri nel file in.txt"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il pattern classico `while ((ch = fgetc(src)) != EOF) fputc(ch, dst);` legge ogni byte dal file sorgente e lo scrive nel file di destinazione.",
+        "Errato. Per confrontare i file occorrerebbe leggere i caratteri contemporaneamente da entrambi gli stream e compararli.",
+        "Errato. L'operazione non elimina il file di origine.",
+        "Errato. Manca una variabile contatore, i dati vengono semplicemente riscritti."
+      ]
+    },
+    {
+      "id": "it_clang_2674",
+      "widget_id": null,
+      "topic": "Tipo del valore di ritorno di fgetc()",
+      "q": "Perché il tipo del valore di ritorno della funzione fgetc() è dichiarato come int e non char?",
+      "hint": "Rifletti sul valore speciale EOF e sulla sua rappresentazione in memoria.",
+      "options": [
+        "Per consentire alla funzione di restituire il valore negativo della costante EOF (-1), che non coincide con alcun carattere valido di tipo unsigned char",
+        "Per leggere numeri Unicode a 32 bit in una sola chiamata",
+        "È fatto per compatibilità all'indietro con il linguaggio C++",
+        "Il tipo int è più veloce sui processori a 64 bit",
+        "Perché in C non esiste il tipo char"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'intervallo di tutti i byte possibili va da 0 a 255 (`unsigned char`). Per distinguere un byte di dati dal segnale di fine file `EOF` (`-1`), il tipo di ritorno è stato esteso a `int`.",
+        "Errato. `fgetc()` legge i dati byte per byte (8 bit), non caratteri Unicode interi.",
+        "Errato. La compatibilità con C++ non ha relazione con la firma della libreria stdio in C.",
+        "Errato. La ragione principale è la necessità di contenere il valore di segnale `EOF`.",
+        "Errato. Il tipo `char` è un tipo fondamentale del linguaggio C."
+      ]
+    },
+    {
+      "id": "it_clang_2675",
+      "widget_id": null,
+      "topic": "Valore di ritorno di fputs() in caso di errore",
+      "q": "Cosa restituisce la funzione fputs() nel caso in cui si verifichi un errore di scrittura nello stream?",
+      "hint": "Per segnalare errori di I/O in stdio.h si utilizza una speciale costante negativa.",
+      "options": [
+        "La costante EOF",
+        "Il valore 0",
+        "Un puntatore NULL"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In caso di successo `fputs()` restituisce un numero non negativo, mentre in caso di errore di scrittura restituisce la costante `EOF` (`-1`).",
+        "Errato. Il valore `0` non è un codice di errore per `fputs()`.",
+        "Errato. `fputs()` restituisce un `int`, non un puntatore."
+      ]
+    },
+    {
+      "id": "it_clang_2676",
+      "widget_id": "widget_clang_2676",
+      "topic": "Isolamento dei caratteri di nuova riga in fputs()",
+      "q": "Cosa stamperà questo programma?",
+      "hint": "fputs() scrive esattamente la stringa passata come argomento. fputs(\"Hello\\n\") scriverà il carattere di nuova riga nel file.",
+      "options": [
+        "[Hello\\n][World]",
+        "[Hello][World]",
+        "[Hello\\nWorld]",
+        "[Hello]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La prima riga nel file è `\"Hello\\n\"`, quindi `fgets` la legge interamente in `buf` e stampa `[Hello\\n]`. La seconda chiamata a `fgets` legge `\"World\"` e stampa `[World]`.",
+        "Errato. L'a capo è stato scritto nella prima riga tramite la chiamata `fputs(\"Hello\\n\", f)`.",
+        "Errato. Il ciclo `fgets` legge il file una riga alla volta.",
+        "Errato. Anche la seconda riga `World` verrà letta."
+      ]
+    },
+    {
+      "id": "it_clang_2677",
+      "widget_id": null,
+      "topic": "Tentativo di scrittura su uno stream aperto in sola lettura",
+      "q": "Cosa accade se si chiama fputc() su uno stream aperto solo in modalità lettura (\"r\")?",
+      "hint": "La modalità \"r\" fornisce l'accesso solo per l'esecuzione di operazioni di input (lettura).",
+      "options": [
+        "La funzione fputc() restituisce EOF e l'operazione di scrittura non viene eseguita",
+        "Il programma riaprirà automaticamente il file in modalità \"w\"",
+        "Il file verrà svuotato del suo vecchio contenuto",
+        "Il carattere verrà scritto nella memoria RAM, ma non sul disco",
+        "Si verificherà un errore durante la compilazione",
+        "Il programma terminerà immediatamente in modo anomalo (Segmentation fault)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se la modalità di accesso non consente la scrittura, la libreria C rifiuta l'operazione: `fputc()` termina con un errore e restituisce `EOF`.",
+        "Errato. La modalità del file non cambia al volo senza una riapertura.",
+        "Errato. Lo svuotamento (`truncation`) avviene solo con le modalità che contengono `\"w\"`.",
+        "Errato. I dati non finiscono neppure nel buffer.",
+        "Errato. L'errore di accesso viene determinato a tempo di esecuzione, non dal compilatore.",
+        "Errato. La chiamata a funzioni con permessi dello stream non validi viene gestita correttamente restituendo il codice `EOF`."
+      ]
+    },
+    {
+      "id": "it_clang_2678",
+      "widget_id": "widget_clang_2678",
+      "topic": "Ricerca e conteggio dei caratteri carattere per carattere con fgetc()",
+      "q": "Se il file \"data.txt\" contiene il testo \"ABBA-ACDC\", cosa stamperà questo programma?",
+      "hint": "Il programma controlla ogni byte letto per verificare l'uguaglianza con il carattere 'A' e incrementa il contatore.",
+      "options": [
+        "3",
+        "2",
+        "4"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La stringa `\"ABBA-ACDC\"` contiene tre caratteri `'A'` (agli indici 0, 3, 5). La variabile `count` diventerà uguale a `3`.",
+        "Errato. I caratteri `'A'` compaiono tre volte.",
+        "Errato. I caratteri `'C'` o `'B'` non vengono presi in considerazione dalla condizione `c == 'A'`."
+      ]
+    },
+    {
+      "id": "it_clang_2679",
+      "widget_id": null,
+      "topic": "Scrittura del terminatore nullo con la funzione fputs()",
+      "q": "La funzione fputs(const char *str, FILE *stream) scrive il terminatore nullo finale '\\0' dalla stringa str nel file?",
+      "hint": "Il terminatore nullo serve solo come marcatore di fine stringa nella memoria in C.",
+      "options": [
+        "No, fputs() scrive solo i caratteri della stringa fino a '\\0', il terminatore nullo stesso non viene scritto nel file",
+        "Sì, fputs() scrive sempre '\\0' nel file per preservare la struttura delle stringhe"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo lo standard C, la funzione `fputs()` scrive la sequenza di caratteri fino a (ma non incluso) il carattere nullo finale `'\\0'`.",
+        "Errato. Il terminatore nullo serve solo per determinare la fine dell'array in memoria e non viene salvato nel file."
+      ]
+    },
+    {
+      "id": "it_clang_2680",
+      "widget_id": "widget_clang_2680",
+      "topic": "Scrittura di una stringa nel file in ordine inverso tramite fputc()",
+      "q": "Quale stringa verrà stampata dal programma dopo aver scritto l'array di caratteri \"C-Lang\" in ordine inverso?",
+      "hint": "L'indice del ciclo va da 5 (carattere 'g') a 0 (carattere 'C').",
+      "options": [
+        "gnaL-C",
+        "C-Lang",
+        "gnaL-",
+        "Lang-C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo prende gli elementi della stringa `\"C-Lang\"` dalla fine: `str[5]` (`'g'`), `str[4]` (`'n'`), ..., `str[0]` (`'C'`). Nel file viene scritto `\"gnaL-C\"`.",
+        "Errato. L'ordine diretto si avrebbe con un ciclo da 0 a 5.",
+        "Errato. Il carattere `str[0]` (`'C'`) viene scritto all'ultima iterazione del ciclo (`i == 0`).",
+        "Errato. La stringa viene invertita completamente."
+      ]
+    }
+  ]
+}

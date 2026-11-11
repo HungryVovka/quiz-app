@@ -1,0 +1,585 @@
+{
+  "subject": "Programmazione in C",
+  "questions": [
+    {
+      "id": "it_clang_2771",
+      "widget_id": "widget_clang_2771",
+      "topic": "Scopo del comando run",
+      "q": "Cosa succede quando si esegue il comando run (o in forma abbreviata r) nel debugger GDB?",
+      "hint": "Pensa a partire da quale momento inizia l'esecuzione del file binario con questo comando.",
+      "options": [
+        "Il programma viene avviato dall'inizio fino al primo punto di interruzione o fino al completamento",
+        "Il programma prosegue dal punto in cui era stato precedentemente sospeso",
+        "Il processo viene ricompilato dai file sorgente C originali"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `run` crea inizialmente il processo e ne avvia l'esecuzione dalla prima istruzione del codice di avvio.",
+        "Errato. Per riprendere l'esecuzione dal punto di pausa corrente si utilizza il comando `continue`.",
+        "Errato. GDB non si occupa della compilazione del codice sorgente."
+      ]
+    },
+    {
+      "id": "it_clang_2772",
+      "widget_id": null,
+      "topic": "Passaggio di argomenti della riga di comando all'avvio",
+      "q": "Come si passano correttamente gli argomenti arg1 e arg2 al programma in fase di debug al suo avvio?",
+      "hint": "Gli argomenti possono essere elencati direttamente al richiamo del comando di avvio oppure impostati in anticipo con un comando set separato.",
+      "options": [
+        "Indicarli direttamente all'avvio: run arg1 arg2 (oppure in anticipo tramite set args arg1 arg2)",
+        "Passarli tramite flag: run -a arg1 arg2",
+        "Utilizzare il comando params arg1 arg2",
+        "Passare gli argomenti nel formato di una funzione C: run(\"arg1\", \"arg2\")"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli argomenti possono essere passati come parametro del comando stesso `run arg1 arg2`, oppure impostati in anticipo con `set args arg1 arg2`.",
+        "Errato. Il flag `-a` non viene utilizzato dal comando `run` per gli argomenti.",
+        "Errato. Il comando `params` non esiste in GDB.",
+        "Errato. I comandi della CLI di GDB non richiedono parentesi tonde e virgolette per la separazione."
+      ]
+    },
+    {
+      "id": "it_clang_2773",
+      "widget_id": "widget_clang_2773",
+      "topic": "Reindirizzamento dello standard input (stdin)",
+      "q": "Come si reindirizza il contenuto del file input.txt nello standard input (stdin) del programma durante l'avvio tramite run?",
+      "hint": "GDB supporta la sintassi standard di reindirizzamento dei flussi della shell.",
+      "options": [
+        "run < input.txt",
+        "run --input input.txt",
+        "set input input.txt"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il simbolo `<` funziona in modo analogo alla riga di comando Unix/Linux, reindirizzando il contenuto del file nello `stdin` del programma.",
+        "Errato. Il flag `--input` non è supportato dal comando `run`.",
+        "Errato. Il comando `set input` ha un altro significato nelle impostazioni di GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2774",
+      "widget_id": null,
+      "topic": "Riavvio di un programma già in esecuzione",
+      "q": "Cosa succede se si inserisce il comando run mentre il programma è già avviato e si trova su un punto di interruzione?",
+      "hint": "GDB chiederà: 'Start it from the beginning? (y or n)'.",
+      "options": [
+        "GDB chiederà di confermare il riavvio e azzererà la sessione corrente, ricominciando l'esecuzione dall'inizio",
+        "GDB terminerà con un errore critico di arresto anomalo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! GDB chiederà la conferma all'utente, dopo di che terminerà il processo attivo corrente e riavvierà il file eseguibile dalla prima istruzione.",
+        "Errato. Questo è un meccanismo regolare per il riavvio del processo."
+      ]
+    },
+    {
+      "id": "it_clang_2775",
+      "widget_id": null,
+      "topic": "Variabili d'ambiente del processo (set env)",
+      "q": "Tramite quale comando è possibile aggiungere o modificare una variabile d'ambiente MY_VAR=123 specificamente per il processo avviato tramite run?",
+      "hint": "Il comando imposta lo stato dell'ambiente (environment).",
+      "options": [
+        "set env MY_VAR=123",
+        "export MY_VAR=123",
+        "run MY_VAR=123",
+        "define env MY_VAR 123",
+        "environment MY_VAR=123",
+        "add env MY_VAR=123"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `set env NOME=VALORE` (o `set environment`) imposta le variabili d'ambiente per le successive esecuzioni del programma in debug.",
+        "Errato. `export` è un comando della Shell, non un comando integrato di GDB.",
+        "Errato. Il comando `run` interpreta tale notazione come un argomento della riga di comando.",
+        "Errato. `define` viene utilizzato per creare macro utente in GDB.",
+        "Errato. È richiesta la sintassi `set environment`.",
+        "Errato. Il comando `add env` non esiste in GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2776",
+      "widget_id": "widget_clang_2776",
+      "topic": "Differenza tra run e continue",
+      "q": "Qual è la differenza fondamentale tra run e continue quando il programma è sospeso su un breakpoint?",
+      "hint": "Un comando riavvia il processo da zero, mentre l'altro riprende l'esecuzione.",
+      "options": [
+        "run riavvia il programma dall'inizio, mentre continue riprende l'esecuzione dal punto di arresto corrente",
+        "continue riavvia il programma da capo, mentre run esegue un singolo comando",
+        "Entrambi i comandi sono sinonimi assoluti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `run` riavvia il processo dalla prima istruzione azzerando lo stato della memoria, mentre `continue` rimuove la pausa e prosegue l'esecuzione.",
+        "Errato. I ruoli dei comandi sono invertiti.",
+        "Errato. Il comportamento di questi comandi è radicalmente diverso."
+      ]
+    },
+    {
+      "id": "it_clang_2777",
+      "widget_id": null,
+      "topic": "Salvataggio degli argomenti a una nuova chiamata di run",
+      "q": "Se hai avviato il programma con il comando run test1 test2 e al riavvio successivo inserisci semplicemente run (senza parametri), con quali argomenti verrà avviato il programma?",
+      "hint": "GDB memorizza in cache l'elenco dei parametri passati finché non vengono cancellati esplicitamente.",
+      "options": [
+        "Con gli argomenti test1 test2, poiché GDB memorizza gli argomenti di avvio precedenti",
+        "Senza argomenti (argc = 1)",
+        "Il programma terminerà con un errore di mancanza di parametri",
+        "Con gli argomenti di sistema predefiniti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! GDB memorizza l'elenco degli argomenti dell'ultimo avvio e li ripassa se si inserisce `run` senza parametri aggiuntivi.",
+        "Errato. I parametri non vengono azzerati automaticamente.",
+        "Errato. Non viene generato alcun errore di chiamata al riavvio.",
+        "Errato. GDB non inserisce argomenti di sistema di terze parti."
+      ]
+    },
+    {
+      "id": "it_clang_2778",
+      "widget_id": "widget_clang_2778",
+      "topic": "Reindirizzamento dello standard output (stdout)",
+      "q": "Quale comando avvierà il programma in GDB reindirizzando l'output di stdout nel file log.txt?",
+      "hint": "Utilizza l'operatore standard di reindirizzamento dell'output della Shell.",
+      "options": [
+        "run > log.txt",
+        "run --output log.txt",
+        "set stdout log.txt",
+        "export STDOUT=log.txt",
+        "pipe run log.txt"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiamata `run > log.txt` costringe il programma a scrivere l'intero flusso `stdout` nel file indicato su disco.",
+        "Errato. Il comando `run` non ha l'opzione `--output`.",
+        "Errato. Il comando `set stdout` non è corretto.",
+        "Errato. La variabile `STDOUT` in Linux non reindirizza i descrittori di file.",
+        "Errato. `pipe` viene utilizzato per reindirizzare l'output dei comandi di GDB stessi, non del processo in debug."
+      ]
+    },
+    {
+      "id": "it_clang_2779",
+      "widget_id": null,
+      "topic": "Azzeramento degli argomenti di avvio salvati",
+      "q": "Come si azzera completamente l'elenco degli argomenti della riga di comando salvati nella sessione GDB?",
+      "hint": "Esegui il comando di impostazione degli argomenti senza specificare parametri.",
+      "options": [
+        "set args",
+        "clear args",
+        "unset run args"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `set args` senza ulteriori parole svuota l'elenco degli argomenti, e la successiva chiamata a `run` avvierà il programma senza parametri.",
+        "Errato. Il comando `clear` serve per rimuovere i punti di interruzione basati sulle righe.",
+        "Errato. La sintassi `unset run args` non è supportata."
+      ]
+    },
+    {
+      "id": "it_clang_2780",
+      "widget_id": null,
+      "topic": "Indicazione di un altro terminale di I/O (tty)",
+      "q": "Quale comando in GDB permette di reindirizzare l'input e l'output del programma su un altro terminale fisico o virtuale (ad esempio /dev/pts/2)?",
+      "hint": "Utilizza il comando integrato tty indicando il percorso del dispositivo.",
+      "options": [
+        "tty /dev/pts/2",
+        "set terminal /dev/pts/2",
+        "run --tty /dev/pts/2",
+        "use terminal /dev/pts/2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `tty /dev/pts/2` (o `set inferiors-tty`) indica a GDB di usare uno specifico dispositivo di terminale per reindirizzare `stdin`/`stdout`/`stderr` del programma in debug.",
+        "Errato. Il comando `set terminal` non è corretto.",
+        "Errato. `run` non accetta direttamente il flag `--tty`.",
+        "Errato. `use terminal` è un comando inesistente."
+      ]
+    },
+    {
+      "id": "it_clang_2781",
+      "widget_id": "widget_clang_2781",
+      "topic": "Comportamento del comando step durante la chiamata a una funzione",
+      "q": "Cosa fa il comando step (o s) quando la riga eseguibile corrente contiene una chiamata a una funzione definita dall'utente?",
+      "hint": "Ricorda lo scopo principale del comando di avanzamento in entrata (step into).",
+      "options": [
+        "Entra all'interno della funzione chiamata e si arresta sulla sua prima riga",
+        "Esegue l'intera funzione senza entrarvi, arrestandosi sulla riga successiva del contesto corrente",
+        "Termina l'esecuzione dell'intero programma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `step` entra nel corpo interno della funzione chiamata, a condizione che siano disponibili le informazioni di debug.",
+        "Errato. L'esecuzione dell'intera funzione senza entrarvi è eseguita dal comando `next`.",
+        "Errato. `step` non termina il programma, ma compie un solo passo di esecuzione."
+      ]
+    },
+    {
+      "id": "it_clang_2782",
+      "widget_id": null,
+      "topic": "Differenza tra step e next",
+      "q": "Qual è la differenza fondamentale tra i comandi step e next nel debugger GDB?",
+      "hint": "Pensa a come reagisce il debugger alle subroutine durante l'esecuzione di ciascuno di questi comandi.",
+      "options": [
+        "step entra all'interno della funzione chiamata (step into), mentre next la scavalca come un'unica riga (step over)",
+        "next entra all'interno della funzione chiamata, mentre step la salta sempre",
+        "step riavvia il programma dall'inizio, mentre next ne completa l'esecuzione",
+        "step funziona solo in C, mentre next esclusivamente in C++"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `step` entra nei dettagli delle subroutine chiamate, mentre `next` esegue la chiamata come un'istruzione atomica e si arresta sulla riga successiva del frame corrente.",
+        "Errato. Il comportamento dei comandi è opposto.",
+        "Errato. Il riavvio del programma viene eseguito con il comando `run`.",
+        "Errato. Entrambi i comandi sono universali per qualsiasi linguaggio supportato da GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2783",
+      "widget_id": "widget_clang_2783",
+      "topic": "Passo con argomento numerico (step N)",
+      "q": "Quale azione eseguirà il debugger all'inserimento del comando step 5?",
+      "hint": "L'argomento numerico indica il numero di ripetizioni del passo.",
+      "options": [
+        "GDB eseguirà 5 passi consecutivi del codice sorgente (entrando nelle funzioni), a meno che non incontri prima un breakpoint",
+        "GDB salterà direttamente alla quinta riga del file",
+        "GDB salterà le prime 5 funzioni nel file",
+        "Il comando genererà un errore di sintassi di GDB",
+        "GDB metterà il programma in pausa temporanea per esattamente 5 secondi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il passaggio dell'argomento `N` a `step` ordina di eseguire `N` passi consecutivi fino al completamento o all'incontro di un breakpoint.",
+        "Errato. Il passaggio a una riga specifica si effettua con il comando `until` o `until <line>`.",
+        "Errato. L'argomento `5` indica il numero di passi, non il numero di funzioni saltate.",
+        "Errato. La sintassi `step N` è valida in GDB.",
+        "Errato. `step` con parametro non è legato a timer o ritardi temporali."
+      ]
+    },
+    {
+      "id": "it_clang_2784",
+      "widget_id": null,
+      "topic": "Passo per singola istruzione (stepi)",
+      "q": "Quale comando esegue esattamente UN'istruzione assembly del processore entrando nelle subroutine?",
+      "hint": "Il comando è l'abbreviazione di «step instruction».",
+      "options": [
+        "stepi (o si)",
+        "nexti (o ni)",
+        "step",
+        "instr",
+        "asmstep",
+        "single"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `stepi` (step instruction) esegue esattamente un'istruzione assembly del processore entrando all'interno delle chiamate `call`.",
+        "Errato. `nexti` esegue un'istruzione assembly, ma scavalca le chiamate `call` per intero.",
+        "Errato. `step` esegue un passo per righe del codice sorgente C, non per singole istruzioni macchina.",
+        "Errato. Il comando `instr` non esiste in GDB.",
+        "Errato. `asmstep` è un comando inesistente.",
+        "Errato. `single` non si usa nella CLI di GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2785",
+      "widget_id": "widget_clang_2785",
+      "topic": "Comportamento di step su funzioni senza simboli di debug",
+      "q": "Come si comporterà il comando step se la riga successiva contiene la chiamata a una funzione di libreria standard (ad esempio printf) per la quale i simboli di debug (-g) non sono installati?",
+      "hint": "Il debugger non dispone del codice sorgente accessibile da mostrare all'interno delle librerie di sistema esterne.",
+      "options": [
+        "GDB eseguirà la funzione di libreria per intero e si arresterà sulla riga successiva del codice sorgente dell'utente",
+        "GDB interromperà in modo anomalo la sessione di debug con un errore di mancanza di file C"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se per la funzione chiamata non sono disponibili informazioni di debug DWARF, GDB non può mostrare le righe di codice ed esegue semplicemente la funzione per intero (in modo analogo a `next`).",
+        "Errato. L'assenza di simboli di debug in una libreria esterna non causa un blocco della sessione."
+      ]
+    },
+    {
+      "id": "it_clang_2786",
+      "widget_id": null,
+      "topic": "Arresto forzato nelle funzioni senza simboli (step-mode)",
+      "q": "Quale comando costringe GDB ad arrestarsi all'interno delle funzioni prive di informazioni di debug durante l'esecuzione di step, invece di saltarle completamente?",
+      "hint": "Il parametro attiva una modalità speciale di funzionamento del comando step.",
+      "options": [
+        "set step-mode on",
+        "set force-step true",
+        "set debug-symbols skip-off"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con `set step-mode on`, il debugger non salterà le funzioni prive di simboli di debug, ma arresterà l'esecuzione sulla loro prima istruzione macchina.",
+        "Errato. Il comando `set force-step` non esiste in GDB.",
+        "Errato. Il parametro `set debug-symbols` non è corretto."
+      ]
+    },
+    {
+      "id": "it_clang_2787",
+      "widget_id": null,
+      "topic": "Esclusione di funzioni selezionate durante il passo (skip)",
+      "q": "Tramite quale comando è possibile configurare GDB in modo che durante l'esecuzione di step il debugger ignori l'ingresso in determinate funzioni di servizio o file?",
+      "hint": "Il comando si traduce come «saltare».",
+      "options": [
+        "skip",
+        "ignore",
+        "pass",
+        "jump"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `skip` (ad esempio `skip function fname` o `skip file file.c`) ordina a `step` di scavalcare automaticamente le subroutine specificate senza entrarvi.",
+        "Errato. `ignore` si usa per ignorare le attivazioni dei breakpoint.",
+        "Errato. `pass` non è un comando base per la gestione dei passi.",
+        "Errato. `jump` modifica il puntatore dell'istruzione corrente (PC) a un altro indirizzo."
+      ]
+    },
+    {
+      "id": "it_clang_2788",
+      "widget_id": "widget_clang_2788",
+      "topic": "Ordine di ingresso in caso di chiamate nidificate",
+      "q": "Nella riga di codice da eseguire è scritto process(add(2, 3)). Dove passerà il debugger inserendo il comando step?",
+      "hint": "Pensa a quale delle due funzioni secondo le regole del C deve essere valutata per prima.",
+      "options": [
+        "All'interno della funzione add, in quanto il suo risultato deve essere calcolato per primo per passare l'argomento a process",
+        "All'interno della funzione process, in quanto è la prima in ordine di lettura da sinistra a destra",
+        "Entrambe le funzioni verranno eseguite contemporaneamente e il debugger passerà subito alla riga successiva"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per passare l'argomento a `process(...)`, occorre prima calcolare la funzione nidificata `add(...)`, pertanto `step` porterà prima il debugger dentro `add`.",
+        "Errato. `process` non può essere chiamata prima che sia generato l'argomento da `add`.",
+        "Errato. L'esecuzione passo-passo si sviluppa in modo sequenziale."
+      ]
+    },
+    {
+      "id": "it_clang_2789",
+      "widget_id": "widget_clang_2789",
+      "topic": "Uscita da una funzione entrata per errore",
+      "q": "Sei entrato per errore con il comando step all'interno di una funzione che non avevi intenzione di analizzare. Con quale comando puoi completarla immediatamente e tornare al codice chiamante?",
+      "hint": "Il comando completa la funzione corrente e restituisce il controllo al frame esterno.",
+      "options": [
+        "finish",
+        "return",
+        "leave",
+        "stepout",
+        "back"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `finish` completa l'esecuzione della funzione corrente e fa una pausa subito dopo il ritorno al contesto esterno.",
+        "Errato. `return` interrompe forzatamente l'esecuzione della funzione senza eseguirne il codice rimanente.",
+        "Errato. `leave` è un'istruzione assembly, non un comando di gestione di GDB.",
+        "Errato. `stepout` è assente nella CLI standard di GDB.",
+        "Errato. `back` non si usa per completare l'esecuzione del frame."
+      ]
+    },
+    {
+      "id": "it_clang_2790",
+      "widget_id": null,
+      "topic": "Ripetizione del comando step premendo Invio",
+      "q": "Cosa succede nella console interattiva di GDB se, dopo aver inserito una volta il comando step, si preme nuovamente il tasto Invio?",
+      "hint": "GDB memorizza e duplica l'ultimo comando inserito quando si invia una riga vuota.",
+      "options": [
+        "GDB eseguirà nuovamente il comando step, consentendo di avanzare nel codice a ogni pressione",
+        "GDB toglierà il programma dalla pausa e proseguirà l'esecuzione continua (continue)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'invio vuoto (pressione di Invio) in GDB ripete il comando precedente. Per `step` o `next`, questo permette di spostarsi comodamente nel codice a passi.",
+        "Errato. L'avvio automatico di `continue` non si verifica."
+      ]
+    },
+    {
+      "id": "it_clang_2791",
+      "widget_id": "widget_clang_2791",
+      "topic": "Comportamento base del comando next (step over)",
+      "q": "Quale azione eseguirà il comando next (o n) se la riga eseguibile corrente contiene la chiamata alla funzione process_data(a)?",
+      "hint": "Pensa al concetto di Step Over nei debugger.",
+      "options": [
+        "Eseguirà interamente la funzione process_data(a) e si arresterà sulla riga successiva del contesto corrente (main)",
+        "Passerà alla prima riga all'interno del corpo della funzione process_data",
+        "Ripristinerà l'esecuzione del programma fino alla prima riga di main"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `next` effettua un «passo con scavalcamento» (step over): esegue la subroutine chiamata per intero e passa il controllo alla riga successiva della funzione corrente.",
+        "Errato. Il passaggio all'interno della funzione chiamata è eseguito dal comando `step`.",
+        "Errato. `next` non azzera il processo di esecuzione."
+      ]
+    },
+    {
+      "id": "it_clang_2792",
+      "widget_id": null,
+      "topic": "Passo seriale con argomento (next N)",
+      "q": "Cosa succede se si inserisce il comando next 4 nel debugger GDB?",
+      "hint": "Il parametro numerico imposta il numero di operazioni di esecuzione consecutive.",
+      "options": [
+        "GDB eseguirà 4 righe del contesto corrente di seguito, saltando le chiamate a funzione (Step Over)",
+        "GDB effettuerà un passaggio immediato alla 4ª riga del file sorgente",
+        "GDB salterà l'esecuzione delle successive 4 funzioni nel codice",
+        "Il comando causerà un errore di sintassi, poiché next non accetta argomenti numerici"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il passaggio del numero `N` al comando `next` costringe il debugger ad eseguire automaticamente `N` passi nel codice sorgente del contesto corrente.",
+        "Errato. Il passaggio a una riga specifica si effettua con il comando `until` o `jump`.",
+        "Errato. L'argomento indica il numero di passi per riga, non il numero di subroutine saltate.",
+        "Errato. Il comando `next N` è perfettamente valido dal punto di vista sintattico in GDB."
+      ]
+    },
+    {
+      "id": "it_clang_2793",
+      "widget_id": "widget_clang_2793",
+      "topic": "Comportamento di next durante la chiamata a una funzione all'interno di un ciclo",
+      "q": "Se ti trovi all'interno di un ciclo for ed esegui il comando next sulla riga sum += calculate(i), il debugger entrerà all'interno di calculate?",
+      "hint": "Il comando next è progettato per lo scavalcamento (step over) delle funzioni.",
+      "options": [
+        "No, la funzione calculate verrà eseguita completamente e il controllo rimarrà nel contesto del ciclo",
+        "Sì, il comando next entra sempre all'interno delle funzioni utente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `next` considera qualsiasi subroutine come un'istruzione atomica di livello superiore, pertanto la chiamata a `calculate` verrà eseguita senza entrarvi.",
+        "Errato. L'ingresso nel corpo della funzione è compito del comando `step`."
+      ]
+    },
+    {
+      "id": "it_clang_2794",
+      "widget_id": null,
+      "topic": "Step over per singola istruzione (nexti)",
+      "q": "Quale comando effettua un passo di una sola istruzione macchina del processore senza entrare nelle subroutine (dopo l'istruzione call)?",
+      "hint": "La lettera 'i' alla fine indica instruction e il comando scavalca le chiamate.",
+      "options": [
+        "nexti (o ni)",
+        "stepi (o si)",
+        "next instruction",
+        "skipi",
+        "passi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `nexti` (next instruction) esegue esattamente un'istruzione del processore, ma se tale istruzione è una `call`, eseguirà la funzione chiamata per intero.",
+        "Errato. `stepi` entra all'interno dell'istruzione `call`.",
+        "Errato. Il comando `next instruction` non esiste nella CLI di GDB.",
+        "Errato. `skipi` non esiste.",
+        "Errato. `passi` è un comando non valido."
+      ]
+    },
+    {
+      "id": "it_clang_2795",
+      "widget_id": "widget_clang_2795",
+      "topic": "Esecuzione di funzioni ad alto consumo di risorse con next",
+      "q": "Se all'interno della funzione long_computation() viene eseguito un ciclo lungo, come si comporterà il comando next alla chiamata di questa funzione in main?",
+      "hint": "Next esegue la funzione in modo sincrono nell'ambito di un singolo passo del contesto corrente.",
+      "options": [
+        "GDB eseguirà completamente l'intera funzione long_computation() (incluso tutto il ciclo) e si arresterà su printf",
+        "GDB interromperà l'esecuzione della funzione dopo 1 secondo e costringerà a entrarvi",
+        "GDB restituirà un errore di superamento del limite di tempo (timeout)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `next` costringe il processo a eseguire tutta la funzione chiamata fino alla fine. La pausa verrà restituita al debugger solo al termine dell'intero corpo di `long_computation()`.",
+        "Errato. GDB non ha un limite di tempo integrato per l'esecuzione di una subroutine quando si chiama `next`.",
+        "Errato. Non viene generato alcun errore di timeout durante l'esecuzione del comando `next`."
+      ]
+    },
+    {
+      "id": "it_clang_2796",
+      "widget_id": null,
+      "topic": "Intercettazione dell'esecuzione da parte di un breakpoint all'interno di una funzione scavalcata",
+      "q": "Hai inserito il comando next per scavalcare la funzione helper(). Tuttavia, ALL'INTERNO di questa funzione era stato impostato in precedenza un breakpoint. Dove si arresterà il debugger?",
+      "hint": "I punti di interruzione (breakpoint) hanno una priorità più alta nell'intercettare il controllo.",
+      "options": [
+        "Il debugger si arresterà sul breakpoint all'interno della funzione helper()",
+        "Il debugger ignorerà il breakpoint all'interno di helper() e si arresterà sulla riga successiva alla chiamata",
+        "GDB eliminerà automaticamente questo breakpoint",
+        "Il programma terminerà con un errore di conflitto tra comandi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Qualsiasi punto di interruzione attivo (breakpoint) interrompe l'esecuzione del processo indipendentemente dal fatto che il passo sia stato richiesto tramite `next` o `continue`.",
+        "Errato. `next` non sopprime e non ignora i punti di interruzione impostati.",
+        "Errato. `next` non elimina i breakpoint dell'utente.",
+        "Errato. Non si verificano conflitti tra `next` e i punti di interruzione: il breakpoint ha semplicemente la priorità."
+      ]
+    },
+    {
+      "id": "it_clang_2797",
+      "widget_id": "widget_clang_2797",
+      "topic": "Avanzamento passo-passo in un ciclo tramite next",
+      "q": "Nel ciclo while (i < 3) inserisci in sequenza il comando next. Quale sarà l'ordine di arresto del debugger durante le iterazioni?",
+      "hint": "Il programma esegue le righe rigorosamente nell'ordine della loro effettiva esecuzione da parte del processore.",
+      "options": [
+        "Verifica della condizione -> corpo del ciclo -> incremento -> verifica della condizione...",
+        "Solo verifica della condizione del ciclo while senza passare alle righe del corpo",
+        "GDB eseguirà l'intero ciclo in un solo passo di next",
+        "Il passaggio avverrà subito a return 0, saltando l'intero ciclo",
+        "Il programma entrerà in un ciclo di pausa infinita",
+        "GDB trasformerà automaticamente next in continue"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `next` avanza lungo le righe in sequenza secondo il flusso di controllo (Control Flow): prima viene verificata la condizione, poi vengono eseguite le righe all'interno del blocco, dopo di che il debugger torna di nuovo alla condizione.",
+        "Errato. `next` passa per ogni riga eseguibile all'interno del corpo del ciclo.",
+        "Errato. Un solo passo di `next` non salta l'intero ciclo (a questo scopo si usa il comando `until`).",
+        "Errato. Il ciclo verrà completato interamente.",
+        "Errato. La pausa si verifica su ciascuna riga.",
+        "Errato. `next` mantiene la propria modalità di funzionamento."
+      ]
+    },
+    {
+      "id": "it_clang_2798",
+      "widget_id": null,
+      "topic": "Forma abbreviata del comando next",
+      "q": "Quale lettera abbreviata viene utilizzata nella console di GDB per richiamare il comando next?",
+      "hint": "È la prima lettera della parola next.",
+      "options": [
+        "n",
+        "x",
+        "ne"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'abbreviazione `n` è equivalente al comando completo `next`.",
+        "Errato. `x` viene utilizzato per esaminare il contenuto della memoria (`examine`).",
+        "Errato. L'abbreviazione è il singolo carattere `n`."
+      ]
+    },
+    {
+      "id": "it_clang_2799",
+      "widget_id": "widget_clang_2799",
+      "topic": "Verifica di eccezioni durante l'esecuzione di next",
+      "q": "Cosa succede se si esegue next su una riga contenente la chiamata a una funzione al cui interno si verifica un errore di esecuzione (ad esempio una divisione per zero)?",
+      "hint": "L'esecuzione del codice all'interno della funzione avviene da parte del processo reale del programma.",
+      "options": [
+        "Il programma genererà un segnale (ad esempio SIGFPE) e si arresterà con un errore nel punto del guasto",
+        "Il comando next intercetterà l'errore e proseguirà l'esecuzione della riga successiva, come se l'errore non si fosse verificato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché il codice all'interno della funzione viene realmente eseguito dal processore, l'insorgere di un errore genererà un segnale operativo (ad esempio `SIGFPE` o `SIGSEGV`) e GDB arresterà l'esecuzione direttamente sull'istruzione che ha causato il guasto.",
+        "Errato. `next` non maschera le eccezioni hardware e operative."
+      ]
+    },
+    {
+      "id": "it_clang_2800",
+      "widget_id": null,
+      "topic": "Confronto tra next e until nel debug dei cicli",
+      "q": "In cosa differisce fondamentalmente il comando until rispetto a chiamate ripetute di next all'interno del corpo di un ciclo?",
+      "hint": "Until consente di proseguire l'esecuzione finché la riga di codice non diventa maggiore di quella corrente (ovvero fino all'uscita dal ciclo).",
+      "options": [
+        "until esegue l'intero ciclo fino all'uscita dallo stesso e si arresta sulla prima riga DOPO il ciclo, mentre next effettua un passo per ogni iterazione",
+        "until entra in tutte le funzioni interne, mentre next le salta",
+        "next termina l'esecuzione dell'intero programma, mentre until passa a main()",
+        "Non differiscono in nulla, sono sinonimi completi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il comando `until` (o `u`) esegue il ciclo finché l'indirizzo/riga corrente non sia strettamente maggiore di quello attuale, permettendo così di uscire facilmente dal ciclo in un solo passo.",
+        "Errato. L'ingresso nelle funzioni interne viene effettuado da `step`.",
+        "Errato. Nessuno di questi comandi è destinato alla conclusione dell'intero programma.",
+        "Errato. Il comportamento di `until` sui cicli fa risparmiare notevolmente tempo rispetto alla pressione ripetuta di `next`."
+      ]
+    }
+  ]
+}
