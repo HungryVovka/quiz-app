@@ -1,0 +1,405 @@
+{
+  "subject": "Reti",
+  "questions": [
+    {
+      "id": "it_net_461",
+      "widget_id": "widget_net_461",
+      "topic": "Standard di Internet — I flussi di pubblicazione RFC (RFC Streams)",
+      "q": "Quali sono i 4 flussi principali (streams) di creazione dei documenti che formano le pubblicazioni nella serie RFC?",
+      "hint": "Pensa alle direzioni principali: ingegneristica (IETF), architetturale (IAB), di ricerca (IRTF) e indipendente (Independent).",
+      "options": [
+        "IETF Stream, IAB Stream, IRTF Stream, Independent Submission Stream",
+        "ISO Stream, IEEE Stream, W3C Stream, ITU-T Stream",
+        "Microsoft Stream, Google Stream, Apple Stream, Amazon Stream",
+        "Hardware Stream, Software Stream, Firmware Stream, Cloud Stream"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Tutti gli RFC vengono pubblicati attraverso uno dei quattro flussi riconosciuti: IETF (gruppi di lavoro), IAB (consiglio architetturale), IRTF (ricerca) o Independent Submissions (autori indipendenti).",
+        "Errato. ISO, IEEE, W3C e ITU-T sono organizzazioni di standardizzazione terze con le proprie serie di documenti.",
+        "Errato. I nomi dei giganti commerciali dell'IT non sono flussi ufficiali della serie RFC.",
+        "Errato. I flussi sono suddivisi per organizzazioni e processi di revisione, non per livelli di astrazione dei sistemi."
+      ]
+    },
+    {
+      "id": "it_net_462",
+      "widget_id": null,
+      "topic": "Standard di Internet — Immutabilità dei documenti RFC (Immutability)",
+      "q": "Cosa succede al file di un documento RFC già pubblicato se vi si scopre un errore fondamentale o se la sua specifica viene aggiornata?",
+      "hint": "Ricorda la regola fondamentale della serie RFC: il numero e il testo di un RFC pubblicato non vengono mai modificati sul posto.",
+      "options": [
+        "Il testo dell'RFC originale rimane immutato per sempre, mentre le correzioni vengono pubblicate sotto forma di Errata o tramite l'emissione di un nuovo RFC che «Aggiorna» (Updates) o «Sostituisce» (Obsoletes) il vecchio",
+        "Il testo dell'RFC esistente viene modificato in modo invisibile e sovrascritto con lo stesso numero sul server IETF",
+        "L'RFC pubblicato viene eliminato per sempre da tutti gli archivi senza possibilità di recupero"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La serie RFC è immutabile (immutable). Un RFC pubblicato rimane in forma archivistica per sempre. Le modifiche vengono apportate con la pubblicazione di un nuovo RFC con un nuovo numero, che fa riferimento al vecchio tramite gli attributi Updates o Obsoletes.",
+        "Errato. I file RFC non vengono mai sovrascritti sui server per preservare l'accuratezza delle citazioni e la cronologia.",
+        "Errato. Gli RFC non vengono mai eliminati dagli archivi, anche se il protocollo è obsoleto."
+      ]
+    },
+    {
+      "id": "it_net_463",
+      "widget_id": "widget_net_463",
+      "topic": "Standard di Internet — Il percorso di standardizzazione RFC (Standards Track)",
+      "q": "Da quali fasi è composto il moderno percorso di standardizzazione (Standards Track) secondo il documento RFC 6410?",
+      "hint": "Ricorda che la procedura è stata semplificata da tre fasi a due stati chiave di maturità dello standard.",
+      "options": [
+        "Proposed Standard (Standard proposto) e Internet Standard (Standard di Internet)",
+        "Alpha Version e Beta Version",
+        "Local Standard e Global Standard",
+        "Draft RFC e Final RFC",
+        "Free RFC e Paid RFC"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'RFC 6410 ha ridotto il precedente sistema a tre fasi (Proposed -> Draft -> Internet) a due fasi: Proposed Standard (specifica iniziale) e Internet Standard (elevata maturità e adozione di massa).",
+        "Errato. I termini Alpha e Beta si applicano allo sviluppo del software, non al percorso degli RFC.",
+        "Errato. Gli RFC non sono divisi in standard locali e globali.",
+        "Errato. Le bozze si chiamano Internet-Drafts, non Draft RFC.",
+        "Errato. Tutti gli RFC sono gratuiti, il concetto di RFC a pagamento non esiste."
+      ]
+    },
+    {
+      "id": "it_net_464",
+      "widget_id": null,
+      "topic": "Standard di Internet — Parole chiave dei requisiti negli RFC (RFC 2119 / RFC 8174)",
+      "q": "Qual è il ruolo delle parole chiave MUST, SHOULD, MAY, MUST NOT, SHOULD NOT, scritte in lettere maiuscole nei testi degli RFC?",
+      "hint": "Presta attenzione alle definizioni precise del livello di tassatività dei requisiti per garantire la compatibilità tra diverse implementazioni.",
+      "options": [
+        "Definiscono in modo preciso e inequivocabile il livello di obbligatorietà dell'adempimento di un requisito tecnico per garantire l'interoperabilità dei sistemi",
+        "Sono un abbellimento stilistico dell'autore e non hanno alcun valore tecnico per gli sviluppatori"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo gli RFC 2119 / RFC 8174, queste parole chiave regolano rigorosamente il grado di obbligatorietà (MUST — strettamente obbligatorio, SHOULD — raccomandato con possibili eccezioni motivate, MAY — opzionale).",
+        "Errato. Queste parole hanno valore legale e tecnico durante la verifica di conformità (compliance) delle implementazioni allo standard."
+      ]
+    },
+    {
+      "id": "it_net_465",
+      "widget_id": "widget_net_465",
+      "topic": "Standard di Internet — Il sistema di errori RFC Errata",
+      "q": "A quali scopi è destinato il meccanismo RFC Errata?",
+      "hint": "Pensa alla registrazione e alla verifica di refusi o imprecisioni tecnico-logiche senza modificare il file RFC originale.",
+      "options": [
+        "Per la registrazione pubblica, la verifica da parte di esperti e la catalogazione di refusi o errori nelle formulazioni e nel codice senza modificare il file originale",
+        "Per bloccare l'accesso al sito IETF agli utenti provenienti da determinati Paesi",
+        "Per la traduzione automatica degli RFC in altre lingue del mondo tramite reti neurali",
+        "Per l'applicazione di sanzioni agli autori che hanno commesso refusi nel testo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il database RFC Errata consente ai lettori di segnalare errori (editoriali o tecnici) e agli esperti di verificarli, lasciando una nota all'RFC senza ristampare il documento stesso.",
+        "Errato. Errata è un database di refusi e correzioni ai documenti, non un firewall di rete.",
+        "Errato. Errata non si occupa di traduzione automatica.",
+        "Errato. Il sistema ha un carattere esclusivamente tecnico-informativo e non prevede sanzioni."
+      ]
+    },
+    {
+      "id": "it_net_466",
+      "widget_id": null,
+      "topic": "Standard di Internet — Il primo documento RFC 1",
+      "q": "A quale evento e tema era dedicato il primissimo documento RFC 1, pubblicato da Steve Crocker nel 1969?",
+      "hint": "Ricorda le origini della rete ARPANET e lo sviluppo del software di base per lo scambio di messaggi tra i nodi.",
+      "options": [
+        "Sviluppo di software per lo scambio dati tra host nella rete ARPANET (Host Software)",
+        "Descrizione del protocollo di crittografia HTTPS per i negozi online",
+        "Standardizzazione delle reti wireless Wi-Fi 6E",
+        "Regole per la registrazione dei nomi di dominio nella zona .com",
+        "Specifica del formato dei flussi video MP4",
+        "Istruzioni per la configurazione del web server Apache"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'RFC 1 intitolato «Host Software» fu pubblicato il 7 aprile 1969 e descriveva l'interfaccia di interazione tra computer host nella rete sperimentale ARPANET.",
+        "Errato. Nel 1969 il protocollo HTTPS e il World Wide Web non esistevano ancora.",
+        "Errato. Le tecnologie Wi-Fi sono apparse tre decenni dopo.",
+        "Errato. Il sistema DNS e le zone di dominio sono apparsi negli anni '80.",
+        "Errato. Il video digitale MP4 è comparso molto più tardi.",
+        "Errato. Il web server Apache è apparso nel 1995."
+      ]
+    },
+    {
+      "id": "it_net_467",
+      "widget_id": "widget_net_467",
+      "topic": "Standard di Internet — Gli RFC del Pesce d'Aprile (April Fools' RFCs)",
+      "q": "Per cosa è famoso il documento di specifica RFC 1149 («A Standard for the Transmission of IP Datagrams on Avian Carriers»)?",
+      "hint": "Pensa alla tradizione della comunità di ingegneri IETF di pubblicare specifiche umoristiche il 1° aprile.",
+      "options": [
+        "È un classico RFC umoristico del Pesce d'Aprile che descrive la trasmissione di pacchetti IP tramite piccioni viaggiatori",
+        "È uno standard industriale in vigore per le reti cellulari 5G",
+        "È la prima specifica del sistema dei nomi di dominio DNS"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'RFC 1149 è un leggendario documento del Pesce d'Aprile del 1990 che descrive il protocollo di trasmissione del traffico IP tramite posta viaggiante con piccioni (IP over Avian Carriers).",
+        "Errato. Si tratta di un documento goliardico che non ha alcuna relazione con le comunicazioni mobili commerciali 5G.",
+        "Errato. Il DNS è descritto negli RFC 1034 e RFC 1035."
+      ]
+    },
+    {
+      "id": "it_net_468",
+      "widget_id": null,
+      "topic": "Standard di Internet — Il servizio RFC Editor",
+      "q": "Quale funzione principale svolge il servizio RFC Editor nel processo di pubblicazione delle specifiche?",
+      "hint": "Pensa alla redazione finale, all'assegnazione dei numeri, all'impaginazione e alla conservazione dell'integrità dell'intero archivio della serie RFC.",
+      "options": [
+        "È responsabile della redazione finale, dell'assegnazione dei numeri permanenti, della pubblicazione e della conservazione dell'archivio dell'intera serie RFC",
+        "Viene nominato dal presidente dell'ISO per gestire gli standard mondiali",
+        "Scrive il codice sorgente per tutte le utility di rete Linux",
+        "Rilascia brevetti per l'uso commerciale delle apparecchiature di rete"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'RFC Editor è l'insieme dei ruoli (incluso l'RPC) che garantiscono la revisione finale del testo, l'assegnazione di un numero RFC univoco e la conservazione a tempo indeterminato dei materiali pubblicati.",
+        "Errato. L'RFC Editor opera nell'ecosistema IETF/IAB e non è subordinato all'ISO.",
+        "Errato. La redazione si occupa del testo delle specifiche, non dello sviluppo del codice per SO.",
+        "Errato. L'RFC Editor non rilascia brevetti commerciali."
+      ]
+    },
+    {
+      "id": "it_net_469",
+      "widget_id": "widget_net_469",
+      "topic": "Standard di Internet — Formati dei documenti RFC v3 (RFC 7990)",
+      "q": "Quali sono le caratteristiche chiave del moderno sistema di formati di pubblicazione RFC (RFC v3, RFC 7990)?",
+      "hint": "Pensa al passaggio dal testo ASCII a spaziatura fissa obsoleto all'XML come sorgente primaria con generazione parallela di HTML, PDF e TXT.",
+      "options": [
+        "Passaggio all'XML v3 come sorgente canonica primaria con generazione ufficiale di HTML, PDF e testo semplice con supporto a grafica e UTF-8",
+        "Abbandono totale dei testi elettronici a favore di libri cartacei stampati",
+        "Traduzione di tutti gli RFC nel formato di file audio crittografati MP3",
+        "Pubblicazione degli RFC esclusivamente sotto forma di video tutorial su YouTube",
+        "Utilizzo del formato proprietario Microsoft Word (.docx)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo l'RFC 7990, il formato sorgente canonico è diventato RFC XML v3, da cui vengono generati automaticamente la versione web HTML (con diagrammi vettoriali SVG e UTF-8), il PDF per la stampa e il TXT classico.",
+        "Errato. La serie RFC è distribuita esclusivamente in formato digitale.",
+        "Errato. Gli RFC sono pubblicati come documenti web testuali e strutturati, non come registrazioni audio.",
+        "Errato. Gli RFC rimangono specifiche ingegneristiche testuali.",
+        "Errato. L'IETF utilizza un formato XML aperto, non i file binari di MS Word."
+      ]
+    },
+    {
+      "id": "it_net_470",
+      "widget_id": null,
+      "topic": "Standard di Internet — La sottoserie BCP (Best Current Practice)",
+      "q": "Cosa indica la sottoserie BCP (Best Current Practice) assegnata a una parte dei documenti RFC?",
+      "hint": "Pensa alle raccomandazioni pratiche di amministrazione, procedure operative e configurazioni che non costituiscono protocolli tecnici.",
+      "options": [
+        "Documenti che descrivono le migliori pratiche ufficialmente approvate per l'amministrazione, la configurazione e la gestione delle infrastrutture di rete",
+        "Un elenco segreto di router guasti da smaltire",
+        "Un catalogo di prezzi commerciali per i servizi dei provider Internet"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo stato BCP (Best Current Practice) viene assegnato ai documenti RFC che contengono raccomandazioni ufficiali per il corretto funzionamento delle reti, le procedure di sicurezza e le linee guida IETF.",
+        "Errato. Il BCP contiene raccomandazioni metodologiche sulle configurazioni e sui processi, non elenchi di apparecchiature.",
+        "Errato. Nel BCP non vengono pubblicati i listini prezzi dei provider."
+      ]
+    },
+    {
+      "id": "it_net_471",
+      "widget_id": "widget_net_471",
+      "topic": "Periferia della rete — Il concetto di Host (Host / End System)",
+      "q": "Che cos'è un host (sistema finale, End System) nel contesto delle reti di calcolatori?",
+      "hint": "Pensa ai dispositivi situati al confine (periferia) della rete che fungono da sorgenti o destinatari dei dati utente.",
+      "options": [
+        "Un dispositivo alla periferia della rete che esegue applicazioni di rete per utenti o server (PC, smartphone, server, dispositivi IoT)",
+        "Solo un router di backbone intermedio che inoltra pacchetti IP",
+        "Un cavo fisico in fibra ottica che collega due switch di rete",
+        "Un sistema operativo specializzato per switch gestiti L2",
+        "Il registro di servizio dei nomi di dominio dell'IANA"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un host (o sistema finale, End System) è un qualsiasi dispositivo al margine della rete (laptop, server, smart TV, sensore) che genera o riceve traffico utente ed esegue applicazioni.",
+        "Errato. I router intermedi formano il core della rete (Network Core), non i sistemi finali.",
+        "Errato. Il cavo è un mezzo di trasmissione dati a livello fisico, non un host.",
+        "Errato. Il sistema operativo degli switch appartiene alle apparecchiature di rete core/accesso.",
+        "Errato. Il registro IANA è un'organizzazione e un database di parametri, non una classe di dispositivi di rete."
+      ]
+    },
+    {
+      "id": "it_net_472",
+      "widget_id": null,
+      "topic": "Periferia della rete — Architettura Client-Server",
+      "q": "In cosa consiste il principio fondamentale di interazione tra nodi nel classico paradigma client-server?",
+      "hint": "Presta attenzione a chi avvia la connessione e a quale nodo deve essere sempre disponibile per elaborare le richieste.",
+      "options": [
+        "Il client avvia la richiesta verso un server sempre disponibile con un indirizzo noto, e il server elabora la richiesta e invia la risposta",
+        "Tutti i nodi richiedono e trasmettono dati simultaneamente ed egualmente senza un nodo centrale",
+        "Il server avvia sempre per primo la connessione al client senza una previa richiesta da parte del client"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel modello client-server il client invia una richiesta (Request) a un server sempre acceso con indirizzo noto (IP/DNS), e il server la elabora restituendo una risposta (Response).",
+        "Errato. Viene descritto il principio di funzionamento delle reti peer-to-peer (P2P).",
+        "Errato. Nel modello classico il client è sempre l'iniziatore della sessione di comunicazione."
+      ]
+    },
+    {
+      "id": "it_net_473",
+      "widget_id": "widget_net_473",
+      "topic": "Periferia della rete — Collocazione dei server nei Data Center",
+      "q": "Perché i server applicativi ad alto carico e i servizi web vengono collocati più spesso nei data center anziché sui PC locali in ufficio?",
+      "hint": "Pensa ai requisiti di alimentazione ininterrotta, raffreddamento, canali di comunicazione ad alta frequenza e protezione fisica.",
+      "options": [
+        "Per garantire alimentazione a prova di guasto, canali di comunicazione gigabit ridondati, controllo del clima ed elevata sicurezza fisica",
+        "Perché il software server è vietato per legge sui computer da ufficio",
+        "Per evitare di pagare le tasse sull'energia elettrica nell'ufficio aziendale",
+        "I data center correggono automaticamente gli errori nel codice sorgente delle applicazioni web",
+        "A causa dell'assenza di accesso tecnico a Internet negli edifici di uffici ordinari",
+        "Per abbandonare completamente l'uso dei protocolli di rete della famiglia TCP/IP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I data center forniscono un'infrastruttura specializzata: UPS e generatori diesel, raffreddamento di precisione, ridondanza multipla dei canali Internet e protezione degli accessi.",
+        "Errato. Eseguire software server è tecnicamente possibile su qualsiasi PC; la questione riguarda la personalizzazione dell'affidabilità e la disponibilità.",
+        "Errato. La collocazione dell'attrezzatura in un data center è a pagamento e non è uno schema fiscale.",
+        "Errato. I data center forniscono infrastruttura hardware e di rete, non il debugging del codice.",
+        "Errato. Gli uffici hanno accesso a Internet, ma i loro canali e alimentazione non hanno il livello di ridondanza dei data center.",
+        "Errato. I server nei data center funzionano proprio sulla base dello stack TCP/IP standard."
+      ]
+    },
+    {
+      "id": "it_net_474",
+      "widget_id": null,
+      "topic": "Periferia della rete — Architettura Peer-to-Peer (P2P)",
+      "q": "Come vengono distribuiti i ruoli dei nodi nell'architettura paritaria (Peer-to-Peer, P2P) alla periferia della rete?",
+      "hint": "Ricorda in cosa differiscono i partecipanti (peers) nelle reti torrent dai clienti tradizionali dei siti web.",
+      "options": [
+        "Ogni nodo (peer) può fungere contemporaneamente sia da client che da server, scambiando dati direttamente con gli altri nodi",
+        "Tutti i nodi comunicano esclusivamente attraverso un unico server centrale che memorizza tutti i file",
+        "Nelle reti P2P è tecnicamente vietato utilizzare il protocollo di trasporto UDP",
+        "I nodi della rete P2P sono obbligati ad avere solo indirizzi IP pubblici statici"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nell'architettura P2P gli host (peer) sono decentralizzati: possono sia scaricare dati (come client) sia distribuirli ad altri nodi (come server).",
+        "Errato. L'assenza di un unico archivio di file centrale è la differenza principale tra P2P e client-server.",
+        "Errato. I protocolli P2P (ad esempio BitTorrent) utilizzano attivamente UDP (uTP).",
+        "Errato. Le reti P2P funzionano con successo con nodi dietro NAT e con indirizzi IP dinamici."
+      ]
+    },
+    {
+      "id": "it_net_475",
+      "widget_id": "widget_net_475",
+      "topic": "Periferia della rete — Bilanciamento del carico (Load Balancing)",
+      "q": "Qual è lo scopo del bilanciatore di carico (Load Balancer) posizionato davanti a una farm di server in un data center?",
+      "hint": "Pensa alla distribuzione del flusso di richieste in entrata da migliaia di utenti tra diversi server identici.",
+      "options": [
+        "Distribuisce uniformemente il traffico di rete in entrata dai client tra un gruppo di server per prevenire il sovraccarico di singoli nodi",
+        "Misura la massa fisica dei rack di server per prevenire la deformazione del pavimento del data center",
+        "Crittografa i dischi rigidi sui server in caso di interruzione dell'alimentazione elettrica",
+        "Converte il segnale digitale in analogico per la trasmissione su linee telefoniche"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il bilanciatore di carico (L4/L7 Load Balancer) distribuisce le richieste in arrivo dei client secondo determinati algoritmi (Round Robin, Least Connections, ecc.) tra un pool di server.",
+        "Errato. Il termine «bilanciamento» si riferisce alla distribuzione del carico di rete, non del peso fisico.",
+        "Errato. La crittografia dei dischi viene eseguita dal sistema operativo o dai controller di storage.",
+        "Errato. La conversione dei segnali è effettuata da un modem analogico."
+      ]
+    },
+    {
+      "id": "it_net_476",
+      "widget_id": null,
+      "topic": "Periferia della rete — Porte e indirizzi di client e server",
+      "q": "In che modo di solito differiscono le porte di rete e gli indirizzi IP dei client e dei server all'instaurazione di una connessione di rete?",
+      "hint": "Pensa ai numeri di porta fissi per i servizi (ad esempio 80 o 443) e alle porte temporanee casuali dal lato del client.",
+      "options": [
+        "Il server è in ascolto su una porta nota e fissa (Well-Known Port) e ha un IP permanente, mentre il client utilizza una porta temporanea casuale (Ephemeral)",
+        "Il server e il client utilizzano sempre lo stesso numero di porta e lo stesso indirizzo IP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I server si collegano a porte riservate (ad esempio HTTP: 80, HTTPS: 443) su indirizzi permanenti, mentre il client sceglie una porta effimera casuale dall'intervallo superiore per la propria sessione.",
+        "Errato. La connessione è identificata dai socket (IP_src, Port_src, IP_dst, Port_dst), che sono distinti."
+      ]
+    },
+    {
+      "id": "it_net_477",
+      "widget_id": "widget_net_477",
+      "topic": "Periferia della rete — Rack e server blade",
+      "q": "Cosa rappresentano i rack da 19 pollici (Racks) e i server blade (Blade Servers) nell'architettura dei data center?",
+      "hint": "Pensa al montaggio standardizzato delle apparecchiature e ai server sottili modulari per un posizionamento compatto.",
+      "options": [
+        "Armadi/rack strutturali standardizzati e schede server modulari sottili per un'elevata densità di calcolo",
+        "Marche di speciali cavi in fibra ottica ad alta resistenza",
+        "Librerie software per la scrittura di codice server in C++",
+        "Sistemi autonomi di ricarica wireless per gli smartphone dei clienti",
+        "Monitor per visualizzare i turni degli ingegneri del data center"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un rack di server (Rack) è un telaio di larghezza standardizzata (19 pollici), mentre i server blade sono moduli compatti e sottili inseriti in uno chassis comune per risparmiare spazio.",
+        "Errato. Non si tratta di cavi, ma di fattori di forma per l'alloggiamento fisico dei server.",
+        "Errato. Si parla di strutture hardware del data center, non di software.",
+        "Errato. Rack e blade non sono destinati alla ricarica di dispositivi mobili.",
+        "Errato. I rack contengono nodi di calcolo e switch, non sistemi di visualizzazione dei turni."
+      ]
+    },
+    {
+      "id": "it_net_478",
+      "widget_id": null,
+      "topic": "Periferia della rete — Virtualizzazione e VPS/VDS",
+      "q": "Qual è il ruolo dell'ipervisore (Hypervisor) nell'organizzazione dei server virtuali (VPS/VDS) nei data center?",
+      "hint": "Pensa allo strato software che suddivide le risorse di calcolo di un singolo server fisico in più macchine virtuali indipendenti.",
+      "options": [
+        "L'ipervisore suddivide le risorse di un singolo server fisico in più macchine virtuali isolate, a ciascuna delle quali viene assegnato il proprio SO",
+        "Un VPS è un dispositivo di archiviazione esterno collegato al server tramite un cavo USB",
+        "L'ipervisore è un programma antivirus per proteggere il browser sul dispositivo dell'utente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'ipervisore (ad esempio KVM, ESXi) astrae l'hardware del server fisico, consentendo l'esecuzione di molteplici server virtuali isolati (VPS) con i propri sistemi operativi.",
+        "Errato. Un VPS (Virtual Private Server) è una macchina virtuale, non un disco esterno fisico.",
+        "Errato. L'ipervisore funziona sul server per la virtualizzazione delle risorse, non nel browser del client."
+      ]
+    },
+    {
+      "id": "it_net_479",
+      "widget_id": "widget_net_479",
+      "topic": "Periferia della rete — Calcolo ai margini (Edge Computing)",
+      "q": "Qual è l'idea principale alla base del concetto di Edge Computing rispetto all'elaborazione cloud centralizzata tradizionale?",
+      "hint": "Pensa all'avvicinamento dei server di elaborazione dati ai dispositivi finali o agli utenti per ridurre la latenza (latency).",
+      "options": [
+        "Esecuzione di calcoli ed elaborazione dati più vicino alla periferia della rete (all'utente o ai dispositivi IoT) per ridurre le latenze di rete",
+        "Abbandono totale dei server di calcolo e trasmissione dati solo tramite messaggi SMS",
+        "Collocazione di tutti i server esclusivamente su stazioni spaziali orbitali",
+        "Utilizzo di un unico supercomputer per servire tutti gli abitanti del pianeta"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'Edge Computing sposta parte dei calcoli dai data center cloud remoti ai nodi periferici (vicini all'utente), riducendo la latenza (RTT) e risparmiando larghezza di banda.",
+        "Errato. L'Edge Computing utilizza attivamente server situati al confine della rete.",
+        "Errato. I calcoli vengono avvicinati alle sorgenti dati terrestri (stazioni base, nodi locali).",
+        "Errato. Al contrario, il modello Edge decentralizza i calcoli, evitando un unico centro gigante."
+      ]
+    },
+    {
+      "id": "it_net_480",
+      "widget_id": null,
+      "topic": "Periferia della rete — Standard di affidabilità dei Data Center (Tier I - IV)",
+      "q": "Cosa definisce la classificazione dei data center per livelli di affidabilità Tier (Tier I — Tier IV, secondo l'Uptime Institute)?",
+      "hint": "Presta attenzione al grado di ridondanza dei sistemi di alimentazione elettrica, raffreddamento e al tasso di inattività annuale consentito.",
+      "options": [
+        "Il livello di ridondanza dei sistemi di alimentazione, raffreddamento e percorsi di comunicazione, che determina la tolleranza ai guasti e la percentuale di disponibilità annuale",
+        "La frequenza di clock dei processori installati sui server del data center",
+        "Il numero di personale di turno nel data center",
+        "La superficie totale dell'edificio del data center in metri quadrati",
+        "La versione del protocollo IP utilizzata per l'indirizzamento dei rack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard Tier (da Tier I a Tier IV) classifica i data center in base al livello di ridondanza (N+1, 2N) e all'affidabilità: il Tier IV garantisce una tolleranza ai guasti del 99,995% e la possibilità di manutenzione senza interruzioni operative.",
+        "Errato. Lo standard Tier valuta l'infrastruttura ingegneristica del data center, non il modello di CPU.",
+        "Errato. Il numero di dipendenti non determina la categoria di affidabilità Tier.",
+        "Errato. La superficie dell'edificio non è un criterio di affidabilità del data center.",
+        "Errato. I protocolli di rete non rientrano nel sistema di valutazione dell'infrastruttura dell'Uptime Institute."
+      ]
+    }
+  ]
+}

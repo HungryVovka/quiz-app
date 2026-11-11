@@ -1,0 +1,593 @@
+{
+  "subject": "Reti",
+  "questions": [
+    {
+      "id": "it_net_401",
+      "widget_id": "widget_net_401",
+      "topic": "Standard di Internet — Internet-Draft (I-D) vs RFC",
+      "q": "In che modo un documento della categoria Internet-Draft (I-D) si differenzia fondamentalmente da un RFC ufficiale?",
+      "hint": "Pensa allo stato temporaneo delle bozze, alla possibilità di modificarle e alla loro durata prima dell'archiviazione o della scadenza.",
+      "options": [
+        "Un Internet-Draft è una bozza temporanea (con validità di 6 mesi) che può essere modificata, mentre un RFC è un documento di archivio permanente e immutabile",
+        "Un Internet-Draft è una versione a pagamento di un RFC destinata alle aziende IT commerciali",
+        "Un Internet-Draft contiene esclusivamente registrazioni audio e video delle riunioni aperte dell'IETF",
+        "Un Internet-Draft viene creato solo per descrivere interfacce fisiche e cavi elettrici",
+        "Un Internet-Draft si trasforma automaticamente in uno standard allo scadere dei 6 mesi senza ulteriore revisione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un Internet-Draft è una bozza di lavoro non definitiva. Se una bozza non viene aggiornata entro 6 mesi, scade. Al contrario, un RFC è una pubblicazione finale immutabile.",
+        "Errato. Le bozze I-D sono distribuite gratuitamente e liberamente.",
+        "Errato. Un Internet-Draft è un documento di testo contenente una specifica.",
+        "Errato. Gli Internet-Draft vengono sviluppati per protocolli di qualsiasi livello.",
+        "Errato. Senza l'approvazione dell'IESG, la bozza scade e viene rimossa, anziché diventare uno standard."
+      ]
+    },
+    {
+      "id": "it_net_402",
+      "widget_id": null,
+      "topic": "Standard di Internet — Errori e refusi (RFC Errata)",
+      "q": "Come vengono registrati e corretti i refusi tecnici o i piccoli errori in un RFC pubblicato senza modificare il file della specifica stesso?",
+      "hint": "Pensa a un database pubblico separato di correzioni (Errata) collegate a righe specifiche del documento.",
+      "options": [
+        "Tramite la pubblicazione di voci Errata (refusi e correzioni), registrate dal servizio RFC Editor in un registro separato senza ripubblicare il testo stesso",
+        "Eliminando il vecchio RFC dal server IETF e caricando una versione aggiornata",
+        "Inviando un'e-mail personale all'autore dell'RFC senza alcuna notifica pubblica"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché i file RFC sono immutabili, gli errori riscontrati vengono inseriti nel registro pubblico RFC Errata con le diciture «Verified», «Held for Document Update» o «Rejected».",
+        "Errato. I documenti RFC sono fondamentalmente immutabili e non vengono eliminati dagli archivi.",
+        "Errato. Gli errori vengono registrati apertamente nel database Errata per l'intera comunità."
+      ]
+    },
+    {
+      "id": "it_net_403",
+      "widget_id": "widget_net_393",
+      "topic": "Standard di Internet — L'organo IESG",
+      "q": "Quale ruolo svolge il comitato IESG (Internet Engineering Steering Group) nel processo di conversione di una bozza in un RFC ufficiale?",
+      "hint": "Presta attenzione alla funzione di direzione tecnica superiore dell'IETF, che approva il passaggio delle bozze sul percorso di standardizzazione.",
+      "options": [
+        "Esegue la revisione tecnica finale delle bozze e approva il loro trasferimento al servizio RFC Editor per la pubblicazione sul percorso di standardizzazione",
+        "Rilascia licenze per l'uso degli indirizzi IP ai provider Internet",
+        "Si occupa della posa fisica di cavi sottomarini in fibra ottica",
+        "Gestisce la vendita di router e switch di rete"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'IESG (Internet Engineering Steering Group) è l'organo direttivo dell'IETF che effettua la revisione finale delle specifiche e ne approva la pubblicazione come RFC.",
+        "Errato. L'assegnazione degli indirizzi IP è gestita dalle organizzazioni IANA e RIR (RIPE, ARIN, ecc.).",
+        "Errato. L'IESG si occupa di standardizzazione tecnica, non della posa di cavi.",
+        "Errato. L'IESG non è un'organizzazione commerciale per la vendita di hardware."
+      ]
+    },
+    {
+      "id": "it_net_404",
+      "widget_id": null,
+      "topic": "Standard di Internet — Modello di consenso dell'IETF",
+      "q": "Cosa significa il principio chiave dell'IETF «Rough Consensus and Running Code» durante l'approvazione delle specifiche RFC?",
+      "hint": "Ricorda che l'IETF evita il voto formale a maggioranza, dando priorità all'assenza di forti obiezioni tecniche e all'esistenza di implementazioni funzionanti.",
+      "options": [
+        "Le decisioni vengono prese sulla base di un consenso generale (approssimativo) degli esperti senza votazione formale, confermato dalla presenza di implementazioni software funzionanti",
+        "È richiesta una votazione all'unanimità al 100% di tutti i partecipanti registrati all'IETF, senza eccezioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il principio «Rough consensus and running code» sottolinea che gli standard tecnici dell'IETF vengono adottati in assenza di obiezioni motivate insuperabili e sono verificati dalla presenza di codice funzionante.",
+        "Errato. L'unanimità assoluta al 100% non è richiesta, poiché un singolo nodo contrario potrebbe bloccare lo sviluppo dell'intera rete."
+      ]
+    },
+    {
+      "id": "it_net_405",
+      "widget_id": "widget_net_405",
+      "topic": "Standard di Internet — RFC fondamentali (RFC 791 / RFC 793)",
+      "q": "Quali protocolli di rete di base dello stack TCP/IP sono stati descritti per la prima volta in modo fondamentale nei famosi documenti RFC 791 e RFC 793?",
+      "hint": "Ricorda i principali protocolli del livello di rete (L3) e di trasporto (L4) che hanno gettato le basi del moderno Internet nel 1981.",
+      "options": [
+        "L'RFC 791 descrive l'IP (Internet Protocol), mentre l'RFC 793 descrive il TCP (Transmission Control Protocol)",
+        "L'RFC 791 descrive l'HTTP, mentre l'RFC 793 descrive il DNS",
+        "L'RFC 791 descrive il Wi-Fi (802.11), mentre l'RFC 793 descrive il Bluetooth",
+        "L'RFC 791 descrive l'Ethernet, mentre l'RFC 793 descrive la fibra ottica",
+        "L'RFC 791 descrive il BGP, mentre l'RFC 793 descrive l'OSPF",
+        "L'RFC 791 descrive lo SSL/TLS, mentre l'RFC 793 descrive lo SSH"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Pubblicati nel 1981 da Jon Postel, gli standard RFC 791 e RFC 793 hanno gettato le basi del moderno Internet, definendo i protocolli IPv4 e TCP.",
+        "Errato. HTTP è descritto nella serie RFC 2616 / RFC 7230+, mentre il DNS negli RFC 1034 / 1035.",
+        "Errato. Wi-Fi e Bluetooth sono regolamentati dall'IEEE, non dagli storici RFC 791/793.",
+        "Errato. Ethernet è regolamentato dallo standard IEEE 802.3.",
+        "Errato. BGP e OSPF sono stati creati successivamente (RFC 1267/1131).",
+        "Errato. SSL/TLS e SSH sono protocolli di livello applicativo/sessione e sono comparsi molto più tardi."
+      ]
+    },
+    {
+      "id": "it_net_406",
+      "widget_id": null,
+      "topic": "Standard di Internet — Formato di testo ASCII e UTF-8",
+      "q": "Perché storicamente il formato di testo principale per la pubblicazione degli RFC era l'ASCII puro (Plain Text), mentre oggi sono consentiti formati canonici XML/HTML/UTF-8?",
+      "hint": "Pensa ai requisiti di massima longevità, indipendenza dalla piattaforma e possibilità di leggere i documenti su qualsiasi sistema informatico.",
+      "options": [
+        "Per garantire longevità, leggibilità su qualsiasi architettura ed eliminare la dipendenza da software proprietario",
+        "Per proteggere i documenti dalla copia e dalla lettura non autorizzata",
+        "A causa della mancanza di monitor grafici al momento della creazione dell'IETF",
+        "Per ridurre la dimensione dei file a un massimo di 1 Kilobyte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il formato Plain ASCII garantiva che qualsiasi documento RFC potesse essere letto su qualunque computer a distanza di decenni senza l'uso di editor grafici specializzati.",
+        "Errato. Il testo ASCII non contiene strumenti di crittografia o protezione dalla copia.",
+        "Errato. Si è trattato di una scelta ingegneristica consapevole a favore della compatibilità, non di un limite tecnico degli schermi.",
+        "Errato. Molti RFC occupano centinaia di kilobyte di testo."
+      ]
+    },
+    {
+      "id": "it_net_407",
+      "widget_id": "widget_net_407",
+      "topic": "Standard di Internet — Struttura dei Gruppi di Lavoro (Working Groups)",
+      "q": "Quale funzione svolgono i Gruppi di Lavoro (Working Groups, WG) all'interno della struttura dell'IETF?",
+      "hint": "Pensa a team altamente specializzati di esperti, formati per un mandato specifico (charter) per sviluppare protocolli particolari.",
+      "options": [
+        "Vengono formati per risolvere specifici problemi tecnici o sviluppare specifiche di protocollo e vengono sciolti dopo il completamento del proprio mandato (charter)",
+        "Sono filiali permanenti dell'IETF in ogni Paese del mondo per la raccolta delle tasse",
+        "Eseguono la tutela legale dei brevetti delle aziende IT commerciali"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I gruppi di lavoro dell'IETF vengono creati attorno a un argomento specifico (ad esempio QUIC WG o TLS WG) con un proprio mandato (charter). Raggiunti gli obiettivi, il gruppo conclude il proprio lavoro.",
+        "Errato. L'IETF non riscuote tasse e non ha filiali statali.",
+        "Errato. L'IETF si concentra su standard aperti e non si occupa di diritto brevettuale."
+      ]
+    },
+    {
+      "id": "it_net_408",
+      "widget_id": null,
+      "topic": "Standard di Internet — Regole di numerazione degli RFC",
+      "q": "Come vengono assegnati i numeri alle specifiche RFC e possono essere riutilizzati dopo la cancellazione o l'obsolescenza di un protocollo?",
+      "hint": "Pensa a una numerazione strettamente sequenziale e all'unicità di ciascun numero nell'archivio.",
+      "options": [
+        "I numeri vengono assegnati in modo strettamente sequenziale e non vengono mai riutilizzati, anche se la specifica diventa obsoleta o viene annullata",
+        "I numeri vengono scelti casualmente dagli autori nell'intervallo da 1 a 1000",
+        "Dopo la cancellazione di un RFC, il suo numero viene trasferito a un nuovo documento del gruppo di lavoro successivo",
+        "Il numero dell'RFC corrisponde al numero della porta TCP su cui funziona il protocollo",
+        "Il numero dell'RFC è formato dalla data e dall'ora di pubblicazione nel formato AAAAMMGG"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Ogni RFC riceve un numero univoco monotonamente crescente (ad esempio RFC 791, RFC 792, RFC 793). Il numero viene assegnato per sempre e non viene riassegnato.",
+        "Errato. L'assegnazione dei numeri è gestita centralmente dal servizio RFC Editor.",
+        "Errato. Il riutilizzo dei numeri è vietato per evitare confusione nei riferimenti.",
+        "Errato. Il numero RFC non è in alcun modo collegato alle porte di rete del Layer 4.",
+        "Errato. Il numero è semplicemente un identificatore sequenziale univoco."
+      ]
+    },
+    {
+      "id": "it_net_409",
+      "widget_id": "widget_net_409",
+      "topic": "Standard di Internet — Indirizzi IP privati (RFC 1918)",
+      "q": "Quale famoso RFC definisce gli intervalli di indirizzi IP privati non instradabili su Internet globale (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16)?",
+      "hint": "Presta attenzione al fondamentale RFC per le reti private IPv4, adottato nel 1996.",
+      "options": [
+        "RFC 1918 (Address Allocation for Private Internets)",
+        "RFC 2616 (Hypertext Transfer Protocol -- HTTP/1.1)",
+        "RFC 1034 (Domain Names - Concepts and Facilities)",
+        "RFC 821 (Simple Mail Transfer Protocol)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'RFC 1918 ha stabilito la riserva degli intervalli di indirizzi IPv4 privati utilizzati all'interno delle reti locali (LAN) tramite NAT.",
+        "Errato. L'RFC 2616 descrive il protocollo di trasferimento ipertestuale HTTP/1.1.",
+        "Errato. L'RFC 1034 descrive il concetto e il funzionamento del sistema dei nomi di dominio DNS.",
+        "Errato. L'RFC 821 descrive il protocollo di invio della posta SMTP."
+      ]
+    },
+    {
+      "id": "it_net_410",
+      "widget_id": null,
+      "topic": "Standard di Internet — Il ruolo dell'Internet Architecture Board (IAB)",
+      "q": "Qual è il compito principale dell'Internet Architecture Board (IAB) relativamente alla serie di documenti RFC?",
+      "hint": "Ricorda la supervisione architettonica globale e il controllo amministrativo sulle pubblicazioni dell'RFC Editor.",
+      "options": [
+        "Fornire una supervisione architettonica generale sullo sviluppo dei protocolli e il controllo amministrativo sulla funzione dell'RFC Editor",
+        "La correzione manuale degli errori in tutti i codici sorgente dei sistemi operativi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'IAB (Internet Architecture Board) esercita la direzione strategica dell'architettura di Internet e approva la nomina dell'RFC Editor.",
+        "Errato. L'IAB non si occupa della programmazione dei sistemi operativi."
+      ]
+    },
+    {
+      "id": "it_net_411",
+      "widget_id": "widget_net_411",
+      "topic": "Standard di Internet — Flussi di pubblicazione (RFC Streams)",
+      "q": "Attraverso quali 4 flussi ufficiali (Streams) i documenti possono giungere all'RFC Editor per la pubblicazione?",
+      "hint": "Pensa alle fonti: l'organo ingegneristico principale (IETF), il ramo di ricerca (IRTF), l'Architecture Board (IAB) e gli autori indipendenti.",
+      "options": [
+        "IETF Stream, IRTF Stream, IAB Stream e Independent Submission Stream",
+        "TCP Stream, UDP Stream, IP Stream e Ethernet Stream",
+        "ISO Stream, IEEE Stream, W3C Stream e ANSI Stream",
+        "Client Stream, Server Stream, Router Stream e Switch Stream"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La serie RFC accetta documenti da 4 flussi indipendenti: IETF (standard principali), IRTF (ricerca), IAB (architettura) e Independent Submissions (invii indipendenti).",
+        "Errato. Sono indicati protocolli di rete e livelli OSI, non flussi di standardizzazione.",
+        "Errato. Si tratta di organizzazioni di standardizzazione esterne che non pubblicano materiali nella serie RFC.",
+        "Errato. Sono indicati i ruoli di dispositivi e nodi di rete."
+      ]
+    },
+    {
+      "id": "it_net_412",
+      "widget_id": null,
+      "topic": "Standard di Internet — Formattazione delle e-mail (RFC 5322 / RFC 822)",
+      "q": "Quale documento RFC definisce la struttura testuale di base dei messaggi di posta elettronica (Internet Message Format, incluse le intestazioni di servizio From, To, Subject)?",
+      "hint": "Ricorda lo standard che ha aggiornato il classico RFC 822 per il formato dei messaggi e-mail.",
+      "options": [
+        "RFC 5322 (che aggiorna lo storico RFC 822)",
+        "RFC 791",
+        "RFC 1918",
+        "RFC 2119",
+        "RFC 3552"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'RFC 5322 (insieme al suo predecessore RFC 822) definisce la sintassi testuale fondamentale delle intestazioni e del corpo dei messaggi e-mail.",
+        "Errato. L'RFC 791 descrive il protocollo IPv4.",
+        "Errato. L'RFC 1918 descrive gli indirizzi IP privati.",
+        "Errato. L'RFC 2119 definisce le parole chiave per i requisiti (MUST, SHOULD, MAY).",
+        "Errato. L'RFC 3552 è dedicato alle linee guida per la redazione della sezione Security Considerations."
+      ]
+    },
+    {
+      "id": "it_net_413",
+      "widget_id": "widget_net_413",
+      "topic": "Standard di Internet — Numerazione della sotto-serie STD",
+      "q": "Cosa significa l'assegnazione a un documento RFC di un indice aggiuntivo della serie STD (ad esempio, STD 86 o STD 97)?",
+      "hint": "Presta attenzione al fatto che ciò indica che la specifica ha raggiunto lo stato ufficiale di Internet Standard.",
+      "options": [
+        "Il documento ha raggiunto il massimo livello di Internet Standard nel percorso di standardizzazione ed è parte integrante degli standard di Internet in vigore",
+        "Il documento contiene note ufficiose temporanee di laboratori universitari"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'indice STD viene assigned solo agli RFC che hanno superato tutti i test e ottenuto lo stato supremo di «Internet Standard» (ad esempio, l'RFC 8200 ha lo stato STD 86).",
+        "Errato. STD è il più alto stato formale di maturità di uno standard nel sistema IETF."
+      ]
+    },
+    {
+      "id": "it_net_414",
+      "widget_id": null,
+      "topic": "Standard di Internet — Specifica IPv6 (RFC 8200)",
+      "q": "Quale RFC è lo standard in vigore (Internet Standard) che definisce la specifica di base del protocollo IPv6 (sostituendo l'obsoleto RFC 2460)?",
+      "hint": "Pensa al documento adottato nel 2017 che ha sostituito l'RFC 2460.",
+      "options": [
+        "RFC 8200",
+        "RFC 1035",
+        "RFC 792"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'RFC 8200 (Internet Protocol, Version 6 Specification) è stato pubblicato nel 2017 e ha ottenuto ufficialmente lo stato di Internet Standard (STD 86), sostituendo l'RFC 2460.",
+        "Errato. L'RFC 1035 descrive il funzionamento dettagliato e il formato dei pacchetti DNS.",
+        "Errato. L'RFC 792 definisce il protocollo di messaggi di controllo ICMPv4."
+      ]
+    },
+    {
+      "id": "it_net_415",
+      "widget_id": "widget_net_415",
+      "topic": "Standard di Internet — Revisioni delle specifiche HTTP (RFC 9110)",
+      "q": "In che modo si è evoluta e consolidata la specifica principale della semantica HTTP, dai documenti obsoleti agli standard odierni?",
+      "hint": "Ripercorri il percorso: il monolitico RFC 2616 è stato dapprima suddiviso nella serie 7230..7235 e poi consolidato nell'attuale standard RFC 9110.",
+      "options": [
+        "L'RFC 2616 è stato sostituito dalla serie modulare RFC 7230–7235 e poi consolidato nel moderno standard RFC 9110 (HTTP Semantics)",
+        "L'RFC 2616 è stato rimosso senza sostituzione e l'HTTP non ha più una specifica RFC",
+        "Le specifiche HTTP sono state trasferite dall'IETF all'IEEE con il numero 802.11",
+        "Tutte le specifiche HTTP sono state unificate nell'RFC 791 insieme al protocollo IP",
+        "La specifica HTTP è stata annullata a favore dell'uso del solo protocollo ICMP",
+        "L'RFC 2616 è stato rinominato in RFC 1918 senza modifiche al contenuto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La specifica HTTP viene regolarmente aggiornata: dall'RFC 2616 (1999), attraverso il refactoring negli RFC 7230–7235 (2014), fino all'attuale specifica unica HTTP Semantics RFC 9110 (2022).",
+        "Errato. HTTP continua a essere un protocollo standardizzato sotto l'egida dell'IETF.",
+        "Errato. IEEE 802.11 è la specifica del Wi-Fi e non ha a che fare con HTTP.",
+        "Errato. L'RFC 791 riguarda esclusivamente l'IP.",
+        "Errato. ICMP è un protocollo di servizio di livello L3, non un sostituto del protocollo web.",
+        "Errato. L'RFC 1918 è la specifica per gli indirizzi IP privati."
+      ]
+    },
+    {
+      "id": "it_net_416",
+      "widget_id": null,
+      "topic": "Standard di Internet — Sezione Security Considerations (RFC 3552)",
+      "q": "Perché in ogni documento RFC moderno sul percorso di standardizzazione è obbligatoria la presenza della sezione «Security Considerations»?",
+      "hint": "Pensa alla valutazione obbligatoria delle minacce, dei rischi e dei metodi di protezione del protocollo prima della sua adozione.",
+      "options": [
+        "Per un'analisi obbligatoria dei vettori di attacco, delle vulnerabilità e delle tecniche di mitigazione legate al protocollo descritto",
+        "Per indicare i requisiti di sistema per i software antivirus sui server",
+        "Per includere codice di crittografia commerciale di un produttore specifico",
+        "Per tracciare il costo finanziario dell'hardware di rete"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo l'RFC 3552, qualsiasi RFC deve descrivere in dettaglio il modello di minaccia e le tecniche di prevenzione, affinché gli ingegneri siano consapevoli delle vulnerabilità del protocollo in esame.",
+        "Errato. Gli RFC descrivono protocolli di rete, non requisiti per software di terze parti.",
+        "Errato. I documenti RFC contengono specifiche aperte e indipendenti dai fornitori.",
+        "Errato. Le questioni relative al costo commerciale dell'hardware non rientrano nelle competenze dell'IETF."
+      ]
+    },
+    {
+      "id": "it_net_417",
+      "widget_id": "widget_net_417",
+      "topic": "Standard di Internet — Sezione IANA Considerations",
+      "q": "Quale ruolo svolge la sezione obbligatoria «IANA Considerations» nel testo di un RFC?",
+      "hint": "Pensa alle istruzioni rivolte all'autorità di registrazione di indirizzi e numeri (IANA) per l'assegnazione di nuove porte, codici di errore e parametri.",
+      "options": [
+        "Contiene istruzioni per l'amministratore dei registri IANA sull'assegnazione e la registrazione di nuove porte, tipi di parametri o numeri di protocollo",
+        "Indica i nomi e i dati di contatto di tutti gli ingegneri che hanno votato contro l'adozione dello standard",
+        "Contiene istruzioni sulla dismissione di apparati di rete obsoleti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sezione IANA Considerations prescrive chiaramente all'IANA quali nuovi numeri di porta, costanti, intestazioni o campi debbano essere inseriti nei registri globali.",
+        "Errato. L'IETF funziona sulla base del consenso: gli elenchi dei votanti contrari non vengono inseriti nella sezione IANA Considerations.",
+        "Errato. La sezione non si occupa dello smaltimento delle apparecchiature."
+      ]
+    },
+    {
+      "id": "it_net_418",
+      "widget_id": null,
+      "topic": "Standard di Internet — La sotto-serie storica FYI (For Your Information)",
+      "q": "Qual era lo scopo della sotto-serie storica di documenti FYI (For Your Information) all'interno della libreria RFC?",
+      "hint": "Presta attenzione ai materiali creati per divulgare le tecnologie di rete e introdurre i principianti.",
+      "options": [
+        "La pubblicazione di materiali didattici introduttivi e spiegazioni di concetti di rete per un ampio pubblico di utenti e ingegneri",
+        "Report segreti su intrusioni nelle reti governative",
+        "Guida alla scelta della memoria RAM per i server",
+        "Raccolte di listini prezzi dei provider Internet",
+        "Specifiche della piedinatura fisica dei connettori RJ-45"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I documenti FYI (For Your Information) erano un sottoinsieme degli RFC di tipo Informational, pensati per introdurre e istruire i principianti alle basi del networking.",
+        "Errato. La serie RFC è completamente pubblica e non contiene report segreti.",
+        "Errato. La scelta dei componenti per PC è separata dagli standard IETF.",
+        "Errato. Gli RFC non pubblicano listini prezzi commerciali.",
+        "Errato. La piedinatura del cavo di rete (TIA/EIA-568) è definita da altre organizzazioni."
+      ]
+    },
+    {
+      "id": "it_net_419",
+      "widget_id": "widget_net_419",
+      "topic": "Standard di Internet — Intestazione dei metadati dell'RFC",
+      "q": "Quali informazioni sono necessariamente contenute nell'intestazione (Header) iniziale di ciascun RFC pubblicato?",
+      "hint": "Presta attenzione ai campi di servizio recanti il numero, l'autore, la data, la categoria e le relazioni (Obsoletes/Updates).",
+      "options": [
+        "Il numero univoco dell'RFC, i nomi degli autori, la data, lo stato/categoria del documento e le relazioni (Updates/Obsoletes)",
+        "Solo il login e la password dell'amministratore IETF",
+        "Il codice sorgente del kernel Linux per l'esecuzione del protocollo",
+        "I numeri seriali di tutti i server che supportano l'RFC in questione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'intestazione di servizio dell'RFC contiene i metadati: numero dell'RFC, nome dell'autore/organizzazione, data, categoria (Standards Track, Informational, ecc.) ed elenchi dei documenti annullati o aggiornati.",
+        "Errato. L'intestazione contiene attributi pubblici del documento, non credenziali di accesso.",
+        "Errato. Gli RFC sono specifiche testuali di standard, non codice sorgente di un sistema operativo.",
+        "Errato. Le specifiche non elencano i numeri seriali dei dispositivi."
+      ]
+    },
+    {
+      "id": "it_net_420",
+      "widget_id": null,
+      "topic": "Standard di Internet — Lo storico RFC 1 (Steve Crocker, 1969)",
+      "q": "Perché è fondamentale il primissimo documento della storia, l'RFC 1 («Host Software»), pubblicato da Steve Crocker nel 1969?",
+      "hint": "Pensa all'inizio dell'intero sistema Request for Comments per la rete ARPANET.",
+      "options": [
+        "Ha segnato l'inizio dell'intera serie di RFC, proponendo un formato ufficioso di nota per discutere l'interazione tra i nodi della rete ARPANET",
+        "Rappresentava il primo abbonamento a pagamento al mondo per la documentazione di rete"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'RFC 1 («Host Software»), scritto da Steve Crocker nel 1969, diede il via al formato aperto di scambio di idee tra gli sviluppatori della rete ARPANET, battezzando l'intera serie «Request for Comments».",
+        "Errato. Fin dal primo giorno, i documenti RFC sono stati distribuiti in modo del tutto gratuito per tutti i partecipanti."
+      ]
+    },
+    {
+      "id": "it_net_421",
+      "widget_id": "widget_net_421",
+      "topic": "Standard di Internet — Missione e struttura dell'IETF",
+      "q": "Che cos'è l'organizzazione IETF (Internet Engineering Task Force) e qual è il suo obiettivo principale?",
+      "hint": "Pensa a una comunità ingegneristica internazionale aperta che sviluppa e perfeziona l'architettura e i protocolli di Internet.",
+      "options": [
+        "Una comunità ingegneristica internazionale aperta che si occupa dello sviluppo, dell'evoluzione e della standardizzazione dell'architettura e dei protocolli di Internet",
+        "Un'agenzia governativa statunitense che gestisce il segmento nazionale della rete",
+        "Un'azienda commerciale privata che vende licenze per gli indirizzi IP",
+        "Un comitato giudiziario internazionale per la disamina dei crimini informatici",
+        "Un produttore di apparati di rete e cavi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'IETF è una comunità internazionale aperta di ingegneri, ricercatori e architetti di rete che sviluppa standard (RFC) per garantire il corretto funzionamento di Internet.",
+        "Errato. L'IETF non è un organo governativo degli Stati Uniti o di qualsiasi altro Paese.",
+        "Errato. L'IETF è una struttura aperta senza scopo di lucro e non vende indirizzi IP (compito svolto dai RIR/IANA).",
+        "Errato. L'IETF non svolge attività di applicazione della legge o giudiziarie.",
+        "Errato. L'IETF sviluppa specifiche aperte e standard, senza produrre componenti fisici."
+      ]
+    },
+    {
+      "id": "it_net_422",
+      "widget_id": null,
+      "topic": "Standard di Internet — Il principio di partecipazione individuale nell'IETF",
+      "q": "Come sono organizzate la membership e la partecipazione degli specialisti alle attività dell'IETF?",
+      "hint": "Ricorda che nell'IETF non esiste un'adesione societaria o statale: tutti i partecipanti intervengono a titolo personale.",
+      "options": [
+        "La partecipazione è aperta e individuale: le persone fisiche intervengono a proprio nome, non in qualità di rappresentanti ufficiali di aziende o Stati",
+        "Possono essere membri solo delegazioni accreditate dei governi dei Paesi membri dell'ONU",
+        "La partecipazione è possibile solo acquistando un abbonamento aziendale annuale del costo di 50.000 $"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nell'IETF non esiste un concetto di «membership aziendale». Tutti gli esperti partecipano come singoli individui, fornendo le proprie competenze tecniche indipendentemente dagli interessi dei datori di lavoro.",
+        "Errato. L'IETF non richiede un accreditamento governativo ed è aperto a qualunque specialista.",
+        "Errato. L'accesso e la partecipazione alle mailing list dei gruppi di lavoro dell'IETF sono gratuiti per tutti."
+      ]
+    },
+    {
+      "id": "it_net_423",
+      "widget_id": "widget_net_423",
+      "topic": "Standard di Internet — Le aree tecniche dell'IETF (Areas)",
+      "q": "In che modo è strutturato l'attuale lavoro tecnico all'interno dell'IETF per aree tematiche?",
+      "hint": "Pensa alla suddivisione in aree tematiche (Areas), come Security, Routing, Transport, dirette da direttori di area (Area Directors).",
+      "options": [
+        "Il lavoro è suddiviso in aree tecniche (Areas), ciascuna delle quali raggruppa Gruppi di Lavoro affini ed è gestita da un direttore di area (Area Director)",
+        "Tutto il lavoro si svolge in un'unica direzione generale senza alcuna suddivisione tematica",
+        "La struttura è suddivisa esclusivamente su base geografica: dipartimenti europeo, asiatico e americano",
+        "La suddivisione avviene rigorosamente in base ai linguaggi di programmazione utilizzati nei protocolli"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'attività dell'IETF è suddivisa in aree (Technical Areas: Security, Transport, Routing, Applications, ecc.), ciascuna delle quali è guidata da uno o due Area Director (AD).",
+        "Errato. A causa dell'enorme volume di standard, il lavoro è rigorosamente strutturato per aree.",
+        "Errato. La suddivisione avviene in base a temi tecnici, non a regioni geografiche.",
+        "Errato. L'IETF standardizza protocolli di rete, non linguaggi di programmazione."
+      ]
+    },
+    {
+      "id": "it_net_424",
+      "widget_id": null,
+      "topic": "Standard di Internet — Gli incontri in presenza dell'IETF (IETF Meetings)",
+      "q": "Con quale frequenza si tengono gli incontri ufficiali in presenza dell'IETF per lavorare sugli standard?",
+      "hint": "Ricorda la frequenza degli incontri di lavoro internazionali dell'IETF nel corso di un anno.",
+      "options": [
+        "3 volte all'anno (in primavera, estate e autunno) in diverse città del mondo",
+        "1 volta ogni 10 anni",
+        "Ogni settimana nel fine settimana",
+        "Ogni mese rigorosamente a Washington",
+        "Gli incontri in presenza non si tengono mai, tutto il lavoro è svolto in modalità ibrida tramite mailing list di testo",
+        "Solo durante lo svolgimento dei Giochi Olimpici"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'IETF organizza 3 settimane di sessioni in presenza/ibride all'anno (di solito a marzo, luglio e novembre), ruotando i continenti per garantire un accesso equo ai partecipanti di tutto il mondo.",
+        "Errato. Incontri ogni 10 anni rallenterebbero eccessivamente lo sviluppo di Internet.",
+        "Errato. Le sessioni richiedono una lunga preparazione e non si svolgono ogni settimana.",
+        "Errato. La sede degli incontri ruota costantemente tra Asia, Europa e America.",
+        "Errato. Sebbene la discussione principale avvenga nelle mailing list, gli incontri di persona si tengono regolarmente.",
+        "Errato. Il calendario degli incontri dell'IETF non è in alcun modo legato ad eventi sportivi."
+      ]
+    },
+    {
+      "id": "it_net_425",
+      "widget_id": "widget_net_425",
+      "topic": "Standard di Internet — Il ruolo dell'Internet Architecture Board (IAB)",
+      "q": "Qual è il rapporto di competenze tra l'IETF e l'Internet Architecture Board (IAB)?",
+      "hint": "Pensa alla supervisione strategica e architettonica dell'IAB sull'operato dell'IETF e alla gestione dei ricorsi.",
+      "options": [
+        "L'IAB garantisce una supervisione architettonica strategica sull'IETF, esamina i ricorsi e funge da organo consultivo",
+        "L'IAB è il dipartimento di marketing che risponde alla direzione commerciale dell'IETF"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'IAB (Internet Architecture Board) non si occupa direttamente dei dettagli dei protocolli, ma esercita una supervisione architettonica generale e funge da ultima istanza per i ricorsi contro le decisioni dell'IESG.",
+        "Errato. L'IAB è l'organo tecnico-architettonico supremo, non un dipartimento commerciale o di marketing."
+      ]
+    },
+    {
+      "id": "it_net_426",
+      "widget_id": null,
+      "topic": "Standard di Internet — Il ruolo dell'Internet Society (ISOC)",
+      "q": "Quale ruolo svolge l'organizzazione Internet Society (ISOC) nei confronti dell'IETF?",
+      "hint": "Ricorda l'organizzazione no-profit che fornisce la base legale, istituzionale e finanziaria per l'IETF.",
+      "options": [
+        "Fornisce supporto organizzativo, legale e finanziario alle attività dell'IETF",
+        "È un Internet Service Provider commerciale che vende traffico",
+        "Sviluppa software antivirus per PC domestici",
+        "Esegue la censura e il blocco dei siti su Internet"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'ISOC (Internet Society) funge da organizzazione madre e «casa legale» per l'IETF, garantendo finanziamenti, copertura assicurativa e protezione istituzionale.",
+        "Errato. L'ISOC è un'organizzazione no-profit e non fornisce servizi di telecomunicazione.",
+        "Errato. L'ISOC non si occupa dello sviluppo di software antivirus per utenti finali.",
+        "Errato. L'obiettivo dell'ISOC è sostenere un Internet aperto e accessibile a tutti, non la censura."
+      ]
+    },
+    {
+      "id": "it_net_427",
+      "widget_id": "widget_net_427",
+      "topic": "Standard di Internet — Differenza tra IRTF e IETF",
+      "q": "Qual è la differenza principale tra l'ambito di attività dell'IETF e quello del ramo di ricerca IRTF (Internet Research Task Force)?",
+      "hint": "Confronta l'ingegneria applicata e la standardizzazione a breve termine dei protocolli con la ricerca accademica a lungo termine.",
+      "options": [
+        "L'IETF si concentra sulla standardizzazione ingegneristica a breve e medio termine, mentre l'IRTF è rivolto a ricerche teoriche e accademiche a lungo termine",
+        "L'IETF si occupa solo di comunicazioni via satellite, mentre l'IRTF solo di fibra ottica",
+        "L'IETF è un'organizzazione a pagamento, mentre l'IRTF è gratuita",
+        "L'IETF sviluppa browser, mentre l'IRTF sviluppa sistemi operativi",
+        "Non c'è alcuna differenza: sono nomi diversi per lo stesso comitato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'IETF crea standard ingegneristici applicati pronti per essere implementati nei prossimi anni, mentre l'IRTF studia temi accademici a lungo termine (crittografia quantistica, reti tolleranti ai ritardi).",
+        "Errato. Entrambe le strutture lavorano con protocolli di rete indipendentemente dal livello fisico.",
+        "Errato. Entrambe le organizzazioni funzionano sulla base della partecipazione aperta.",
+        "Errato. Né l'IETF né l'IRTF sviluppano browser client o sistemi operativi.",
+        "Errato. Si tratta di due strutture parallele con orizzonti di pianificazione e compiti differenti."
+      ]
+    },
+    {
+      "id": "it_net_428",
+      "widget_id": null,
+      "topic": "Standard di Internet — La procedura di mormorio (Humming)",
+      "q": "Perché durante le sessioni in presenza dei gruppi di lavoro dell'IETF si usa la tradizione del «mormorio» (humming) anziché una votazione esatta per alzata di mano?",
+      "hint": "Pensa a come valutare il livello generale di supporto («consenso approssimativo») senza un conteggio singolo dei voti ed evitando la pressione della maggioranza.",
+      "options": [
+        "Per valutare il grado di «consenso approssimativo» (Rough Consensus) in base al volume del suono senza un conteggio esatto dei singoli voti e senza esercitare pressioni sui partecipanti",
+        "Per testare l'acustica e regolare i microfoni prima dell'inizio dell'intervento",
+        "Per esprimere una forte protesta contro le decisioni della direzione IESG"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il presidente del gruppo di lavoro chiede alla sala di produrre un mormorio («hum») a favore e contro una proposta. Questo permette di valutare l'orientamento prevalente senza un voto formale che potrebbe portare a manipolazioni basate sul numero di partecipanti.",
+        "Errato. La tradizione dell'humming è un metodo ufficiale per valutare il consenso, non una prova audio.",
+        "Errato. Il mormorio non è un atto di protesta, ma viene utilizzato per prendere una decisione."
+      ]
+    },
+    {
+      "id": "it_net_429",
+      "widget_id": null,
+      "topic": "Standard di Internet — Politica di proprietà intellettuale (Note Well / IPR)",
+      "q": "Cosa prescrivono la politica IPR (Intellectual Property Rights) e il documento «Note Well» per gli autori che propongono tecnologie all'IETF?",
+      "hint": "Ricorda l'obbligo di divulgare in modo tempestivo tutti i brevetti e le domande di brevetto relativi allo standard proposto.",
+      "options": [
+        "I partecipanti sono tenuti a divulgare tempestivamente le informazioni relative a tutti i brevetti e le domande di brevetto a loro noti che riguardano gli standard in discussione",
+        "Tutti i brevetti dei partecipanti vengono automaticamente trasferiti di proprietà all'IETF senza diritto di utilizzo da parte dell'autore",
+        "Ai partecipanti è severamente vietato possedere brevetti nel campo delle tecnologie di rete",
+        "È consentito nascondere i brevetti fino al momento della pubblicazione finale dell'RFC"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La politica dell'IETF richiede che ogni partecipante che propone una soluzione renda immediatamente nota la presenza di diritti di brevetto (IPR), in modo che la comunità sia consapevole delle potenziali limitazioni di licenza.",
+        "Errato. L'IETF non acquisisce i diritti sui brevetti.",
+        "Errato. I titolari di brevetti possono partecipare all'IETF, ma hanno l'obbligo di dichiarare onestamente i propri diritti.",
+        "Errato. Nascondere i brevetti durante la discussione costituisce una violazione diretta delle regole dell'IETF."
+      ]
+    },
+    {
+      "id": "it_net_430",
+      "widget_id": null,
+      "topic": "Standard di Internet — Il Comitato di Nomina (NomCom)",
+      "q": "Quale ruolo svolge il Comitato di Nomina (NomCom) nella struttura di governance dell'IETF?",
+      "hint": "Pensa alla selezione periodica della leadership (nomina dei membri di IESG e IAB) attingendo ai volontari della comunità.",
+      "options": [
+        "Seleziona e nomina i candidati alle posizioni di leadership nell'IESG e nell'IAB attingendo ai volontari della comunità tramite un'estrazione casuale dei componenti del comitato",
+        "Fissa i prezzi dei nomi di dominio di secondo livello"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il NomCom è composto da volontari estratti a sorte dalla comunità IETF ed è responsabile della selezione annuale e del rinnovo dei membri di IESG e IAB.",
+        "Errato. Il NomCom è un organo di gestione interno all'IETF e non si occupa della definizione dei prezzi dei domini."
+      ]
+    }
+  ]
+}

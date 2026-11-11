@@ -1,0 +1,591 @@
+{
+  "subject": "Reti",
+  "questions": [
+    {
+      "id": "it_net_191",
+      "widget_id": "widget_net_191",
+      "topic": "Reti di calcolatori — Sistemi Autonomi (Autonomous Systems)",
+      "q": "Che cos'è un Sistema Autonomo (Autonomous System — AS) nell'architettura globale di Internet?",
+      "hint": "Pensa a un insieme connesso di reti IP e router sotto un'unica amministrazione e con una politica di instradamento comune.",
+      "options": [
+        "Un insieme di reti IP e router sotto un unico controllo amministrativo, con una politica di instradamento esterna comune e un numero ASN unico",
+        "Un qualsiasi router Wi-Fi domestico collegato a una linea in fibra ottica",
+        "Un rack di server su cui è installato il sistema operativo Linux"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un Sistema Autonomo (AS) è una grande porzione della rete globale (ad esempio un ISP o un'azienda) gestita da un'unica organizzazione, che usa un IGP al suo interno e il protocollo BGP con un numero ASN (Autonomous System Number) unico per comunicare con altri AS.",
+        "Errato. Un router domestico è un dispositivo finale del cliente che fa parte dell'AS dell'ISP, ma non costituisce di per sé un sistema autonomo.",
+        "Errato. Il termine AS descrive un'infrastruttura di rete e un dominio di instradamento, non un singolo server."
+      ]
+    },
+    {
+      "id": "it_net_192",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Gerarchia degli ISP (Tier-1 ISPs)",
+      "q": "Qual è la caratteristica chiave che distingue i provider Tier-1 (Tier-1 ISPs) dai provider Tier-2 e Tier-3?",
+      "hint": "Fai attenzione a se gli operatori Tier-1 acquistino o meno un servizio di transito IP da altre aziende per accedere alla tabella di instradamento globale.",
+      "options": [
+        "I provider Tier-1 accedono all'intera tabella di instradamento di Internet esclusivamente tramite accordi di peering senza compensazione (Settlement-Free Peering) con altri Tier-1, senza acquistare il transito IP",
+        "I provider Tier-1 forniscono Internet solo ai laboratori scientifici statali",
+        "I provider Tier-1 utilizzano esclusivamente comunicazioni satellitari per la trasmissione di tutti i dati",
+        "I provider Tier-1 vietano il transito di traffico HTTPS crittografato attraverso i propri canali"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I Tier-1 (circa due dozzine dei più grandi operatori mondiali, come Lumen, NTT, Telia) formano il backbone di Internet. Non pagano nessuno per il transito e si collegano direttamente tra loro a condizioni di Settlement-Free Peering.",
+        "Errato. Gli operatori Tier-1 servono provider Tier-2, grandi aziende e data center in tutto il mondo.",
+        "Errato. La base dei dorsali Tier-1 è costituita da linee in fibra ottica sottomarine e terrestri transoceaniche e transcontinentali.",
+        "Errato. Gli operatori di livello L3/L1 trasmettono qualsiasi pacchetto IP in modo trasparente e non limitano la crittografia."
+      ]
+    },
+    {
+      "id": "it_net_193",
+      "widget_id": "widget_net_193",
+      "topic": "Reti di calcolatori — Punti di scambio Internet (IXP)",
+      "q": "Qual è lo scopo principale della creazione dei punti di scambio Internet (Internet Exchange Point — IXP)?",
+      "hint": "Pensa all'unione di più provider e CDN in un'unica infrastruttura L2 locale per lo scambio diretto e locale di traffico senza reti di transito intermedie.",
+      "options": [
+        "Fornire un'infrastruttura fisica L2 (matrice di commutazione) che consenta a reti indipendenti (provider, CDN, banche) di scambiare traffico direttamente a livello locale, riducendo la latenza e i costi di transito",
+        "Archiviazione centralizzata dei backup dei dischi rigidi di tutti gli utenti della regione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un Internet Exchange Point (IXP) è una rete L2 commutata. Collegandosi ad esso, i partecipanti (provider, servizi come Google/Akamai) possono fare peering diretto tra loro senza far passare il traffico attraverso operatori di transito terzi.",
+        "Errato. Un IXP è un'infrastruttura di rete per la commutazione di frame/pacchetti in tempo reale, non un sistema di archiviazione dati."
+      ]
+    },
+    {
+      "id": "it_net_194",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Topologia Leaf-Spine nei Data Center",
+      "q": "Perché la moderna architettura delle reti dei data center è passata dal classico modello a tre livelli alla topologia a due livelli Leaf-Spine (Clos Network)?",
+      "hint": "Pensa alla prevalenza del traffico orizzontale tra server (East-West), alla latenza prevedibile di 2 hop e al bilanciamento ECMP.",
+      "options": [
+        "Garantisce una latenza rigorosamente prevedibile (esattamente 2 hop tra qualsiasi server), un traffico orizzontale (East-West) ad alta velocità e un bilanciamento scalabile tramite ECMP senza l'uso di STP",
+        "Consente di eliminare completamente l'uso dei cavi di rete all'interno del data center",
+        "Riduce il numero di server per rack diminuendo il consumo di corrente",
+        "Garantisce che i dati non possano uscire dall'edificio del data center",
+        "Consente di collegare alla rete del data center solo il sistema operativo Windows"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In Leaf-Spine, ogni switch Leaf è collegato a tutti gli switch Spine. Il traffico tra due server qualsiasi su Leaf diversi effettua sempre esattamente 2 hop (Leaf1 ──► Spine ──► Leaf2). È una struttura ideale per sistemi distribuiti e cloud computing con bilanciamento dinamico ECMP.",
+        "Errato. In Leaf-Spine vengono utilizzati migliaia di cavi DAC ad alta velocità e connessioni ottiche.",
+        "Errato. La topologia di rete non riduce la densità o il numero di server nel rack.",
+        "Errato. Il traffico esterno (North-South) viene instradato normalmente tramite switch Border Leaf dedicati.",
+        "Errato. La topologia L2/L3 è completamente neutrale rispetto ai sistemi operativi presenti sugli host."
+      ]
+    },
+    {
+      "id": "it_net_195",
+      "widget_id": "widget_net_195",
+      "topic": "Reti di calcolatori — Reti definite dal software (SDN)",
+      "q": "Qual è l'idea fondamentale alla base del concetto di Software-Defined Networking (SDN)?",
+      "hint": "Pensa alla separazione della logica decisionale (Control Plane) dai dispositivi fisici di commutazione (Data Plane) e allo spostamento di tale logica in un controller centralizzato.",
+      "options": [
+        "Separazione del piano di controllo (Control Plane) dal piano dati (Data Plane) e centralizzazione della logica di gestione della rete in un controller SDN software",
+        "Sostituzione di tutti gli switch fisici con normali personal computer dotati di schede Wi-Fi",
+        "Cancellazione automatica degli utenti inattivi dal database dell'azienda"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nelle reti classiche ogni router prende autonomamente le decisioni di instradamento. Nelle SDN il Control Plane è spostato in un controller programmabile che costruisce centralmente i grafi dei percorsi e carica le regole di inoltro (Flow Tables) negli chip degli switch del Data Plane.",
+        "Errato. Nel Data Plane SDN l'elaborazione viene comunque eseguita su switch hardware ASIC dedicati ad alte prestazioni.",
+        "Errato. L'SDN gestisce i flussi di rete e la configurazione degli apparati, non gli account utente."
+      ]
+    },
+    {
+      "id": "it_net_196",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Reti overlay (VXLAN)",
+      "q": "In che modo il protocollo di rete overlay VXLAN (Virtual Extensible LAN) risolve i limiti delle VLAN tradizionali riguardo al numero di reti e all'incapsulamento L2 over L3?",
+      "hint": "Pensa all'incapsulamento del frame Ethernet L2 in L3/L4 (pacchetto UDP) e all'estensione dell'identificatore VNI a 24 bit (16 milioni di reti).",
+      "options": [
+        "Incapsula i frame Ethernet L2 in pacchetti UDP (MAC-in-UDP) e utilizza un identificatore VNI a 24 bit, consentendo la creazione di fino a 16 milioni di reti virtuali sopra un'infrastruttura L3 instradata",
+        "Comprime tutti i file in entrata nel formato ZIP prima di inviarli in rete",
+        "Trasmette i frame tramite gli altoparlanti audio dei server",
+        "Sostituisce il protocollo IP fisico con uno standard proprietario Apple",
+        "Limita la dimensione massima del frame a 64 byte",
+        "Richiede la posa di una fibra separata per ogni VLAN"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La VLAN 802.1Q tradizionale ha un ID a 12 bit (massimo 4094 reti), insufficiente per i cloud. VXLAN racchiude il frame L2 in UDP (porta 4789) con un VNI a 24 bit ($2^{24} \\approx 16,7$ milioni di reti), permettendo di estendere la connettività L2 sopra una normale rete L3.",
+        "Errato. VXLAN esegue l'incapsulamento delle intestazioni di rete, non la compressione dei file utente.",
+        "Errato. La trasmissione avviene attraverso i tradizionali canali di comunicazione.",
+        "Errato. VXLAN utilizza il protocollo standard UDP sopra un'infrastruttura IP tradizionale.",
+        "Errato. Al contrario, l'incapsulamento VXLAN aggiunge 50 byte di intestazione, richiedendo il supporto per i Jumbo Frame sulla fabric L3.",
+        "Errato. VXLAN crea un overlay logico sopra un'unica rete fisica L3 esistente (underlay)."
+      ]
+    },
+    {
+      "id": "it_net_197",
+      "widget_id": "widget_net_197",
+      "topic": "Reti di calcolatori — Routing Inter-dominio vs Intra-dominio",
+      "q": "Qual è la differenza fondamentale tra i protocolli di instradamento intra-dominio (IGP — OSPF/IS-IS) e inter-dominio (EGP — BGP)?",
+      "hint": "Pensa al fatto che l'IGP ottimizza il percorso più breve all'interno di un singolo dominio, mentre BGP considera policy, accordi commerciali e scalabilità tra AS indipendenti.",
+      "options": [
+        "L'IGP ottimizza la ricerca dei percorsi più brevi all'interno di un unico AS in base a metriche (velocità/latenza), mentre l'EGP (BGP) collega AS diversi e prende decisioni basandosi su policy flessibili (Policy-Based Routing) e elenchi AS-Path",
+        "L'IGP funziona solo su dispositivi wireless, mentre l'EGP funziona esclusivamente su dispositivi cablati",
+        "BGP non supporta il protocollo IPv6, mentre OSPF funziona solo con IPv6",
+        "L'IGP calcola i percorsi tramite algoritmi quantistici, mentre l'EGP lo fa manualmente in un file di testo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'IGP (OSPF/IS-IS) ha lo scopo di calcolare il percorso più rapido verso un nodo all'interno di una singola rete. L'EGP (BGP-4) opera a livello globale, dove spesso il criterio non è il percorso più breve, ma le regole commerciali (instradamento basato su policy).",
+        "Errato. Sia IGP che EGP sono neutrali rispetto al mezzo fisico di trasmissione L1.",
+        "Errato. Sia BGP (BGP-4 MP-BGP) che OSPF (OSPFv3) supportano pienamente IPv6.",
+        "Errato. BGP è un protocollo dinamico di tipo Path Vector matematicamente ben definito."
+      ]
+    },
+    {
+      "id": "it_net_198",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Tecnologia MPLS",
+      "q": "Qual è il principio base dell'accelerazione e della gestione del traffico nelle reti tramite la tecnologia di commutazione delle etichette (Multiprotocol Label Switching — MPLS)?",
+      "hint": "Pensa all'applicazione di etichette corte a lunghezza fissa all'ingresso della rete (Ingress LSR) e alla commutazione rapida basata su etichetta anziché alla lunga ricerca del prefisso IP su ogni router intermedio.",
+      "options": [
+        "All'ingresso della rete MPLS, al pacchetto viene assegnata un'etichetta corta a 20 bit (Label); i router intermedi (LSR) commutano il pacchetto in base a questa etichetta in tempo $O(1)$, senza analizzare l'intera intestazione IP",
+        "MPLS rimuove il payload dal pacchetto e trasmette solo le intestazioni",
+        "MPLS esegue la conversione obbligatoria di tutti i pacchetti in un segnale analogico di trasmissione TV"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Sul router di bordo (Ingress LER), al pacchetto viene aggiunta un'intestazione MPLS con etichetta. I nodi intermedi (LSR) scambiano semplicemente l'etichetta (Label Swapping) e inoltrano il pacchetto lungo un percorso predefinito (LSP) senza effettuare ricerche nella tabella di instradamento IP.",
+        "Errato. MPLS mantiene il pacchetto IP originale (payload), incapsulandolo in una sottile intestazione di etichetta.",
+        "Errato. MPLS è una tecnologia di virtualizzazione e inoltro del traffico per reti digitali a livello L2.5."
+      ]
+    },
+    {
+      "id": "it_net_199",
+      "widget_id": "widget_net_199",
+      "topic": "Reti di calcolatori — Economia di Internet (Peering vs Transit)",
+      "q": "In che cosa differisce un accordo di transito IP (IP Transit) da un accordo di peering (Peering) tra due operatori di rete?",
+      "hint": "Pensa all'accesso a pagamento all'intera tabella di instradamento globale (Transit) rispetto allo scambio gratuito di traffico solo tra i propri clienti (Peering).",
+      "options": [
+        "Nel transito IP (IP Transit), il cliente paga l'operatore per l'accesso a tutta la rete Internet globale; nel Peering, due operatori scambiano traffico solo tra i propri clienti (di solito gratuitamente)",
+        "Il Peering richiede sempre un pagamento per ogni gigabyte trasmesso, mentre il Transit è sempre gratuito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il transito è un servizio commerciale: il cliente paga affinché il provider annunci le sue reti e fornisca l'accesso a tutti gli indirizzi IP del mondo. Il Peering è uno scambio di traffico reciprocamente vantaggioso e gratuito (o paid-peering) limitato ai clienti delle due reti accordate.",
+        "Errato. È esattamente l'opposto: il Transit è un accesso a pagamento alla rete globale, mentre il Peering è per lo più uno scambio reciproco gratuito."
+      ]
+    },
+    {
+      "id": "it_net_200",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Instradamento Anycast",
+      "q": "Qual è il principio di funzionamento dell'instradamento Anycast e per quali servizi viene ampiamente utilizzato in Internet?",
+      "hint": "Ricorda l'assegnazione dello stesso indirizzo IP a più server geograficamente distribuiti e il ruolo di BGP nell'instradare il pacchetto verso il nodo più vicino.",
+      "options": [
+        "Lo stesso indirizzo IP viene assegnato a più server in diverse parti del mondo; BGP instrada il traffico dell'utente verso il nodo topologicamente più vicino (ampiamente utilizzato nei Root Server DNS e nelle CDN)",
+        "Il pacchetto viene duplicato e inviato simultaneamente a assolutamente tutti i computer del pianeta",
+        "Il traffico viene trasmesso solo di notte, quando i canali di rete sono liberi",
+        "Anycast viene utilizzato esclusivamente per trasmettere chiamate vocali su telefoni fissi",
+        "Anycast blocca il funzionamento di qualsiasi server web se si superano le 100 connessioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In Anycast, un singolo indirizzo IP viene annunciato tramite BGP da decine di posizioni. I router di Internet instradano automaticamente i pacchetti del cliente verso il punto con la metrica BGP (AS-Path) minore. Ciò garantisce un'elevata tolleranza ai guasti per i server root DNS (`8.8.8.8`, `1.1.1.1`) e la distribuzione del carico nelle CDN.",
+        "Errato. L'invio a assolutamente tutti i dispositivi è Broadcast/Multicast, non Anycast.",
+        "Errato. Anycast funziona in tempo reale continuo.",
+        "Errato. Anycast è un metodo di instradamento L3 in reti IP, ampiamente usato in DNS e CDN HTTP/HTTPS.",
+        "Errato. Al contrario, Anycast protegge l'infrastruttura dai sovraccarichi (inclusi gli attacchi DDoS) distribuendo il carico su più nodi."
+      ]
+    },
+    {
+      "id": "it_net_201",
+      "widget_id": "widget_net_201",
+      "topic": "Reti di calcolatori — Virtualizzazione del routing (VRF)",
+      "q": "Che cos'è la tecnologia VRF (Virtual Routing and Forwarding) e quale problema risolve su un router fisico?",
+      "hint": "Fai un'analogia con le VLAN: se le VLAN isolano i segmenti L2, cosa fa la VRF per le tabelle di instradamento L3?",
+      "options": [
+        "Consente di creare più tabelle di instradamento indipendenti e isolate su un singolo dispositivo fisico, permettendo l'uso di indirizzi IP sovrapposti in VRF differenti",
+        "Raddoppia la memoria RAM fisica del router tramite la compressione",
+        "Converte automaticamente gli indirizzi IPv4 in indirizzi IPv6 senza l'intervento dell'amministratore",
+        "Fornisce protezione fisica al router da surriscaldamento e guasti di alimentazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La VRF virtualizza il livello L3: un singolo router può servire clienti diversi o zone di rete isolate mantenendo una tabella di instradamento separata per ogni zona (ad es. con IP sovrapposti `10.0.0.0/8`).",
+        "Errato. La VRF è una separazione logica del contesto di rete, non una compressione hardware della RAM.",
+        "Errato. La traduzione dei protocolli IPv4/IPv6 viene eseguita da tecnologie NAT64/DS-Lite, non dalla VRF.",
+        "Errato. La VRF riguarda la logica dello stack di rete L3, non il raffreddamento fisico."
+      ]
+    },
+    {
+      "id": "it_net_202",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Rilevamento rapido dei guasti (BFD)",
+      "q": "A cosa serve il protocollo BFD (Bidirectional Forwarding Detection) in combinazione con i protocolli di instradamento dinamico (OSPF, BGP)?",
+      "hint": "Pensa al tempo di rilevamento di un'interruzione di una linea fisica o di un nodo intermedio (millisecondi vs timer Hello/Keepalive).",
+      "options": [
+        "Per il rilevamento ultra-rapido (sub-secondo, ~50–100 ms) dell'inoperatività di un canale di comunicazione tra nodi adiacenti e per accelerare la convergenza dell'instradamento",
+        "Per l'assegnazione automatica di indirizzi IP a nuovi dispositivi nella rete locale",
+        "Per crittografare tutti i dati BGP in transito utilizzando l'algoritmo AES-256"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I timer standard OSPF/BGP rilevano l'interruzione di una linea in secondi o decine di secondi. BFD scambia brevi pacchetti di controllo ad intervalli di millisecondi, notificando all'istante i protocolli di instradamento.",
+        "Errato. Dell'indirizzamento dinamico si occupa il protocollo DHCP.",
+        "Errato. BFD non cifra il traffico; il suo scopo è il controllo della connettività del percorso L3."
+      ]
+    },
+    {
+      "id": "it_net_203",
+      "widget_id": "widget_net_203",
+      "topic": "Reti di calcolatori — Protocolli di ridondanza del primo hop (FHRP)",
+      "q": "Quale problema risolvono i protocolli di ridondanza del gateway predefinito (FHRP: VRRP, HSRP) in un segmento di rete locale?",
+      "hint": "Pensa al fatto che un PC finale conosce solo un indirizzo IP di Default Gateway. Come mantenere la connessione in caso di guasto di uno dei router?",
+      "options": [
+        "Garantiscono la tolleranza ai guasti del Default Gateway per gli host finali raggruppando più router fisici in un unico router virtuale con IP e indirizzo MAC condivisi",
+        "Accelerano il caricamento delle pagine web memorizzando nella cache le query DNS",
+        "Sostituiscono lo switch fisico L2 con un'applicazione software nel cloud",
+        "Aumentano la larghezza di banda del cavo a doppino intrecciato fino a 100 Gbit/s",
+        "Bloccano la trasmissione di messaggi e-mail di spam"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se il router attivo (Active/Master) si guasta, quello di riserva (Standby/Backup) subentra all'istante prendendo in carico l'IP virtuale e l'indirizzo MAC del gateway. I PC client non perdono la connettività e non richiedono riconfigurazione.",
+        "Errato. Della memorizzazione nella cache si occupa il server DNS, non FHRP.",
+        "Errato. FHRP opera su router L3/switch L3 all'interno della rete locale.",
+        "Errato. Il protocollo non può modificare le caratteristiche fisiche del cavo.",
+        "Errato. La protezione dallo spam viene eseguita a livello applicativo (L7) tramite filtri e-mail."
+      ]
+    },
+    {
+      "id": "it_net_204",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Protezione contro lo spoofing (uRPF)",
+      "q": "Qual è il principio di funzionamento dei meccanismi uRPF (Unicast Reverse Path Forwarding) sulle interfacce di rete?",
+      "hint": "Presta attenzione alla verifica del 'percorso inverso': si controlla se il pacchetto con un determinato Source IP è arrivato dall'interfaccia corretta.",
+      "options": [
+        "Il router verifica il Source IP del pacchetto in ingresso tramite la sua tabella di instradamento; se l'interfaccia di arrivo non coincide con il percorso ottimale verso tale IP (o se il percorso manca), il pacchetto viene scartato per proteggere dall'IP spoofing",
+        "Il router sostituisce il Destination IP con il proprio indirizzo per nascondere la topologia"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! uRPF protegge la rete da attacchi con indirizzo sorgente falsificato (IP Spoofing). In modalità rigida (Strict mode), il pacchetto viene accettato solo se nella tabella di instradamento il percorso verso il Source IP passa esattamente per la stessa interfaccia.",
+        "Errato. La modifica del Destination IP viene eseguita dalle tecnologie di traduzione degli indirizzi (DNAT/Port Forwarding)."
+      ]
+    },
+    {
+      "id": "it_net_205",
+      "widget_id": "widget_net_205",
+      "topic": "Reti di calcolatori — Bilanciamento ECMP",
+      "q": "In che modo un router distribuisce il traffico mediante il meccanismo ECMP (Equal-Cost Multi-Path)?",
+      "hint": "Presta attenzione a cosa accadrebbe se i pacchetti di una stessa sessione TCP viaggiassero su percorsi diversi con latenze diverse (Out-of-Order).",
+      "options": [
+        "Distribuisce i flussi di rete (Flows) tra più percorsi con la stessa metrica in base all'hashing dei campi dell'intestazione (5-tuple), garantendo l'invio dei pacchetti di una singola sessione lungo lo stesso percorso",
+        "Invia i pacchetti rigorosamente in ordine, un pacchetto alla volta su ciascun cavo (Round-Robin a livello di singoli pacchetti)",
+        "Trasmette tutto il traffico solo sul primo canale, mantenendo gli altri disattivati",
+        "Duplica ogni pacchetto su tutti i canali di comunicazione paralleli per affidabilità",
+        "Comprime il traffico e lo trasmette solo tramite il canale wireless Wi-Fi",
+        "Si applica solo quando si utilizzano cavi di comunicazione in fibra ottica"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per evitare la consegna fuori ordine dei pacchetti (Out-of-Order delivery in TCP), ECMP esegue l'hash di 5 campi: Src IP, Dst IP, Src Port, Dst Port, Protocollo. Tutti i pacchetti di uno stesso flusso ottengono lo stesso hash e percorrono lo stesso canale.",
+        "Errato. Un Round-Robin pacchetto per pacchetto causerebbe la desincronizzazione dei pacchetti sul ricevitore e un drastico calo delle prestazioni TCP.",
+        "Errato. L'utilizzo attivo di tutti i canali equivalenti disponibili è lo scopo principale di ECMP.",
+        "Errato. La duplicazione dei pacchetti viene eseguita da tecnologie di affidabilità specifiche (ad es. 802.1CB CB), non da ECMP.",
+        "Errato. ECMP è indipendente dal tipo di mezzo fisico.",
+        "Errato. ECMP funziona a livello L3 sopra qualsiasi canale (rame, fibra, ponti radio)."
+      ]
+    },
+    {
+      "id": "it_net_206",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Scalabilità di BGP (Route Reflector)",
+      "q": "Quale problema architetturale di iBGP (Internal BGP) risolve l'introduzione dei server di riflessione dei percorsi (Route Reflector — RR)?",
+      "hint": "Ricorda la regola dello split horizon in iBGP e il numero di sessioni full-mesh $N(N-1)/2$.",
+      "options": [
+        "Elimina il requisito di creare una maglia completa di sessioni iBGP (Full Mesh) tra tutti i router all'interno dell'AS, inoltrando (riflettendo) gli annunci BGP dai client agli altri nodi",
+        "Crittografa automaticamente le sessioni BGP utilizzando il protocollo TLS",
+        "Sostituisce i percorsi BGP con tabelle ARP statiche",
+        "Riduce il tempo di propagazione fisica del segnale luminoso nella fibra ottica"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In iBGP la regola di prevenzione dei loop vieta di inoltrare un percorso BGP da un vicino iBGP a un altro vicino iBGP. Senza RR era necessaria una maglia Full Mesh ($N(N-1)/2$ sessioni). Il Route Reflector allenta questa regola, permettendo di scalare le reti di grandi dimensioni.",
+        "Errato. Per proteggere BGP si usano TCP MD5 Signature o BGP AO (Authentication Option).",
+        "Errato. Il RR opera nell'ambito di BGP e non lo sostituisce con ARP.",
+        "Errato. Il RR è un elemento logico di controllo L3, non influisce sulla fisica del livello L1."
+      ]
+    },
+    {
+      "id": "it_net_207",
+      "widget_id": "widget_net_207",
+      "topic": "Reti di calcolatori — Interfacce virtuali dello switch (SVI)",
+      "q": "Che cos'è una SVI (Switched Virtual Interface) su uno switch di livello 3 (L3 Switch)?",
+      "hint": "Pensa all'interfaccia `interface Vlan 10`, che funge da gateway per i dispositivi presenti in quella VLAN.",
+      "options": [
+        "Un'interfaccia logica L3 associata a una VLAN specifica, che consente allo switch di effettuare l'instradamento dei pacchetti tra VLAN differenti (Inter-VLAN Routing)",
+        "Un connettore fisico sul pannello posteriore dello switch per collegare un cavo console",
+        "Un modulo software per misurare la temperatura all'interno dello chassis dello switch"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Una SVI (ad esempio `interface Vlan 10` in Cisco) è un'interfaccia IP virtuale per il rispettivo dominio L2 (VLAN 10). Funge da gateway predefinito per gli host di quella VLAN e consente di commutare il traffico verso altre VLAN alla velocità dell'ASIC.",
+        "Errato. Il connettore fisico di gestione è chiamato porta Console o Out-of-Band Management (OOB).",
+        "Errato. Il monitoraggio della temperatura viene eseguito da sensori hardware ed è accessibile via SNMP/Syslog."
+      ]
+    },
+    {
+      "id": "it_net_208",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Topologie di rete (Full Mesh vs Partial Mesh)",
+      "q": "Qual è il compromesso principale nella scelta di una topologia di rete a maglia completa (Full Mesh) rispetto a una a maglia parziale (Partial Mesh)?",
+      "hint": "Confronta la formula del numero di canali $N(N-1)/2$ con la tolleranza ai guasti assoluta.",
+      "options": [
+        "La Full Mesh offre la massima tolleranza ai guasti e i percorsi più brevi, ma richiede $N(N-1)/2$ collegamenti fisici/logici, rendendola non scalabile e costosa per un numero elevato di nodi $N$",
+        "La Full Mesh funziona più lentamente, poiché i pacchetti devono passare attraverso tutti i nodi della rete in sequenza",
+        "La Partial Mesh vieta l'uso dei protocolli della suite TCP/IP",
+        "La Full Mesh richiede l'uso obbligatorio di canali di comunicazione satellitari",
+        "La Partial Mesh elimina completamente la possibilità di guasto di qualsiasi apparato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In una Full Mesh ogni nodo è collegato a tutti gli altri. Con $N=100$ nodi occorrono $100 \\times 99 / 2 = 4950$ collegamenti. Per questo in pratica si sceglie la Partial Mesh (collegando solo i nodi chiave) per bilanciare costi e affidabilità.",
+        "Errato. Nella Full Mesh la latenza è minima, poiché qualsiasi coppia di nodi è connessa direttamente (1 hop).",
+        "Errato. La topologia di rete L1/L2 non limita l'uso dei protocolli L3/L4.",
+        "Errato. La topologia Full Mesh può essere realizzata su qualsiasi canale (rame, fibra, tunnel VPN).",
+        "Errato. Nessuna topologia preserva l'hardware dai guasti fisici."
+      ]
+    },
+    {
+      "id": "it_net_209",
+      "widget_id": "widget_net_209",
+      "topic": "Reti di calcolatori — Monitoraggio e telemetria (SNMP vs gNMI)",
+      "q": "Qual è il vantaggio tecnologico chiave della telemetria in streaming (Streaming Telemetry, gNMI/gRPC) rispetto al tradizionale polling SNMP?",
+      "hint": "Confronta il modello Periodic Pull (interrogazione programmata) e Push-driven Streaming (invio dati su evento/continuo).",
+      "options": [
+        "La Streaming Telemetry utilizza un modello Push: il dispositivo trasmette continuamente i dati sulle sue prestazioni in tempo reale con un carico minimo sulla CPU, a differenza del polling discreto Pull di SNMP",
+        "SNMP trasmette i dati via fibra ottica, mentre la Streaming Telemetry solo via canali radio",
+        "La Streaming Telemetry elimina la necessità di utilizzare indirizzi IP nella rete",
+        "SNMP funziona solo su server gestiti da Windows"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! SNMP usa un modello Pull (il server di monitoraggio richiede i parametri ogni $N$ minuti), producendo elevata latenza di reazione e sovraccaricando la CPU del router. La Streaming Telemetry si iscrive ai dati ed effettua il push delle variazioni a livello di millisecondi.",
+        "Errato. Entrambi i metodi di monitoraggio funzionano sopra lo stack di rete IP.",
+        "Errato. La telemetria viene trasmessa tramite protocolli L4 standard (gRPC/HTTP2 sopra TCP/IP).",
+        "Errato. SNMP è uno standard aperto supportato da quasi tutti i dispositivi di rete."
+      ]
+    },
+    {
+      "id": "it_net_210",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — NAT del provider (Carrier-Grade NAT / CGNAT)",
+      "q": "Per quale scopo i grandi provider di servizi Internet (ISP) implementano la tecnologia CGNAT (Carrier-Grade NAT / Large-Scale NAT) nelle loro reti?",
+      "hint": "Pensa all'esaurimento del pool globale di indirizzi IPv4 pubblici.",
+      "options": [
+        "Per risparmiare indirizzi IPv4 pubblici traducendo gli indirizzi privati RFC 1918 / RFC 6598 (100.64.0.0/10) di migliaia di abbonati in un piccolo pool di IP pubblici del provider",
+        "Per accelerare automaticamente la velocità dell'Internet domestico fino a 10 Gbit/s"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A causa dell'esaurimento dello spazio IPv4 pubblico, gli operatori non possono assegnare un IP pubblico ad ogni abbonato. CGNAT esegue una traduzione ad alte prestazioni a due livelli di indirizzi e porte nel core della rete.",
+        "Errato. CGNAT non modifica la larghezza di banda fisica dei canali verso gli abbonati."
+      ]
+    },
+    {
+      "id": "it_net_211",
+      "widget_id": "widget_net_211",
+      "topic": "Reti di calcolatori — Gerarchia dei provider nella Rete delle reti",
+      "q": "Come è strutturata la rete globale «Rete delle reti» per garantire la connettività globale senza un singolo punto di controllo centralizzato?",
+      "hint": "Pensa alla combinazione di livelli gerarchici (Tier-1, Tier-2, Tier-3) e collegamenti orizzontali (Peering / IXP).",
+      "options": [
+        "Una struttura gerarchica composta da operatori di transito Tier-1 nel core, integrata da Tier-2/3 regionali e collegamenti di peering orizzontali tramite IXP",
+        "Una stella centralizzata in cui tutti i dati del mondo passano attraverso un unico server principale ICANN negli USA",
+        "Una rete P2P completamente piatta in cui ogni router domestico è direttamente collegato a tutti i router del mondo",
+        "Una struttura a due livelli composta esclusivamente da satelliti di comunicazione e torri mobili 5G"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Internet non ha un centro unico. È un sistema complesso e gerarchico: gli operatori globali Tier-1 formano il core privo di costi di transito, i Tier-2/Tier-3 vendono l'accesso agli utenti finali, mentre gli IXP consentono di abbreviare i percorsi tramite peering gratuito o economico.",
+        "Errato. ICANN gestisce i nomi di dominio e l'indirizzamento IP (amministrativamente a livello L7/L3), ma non fa transitare tutto il traffico di rete mondiale.",
+        "Errato. I router domestici non possono gestire milioni di collegamenti fisici a causa di limiti hardware ed economici.",
+        "Errato. L'infrastruttura terrestre in fibra ottica costituisce la base di oltre il 95% del traffico globale."
+      ]
+    },
+    {
+      "id": "it_net_212",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Default-Free Zone (DFZ)",
+      "q": "Cosa significa il concetto di «Default-Free Zone» (DFZ) nel contesto dei router dorsali di Internet?",
+      "hint": "Presta attenzione all'assenza di una rotta predefinita (`0.0.0.0/0`) nelle tabelle BGP dei router di backbone.",
+      "options": [
+        "Una zona della rete i cui router non hanno una 'rotta predefinita' (Default Route) e devono conoscere il percorso esplicito (prefisso BGP) verso qualsiasi rete in Internet",
+        "Una zona Wi-Fi gratuita negli aeroporti e nei luoghi pubblici",
+        "Un segmento della rete locale in cui il protocollo DHCP è disabilitato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I router dorsali della DFZ (il core dei provider Tier-1) non possono 'inoltrare' un pacchetto sconosciuto su una rotta predefinita (`0.0.0.0/0`). Contengono la tabella di instradamento globale completa (Full View), conoscendo il percorso BGP esplicito verso ogni prefisso annunciato al mondo.",
+        "Errato. Il termine DFZ si riferisce all'architettura dell'instradamento BGP nel core di Internet, non ai punti di accesso gratuiti per gli utenti.",
+        "Errato. La presenza o l'assenza di DHCP in LAN non ha alcuna relazione con il concetto di DFZ in BGP."
+      ]
+    },
+    {
+      "id": "it_net_213",
+      "widget_id": "widget_net_213",
+      "topic": "Reti di calcolatori — Multihoming",
+      "q": "Quali sono i vantaggi principali del collegamento di un'organizzazione a Internet tramite due o più provider indipendenti (Multihoming)?",
+      "hint": "Pensa all'alta disponibilità in caso di guasto al cavo di un ISP e all'ottimizzazione dei percorsi BGP.",
+      "options": [
+        "Elevata disponibilità (tolleranza ai guasti in caso di guasto a un ISP) e possibilità di bilanciamento/scelta del percorso migliore tramite BGP",
+        "Aumento gratuito e automatico della larghezza di banda di tutti i computer di 100 volte",
+        "Protezione dai danni fisici ai dischi rigidi sui server aziendali",
+        "Possibilità di disattivare tutti i firewall",
+        "Abbandono completo dell'uso degli indirizzi IP nella rete locale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il multihoming basato su ASN proprio e BGP consente di reindirizzare il traffico su un canale di riserva in pochi secondi in caso di caduta del provider primario, oltre a scegliere percorsi BGP più brevi per diversi prefissi.",
+        "Errato. La velocità dei canali è limitata dalla larghezza di banda fisica delle porte, non dal semplice fatto di avere un secondo provider.",
+        "Errato. La ridondanza dei canali L3 non ha alcun impatto sui sistemi di archiviazione dati locali (HDD/SSD).",
+        "Errato. Al contrario, l'avere più accessi alla rete richiede politiche di firewalling più severe.",
+        "Errato. Per utilizzare BGP Multihoming, l'organizzazione deve utilizzare indirizzi IP pubblici e un proprio AS."
+      ]
+    },
+    {
+      "id": "it_net_214",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Dorsali ottiche sottomarine",
+      "q": "Quale ruolo svolgono i cavi sottomarini in fibra ottica (Subsea Optical Cables) nel funzionamento della «Rete delle reti» globale?",
+      "hint": "Confronta la capacità e la latenza della fibra sottomarina con i canali satellitari.",
+      "options": [
+        "Trasmettono oltre il 98% di tutto il traffico Internet intercontinentale, garantendo un'enorme capacità di banda (centinaia di Tbit/s) e una latenza minima rispetto ai satelliti",
+        "Servono esclusivamente come canali di riserva in caso di disattivazione delle comunicazioni satellitari"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Contrariamente al comune errore sui satelliti, sono proprio i cavi sottomarini in fibra ottica a costituire la dorsale principale di Internet a livello intercontinentale grazie all'enorme larghezza di banda e alla bassa latenza.",
+        "Errato. I cavi sottomarini rappresentano il trasporto principale, non di riserva, del traffico intercontinentale."
+      ]
+    },
+    {
+      "id": "it_net_215",
+      "widget_id": "widget_net_215",
+      "topic": "Reti di calcolatori — Routing «Patata calda vs Patata fredda»",
+      "q": "Qual è la differenza tra le strategie di instradamento «patata calda» (Hot-Potato Routing) e «patata fredda» (Cold-Potato Routing) nella trasmissione del traffico inter-dominio?",
+      "hint": "Pensa a come l'operatore cerchi di liberarsi del pacchetto in transito il prima possibile (tramite il peering più vicino) o di trasportarlo sulla propria rete fino al punto di interconnessione più lontano.",
+      "options": [
+        "L'Hot-Potato mira ad espellere il pacchetto dal proprio Sistema Autonomo attraverso l'interconnessione BGP più vicina per ridurre i propri costi; la Cold-Potato trasporta il pacchetto sulla propria rete fino all'interconnessione più vicina al destinatario per controllare la QoS",
+        "L'Hot-Potato viene utilizzato solo in estate, mentre la Cold-Potato solo in inverno",
+        "L'Hot-Potato trasmette i dati su cavi in rame, mentre la Cold-Potato su fibra ottica",
+        "L'Hot-Potato viene applicato esclusivamente nelle reti Wi-Fi 6"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con l'Hot-Potato routing, l'AS si libera del traffico al primo punto di uscita valido (riducendo al minimo il carico del proprio IGP). Con la Cold-Potato (spesso usata da grandi CDN e Tier-1), la rete trattiene il pacchetto nella propria dorsale ad alta velocità il più a lungo possibile, consegnandolo alla rete adiacente il più vicino possibile alla destinazione.",
+        "Errato. Sono nomi metaforici per gli algoritmi di instradamento BGP, non legati alla stagione dell'anno.",
+        "Errato. Entrambe le strategie sono principi logici di scelta del percorso in BGP e non dipendono dal mezzo L1.",
+        "Errato. Il concetto si riferisce all'instradamento inter-dominio BGP tra Sistemi Autonomi."
+      ]
+    },
+    {
+      "id": "it_net_216",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Registro Internet Regionale (RIR)",
+      "q": "Qual è la funzione principale dei Registri Internet Regionali (RIR, come RIPE NCC, ARIN, APNIC)?",
+      "hint": "Pensa all'assegnazione e alla registrazione degli indirizzi IP pubblici (IPv4/IPv6) e dei numeri di sistema autonomo (ASN) nelle rispettive regioni geografiche.",
+      "options": [
+        "Assegnazione e gestione delle risorse di rete limitate (blocchi di indirizzi IPv4/IPv6 e numeri di sistema autonomo ASN) nella propria regione geografica",
+        "Posa fisica dei cavi in fibra ottica sul fondo degli oceani",
+        "Vendita di software antivirus agli utenti domestici",
+        "Controllo dei prezzi di router e switch nei negozi al dettaglio",
+        "Fabbricazione di schede di rete per personal computer",
+        "Crittografia del traffico utente nei browser"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I RIR (RIPE NCC in Europa, ARIN in Nord America, APNIC in Asia, ecc.) fanno capo a IANA/ICANN e sono responsabili dell'assegnazione di indirizzi IPv4, IPv6 e ASN unici a provider e organizzazioni della propria regione.",
+        "Errato. Della posa dei cavi si occupano gli operatori di telecomunicazione e consorzi specializzati.",
+        "Errato. I RIR sono organizzazioni amministrative no-profit per le risorse L3, non vendono software.",
+        "Errato. I RIR non regolano il mercato commerciale degli apparati hardware.",
+        "Errato. Della produzione degli apparati si occupano i vendor (Cisco, Huawei, Juniper, ecc.).",
+        "Errato. La crittografia L7 viene eseguita dai protocolli crittografici (TLS/HTTPS) sugli host finali."
+      ]
+    },
+    {
+      "id": "it_net_217",
+      "widget_id": "widget_net_217",
+      "topic": "Reti di calcolatori — Sicurezza BGP e RPKI",
+      "q": "A cosa serve il meccanismo RPKI (Resource Public Key Infrastructure) nel sistema di instradamento globale BGP?",
+      "hint": "Pensa al problema del BGP Hijacking, in cui un malintenzionato o un operatore sbadato annuncia prefissi IP altrui.",
+      "options": [
+        "Per la convalida dell'origine degli annunci dei prefissi (Route Origin Validation — ROV), consentendo ai router di verificare se un specifico AS ha il diritto di annunciare quel blocco di indirizzi IP",
+        "Per la compressione dei pacchetti IP prima dell'invio in una sessione BGP",
+        "Per il pagamento automatico dei servizi di peering tra operatori mediante criptovaluta"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel BGP classico qualsiasi router può accidentalmente o intenzionalmente annunciare il prefisso IP di un altro (BGP Hijacking). RPKI utilizza certificati crittografici (ROA) firmati dal proprietario delle risorse presso il RIR, permettendo agli altri router di scartare gli annunci BGP non validi (Invalid).",
+        "Errato. RPKI non si occupa della compressione dei dati, è un sistema di autenticazione crittografica degli annunci BGP.",
+        "Errato. RPKI è uno standard di sicurezza di rete (RFC 6480) e non è legato a transazioni finanziarie."
+      ]
+    },
+    {
+      "id": "it_net_218",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Impatto delle CDN sull'architettura della «Rete delle reti»",
+      "q": "In che modo la capillare diffusione delle reti di distribuzione dei contenuti (CDN, come Cloudflare, Akamai) ha modificato la struttura del traffico nella «rete delle reti»?",
+      "hint": "Pensa all'avvicinamento dei contenuti all'utente finale tramite nodi di cache posti direttamente all'interno delle reti Access ISP.",
+      "options": [
+        "Ha spostato il traffico dal core di backbone Tier-1 verso il bordo della rete (Edge), memorizzando i contenuti nella cache all'interno delle reti di accesso (Access ISP) e negli IXP, riducendo il carico sui canali di transito",
+        "Ha completamente eliminato la necessità di utilizzare cavi in fibra ottica",
+        "Ha costretto tutti gli utenti del mondo a tornare ai modem dial-up",
+        "Ha portato alla chiusura di tutti i punti di scambio Internet (IXP)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le CDN posizionano i propri server edge direttamente all'interno delle reti degli ISP dell'ultimo miglio o negli IXP. Quando l'utente guarda un video, il flusso non proviene da un server estero passando per diversi provider Tier-1, ma dal rack adiacente nella sua stessa città.",
+        "Errato. Le CDN utilizzano attivamente le linee in fibra ottica per la sincronizzazione e la consegna dei contenuti ai nodi Edge.",
+        "Errato. Le CDN si evolvono proprio per trasmettere enormi volumi di dati multimediali ad alta velocità.",
+        "Errato. Le CDN sono tra i principali partecipanti agli IXP, generando attivamente traffico di peering locale."
+      ]
+    },
+    {
+      "id": "it_net_219",
+      "widget_id": "widget_net_219",
+      "topic": "Reti di calcolatori — BGP Route Server negli IXP",
+      "q": "Perché negli Internet Exchange Point (IXP) vengono installati speciali BGP Route Server?",
+      "hint": "Pensa a quante sessioni BGP dovrebbe configurare un partecipante all'IXP con altri 500 partecipanti senza un Route Server.",
+      "options": [
+        "Consentono ai partecipanti all'IXP di stabilire una sola sessione BGP con il Route Server per scambiare rotte con centinaia di altri partecipanti contemporaneamente, evitando la configurazione di una maglia di sessioni BGP $N \\times (N-1) / 2$",
+        "Intercettano e salvano le password di tutti gli utenti che passano attraverso l'IXP",
+        "Generano traffico di spam di prova per verificare la capacità di banda dei cavi",
+        "Convertono i frame Ethernet in segnali radio per comunicazioni satellitari",
+        "Garantiscono il riavvio forzato degli switch ogni 24 ore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se in un IXP ci sono 300 partecipanti, ciascuno dovrebbe configurare 299 sessioni BGP individuali (BGP Peering). Il Route Server raccoglie le rotte da tutti e le ridistribuisce, riducendo la configurazione a soli 1–2 sessioni con il RS stesso.",
+        "Errato. Il Route Server gestisce solo le informazioni di controllo BGP (Control Plane); i dati utente viaggiano direttamente a livello L2 tra gli switch.",
+        "Errato. Il RS opera esclusivamente con il protocollo BGP per semplificare il peering.",
+        "Errato. Il RS è un demone software BGP (ad es. BIRD/FRR) in esecuzione a livello L3/software.",
+        "Errato. Gli apparati di rete negli IXP sono progettati per un funzionamento continuo senza riavvii."
+      ]
+    },
+    {
+      "id": "it_net_220",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Scalabilità di BGP (Dimensione della tabella globale)",
+      "q": "Qual è il principale problema hardware riscontrato dagli operatori di telecomunicazioni con la continua crescita della tabella di instradamento BGP globale (che ha superato i 900.000+ prefissi IPv4)?",
+      "hint": "Ricorda la memoria ad altissima velocità, ma costosa e limitata in capacità, utilizzata negli ASIC dei router per conservare la tabella FIB.",
+      "options": [
+        "L'esaurimento della costosa memoria specializzata TCAM (Ternary Content-Addressable Memory) sulle schede di rete dei router, utilizzata per la ricerca hardware dei prefissi nella FIB alla velocità di porta",
+        "Il riempimento dei dischi rigidi dei computer degli utenti a causa del download della tabella BGP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per prendere decisioni sull'inoltro dei pacchetti a velocità di centinaia di Gbit/s, i router utilizzano la memoria hardware TCAM (tabella FIB). La TCAM ha un elevato consumo energetico e una dimensione limitata. Superato il limite, i chip dei router più datati si saturano e smettono di funzionare.",
+        "Errato. La tabella BGP è conservata esclusivamente sui router L3 degli operatori e non viene scaricata sui dispositivi degli utenti."
+      ]
+    }
+  ]
+}

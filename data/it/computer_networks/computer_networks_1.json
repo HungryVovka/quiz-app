@@ -1,0 +1,605 @@
+{
+  "subject": "Reti",
+  "questions": [
+    {
+      "id": "it_net_31",
+      "widget_id": "widget_net_31",
+      "topic": "Reti di calcolatori — Sistemi periferici (Host)",
+      "q": "Quale tra i seguenti appartiene ai sistemi periferici (End Systems / Host) situati al «bordo» (edge) della rete?",
+      "hint": "Pensate a quali dispositivi eseguono direttamente le applicazioni di rete dell'utente e generano traffico.",
+      "options": [
+        "PC utente, server web e dispositivi IoT",
+        "Router di dorsale (Core Routers)",
+        "Switch di livello 2 (L2 Switches)",
+        "Ripetitori ottici di segnale",
+        "Stazioni base dei provider (DSLAM)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I sistemi periferici (host) sono dispositivi ai margini della rete (PC, server, smartphone, IoT) che eseguono applicazioni di rete.",
+        "Errato. I router costituiscono il nucleo della rete (Network Core) e si occupano dell'inoltro dei pacchetti.",
+        "Errato. Gli switch L2 appartengono agli apparati di rete intermedi.",
+        "Errato. I ripetitori funzionano a livello fisico del mezzo di trasmissione nel nucleo o nei segmenti di accesso.",
+        "Errato. Il DSLAM è un apparato del nodo di accesso del provider, non un nodo terminale."
+      ]
+    },
+    {
+      "id": "it_net_32",
+      "widget_id": "widget_net_32",
+      "topic": "Reti di calcolatori — Architettura P2P vs Client-Server",
+      "q": "Qual è il vantaggio chiave dell'architettura Peer-to-Peer (P2P) rispetto al classico modello Client-Server?",
+      "hint": "Pensate a come cambia la larghezza di banda complessiva della rete all'aggiunta di nuovi nodi (Peer).",
+      "options": [
+        "Scalabilità: ogni nuovo nodo aggiunge alla rete le proprie risorse di calcolo e la propria larghezza di banda",
+        "Garanzia di latenza di trasmissione pari a zero tra due partecipanti qualsiasi",
+        "Completa assenza di necessità di utilizzare i protocolli di trasporto TCP e UDP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nelle reti P2P i nodi (peer) sono contemporaneamente client e server. Con l'aumentare dei partecipanti cresce anche la capacità complessiva del sistema.",
+        "Errato. Le latenze in P2P possono essere più elevate a causa della topologia variabile e delle diverse velocità dei nodi.",
+        "Errato. Le applicazioni P2P utilizzano attivamente i protocolli standard di L4 (TCP/UDP)."
+      ]
+    },
+    {
+      "id": "it_net_33",
+      "widget_id": "widget_net_33",
+      "topic": "Reti di calcolatori — Programmazione dei socket in C",
+      "q": "Quale funzione della C Socket API deve essere chiamata al posto di `???` per portare un socket TCP in uno stato di attesa passiva di connessioni in ingresso?",
+      "hint": "Ricordate la chiamata che prepara il socket a ricevere i client e imposta la dimensione della coda di connessione (backlog).",
+      "options": [
+        "connect()",
+        "listen()",
+        "accept()",
+        "bind()"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. `connect()` viene utilizzata dal client per inizializzare la connessione al server.",
+        "Corretto! La chiamata `listen(server_fd, backlog)` porta il socket in modalità passiva di ricezione delle connessioni.",
+        "Errato. `accept()` estrae la prima connessione dalla coda dopo che il socket è stato messo in modalità di ascolto.",
+        "Errato. `bind()` associa il socket a uno specifico indirizzo IP e porta."
+      ]
+    },
+    {
+      "id": "it_net_34",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Ritardo di trasmissione (Transmission Delay)",
+      "q": "Con quale formula si calcola il tempo di ritardo di trasmissione ($d_{trans}$) di un pacchetto di lunghezza $L$ bit attraverso l'adattatore di rete dell'host con una velocità del canale di $R$ bit/s?",
+      "hint": "Ricordate come si rapporta la dimensione fisica del pacchetto con la velocità di trasmissione della scheda di rete.",
+      "options": [
+        "$d_{trans} = L / R$",
+        "$d_{trans} = R / L$",
+        "$d_{trans} = d_{prop} \\cdot L$",
+        "$d_{trans} = (L \\cdot R) / 2$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ritardo di trasmissione è il tempo necessario per inserire tutti i bit del pacchetto nel canale: $d_{trans} = L / R$.",
+        "Errato. Dividere la larghezza di banda per la dimensione del pacchetto non fornisce un'unità di tempo.",
+        "Errato. $d_{prop}$ è il ritardo di propagazione del segnale nei mezzi di comunicazione (dipendente dalla distanza).",
+        "Errato. Moltiplicare la dimensione per la velocità non riflette la fisica della trasmissione del pacchetto."
+      ]
+    },
+    {
+      "id": "it_net_35",
+      "widget_id": "widget_net_35",
+      "topic": "Reti di calcolatori — Multihoming",
+      "q": "Quale definizione descrive con maggiore precisione un sistema periferico (Host) in configurazione Multihoming?",
+      "hint": "Fate attenzione al numero di interfacce di rete fisiche/logiche e alle connessioni alle reti.",
+      "options": [
+        "Un host che funge da server DNS per la rete locale",
+        "Un host che utilizza solo container virtuali Docker",
+        "Un host collegato a più reti fisiche o avente più indirizzi IP/interfacce attivi",
+        "Un host che funziona esclusivamente tramite canale wireless Wi-Fi"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Errato. L'assegnazione del ruolo di server DNS non è correlata al concetto di multihoming.",
+        "Errato. La containerizzazione riguarda la virtualizzazione a livello di SO.",
+        "Corretto! Multihoming significa che il sistema periferico è dotato di più interfacce di rete ed è collegato a più canali/provider per aumentare l'affidabilità o bilanciare il carico.",
+        "Errato. La presenza di un solo adattatore Wi-Fi è una connessione Single-homed."
+      ]
+    },
+    {
+      "id": "it_net_36",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Scheda di rete (NIC)",
+      "q": "In quali due livelli inferiori del modello OSI funziona fisicamente e logicamente la scheda di rete (NIC) di un sistema periferico?",
+      "hint": "Ricordate dove avviene la formazione dei segnali elettrici/ottici e l'assemblaggio dei frame Ethernet.",
+      "options": [
+        "Livello fisico (L1) e Livello di collegamento dati (L2)",
+        "Livello di rete (L3) e Livello di trasporto (L4)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La NIC implementa il livello fisico L1 (codifica dei segnali, mezzo) e il livello di collegamento L2 (framing, gestione degli indirizzi MAC).",
+        "Errato. I livelli di rete (L3) e trasporto (L4) sono gestiti dallo stack di protocolli software del sistema operativo."
+      ]
+    },
+    {
+      "id": "it_net_37",
+      "widget_id": "widget_net_37",
+      "topic": "Reti di calcolatori — Programmazione dei socket in C",
+      "q": "Quale funzione della C Socket API deve essere chiamata al posto di `???` per inizializzare una connessione TCP client verso il server?",
+      "hint": "Ricordate la chiamata di sistema che invia il pacchetto SYN iniziale all'indirizzo e alla porta specificati.",
+      "options": [
+        "sendto()",
+        "connect()",
+        "bind()",
+        "listen()",
+        "recvfrom()"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. `sendto()` si usa per inviare datagrammi tramite il protocollo UDP.",
+        "Corretto! La chiamata `connect()` avvia l'handshake a tre vie (3-way handshake) TCP con il nodo remoto.",
+        "Errato. `bind()` associa il socket a un indirizzo locale dal lato client o server.",
+        "Errato. `listen()` viene utilizzata dal server per ascoltare le chiamate in ingresso.",
+        "Errato. `recvfrom()` viene utilizzata per leggere i datagrammi UDP."
+      ]
+    },
+    {
+      "id": "it_net_38",
+      "widget_id": "widget_net_38",
+      "topic": "Reti di calcolatori — Buffer dei socket del SO",
+      "q": "Per impostazione predefinita, come si comporterà un socket bloccante (blocking) al tentativo dell'applicazione di scrivere dati se il buffer di invio del sistema (Send Buffer) è completamente pieno?",
+      "hint": "Pensate alla differenza tra socket bloccanti e non bloccanti (non-blocking) nel SO.",
+      "options": [
+        "La chiamata bloccherà l'esecuzione del thread dell'applicazione fino a quando non si libererà spazio nel buffer",
+        "I dati verranno scartati all'istante senza notificare l'applicazione",
+        "Il sistema operativo terminerà forzatamente il processo con lo stato di Segmentation Fault",
+        "I dati verranno salvati automaticamente in un file temporaneo sul disco rigido"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando si lavora con un socket bloccante, la chiamata `write()` / `send()` sospende il thread fino a quando non c'è spazio nel buffer del SO.",
+        "Errato. I modelli di scarto dei dati senza notifica non si applicano ai socket bloccanti affidabili TCP.",
+        "Errato. L'overflow del buffer del socket non causa un errore di accesso alla memoria (Segmentation Fault).",
+        "Errato. I buffer dei socket si trovano esclusivamente nella memoria RAM (kernel space)."
+      ]
+    },
+    {
+      "id": "it_net_39",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Stack IPv4 / IPv6 sull'host",
+      "q": "In che modo un sistema periferico con configurazione Dual-Stack interagisce con le risorse di rete?",
+      "hint": "Pensate al supporto parallelo di entrambi i protocolli a livello di rete nel sistema operativo.",
+      "options": [
+        "L'host può utilizzare contemporaneamente entrambi gli stack di protocolli IPv4 e IPv6 in modo indipendente l'uno dall'altro",
+        "L'host converte tutti i pacchetti IPv4 nel formato Ethernet II, e IPv6 in 802.3",
+        "L'host funziona solo con IPv6, disattivando completamente IPv4 a livello fisico",
+        "L'host richiede la presenza di due schede di rete fisiche per ciascuno dei protocolli",
+        "L'host utilizza IPv4 esclusivamente per le chiamate C API, e IPv6 per Java API",
+        "L'host crittografa forzatamente il traffico IPv4 all'interno di tunnel IPv6"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Dual-Stack significa che il SO dell'host contiene stack IPv4 e IPv6 paralleli, consentendo di interagire con qualsiasi nodo della rete.",
+        "Errato. Il formato dei frame al livello di collegamento (Ethernet) non dipende dalla versione del protocollo IP.",
+        "Errato. Dual-Stack mantiene la piena compatibilità all'indietro con IPv4.",
+        "Errato. Entrambi gli stack possono funzionare sopra la stessa scheda di rete (NIC).",
+        "Errato. L'API socket del SO supporta entrambe le versioni di IP allo stesso modo.",
+        "Errato. Dual-Stack non richiede il tunneling, i pacchetti vengono inviati in formato nativo."
+      ]
+    },
+    {
+      "id": "it_net_40",
+      "widget_id": "widget_net_40",
+      "topic": "Reti di calcolatori — Reti di accesso (Access Networks)",
+      "q": "Quale tecnologia di accesso a Internet è rappresentata nello schema di collegamento del sistema periferico?",
+      "hint": "Fate attenzione all'uso del separatore di frequenza (Splitter) sulla linea telefonica in rame.",
+      "options": [
+        "FTTH (Fiber to the Home)",
+        "Docsis (Cable Internet)",
+        "DSL (Digital Subscriber Line)",
+        "Satellite Broadband"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Errato. FTTH utilizza il cavo ottico direttamente fino all'edificio.",
+        "Errato. DOCSIS funziona su cavo televisivo coassiale.",
+        "Corretto! La tecnologia DSL trasmette dati digitali sopra doppini in rame standard della rete telefonica, separando le frequenze del segnale tramite Splitter e DSLAM.",
+        "Errato. Internet satellitare utilizza un'antenna parabolica."
+      ]
+    },
+    {
+      "id": "it_net_41",
+      "widget_id": "widget_net_41",
+      "topic": "Reti di calcolatori — Demultiplexing sull'host",
+      "q": "In che modo il sistema operativo del sistema periferico (host) determina a quale specifico processo (applicazione) consegnare il segmento di trasporto ricevuto dalla rete?",
+      "hint": "Ricordate l'indirizzamento di livello di trasporto (L4) utilizzato per identificare i servizi di rete nel SO.",
+      "options": [
+        "In base all'indirizzo MAC della scheda di rete",
+        "In base al numero di porta di destinazione (Destination Port)",
+        "In base al valore del campo TTL nell'intestazione IP",
+        "In base al checksum del frame Ethernet (FCS)"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. L'indirizzo MAC serve a consegnare il frame a uno specifico adattatore fisico nella rete locale (L2).",
+        "Corretto! Il processo di demultiplexing sull'host utilizza il numero di porta di destinazione dall'intestazione TCP/UDP per trovare il socket del processo corretto.",
+        "Errato. Il campo TTL previene il loop dei pacchetti nella rete e viene decrementato dai router.",
+        "Errato. L'FCS verifica l'integrità del frame Ethernet al livello di collegamento."
+      ]
+    },
+    {
+      "id": "it_net_42",
+      "widget_id": "widget_net_42",
+      "topic": "Reti di calcolatori — Socket di rete in C API",
+      "q": "Quale tipo di trasmissione dati viene configurato quando si crea un socket con l'argomento `SOCK_DGRAM` nelle chiamate di sistema in C?",
+      "hint": "Pensate a quale protocollo L4 funziona con datagrammi indipendenti senza garanzie di handshake.",
+      "options": [
+        "Trasmissione a flusso con conferma di consegna (TCP)",
+        "Trasmissione a datagrammi senza instaurazione della connessione (UDP)",
+        "Accesso diretto ai frame di livello di collegamento (Raw Ethernet)"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. La trasmissione a flusso con instaurazione della connessione (TCP) si imposta con il flag `SOCK_STREAM`.",
+        "Corretto! `SOCK_DGRAM` crea un socket a datagrammi che funziona con il protocollo UDP senza negoziazione preventiva della connessione.",
+        "Errato. L'accesso diretto alle intestazioni L2/L3 si crea tramite il flag `SOCK_RAW`."
+      ]
+    },
+    {
+      "id": "it_net_43",
+      "widget_id": "widget_net_43",
+      "topic": "Reti di calcolatori — I/O della scheda di rete (NIC)",
+      "q": "Quale tecnologia consente all'adattatore di rete (NIC) di trasferire i pacchetti ricevuti dal proprio buffer direttamente nella memoria RAM dell'host senza il coinvolgimento continuo della CPU?",
+      "hint": "Ricordate il meccanismo hardware di transazioni dirette tra periferiche e memoria di sistema.",
+      "options": [
+        "DMA (Direct Memory Access)",
+        "PIO (Programmed Input/Output)",
+        "ARP Snooping",
+        "TCP Segmentation Offload (TSO)",
+        "Virtual Memory Paging"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La tecnologia DMA consente alla scheda di rete di scrivere i pacchetti direttamente nel buffer circolare (Ring Buffer) nella RAM dell'host, minimizzando il carico sulla CPU.",
+        "Errato. PIO è un metodo obsoleto in cui il processore deve trasferire personalmente ogni byte dalle porte di I/O.",
+        "Errato. ARP Snooping è una funzione di sicurezza sugli switch.",
+        "Errato. TSO delega alla scheda di rete la suddivisione di grandi blocchi di dati in segmenti TCP, ma non è direttamente responsabile del trasferimento in RAM.",
+        "Errato. La paginazione di memoria è un meccanismo di gestione della memoria virtuale del SO."
+      ]
+    },
+    {
+      "id": "it_net_44",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Ruolo degli host nell'architettura di rete",
+      "q": "I sistemi periferici (End Systems / Host) eseguono di default funzioni di inoltro (forwarding) e instradamento di transito del traffico di altri nodi nel nucleo della rete Internet?",
+      "hint": "Pensate alla separazione dei ruoli tra i dispositivi al bordo (Edge) e i dispositivi nel nucleo (Core) della rete.",
+      "options": [
+        "Sì, ogni host è obbligato a partecipare al transito dei pacchetti altrui",
+        "No, gli host si trovano al bordo della rete ed eseguono le applicazioni, mentre dell'inoltro dei pacchetti si occupano i router del nucleo"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Gli host non sono tenuti a inoltrare il traffico altrui; sono sorgenti e destinatari finali dei dati.",
+        "Corretto! I sistemi periferici generano ed elaborano i dati delle applicazioni al bordo della rete (Edge). Dell'inoltro dei pacchetti altrui tra le reti si occupano i router nel nucleo della rete (Network Core)."
+      ]
+    },
+    {
+      "id": "it_net_45",
+      "widget_id": "widget_net_45",
+      "topic": "Reti di calcolatori — Reti di accesso wireless",
+      "q": "Come si chiama l'elemento chiave dell'infrastruttura di accesso radio (RAN) che fornisce la connessione radio diretta a un sistema periferico mobile nelle reti 5G?",
+      "hint": "Ricordate il nome della stazione base negli standard di comunicazione cellulare 5G NR.",
+      "options": [
+        "DSLAM",
+        "gNodeB (gNB)",
+        "Cable Modem",
+        "OLT (Optical Line Terminal)"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. DSLAM si usa nelle reti di accesso telefonico cablato (ADSL/VDSL).",
+        "Corretto! gNodeB (gNB) è la stazione base del nodo della rete di accesso radio (NG-RAN) nell'architettura 5G.",
+        "Errato. Il modem via cavo viene utilizzato nelle reti di accesso cablato DOCSIS.",
+        "Errato. OLT è il terminale delle reti ottiche passive (PON)."
+      ]
+    },
+    {
+      "id": "it_net_46",
+      "widget_id": "widget_net_46",
+      "topic": "Reti di calcolatori — Incapsulamento dei dati sull'host",
+      "q": "Qual è la sequenza corretta dei nomi delle unità dati (PDU) durante l'incapsulamento dall'alto verso il basso (dal livello applicazione a quello fisico) su un sistema periferico?",
+      "hint": "Seguite il percorso: Messaggio -> Trasporto -> Rete -> Collegamento -> Fisico.",
+      "options": [
+        "Message -> Segment -> Packet -> Frame -> Bits",
+        "Packet -> Frame -> Segment -> Message -> Bits",
+        "Segment -> Message -> Frame -> Packet -> Bits",
+        "Bits -> Frame -> Packet -> Segment -> Message",
+        "Frame -> Packet -> Segment -> Message -> Bits",
+        "Message -> Packet -> Segment -> Frame -> Bits"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L7 crea il Messaggio (Message), L4 forma il Segmento (Segment), L3 lo racchiude in un Pacchetto (Packet), L2 in un Frame (Frame) e L1 trasmette i Bit (Bits).",
+        "Errato. Pacchetto e Frame si trovano al di sotto del livello di messaggio applicativo.",
+        "Errato. L'ordine dei livelli è errato.",
+        "Errato. Questa è la sequenza di decapsulamento dal basso verso l'alto.",
+        "Errato. Il frame si forma alla fine, prima della trasmissione al livello fisico.",
+        "Errato. Il segmento (L4) si forma PRIMA del pacchetto (L3), non viceversa."
+      ]
+    },
+    {
+      "id": "it_net_47",
+      "widget_id": "widget_net_47",
+      "topic": "Reti di calcolatori — Socket in C (Gestione della chiusura)",
+      "q": "Cosa significa un valore restituito pari a `0` dalla chiamata di sistema `recv()` durante la lettura da un socket TCP bloccante su un sistema periferico?",
+      "hint": "Pensate a come lo stack di rete del SO informa l'applicazione che la parte opposta ha terminato la trasmissione dei dati (ha inviato un FIN).",
+      "options": [
+        "Si è verificato un errore fatale della scheda di rete dell'host",
+        "Il nodo remoto ha terminato correttamente la connessione (ricevuto segmento TCP FIN)",
+        "Il buffer di ricezione è pieno, è necessario riprovare",
+        "Nel socket è arrivato un pacchetto UDP vuoto"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. In caso di errori hardware o di rete, `recv()` restituisce `-1` e imposta `errno`.",
+        "Corretto! Il ritorno di `0` in `recv()` indica una chiusura graduale (graceful shutdown): l'host remoto ha chiuso l'invio dei dati tramite `close()` o `shutdown()`.",
+        "Errato. In assenza di dati in modalità non-blocking viene restituito `-1` con l'errore `EAGAIN` o `EWOULDBLOCK`.",
+        "Errato. La domanda riguarda un socket TCP, UDP utilizza `recvfrom()`."
+      ]
+    },
+    {
+      "id": "it_net_48",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Server come sistemi periferici",
+      "q": "A quale categoria di elementi della struttura di Internet appartengono i potenti server di database e i server web ospitati nei data center?",
+      "hint": "Tenete conto che, nonostante le elevate prestazioni, essi eseguono applicazioni e si trovano ai bordi della rete.",
+      "options": [
+        "Nodi intermedi di commutazione di pacchetto (Packet Switches)",
+        "Canali di comunicazione di dorsale (Backbone Links)",
+        "Sistemi periferici / Host (End Systems / Host)",
+        "Dispositivi di ripetizione fisica del segnale",
+        "Gateway di sistemi autonomi (BGP Edge Routers)"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Errato. I nodi intermedi di commutazione (router/switch) non eseguono applicazioni utente.",
+        "Errato. I canali di dorsale sono mezzi di trasmissione dati (fibra ottica, cavi).",
+        "Corretto! Tutti i computer di calcolo (dagli smartphone ai supercomputer e ai server nei data center) che eseguono applicazioni di rete sono sistemi periferici (Host).",
+        "Errato. I ripetitori funzionano al livello L1 e non elaborano i dati.",
+        "Errato. I router BGP gestiscono la comunicazione tra sistemi autonomi nel nucleo della rete."
+      ]
+    },
+    {
+      "id": "it_net_49",
+      "widget_id": "widget_net_49",
+      "topic": "Reti di calcolatori — Modalità di funzionamento della NIC sull'host",
+      "q": "Quale modalità di funzionamento della scheda di rete (NIC) consente a un host periferico di elaborare in ricezione assolutamente TUTTI i frame nel segmento di rete locale, anche se il loro indirizzo MAC di destinazione non coincide con l'indirizzo MAC di questo adattatore?",
+      "hint": "Questa modalità viene spesso utilizzata dagli analizzatori di traffico (ad esempio Wireshark) per analizzare il segmento di rete.",
+      "options": [
+        "Unicast Mode",
+        "Promiscuous Mode (Modalità promiscua)",
+        "Broadcast-Only Mode"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Nella modalità standard (Unicast), la NIC scarta i frame indirizzati ad altri indirizzi MAC.",
+        "Corretto! Nella modalità Promiscuous Mode, la scheda di rete disattiva il filtro hardware degli indirizzi MAC e passa al sistema operativo assolutamente tutti i frame intercettati nel mezzo fisico.",
+        "Errato. Broadcast Mode descrive la ricezione standard dei frame broadcast (FF:FF:FF:FF:FF:FF)."
+      ]
+    },
+    {
+      "id": "it_net_50",
+      "widget_id": "widget_net_50",
+      "topic": "Reti di calcolatori — Ritardi nella trasmissione dei pacchetti",
+      "q": "Quale delle componenti del ritardo totale di trasmissione del pacchetto è determinata esclusivamente dalle caratteristiche dell'adattatore di rete del sistema periferico ($R$ bit/s) e dalla dimensione del pacchetto ($L$ bit)?",
+      "hint": "Ricordate il ritardo necessario all'host per spingere fisicamente tutti i bit del pacchetto nel cavo.",
+      "options": [
+        "Ritardo di propagazione del segnale nel mezzo ($d_{prop}$)",
+        "Ritardo di trasmissione dell'adattatore di rete ($d_{trans}$)",
+        "Ritardo di elaborazione del router ($d_{proc}$)",
+        "Ritardo di permanenza del pacchetto in coda ($d_{queue}$)"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. $d_{prop}$ dipende dalla distanza fisica tra i nodi e dalla velocità della luce/segnale nel mezzo.",
+        "Corretto! Il ritardo di trasmissione ($d_{trans} = L / R$) dipende dalla dimensione del pacchetto $L$ e dalla larghezza di banda $R$ dell'interfaccia di rete dell'host.",
+        "Errato. $d_{proc}$ è causato dalla verifica delle intestazioni e dei checksum sui dispositivi intermedi.",
+        "Errato. $d_{queue}$ è determinato dal livello di carico dei buffer del router."
+      ]
+    },
+    {
+      "id": "it_net_51",
+      "widget_id": "widget_net_51",
+      "topic": "Reti di calcolatori — Principio Store-and-Forward",
+      "q": "Qual è l'essenza del principio Store-and-Forward («memorizzazione e inoltro»), applicato nella maggior parte dei commutatori di pacchetto (router)?",
+      "hint": "Pensate a quale parte del pacchetto il commutatore deve ricevere completamente prima di poter iniziare a inviarlo sul canale in uscita.",
+      "options": [
+        "Il commutatore deve ricevere completamente l'intero pacchetto prima di poter iniziare a trasmettere il suo primo bit nel canale in uscita",
+        "Il commutatore inizia la trasmissione del pacchetto subito dopo aver letto l'indirizzo IP di destinazione, senza attendere i bit rimanenti",
+        "Il commutatore salva il pacchetto sul disco rigido in caso di interruzione dell'alimentazione elettrica",
+        "Il commutatore duplica ogni pacchetto su tutte le porte in uscita disponibili per garantire la consegna"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con lo Store-and-Forward, il commutatore deve ricevere completamente il pacchetto (tutti gli $L$ bit), verificarne il checksum e solo dopo iniziare la trasmissione al canale successivo.",
+        "Errato. La trasmissione del pacchetto prima del suo completo ricevimento si chiama Cut-Through.",
+        "Errato. Il buffering dei pacchetti avviene nella memoria RAM temporaneamente allocata (RAM / SRAM), non su dischi non volatili.",
+        "Errato. L'invio a tutte le porte (Flooding) è un meccanismo di gestione degli indirizzi sconosciuti, non il principio Store-and-Forward."
+      ]
+    },
+    {
+      "id": "it_net_52",
+      "widget_id": "widget_net_52",
+      "topic": "Reti di calcolatori — Perdite di pacchetti (Packet Loss)",
+      "q": "Cosa succede in un commutatore di pacchetto quando la velocità di ingresso dei dati supera la capacità del canale in uscita e il buffer di memoria del commutatore risulta completamente pieno?",
+      "hint": "Ricordate come la dimensione della memoria del dispositivo, limitata fisicamente, reagisce ai nuovi pacchetti in arrivo in caso di impossibilità di salvarli.",
+      "options": [
+        "Il commutatore sospende il funzionamento del canale fisico fino a quando la memoria non si libera",
+        "I nuovi pacchetti in arrivo vengono scartati (si verifica il loss / drop dei pacchetti)",
+        "Il commutatore aumenta automaticamente la dimensione della RAM combinata utilizzando la memoria virtuale"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. A livello di rete (L3), il commutatore di pacchetto non può mettere fisicamente «in pausa» tutto il traffico in ingresso da nodi terzi.",
+        "Corretto! Se il buffer di memoria (Output Buffer) è pieno, il commutatore non ha dove conservare i pacchetti appena arrivati, quindi essi vengono scartati (packet drop).",
+        "Errato. I buffer dei commutatori sono fissati a livello hardware e l'uso di file di swap non è previsto a causa delle elevate latenze."
+      ]
+    },
+    {
+      "id": "it_net_53",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Multiplexing statistico",
+      "q": "Qual è la differenza fondamentale tra il multiplexing statistico nella commutazione di pacchetto e la divisione fissa dei canali (TDM / FDM) nella commutazione di circuito?",
+      "hint": "Fate attenzione al fatto che le risorse del canale vengano assegnate in anticipo con un quanto fisso di tempo/frequenza o solo su richiesta effettiva.",
+      "options": [
+        "Le risorse del canale sono allocate dinamicamente «su richiesta» (On Demand) solo per i nodi attivi che generano traffico",
+        "A ciascun utente viene assegnata in modo rigido una banda di frequenza fissa, indipendentemente dal fatto che stia trasmettendo dati",
+        "A ciascuna connessione viene garantito un ritardo di trasmissione strettamente fisso senza coda",
+        "Tutti i pacchetti vengono trasmessi solo attraverso circuiti fisici pre-riservati",
+        "Il multiplexing statistico esclude la possibilità che si verifichino ritardi in coda"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il multiplexing statistico alloca la capacità del canale in modo dinamico. Se un nodo è inattivo, la sua banda viene utilizzata da altri nodi.",
+        "Errato. L'allocazione fissa delle frequenze appartiene alla tecnologia FDM (Frequency Division Multiplexing).",
+        "Errato. I ritardi fissi e la garanzia della banda sono caratteristici della commutazione di circuito (Circuit Switching).",
+        "Errato. La prenotazione dei circuiti fisici è un segno della commutazione di circuito.",
+        "Errato. Nella commutazione di pacchetto i ritardi in coda si verificano inevitabilmente durante i picchi di traffico."
+      ]
+    },
+    {
+      "id": "it_net_54",
+      "widget_id": "widget_net_54",
+      "topic": "Reti di calcolatori — Strutture di commutazione (Switch Fabrics)",
+      "q": "Quale architettura di struttura di commutazione (Switch Fabric) consente di trasmettere più pacchetti in parallelo tra diverse porte di ingresso e di uscita senza il loro blocco reciproco?",
+      "hint": "Pensate a una struttura a matrice con bus incrociati e interruttori elettronici nei punti di intersezione.",
+      "options": [
+        "Commutazione tramite memoria condivisa (Shared Memory)",
+        "Commutazione tramite bus condiviso (Shared Bus)",
+        "Struttura di commutazione a matrice (Crossbar / Matrix Fabric)"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Errato. Nella commutazione tramite memoria condivisa la velocità è limitata dalla larghezza di banda del bus di memoria, che elabora un pacchetto alla volta.",
+        "Errato. Con l'uso di un bus condiviso solo un pacchetto alla volta può essere trasmesso sul bus in qualsiasi momento.",
+        "Corretto! Crossbar (struttura a matrice) contiene una griglia di bus interni, consentendo di trasmettere pacchetti da diversi ingressi a diverse uscite in parallelo."
+      ]
+    },
+    {
+      "id": "it_net_55",
+      "widget_id": "widget_net_55",
+      "topic": "Reti di calcolatori — Blocco HOL (Head-of-Line)",
+      "q": "In cosa consiste l'effetto di blocco in testa alla coda (Head-of-Line / HOL Blocking) nei buffer di ingresso di un commutatore di pacchetto?",
+      "hint": "Immaginate la coda: se il primo pacchetto non può essere trasmesso a causa dell'occupazione della sua porta di uscita, cosa succede ai pacchetti dietro di esso?",
+      "options": [
+        "Il pacchetto in testa alla coda, in attesa della liberazione della propria porta di uscita, blocca l'avanzamento di tutti gli altri pacchetti dietro di esso, anche se le loro uscite sono libere",
+        "Il router scarta il primo 10% dei pacchetti in tutte le code quando si supera il carico del processore",
+        "Un frame ad alta priorità distrugge tutti i frame all'inizio della coda per velocizzare la propria trasmissione",
+        "L'adattatore di rete smette di accettare nuovi pacchetti a causa della mancanza di alimentazione sulla porta"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con una coda FIFO nella porta di ingresso, il primo pacchetto bloccato da un'uscita occupata impedisce fisicamente la trasmissione dei pacchetti successivi indirizzati a porte libere.",
+        "Errato. Lo scarto di pacchetti (ad esempio RED) è un meccanismo di gestione della congestione, non il fenomeno HOL.",
+        "Errato. La prioritarizzazione non distrugge i frame, ma cambia solo l'ordine con cui vengono estratti.",
+        "Errato. Il blocco HOL è un problema logico di base della struttura dei buffer FIFO, non un guasto hardware dell'alimentazione."
+      ]
+    },
+    {
+      "id": "it_net_56",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Data Plane vs Control Plane",
+      "q": "Quale tra le azioni del commutatore/router appartiene al piano dati (Data Plane / Forwarding) e NON al piano di controllo (Control Plane / Routing)?",
+      "hint": "Separare il rapido processo hardware locale di inoltro di un pacchetto arrivato dall'ingresso all'uscita dal calcolo globale dei percorsi.",
+      "options": [
+        "Inoltro locale (forwarding) del pacchetto arrivato dall'interfaccia di ingresso alla corrispondente interfaccia di uscita secondo la tabella",
+        "Esecuzione degli algoritmi di instradamento (OSPF, BGP) per costruire e aggiornare la tabella di inoltro"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il Forwarding (inoltro) è l'operazione principale del Data Plane, eseguita via hardware in nanosecondi per ciascun pacchetto in ingresso.",
+        "Errato. Il calcolo dei percorsi e lo scambio di protocolli di servizio (OSPF, BGP) appartengono alla funzione del Control Plane (piano di controllo)."
+      ]
+    },
+    {
+      "id": "it_net_57",
+      "widget_id": "widget_net_57",
+      "topic": "Reti di calcolatori — Modalità di commutazione (Cut-Through)",
+      "q": "Qual è il vantaggio principale della modalità di commutazione immediata (Cut-Through) rispetto a Store-and-Forward negli switch L2 di pacchetto?",
+      "hint": "Pensate a qual è il guadagno in termini di tempo se la trasmissione del frame inizia subito dopo aver letto l'indirizzo di destinazione.",
+      "options": [
+        "Notevole riduzione della latenza (latency) di trasmissione del frame attraverso lo switch",
+        "Filtraggio automatico dei frame con checksum danneggiato (FCS)",
+        "Possibilità di commutare frame tra porte con velocità fisiche diverse (ad esempio da 10G a 1G)",
+        "Eliminazione totale delle perdite di pacchetti in caso di overflow dei buffer in uscita"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Cut-Through inizia l'invio del frame in uscita subito dopo aver letto i primi 6 byte (indirizzo MAC di destinazione), minimizzando la latenza.",
+        "Errato. Lo svantaggio di Cut-Through è che trasmette oltre i frame danneggiati, poiché l'FCS si trova alla fine del frame.",
+        "Errato. La commutazione immediata non può trasmettere un frame su una porta a velocità inferiore senza salvare completamente il frame nel buffer.",
+        "Errato. Cut-Through non previene le perdite in caso di overflow dei buffer."
+      ]
+    },
+    {
+      "id": "it_net_58",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Principio Longest Prefix Match (LPM)",
+      "q": "Quale regola utilizza il router (switch L3) durante la ricerca dell'indirizzo di destinazione nella tabella di inoltro se l'indirizzo IP rientra in più voci di sottorete?",
+      "hint": "Ricordate la regola Longest Prefix Match (LPM) — la ricerca della voce più specifica.",
+      "options": [
+        "Viene scelta la prima voce trovata nella tabella di instradamento",
+        "Viene scelta la voce con la maschera di sottorete più lunga (Longest Prefix Match)",
+        "Viene scelta la voce con il valore dell'indirizzo IP più basso",
+        "Il router sceglie casualmente uno dei percorsi adatti"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. L'ordine delle voci nella tabella non determina la scelta; la ricerca viene effettuata in base alla maschera.",
+        "Corretto! Il principio Longest Prefix Match stabilisce che tra i percorsi corrispondenti viene scelto quello la cui lunghezza del prefisso della maschera è maggiore (il percorso più preciso/specifico).",
+        "Errato. Il valore dell'indirizzo IP della sottorete non è un criterio di selezione.",
+        "Errato. La scelta del percorso è deterministica e segue il rigoroso algoritmo LPM."
+      ]
+    },
+    {
+      "id": "it_net_59",
+      "widget_id": "widget_net_59",
+      "topic": "Reti di calcolatori — Flooding dei frame (Unknown Unicast Flooding)",
+      "q": "Come si comporterà uno switch L2 con un frame Unicast ricevuto se l'indirizzo MAC di destinazione fa riferimento a un nodo sconosciuto (la voce è assente nella tabella degli indirizzi MAC)?",
+      "hint": "Ricordate l'algoritmo base di funzionamento degli switch L2 con i frame Unicast sconosciuti.",
+      "options": [
+        "Invierà il frame a tutte le porte attive della stessa VLAN, eccetto la porta da cui il frame è stato ricevuto (Unknown Unicast Flooding)",
+        "Scarterà il frame e invierà al mittente un messaggio di errore ICMP Destination Unreachable",
+        "Richiederà l'indirizzo IP al server DHCP più vicino",
+        "Invierà il frame solo alla porta del gateway predefinito (Default Gateway)",
+        "Salverà il frame nella memoria permanente in attesa dell'aggiunta manuale della voce",
+        "Convertirà il frame Unicast in un pacchetto IP multicast"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Alla ricezione di un frame con un indirizzo di destinazione sconosciuto, lo switch L2 lo ritrasmette a valanga (Flooding) su tutte le porte tranne quella di ingresso.",
+        "Errato. Lo switch L2 non genera messaggi ICMP (questa è una funzione L3).",
+        "Errato. La ricerca degli indirizzi MAC non ha alcuna relazione con il rilascio degli indirizzi IP tramite DHCP.",
+        "Errato. Lo switch L2 non conosce il concetto di «Default Gateway» per l'inoltro dei frame Ethernet.",
+        "Errato. I frame non vengono salvati in attesa di configurazioni manuali.",
+        "Errato. Gli switch L2 non modificano le intestazioni L3."
+      ]
+    },
+    {
+      "id": "it_net_60",
+      "widget_id": "widget_net_60",
+      "topic": "Reti di calcolatori — Intensità del traffico e ritardo",
+      "q": "Come si comporta il ritardo medio in coda ($d_{queue}$) quando l'indice di intensità del traffico $I = \\frac{L \\cdot a}{R}$ si avvicina al valore 1?",
+      "hint": "Fate attenzione a cosa succede alla coda quando la velocità di ingresso dei dati è vicina alla velocità limite di servizio del canale.",
+      "options": [
+        "Il ritardo in coda aumenta in modo esponenziale e tende all'infinito",
+        "Il ritardo diminuisce linearmente fino a zero",
+        "Il ritardo rimane strettamente costante e pari a $d_{trans}$",
+        "Il ritardo crolla improvvisamente a valori negativi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La formula dell'intensità del traffico mostra: per $I \\to 1$ il flusso in arrivo è quasi pari alla velocità di servizio. Qualsiasi picco casuale causa una crescita a valanga della lunghezza della coda e del ritardo $d_{queue} \\to \\infty$.",
+        "Errato. Con l'aumentare di $I$ il ritardo aumenta, non diminuisce.",
+        "Errato. Il ritardo in coda cresce rapidamente e supera il tempo di trasmissione $d_{trans}$.",
+        "Errato. Il ritardo è una grandezza fisica e non può essere negativo."
+      ]
+    }
+  ]
+}

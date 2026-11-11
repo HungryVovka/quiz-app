@@ -1,0 +1,595 @@
+{
+  "subject": "Reti",
+  "questions": [
+    {
+      "id": "it_net_311",
+      "widget_id": "widget_net_311",
+      "topic": "Configurazione di un client TCP in C — connect() non bloccante ed EINPROGRESS",
+      "q": "Quale evento (o stato) del descrittore deve monitorare un client C non bloccante tramite select() o poll() per verificare che la connect() asincrona abbia completato la connessione?",
+      "hint": "Pensate se il socket diventa disponibile in lettura (READ) o in scrittura (WRITE) dopo il completamento con successo del handshake a tre vie TCP.",
+      "options": [
+        "Prontezza del socket in scrittura (WRITE / POLLOUT)",
+        "Prontezza del socket solo in lettura (READ / POLLIN)",
+        "La generazione del segnale SIGALRM da parte del sistema operativo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando la chiamata `connect()` non bloccante restituisce `-1` con `errno == EINPROGRESS`, lo stabilimento della connessione TCP prosegue in background. Non appena l'handshake si completa (con successo o con un errore), il socket diventa disponibile in scrittura (`WRITE` / `POLLOUT`).",
+        "Errato. La prontezza in lettura si verifica quando arrivano dati dal server, mentre il completamento della connessione è segnalato dalla scrittura.",
+        "Errato. I segnali di timer (SIGALRM) non sono legati al monitoraggio della prontezza dei file descriptor in `select`/`poll`."
+      ]
+    },
+    {
+      "id": "it_net_312",
+      "widget_id": null,
+      "topic": "Configurazione di un client TCP in C — Differenze tra close() e shutdown()",
+      "q": "Qual è la differenza fondamentale nel comportamento delle chiamate di sistema close() e shutdown() per i socket TCP in presenza di descrittori duplicati (ad esempio, dopo una fork())?",
+      "hint": "Ricordate il contatore dei riferimenti al file descriptor nel kernel (Reference Count) e l'invio incondizionato dei segmenti di chiusura TCP.",
+      "options": [
+        "close() decrementa il contatore dei riferimenti al descrittore e chiude la connessione solo quando il contatore raggiunge 0; shutdown() interrompe immediatamente il canale di trasmissione indipendentemente dal numero di copie del descrittore",
+        "close() funziona solo con IPv6, mentre shutdown() solo con IPv4",
+        "shutdown() elimina istantaneamente il processo client dal sistema, mentre close() lo lascia in background",
+        "Entrambe le funzioni sono assolutamente identiche in tutti i sistemi operativi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se il descrittore del socket è stato copiato tramite la chiamata `dup()` o durante una `fork()`, la chiamata a `close()` decrementa solo il contatore di riferimenti del kernel, senza chiudere la reale connessione TCP finché non viene eseguita la `close()` nell'ultimo processo. La chiamata a `shutdown()` invia immediatamente un pacchetto FIN/RST per tutti i processi.",
+        "Errato. Entrambe le funzioni funzionano con qualsiasi versione del protocollo IP.",
+        "Errato. Le chiamate di gestione dei socket non distruggono i processi dell'applicazione.",
+        "Errato. `shutdown()` gestisce gli stati dei canali TCP (RD/WR), mentre `close()` distrugge il file descriptor di sistema."
+      ]
+    },
+    {
+      "id": "it_net_313",
+      "widget_id": "widget_net_313",
+      "topic": "Configurazione di un client TCP in C — I/O vettoriale (writev / sendmsg)",
+      "q": "Qual è il vantaggio di utilizzare la funzione writev() (o sendmsg()) con la struttura struct iovec durante l'invio di una richiesta HTTP da parte di un client TCP?",
+      "hint": "Pensate all'invio di più buffer di memoria non contigui (ad esempio intestazione e corpo) in una singola chiamata di sistema (Gather I/O) senza doverli prima concatenare.",
+      "options": [
+        "Consente di inviare più buffer di memoria distinti nel socket in una singola chiamata di sistema, senza doverli prima copiare e concatenare in un unico array",
+        "Verifica automaticamente gli errori ortografici nel testo della richiesta HTTP",
+        "Raddoppia la velocità fisica di trasmissione del cavo Ethernet",
+        "Sostituisce al volo il protocollo TCP con il più veloce UDP",
+        "Garantisce che i pacchetti attraversino la rete senza utilizzare router IP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'I/O vettoriale (Gather I/O) consente di trasmettere un array di puntatori a buffer distinti (`struct iovec`). Il kernel crea un unico pacchetto di rete da questi buffer in una singola chiamata di sistema `writev()`, eliminando `memcpy()` superflue nello User Space.",
+        "Errato. Le chiamate di sistema del kernel lavorano con byte grezzi e non eseguono controlli linguistici.",
+        "Errato. Nessuna chiamata di sistema può aumentare la larghezza di banda fisica dell'hardware di rete.",
+        "Errato. `writev()` lavora con il tipo di socket corrente e non modifica il protocollo di trasporto.",
+        "Errato. L'instradamento al livello di rete L3 non dipende dalle chiamate di scrittura sul socket."
+      ]
+    },
+    {
+      "id": "it_net_314",
+      "widget_id": null,
+      "topic": "Configurazione di un client TCP in C — Frammentazione dello stream e MSS",
+      "q": "Un programmatore C è obbligato a suddividere manualmente un grande buffer di dati (ad esempio 10 MB) in frammenti della dimensione MSS (Maximum Segment Size) prima di chiamare send() su un socket TCP?",
+      "hint": "Pensate a quale livello OSI (di trasporto o applicativo) avviene la segmentazione del flusso di dati TCP.",
+      "options": [
+        "No, la suddivisione del flusso dati in segmenti di dimensione MSS viene eseguita automaticamente dal livello di trasporto TCP all'interno del kernel del sistema operativo",
+        "Sì, l'invio di un buffer di dimensione superiore a MSS genererà un errore EMSGSIZE e l'interruzione anomala del programma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! TCP è un protocollo di trasporto orientato al flusso di byte (Byte Stream). L'applicazione può passare a `send()` un buffer di qualsiasi dimensione: lo stack TCP nel kernel lo suddividerà autonomamente in segmenti in base ai valori correnti di MSS e MTU.",
+        "Errato. L'errore `EMSGSIZE` è tipico del protocollo UDP (SOCK_DGRAM) quando si supera la dimensione del datagramma, ma non si applica a TCP."
+      ]
+    },
+    {
+      "id": "it_net_315",
+      "widget_id": "widget_net_315",
+      "topic": "Configurazione di un client TCP in C — Formattazione degli indirizzi (inet_ntop)",
+      "q": "A cosa serve la funzione inet_ntop() nel codice di un client C?",
+      "hint": "Decodificate il nome ntop come «network to presentation»: la conversione di un indirizzo IP binario di rete in una stringa leggibile dall'uomo.",
+      "options": [
+        "Converte un indirizzo IP numerico dal formato binario di rete (strutture in_addr/in6_addr) in una stringa di testo (ad esempio \"192.168.1.1\")",
+        "Esegue la crittografia dell'indirizzo IP del client per una connessione anonima",
+        "Converte il numero di porta da Network Byte Order a Host Byte Order",
+        "Calcola automaticamente la posizione fisica del server"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il nome `inet_ntop` sta per «network to presentation». La funzione converte la rappresentazione binaria dell'indirizzo di rete dalla struttura del socket in una stringa di testo comprensibile dall'uomo (IPv4 o IPv6).",
+        "Errato. La funzione non esegue la crittografia o l'anonimizzazione degli indirizzi.",
+        "Errato. Per convertire l'ordine dei byte della porta si utilizzano le funzioni `ntohs()` / `htons()`, non `inet_ntop()`.",
+        "Errato. `inet_ntop()` si occupa esclusivamente della conversione del formato di rappresentazione dei byte in memoria."
+      ]
+    },
+    {
+      "id": "it_net_316",
+      "widget_id": null,
+      "topic": "Configurazione di un client TCP in C — Gestione dell'errore EPIPE",
+      "q": "In quali condizioni la chiamata a send() in un client C restituisce -1 e imposta la variabile errno a EPIPE?",
+      "hint": "Ricordate il tentativo di scrittura su un socket che è già stato chiuso dal lato server e la soppressione del segnale SIGPIPE.",
+      "options": [
+        "Quando si tenta di scrivere su un socket chiuso o azzerato dal lato remoto, a condizione che il segnale SIGPIPE sia stato ignorato o soppresso con il flag MSG_NOSIGNAL",
+        "Quando la lunghezza del buffer da inviare supera la memoria RAM disponibile",
+        "Se sul computer del client manca la connessione a Internet",
+        "Se l'indirizzo IP del client e l'indirizzo IP del server coincidono",
+        "Se il testo inviato contiene caratteri non validi nella codifica UTF-8",
+        "Quando si utilizza un numero di porta locale dispari"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'errore `EPIPE` (Broken pipe) si verifica quando si chiama `send()` su un socket la cui connessione è già stata interrotta dal nodo remoto (è stato ricevuto un RST). Se il processo ha bloccato o ignorato il segnale `SIGPIPE` (o ha specificato `MSG_NOSIGNAL`), la chiamata di sistema termina con `-1` ed `errno = EPIPE`.",
+        "Errato. La mancanza di memoria genera l'errore `ENOMEM`.",
+        "Errato. L'assenza di rete genera un errore `ENETUNREACH` o `EHOSTUNREACH` durante la connessione.",
+        "Errato. La connessione verso se stessi (Loopback) è una procedura del tutto regolare.",
+        "Errato. L'API Socket opera al livello L4 e non analizza la codifica del testo di livello L7.",
+        "Errato. La parità o disparità del numero di porta non influisce sul funzionamento delle chiamate di sistema."
+      ]
+    },
+    {
+      "id": "it_net_317",
+      "widget_id": "widget_net_317",
+      "topic": "Configurazione di un client TCP in C — Timeout di scrittura (SO_SNDTIMEO)",
+      "q": "Cosa succede quando si chiama send() in un client C bloccante se per il socket è impostata l'opzione SO_SNDTIMEO e il buffer di invio di sistema rimane pieno per l'intera durata del timeout specificato?",
+      "hint": "Pensate all'interruzione del blocco della chiamata allo scadere del tempo di attesa e all'impostazione dell'errore EAGAIN / EWOULDBLOCK.",
+      "options": [
+        "send() interromperà l'attesa, restituirà -1 e la variabile errno verrà impostata su EAGAIN o EWOULDBLOCK",
+        "Il sistema operativo interromperà forzatamente il processo dell'applicazione con il codice SIGKILL",
+        "Il socket passerà automaticamente alla modalità asincrona epoll"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'opzione `SO_SNDTIMEO` definisce il ritardo massimo per le operazioni di scrittura. Se nell'intervallo di tempo stabilito il buffer di invio del kernel non libera spazio per la trasmissione dei byte, la `send()` bloccante interrompe l'attesa e restituisce l'errore `EAGAIN` / `EWOULDBLOCK`.",
+        "Errato. Il superamento del timeout di I/O è un errore gestibile standard e non comporta la terminazione del processo da parte del kernel.",
+        "Errato. Il cambio dei meccanismi di multiplexing richiede chiamate di sistema esplicite da parte dello sviluppatore."
+      ]
+    },
+    {
+      "id": "it_net_318",
+      "widget_id": null,
+      "topic": "Configurazione di un client TCP in C — Decodifica degli ошибок getaddrinfo (gai_strerror)",
+      "q": "Quale funzione speciale viene utilizzata in C per ottenere una descrizione leggibile dell'errore se la funzione getaddrinfo() ha restituito un codice di errore diverso da zero?",
+      "hint": "Ricordate l'analogo specializzato della funzione strerror(), destinato agli errori del risolutore di nomi di sistema getaddrinfo (gai).",
+      "options": [
+        "gai_strerror()",
+        "strerror()",
+        "perror()",
+        "hstrerror()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `getaddrinfo()` restituisce propri codici di errore (ad esempio `EAI_AGAIN`, `EAI_NONAME`) che non fanno parte dell'insieme standard di `errno`. Per convertirli in una stringa di testo si utilizza la funzione `gai_strerror(errcode)`.",
+        "Errato. `strerror()` accetta i codici dalla variabile di sistema `errno`, che non coincidono con i codici di `getaddrinfo()`.",
+        "Errato. `perror()` stampa un messaggio basato sulla `errno` globale, non sul codice di ritorno di `getaddrinfo()`.",
+        "Errato. `hstrerror()` è una funzione obsoleta per gli errori di `gethostbyname()`."
+      ]
+    },
+    {
+      "id": "it_net_319",
+      "widget_id": "widget_net_319",
+      "topic": "Configurazione di un client TCP in C — I/O scalabile (epoll in Linux)",
+      "q": "Perché nella creazione di un client C ad alto carico che supporta migliaia di connessioni TCP simultanee in Linux si preferisce utilizzare epoll anziché select()?",
+      "hint": "Pensate alla complessità dell'algoritmo di polling: O(N) nella scansione lineare dell'array in select() contro O(1) nell'ottenere gli eventi pronti dalla coda del kernel in epoll.",
+      "options": [
+        "epoll ha una complessità temporale pari a O(1) per l'ottenimento degli eventi attivi, poiché il kernel restituisce solo i descrittori pronti, evitando la scansione completa O(N) di tutti i socket",
+        "epoll lavora direttamente con la scheda video, velocizzando l'elaborazione dei pacchetti di rete",
+        "select() non supporta il funzionamento con il protocollo TCP",
+        "epoll crittografa automaticamente tutti i pacchetti in uscita utilizzando SSL",
+        "select() può monitorare non più di 2 socket contemporaneamente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando si utilizza `select()`, l'applicazione e il kernel sono costretti a scansionare interamente le strutture dei descrittori in tempo $O(N)$. Il meccanismo `epoll` registra gli eventi in un albero rosso-nero nel kernel e, alla chiamata di `epoll_wait()`, restituisce solo l'elenco dei socket sui quali si sono effettivamente verificati eventi di I/O, garantendo una complessità pari a $O(1)$.",
+        "Errato. Lo stack di rete ed `epoll` vengono elaborati dalla CPU e dal kernel del sistema operativo, senza coinvolgere la GPU.",
+        "Errato. `select()` funziona perfettamente con i socket TCP.",
+        "Errato. `epoll` è un meccanismo di multiplexing dell'I/O basato su eventi, non legato alla crittografia L7.",
+        "Errato. `select()` è in grado di monitorare fino a `FD_SETSIZE` (di norma 1024) socket."
+      ]
+    },
+    {
+      "id": "it_net_320",
+      "widget_id": null,
+      "topic": "Configurazione di un client TCP in C — Modalità Full-Duplex del socket",
+      "q": "Un client TCP in C può eseguire contemporaneamente l'invio di dati con send() in un thread e la lettura della risposta con recv() in un altro thread sullo stesso socket?",
+      "hint": "Ricordate se la connessione TCP a livello di trasporto è full-duplex con buffer di lettura e scrittura separati.",
+      "options": [
+        "Sì, poiché il socket TCP è full-duplex e possiede buffer di sistema indipendenti per la lettura e per la scrittura",
+        "No, chiamare contemporaneamente send() e recv() sullo stesso socket è vietato dallo standard POSIX e causa la corruzione dei dati"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il protocollo TCP e l'API Socket sono progettati come Full-Duplex. Il buffer di ricezione (`SO_RCVBUF`) e il buffer di invio (`SO_SNDTIMEO` / `SO_SNDBUF`) sono isolati tra loro nel kernel, il che consente di leggere e scrivere in parallelo in modo sicuro da thread differenti.",
+        "Errato. Le operazioni parallele di lettura e scrittura sono del tutto legittime per i socket full-duplex."
+      ]
+    },
+    {
+      "id": "it_net_321",
+      "widget_id": "widget_net_321",
+      "topic": "Configurazione di un client TCP in C — Verifica dello stato della connect() asincrona tramite SO_ERROR",
+      "q": "In che modo un client C non bloccante, dopo che select() o poll() segnala la prontezza in scrittura, determina se la connect() si è completata con successo o se si è verificato un errore di connessione?",
+      "hint": "Pensate all'uso di getsockopt() con l'opzione di livello SOL_SOCKET.",
+      "options": [
+        "Legge il valore dell'opzione SO_ERROR mediante getsockopt(): un valore pari a 0 indica una connessione riuscita, mentre un codice diverso da zero indica un errore (ad esempio ECONNREFUSED)",
+        "Chiama nuovamente la funzione socket()",
+        "Verifica il numero di porta locale mediante getpeername()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella `connect()` asincrona, la prontezza del socket in scrittura segnala solo il completamento del handshake a tre vie TCP. Per conoscere l'esito della connessione si chiama `getsockopt(..., SOL_SOCKET, SO_ERROR, &error, ...)`: se `error == 0`, la connessione è stata stabilita con successo.",
+        "Errato. La ricreazione del socket tramite la chiamata a `socket()` comporterebbe la perdita della sessione non completata.",
+        "Errato. `getpeername()` restituirebbe l'indirizzo del nodo remoto, ma in caso di errore di connessione la chiamata stessa a `getpeername()` fallirà (`ENOTCONN`)."
+      ]
+    },
+    {
+      "id": "it_net_322",
+      "widget_id": null,
+      "topic": "Configurazione di un client TCP in C — Conversione degli indirizzi IP (inet_pton)",
+      "q": "Perché nel codice C moderno per convertire un indirizzo IP testuale in formato binario il client dovrebbe utilizzare inet_pton() anziché l'obsoleta funzione inet_addr()?",
+      "hint": "Ricordate il supporto al protocollo IPv6 e la gestione dell'indirizzo speciale 255.255.255.255.",
+      "options": [
+        "inet_pton() supporta sia IPv4 che IPv6 (Presentation To Network) e gestisce correttamente l'indirizzo 255.255.255.255, che inet_addr() confonde con il codice di errore INADDR_NONE",
+        "inet_pton() esegue automaticamente richieste DNS per i nomi di dominio",
+        "inet_addr() funziona esclusivamente sui server e non è disponibile nel codice client",
+        "inet_pton() crittografa forzatamente l'indirizzo IP trasmesso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `inet_addr()` è obsoleta per due motivi: restituisce `INADDR_NONE` (`-1`) in caso di errore, il che coincide con la rappresentazione binaria dell'indirizzo `255.255.255.255`, e non supporta IPv6. La funzione `inet_pton()` è priva di questi difetti e supporta entrambe le famiglie di indirizzi (`AF_INET` e `AF_INET6`).",
+        "Errato. Nessuna di queste funzioni effettua richieste DNS; per la risoluzione dei nomi si usa `getaddrinfo()`.",
+        "Errato. Entrambe le funzioni sono disponibili nelle librerie di sistema sia lato client che lato server.",
+        "Errato. `inet_pton()` esegue solo il parsing della stringa in forma numerica in memoria."
+      ]
+    },
+    {
+      "id": "it_net_323",
+      "widget_id": "widget_net_323",
+      "topic": "Configurazione di un client TCP in C — Il flag MSG_DONTWAIT nelle chiamate di I/O",
+      "q": "Qual è il vantaggio fornito dal flag MSG_DONTWAIT quando si chiama recv() o send() su un normale socket bloccante?",
+      "hint": "Notate l'esecuzione di una singola operazione di I/O in modalità non bloccante senza modificare i flag globali del socket tramite fcntl().",
+      "options": [
+        "Esegue la specifica operazione di lettura/scrittura in modalità non bloccante senza dover modificare i flag globali del socket tramite fcntl()",
+        "Velocizza la trasmissione dei dati disabilitando i checksum IP",
+        "Costringe il sistema operativo a comprimere il buffer trasmesso",
+        "Mette l'intero thread del programma in modalità di sospensione per 1 secondo",
+        "Garantisce l'invio dei dati senza la conferma ACK"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `MSG_DONTWAIT` forza una singola chiamata `recv()` o `send()` a operare in modalità non bloccante. Se non ci sono dati o il buffer di invio è pieno, la chiamata restituisce immediatamente `-1` con `errno = EAGAIN`/`EWOULDBLOCK`, lasciando il socket bloccante per tutte le operazioni successive.",
+        "Errato. I checksum di livello di trasporto e di rete vengono sempre calcolati dall'hardware o dal kernel.",
+        "Errato. Il flag non effettua alcuna compressione dei dati.",
+        "Errato. Al contrario, questo flag evita i blocchi e la sospensione del thread.",
+        "Errato. Le conferme ACK sono una parte fondamentale del TCP e non vengono disabilitate dai flag applicativi."
+      ]
+    },
+    {
+      "id": "it_net_324",
+      "widget_id": null,
+      "topic": "Configurazione di un client TCP in C — Terminazione del processo e pulizia dei socket",
+      "q": "Cosa succede alla struttura della connessione TCP e al file descriptor del socket se un client C termina in modo anomalo o regolare senza aver chiamato esplicitamente close()?",
+      "hint": "Pensate a come il kernel del sistema operativo rilasci automaticamente le risorse (inclusa la chiusura dei file descriptor) alla fine del processo.",
+      "options": [
+        "Il kernel del sistema operativo chiude automaticamente tutti i descrittori aperti del processo, avviando la procedura standard di terminazione della connessione TCP (invio del pacchetto FIN o RST)",
+        "Il socket rimane aperto per sempre nel sistema operativo, bloccando completamente la scheda di rete fino al riavvio del PC"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Alla terminazione di un processo (regolare o anomala), il kernel del SO pulisce automaticamente la tabella dei file descriptor del processo. Per i socket aperti viene eseguita la chiusura, inviando un segmento FIN (o RST in caso di arresto anomalo) al lato remoto.",
+        "Errato. I sistemi operativi moderni isolano rigorosamente le risorse dei processi e non consentono il blocco dell'adattatore di rete."
+      ]
+    },
+    {
+      "id": "it_net_325",
+      "widget_id": "widget_net_325",
+      "topic": "Configurazione di un client TCP in C — Ottimizzazione del trasferimento di file (sendfile)",
+      "q": "Qual è il vantaggio principale della chiamata di sistema sendfile() quando si trasmette il contenuto di un file da disco a un socket TCP in un client C?",
+      "hint": "Pensate al trasferimento dati dalla cache dei file del kernel direttamente al buffer del socket senza copiare nella memoria dello User Space (Zero-Copy).",
+      "options": [
+        "Garantisce il trasferimento dati Zero-Copy dalla cache dei file del kernel direttamente al buffer del socket senza inutili copie nella memoria dello User Space",
+        "Crittografa automaticamente il file con l'algoritmo AES-256",
+        "Consente di trasferire file anche in assenza di connessione di rete",
+        "Converte i file binari nel formato di testo HTML"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Di solito il trasferimento di un file richiede chiamate a `read()` (copia dalla cache del kernel a User Space) e `send()` (copia da User Space al buffer del socket del kernel). `sendfile()` esegue questo passaggio interamente all'interno dello spazio del kernel (Zero-Copy), riducendo notevolmente il carico su CPU e memoria.",
+        "Errato. `sendfile()` non esegue alcuna crittografia del traffico.",
+        "Errato. Per trasferire dati tramite socket è necessaria una connessione fisica o logica.",
+        "Errato. La funzione trasmette lo stream di byte grezzi del file senza modificarne il formato."
+      ]
+    },
+    {
+      "id": "it_net_326",
+      "widget_id": null,
+      "topic": "Configurazione di un client TCP in C — Invio parziale dei dati (Partial Send)",
+      "q": "Come deve gestire correttamente un client C la situazione in cui, inviando un buffer di 1000 byte, la chiamata send(sockfd, buffer, 1000, 0) restituisce il valore 400?",
+      "hint": "Notate che send() può inviare meno byte di quelli richiesti e la parte restante dell'array deve essere trasmessa con una chiamata successiva.",
+      "options": [
+        "Spostare il puntatore del buffer in avanti di 400 byte, ridurre la dimensione rimanente a 600 byte e chiamare nuovamente send() in un ciclo",
+        "Chiudere immediatamente il socket con close(), poiché si tratta di un sintomo di guasto hardware",
+        "Ritenere che tutti i 1000 byte siano stati consegnati con successo, poiché il kernel scriverà da solo i byte rimanenti",
+        "Riavviare l'intero sistema operativo",
+        "Chiamare di nuovo connect() con lo stesso indirizzo",
+        "Eliminare il buffer inviato dalla memoria RAM"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `send()` restituisce il numero effettivo di byte accettati dal buffer del kernel (in questo caso 400). L'applicazione deve avanzare il puntatore in un ciclo (`buffer + 400`) e inviare i rimanenti `1000 - 400 = 600` byte.",
+        "Errato. La scrittura parziale è un comportamento standard dell'API dei socket quando i buffer sono pieni, non un guasto hardware.",
+        "Errato. Se `send()` ha restituito 400, significa che i restanti 600 byte non sono stati presi dal kernel e non verranno inviati senza un'ulteriore chiamata.",
+        "Errato. Non vi è alcuna necessità di riavviare il SO.",
+        "Errato. La connessione è già stabilita, un'ulteriore `connect()` restituirà l'errore `EISCONN`.",
+        "Errato. Il buffer dell'applicazione non può essere eliminato finché tutti i dati contenutivi non sono stati completamente inviati."
+      ]
+    },
+    {
+      "id": "it_net_327",
+      "widget_id": "widget_net_327",
+      "topic": "Configurazione di un client TCP in C — Dimensioni dei buffer del socket (SO_RCVBUF / SO_SNDBUF)",
+      "q": "In che modo la dimensione del buffer di ricezione di sistema (SO_RCVBUF) in un client C influisce sul funzionamento del protocollo TCP durante il download di grandi quantità di dati?",
+      "hint": "Pensate alle dimensioni dei buffer del sistema operativo per l'archiviazione temporanea dei pacchetti TCP in entrata e in uscita.",
+      "options": [
+        "Determina la dimensione della finestra annunciata TCP (TCP Advertised Window), limitando la quantità massima di dati che il server può inviare senza ricevere conferma (ACK)",
+        "Imposta un limite fisico sulla dimensione massima del file che può essere salvato su disco rigido",
+        "Costringe la scheda di rete a richiedere al provider una maggiore larghezza di banda"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il valore `SO_RCVBUF` imposta la dimensione del buffer di ricezione del kernel. In base allo spazio libero in questo buffer, lo stack TCP compone il parametro «Receive Window» (finestra del ricevente) nelle intestazioni TCP. Il server non invierà più dati di quanti possano essere contenuti in questa finestra.",
+        "Errato. Il buffer del socket risiede in RAM e gestisce il flusso di rete, senza limitare le operazioni su disco.",
+        "Errato. Le opzioni dei socket non possono modificare la larghezza di banda del piano tariffario dell'ISP."
+      ]
+    },
+    {
+      "id": "it_net_328",
+      "widget_id": null,
+      "topic": "Configurazione di un client TCP in C — Ciclo di vita delle chiamate di socket TCP client",
+      "q": "Qual è la sequenza corretta delle chiamate di sistema di base in un client C per creare un socket, connettersi a un server, scambiare dati e terminare il lavoro?",
+      "hint": "Prima viene creato il socket, poi viene stabilita la connessione con il server, dopodiché avvengono l'invio/ricezione dei dati e la chiusura.",
+      "options": [
+        "socket() -> connect() -> send() / recv() -> close()",
+        "bind() -> listen() -> accept() -> close()",
+        "socket() -> listen() -> connect() -> recv()",
+        "connect() -> socket() -> send() -> close()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ciclo di vita classico di un client TCP: 1) `socket()` (creazione del descrittore), 2) `connect()` (avvio dell'handshake a 3 vie), 3) `send()` / `recv()` (scambio dati), 4) `close()` (chiusura della connessione).",
+        "Errato. La sequenza `bind() -> listen() -> accept()` è utilizzata dai server TCP, non dai client.",
+        "Errato. Il client non richiede la chiamata `listen()`, che porta il socket nello stato di ascolto.",
+        "Errato. La chiamata `connect()` non può essere eseguita prima che il socket sia creato tramite `socket()`."
+      ]
+    },
+    {
+      "id": "it_net_329",
+      "widget_id": "widget_net_329",
+      "topic": "Configurazione di un client TCP in C — Lavorare con IPv6 (struct sockaddr_in6)",
+      "q": "Quale struttura dell'indirizzo del socket viene utilizzata in un client C per configurare la connessione a un server IPv6?",
+      "hint": "Ricordate la struttura sockaddr specifica per IPv6 in contrapposizione a struct sockaddr_in per IPv4.",
+      "options": [
+        "struct sockaddr_in6",
+        "struct sockaddr_in",
+        "struct sockaddr_un",
+        "struct in_addr",
+        "struct hostent"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per le reti IPv6, nell'API Socket viene utilizzata la struttura specializzata `struct sockaddr_in6` (contenente il campo della famiglia `sin6_family = AF_INET6` e la struttura dell'indirizzo `sin6_addr`).",
+        "Errato. `struct sockaddr_in` è destinata esclusivamente agli indirizzi IPv4.",
+        "Errato. `struct sockaddr_un` viene utilizzata per i Unix Domain Sockets locali (`AF_UNIX`).",
+        "Errato. `struct in_addr` è solo un campo all'interno di `sockaddr_in` per memorizzare un indirizzo IPv4 a 32 bit.",
+        "Errato. `struct hostent` è una struttura obsoleta per memorizzare i risultati di una richiesta DNS via `gethostbyname()`."
+      ]
+    },
+    {
+      "id": "it_net_330",
+      "widget_id": null,
+      "topic": "Configurazione di un client TCP in C — Gestione della chiusura del socket da parte del server (recv == 0)",
+      "q": "Cosa significa la situazione in cui la chiamata recv(sockfd, buf, len, 0) in un client C restituisce 0?",
+      "hint": "Notate la ricezione del segmento FIN TCP dal server remoto, che segnala una chiusura regolare della trasmissione da parte sua (Graceful Close).",
+      "options": [
+        "Il server remoto ha chiuso correttamente la connessione dal suo lato (ricevuto segmento TCP FIN)",
+        "La rete è troppo lenta, quindi il pacchetto non è arrivato in tempo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza della lettura di file ordinari, `recv() == 0` su un socket TCP è l'indicatore standard di EOF (End of File). Significa che il lato remoto ha avviato la chiusura della sessione TCP e l'invio del pacchetto FIN.",
+        "Errato. Una rete lenta o l'assenza di dati fanno sì che la `recv()` bloccante rimanga in attesa, anziché restituire 0."
+      ]
+    },
+    {
+      "id": "it_net_331",
+      "widget_id": "widget_net_331",
+      "topic": "Protocolli di rete — I tre componenti chiave di un protocollo",
+      "q": "Quali tre elementi fondamentali costituiscono la definizione accademica completa di qualsiasi protocollo di rete?",
+      "hint": "Ricordate la triade: descrizione formale della struttura dei dati, significato di tali dati e comandi, e regole di sincronizzazione temporale.",
+      "options": [
+        "Sintassi (struttura), Semantica (significato dei comandi) e Timing (ordine e sincronizzazione)",
+        "Crittografia, Compressione e Instradamento",
+        "Indirizzo IP, indirizzo MAC e Maschera di sottorete",
+        "Velocità, Larghezza di banda e Latenza"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un protocollo di rete definisce tre aspetti chiave: Sintassi (formato e codifica dei messaggi), Semantica (significato dei campi e azioni previste) e Timing (sincronizzazione delle velocità e sequenza dello scambio).",
+        "Errato. Crittografia, compressione e instradamento sono funzioni specifiche di singoli livelli e algoritmi, non componenti fondamentali della definizione di un protocollo.",
+        "Errato. Indirizzi e maschere sono identificatori di rete specifici, non elementi del concetto formale di protocollo.",
+        "Errato. Velocità e latenza sono caratteristiche prestazionali del canale di comunicazione."
+      ]
+    },
+    {
+      "id": "it_net_332",
+      "widget_id": null,
+      "topic": "Protocolli di rete — Sintassi del protocollo (Syntax)",
+      "q": "Cosa definisce esattamente la «Sintassi» (Syntax) nel contesto delle regole di un protocollo di rete?",
+      "hint": "Pensate alla struttura del pacchetto, ai campi delle intestazioni e alla loro posizione esatta nel flusso di byte.",
+      "options": [
+        "La struttura e il formato dei dati trasmessi, compreso l'ordine dei campi, la loro dimensione in bit e il metodo di codifica",
+        "Le azioni che la parte ricevente deve eseguire al ricevimento di un determinato comando",
+        "La velocità di propagazione del segnale attraverso il cavo fisico"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sintassi definisce la «grammatica» e la struttura dei messaggi: quali primi 4 byte sono riservati alla porta, dove inizia l'intestazione, qual è la dimensione del campo lunghezza e con quale codifica vengono trasmessi i caratteri.",
+        "Errato. La definizione di azioni specifiche alla ricezione di comandi fa parte della semantica del protocollo.",
+        "Errato. La velocità del segnale è determinata dal mezzo fisico di trasmissione dei dati."
+      ]
+    },
+    {
+      "id": "it_net_333",
+      "widget_id": "widget_net_333",
+      "topic": "Protocolli di rete — Semantica del protocollo (Semantics)",
+      "q": "Di quale aspetto dello scambio di messaggi è responsabile la «Semantica» (Semantics) di un protocollo di rete?",
+      "hint": "Notate il significato delle informazioni di controllo e il modo in cui un'entità di rete interpreta i bit ricevuti.",
+      "options": [
+        "L'interpretazione del significato delle informazioni di controllo e la scelta delle azioni da eseguire al ricevimento di un messaggio",
+        "La lunghezza fisica esatta del pacchetto di rete in millimetri",
+        "La scelta della marca del cavo di rete per la posa dell'infrastruttura",
+        "L'algoritmo di compressione delle immagini sul dispositivo client",
+        "L'ordine di disposizione dei chip di memoria sulla scheda madre"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La semantica definisce il valore («significato») di bit e campi. Ad esempio, se nel campo del codice di risposta HTTP figura `200`, la semantica del protocollo impone di interpretarlo come «OK/Successo» e di fornire il corpo della risposta all'utente.",
+        "Errato. Le dimensioni fisiche non sono collegate alla logica dei protocolli di rete.",
+        "Errato. La scelta dell'hardware è un compito ingegneristico per la progettazione dei canali di comunicazione.",
+        "Errato. Gli algoritmi di compressione dei file sono un compito separato per i formati dati applicativi.",
+        "Errato. L'architettura hardware del PC non ha alcuna relazione con la semantica di rete."
+      ]
+    },
+    {
+      "id": "it_net_334",
+      "widget_id": "widget_net_334",
+      "topic": "Protocolli di rete — Timing e sincronizzazione (Timing)",
+      "q": "Quale ruolo svolge il componente «Timing» (Timing) nelle regole di un protocollo di rete?",
+      "hint": "Pensate alla sincronizzazione della velocità di trasmissione e all'ordine rigorosamente definito di invio/ricezione dei messaggi.",
+      "options": [
+        "Definisce le caratteristiche temporali dello scambio: quando esattamente i messaggi devono essere inviati, a quale velocità e in quale ordine ben preciso",
+        "Definisce le regole per la crittografia delle password utente durante l'autenticazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il timing include il controllo di flusso e della velocità (affinché un mittente veloce non sovraccarichi un ricevente lento) e il rispetto rigoroso della sequenza (ad esempio, prima viene inviato l'handshake e solo dopo i dati).",
+        "Errato. La crittografia dei dati è regolata da standard crittografici e algoritmi di sicurezza."
+      ]
+    },
+    {
+      "id": "it_net_335",
+      "widget_id": null,
+      "topic": "Protocolli di rete — Stati e Automi a Stati Finiti (FSM)",
+      "q": "Perché la reazione di un'entità di rete a un pacchetto in arrivo con il flag DATA può variare in base al suo stato interno corrente (State)?",
+      "hint": "Pensate al concetto di automi a stati finiti (FSM), in cui le azioni dell'entità dipendono dalla fase corrente della sessione.",
+      "options": [
+        "I protocolli di rete sono progettati come automi a stati finiti (FSM): l'elaborazione del pacchetto dipende dallo stato corrente (ad esempio, nello stato ESTABLISHED i dati vengono accettati, mentre in CLOSED vengono scartati)",
+        "Dipende dall'attivazione degli indicatori luminosi sulla scheda di rete",
+        "Dipende dalla quantità di memoria RAM attualmente disponibile sul router",
+        "La risposta viene scelta da un generatore di numeri casuali del sistema operativo",
+        "Dipende esclusivamente dalla lunghezza del cavo di rete",
+        "La reazione è sempre assolutamente identica e non dipende dallo stato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I protocolli vengono descritti mediante Automi a Stati Finiti (Finite State Machines). Se il socket si trova nello stato `ESTABLISHED`, i dati in arrivo verranno accettati e inseriti nel buffer; se si trova nello stato `CLOSED`, i dati verranno ignorati o verrà restituito un reset `RST`.",
+        "Errato. Gli indicatori LED riflettono solo l'attività fisica e non influiscono sulla logica della FSM.",
+        "Errato. La quantità di RAM può limitare il buffering, ma non modifica le regole logiche fondamentali delle transizioni di stato della FSM.",
+        "Errato. Il comportamento dei protocolli di rete è strettamente determinato dalle specifiche (RFC).",
+        "Errato. La lunghezza del cavo influisce sul ritardo di propagazione, ma non sullo stato logico del protocollo.",
+        "Errato. Le entità di rete dipendono dal contesto e modificano la reazione in base alla fase corrente dell'interazione."
+      ]
+    },
+    {
+      "id": "it_net_336",
+      "widget_id": "widget_net_336",
+      "topic": "Protocolli di rete — Violazione della sequenza di scambio (Message Sequence Rules)",
+      "q": "In base alle regole del protocollo, cosa deve fare un'entità di rete se riceve un messaggio fuori sequenza (out-of-sequence / transizione di stato non valida)?",
+      "hint": "Pensate a come il protocollo si protegge da comandi non validi arrivati in un momento non previsto.",
+      "options": [
+        "Rifiutare o ignorare il messaggio e/o inviare un segnale di errore (ad esempio TCP RST), poiché l'evento non corrisponde allo stato corrente dell'automa a stati finiti",
+        "Riscrivere automaticamente il codice sorgente del programma sul server ricevente",
+        "Salvare il pacchetto non valido su disco e attendere 24 ore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La violazione della sequenza dei messaggi dal punto di vista della FSM del protocollo rappresenta un errore. La parte ricevente deve rifiutare tale messaggio o interrompere la sessione non valida inviando un messaggio di errore.",
+        "Errato. I protocolli di trasmissione dati non modificano il codice eseguibile delle applicazioni.",
+        "Errato. I messaggi fuori contesto non vengono conservati a lungo, ma vengono scartati immediatamente per prevenire attacchi e malfunzionamenti."
+      ]
+    },
+    {
+      "id": "it_net_337",
+      "widget_id": null,
+      "topic": "Protocolli di rete — Gestione dello stato (Stateful vs Stateless)",
+      "q": "Qual è la differenza fondamentale tra i protocolli con stato (Stateful) e quelli senza stato (Stateless)?",
+      "hint": "Confrontate HTTP/IP (stateless) e TCP (stateful) dal punto di vista della memorizzazione del contesto delle richieste precedenti.",
+      "options": [
+        "I protocolli Stateful mantengono il contesto dell'interazione e ricordano la cronologia degli scambi precedenti, mentre i protocolli Stateless elaborano ogni messaggio in modo isolato senza considerare il passato",
+        "I protocolli Stateless sono in grado di funzionare solo in assenza di connessione di rete",
+        "I protocolli Stateful vengono utilizzati esclusivamente su linee di comunicazione in fibra ottica",
+        "I protocolli Stateless non hanno intestazioni di controllo nei pacchetti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nei protocolli `Stateful` (ad esempio TCP) le parti tracciano lo stato corrente (numeri di sequenza, dimensione della finestra). Nei protocolli `Stateless` (ad esempio IP, HTTP di base) ogni richiesta contiene tutte le informazioni necessarie per la sua elaborazione e non dipende da quelle precedenti.",
+        "Errato. Qualsiasi protocollo di rete richiede una connessione fisica o logica.",
+        "Errato. Il tipo di mezzo trasmessivo (fibra, rame, radio) è indipendente dalla logica di gestione dello stato ai livelli L4-L7.",
+        "Errato. I protocolli Stateless (ad esempio IP o UDP) possiedono intestazioni ben definite."
+      ]
+    },
+    {
+      "id": "it_net_338",
+      "widget_id": "widget_net_338",
+      "topic": "Protocolli di rete — Azioni in caso di timeout e perdita di pacchetti (Error Handling)",
+      "q": "Quale azione standard impone di eseguire un protocollo affidabile (ad esempio TCP) allo scadere del timer di attesa della conferma (Retransmission Timeout)?",
+      "hint": "Ricordate i meccanismi di consegna garantita e di ripetizione automatica (ARQ).",
+      "options": [
+        "Inviare nuovamente (ritrasmettere) il pacchetto dati non confermato e ricalcolare/aumentare l'intervallo di attesa",
+        "Arrestare immediatamente il sistema operativo",
+        "Inviare una notifica all'amministratore di sistema tramite SMS",
+        "Passare automaticamente al protocollo UDP",
+        "Ignorare la perdita e continuare la trasmissione di nuovi pacchetti, dimenticando quello perso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le regole di un protocollo a consegna garantita richiedono il reinvio (ritrasmissione) del pacchetto allo scadere del timeout per l'ACK, nonché la regolazione del timer (ad esempio con incremento esponenziale del ritardo di Backoff).",
+        "Errato. Le perdite di rete sono una situazione ordinaria che non provoca il blocco del SO.",
+        "Errato. I protocolli L4 gestiscono le perdite automaticamente senza chiamare servizi di notifica esterni.",
+        "Errato. Il protocollo di trasporto della sessione è fisso e non viene cambiato al volo.",
+        "Errato. Ignorare le perdite distruggerebbe l'integrità del flusso dati trasmesso."
+      ]
+    },
+    {
+      "id": "it_net_339",
+      "widget_id": null,
+      "topic": "Protocolli di rete — Intestazione (Header) e Payload",
+      "q": "In che modo le regole di sintassi del protocollo dividono lo scopo dell'«Intestazione» (Header) e del «Payload»?",
+      "hint": "Distinguete i metadati di controllo necessari per la consegna dai dati utente di livello superiore.",
+      "options": [
+        "L'intestazione contiene le informazioni di controllo del protocollo stesso (indirizzi, flag, checksum), mentre il payload contiene i dati del livello superiore",
+        "L'intestazione contiene i file dell'utente, mentre il payload solo gli zeri e gli uno del livello fisico",
+        "L'intestazione e il payload non presentano differenze e vengono usati in modo intercambiabile"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In base alla sintassi del protocollo, il messaggio si divide in Header (campi di servizio letti dall'entità di rete per gestire la consegna) e Payload (contenuto trasmesso al livello successivo).",
+        "Errato. I file dell'utente sono trasportati nel payload, non nelle intestazioni.",
+        "Errato. Intestazione e payload hanno scopi e strutture fondamentalmente diversi."
+      ]
+    },
+    {
+      "id": "it_net_340",
+      "widget_id": "widget_net_340",
+      "topic": "Protocolli di rete — Asimmetria dei ruoli (Client-Server Rules)",
+      "q": "In che modo si manifesta l'asimmetria delle regole di scambio messaggi nei protocolli di interazione di tipo «Client-Server» (ad esempio HTTP)?",
+      "hint": "Pensate a quale parte avvia sempre il dialogo (invia la richiesta) e quale parte attende e risponde.",
+      "options": [
+        "I ruoli sono chiaramente divisi: il client avvia sempre l'interazione inviando una richiesta, mentre il server risponde solo in risposta alla richiesta ricevuta",
+        "Il server invia dati in qualsiasi momento arbitrario senza richiesta da parte del client",
+        "Il client e il server trasmettono messaggi senza utilizzare porte e indirizzi",
+        "La trasmissione dei dati è possibile solo nella direzione da client a server senza alcuna risposta"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nei classici protocolli asimmetrici (Client-Server), le regole di interazione impongono al client il ruolo di iniziatore (Request) e al server il ruolo di ascoltatore passivo che risponde alla richiesta (Response).",
+        "Errato. Il server non può inviare originariamente una risposta HTTP/1.1 senza una richiesta in arrivo dal client.",
+        "Errato. L'indirizzamento e le porte sono obbligatori per la consegna dei messaggi sulle reti.",
+        "Errato. Il dialogo è bidirezionale: a ogni richiesta segue una risposta dal server."
+      ]
+    }
+  ]
+}

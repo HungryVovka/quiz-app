@@ -1,0 +1,593 @@
+{
+  "subject": "Reti",
+  "questions": [
+    {
+      "id": "it_net_371",
+      "widget_id": "widget_net_371",
+      "topic": "Protocolli di rete — Richiesta di connessione TCP (SYN)",
+      "q": "Qual è il primo segmento di controllo che il client invia al livello di trasporto per avviare una connessione prima di richiedere una pagina HTTP?",
+      "hint": "Pensa alla richiesta iniziale di sincronizzazione dei numeri di sequenza (SYN) nel protocollo TCP.",
+      "options": [
+        "Segmento TCP con flag SYN (Synchronize) impostato",
+        "Messaggio HTTP GET /index.html",
+        "Richiesta di risoluzione DNS di un record A",
+        "Pacchetto ICMP Echo Request"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Prima di inviare qualsiasi dato del livello applicativo (HTTP GET), il client deve avviare una connessione TCP inviando un segmento con il flag SYN impostato per sincronizzare i numeri di sequenza iniziali (ISN).",
+        "Errato. La richiesta HTTP GET appartiene al livello applicativo e non può essere inviata prima che la connessione TCP sia stata stabilita.",
+        "Errato. La richiesta DNS precede la ricerca dell'indirizzo IP, ma non fa parte dei pacchetti della connessione TCP stessa con il server web.",
+        "Errato. ICMP Echo Request viene utilizzato dall'utilità ping per verificare la connettività di rete, non per aprire sessioni TCP."
+      ]
+    },
+    {
+      "id": "it_net_372",
+      "widget_id": null,
+      "topic": "Protocolli di rete — Risposta alla connessione TCP (SYN-ACK)",
+      "q": "Cosa significa per il client ricevere un segmento SYN-ACK dal server nell'ambito del protocollo TCP?",
+      "hint": "Nota che questo segmento conferma la ricezione del SYN del client e allo stesso tempo avvia la negoziazione inversa.",
+      "options": [
+        "Il server conferma la ricezione del flag SYN dal client ed esprime la disponibilità a stabilire una connessione bidirezionale inviando il proprio numero di sequenza iniziale (ISN)",
+        "Il server ha già trasferito completamente il file richiesto ed è pronto a chiudere la connessione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il segmento SYN-ACK combina la conferma (ACK) della richiesta del client con la propria richiesta di sincronizzazione (SYN) da parte del server, confermando la disponibilità allo scambio bidirezionale.",
+        "Errato. Nella fase SYN-ACK il trasferimento dei dati applicativi non è ancora iniziato."
+      ]
+    },
+    {
+      "id": "it_net_373",
+      "widget_id": "widget_net_373",
+      "topic": "Protocolli di rete — Separazione delle responsabilità tra L4 e L7",
+      "q": "Perché il client non può inviare una richiesta HTTP GET nel primo pacchetto TCP SYN durante il classico handshake a tre vie?",
+      "hint": "Ricorda le regole di separazione dei livelli: un trasporto affidabile (L4) deve prima garantire la presenza di un canale prima di accettare richieste L7.",
+      "options": [
+        "Secondo le regole del TCP classico, prima di trasferire dati del livello applicativo è necessario stabilire una connessione affidabile, concordare i numeri di sequenza e la dimensione della finestra di ricezione",
+        "A causa dell'assenza di un cavo di rete fisico",
+        "Perché HTTP GET può essere trasmesso solo tramite il protocollo UDP",
+        "Perché il server formatta il proprio disco rigido prima di accettare il SYN",
+        "Perché HTTP GET viene inviato esclusivamente prima dell'inizio dello stabilimento della connessione TCP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La specifica TCP classica richiede il completamento della procedura di handshake (stabilimento del contesto di sessione, delle finestre e dei numeri di sequenza) prima che il livello applicativo possa trasmettere i suoi dati.",
+        "Errato. Se mancasse il cavo, il pacchetto SYN non potrebbe nemmeno lasciare il nodo.",
+        "Errato. HTTP/1.1 e HTTP/2 funzionano su TCP.",
+        "Errato. Il server non esegue azioni distruttive sul file system durante l'elaborazione del SYN.",
+        "Errato. HTTP GET viene inviato solo dopo o durante (con TFO) l'avvenuto stabilimento della connessione di trasporto."
+      ]
+    },
+    {
+      "id": "it_net_374",
+      "widget_id": null,
+      "topic": "Protocolli di rete — Richiesta del livello applicativo (HTTP GET)",
+      "q": "Quale ruolo svolge il messaggio HTTP GET dopo il completamento con successo dell'handshake TCP a tre vie?",
+      "hint": "Pensa alla richiesta di una risorsa specifica (pagina, immagine) a livello applicativo.",
+      "options": [
+        "Funge da richiesta applicativa del client al server per richiedere l'invio di una risorsa (file) specifica",
+        "Termina la sessione fisica sulla scheda di rete",
+        "Richiede la modifica dell'indirizzo MAC allo switch"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Una volta creato il canale TCP, il client invia il comando applicativo `HTTP GET`, richiedendo al server web il contenuto di uno specifico URI/file.",
+        "Errato. HTTP GET avvia la ricezione dei dati e non chiude la sessione di rete.",
+        "Errato. La commutazione a livello MAC avviene al L2 ed è separata dai comandi HTTP."
+      ]
+    },
+    {
+      "id": "it_net_375",
+      "widget_id": "widget_net_375",
+      "topic": "Protocolli di rete — Segmentazione e trasmissione del file (Segmentation)",
+      "q": "In che modo le regole dei protocolli TCP/IP organizzano il trasferimento di un file web di grandi dimensioni (ad esempio 10 MB) in risposta a una richiesta HTTP GET?",
+      "hint": "Pensa alla frammentazione di un grande flusso di byte in segmenti di trasporto tenendo conto della dimensione MSS.",
+      "options": [
+        "Il file viene suddiviso dal livello applicativo/di trasporto in molteplici segmenti TCP distinti con numeri di sequenza (Sequence Numbers) progressivi per una trasmissione affidabile",
+        "Il file viene trasmesso in un unico gigantesco pacchetto IP di 10 MB senza frammentazione",
+        "Il server invia il file tramite un cavo fisico separato direttamente al monitor",
+        "Il file viene codificato in un segnale audio e trasmesso tramite il protocollo ICMP",
+        "Il sistema operativo del server elimina il file dopo il primo tentativo di trasmissione",
+        "I dati vengono trasmessi solo riavviando continuamente la scheda di rete del client"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un file di grandi dimensioni viene diviso in parti che non superano il MSS (Maximum Segment Size) e inviato tramite segmenti TCP sequenziali. A ogni byte viene assegnato un numero di sequenza per il riassemblaggio dal lato ricevente.",
+        "Errato. La dimensione massima del frame in rete (MTU/MSS) è limitata e non consente di trasmettere 10 MB in un singolo pacchetto non protetto.",
+        "Errato. Il trasferimento avviene sulla connessione logica esistente sotto forma di pacchetti.",
+        "Errato. L'ICMP è progettato per trasmettere messaggi di controllo ed errore, non file web.",
+        "Errato. Il server conserva il file sul disco per servire più client.",
+        "Errato. Il riavvio della scheda di rete (NIC) interrompe tutte le connessioni di rete."
+      ]
+    },
+    {
+      "id": "it_net_376",
+      "widget_id": null,
+      "topic": "Protocolli di rete — Cronologia completa della sessione",
+      "q": "Qual è la sequenza cronologica rigorosa delle fasi durante il caricamento standard di una pagina web tramite protocollo HTTP su TCP?",
+      "hint": "Segui il percorso dal primo flag di sincronizzazione fino alla ricezione del corpo della risposta HTTP.",
+      "options": [
+        "TCP SYN → TCP SYN-ACK → TCP ACK + HTTP GET → HTTP 200 OK (trasmissione dati)",
+        "HTTP GET → TCP SYN → Trasferimento file → TCP SYN-ACK",
+        "Trasferimento file → HTTP GET → TCP ACK → TCP SYN",
+        "TCP SYN-ACK → HTTP GET → TCP SYN → Trasferimento file"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'ordine è rigorosamente regolamentato: prima avviene il 3-way handshake (SYN, SYN-ACK, ACK), poi il client invia la richiesta HTTP GET e il server risponde con lo stato 200 OK e il payload.",
+        "Errato. HTTP GET non può precedere l'handshake TCP.",
+        "Errato. Il trasferimento del file è la fase finale, non quella iniziale.",
+        "Errato. Il server non invia SYN-ACK prima di aver ricevuto l'iniziale richiesta SYN dal client."
+      ]
+    },
+    {
+      "id": "it_net_377",
+      "widget_id": "widget_net_377",
+      "topic": "Protocolli di rete — Perdita della richiesta applicativa (RTO)",
+      "q": "Quale azione prescrive il protocollo TCP se un segmento inviato dal client contenente la richiesta HTTP GET viene perso in rete e non viene confermato dal server?",
+      "hint": "Ricorda il funzionamento del timer di ritrasmissione dal lato mittente.",
+      "options": [
+        "Il client attende la scadenza del timeout (RTO) e ritrasmette il segmento con la richiesta HTTP GET",
+        "Il client chiude immediatamente il browser web e spegne il computer"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché il TCP è un protocollo a consegna garantita, un segmento non confermato contenente la richiesta HTTP GET verrà reinviato alla scadenza del timer di Retransmission Timeout (RTO).",
+        "Errato. La perdita di un pacchetto è una situazione normale nelle reti, risolta tramite il rinvio al livello L4."
+      ]
+    },
+    {
+      "id": "it_net_378",
+      "widget_id": null,
+      "topic": "Protocolli di rete — Riscontro in flusso (ACK Stream)",
+      "q": "Quale ruolo svolgono i segmenti TCP ACK in arrivo inviati dal client durante la ricezione dei frammenti di file dal server?",
+      "hint": "Pensa alla conferma della ricezione di determinati byte e all'avanzamento della finestra scorrevole.",
+      "options": [
+        "Informano il server dell'avvenuta ricezione di specifici byte del file e consentono di far avanzare la finestra scorrevole (Sliding Window)",
+        "Richiedono la riaggregazione delle partizioni logiche sul disco del server",
+        "Modificano l'indirizzo DNS del server al volo",
+        "Cancellano la cronologia di navigazione del browser",
+        "Scollegano l'alimentazione del router di rete"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I messaggi ACK informano il mittente (server) su quali byte hanno raggiunto con successo il client, consentendo di liberare i buffer e di espandere/scorrere la finestra di trasmissione.",
+        "Errato. L'ACK conferma la ricezione dei dati di rete e non gestisce il partizionamento del disco del server.",
+        "Errato. Il protocollo DNS non partecipa alla conferma dei segmenti TCP.",
+        "Errato. Il funzionamento del protocollo di trasporto è separato dalle funzioni della cronologia del browser.",
+        "Errato. I pacchetti ACK costituiscono traffico di controllo standard e non spengono l'hardware."
+      ]
+    },
+    {
+      "id": "it_net_379",
+      "widget_id": "widget_net_379",
+      "topic": "Protocolli di rete — Ottimizzazione della latenza (TCP Fast Open)",
+      "q": "Quale estensione del protocollo TCP (TCP Fast Open) modifica l'ordine classico «Handshake → Richiesta», consentendo di inviare HTTP GET già nel primissimo pacchetto SYN?",
+      "hint": "Ricorda il meccanismo di ottimizzazione del Round Trip Time (RTT) che utilizza i Cookie TFO di convalida.",
+      "options": [
+        "TCP Fast Open (TFO), che utilizza Cookie speciali per includere in modo sicuro dati applicativi nel pacchetto SYN delle connessioni successive",
+        "DHCP Option 82",
+        "IPv6 Path MTU Discovery"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! TCP Fast Open (RFC 7413) consente ai client precedentemente collegati al server di inserire il payload (HTTP GET) direttamente nel segmento SYN tramite un Cookie TFO, riducendo la latenza di 1 RTT.",
+        "Errato. L'Option 82 in DHCP trasmette informazioni sulla porta dello switch per l'assegnazione dell'indirizzo IP.",
+        "Errato. Path MTU Discovery individua la dimensione massima del pacchetto lungo il percorso."
+      ]
+    },
+    {
+      "id": "it_net_380",
+      "widget_id": null,
+      "topic": "Protocolli di rete — Identificazione della sessione (4-tuple / Socket Pair)",
+      "q": "Grazie a quali campi nelle intestazioni TCP e IP il server comprende a quale connessione TCP stabilita si riferisce la richiesta HTTP GET pervenuta?",
+      "hint": "Pensa alla coppia socket composta da 4 componenti (IP/Porta del mittente e del destinatario).",
+      "options": [
+        "Alla combinazione di 4 campi (Socket Pair / 4-tuple): indirizzo IP sorgente, porta sorgente, indirizzo IP di destinazione e porta di destinazione",
+        "Solo in base alla lunghezza fisica del cavo",
+        "In base al nome del modello del processore del client",
+        "In base all'ora corrente dell'orologio del server"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il multiplexing TCP si basa sulla 4-tuple (IP sorgente, Porta sorgente, IP destinazione, Porta destinazione). Questa combinazione identifica in modo univoco la coppia socket e associa il segmento in ingresso a una sessione specifica.",
+        "Errato. La lunghezza fisica del cavo non partecipa all'indirizzamento logico dei pacchetti L3/L4.",
+        "Errato. Il modello della CPU non viene trasmesso nelle intestazioni TCP/IP.",
+        "Errato. L'ora sul server non identifica le connessioni di rete."
+      ]
+    },
+    {
+      "id": "it_net_381",
+      "widget_id": "widget_net_381",
+      "topic": "Eventi di rete — Attacco SYN Flood e analogia umana",
+      "q": "Se un malintenzionato invia al server migliaia di richieste TCP SYN ma ignora le risposte SYN-ACK, a quale guasto/attacco di rete corrisponde?",
+      "hint": "Pensa al sovraccarico della coda di connessioni incomplete (SYN Backlog), quando il server consuma risorse in attesa degli ACK finali.",
+      "options": [
+        "A un attacco di tipo SYN Flood (Denial of Service), che esaurisce il buffer delle connessioni semi-aperte del server",
+        "Alla deframmentazione del disco rigido del server",
+        "A un errore di risoluzione dei nomi DNS",
+        "Alla configurazione dell'indirizzamento IPv6 SLAAC",
+        "All'aggiornamento automatico del firmware del router"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con il SYN Flood, l'invio massiccio di pacchetti SYN senza completare l'handshake porta al sovraccarico della coda `SYN_RCVD` (SYN backlog), impedendo ai client legittimi di stabilire una connessione.",
+        "Errato. Il SYN Flood è un attacco di rete al livello L4 non legato alla deframmentazione del disco.",
+        "Errato. Il DNS traduce i nomi in IP, mentre il SYN Flood attacca il livello di trasporto di uno specifico IP.",
+        "Errato. SLAAC serve per la configurazione automatica degli indirizzi IPv6.",
+        "Errato. L'attacco all'handshake è separato dagli aggiornamenti del firmware dei dispositivi."
+      ]
+    },
+    {
+      "id": "it_net_382",
+      "widget_id": null,
+      "topic": "Protocolli di rete — Intestazioni della risposta HTTP (200 OK vs 404 Not Found)",
+      "q": "Cosa succede a livello applicativo subito dopo che il server ha ricevuto una richiesta HTTP GET valida?",
+      "hint": "Nota la formazione della risposta con codice di stato ed intestazioni prima dell'invio del corpo del file.",
+      "options": [
+        "Il server genera una risposta con codice 200 OK e intestazioni, dopodiché inizia la trasmissione del corpo del file (Payload), oppure restituisce un codice di errore (ad esempio 404 Not Found)",
+        "Il server disattiva l'interfaccia di rete e si riavvia",
+        "Il server richiede al client di cambiare il proprio indirizzo IP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il server analizza prima la presenza del file: se la risorsa viene trovata, invia `200 OK` e il Payload. Se il file manca, viene restituito il codice `404 Not Found`.",
+        "Errato. L'esecuzione di una richiesta GET è un'operazione standard e non causa un riavvio.",
+        "Errato. Il server non gestisce gli indirizzi IP dei client durante l'elaborazione delle richieste HTTP."
+      ]
+    },
+    {
+      "id": "it_net_383",
+      "widget_id": "widget_net_383",
+      "topic": "Protocolli di rete — Stato semi-aperto (TCP Half-Open)",
+      "q": "Cosa significa la situazione in cui il client ha inviato un segmento FIN dopo aver ricevuto un file, ma il server sta ancora continuando a trasmettere i dati rimanenti?",
+      "hint": "Ricorda che il TCP supporta la chiusura semi-duplex, in cui una direzione viene chiusa mentre l'altra rimane attiva.",
+      "options": [
+        "Stato di TCP Half-Open (connessione semi-chiusa): il client ha chiuso l'invio dei propri dati, ma è pronto a ricevere i dati rimanenti dal server",
+        "Un errore di duplicazione degli indirizzi MAC nello switch",
+        "La completa eliminazione della tabella ARP sul router",
+        "Il passaggio della connessione al protocollo UDP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In TCP la chiusura delle connessioni è unilaterale: l'invio di FIN indica «non trasmetterò più nulla», ma al nodo è consentito ricevere dati dall'altro capo finché questi non invia il proprio FIN.",
+        "Errato. Half-open è uno stato standard di TCP, non correlato alla duplicazione di MAC.",
+        "Errato. Gli stati delle sessioni L4 non cancellano le tabelle L2/ARP.",
+        "Errato. Il cambio di protocollo di trasporto al volo non avviene."
+      ]
+    },
+    {
+      "id": "it_net_384",
+      "widget_id": null,
+      "topic": "Protocolli di rete — Pipelining e Multiplexing",
+      "q": "Quale ottimizzazione consente al client di inviare più richieste HTTP GET consecutive senza attendere la risposta a ciascuna delle precedenti?",
+      "hint": "Pensa alle tecnologie HTTP/1.1 Pipelining e al multiplexing dei frame in HTTP/2 e HTTP/3.",
+      "options": [
+        "HTTP Pipelining (in HTTP/1.1) e Multiplexing dei flussi (in HTTP/2 e HTTP/3)",
+        "Ripristino hardware dell'alimentazione sullo switch",
+        "Aumento della lunghezza fisica della linea in fibra ottica",
+        "Cambio della maschera di sottorete da /24 a /16",
+        "Ridenominazione automatica delle interfacce di rete del SO",
+        "Disattivazione forzata della crittografia TLS"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In HTTP/1.1 il Pipelining consente di inviare un blocco di richieste senza attendere risposte intermedie (anche se con il problema dell'Head-of-Line Blocking). In HTTP/2 il multiplexing risolve completamente questo problema a livello di frame.",
+        "Errato. Il ripristino dell'alimentazione interrompe tutti gli scambi di rete.",
+        "Errato. La lunghezza del cavo aumenta solo la latenza fisica (RTT).",
+        "Errato. La maschera di sottorete determina le dimensioni delle reti IP, non il pipelining L7.",
+        "Errato. I nomi delle schede di rete non influiscono sul parallelismo delle richieste web.",
+        "Errato. La crittografia TLS non proibisce il pipelining o il multiplexing."
+      ]
+    },
+    {
+      "id": "it_net_385",
+      "widget_id": "widget_net_385",
+      "topic": "Protocolli di rete — Meccanismo della finestra scorrevole (Sliding Window)",
+      "q": "A quale meccanismo del protocollo TCP è soggetta la trasmissione continua dei byte di un file dal server al client senza fermarsi dopo ogni pacchetto?",
+      "hint": "Pensa al concetto di Window Size, che imposta la quantità di byte consentita per l'invio prima di ricevere un ACK.",
+      "options": [
+        "Al meccanismo della finestra scorrevole (Sliding Window), che definisce il volume di byte trasmissibile senza ricevere un ulteriore ACK",
+        "Al protocollo di routing dinamico RIP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il meccanismo della finestra scorrevole (Sliding Window) consente di trasmettere un flusso di dati in modo continuo entro una finestra dinamica, aumentando le prestazioni rispetto allo schema Stop-and-Wait.",
+        "Errato. RIP è un protocollo di routing distance-vector a livello L3, non un meccanismo di trasmissione del flusso a livello L4."
+      ]
+    },
+    {
+      "id": "it_net_386",
+      "widget_id": null,
+      "topic": "Protocolli di rete — Incapsulamento del frame nella trasmissione di HTTP GET",
+      "q": "In quale ordine le intestazioni avvolgono il messaggio HTTP GET quando viene inviato a una rete locale Ethernet?",
+      "hint": "Segui l'incapsulamento dall'alto verso il basso: L7 (HTTP) → L4 (TCP) → L3 (IP) → L2 (Ethernet).",
+      "options": [
+        "Ethernet Header [ IP Header [ TCP Header [ HTTP GET Payload ] ] ]",
+        "HTTP GET Payload [ Ethernet Header [ IP Header [ TCP Header ] ] ]",
+        "IP Header [ Ethernet Header [ HTTP GET Payload [ TCP Header ] ] ]",
+        "TCP Header [ HTTP GET Payload [ Ethernet Header [ IP Header ] ] ]"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nell'incapsulamento dall'alto verso il basso, i dati applicativi HTTP GET vengono inseriti in un segmento TCP, il segmento TCP in un pacchetto IP e il pacchetto IP in un frame Ethernet. Pertanto, l'intestazione esterna è Ethernet e quella più interna è HTTP.",
+        "Errato. I dati L7 si trovano all'interno delle intestazioni di controllo dei livelli sottostanti.",
+        "Errato. L'ordine è errato: l'intestazione IP non può racchiudere l'intestazione Ethernet.",
+        "Errato. L'intestazione esterna per l'ambiente locale è sempre l'intestazione del livello data link (Ethernet)."
+      ]
+    },
+    {
+      "id": "it_net_387",
+      "widget_id": "widget_net_387",
+      "topic": "Protocolli di rete — Ripristino di emergenza della connessione (TCP RST)",
+      "q": "Quale flag TCP invia il server se durante il trasferimento di un file il client invia all'improvviso una richiesta per un socket inesistente o in caso di disconnessione anomala?",
+      "hint": "Pensa a uno speciale flag di controllo che richiede il ripristino immediato e l'interruzione della connessione senza la procedura di chiusura formale dell'handshake.",
+      "options": [
+        "Il flag RST (Reset), che interrompe immediatamente la connessione senza attendere le procedure di chiusura",
+        "Il flag SYN (Synchronize), che richiede di ripetere l'handshake",
+        "Il flag FIN (Finish), che richiede una chiusura regolare"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag RST (Reset) informa la controparte che la connessione è stata ritenuta non valida o anomala e deve essere immediatamente ripristinata/interrotta.",
+        "Errato. SYN viene utilizzato per aprire le sessioni, non per la loro cancellazione di emergenza.",
+        "Errato. FIN viene utilizzato per una chiusura bidirezionale corretta e concordata."
+      ]
+    },
+    {
+      "id": "it_net_388",
+      "widget_id": null,
+      "topic": "Protocolli di rete — Negoziazione del MSS (Maximum Segment Size)",
+      "q": "Quale opzione TCP, trasmessa nei pacchetti SYN durante l'handshake, garantisce che i frammenti del file web trasmesso non superino la capacità del buffer del ricevente e l'MTU della rete?",
+      "hint": "Ricorda il parametro che definisce la dimensione massima del payload (in byte) in un singolo segmento TCP.",
+      "options": [
+        "MSS (Maximum Segment Size)",
+        "RTT (Round Trip Time)",
+        "TTL (Time To Live)",
+        "Indirizzo MAC del gateway predefinito",
+        "Chiave di crittografia simmetrica AES"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'opzione MSS (Maximum Segment Size) viene trasmessa nei segmenti SYN e informa la controparte sulla dimensione massima del Payload (di solito MTU meno 40 byte di intestazioni IP/TCP) che è disposta ad accettare.",
+        "Errato. RTT è il tempo di andata e ritorno del segnale (Round Trip Time).",
+        "Errato. TTL è il tempo di vita del pacchetto in hop a livello L3.",
+        "Errato. L'indirizzo MAC del gateway viene utilizzato a livello data link.",
+        "Errato. La chiave AES viene utilizzata per la crittografia a livello applicativo/di sessione."
+      ]
+    },
+    {
+      "id": "it_net_389",
+      "widget_id": "widget_net_389",
+      "topic": "Protocolli di rete — Idempotenza di HTTP GET durante il download di file",
+      "q": "Una richiesta HTTP GET ripetuta per lo stesso file è un'azione idempotente secondo le specifiche del protocollo?",
+      "hint": "Pensa se una chiamata di lettura della risorsa ripetuta modifica il suo stato sul server.",
+      "options": [
+        "Sì, il metodo GET è idempotente: la ripetizione della richiesta restituisce la stessa risorsa e non causa modifiche collaterali di stato sul server",
+        "No, il metodo GET non è idempotente e una richiesta ripetuta porta all'eliminazione del file dal server"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo la RFC 7231, HTTP GET è un metodo «sicuro» e idempotente. La chiamata multipla di GET non modifica lo stato della risorsa di destinazione sul server.",
+        "Errato. Il metodo GET non elimina né modifica i dati sul server quando viene ripetuto."
+      ]
+    },
+    {
+      "id": "it_net_390",
+      "widget_id": null,
+      "topic": "Protocolli di rete — Completamento del trasferimento del file e chiusura della connessione",
+      "q": "Quale evento standard del livello di trasporto si verifica subito dopo che il server web ha terminato la trasmissione di tutti i byte del file richiesto (nel caso della modalità Connection: close)?",
+      "hint": "Ricorda l'invio del segmento di terminazione dal lato server.",
+      "options": [
+        "Il server invia un segmento TCP con il flag FIN per avviare la chiusura programmata della connessione",
+        "Il server toglie immediatamente l'alimentazione alla scheda di rete",
+        "Il client invia un pacchetto ICMP Echo Reply",
+        "Lo switch cancella l'intera tabella degli indirizzi MAC"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Dopo il completamento completo del trasferimento di tutti i dati del file in una connessione non memorizzata nella cache o monouso (Connection: close), la parte che ha terminato la trasmissione avvia la chiusura della sessione con un segmento FIN.",
+        "Errato. Lo scollegamento dell'alimentazione della NIC è un'emergenza fisica.",
+        "Errato. ICMP Echo Reply è una risposta al ping, non correlata alla chiusura del TCP.",
+        "Errato. La cancellazione della tabella MAC dello switch non è correlata allo stato di trasferimento del file di una specifica sessione."
+      ]
+    },
+    {
+      "id": "it_net_391",
+      "widget_id": "widget_net_391",
+      "topic": "Standard di Internet — Scopo e natura dei documenti RFC",
+      "q": "Che cos'è la serie di documenti RFC (Request for Comments) nel contesto delle tecnologie di rete?",
+      "hint": "Pensa al ruolo delle pubblicazioni IETF contenenti specifiche di protocollo, standard, materiale di ricerca e istruzioni.",
+      "options": [
+        "Una serie ufficiale di documenti tecnici numerati e specifiche che descrivono l'architettura, i protocolli e gli standard di Internet",
+        "Licenze commerciali per l'uso di cavi di rete e router",
+        "Istruzioni militari segrete per disattivare la rete globale",
+        "Una rivista periodica sul design delle interfacce utente",
+        "Istruzioni per l'assemblaggio di PC e l'installazione dei driver delle schede video",
+        "Un database di password di tutti i server web del mondo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli RFC (Request for Comments) sono pubblicazioni ufficiali di IETF/IAB che costituiscono la libreria degli standard di Internet, delle specifiche di protocollo (IP, TCP, HTTP) e delle raccomandazioni per la loro implementazione.",
+        "Errato. Gli RFC sono liberamente accessibili e non sono licenze per le apparecchiature.",
+        "Errato. Gli RFC sono documenti pubblici e aperti.",
+        "Errato. I documenti RFC sono dedicati ai protocolli di rete e all'infrastruttura, non al web design grafico.",
+        "Errato. L'assemblaggio del PC riguarda l'hardware e non rientra negli standard IETF.",
+        "Errato. Gli RFC non conservano dati di autorizzazione o informazioni personali."
+      ]
+    },
+    {
+      "id": "it_net_392",
+      "widget_id": null,
+      "topic": "Standard di Internet — L'organizzazione IETF",
+      "q": "Quale organizzazione internazionale ha la responsabilità principale dello sviluppo e della standardizzazione della maggior parte degli RFC?",
+      "hint": "Ricorda la comunità ingegneristica internazionale aperta impegnata nello sviluppo dell'architettura di Internet.",
+      "options": [
+        "IETF (Internet Engineering Task Force)",
+        "IEEE (Institute of Electrical and Electronics Engineers)",
+        "ISO (International Organization for Standardization)",
+        "W3C (World Wide Web Consortium)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'IETF (Internet Engineering Task Force) è una comunità internazionale aperta di ingegneri e ricercatori che sviluppa standard e protocolli di rete pubblicati sotto forma di RFC.",
+        "Errato. L'IEEE si occupa degli standard dei livelli data link/fisico (ad esempio Wi-Fi 802.11, Ethernet 802.3).",
+        "Errato. L'ISO ha sviluppato il modello OSI, ma la maggior parte degli standard di Internet viene sviluppata sotto l'egida dell'IETF.",
+        "Errato. Il W3C sviluppa standard per le tecnologie web (HTML, CSS), ma non i protocolli di base dei livelli di rete/trasporto."
+      ]
+    },
+    {
+      "id": "it_net_393",
+      "widget_id": "widget_net_393",
+      "topic": "Standard di Internet — Categorie di RFC (Standards Track vs Informational)",
+      "q": "Quale categoria di RFC definisce gli standard tecnici obbligatori di Internet soggetti a procedura ufficiale di approvazione?",
+      "hint": "Distingui tra materiali informativi, rami sperimentali e il percorso ufficiale di standardizzazione.",
+      "options": [
+        "Standards Track (Percorso di standardizzazione)",
+        "Informational (Informativo)",
+        "Experimental (Sperimentale)",
+        "Historic (Storico)",
+        "April Fools' (Pesce d'aprile)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I documenti che definiscono gli standard di Internet (Internet Standards) sono pubblicati rigorosamente all'interno del percorso di standardizzazione (Standards Track), passando attraverso le fasi di Proposed Standard e Internet Standard.",
+        "Errato. Gli RFC Informational sono pubblicati a scopo informativo e non contengono standard obbligatori.",
+        "Errato. Gli RFC Experimental descrivono sviluppi di ricerca non pronti per l'adozione generale.",
+        "Errato. Gli RFC Historic contengono specifiche obsolete dismesse.",
+        "Errato. Gli RFC April Fools' sono pubblicazioni goliardiche/scherzose."
+      ]
+    },
+    {
+      "id": "it_net_394",
+      "widget_id": null,
+      "topic": "Standard di Internet — Parole chiave dei requisiti (RFC 2119)",
+      "q": "Qual è il significato del termine MUST nel testo di una specifica RFC secondo il documento RFC 2119?",
+      "hint": "Pensa al grado di obbligatorietà del requisito per garantire la compatibilità dell'implementazione con il protocollo.",
+      "options": [
+        "Un requisito assolutamente obbligatorio, senza il cui rispetto l'implementazione non è considerata conforme alla specifica",
+        "Una raccomandazione che può essere ignorata in presenza di valide ragioni",
+        "Una funzionalità opzionale aggiunta a discrezione dello sviluppatore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Secondo la RFC 2119, i termini `MUST`, `REQUIRED` o `SHALL` indicano un requisito assolutamente rigido della specifica. La violazione di questo punto rende l'implementazione incompatibile.",
+        "Errato. La descrizione delle raccomandazioni che possono essere ignorate in casi particolari è indicata dalla parola `SHOULD`.",
+        "Errato. Le funzionalità completamente opzionali sono indicate dalla parola `MAY` o `OPTIONAL`."
+      ]
+    },
+    {
+      "id": "it_net_395",
+      "widget_id": "widget_net_395",
+      "topic": "Standard di Internet — Principio di immutabilità degli RFC d'archivio (Immutability)",
+      "q": "Cosa succede a un documento RFC dopo la sua pubblicazione ufficiale e l'assegnazione di un numero se viene individuato un errore o se è necessario un aggiornamento?",
+      "hint": "Ricorda la regola per cui il testo di un RFC pubblicato non viene mai modificato «in loco».",
+      "options": [
+        "Il testo dell'RFC pubblicato rimane immutato per sempre; viene creato un nuovo RFC con un nuovo numero recante «Obsoletes» o «Updates» riferito al vecchio",
+        "I redattori accedono al file RFC e modificano direttamente il vecchio testo con lo stesso numero"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I documenti RFC sono fondamentalmente immutabili (immutable). Se è necessario apportare modifiche, viene rilasciato un nuovo RFC con un nuovo numero, contrassegnato come `Obsoletes` (sostituisce) o `Updates` (aggiorna) il precedente.",
+        "Errato. La modifica diretta del testo sotto lo stesso numero è vietata per preservare l'accuratezza storica e ingegneristica dell'archivio."
+      ]
+    },
+    {
+      "id": "it_net_396",
+      "widget_id": null,
+      "topic": "Standard di Internet — RFC del pesce d'aprile (April Fools' RFCs)",
+      "q": "Qual è la tradizione relativa alla pubblicazione dei documenti RFC il 1° aprile di ogni anno?",
+      "hint": "Presta attenzione agli RFC umoristici e scherzosi scritti nel rispetto di tutte le rigide regole formali dell'IETF.",
+      "options": [
+        "La pubblicazione di specifiche goliardiche e scherzose (ad esempio IP over Avian Carriers — trasmissione di pacchetti tramite piccioni), redatte secondo tutte le regole accademiche degli RFC",
+        "La pulizia pianificata forzata del database di tutte le specifiche esistenti",
+        "La chiusura dell'accesso al server RFC Editor per 24 ore per manutenzione",
+        "L'eliminazione di tutti i riferimenti al protocollo TCP dalla libreria IETF"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Dal 1989 l'IETF mantiene la tradizione degli RFC del pesce d'aprile. Si tratta di documenti tecnicamente ineccepibili ma scherzosi (ad esempio RFC 1149 IP over Avian Carriers, RFC 2324 HTCPCP — protocollo di controllo delle macchine da caffè).",
+        "Errato. L'RFC Editor non elimina i documenti dall'archivio.",
+        "Errato. Il server con gli RFC funziona continuamente.",
+        "Errato. I protocolli di base della rete non vengono mai rimossi dagli standard."
+      ]
+    },
+    {
+      "id": "it_net_397",
+      "widget_id": "widget_net_397",
+      "topic": "Standard di Internet — Differenza tra 'Obsoletes' e 'Updates'",
+      "q": "Qual è la differenza quando un nuovo RFC reca l'indicazione «Updates RFC X» rispetto a «Obsoletes RFC X»?",
+      "hint": "Confronta le modifiche mirate a singole sezioni rispetto alla sostituzione completa della specifica precedente.",
+      "options": [
+        "Updates apporta modifiche/integrazioni a singole sezioni dell'RFC X (lasciandolo in vigore), mentre Obsoletes annulla e sostituisce completamente l'RFC X",
+        "Updates significa che il nuovo documento contiene una traduzione rielaborata in russo, mentre Obsoletes in cinese",
+        "Updates si applica solo alle reti wireless, mentre Obsoletes a quelle in fibra ottica"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `Updates` indica che il vecchio RFC rimane lo standard di base, ma singoli paragrafi sono aggiornati dal nuovo documento. `Obsoletes` annulla completamente il vecchio documento, rendendolo non valido.",
+        "Errato. Le diciture servono per gestire il versionamento delle specifiche, non le traduzioni.",
+        "Errato. Le diciture si riferiscono alla logica di standardizzazione e non sono legate al mezzo fisico."
+      ]
+    },
+    {
+      "id": "it_net_398",
+      "widget_id": null,
+      "topic": "Standard di Internet — Pratiche Best Current Practice (BCP)",
+      "q": "Qual è lo scopo dei documenti di sottotipo BCP (Best Current Practice) nella serie RFC?",
+      "hint": "Pensa alle guide pratiche sulla configurazione, l'amministrazione e la sicurezza dell'infrastruttura di rete.",
+      "options": [
+        "La pubblicazione di raccomandazioni ufficialmente approvate sull'amministrazione, la configurazione della sicurezza e la gestione dell'infrastruttura di rete",
+        "La descrizione ufficiale dei linguaggi di programmazione C++ e Java",
+        "La formattazione dei array di dischi RAID sui server dei provider",
+        "La descrizione dei metodi di assemblaggio dei rack per server e dei mobili",
+        "La regolamentazione delle tariffe e dei prezzi dei servizi dei provider Internet"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I documenti BCP (Best Current Practice) sono linee guida sulle migliori pratiche di gestione delle reti (ad esempio il filtraggio BGP, le impostazioni DNS sicure, la lotta allo spoofing degli indirizzi BCP 38).",
+        "Errato. I linguaggi di programmazione sono sviluppati da comitati distinti (ISO/ANSI) e non sono definiti da BCP.",
+        "Errato. BCP non si occupa dell'amministrazione dei sistemi disco.",
+        "Errato. BCP non descrive l'assemblaggio fisico dei mobili.",
+        "Errato. BCP contiene raccomandazioni tecniche e operative di rete, non tariffe finanziarie."
+      ]
+    },
+    {
+      "id": "it_net_399",
+      "widget_id": "widget_net_399",
+      "topic": "Standard di Internet — Lo stato Internet Standard (STD)",
+      "q": "Quale condizione è necessaria affinché un documento RFC a livello Proposed Standard ottenga lo stato supremo di Internet Standard (STD)?",
+      "hint": "Presta attenzione alla necessità di una riuscita implementazione pratica da parte di più sviluppatori indipendenti e ad un funzionamento prolungato in reti reali.",
+      "options": [
+        "La presenza di molteplici implementazioni pratiche indipendenti ed interoperabili che abbiano dimostrato affidabilità e siano state ampiamente adottate nelle reti",
+        "Il pagamento di una quota di pubblicazione di $ 1.000.000 al fondo IETF",
+        "L'autorizzazione personale del presidente di un singolo Paese",
+        "L'assegnazione automatica dopo 100 anni dalla creazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo stato `Internet Standard` (STD) viene assegnato a una specifica solo dopo averne confermato la maturità, la presenza di implementazioni indipendenti ed intercambiabili e l'ampia adozione con successo nella rete globale.",
+        "Errato. Il processo di standardizzazione non si basa su contributi finanziari.",
+        "Errato. Gli standard IETF sono adottati per consenso aperto della comunità ingegneristica.",
+        "Errato. Lo stato viene assegnato in base a test tecnici e consenso, e non semplicemente allo scadere di un timer."
+      ]
+    },
+    {
+      "id": "it_net_400",
+      "widget_id": null,
+      "topic": "Standard di Internet — Il ruolo dell'RFC Editor",
+      "q": "Di quale fase finale è responsabile il servizio RFC Editor nel processo di trasformazione di una bozza in un RFC ufficiale?",
+      "hint": "Pensa al controllo editoriale finale, alla formattazione, all'assegnazione dell'identificativo numerico e all'archiviazione pubblica permanente.",
+      "options": [
+        "La revisione finale, l'assegnazione di un numero univoco di RFC, la formattazione e l'archiviazione permanente del documento",
+        "La scrittura del codice sorgente del protocollo in linguaggio C e la vendita dei file binari pronti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'RFC Editor è il servizio ufficiale che esegue la revisione finale, l'assegnazione del numero univoco e la pubblicazione a lungo termine dei documenti nell'archivio aperto degli RFC.",
+        "Errato. L'RFC Editor pubblica standard e specifiche testuali, non sviluppa software commerciale."
+      ]
+    }
+  ]
+}

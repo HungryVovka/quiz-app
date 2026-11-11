@@ -1,0 +1,593 @@
+{
+  "subject": "Reti",
+  "questions": [
+    {
+      "id": "it_net_481",
+      "widget_id": "widget_net_481",
+      "topic": "Edge della rete — Reti di distribuzione dei contenuti (CDN)",
+      "q": "Quale ruolo svolgono le CDN (Content Delivery Networks) nel servire le richieste dei clienti ai server?",
+      "hint": "Pensa alla distribuzione del contenuto memorizzato nella cache più vicino agli utenti per ridurre il carico sul server principale (Origin).",
+      "options": [
+        "Memorizzano nella cache il contenuto statico su server edge distribuiti, riducendo la latenza per i clienti e il carico sul server principale",
+        "Sostituiscono automaticamente l'indirizzo IP del client con IPv6 in tutti i pacchetti trasmessi",
+        "Aumentano fisicamente la velocità di propagazione del segnale nei cavi in fibra ottica",
+        "Sostituiscono il sistema operativo sui dispositivi degli utenti finali",
+        "Annullano completamente l'uso dei protocolli di trasporto TCP e UDP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La CDN posiziona gruppi di nodi di caching (Edge) più vicini ai clienti, intercettando le richieste di contenuti statici (immagini, video, script) e alleggerendo il data center centrale.",
+        "Errato. La CDN opera a livello applicativo/di rete per la consegna dei file, non per la traduzione forzata di tutti gli indirizzi in IPv6.",
+        "Errato. La velocità della luce nel mezzo di trasmissione è una costante fisica.",
+        "Errato. La CDN non influisce sul sistema operativo installato sul dispositivo del client.",
+        "Errato. La CDN funziona al di sopra dello stack di trasporto standard (TCP, UDP, QUIC)."
+      ]
+    },
+    {
+      "id": "it_net_482",
+      "widget_id": null,
+      "topic": "Edge della rete — Architetture server Stateful e Stateless",
+      "q": "Qual è la differenza principale tra le architetture server Stateless (senza stato) e Stateful (con stato)?",
+      "hint": "Pensa se il server memorizza o meno le informazioni sulle richieste precedenti del client tra le singole transazioni.",
+      "options": [
+        "Un server Stateless non memorizza i dati del client tra le richieste, facilitando la scalabilità orizzontale, mentre un server Stateful conserva i dati di sessione sul server",
+        "I server Stateful sono utilizzati solo nelle reti wireless, mentre i server Stateless sono utilizzati esclusivamente in quelle cablate"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nell'architettura Stateless ogni richiesta contiene tutte le informazioni necessarie per la sua elaborazione, quindi qualsiasi server nel pool può gestirla. In Stateful il server mantiene il contesto della sessione in memoria.",
+        "Errato. Il modo in cui lo stato dell'applicazione viene memorizzato sul server non ha alcuna relazione con il mezzo di trasmissione del livello di collegamento."
+      ]
+    },
+    {
+      "id": "it_net_483",
+      "widget_id": "widget_net_483",
+      "topic": "Edge della rete — Forward Proxy vs Reverse Proxy",
+      "q": "Quali sono le differenze di scopo tra un Forward Proxy e un Reverse Proxy?",
+      "hint": "Fai attenzione a chi viene protetto o nascosto dal proxy: i client all'interno della rete locale o i server nel data center.",
+      "options": [
+        "Un Forward Proxy agisce per conto dei client per accedere alla rete esterna, mentre un Reverse Proxy si trova davanti ai server del data center, proteggendoli e bilanciando il traffico",
+        "Un Forward Proxy viene utilizzato solo per IPv4, mentre un Reverse Proxy viene utilizzato esclusivamente per IPv6",
+        "Un Reverse Proxy modifica fisicamente la direzione della corrente elettrica nei cavi di rete",
+        "Entrambi i concetti indicano lo stesso switch non gestito di Livello 2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un Forward Proxy intercetta il traffico in uscita dei client (ad esempio in una rete aziendale), mentre un Reverse Proxy intercetta le richieste in entrata da Internet verso un gruppo di server applicativi.",
+        "Errato. Entrambi i tipi di proxy funzionano con qualsiasi versione del protocollo IP.",
+        "Errato. Il termine «reverse» si riferisce al ruolo logico nell'architettura, non ai parametri fisici della corrente.",
+        "Errato. I server proxy sono nodi software/hardware a livello applicativo/di rete, non switch L2."
+      ]
+    },
+    {
+      "id": "it_net_484",
+      "widget_id": null,
+      "topic": "Edge della rete — Data Center Interconnect (DCI)",
+      "q": "A cosa servono le tecnologie DCI (Data Center Interconnect) nelle moderne infrastrutture di rete?",
+      "hint": "Ricorda la necessità di collegare ad alta velocità più data center geograficamente distribuiti.",
+      "options": [
+        "Per l'interconnessione ad alta velocità di più data center geograficamente distanti in un'unica struttura di rete replicata",
+        "Per connettere i personal computer domestici a un provider di servizi Internet locale",
+        "Per la ricarica wireless delle batterie dei dispositivi mobili dei clienti",
+        "Per verificare il corretto funzionamento delle GPU sui laptop degli utenti",
+        "Per la pulizia automatica della cache di sistema nel sistema operativo Windows",
+        "Per il mining di criptovalute all'interno degli switch di accesso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! DCI (Data Center Interconnect) unisce due o più data center ad alte velocità (100G/400G+) per la sincronizzazione dei database, la migrazione delle macchine virtuali e il disaster recovery.",
+        "Errato. La connessione degli utenti ai provider avviene tramite reti di accesso (Last Mile), non DCI.",
+        "Errato. DCI è una tecnologia di rete per il trasferimento dati, non per la trasmissione di energia.",
+        "Errato. DCI si riferisce alla connettività di rete dei data center, non alla diagnostica dei PC locali.",
+        "Errato. DCI non ha nulla a che fare con la manutenzione del sistema operativo del client.",
+        "Errato. La tecnologia è progettata per il trasferimento del traffico di rete tra siti."
+      ]
+    },
+    {
+      "id": "it_net_485",
+      "widget_id": "widget_net_485",
+      "topic": "Edge della rete — Virtualizzazione e Containerizzazione",
+      "q": "Qual è la differenza fondamentale tra la containerizzazione (es. Docker) e la classica virtualizzazione basata su hypervisor nei data center?",
+      "hint": "Pensa se viene isolato un singolo sistema operativo guest o se viene condiviso il kernel del sistema operativo host.",
+      "options": [
+        "I container condividono il kernel del sistema operativo host e consumano meno risorse, mentre le VM eseguono un sistema operativo guest isolato sopra un hypervisor",
+        "Le macchine virtuali non richiedono un processore fisico sul server, a differenza dei container",
+        "La containerizzazione è destinata solo ai file di testo, mentre le macchine virtuali sono destinate ai database"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza delle macchine virtuali, che hanno il proprio kernel e sistema operativo guest, i container isolano i processi a livello utente condividendo il kernel dell'host (Host OS Kernel), rendendoli leggeri.",
+        "Errato. Tutti i calcoli vengono infine eseguiti sul processore fisico (CPU) del server.",
+        "Errato. Nei container è possibile distribuire qualsiasi applicazione, inclusi DBMS, server web e microservizi."
+      ]
+    },
+    {
+      "id": "it_net_486",
+      "widget_id": null,
+      "topic": "Edge della rete — Metrica PUE (Power Usage Effectiveness)",
+      "q": "Cosa indica la metrica PUE (Power Usage Effectiveness) utilizzata per valutare l'infrastruttura dei data center?",
+      "hint": "Fai attenzione al rapporto tra l'energia totale consumata dal data center e l'energia utilizzata direttamente dalle apparecchiature IT.",
+      "options": [
+        "Il rapporto tra la potenza totale consumata dall'intero data center (inclusi raffreddamento e illuminazione) e la potenza utilizzata esclusivamente dalle apparecchiature IT",
+        "Il numero di core del processore per singola unità server",
+        "La velocità di trasferimento dati tra la memoria RAM e i dispositivi di archiviazione",
+        "Il volume totale del traffico Internet passato attraverso il data center in 24 ore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! PUE = (Total Facility Energy) / (IT Equipment Energy). Il valore ideale di PUE tende a 1.0, indicando che tutta l'energia viene utilizzata per il carico IT e non per il raffreddamento o le perdite.",
+        "Errato. Il PUE valuta l'efficienza energetica dell'infrastruttura del data center, non la densità dei core del processore.",
+        "Errato. La velocità della memoria non ha alcuna relazione con la metrica energetica PUE.",
+        "Errato. Il PUE non misura il volume del traffico di rete."
+      ]
+    },
+    {
+      "id": "it_net_487",
+      "widget_id": "widget_net_487",
+      "topic": "Edge della rete — Gestione Fuori Banda (Out-of-Band / IPMI)",
+      "q": "A cosa serve la gestione fuori banda (Out-of-Band Management, IPMI / BMC / iDRAC) nei sistemi server dei data center?",
+      "hint": "Pensa al controllo remoto dell'alimentazione, del BIOS e al riavvio del server, anche se il sistema operativo principale è completamente bloccato o spento.",
+      "options": [
+        "Per il monitoraggio e la gestione remota autonoma del server tramite un controller e una porta dedicati, anche se il sistema operativo principale è inaccessibile o spento",
+        "Per velocizzare il trasferimento dei file utente tramite protocolli P2P",
+        "Per il montaggio automatico di server pesanti nel rack mediante robot",
+        "Per sostituire il sistema operativo principale durante i picchi di carico",
+        "Per il mining di criptovalute durante l'inattività del processore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I controller BMC/IPMI funzionano su un chip separato con la propria porta di rete dedicata, consentendo all'ingegnere di accendere da remoto il server, accedere al BIOS o reinstallare il sistema operativo.",
+        "Errato. La gestione fuori banda serve per l'amministrazione di sistema dell'hardware, non per il trasferimento dei file utente.",
+        "Errato. È un sistema di controllo elettronico, non un manipolatore meccanico.",
+        "Errato. Il BMC non esegue applicazioni utente e non sostituisce il sistema operativo del server.",
+        "Errato. Il BMC ha un microcontrollore molto debole, inadatto a calcoli ad alta intensità di risorse."
+      ]
+    },
+    {
+      "id": "it_net_488",
+      "widget_id": null,
+      "topic": "Edge della rete — Archiviazione dati NAS e SAN",
+      "q": "Qual è la principale differenza di rete tra i sistemi di archiviazione dati NAS (Network Attached Storage) e SAN (Storage Area Network)?",
+      "hint": "Ricorda a cosa viene fornito l'accesso in rete: al file system (livello file) o ai blocchi grezzi di spazio su disco (livello blocco).",
+      "options": [
+        "Il NAS fornisce accesso a livello di file (tramite NFS/SMB), mentre la SAN fornisce accesso a livello di blocco tramite una rete dedicata (iSCSI, Fibre Channel)",
+        "Il NAS funziona solo su fibra ottica, mentre la SAN funziona esclusivamente su canali wireless 4G/5G",
+        "La SAN viene utilizzata solo sui PC domestici, mentre il NAS esclusivamente sui supercomputer"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il NAS è un archivio di file (nodo di rete che distribuisce file tramite NFS/SMB), mentre la SAN è una rete ad alta velocità separata che fornisce ai server dispositivi a blocchi (dischi) tramite iSCSI o FC.",
+        "Errato. Il NAS lavora spesso su Ethernet standard (cavi in rame/ottici), mentre la SAN utilizza Fibre Channel o iSCSI su Ethernet.",
+        "Errato. Entrambe le tecnologie sono utilizzate nei data center e nelle infrastrutture aziendali."
+      ]
+    },
+    {
+      "id": "it_net_489",
+      "widget_id": "widget_net_489",
+      "topic": "Edge della rete — Applicazioni Server: Monolite e Microservizi",
+      "q": "Come cambia l'organizzazione dell'interazione di rete sui server nel passaggio da un'applicazione monolitica a un'architettura a microservizi?",
+      "hint": "Pensa a come il monolite effettua chiamate di funzione all'interno della memoria condivisa, mentre i microservizi comunicano tra loro in rete tramite richieste API.",
+      "options": [
+        "Invece di chiamate di funzione interne a un unico processo, i componenti comunicano tra loro in rete tramite API di rete (REST, gRPC)",
+        "Tutti i componenti del programma sono uniti in un unico processo che esclude l'interazione di rete",
+        "I microservizi eliminano completamente l'uso di router e switch nel data center",
+        "Ogni microservizio richiede un edificio fisico di data center separato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con l'architettura a microservizi, un singolo monolite viene suddiviso in servizi indipendenti che interagiscono tra loro tramite richieste di rete (HTTP/REST, gRPC, code di messaggi).",
+        "Errato. L'unione dei componenti in un unico processo è una caratteristica dell'architettura monolitica.",
+        "Errato. Le apparecchiature di rete diventano ancora più critiche poiché il volume del traffico inter-server (East-West) aumenta.",
+        "Errato. Più microservizi possono essere eseguiti su un singolo server fisico o in un singolo cluster Kubernetes."
+      ]
+    },
+    {
+      "id": "it_net_490",
+      "widget_id": null,
+      "topic": "Edge della rete — Raffreddamento dei data center: Corridoi caldi e freddi",
+      "q": "Qual è lo scopo dell'organizzazione dei corridoi «caldi» e «freddi» (Hot/Cold Aisles) nelle sale server dei data center?",
+      "hint": "Ricorda la necessità di separare l'aria fredda in entrata dall'aria calda espulsa dai server per aumentare l'efficienza del raffreddamento.",
+      "options": [
+        "Separazione dei flussi d'aria fredda fornita e d'aria calda espulsa dai server per impedirne il mescolamento e aumentare l'efficienza del controllo del clima",
+        "Separazione dei server in base al costo: i server costosi sono installati nei corridoi freddi, quelli economici in quelli caldi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I server prelevano l'aria fredda dal pannello anteriore (corridoio freddo) ed espellono l'aria riscaldata dal retro (corridoio caldo). Il loro isolamento fisico impedisce la miscelazione dei flussi e risparmia energia.",
+        "Errato. I corridoi si formano esclusivamente in base al movimento dei flussi d'aria dei sistemi di condizionamento, non al prezzo delle apparecchiature."
+      ]
+    },
+    {
+      "id": "it_net_491",
+      "widget_id": "widget_net_491",
+      "topic": "Edge della rete — Form factor dei server (Tower, Rack, Blade)",
+      "q": "Quali sono le principali differenze costruttive tra i form factor dei server Tower, Rack e Blade durante il loro utilizzo nei data center?",
+      "hint": "Fai attenzione alla densità di montaggio nei rack da 19 pollici e all'infrastruttura di alimentazione/raffreddamento condivisa.",
+      "options": [
+        "Tower: uno chassis autonomo per ufficio; Rack: moduli standard (1U-4U) da rack; Blade: schede ultracompatte in uno chassis condiviso con sistema di alimentazione e raffreddamento comune",
+        "I server Blade sono destinati solo all'uso domestico, mentre i server Tower ai data center",
+        "I server Rack funzionano esclusivamente a batteria senza essere collegati a una presa",
+        "I form factor differiscono solo per il colore dello chassis esterno"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Tower è uno chassis autonomo a torre, Rack è montato in rack da 19 pollici in singole unità (U), mentre Blade sono server sottili installati in uno chassis comune con alimentatori e ventole condivisi.",
+        "Errato. I server Blade sono utilizzati in data center ad alta densità, non a casa.",
+        "Errato. Tutti i form factor dei server si collegano a fonti di alimentazione stazionarie del data center.",
+        "Errato. Il form factor determina le dimensioni, i metodi di montaggio e l'architettura del layout hardware."
+      ]
+    },
+    {
+      "id": "it_net_492",
+      "widget_id": null,
+      "topic": "Edge della rete — Concetto di Zero Trust (Fiducia zero)",
+      "q": "Qual è il concetto principale di sicurezza «Zero Trust» (Fiducia zero) nell'interazione tra client e server?",
+      "hint": "Pensa al principio «non fidarsi mai di default», anche se il client si trova all'interno del perimetro della rete locale.",
+      "options": [
+        "Né il nodo né l'utente sono considerati affidabili per impostazione predefinita; ogni connessione richiede autenticazione e autorizzazione continue",
+        "La fiducia viene concessa automaticamente a tutti i dispositivi connessi tramite cavo Ethernet all'interno dell'ufficio",
+        "I server disabilitano completamente password e crittografia per velocizzare il lavoro"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il modello Zero Trust afferma: «Non fidarsi mai, verificare sempre» (Never Trust, Always Verify). La presenza di un dispositivo all'interno della rete interna non concede diritti di accesso automatici ai server.",
+        "Errato. Presumere la fiducia basandosi solo sulla connessione alla rete locale è un modello di protezione perimetrale obsoleto.",
+        "Errato. Al contrario, Zero Trust richiede crittografia obbligatoria e autenticazione rigorosa."
+      ]
+    },
+    {
+      "id": "it_net_493",
+      "widget_id": "widget_net_493",
+      "topic": "Edge della rete — Routing Anycast per i server",
+      "q": "In che modo il routing Anycast consente di reindirizzare le richieste dei client al server del data center più vicino?",
+      "hint": "Fai attenzione all'annuncio dello stesso indirizzo IP da parte di server diversi in posizioni geografiche diverse tramite BGP.",
+      "options": [
+        "Più server in regioni diverse annunciano lo stesso indirizzo IP tramite BGP e la rete globale instrada il traffico verso il server più vicino in base alla metrica di routing",
+        "A ogni client nel mondo viene assegnato un server personale individuale con un cavo unico",
+        "Le richieste vengono inoltrate a un server scelto casualmente nel mondo utilizzando un generatore di numeri casuali",
+        "Anycast funziona esclusivamente all'interno di un singolo rack e non viene utilizzato su Internet",
+        "Il server si sposta autonomamente nel mondo avvicinandosi alla posizione geografica del client"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In Anycast lo stesso indirizzo IP viene assegnato a server in diverse parti del mondo. I protocolli BGP instradano i pacchetti del client verso il server con la metrica minore (minor numero di hop/latenza).",
+        "Errato. Linee fisiche personali per ciascun client sono tecnicamente impossibili.",
+        "Errato. Il routing Anycast è deterministico ed è definito dalle tabelle BGP, non da numeri casuali.",
+        "Errato. Anycast viene utilizzato attivamente in Internet globale (ad esempio radice DNS, Cloudflare 1.1.1.1, Google 8.8.8.8).",
+        "Errato. È il traffico che si sposta sulla rete, non i server fisici."
+      ]
+    },
+    {
+      "id": "it_net_494",
+      "widget_id": null,
+      "topic": "Edge della rete — Affinity di sessione (Sticky Sessions / Session Affinity)",
+      "q": "Per quale scopo viene configurata la modalità Sticky Sessions (Session Affinity) sui bilanciatori di carico davanti ai server applicativi?",
+      "hint": "Pensa ai casi in cui i dati di sessione dell'utente sono memorizzati localmente nella memoria di un server specifico.",
+      "options": [
+        "Per reindirizzare tutte le successive richieste dello stesso client allo stesso server fisico che ne conserva la sessione locale",
+        "Per disconnettere forzatamente la connessione del client ogni 5 secondi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le Sticky Sessions garantiscono che il client, nell'ambito di una sessione web, raggiunga sempre lo stesso server, cosa fondamentale se lo stato della sessione non è salvato in un DB esterno (es. Redis).",
+        "Errato. La modalità di affinità di sessione mira a mantenere la continuità del lavoro del client con uno specifico server, non a interrompere la connessione."
+      ]
+    },
+    {
+      "id": "it_net_495",
+      "widget_id": "widget_net_495",
+      "topic": "Edge della rete — Aggregazione di schede di rete (NIC Teaming / Bonding)",
+      "q": "Quali sono i vantaggi principali dell'utilizzo di NIC Teaming (LACP Bonding) sui server fisici nei data center?",
+      "hint": "Pensa alla combinazione di più cavi di rete fisici per sommare la larghezza di banda e garantire la ridondanza della connessione.",
+      "options": [
+        "Aggregazione della larghezza di banda di più interfacce di rete e garanzia di tolleranza ai guasti in caso di malfunzionamento di uno dei cavi o delle porte",
+        "Aumento della quantità di memoria RAM del server tramite la scheda di rete",
+        "Conversione automatica dei file dal formato PDF a DOCX durante la trasmissione in rete",
+        "Sostituzione degli alimentatori del server con cavi di rete"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il NIC Teaming / Bonding (tramite il protocollo LACP) collega più porte di rete fisiche in una logica: questo somma la larghezza di banda del canale (es. 2x10Gbps = 20Gbps) e previene la perdita di connessione in caso di guasto a un singolo link.",
+        "Errato. Il NIC Teaming opera sulle proprietà dei canali di rete, non sulla memoria RAM.",
+        "Errato. L'aggregazione dei canali avviene ai livelli L2/L3 e non si occupa della conversione dei file.",
+        "Errato. L'alimentazione del server avviene tramite alimentatori e linee elettriche, non tramite aggregazione di rete."
+      ]
+    },
+    {
+      "id": "it_net_496",
+      "widget_id": null,
+      "topic": "Edge della rete — Doppia alimentazione dei server (A+B Power Feeds)",
+      "q": "In che modo lo schema a doppia alimentazione (A+B Power Feeds) protegge i server nel data center dai guasti?",
+      "hint": "Fai attenzione alla presenza nel server di due alimentatori indipendenti collegati a linee di rete elettrica e UPS differenti.",
+      "options": [
+        "Il server ha due alimentatori collegati a linee UPS/generatori diesel indipendenti tra loro: in caso di disconnessione della linea A, il server continua a essere alimentato dalla linea B senza riavviarsi",
+        "Il secondo alimentatore viene utilizzato per raddoppiare automaticamente la velocità del processore",
+        "Lo schema A+B viene utilizzato solo per l'illuminazione del rack server"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nello schema A+B il server è dotato di due (o più) alimentatori. La linea A e la linea B sono alimentate da trasformatori, UPS e generatori diversi. In caso di guasto a un ramo, il server continua a funzionare senza interruzioni.",
+        "Errato. L'alimentatore di riserva garantisce la tolleranza ai guasti dell'alimentazione, non l'overclocking del processore.",
+        "Errato. La doppia alimentazione è uno standard chiave per l'affidabilità dell'alimentazione delle apparecchiature IT nei data center."
+      ]
+    },
+    {
+      "id": "it_net_497",
+      "widget_id": "widget_net_497",
+      "topic": "Edge della rete — Architetture ToR (Top-of-Rack) e EoR (End-of-Row)",
+      "q": "Qual è il principale vantaggio architettonico dello schema Top-of-Rack (ToR) rispetto all'End-of-Row (EoR) nei data center?",
+      "hint": "Pensa alla lunghezza e al numero di cavi in rame che vanno dai server allo switch all'interno di un singolo rack.",
+      "options": [
+        "Lo switch è collocato all'interno di ciascun rack, riducendo la lunghezza dei cavi verso i server ed evitando la formazione di enormi fasci di cavi tra i rack",
+        "Lo schema ToR elimina completamente l'uso di cavi ottici e in rame",
+        "ToR riduce il costo dell'elettricità del 90%",
+        "In ToR gli switch sono installati sul tetto dell'edificio del data center",
+        "EoR è destinato solo a server Wi-Fi wireless",
+        "ToR richiede l'uso esclusivo di server virtuali senza hardware fisico"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In ToR (Top-of-Rack) lo switch si trova nella parte superiore dello stesso rack in cui si trovano i server: i cavi di permuta sono corti e non escono dal rack. In EoR (End-of-Row) i cavi provenienti da tutti i rack della fila vanno a un unico armadio centrale, formando percorsi ingombranti.",
+        "Errato. ToR utilizza l'infrastruttura di cablaggio standard (cavi di permuta in rame DAC/RJ45 e fibra ottica per gli uplink).",
+        "Errato. ToR ottimizza il sistema di cablaggio strutturato, non risparmia il 90% dell'energia.",
+        "Errato. Top-of-Rack indica la posizione dello switch nella parte superiore dello specifico rack server.",
+        "Errato. EoR si riferisce al layout del cablaggio della rete cablata in una fila di rack.",
+        "Errato. Entrambi gli schemi (ToR/EoR) vengono utilizzati per collegare apparecchiature fisiche nei data center."
+      ]
+    },
+    {
+      "id": "it_net_498",
+      "widget_id": null,
+      "topic": "Edge della rete — Configurazione dinamica degli host tramite DHCP",
+      "q": "Qual è la sequenza corretta dei 4 passaggi (DORA) quando un host client ottiene le impostazioni di rete da un server DHCP?",
+      "hint": "Ricorda l'acronimo DORA (Discover, Offer, Request, Acknowledge).",
+      "options": [
+        "Discover (Scoperta) -> Offer (Offerta) -> Request (Richiesta) -> Acknowledge (Conferma)",
+        "Request -> Discover -> Offer -> Acknowledge",
+        "Acknowledge -> Offer -> Discover -> Request",
+        "Offer -> Request -> Acknowledge -> Discover"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il processo DORA: 1. Il client invia un DHCP Discover in broadcast; 2. Il server risponde con DHCP Offer contenente l'IP; 3. Il client richiede i parametri tramite DHCP Request; 4. Il server conferma il lease tramite DHCP ACK.",
+        "Errato. Come primo passaggio il client esegue sempre la ricerca (Discover) del server nel segmento locale.",
+        "Errato. La conferma (ACK) conclude il processo, non lo avvia.",
+        "Errato. Il server non può fare un Offer prima di aver ricevuto un Discover dal client."
+      ]
+    },
+    {
+      "id": "it_net_499",
+      "widget_id": "widget_net_499",
+      "topic": "Edge della rete — Architettura Serverless (Serverless / FaaS)",
+      "q": "Qual è la caratteristica fondamentale del modello Serverless (Function-as-a-Service, FaaS) per l'esecuzione del codice delle applicazioni?",
+      "hint": "Pensa alla mancanza della necessità di mantenere costantemente un server in esecuzione: il codice si avvia solo al momento dell'evento e si disattiva dopo l'elaborazione.",
+      "options": [
+        "Lo sviluppatore carica solo il codice della funzione e l'infrastruttura avvia automaticamente un container al verificarsi di un evento e lo elimina al termine, con pagamento in base al tempo di esecuzione",
+        "Serverless significa assenza fisica di server nei data center: il codice viene eseguito nell'aria",
+        "FaaS richiede il noleggio permanente di un server fisico dedicato 24/7 senza possibilità di scalabilità",
+        "Le applicazioni serverless funzionano solo in assenza di una connessione Internet",
+        "Serverless vieta l'uso di database e richieste di rete esterne"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel concetto di Serverless (AWS Lambda, Google Cloud Functions) i server esistono, ma la loro amministrazione è nascosta all'utente. Il container con il codice viene avviato su chiamata (HTTP/evento), elabora la richiesta e viene distrutto.",
+        "Errato. Il nome è metaforico: i server ci sono, ma sono gestiti dal cloud provider.",
+        "Errato. FaaS elimina proprio la necessità di pagare per un server dedicato costantemente inattivo.",
+        "Errato. Le funzioni FaaS vengono solitamente richiamate in rete tramite API Gateway.",
+        "Errato. Le funzioni Serverless possono lavorare liberamente con DBMS e microservizi esterni sulla rete."
+      ]
+    },
+    {
+      "id": "it_net_500",
+      "widget_id": null,
+      "topic": "Edge della rete — Metriche di Disaster Recovery RTO e RPO",
+      "q": "Qual è il significato degli indicatori RTO (Recovery Time Objective) e RPO (Recovery Point Objective) nella pianificazione del disaster recovery dei server del data center?",
+      "hint": "Pensa al tempo massimo di inattività del server (RTO) e alla quantità massima consentita di dati persi espressa in unità di tempo (RPO).",
+      "options": [
+        "L'RTO definisce il tempo massimo di ripristino del servizio target dopo un guasto, mentre l'RPO definisce l'intervallo di tempo tollerabile per una potenziale perdita di dati",
+        "L'RTO misura la temperatura del processore, mentre l'RPO misura il numero di cavi di rete nel rack"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'RTO (tempo di ripristino) indica in quanti minuti/ore il servizio deve ripartire. L'RPO (punto di ripristino) indica il periodo di tempo per cui i dati possono andare persi (ad es. se il backup viene eseguito ogni ora, RPO = 1 ora).",
+        "Errato. RTO e RPO sono metriche target chiave per la continuità aziendale (Disaster Recovery), non parametri fisici delle apparecchiature."
+      ]
+    },
+    {
+      "id": "it_net_501",
+      "widget_id": "widget_net_501",
+      "topic": "Edge della rete — Protocolli di archiviazione dati (NVMe-oF vs iSCSI)",
+      "q": "Qual è il vantaggio chiave offerto dal protocollo NVMe-oF (NVMe over Fabrics) rispetto al tradizionale iSCSI quando si collegano i server ai sistemi di archiviazione nei data center?",
+      "hint": "Ricorda le latenze minime e l'elaborazione parallela dei comandi nel protocollo NVMe rispetto ai vecchi stack SCSI.",
+      "options": [
+        "L'uso di NVMe over Fabrics riduce drasticamente le latenze e consente di eseguire centinaia di migliaia di code di comandi parallele direttamente tramite RDMA/RoCE o Fibre Channel",
+        "NVMe-oF è destinato solo alle comunicazioni wireless tramite Wi-Fi",
+        "NVMe-oF elimina completamente la necessità di utilizzare linee in fibra ottica nel data center",
+        "NVMe-oF limita la velocità di trasmissione dati a 100 Mbps",
+        "NVMe-oF viene utilizzato esclusivamente per la trasmissione di traffico vocale VoIP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! NVMe-oF porta l'architettura NVMe sulle fabric di rete (RoCEv2, InfiniBand, FC), riducendo il overhead dello stack del SO e supportando fino a 64k code da 64k comandi ciascuna.",
+        "Errato. NVMe-oF è un protocollo per reti di archiviazione cablate ad alta velocità (SAN).",
+        "Errato. NVMe-oF utilizza attivamente la fibra ottica (Fibre Channel, 100G+ Ethernet).",
+        "Errato. NVMe-oF viene utilizzato a velocità di 10, 25, 40, 100+ Gbps.",
+        "Errato. Il protocollo è progettato per l'interazione tra server e unità disco, non per la telefonia."
+      ]
+    },
+    {
+      "id": "it_net_502",
+      "widget_id": null,
+      "topic": "Edge della rete — Microsegmentazione nei data center",
+      "q": "Qual è l'essenza del concetto di microsegmentazione (Microsegmentation) dell'infrastruttura di rete nei moderni data center?",
+      "hint": "Pensa alla separazione del traffico tra le singole macchine virtuali e i container (traffico East-West) a livello di regole di sicurezza isolate.",
+      "options": [
+        "Isolamento e filtraggio del traffico a livello di singole macchine virtuali o container per impedire il movimento laterale di un attaccante (East-West)",
+        "Divisione del data center in più stanze fisiche a seconda del colore dei rack server",
+        "Uso esclusivo di cavi di lunghezza non superiore a 10 centimetri"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La microsegmentazione divide la rete in piccole zone isolate fino al livello di singola VM o Pod, bloccando il traffico inter-server non autorizzato (East-West).",
+        "Errato. La microsegmentazione è un concetto di sicurezza logico software-defined, non la disposizione fisica dei rack.",
+        "Errato. La lunghezza dei cavi di permuta non ha a che fare con la microsegmentazione di rete."
+      ]
+    },
+    {
+      "id": "it_net_503",
+      "widget_id": "widget_net_503",
+      "topic": "Edge della rete — Clustering di server (Active-Active vs Active-Passive)",
+      "q": "Qual è la differenza tra un cluster ad alta disponibilità in modalità Active-Active e uno in modalità Active-Passive?",
+      "hint": "Fai attenzione al fatto che tutti i nodi del cluster elaborino il traffico in entrata contemporaneamente o che una parte dei nodi sia in attesa di un guasto.",
+      "options": [
+        "In Active-Active tutti i nodi elaborano contemporaneamente il carico in entrata, mentre in Active-Passive il nodo di riserva rimane inattivo fino al guasto del nodo principale",
+        "In Active-Passive i nodi funzionano due volte più velocemente rispetto all'Active-Active",
+        "La modalità Active-Active viene utilizzata solo per i server web, mentre l'Active-Passive solo per i router",
+        "L'Active-Passive richiede la presenza obbligatoria di tre data center fisici in continenti diversi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In modalità Active-Active il traffico viene bilanciato tra tutti i nodi contemporaneamente. In Active-Passive il nodo passivo è in modalità hot-standby e accetta il traffico solo in caso di guasto del nodo principale.",
+        "Errato. La modalità Active-Passive non offre un aumento di velocità, poiché solo un nodo è attivo.",
+        "Errato. Entrambe le modalità vengono applicate a DBMS, servizi web, firewall e altri sistemi.",
+        "Errato. Gli schemi di ridondanza possono essere implementati all'interno di un singolo rack o data center."
+      ]
+    },
+    {
+      "id": "it_net_504",
+      "widget_id": null,
+      "topic": "Edge della rete — Replicazione sincrona e asincrona dei database",
+      "q": "Qual è il compromesso nella scelta tra la replicazione sincrona e asincrona dei database tra data center?",
+      "hint": "Pensa alla garanzia di zero perdite di dati in caso di guasto a costo di una maggiore latenza di scrittura rispetto a una scrittura rapida con il rischio di perdere le ultime transazioni.",
+      "options": [
+        "La replicazione sincrona garantisce zero perdite di dati, ma aumenta la latenza di scrittura; la replicazione asincrona offre un'elevata velocità di scrittura, ma consente la perdita delle ultime transazioni in caso di incidente",
+        "La replicazione asincrona garantisce la totale assenza di latenze in qualsiasi rete globale e la conservazione al 100% dei dati senza eccezioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La replicazione sincrona attende la conferma di scrittura da parte del nodo remoto prima di completare la transazione (aumentando l'RTT), mentre la replicazione asincrona conferma la scrittura localmente e invia i dati in background.",
+        "Errato. La replicazione asincrona, in caso di guasto del nodo principale, può perdere transazioni che non sono ancora state trasmesse in rete."
+      ]
+    },
+    {
+      "id": "it_net_505",
+      "widget_id": "widget_net_505",
+      "topic": "Edge della rete — Infrastructure as Code (IaC)",
+      "q": "Qual è il vantaggio principale dell'utilizzo dell'approccio «Infrastructure as Code» (IaC) durante la distribuzione dei server nel data center?",
+      "hint": "Pensa all'automazione, al versionamento delle configurazioni e alla riproducibilità dell'ambiente utilizzando codice dichiarativo.",
+      "options": [
+        "Gestione automatizzata, riproducibile e sottoposta a versionamento della configurazione di server e reti mediante script e file dichiarativi",
+        "Sostituzione completa dei server fisici con documenti cartacei",
+        "Riduzione automatica della temperatura nella sala server a 0°C",
+        "Annullamento di tutti i requisiti di sicurezza e protezione tramite password",
+        "Aumento della resistenza fisica dei rack metallici",
+        "Divieto di utilizzo di virtualizzazione e container"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli strumenti IaC (Terraform, Ansible) descrivono lo stato target dell'infrastruttura sotto forma di codice, consentendo di distribuire e gestire le versioni di macchine virtuali, reti e impostazioni rapidamente e senza errori.",
+        "Errato. L'IaC gestisce le risorse virtuali e fisiche tramite API, non con la carta.",
+        "Errato. Della gestione della temperatura si occupano i sistemi di condizionamento di precisione (HVAC).",
+        "Errato. L'IaC al contrario aumenta la sicurezza grazie all'assenza dell'fattore umano durante la configurazione.",
+        "Errato. L'IaC si riferisce alla gestione software dell'infrastruttura, non al metallo dei rack.",
+        "Errato. L'IaC viene utilizzato attivamente per la gestione di container e macchine virtuali."
+      ]
+    },
+    {
+      "id": "it_net_506",
+      "widget_id": null,
+      "topic": "Edge della rete — Orchestrazione dei container (Kubernetes)",
+      "q": "Quali sono le funzioni di Kubernetes (k8s) nella gestione delle applicazioni containerizzate sui server nel data center?",
+      "hint": "Pensa al ridimensionamento automatico, all'auto-ripristino (self-healing) e al bilanciamento del traffico tra i container.",
+      "options": [
+        "Posizionamento automatico, ridimensionamento, auto-ripristino in caso di guasti e connettività di rete dei container in un cluster di server",
+        "Assemblaggio fisico dei rack server negli stabilimenti di produzione",
+        "Monitoraggio della tensione nelle reti elettriche domestiche dell'ufficio",
+        "Compilazione del codice sorgente delle applicazioni C++ in file binari"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Kubernetes distribuisce automaticamente i container (Pod) sui nodi del cluster, ne monitora lo stato, riavvia quelli arrestati e bilancia il traffico di rete.",
+        "Errato. Kubernetes è un sistema software di orchestrazione, non una produzione industriale di hardware.",
+        "Errato. Delle reti elettriche si occupano i sistemi tecnologici del data center (UPS, PDU).",
+        "Errato. La compilazione viene eseguita nelle pipeline CI/CD, mentre Kubernetes distribuisce immagini già pronte."
+      ]
+    },
+    {
+      "id": "it_net_507",
+      "widget_id": "widget_net_507",
+      "topic": "Edge della rete — Controllo dello stato di salute L4/L7 (Health Checks)",
+      "q": "Qual è la differenza tra un controllo dello stato di salute del server a livello L4 (Trasporto) e a livello L7 (Applicativo)?",
+      "hint": "Pensa se è sufficiente avere una porta TCP aperta (L4) o se è richiesta una risposta HTTP corretta dall'applicazione (L7, ad es. 200 OK).",
+      "options": [
+        "Il controllo L4 verifica solo l'apertura della porta TCP/UDP, mentre il controllo L7 verifica la risposta logica dell'applicazione (ad esempio, codice HTTP 200 OK)",
+        "Il controllo L7 misura la temperatura fisica del processore, mentre il controllo L4 misura la velocità della ventola",
+        "I controlli L4 vengono eseguiti solo manualmente da un ingegnere, mentre i controlli L7 da un sistema automatico"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il controllo L4 tenta semplicemente di stabilire una connessione TCP su una porta (ad es. 80). Il controllo L7 effettua una vera richiesta al servizio web e controlla lo status code e il contenuto della risposta (l'applicazione potrebbe essere bloccata, anche se la porta è aperta).",
+        "Errato. I livelli L4 e L7 si riferiscono al modello OSI, non ai sensori di monitoraggio hardware.",
+        "Errato. Entrambi i controlli vengono effettuati automaticamente dal bilanciatore di carico."
+      ]
+    },
+    {
+      "id": "it_net_508",
+      "widget_id": null,
+      "topic": "Edge della rete — Ridondanza dell'alimentazione (N+1, 2N)",
+      "q": "Cosa significa uno schema di ridondanza dell'infrastruttura tecnologica 2N in un data center?",
+      "hint": "Pensa a una duplicazione al 100% di tutti i componenti (due sistemi paralleli completamente indipendenti).",
+      "options": [
+        "Duplicazione completa al 100% dell'intero sistema: presenza di due percorsi indipendenti di alimentazione/raffreddamento, ciascuno in grado di sostenere il 100% del carico",
+        "Presenza di un componente principale e di un fusibile di riserva nella scatola",
+        "Presenza di due dipendenti aggiuntivi in ogni turno del data center",
+        "Connessione del server a due batterie di formato AA",
+        "Limitazione del consumo energetico del server a due watt"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo schema 2N fornisce un sistema di ridondanza completo. Se la linea principale di alimentazione o il sistema di raffreddamento si guastano completamente, il percorso di riserva subentra assumendosi il 100% della potenza senza interrompere i servizi.",
+        "Errato. Un fusibile di riserva non garantisce una commutazione automatica senza interruzioni sotto carico.",
+        "Errato. Lo schema di ridondanza si riferisce alle capacità tecnologiche e alle apparecchiature del data center.",
+        "Errato. L'alimentazione dei server proviene da linee industriali UPS e gruppi elettrogeni diesel.",
+        "Errato. 2N è la designazione del livello di ridondanza (Redundancy Level)."
+      ]
+    },
+    {
+      "id": "it_net_509",
+      "widget_id": "widget_net_509",
+      "topic": "Edge della rete — Gateway di periferia (Edge Gateways)",
+      "q": "Qual è il compito principale svolto dagli Edge Gateway nell'acquisizione di dati da migliaia di dispositivi IoT?",
+      "hint": "Fai attenzione al filtraggio primario, all'aggregazione e all'elaborazione locale del flusso di dati grezzi prima che venga inviato al cloud centrale.",
+      "options": [
+        "Filtraggio primario, aggregazione ed elaborazione locale dei dati per risparmiare larghezza di banda e ridurre il traffico verso il data center centrale",
+        "Conversione di tutti i dati di testo in entrata in un segnale radio analogico nella banda FM"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli Edge Gateway elaborano i flussi di telemetria direttamente sul posto (filtrano i duplicati, comprimono i dati, eseguono analisi locali) e trasmettono al data center cloud solo i report aggregati.",
+        "Errato. I gateway funzionano con protocolli digitali (MQTT, CoAP, HTTP) e non si occupano di trasmissioni FM."
+      ]
+    },
+    {
+      "id": "it_net_510",
+      "widget_id": null,
+      "topic": "Edge della rete — Moduli hardware di sicurezza (HSM)",
+      "q": "Per quali scopi vengono utilizzati i moduli hardware di sicurezza (Hardware Security Module, HSM) nelle infrastrutture server dei data center?",
+      "hint": "Pensa a un dispositivo fisico sicuro per l'archiviazione e la generazione di chiavi crittografiche, isolato dal sistema operativo principale.",
+      "options": [
+        "Archiviazione hardware sicura, generazione e gestione delle chiavi crittografiche con protezione da intrusioni fisiche e software",
+        "Aumento della quantità di memoria video degli acceleratori grafici",
+        "Estinzione automatica degli incendi nel rack server mediante anidride carbonica",
+        "Blocco fisico delle porte della sala server all'accensione delle luci"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'HSM (Hardware Security Module) è un dispositivo fisico (scheda o unità esterna) ad elevata protezione in cui vengono eseguite operazioni crittografiche e conservate le chiavi private SSL/TLS, CA o dei sistemi di pagamento.",
+        "Errato. L'HSM non è responsabile della memoria video (VRAM).",
+        "Errato. Dell'estinzione degli incendi si occupano sistemi antincendio a gas specializzati (gas Freon, Novec).",
+        "Errato. Del blocco delle porte si occupa il sistema di controllo accessi (ACS)."
+      ]
+    }
+  ]
+}

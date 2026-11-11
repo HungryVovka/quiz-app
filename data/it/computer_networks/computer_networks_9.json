@@ -1,0 +1,597 @@
+{
+  "subject": "Reti",
+  "questions": [
+    {
+      "id": "it_net_281",
+      "widget_id": "widget_net_281",
+      "topic": "Configurazione del client TCP in C — Timeout di lettura bloccante (SO_RCVTIMEO)",
+      "q": "In che modo un client C può prevenire il blocco indefinito della chiamata recv() se il server smette di rispondere o si blocca?",
+      "hint": "Si pensi alla configurazione di un timeout a livello di socket tramite la chiamata setsockopt() e la struttura timeval.",
+      "options": [
+        "Impostare l'opzione SO_RCVTIMEO tramite setsockopt(), passando una struttura timeval con il tempo di attesa desiderato",
+        "Riavviare la funzione recv() in un ciclo infinito senza ritardi",
+        "Ridurre forzatamente la dimensione del buffer di ricezione di rete a 1 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'impostazione dell'opzione `SO_RCVTIMEO` stabilisce il tempo massimo di attesa per i dati in ingresso. Se entro l'intervallo specificato (ad esempio 5 secondi) non arrivano byte, `recv()` interrompe l'attesa, restituisce `-1` e `errno` viene impostato su `EWOULDBLOCK` o `EAGAIN`.",
+        "Errato. Un ciclo infinito senza timeout porterà al 100% di utilizzo della CPU o al blocco permanente del thread.",
+        "Errato. La riduzione del buffer di ricezione non risolverà il problema del ritardo di risposta e rallenterà solo il funzionamento del socket."
+      ]
+    },
+    {
+      "id": "it_net_282",
+      "widget_id": null,
+      "topic": "Configurazione del client TCP in C — Determinazione dell'indirizzo e della porta locali (getsockname)",
+      "q": "Quale funzione della Socket API consente di conoscere l'indirizzo IP locale e la porta assegnati dal sistema operativo al socket del client C dopo la chiamata a connect()?",
+      "hint": "Si ricordi la chiamata di sistema che estrae il nome (indirizzo) del lato locale di un socket connesso.",
+      "options": [
+        "getsockname()",
+        "getpeername()",
+        "gethostbyname()",
+        "inet_ntop()",
+        "listen()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La funzione `getsockname(sockfd, addr, addrlen)` restituisce l'indirizzo locale e la porta effimera automaticamente associate dal kernel a questo socket al momento della chiamata a `connect()`.",
+        "Errato. `getpeername()` restituisce l'indirizzo e la porta del lato opposto (remoto) della connessione.",
+        "Errato. `gethostbyname()` è una funzione obsoleta del risolutore DNS.",
+        "Errato. `inet_ntop()` converte un indirizzo IP binario in una stringa, ma non interroga autonomamente i parametri del socket.",
+        "Errato. `listen()` imposta il socket in modalità di ascolto per le connessioni in ingresso sul server."
+      ]
+    },
+    {
+      "id": "it_net_283",
+      "widget_id": "widget_net_283",
+      "topic": "Configurazione del client TCP in C — Protezione dal segnale SIGPIPE (MSG_NOSIGNAL)",
+      "q": "Cosa succede se un client C tenta di eseguire send() su un socket TCP che è già stato esplicitamente chiuso dal server e ripristinato con un pacchetto RST?",
+      "hint": "Si consideri il comportamento predefinito dei sistemi Unix quando si tenta di scrivere in una pipe interrotta (Broken Pipe) e come il flag MSG_NOSIGNAL protegge il processo dall'interruzione anomala.",
+      "options": [
+        "Il sistema operativo genererà per impostazione predefinita il segnale SIGPIPE, che interromperà il processo del client se il segnale non viene gestito o soppresso con il flag MSG_NOSIGNAL",
+        "La funzione send() ripristinerà automaticamente la connessione di rete con il server",
+        "I dati verranno salvati in un file locale su disco",
+        "Il sistema operativo ignorerà la scrittura e restituirà un codice di successo pari a 0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il tentativo di scrittura su un socket chiuso dalla parte remota (che ha ricevuto un RST) comporta l'invio del segnale del SO `SIGPIPE`. Per impostazione predefinita, questo interrompe immediatamente il programma. Per prevenire il crash al richiamo di `send()`, si utilizza il flag `MSG_NOSIGNAL` oppure si ignora il segnale con `signal(SIGPIPE, SIG_IGN)`.",
+        "Errato. Il livello di trasporto non può ripristinare automaticamente una sessione TCP interrotta senza l'intervento dell'applicazione.",
+        "Errato. L'API socket non dispone di un meccanismo integrato di memorizzazione nella cache del file system per i byte non scritti.",
+        "Errato. In caso di errore, la chiamata restituisce `-1` e genera un segnale o l'errore `EPIPE`."
+      ]
+    },
+    {
+      "id": "it_net_284",
+      "widget_id": "widget_net_284",
+      "topic": "Configurazione del client TCP in C — Gestione dell'interruzione delle chiamate di sistema (EINTR)",
+      "q": "Come deve reagire un client C se una chiamata di sistema di rete (recv o connect) restituisce -1 e la variabile errno è pari a EINTR?",
+      "hint": "Si consideri se EINTR sia un errore fatale di connessione o semplicemente un segnale del SO che ha interrotto l'attesa di I/O.",
+      "options": [
+        "Ripetere il tentativo di esecuzione della chiamata di sistema, in quanto l'operazione è stata solo temporaneamente interrotta da un segnale asincrono del SO",
+        "Distruggere immediatamente il socket e interrompere in modo anomalo l'intero programma"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `EINTR` (Interrupted system call) indica che la chiamata di sistema è stata interrotta da un gestore di segnali del SO prima che si verificassero eventi di rete. La connessione rimane valida, quindi la chiamata deve essere semplicemente ripetuta.",
+        "Errato. `EINTR` non è un guasto di rete né un indicatore di socket interrotto."
+      ]
+    },
+    {
+      "id": "it_net_285",
+      "widget_id": "widget_net_285",
+      "topic": "Configurazione del client TCP in C — Formattazione manuale di una richiesta HTTP nel socket",
+      "q": "Quale regola di formattazione della stringa di testo di una richiesta HTTP/1.1 deve rispettare un client TCP in C quando invia dati a un server web tramite socket?",
+      "hint": "Si ricordi lo standard per la fine delle righe nel protocollo HTTP (\\r\\n) e l'intestazione obbligatoria Host.",
+      "options": [
+        "Ogni riga deve terminare con la sequenza \\r\\n (CRLF), l'intestazione Host è obbligatoria e la richiesta stessa termina con una riga vuota (doppio \\r\\n\\r\\n)",
+        "Le righe della richiesta HTTP devono essere separate esclusivamente dal carattere nullo '\\0'",
+        "La richiesta HTTP deve obbligatoriamente iniziare con i due byte 0xFF 0xD8",
+        "Il testo della richiesta deve essere compresso in formato GZIP prima di chiamare send()",
+        "La richiesta non deve contenere spazi",
+        "Alla fine della richiesta deve essere obbligatoriamente specificato l'indirizzo MAC del client"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il protocollo HTTP/1.1 (RFC 7230) richiede rigorosamente l'uso di `\\r\\n` (Carriage Return + Line Feed) per separare le intestazioni, la presenza obbligatoria dell'intestazione `Host:`, nonché una riga vuota `\\r\\n\\r\\n` alla fine delle intestazioni.",
+        "Errato. Il terminatore nullo `\\0` è un carattere proprio del linguaggio C e non deve essere inviato nel corpo delle intestazioni HTTP.",
+        "Errato. `0xFF 0xD8` è l'intestazione di un file in formato JPEG.",
+        "Errato. Le intestazioni HTTP vengono trasmesse in formato testo in chiaro.",
+        "Errato. Gli spazi sono separatori standard per metodi, URI e versioni del protocollo (ad esempio `GET / HTTP/1.1`).",
+        "Errato. L'indirizzo MAC appartiene al livello L2 e non viene incluso in una richiesta HTTP di livello L7."
+      ]
+    },
+    {
+      "id": "it_net_286",
+      "widget_id": null,
+      "topic": "Configurazione del client TCP in C — Iterazione sull'elenco delle strutture getaddrinfo",
+      "q": "Perché nella scrittura di un client TCP affidabile in C si raccomanda di scorrere i risultati della funzione getaddrinfo() all'interno di un ciclo?",
+      "hint": "Si consideri che un nome di dominio può essere risolto in diversi indirizzi IP (ad esempio IPv6 e IPv4), alcuni dei quali potrebbero non essere raggiungibili.",
+      "options": [
+        "getaddrinfo() restituisce una lista concatenata di indirizzi; il ciclo consente di tentare la connessione (connect) a ciascuno in sequenza finché uno di essi non ha successo",
+        "Il ciclo è necessario per ripulire la memoria RAM dai dati DNS spazzatura",
+        "È richiesto per calcolare il checksum di tutti gli indirizzi IP del server",
+        "Senza il ciclo, la funzione socket() creerebbe esattamente 100 socket contemporaneamente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `getaddrinfo()` restituisce una lista concatenata di `struct addrinfo`. Un server può avere più record A/AAAA (IPv4/IPv6). Il client scorre questa lista in un ciclo: se per l'elemento corrente `socket()` o `connect()` falliscono, il client chiude il socket non funzionante e tenta l'indirizzo successivo.",
+        "Errato. La liberazione della memoria della lista viene eseguita tramite la chiamata `freeaddrinfo()`, non tramite un ciclo di connessione.",
+        "Errato. I checksum vengono calcolati automaticamente dai protocolli IP/TCP nel kernel.",
+        "Errato. La chiamata a `socket()` crea rigorosamente un solo socket per ciascuna chiamata."
+      ]
+    },
+    {
+      "id": "it_net_287",
+      "widget_id": "widget_net_287",
+      "topic": "Configurazione del client TCP in C — Confronto tra write() e send()",
+      "q": "Qual è la differenza tra le chiamate POSIX write(sockfd, buf, len) e send(sockfd, buf, len, flags) durante l'invio di dati a un socket in C?",
+      "hint": "Si consideri la presenza del parametro aggiuntivo relativo ai flag nella funzione send().",
+      "options": [
+        "write() è una chiamata di sistema universale per la scrittura su qualsiasi descrittore di file, mentre send() aggiunge il parametro flags per gestire la trasmissione (ad esempio MSG_NOSIGNAL o MSG_OOB)",
+        "write() funziona solo con IPv4, mentre send() solo con IPv6",
+        "send() trasmette dati esclusivamente in formato binario, mentre write() solo in formato testo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `write(fd, buf, len)` è una chiamata I/O POSIX universale. La chiamata `send(sockfd, buf, len, flags)` con `flags = 0` è assolutamente equivalente a `write()`, ma offre la possibilità di passare flag specifici per i socket di rete.",
+        "Errato. Entrambe le chiamate funzionano a livello di descrittori di file e sono del tutto indipendenti dalla versione del protocollo IP.",
+        "Errato. Entrambe le chiamate operano su sequenze grezze di byte in memoria."
+      ]
+    },
+    {
+      "id": "it_net_288",
+      "widget_id": null,
+      "topic": "Configurazione del client TCP in C — Porte effimere (Ephemeral Ports)",
+      "q": "Che cos'è una porta effimera (Ephemeral Port) assegnata a un client TCP durante la chiamata a connect()?",
+      "hint": "Si pensi a una porta temporanea e univoca estratta dall'intervallo dinamico del SO, assegnata per identificare il punto di connessione locale.",
+      "options": [
+        "Un numero di porta temporaneo dall'intervallo dinamico (ad esempio 49152-65535), assegnato automaticamente dal kernel del SO per la connessione in uscita del client",
+        "Un numero di porta permanente (da 1 a 1024), registrato presso l'IANA per un programma specifico",
+        "Una porta virtuale all'interno della scheda video per accelerare il rendering",
+        "Un numero di porta speciale utilizzato solo durante i guasti alla rete elettrica",
+        "Una porta crittografata tramite chiavi blockchain monouso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se il client prima di `connect()` non chiama `bind()` su una porta specifica, il kernel del SO seleziona automaticamente una porta libera dall'intervallo delle porte effimere (Ephemeral Ports) per identificare la quadrupla (IP locale, porta locale, IP remoto, porta remota).",
+        "Errato. Le porte registrate e privilegiate (Well-known ports 1-1023) sono solitamente occupate dai server (ad esempio HTTP 80, HTTPS 443).",
+        "Errato. Le porte effimere appartengono allo stack di rete a livello di trasporto (TCP/UDP) nel kernel del SO.",
+        "Errato. L'assegnazione della porta è un normale processo di rete non legato all'alimentazione elettrica.",
+        "Errato. Le porte effimere sono semplici numeri interi a 16 bit, senza l'uso di blockchain."
+      ]
+    },
+    {
+      "id": "it_net_289",
+      "widget_id": "widget_net_289",
+      "topic": "Configurazione del client TCP in C — Flag MSG_PEEK durante la lettura",
+      "q": "Quale azione speciale esegue il flag MSG_PEEK durante la chiamata recv(sockfd, buffer, len, MSG_PEEK) in un client C?",
+      "hint": "Si consideri l'ispezione dei byte nel buffer di ricezione senza la loro effettiva rimozione dalla coda del kernel.",
+      "options": [
+        "Legge i dati dal buffer di ricezione del socket lasciandoli nella coda del kernel, consentendo alle successive chiamate a recv() di leggerli nuovamente",
+        "Svuota forzatamente il buffer di ricezione del socket senza copiare i dati nel programma",
+        "Converte tutti i caratteri ricevuti in lettere maiuscole",
+        "Restituisce la distanza fisica esatta in chilometri fino al server"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `MSG_PEEK` consente di «sbirciare» i dati nel buffer in arrivo. I dati vengono copiati nel `buffer` dell'utente ma non vengono rimossi dalla coda di ricezione del sistema nel kernel.",
+        "Errato. Per scartare i dati dal buffer li si legge semplicemente con una normale `recv()` senza usare `MSG_PEEK`.",
+        "Errato. `recv()` con qualsiasi flag copia i byte così come sono, senza modificare il testo.",
+        "Errato. `recv()` lavora a livello L4 e non misura distanze fisiche."
+      ]
+    },
+    {
+      "id": "it_net_290",
+      "widget_id": null,
+      "topic": "Configurazione del client TCP in C — Differenza tra getsockopt e setsockopt",
+      "q": "Qual è la differenza fondamentale tra le funzioni di sistema getsockopt() e setsockopt() quando si lavora con i socket di rete?",
+      "hint": "Distinguere la lettura delle opzioni correnti del socket dalla scrittura/configurazione di nuovi parametri.",
+      "options": [
+        "setsockopt() modifica i parametri e il comportamento del socket (timeout, dimensioni buffer), mentre getsockopt() recupera i valori correnti dei parametri o lo stato degli errori",
+        "setsockopt() si usa solo sul server, mentre getsockopt() esclusivamente sul client"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `setsockopt()` modifica le impostazioni del socket (ad esempio `SO_REUSEADDR`, `SO_RCVTIMEO`, `TCP_NODELAY`), mentre `getsockopt()` serve a ispezionare le impostazioni correnti o a leggere lo stato degli errori (`SO_ERROR`).",
+        "Errato. Entrambe le funzioni sono universali e vengono utilizzate sia nelle applicazioni server che client."
+      ]
+    },
+    {
+      "id": "it_net_291",
+      "widget_id": "widget_net_291",
+      "topic": "Configurazione del client TCP in C — Opzione SO_REUSEADDR per il riavvio rapido del socket",
+      "q": "Perché nella configurazione di un socket in C, prima dell'associazione (bind) o della riconnessione, si applica l'opzione SO_REUSEADDR?",
+      "hint": "Si consideri lo stato del socket TIME_WAIT dopo la chiusura di una connessione TCP e la possibilità di riutilizzare immediatamente la porta locale.",
+      "options": [
+        "Consente di riassociare immediatamente il socket a una porta locale nello stato TIME_WAIT dopo la chiusura della connessione precedente",
+        "Abilita la compressione hardware del traffico sulla scheda di rete",
+        "Costringe il socket a ignorare qualsiasi errore di timeout"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Dopo la chiusura di una connessione TCP, la porta locale rimane bloccata dal SO per un tempo pari a 2*MSL (stato TIME_WAIT). L'opzione `SO_REUSEADDR` consente all'applicazione di riassociare immediatamente il socket alla stessa porta senza attendere lo scadere del timer.",
+        "Errato. L'opzione `SO_REUSEADDR` riguarda esclusivamente le regole di associazione delle porte nel kernel e non gestisce la compressione dei dati.",
+        "Errato. Le impostazioni dei timeout sono definite da opzioni separate (`SO_RCVTIMEO`, `SO_SNDTIMEO`)."
+      ]
+    },
+    {
+      "id": "it_net_292",
+      "widget_id": null,
+      "topic": "Configurazione del client TCP in C — Disattivazione dell'algoritmo di Nagle (TCP_NODELAY)",
+      "q": "A cosa serve l'opzione di socket TCP_NODELAY (livello IPPROTO_TCP) in un client TCP in C?",
+      "hint": "Si presti attenzione all'invio di piccoli pacchetti senza attendere l'accumulo di un MSS completo o la ricezione di un ACK (algoritmo di Nagle).",
+      "options": [
+        "Per disattivare l'algoritmo di Nagle (Nagle's algorithm), riducendo la latenza nell'invio di piccoli messaggi grazie alla trasmissione immediata dei pacchetti",
+        "Per aumentare la dimensione massima della finestra TCP (Window Scaling)",
+        "Per forzare l'uso di UDP al posto di TCP",
+        "Per prevenire la frammentazione dei pacchetti IP da parte dei router"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per impostazione predefinita, l'algoritmo di Nagle inserisce in un buffer le piccole porzioni di dati per unirle prima dell'invio. L'impostazione di `TCP_NODELAY` disabilita il ritardo di buffering, costringendo lo stack a inviare i pacchetti immediatamente (necessario per applicazioni interattive come SSH o giochi online).",
+        "Errato. Della dimensione della finestra si occupa il meccanismo TCP Window Scale Option (RFC 7323) e non `TCP_NODELAY`.",
+        "Errato. Questa opzione appartiene al protocollo TCP e non modifica il protocollo di trasporto in UDP.",
+        "Errato. Della prevenzione della frammentazione si occupa il bit Don't Fragment (DF) nell'intestazione IP (`IP_MTU_DISCOVER`)."
+      ]
+    },
+    {
+      "id": "it_net_293",
+      "widget_id": "widget_net_293",
+      "topic": "Configurazione del client TCP in C — Impostazione del socket in modalità non bloccante (fcntl)",
+      "q": "Quale comportamento mostrano le chiamate connect() e recv() dopo aver impostato un socket TCP in modalità non bloccante tramite fcntl()?",
+      "hint": "Si consideri la restituzione immediata del controllo dalla chiamata di sistema con codice di errore EINPROGRESS o EAGAIN/EWOULDBLOCK invece dell'attesa del completamento dell'I/O.",
+      "options": [
+        "Le chiamate restituiscono immediatamente il controllo: connect() restituisce -1 con errno=EINPROGRESS, mentre recv() restituisce -1 con errno=EAGAIN/EWOULDBLOCK se i dati non sono pronti",
+        "Le chiamate bloccano il thread dell'applicazione per un tempo fisso (sempre per 10 secondi)",
+        "La funzione recv() inizia a creare automaticamente nuovi thread per ogni byte ricevuto",
+        "Il socket smette di ricevere dati e funziona solo in invio",
+        "La chiamata di sistema fcntl() rimuove il socket dalla memoria RAM"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `O_NONBLOCK` disattiva il blocco del thread. Lo stabilirsi della connessione prosegue in background (`connect()` restituirà `-1` e `EINPROGRESS`), mentre `recv()`, in assenza di dati, restituirà subito `-1` con `EAGAIN` o `EWOULDBLOCK`.",
+        "Errato. La modalità non bloccante elimina completamente il blocco del thread del processore.",
+        "Errato. L'API dei socket del kernel non gestisce la creazione di thread nello spazio utente.",
+        "Errato. Il socket rimane full-duplex.",
+        "Errato. `fcntl()` modifica solo i flag del descrittore di file e non chiude/rimuove il socket."
+      ]
+    },
+    {
+      "id": "it_net_294",
+      "widget_id": null,
+      "topic": "Configurazione del client TCP in C — Assemblaggio di un messaggio composito in un ciclo recv()",
+      "q": "Se un client TCP deve ricevere esattamente 256 byte di una struttura dati dal server, perché non è sufficiente scrivere una singola chiamata recv(sockfd, &buf, 256, 0)?",
+      "hint": "Si ricordi che TCP è un protocollo basato su flusso e che i buffer di rete del kernel possono restituire meno byte di quelli richiesti.",
+      "options": [
+        "recv() può restituire qualsiasi numero di byte da 1 a 256 a seconda della frammentazione di rete e del riempimento dei buffer del kernel, pertanto la lettura deve essere eseguita in un ciclo fino all'accumulo completo dei 256 byte",
+        "Una singola chiamata a recv() causa sempre il blocco del programma quando si ricevono più di 64 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `recv()` garantisce solo la lettura da 1 a `len` byte (se la connessione non è chiusa). TCP non preserva i confini dei messaggi, pertanto per raccogliere un numero esatto di byte (ad esempio l'intestazione fissa di una struttura) è necessario un ciclo di lettura accumulativa.",
+        "Errato. Non esiste alcun limite a 64 byte: `recv()` è limitato solo dalla dimensione del buffer passato."
+      ]
+    },
+    {
+      "id": "it_net_295",
+      "widget_id": "widget_net_295",
+      "topic": "Configurazione del client TCP in C — Chiusura parziale della connessione (shutdown)",
+      "q": "Qual è il vantaggio dell'uso della chiamata shutdown(sockfd, SHUT_WR) rispetto a close(sockfd) al termine dell'invio di una richiesta al server?",
+      "hint": "Si ricordi il concetto di connessione parzialmente chiusa (Half-Closed Connection), in cui il client chiude la trasmissione (WR) lasciando aperta la ricezione della risposta (RD).",
+      "options": [
+        "shutdown(SHUT_WR) invia un segmento FIN al server segnalando la fine della richiesta, ma lascia il socket aperto per la lettura della risposta in arrivo",
+        "shutdown(SHUT_WR) interrompe istantaneamente il cavo fisico di comunicazione",
+        "shutdown() cancella la cronologia delle connessioni di rete dai log del sistema operativo",
+        "close() esegue la chiusura parziale, mentre shutdown() rimuove il processo dalla tabella dei processi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiamata `shutdown(..., SHUT_WR)` esegue una chiusura parziale (half-close). Il server riceve il segnale EOF (segmento FIN) e comprende che il client ha terminato l'invio della richiesta, ma il client può ancora leggere dati tramite `recv()` finché il server non chiude il proprio lato.",
+        "Errato. Si tratta di una gestione software della sessione TCP; i canali fisici di comunicazione non vengono toccati.",
+        "Errato. La funzione non effettua alcuna manipolazione dei log di sistema.",
+        "Errato. `close()` chiude completamente il socket in lettura e scrittura e libera il descrittore, a differenza di `shutdown()`."
+      ]
+    },
+    {
+      "id": "it_net_296",
+      "widget_id": null,
+      "topic": "Configurazione del client TCP in C — Gestione della memoria di getaddrinfo (freeaddrinfo)",
+      "q": "Perché dopo l'uso corretto o non riuscito di una lista dinamica struct addrinfo ottenuta da getaddrinfo() è obbligatoria la chiamata a freeaddrinfo()?",
+      "hint": "Si consideri l'allocazione dinamica della memoria (heap) all'interno della libreria C durante la risoluzione dei nomi di dominio.",
+      "options": [
+        "La funzione getaddrinfo() alloca memoria dinamica nell'heap per la lista concatenata dei risultati e la mancanza della chiamata a freeaddrinfo() provoca una perdita di memoria (memory leak)",
+        "freeaddrinfo() invia un pacchetto UDP speciale al server DNS per chiudere la sessione",
+        "Senza questa chiamata il sistema operativo bloccherà l'adattatore di rete per gli altri processi",
+        "freeaddrinfo() esegue la pulizia del file /etc/hosts",
+        "È necessario per azzerare il contatore dei socket TCP aperti",
+        "La chiamata a freeaddrinfo() è obbligatoria solo nel sistema operativo Windows"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `getaddrinfo()` alloca dinamicamente memoria nell'heap per i nodi della lista concatenata `struct addrinfo` tramite chiamate `malloc()`. La funzione `freeaddrinfo()` libera in modo ricorsivo e corretto tutta questa struttura in memoria.",
+        "Errato. `freeaddrinfo()` opera esclusivamente sulla memoria locale del processo e non genera traffico di rete.",
+        "Errato. L'operazione non influisce sul funzionamento di altri processi o sull'hardware di rete.",
+        "Errato. Il file `/etc/hosts` è un file di configurazione di sistema del risolutore e non viene pulito da questa funzione.",
+        "Errato. Il contatore dei socket è legato alle chiamate `socket()` / `close()`, non alla risoluzione DNS.",
+        "Errato. `freeaddrinfo()` è una funzione standard POSIX, obbligatoria in tutti i sistemi operativi."
+      ]
+    },
+    {
+      "id": "it_net_297",
+      "widget_id": "widget_net_297",
+      "topic": "Configurazione del client TCP in C — Determinazione dell'indirizzo del nodo remoto (getpeername)",
+      "q": "Per cosa viene utilizzata la chiamata di sistema getpeername() in un client TCP in C?",
+      "hint": "Si noti la differenza tra l'indirizzo proprio (locale) del socket e l'indirizzo dell'interlocutore connesso (peer).",
+      "options": [
+        "Per ottenere l'indirizzo IP e la porta del nodo remoto (server) a cui è connesso il socket",
+        "Per verificare la velocità della connessione Internet",
+        "Per determinare l'indirizzo MAC della scheda di rete locale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `getpeername(sockfd, addr, addrlen)` popola la struttura dell'indirizzo con i dati della parte opposta (peer) della connessione stabilita.",
+        "Errato. La misurazione della larghezza di banda viene eseguita da benchmark applicativi di trasferimento dati.",
+        "Errato. Gli indirizzi MAC delle interfacce locali si determinano tramite `ioctl` (`SIOCGIFHWADDR`) o `getifaddrs()`, non con `getpeername()`."
+      ]
+    },
+    {
+      "id": "it_net_298",
+      "widget_id": null,
+      "topic": "Configurazione del client TCP in C — Ricezione di dati urgenti (MSG_OOB)",
+      "q": "Come fa un'applicazione client a sapere che su un socket TCP sono arrivati dati fuori banda (urgent/OOB) se il socket opera in modalità normale?",
+      "hint": "Si ricordi il segnale del SO SIGURG e la possibilità di impostare il proprietario del socket tramite fcntl(sockfd, F_SETOWN, getpid()).",
+      "options": [
+        "Il kernel del sistema operativo invia al processo il segnale SIGURG (se è stato impostato il proprietario del socket tramite F_SETOWN), dopodiché i dati possono essere letti con recv() usando il flag MSG_OOB",
+        "L'applicazione viene riavviata automaticamente con i privilegi di amministratore (root)",
+        "La funzione read() inizia a restituire numeri negativi con errno=E2BIG",
+        "La scheda di rete riproduce un segnale acustico tramite l'altoparlante di sistema",
+        "Il socket passa automaticamente al protocollo UDP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Alla ricezione di un segmento TCP con il flag URG impostato, il kernel invia il segnale `SIGURG` al processo proprietario del socket (configurato tramite `fcntl` `F_SETOWN`). L'applicazione intercetta questo segnale e legge il byte di dati urgenti tramite la chiamata `recv(..., MSG_OOB)`.",
+        "Errato. La ricezione di dati di rete non modifica i privilegi o lo stato di esecuzione del processo.",
+        "Errato. `E2BIG` si riferisce a errori di lunghezza della lista di argomenti della chiamata `execve`, non a dati urgenti.",
+        "Errato. Gli altoparlanti di sistema e l'hardware non vengono coinvolti nell'elaborazione dei socket.",
+        "Errato. Il protocollo del socket viene fissato al momento della sua creazione e non cambia."
+      ]
+    },
+    {
+      "id": "it_net_299",
+      "widget_id": "widget_net_299",
+      "topic": "Configurazione del client TCP in C — Multiplexing dei socket (select / fd_set)",
+      "q": "In che modo le macro FD_ZERO, FD_SET e la chiamata di sistema select() consentono a un client TCP di attendere in modo efficiente i dati da un socket?",
+      "hint": "Si noti la creazione di una maschera di bit (fd_set) e il blocco del processo fino alla comparsa di eventi di I/O o allo scadere del timeout.",
+      "options": [
+        "FD_ZERO svuota la maschera di bit, FD_SET aggiunge il socket al set di ascolto e select() blocca il thread finché il socket non diventa disponibile per la lettura o non scade il timeout",
+        "FD_SET crea un nuovo socket TCP, mentre select() esegue la crittografia SSL automatica",
+        "select() mescola l'array di socket in ordine casuale per distribuire equamente il carico",
+        "La maschera fd_set viene utilizzata per limitare la velocità di download dei file"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `FD_ZERO` azzera la struttura della maschera dei descrittori di file, `FD_SET` vi include `sockfd`. La funzione `select()` mette in sospensione il processo fino alla disponibilità dell'I/O sui descrittori indicati, risparmiando risorse CPU.",
+        "Errato. `FD_SET` si limita a modificare i bit nella struttura `fd_set` nella memoria del processo e non causa la crittografia né la creazione di socket.",
+        "Errato. `select()` verifica la disponibilità dei descrittori nell'ordine dei bit e non si occupa di bilanciamento casuale.",
+        "Errato. Il multiplexing non gestisce la limitazione della banda passante (rate limiting)."
+      ]
+    },
+    {
+      "id": "it_net_300",
+      "widget_id": null,
+      "topic": "Configurazione del client TCP in C — Gestione della chiusura del socket (SO_LINGER)",
+      "q": "In che modo l'opzione di socket SO_LINGER influisce sul comportamento della funzione close(sockfd) in un client TCP in C?",
+      "hint": "Si consideri il ritardo nella chiusura del socket fino all'invio di tutti i dati non inviati presenti nel buffer, oppure il ripristino di emergenza della connessione con un pacchetto RST.",
+      "options": [
+        "Configura il comportamento di close(): o lo costringe a bloccarsi per N secondi per tentare l'invio dei dati nel buffer, oppure ripristina immediatamente la connessione con un pacchetto RST senza la fase FIN-ACK",
+        "Prolunga forzatamente la durata della connessione TCP per 24 ore dopo la conclusione del processo",
+        "Attiva un log permanente di tracciamento di tutti i pacchetti di rete nel registro di sistema",
+        "Imposta il socket in modalità di scansione continua delle porte aperte del router"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La struttura `linger` imposta il flag `l_onoff` e il tempo `l_linger`. Se `l_onoff` è attivo, `close()` si bloccherà fino all'invio di tutti i byte in coda o allo scadere del timeout. Se `l_linger = 0`, il socket, alla chiusura, svuota i buffer e invia immediatamente un RST.",
+        "Errato. Il tempo di ritardo è limitato dal parametro `l_linger` (solitamente secondi) e non può durare 24 ore dopo il termine del processo.",
+        "Errato. Il tracciamento dei pacchetti è un compito di strumenti specializzati (ad es. `tcpdump` / libpcap).",
+        "Errato. L'opzione `SO_LINGER` gestisce solo il processo di chiusura della sessione TCP corrente."
+      ]
+    },
+    {
+      "id": "it_net_301",
+      "widget_id": "widget_net_301",
+      "topic": "Configurazione del client TCP in C — Gestione del tempo di vita del pacchetto (IP_TTL)",
+      "q": "Per quali scopi in un client C si può utilizzare l'opzione di socket IP_TTL durante la chiamata a setsockopt()?",
+      "hint": "Si pensi alla limitazione del numero di hop di rete (router) che un pacchetto IP può attraversare prima di essere distrutto.",
+      "options": [
+        "Definisce il numero massimo di router (hop) che un pacchetto può attraversare prima di essere distrutto a livello di rete",
+        "Determina il timeout della funzione connect() in secondi",
+        "Abilita la crittografia dei dati a livello di intestazioni IP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'opzione `IP_TTL` (Time To Live) imposta il valore del campo TTL nell'intestazione IPv4 dei pacchetti in uscita. Ogni router decrementa questo valore di 1, prevenendo il loop infinito dei pacchetti nella rete.",
+        "Errato. Il timeout di connessione non viene gestito tramite IP_TTL, ma mediante socket non bloccanti o l'opzione `SO_SNDTIMEO`.",
+        "Errato. IP_TTL non effettua crittografia, ma risponde solo del contatore degli hop a livello L3."
+      ]
+    },
+    {
+      "id": "it_net_302",
+      "widget_id": null,
+      "topic": "Configurazione del client TCP in C — Errore EADDRINUSE durante la chiamata a connect()",
+      "q": "In quali condizioni la chiamata a connect() in un client C può restituire l'errore EADDRINUSE?",
+      "hint": "Si ricordino i casi in cui il client tenta esplicitamente di eseguire bind() su una porta locale già occupata da un altro processo o nello stato TIME_WAIT.",
+      "options": [
+        "Se prima di connect() è stato eseguito bind() su una specifica porta locale già occupata da un altro processo o non ancora liberata",
+        "Se il server remoto ha ripristinato la connessione con un pacchetto RST",
+        "Se il client ha inviato una richiesta HTTP senza l'intestazione obbligatoria Host",
+        "Se il socket è stato preventivamente impostato in modalità di ascolto tramite la chiamata listen()"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'errore `EADDRINUSE` (Address already in use) si verifica quando il socket tenta di occupare la combinazione (IP locale, porta locale) già in uso da un altro socket attivo o in stato TIME_WAIT.",
+        "Errato. Il ripristino da parte del server genera gli errori `ECONNRESET` o `ECONNREFUSED`.",
+        "Errato. Gli errori nelle intestazioni HTTP vengono gestiti a livello L7 dal server, non dalla chiamata `connect()` del kernel.",
+        "Errato. La chiamata `listen()` si usa sui server; se si chiama `connect()` su un socket in ascolto, verrà restituito l'errore `EINVAL`."
+      ]
+    },
+    {
+      "id": "it_net_303",
+      "widget_id": "widget_net_303",
+      "topic": "Configurazione del client TCP in C — Gestione di EAGAIN/EWOULDBLOCK durante send()",
+      "q": "Cosa deve fare un client C non bloccante se la chiamata send() restituisce -1 e il valore di errno è impostato su EAGAIN o EWOULDBLOCK?",
+      "hint": "Si consideri che il buffer di invio del kernel è temporaneamente pieno ed è necessario sospendere l'invio fino alla disponibilità del socket in scrittura.",
+      "options": [
+        "Sospendere l'invio e attendere la disponibilità del socket in scrittura tramite select(), poll() o epoll()",
+        "Chiamare immediatamente close() e terminare l'esecuzione del programma",
+        "Richiamare socket() per ricreare il descrittore",
+        "Liberare forzatamente la memoria RAM del dispositivo tramite la chiamata free()",
+        "Inviare un pacchetto UDP vuoto per azzerare la coda"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In modalità non bloccante, gli errori `EAGAIN` / `EWOULDBLOCK` indicano che il buffer di invio di sistema del socket è pieno. L'applicazione deve attendere l'evento di disponibilità alla scrittura (WRITE event) tramite il multiplexer I/O, per poi ripetere `send()` con la parte restante dei dati.",
+        "Errato. È una situazione temporanea di buffer pieno, non un errore fatale della connessione.",
+        "Errato. Ricreare il socket interromperebbe la sessione TCP in corso.",
+        "Errato. La chiamata `free()` opera sulla memoria dinamica dell'applicazione in User Space e non influisce sui buffer di rete del kernel.",
+        "Errato. I pacchetti UDP sono gestiti da uno stack separato e non azzerano i buffer dei socket TCP."
+      ]
+    },
+    {
+      "id": "it_net_304",
+      "widget_id": "widget_net_304",
+      "topic": "Configurazione del client TCP in C — Chiamata a bind() sul lato client",
+      "q": "La chiamata a bind() è obbligatoria per un client TCP prima di chiamare connect()?",
+      "hint": "Si noti come il sistema operativo assegni automaticamente un IP locale e una porta effimera durante la chiamata a connect() se bind() non viene invocato.",
+      "options": [
+        "Non è obbligatoria: se bind() non viene chiamato, il kernel del SO assegna automaticamente al socket un IP locale idoneo e una porta effimera libera durante connect()",
+        "È obbligatoria: senza la chiamata esplicita a bind(), la funzione connect() restituisce sempre l'errore EBADF"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella stragrande maggioranza dei casi, il client non ha bisogno di chiamare esplicitamente `bind()`. Durante l'esecuzione di `connect()`, il kernel del SO sceglie autonomamente l'interfaccia di rete locale e assegna una porta effimera libera.",
+        "Errato. La chiamata a `bind()` sul client è richiesta solo nei rari casi in cui sia necessario associare la connessione in uscita a uno specifico IP locale o a una porta specifica."
+      ]
+    },
+    {
+      "id": "it_net_305",
+      "widget_id": null,
+      "topic": "Configurazione del client TCP in C — Confronto tra poll() e select() per l'attesa sui socket",
+      "q": "Qual è il vantaggio principale della chiamata di sistema poll() rispetto a select() nell'attesa della disponibilità dei socket in un client C?",
+      "hint": "Si ricordino il limite della maschera FD_SETSIZE (solitamente 1024) in select() e l'array dinamico di strutture struct pollfd in poll().",
+      "options": [
+        "poll() utilizza un array dinamico di strutture pollfd e non ha un limite rigido sul numero massimo del descrittore (FD_SETSIZE)",
+        "poll() funziona solo con adattatori wireless Wi-Fi",
+        "poll() esegue automaticamente la crittografia SSL/TLS",
+        "select() è obsoleta ed è stata rimossa da tutti i moderni standard POSIX",
+        "poll() invia pacchetti ICMP ping al server prima di ciascun controllo",
+        "select() è in grado di funzionare solo con un socket alla volta"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In `select()`, il limite è dato dalla maschera di bit `fd_set`, la cui dimensione è fissata dalla costante `FD_SETSIZE` (di norma 1024). `poll()` accetta un array di strutture `struct pollfd`, la cui dimensione è limitata solo dai limiti del SO sul numero di file aperti.",
+        "Errato. Entrambe le chiamate operano su descrittori di file astratti e non dipendono dal tipo di canale fisico.",
+        "Errato. Il multiplexing I/O non gestisce la crittografia dei dati applicativi.",
+        "Errato. `select()` fa tuttora parte dello standard POSIX ed è supportata ovunque.",
+        "Errato. La funzione `poll()` non genera traffico ICMP.",
+        "Errato. `select()` è appositamente progettata per monitorare contemporaneamente una moltitudine di socket."
+      ]
+    },
+    {
+      "id": "it_net_306",
+      "widget_id": "widget_net_306",
+      "topic": "Configurazione del client TCP in C — Dimensione del buffer pari a zero in send()",
+      "q": "Cosa succede se un client C chiama send(sockfd, buf, 0, 0) con valore zero per la lunghezza del buffer da trasmettere?",
+      "hint": "Si consideri se ciò comporterà l'invio di dati in rete o se la chiamata di sistema restituirà semplicemente 0 senza trasmettere dati.",
+      "options": [
+        "La chiamata restituirà 0, non verranno inviati dati sulla rete e lo stato della connessione TCP non subirà alcuna modifica",
+        "Il server chiuderà immediatamente la connessione TCP e invierà un pacchetto RST",
+        "Il sistema operativo genererà un errore fatale di segmentazione (Segmentation Fault)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiamata a `send()` con il parametro di lunghezza `len = 0` è un'operazione valida. La chiamata di sistema restituisce immediatamente `0`, senza generare pacchetti di rete e senza modificare lo stato del socket.",
+        "Errato. Il server non riceverà alcun pacchetto, quindi la connessione rimarrà nello stato iniziale.",
+        "Errato. Se il puntatore `buf` è valido (o pari a NULL con len=0), non si verificherà alcun errore di segmentazione."
+      ]
+    },
+    {
+      "id": "it_net_307",
+      "widget_id": "widget_net_307",
+      "topic": "Configurazione del client TCP in C — Differenza tra htons() e htonl()",
+      "q": "Perché per il campo sin_port si utilizza la funzione htons() e per sin_addr.s_addr la funzione htonl()?",
+      "hint": "Si presti attenzione ai suffissi 's' (short — 16 bit) e 'l' (long — 32 bit) e alla corrispondenza delle dimensioni di porta e indirizzo IPv4.",
+      "options": [
+        "htons() converte numeri interi a 16 bit (dimensione della porta TCP/UDP), mentre htonl() numeri interi a 32 bit (dimensione dell'indirizzo IPv4)",
+        "htons() funziona solo con il protocollo HTTP, mentre htonl() solo con il protocollo HTTPS",
+        "htons() converte il numero in una stringa di testo, mentre htonl() in codice binario",
+        "htons() si usa solo su Linux, mentre htonl() esclusivamente su Windows"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le porte in TCP/IP sono numeri a 16 bit (`uint16_t` / `short`), perciò a esse si applica `htons` (host-to-network-short). Gli indirizzi IPv4 sono numeri a 32 bit (`uint32_t` / `long`), perciò per essi si usa `htonl` (host-to-network-long).",
+        "Errato. Queste funzioni lavorano a livello di rappresentazione dei numeri in memoria e non sono legate a specifici protocolli applicativi L7.",
+        "Errato. Entrambe le funzioni convertono l'ordine dei byte dei numeri in memoria (da Little-Endian a Big-Endian) e non li convertono in testo.",
+        "Errato. Entrambe le funzioni sono standard POSIX e sono presenti in tutti i SO."
+      ]
+    },
+    {
+      "id": "it_net_308",
+      "widget_id": null,
+      "topic": "Configurazione del client TCP in C — Controllo di errno dopo le funzioni di socket",
+      "q": "Quando ha senso verificare il valore della variabile globale errno dopo aver chiamato una funzione di rete (ad esempio connect() o recv())?",
+      "hint": "Si consideri se la correttezza del valore di errno sia garantita qualora la funzione abbia restituito un codice di successo.",
+      "options": [
+        "Solo quando la chiamata di sistema restituisce un valore di errore (di norma -1 o NULL), poiché in caso di successo errno non viene azzerata automaticamente e potrebbe contenere un vecchio codice di errore",
+        "Dopo ogni chiamata indipendentemente dal risultato, poiché una chiamata riuscita scrive sempre 0 nella variabile errno"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo standard C/POSIX indica che le funzioni di sistema garantiscono la validità di `errno` solo nel caso in cui la chiamata stessa abbia restituito un indicatore di errore (ad esempio `-1`). Le chiamate riuscite non sono tenute ad azzerare `errno`, pertanto non lo si deve leggere senza aver prima verificato il valore restituito dalla chiamata.",
+        "Errato. Affidarsi a `errno` al completamento con successo di una funzione è un errore comune che porta a falsi positivi."
+      ]
+    },
+    {
+      "id": "it_net_309",
+      "widget_id": "widget_net_309",
+      "topic": "Configurazione del client TCP in C — Abilitazione di SO_KEEPALIVE",
+      "q": "Perché un client C potrebbe abilitare l'opzione SO_KEEPALIVE su un socket tramite setsockopt()?",
+      "hint": "Si pensi all'individuazione di connessioni intermedie cadute senza FIN/RST durante un prolungato periodo di inattività.",
+      "options": [
+        "Per l'invio automatico di sonde TCP di controllo durante i periodi di inattività, al fine di rilevare tempestivamente una connessione «morta» o evitare il timeout del router NAT",
+        "Per aumentare costantemente la velocità di download dei file",
+        "Per crittografare le intestazioni dei segmenti TCP",
+        "Per prevenire perdite di memoria alla chiamata di close()",
+        "Per disattivare forzatamente il firewall del SO"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se una connessione rimane inattiva a lungo, i router NAT intermedi o i firewall possono «dimenticare» lo stato della sessione, e in caso di crash del server il client non ne verrebbe a conoscenza. `SO_KEEPALIVE` costringe lo stack a inviare periodicamente pacchetti ACK vuoti per mantenere la tabella NAT e rilevare le interruzioni.",
+        "Errato. Keepalive non influisce sulla larghezza di banda del canale.",
+        "Errato. L'opzione non apporta modifiche alla crittografia dei dati.",
+        "Errato. Il rilascio della memoria del socket dipende dalla chiamata a `close()`, non dalle sonde Keepalive.",
+        "Errato. Le opzioni del socket non gestiscono le politiche del firewall."
+      ]
+    },
+    {
+      "id": "it_net_310",
+      "widget_id": "widget_net_310",
+      "topic": "Configurazione del client TCP in C — Protezione dal buffer overflow in recv()",
+      "q": "Perché durante la lettura di una stringa da un socket si passa alla chiamata recv() la dimensione sizeof(buf) - 1 invece della dimensione intera dell'array sizeof(buf)?",
+      "hint": "Si consideri lo spazio riservato al terminatore nullo '\\0' alla fine della stringa in C.",
+      "options": [
+        "Per garantire di lasciare 1 byte alla fine dell'array per la scrittura del terminatore nullo '\\0', evitando lo sforamento dei limiti di memoria durante le operazioni sulla stringa",
+        "Per risparmiare 1 byte di larghezza di banda di rete",
+        "È un requisito dello standard POSIX per velocizzare il trasferimento dati",
+        "Per costringere il server a inviare la conferma ACK"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché `recv()` legge dati grezzi e non aggiunge il terminatore nullo, passare `sizeof(buf) - 1` garantisce che anche con il buffer completamente pieno rimanga un byte libero per `buf[bytes] = '\\0'`, proteggendo dal Buffer Overflow nelle successive chiamate a `printf` o `strlen`.",
+        "Errato. Il passaggio della dimensione del buffer in `recv()` regola la lettura locale dal kernel e non fa risparmiare traffico di rete.",
+        "Errato. È una regola di programmazione sicura in C per evitare il buffer overflow, non un acceleratore di sistema.",
+        "Errato. L'invio dei TCP ACK è gestito automaticamente dallo stack del kernel alla ricezione dei segmenti."
+      ]
+    }
+  ]
+}

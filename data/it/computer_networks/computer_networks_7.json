@@ -1,0 +1,602 @@
+{
+  "subject": "Reti",
+  "questions": [
+    {
+      "id": "it_net_221",
+      "widget_id": "widget_net_221",
+      "topic": "Reti informatiche — Stabilizzazione BGP (Route Flap Damping)",
+      "q": "Per risolvere quale problema nell'instradamento BGP globale viene utilizzato il meccanismo di Route Flap Damping (RFD)?",
+      "hint": "Pensate al problema di un collegamento di rete instabile che continua a fare «flapping» (attivarsi e disattivarsi), sovraccaricando le CPU dei router BGP in tutto il mondo.",
+      "options": [
+        "Per prevenire il sovraccarico delle CPU dei router dovuto ai ricalcoli BGP causati da prefissi continuamente «flapping», sopprimendoli temporaneamente (suppress)",
+        "Per comprimere i pacchetti IP durante la trasmissione su linee di comunicazione ottiche",
+        "Per correggere automaticamente gli errori nelle intestazioni delle sessioni TCP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se una linea o una sessione con un neighbor cade e si ripristina continuamente («flapping»), BGP inizia a inviare messaggi UPDATE a valanga in tutto il mondo. L'RFD assegna punti di penalità a tale prefisso e, al superamento della soglia, ne blocca temporaneamente l'annuncio.",
+        "Non corretto. L'RFD funziona con gli annunci di instradamento BGP nel Control Plane e non comprime i dati.",
+        "Non corretto. Il controllo d'integrità TCP viene eseguito tramite checksum a livello di trasporto (Transport Layer)."
+      ]
+    },
+    {
+      "id": "it_net_222",
+      "widget_id": null,
+      "topic": "Reti informatiche — Modello economico di Internet (Co-opetition)",
+      "q": "Cosa riflette il concetto di «Co-opetition» (competizione cooperativa) nel contesto dell'interazione tra i principali provider di servizi Internet (ISP Tier-1)?",
+      "hint": "Fate attenzione al concetto di «co-opetition» (competizione cooperativa), in cui i rivali commerciali sul mercato globale sono costretti a collaborare per garantire la connettività dei propri clienti.",
+      "options": [
+        "Una situazione in cui gli operatori Tier-1 competono per i clienti sul mercato globale, ma sono costretti a scambiarsi il traffico gratuitamente (Settlement-Free Peering) per mantenere la connettività di Internet",
+        "Un requisito obbligatorio per gli operatori di utilizzare gli stessi modelli di apparecchiature di un unico produttore",
+        "Un divieto totale di trasmissione del traffico commerciale tra operatori di backbone concorrenti",
+        "Un'unione statale di tutti i provider Internet del mondo sotto un unico ministero",
+        "L'uso di una password di protezione unica su tutti i router di backbone"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il termine Co-opetition combina Cooperation e Competition. I principali giganti delle telecomunicazioni competono per contratti aziendali milionari, ma sono costretti a cooperare al livello L3 più alto, scambiandosi gratuitamente il traffico, altrimenti Internet si dividerebbe in segmenti isolati.",
+        "Non corretto. Gli operatori sono liberi di utilizzare apparecchiature di qualsiasi vendor (Cisco, Juniper, Nokia, Huawei).",
+        "Non corretto. Al contrario, il libero trasferimento del traffico tra le reti è alla base della connettività globale di Internet.",
+        "Non corretto. Internet è decentralizzato e non è gestito da un singolo ente statale.",
+        "Non corretto. Ogni operatore è autonomamente responsabile dell'autenticazione e della sicurezza della propria infrastruttura."
+      ]
+    },
+    {
+      "id": "it_net_223",
+      "widget_id": "widget_net_223",
+      "topic": "Reti informatiche — Diagnostica BGP (Looking Glass)",
+      "q": "Quale funzione pratica svolge il servizio Looking Glass (LG) nelle operazioni di rete degli operatori?",
+      "hint": "Pensate agli strumenti web forniti dagli operatori per la diagnostica esterna della tabella BGP e la verifica della visibilità dei prefissi da uno specifico sistema autonomo.",
+      "options": [
+        "Fornisce un accesso pubblico esterno (Read-Only) ai comandi BGP sul router dell'operatore per verificare come la sua rete «vede» i prefissi e gli annunci dall'esterno",
+        "Aumenta fisicamente la velocità del segnale ottico al confine del sistema autonomo",
+        "Esegue la funzione di uno scanner antivirus per tutti i pacchetti in transito",
+        "Serve per il riavvio remoto di server hardware"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Looking Glass è un'interfaccia web o script che consente agli ingegneri di reti terze di eseguire comandi `show ip bgp` o `ping/traceroute` dall'interno di un AS altrui per diagnosticare la visibilità dei propri prefissi e percorsi di instradamento.",
+        "Non corretto. È uno strumento di diagnostica software, non un amplificatore fisico L1.",
+        "Non corretto. Looking Glass è destinato esclusivamente all'ispezione dell'instradamento BGP/L3.",
+        "Non corretto. I server Looking Glass funzionano in modalità strettamente Read-Only e non hanno diritti di gestione delle apparecchiature."
+      ]
+    },
+    {
+      "id": "it_net_224",
+      "widget_id": null,
+      "topic": "Reti informatiche — DNS e Anycast nella rete globale",
+      "q": "Perché i 13 root server DNS (da A a M) sono fisicamente rappresentati da migliaia di server in tutto il mondo utilizzando Anycast?",
+      "hint": "Ricordate come Anycast consenta di gestire milioni di richieste verso un unico indirizzo IP nei punti geografici più vicini senza modificare le impostazioni dei client.",
+      "options": [
+        "Questo permette di mantenere i 13 indirizzi IP fissi dei root server nella configurazione dei resolver, distribuendo le richieste tramite BGP Anycast ai nodi locali più vicini per scalabilità e protezione dai DDoS",
+        "È causato da una limitazione del protocollo IPv4, che non è in grado di trasmettere richieste DNS a una distanza superiore a 1000 chilometri"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il limite storico del frame UDP a 512 byte ha limitato il numero di root server a 13 (`a.root-servers.net` ... `m.root-servers.net`). Con Anycast, dietro ciascuno di questi 13 indirizzi IP ci sono centinaia di server replicati distribuiti sul pianeta.",
+        "Non corretto. Il protocollo IPv4 non presenta limiti fisici di distanza di trasmissione."
+      ]
+    },
+    {
+      "id": "it_net_225",
+      "widget_id": "widget_net_225",
+      "topic": "Reti informatiche — Sicurezza dell'instradamento globale (MANRS)",
+      "q": "Qual è l'obiettivo principale dell'iniziativa MANRS (Mutually Agreed Norms for Routing Security) per gli operatori di telecomunicazioni?",
+      "hint": "Ricordate l'iniziativa globale della community degli operatori volta a ridurre le principali minacce all'instradamento BGP (BGP Hijacking, Route Leaks, IP Spoofing).",
+      "options": [
+        "L'implementazione di un set di misure di sicurezza fondamentali (filtraggio degli annunci, protezione dallo spoofing, RPKI, aggiornamento dei contatti) per contrastare il BGP Hijacking e i Route Leak",
+        "La definizione di un prezzo minimo di abbonamento per gli utenti di Internet domestico",
+        "La conversione di tutti i router del mondo a software proprietario chiuso",
+        "L'abbandono forzato del protocollo IPv6 a favore di IPv4",
+        "Il divieto dell'uso di cavi in fibra ottica nelle reti backbone",
+        "La sostituzione di BGP con il protocollo RIPv2 in tutti i sistemi autonomi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! MANRS (supportato dall'Internet Society) definisce un insieme di pratiche di sicurezza obbligatorie: filtraggio dei percorsi BGP non validi, verifica del Source IP (anti-spoofing tramite uRPF), pubblicazione di record ROA e coordinamento tramite PeeringDB/IRR.",
+        "Non corretto. MANRS è un'iniziativa tecnica sulla sicurezza dell'instradamento e non si occupa della definizione dei prezzi commerciali.",
+        "Non corretto. L'iniziativa promuove standard aperti e non disciplina la chiusura del software.",
+        "Non corretto. MANRS supporta attivamente l'implementazione e la protezione degli annunci sia IPv4 che IPv6.",
+        "Non corretto. Il mezzo fisico L1 non rientra nell'ambito di regolamentazione di MANRS.",
+        "Non corretto. RIPv2 è un protocollo di instradamento interno obsoleto, non applicabile alla scala di Internet."
+      ]
+    },
+    {
+      "id": "it_net_226",
+      "widget_id": null,
+      "topic": "Reti informatiche — Gestione del traffico BGP (BGP Communities)",
+      "q": "Come vengono utilizzati gli attributi BGP Communities nell'interazione tra sistemi autonomi?",
+      "hint": "Fate attenzione ai tag a 32 bit allegati agli annunci BGP per trasmettere istruzioni di controllo ai provider di transito (ad esempio, la modifica della Local Preference).",
+      "options": [
+        "Sono etichette numeriche (tag) allegate ai prefissi per trasmettere istruzioni di controllo al provider (ad esempio, modifica della Local Preference, Blackholing del traffico o limitazione degli annunci)",
+        "Vengono utilizzate per creare social network privati tra ingegneri di rete di diversi provider",
+        "Servono per misurare fisicamente la temperatura delle apparecchiature all'estremità opposta del cavo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Una BGP Community (RFC 1997 / RFC 8092) è un metadato di servizio aggiuntivo in formato personalizzato o standard (ad esempio `65000:666` per Remote Triggered Blackhole) che consente al cliente di gestire il comportamento di BGP sui router del provider upstream.",
+        "Non corretto. Le BGP Communities sono attributi del protocollo BGP, non servizi social.",
+        "Non corretto. La misurazione dei parametri ambientali viene eseguita da sensori hardware e trasmessa tramite SNMP/Telemetry."
+      ]
+    },
+    {
+      "id": "it_net_227",
+      "widget_id": "widget_net_227",
+      "topic": "Reti informatiche — Incidenti di instradamento (Route Leak)",
+      "q": "In cosa consiste il pericolo del fenomeno del BGP Route Leak (fuga di instradamento) per i provider Internet?",
+      "hint": "Fate attenzione alla situazione in cui un sistema autonomo reindirizza accidentalmente il traffico tra due dei suoi upstream (provider), pur dovendo essere solo un consumatore finale.",
+      "options": [
+        "Un AS cliente annuncia inavvertitamente a un altro provider i percorsi ricevuti da un provider di transito, trasformandosi in una rete di transito non autorizzata e causando il sovraccarico dei propri canali",
+        "Si verifica una fuga di dati personali degli utenti dal database locale a server terzi",
+        "I pacchetti di dati iniziano a essere fisicamente irradiati dai cavi doppino nell'ambiente circostante",
+        "La sessione BGP passa automaticamente alla modalità di crittografia Quantum Key Distribution"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un Route Leak si verifica a causa di un errore di filtraggio (ad esempio mancanza di No-Export o filtri lato cliente). Una piccola rete cliente inizia a «trasmettere» traffico tra grandi dorsali Tier-1/2, intasando all'istante i propri canali stretti e provocando un Denial of Service.",
+        "Non corretto. Un leak di percorsi BGP è un incidente di instradamento L3, non una fuga di database L7.",
+        "Non corretto. Il termine metaforico «fuga» (leak) indica il reindirizzamento del traffico IP su un percorso BGP errato.",
+        "Non corretto. Il Route Leak non ha alcuna relazione con la crittografia quantistica."
+      ]
+    },
+    {
+      "id": "it_net_228",
+      "widget_id": null,
+      "topic": "Reti informatiche — Gestione del traffico in ingresso (AS Path Prepending)",
+      "q": "Con quale scopo gli ingegneri di rete applicano il metodo di AS Path Prepending quando annunciano prefissi tramite BGP?",
+      "hint": "Pensate a un modo per rendere un percorso BGP attraverso uno specifico provider artificialmente «più lungo» e meno attraente per il traffico in ingresso.",
+      "options": [
+        "Per allungare artificialmente l'elenco AS_PATH (aggiungendo più volte il proprio ASN) al fine di rendere tale percorso meno preferibile per il traffico in ingresso da reti esterne",
+        "Per comprimere la tabella BGP e liberare memoria RAM sul router",
+        "Per aumentare all'istante la velocità di trasmissione dati attraverso il provider selezionato",
+        "Per nascondere il numero del sistema autonomo dai filtri RPKI",
+        "Per convertire pacchetti unicast in un flusso broadcast"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché BGP a parità di condizioni sceglie il percorso con il minor numero di hop nell'attributo AS_PATH, il metodo di Prepending (aggiunta di `AS100 AS100 AS100`) rende artificialmente il canale di backup «più lungo», costringendo il traffico in ingresso a passare dal canale principale più breve.",
+        "Non corretto. Il Prepending aumenta leggermente le dimensioni dell'annuncio a causa della ripetizione dei numeri ASN.",
+        "Non corretto. È uno strumento di gestione della selezione del percorso BGP, non modifica la larghezza di banda fisica.",
+        "Non corretto. RPKI verifica l'Origin AS (l'ASN più a destra nel percorso) e la lunghezza del prefisso, il Prepending non nasconde l'AS.",
+        "Non corretto. Il Prepending non modifica il tipo di indirizzamento dei pacchetti."
+      ]
+    },
+    {
+      "id": "it_net_229",
+      "widget_id": "widget_net_229",
+      "topic": "Reti informatiche — Strategie di ricezione BGP (Full View vs Partial Feed)",
+      "q": "Perché i provider di piccole o medie dimensioni spesso preferiscono ricevere da un operatore upstream un Partial Feed o una Default Route invece della BGP Full View?",
+      "hint": "Riflettete sul compromesso tra il consumo di memoria del router (RAM/TCAM) e l'ottimizzazione della scelta dei percorsi in ingresso/uscita.",
+      "options": [
+        "La ricezione della Full View (>900 mila prefissi) richiede apparecchiature costose con grandi volumi di TCAM/RAM, mentre una Default Route + peering locale risparmia risorse mantenendo un instradamento efficiente",
+        "La BGP Full View è severamente vietata dalle norme internazionali IANA per tutte le reti tranne gli operatori Tier-1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'archiviazione e l'elaborazione continua dell'intera tabella BGP richiedono router costosi con molta memoria. Ricevere una rotta di default (`0.0.0.0/0`) dall'upstream principale e prefissi BGP espliciti solo dai peer locali (IXP) garantisce un risparmio di risorse hardware senza perdere qualità nella connettività.",
+        "Non corretto. Qualsiasi sistema autonomo con il proprio numero ASN ha il diritto di richiedere la Full View al proprio provider."
+      ]
+    },
+    {
+      "id": "it_net_230",
+      "widget_id": null,
+      "topic": "Reti informatiche — Continuità di instradamento (BGP Graceful Restart & NSR)",
+      "q": "Quale problema risolvono le tecnologie BGP Graceful Restart (GR) e Non-Stop Routing (NSR) durante la manutenzione o il riavvio del software di gestione del router?",
+      "hint": "Pensate a come mantenere il piano dati (Data Plane) operativo durante il riavvio del processo BGP nel piano di controllo (Control Plane).",
+      "options": [
+        "Consentono di mantenere inalterato l'inoltro dei pacchetti di transito a livello di Data Plane (ASIC), mentre il processo BGP sul Control Plane si riavvia o viene aggiornato in modo pianificato",
+        "Ripristinano automaticamente i connettori ottici danneggiati fisicamente",
+        "Trasferiscono tutto il traffico in modalità wireless Wi-Fi durante il riavvio",
+        "Interrompono forzatamente tutte le connessioni dei clienti per pulire la cache"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La separazione tra Control Plane e Data Plane consente ai chip di commutazione (ASIC/FIB) di continuare a inoltrare i pacchetti utente lungo i percorsi esistenti, anche se il demone BGP è caduto o viene riavviato da un ingegnere per l'aggiornamento del SO.",
+        "Non corretto. Si tratta di tecnologie software a livello L3 Control Plane, non riparano l'infrastruttura fisica L1.",
+        "Non corretto. Non si verifica alcun passaggio ad altri mezzi di trasmissione.",
+        "Non corretto. L'obiettivo principale di GR/NSR è evitare la perdita di traffico e l'interruzione delle connessioni."
+      ]
+    },
+    {
+      "id": "it_net_231",
+      "widget_id": "widget_net_231",
+      "topic": "Infrastruttura dei servizi — Video streaming adattivo (HLS / MPEG-DASH)",
+      "q": "In che modo i meccanismi di streaming adattivo (HLS, MPEG-DASH) garantiscono una riproduzione video fluida al variare della velocità della connessione Internet?",
+      "hint": "Pensate alla suddivisione del flusso multimediale in brevi frammenti e al cambio dinamico della qualità (bitrate) lato client.",
+      "options": [
+        "Suddividono il video in brevi frammenti (chunk) con bitrate differenti; il player seleziona automaticamente la qualità del frammento successivo in base alla larghezza di banda corrente della rete",
+        "Disattivano forzatamente la trasmissione della traccia audio se la velocità di connessione diminuisce",
+        "Effettuano il buffering dell'intero file video di un'ora sul dispositivo prima dell'inizio della riproduzione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I protocolli HLS e MPEG-DASH dividono il video in piccoli segmenti (di solito da 2 a 6 secondi), codificati a differenti risoluzioni e bitrate. Il player del client misura continuamente la velocità di download e richiede dinamicamente frammenti a qualità superiore o inferiore, evitando blocchi del video.",
+        "Non corretto. I protocolli adattivi riducono il bitrate complessivo del video mantenendo l'integrità del flusso multimediale.",
+        "Non corretto. Il precaricamento dell'intero file contrasta con il concetto di streaming."
+      ]
+    },
+    {
+      "id": "it_net_232",
+      "widget_id": null,
+      "topic": "Infrastruttura dei servizi — Protocolli in tempo reale (WebRTC)",
+      "q": "Quale vantaggio chiave offre il protocollo WebRTC per i servizi interattivi in tempo reale (videochiamate, cloud gaming)?",
+      "hint": "Fate attenzione all'organizzazione di una connessione diretta tra client utilizzando UDP per ridurre la latenza.",
+      "options": [
+        "Garantisce una connessione P2P (Peer-to-Peer) diretta tra browser/client per la trasmissione di dati multimediali su UDP con una latenza minima",
+        "Richiede l'instradamento obbligatorio dell'intero flusso video attraverso un server HTTP centrale",
+        "Crittografa i dati utilizzando il protocollo obsoleto SSLv2",
+        "Converte i fotogrammi video in caratteri di testo ASCII prima dell'invio",
+        "Limita il numero di partecipanti alla chiamata esattamente a due utenti in tutto il mondo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! WebRTC consente di stabilire una connessione P2P diretta a bassa latenza tra i client (superando i NAT tramite STUN/TURN). L'uso di UDP (SRTP/SCTP) riduce al minimo i ritardi di consegna dei frame, elemento critico per chiamate e interazioni in tempo reale.",
+        "Non corretto. WebRTC punta a trasmettere il traffico multimediale direttamente tra i nodi, usando i server solo per la segnalazione (Signaling) e l'attraversamento del NAT.",
+        "Non corretto. WebRTC utilizza la moderna crittografia obbligatoria DTLS e SRTP.",
+        "Non corretto. La codifica viene eseguita da moderni codec multimediali (VP8/VP9/AV1/H.264).",
+        "Non corretto. WebRTC può scalare verso gruppi multipli utilizzando media server (SFU/MCU)."
+      ]
+    },
+    {
+      "id": "it_net_233",
+      "widget_id": "widget_net_233",
+      "topic": "Infrastruttura dei servizi — Protezione dell'infrastruttura e-mail (SPF, DKIM, DMARC)",
+      "q": "Quale ruolo svolge la combinazione delle tecnologie SPF, DKIM e DMARC nella moderna infrastruttura e-mail di Internet?",
+      "hint": "Pensate ai metodi per confermare che un'e-mail è stata effettivamente inviata da un server autorizzato del dominio e non è stata contraffatta.",
+      "options": [
+        "Fornisce l'autenticazione del mittente, la verifica dell'integrità del messaggio e definisce le politiche per la gestione delle e-mail contraffatte per proteggere da phishing e spam",
+        "Velocizza la consegna delle e-mail comprimendo i file allegati",
+        "Traduce automaticamente il testo delle e-mail nella lingua del destinatario",
+        "Offre la possibilità di effettuare videochiamate all'interno del client di posta"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! SPF indica quali indirizzi IP possono inviare posta a nome del dominio. DKIM aggiunge una firma digitale per verificare che il contenuto non sia stato alterato. DMARC li unisce e indica al server ricevente cosa fare con i messaggi che non superano i controlli.",
+        "Non corretto. Questi meccanismi sono progettati per la sicurezza e l'autenticazione, non per l'archiviazione dei file.",
+        "Non corretto. La traduzione del testo è una funzione delle applicazioni L7 e delle interfacce web, non dei protocolli di validazione del dominio e-mail."
+      ]
+    },
+    {
+      "id": "it_net_234",
+      "widget_id": null,
+      "topic": "Infrastruttura dei servizi — Edge Computing",
+      "q": "Qual è l'idea principale dell'Edge Computing nel contesto dell'infrastruttura delle applicazioni web distribuite?",
+      "hint": "Ricordate come l'esecuzione del codice direttamente sui nodi CDN del primo miglio riduca il tempo di risposta (Round Trip Time) per l'utente.",
+      "options": [
+        "L'esecuzione della logica applicativa e l'elaborazione delle richieste su nodi geograficamente distribuiti (Edge), posizionati il più vicino possibile all'utente per ridurre al minimo la latenza (RTT)",
+        "Il trasferimento di tutti i calcoli lato server su un unico data center centrale situato in un solo punto del mondo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'Edge Computing (ad esempio Cloudflare Workers, AWS Lambda@Edge) esegue il codice utente direttamente sui server edge CDN più vicini. Ciò riduce il percorso di rete (RTT) a pochi millisecondi e alleggerisce i data center cloud centrali.",
+        "Non corretto. Concentrare tutte le risorse in un unico punto è il modello centralizzato tradizionale, l'opposto dell'Edge Computing."
+      ]
+    },
+    {
+      "id": "it_net_235",
+      "widget_id": "widget_net_235",
+      "topic": "Infrastruttura dei servizi — Interazione tra microservizi (gRPC & Protocol Buffers)",
+      "q": "Perché le piattaforme a microservizi ad alto carico utilizzano spesso gRPC (su HTTP/2 e Protocol Buffers) invece del tradizionale REST su HTTP/1.1 con JSON?",
+      "hint": "Pensate alle differenze tra la serializzazione binaria rigorosa e il formato testo JSON, oltre alle funzionalità di multiplexing delle richieste.",
+      "options": [
+        "L'uso della serializzazione binaria (Protobuf) e del multiplexing HTTP/2 riduce notevolmente l'overhead sul traffico di rete, la CPU e la latenza",
+        "gRPC permette di scrivere codice solo in C++ e vieta l'uso di altri linguaggi",
+        "Protobuf aumenta le dimensioni dei dati trasmessi di 10 volte per migliorare l'affidabilità",
+        "REST con JSON non è in grado di trasmettere caratteri di testo",
+        "gRPC funziona solo su canali wireless Bluetooth",
+        "HTTP/2 elimina completamente la necessità di utilizzare indirizzi IP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Protobuf impacchetta i dati in un formato binario compatto (molto più piccolo del JSON testuale), mentre HTTP/2 consente di inviare più richieste parallele su una singola connessione TCP. Ciò velocizza drasticamente l'interazione tra centinaia di microservizi.",
+        "Non corretto. gRPC supporta decine di linguaggi di programmazione (Go, Java, Python, Node.js, C#, ecc.).",
+        "Non corretto. Protobuf, al contrario, riduce notevolmente il volume del traffico di rete rispetto a JSON/XML.",
+        "Non corretto. JSON è un formato di testo perfetto per trasmettere testo, ma meno efficiente con carichi elevati.",
+        "Non corretto. gRPC è un framework di rete a livello applicativo che funziona su TCP/IP.",
+        "Non corretto. HTTP/2 è un protocollo a livello applicativo che funziona sopra lo stack di rete IP standard."
+      ]
+    },
+    {
+      "id": "it_net_236",
+      "widget_id": null,
+      "topic": "Infrastruttura dei servizi — Reti di distribuzione dei contenuti (CDN)",
+      "q": "In che modo una moderna infrastruttura CDN aiuta i servizi web a gestire picchi improvvisi di traffico (Flash Crowds / DDoS)?",
+      "hint": "Fate attenzione allo sgravio del server di origine (Origin) grazie alla memorizzazione nella cache distribuita e al filtraggio del traffico alla periferia.",
+      "options": [
+        "Memorizza nella cache contenuti statici e dinamici su migliaia di server edge distribuiti, assorbendo la maggior parte delle richieste prima che raggiungano il server Origin",
+        "Disattiva automaticamente il sito web per tutti gli utenti quando si supera il limite di visite",
+        "Reindirizza tutto il traffico dannoso nei file system locali degli utenti",
+        "Rimuove tutte le immagini e i video dal sito durante i momenti di carico elevato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La CDN distribuisce il flusso in ingresso su centinaia di nodi in tutto il mondo. Fino al 90–99% delle richieste viene servito dalla cache dei server edge (Cache Hit), consentendo al server origin di gestire solo una minima parte del carico.",
+        "Non corretto. L'obiettivo della CDN è garantire la disponibilità del servizio, non bloccarlo.",
+        "Non corretto. La CDN filtra e scarta il traffico anomalo sui propri server di bonifica (Scrubbing Centers).",
+        "Non corretto. La CDN memorizza nella cache i contenuti multimediali e li serve agli utenti senza eliminarli."
+      ]
+    },
+    {
+      "id": "it_net_237",
+      "widget_id": "widget_net_237",
+      "topic": "Infrastruttura dei servizi — Architettura di rete dei giochi online",
+      "q": "Perché per i giochi online multiplayer dinamici (FPS, MOBA) gli sviluppatori preferiscono il protocollo UDP (con estensioni personalizzate) al classico TCP?",
+      "hint": "Pensate al problema del blocco Head-of-Line quando si perde un pacchetto in TCP e al valore della freschezza dei dati rispetto ai vecchi pacchetti persi.",
+      "options": [
+        "TCP utilizza un meccanismo di re-invio (retransmission) e ordinamento che causa latenza (Head-of-Line Blocking), inaccettabile in tempo reale; UDP consente di trasmettere gli stati più recenti del mondo di gioco senza ritardi",
+        "L'uso di TCP è vietato dalla legislazione internazionale nei videogiochi",
+        "UDP raddoppia automaticamente le prestazioni della scheda video del giocatore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se in TCP si perde un pacchetto, l'intera coda si blocca in attesa della sua riconsegna (Head-of-Line Blocking). Nei giochi d'azione è più importante ricevere le coordinate più recenti del giocatore tramite UDP anziché attendere pacchetti obsoleti di 100 millisecondi prima.",
+        "Non corretto. La scelta del protocollo di rete è dettata da requisiti tecnici di latenza, non da leggi.",
+        "Non corretto. I protocolli di rete gestiscono i pacchetti e non influenzano la potenza di rendering hardware della GPU."
+      ]
+    },
+    {
+      "id": "it_net_238",
+      "widget_id": null,
+      "topic": "Infrastruttura dei servizi — Sistemi di notifiche push (FCM / APNs)",
+      "q": "Come è strutturata la consegna efficiente di notifiche Push istantanee a milioni di dispositivi mobili senza scaricare rapidamente la batteria ed evitare il polling continuo?",
+      "hint": "Pensate al mantenimento di un'unica connessione TCP/TLS a lunga durata (persistent connection) con il broker di messaggi della piattaforma.",
+      "options": [
+        "Il dispositivo mantiene un'unica connessione TCP crittografata persistente con un gateway centralizzato (Apple APNs / Google FCM), attraverso il quale il gateway multiplexa le notifiche push di tutte le applicazioni",
+        "Ciascuna delle 100 applicazioni installate invia una richiesta HTTP al proprio server ogni 2 secondi",
+        "Le notifiche Push vengono trasmesse tramite i normali messaggi SMS degli operatori telefonici",
+        "Il server invia notifiche tramite segnale radio in banda FM",
+        "Il dispositivo mobile interroga il server solo durante la ricarica della batteria"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Invece che ogni applicazione mantenga la propria connessione scaricando la batteria, il SO dello smartphone mantiene un'unica connessione socket permanente con il gateway di servizio (APNs o FCM). Quando si verifica un evento, il gateway spinge i byte in questo socket.",
+        "Non corretto. Il polling continuo da parte di centinaia di app scaricherebbe la batteria in poche ore e intaserebbe la rete radio.",
+        "Non corretto. Le notifiche Push vengono trasmesse tramite reti IP (Dati cellulari / Wi-Fi), non tramite SMS.",
+        "Non corretto. Le notifiche Push funzionano tramite protocolli Internet IP/TCP.",
+        "Non corretto. La consegna Push funziona istantaneamente in tempo reale indipendentemente dalla modalità di alimentazione."
+      ]
+    },
+    {
+      "id": "it_net_239",
+      "widget_id": "widget_net_239",
+      "topic": "Infrastruttura dei servizi — Service Mesh (Service Mesh / Sidecar Proxy)",
+      "q": "Quale ruolo svolge il pattern Service Mesh (ad es. Istio con container proxy Envoy) nell'infrastruttura di applicazioni a microservizi?",
+      "hint": "Fate attenzione alla separazione delle attività di rete e infrastrutturali (mTLS, circuit breaking, metriche) dalla logica di business dell'applicazione utilizzando container proxy (Sidecar).",
+      "options": [
+        "Esterna le attività di instradamento, crittografia (mTLS), bilanciamento, retry e monitoraggio dal codice dell'applicazione a container proxy trasparenti (Sidecar)",
+        "Sostituisce il sistema operativo Linux sui microcontrollori",
+        "Riscrive automaticamente il codice sorgente delle applicazioni da Python a Rust",
+        "Fornisce l'accesso fisico a Internet via wireless per i server"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Service Mesh intercetta tutto il traffico di rete tra microservizi tramite proxy Sidecar leggeri. I programmatori non devono scrivere nel codice del servizio la logica di autorizzazione mTLS, tentativi di re-invio (retry) o tracciamento: di tutto si occupa l'infrastruttura.",
+        "Non corretto. Service Mesh funziona in User Space su SO standard basati su containerizzazione (Kubernetes).",
+        "Non corretto. Service Mesh è completamente agnostico rispetto ai linguaggi di programmazione delle applicazioni.",
+        "Non corretto. È uno strato software di gestione dell'interazione tra servizi, non un adattatore fisico Wi-Fi/L1."
+      ]
+    },
+    {
+      "id": "it_net_240",
+      "widget_id": null,
+      "topic": "Infrastruttura dei servizi — Tecnologie di comunicazione asincrona (WebSocket vs SSE)",
+      "q": "Qual è la differenza fondamentale tra le tecnologie Server-Sent Events (SSE) e WebSocket nell'organizzazione degli aggiornamenti dati nelle applicazioni web?",
+      "hint": "Fate attenzione alla direzione della trasmissione dati (unidirezionale server->client vs full-duplex bidirezionale) e al protocollo di trasporto utilizzato.",
+      "options": [
+        "SSE fornisce un canale unidirezionale dal server al client su HTTP standard, mentre WebSocket crea una connessione TCP full-duplex (bidirezionale) dopo l'handshake",
+        "WebSocket funziona solo su smartphone, mentre SSE funziona solo su PC desktop",
+        "SSE trasmette esclusivamente file binari, mentre WebSocket trasmette solo testo in chiaro",
+        "WebSocket elimina l'uso dei browser web"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! SSE (Server-Sent Events) è ottimizzato per gli scenari in cui solo il server invia aggiornamenti al client (ad es. feed di notizie, quotazioni di borsa) su normale HTTP. WebSocket stabilisce invece un canale bidirezionale permanente per lo scambio di messaggi in entrambe le direzioni (ad es. chat, giochi online).",
+        "Non corretto. Entrambe le tecnologie sono ampiamente supportate da tutti i moderni browser web e piattaforme.",
+        "Non corretto. Al contrario, SSE trasmette dati testuali (`text/event-stream`), mentre WebSocket supporta sia frame testuali che binari (Binary Frames).",
+        "Non corretto. WebSocket è stato sviluppato proprio per estendere le funzionalità di comunicazione dei browser web."
+      ]
+    },
+    {
+      "id": "it_net_241",
+      "widget_id": "widget_net_241",
+      "topic": "Infrastruttura dei servizi — Bilanciamento tramite GeoDNS",
+      "q": "In che modo la tecnologia GeoDNS aiuta a indirizzare gli utenti di un servizio web distribuito verso i nodi server ottimali?",
+      "hint": "Pensate all'identificazione della geolocalizzazione del resolver DNS del client e alla restituzione dell'indirizzo IP del data center più vicino.",
+      "options": [
+        "Determina la posizione geografica del resolver DNS del client in base al suo IP e restituisce il record A/AAAA dell'indirizzo IP del punto di presenza (PoP) più vicino, riducendo la latenza di rete",
+        "Traduce automaticamente le pagine web nella lingua madre dell'utente al momento della richiesta DNS",
+        "Blocca l'accesso al sito a tutti gli utenti al di fuori del paese in cui si trova il server principale",
+        "Riduce forzatamente la larghezza di banda del canale per gli utenti stranieri",
+        "Sostituisce il protocollo HTTP con il classico protocollo di trasferimento file FTP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! GeoDNS analizza l'indirizzo IP del server DNS richiedente (o la sottorete del client tramite EDNS Client Subnet) e lo associa dinamicamente al server edge o data center più vicino, garantendo il minor tempo RTT.",
+        "Non corretto. Il DNS traduce i nomi di dominio in indirizzi IP e non si occupa della localizzazione dei contenuti delle pagine web.",
+        "Non corretto. GeoDNS ottimizza l'accesso per gli utenti di varie regioni, non li blocca.",
+        "Non corretto. L'obiettivo di GeoDNS è migliorare la velocità del servizio, non limitarla.",
+        "Non corretto. GeoDNS non influisce sui protocolli applicativi (HTTP/FTP), ma restituisce solo l'IP di destinazione."
+      ]
+    },
+    {
+      "id": "it_net_242",
+      "widget_id": null,
+      "topic": "Infrastruttura dei servizi — Object Storage (S3 / Object Storage)",
+      "q": "Perché per la memorizzazione dei file multimediali degli utenti nelle applicazioni web distribuite si utilizza l'Object Storage (API S3) anziché i file system POSIX tradizionali?",
+      "hint": "Confrontate la scalabilità di uno spazio dei nomi piatto via API HTTP con le strutture ad albero delle directory gerarchiche in presenza di miliardi di file.",
+      "options": [
+        "Offre uno spazio di indirizzamento piatto con metadati e accesso tramite API REST HTTP, consentendo una scalabilità illimitata fino a miliardi di file senza i limiti dei file system gerarchici",
+        "L'Object Storage consente di eseguire codice C++ direttamente all'interno dei file immagine",
+        "I sistemi POSIX vietano il trasferimento di dati su rete TCP/IP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I file system tradizionali (POSIX) perdono prestazioni a causa dei blocchi e delle strutture ad albero gerarchiche con milioni di file. L'Object Storage utilizza chiavi in uno spazio piatto (Bucket/Key), scalando su qualsiasi volume via HTTP.",
+        "Non corretto. L'Object Storage è destinato alla memorizzazione di dati statici (BLOB) e metadati, non all'esecuzione di codice.",
+        "Non corretto. I sistemi POSIX di rete (NFS/SMB) funzionano su TCP/IP, ma hanno limiti di scalabilità per i servizi web."
+      ]
+    },
+    {
+      "id": "it_net_243",
+      "widget_id": "widget_net_243",
+      "topic": "Infrastruttura dei servizi — Pattern Circuit Breaker",
+      "q": "Quale ruolo svolge il pattern Circuit Breaker («Interruttore di protezione») nell'architettura dei microservizi distribuiti?",
+      "hint": "Pensate a come prevenire il guasto a cascata del sistema in caso di errore di uno dei servizi subordinati restituendo rapidamente un errore (Fail-Fast).",
+      "options": [
+        "Monitora il numero di guasti di un servizio subordinato e, al superamento della soglia, «apre il circuito» temporaneamente, restituendo immediatamente un errore (Fail-Fast) per proteggere il resto del sistema da guasti a cascata",
+        "Riavvia automaticamente i rack di server fisici durante gli sbalzi di tensione",
+        "Crittografa il traffico tra il browser web e una rete CDN esterna",
+        "Rimuove dal database gli account utente obsoleti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se un microservizio richiesto rallenta o va in crash, i client possono intasare tutti i thread di chiamata. Circuit Breaker blocca temporaneamente le chiamate al servizio «malato», restituendo rapidamente un fallback (Fail-Fast) e dando al servizio il tempo di ripristinarsi.",
+        "Non corretto. Si tratta di un design pattern software, non di un relè elettrico o hardware.",
+        "Non corretto. La crittografia del traffico è gestita dai protocolli TLS/HTTPS.",
+        "Non corretto. Circuit Breaker gestisce le chiamate tra servizi in tempo reale e non tocca il database."
+      ]
+    },
+    {
+      "id": "it_net_244",
+      "widget_id": null,
+      "topic": "Infrastruttura dei servizi — Specifiche API (GraphQL vs REST)",
+      "q": "Quale problema principale dell'interazione client-server nelle applicazioni distribuite risolve GraphQL rispetto alle classiche API REST?",
+      "hint": "Pensate ai problemi di recupero dati eccessivo (Over-fetching) o insufficiente (Under-fetching) durante la composizione di una singola schermata dell'applicazione.",
+      "options": [
+        "Elimina il recupero eccessivo (Over-fetching) e insufficiente (Under-fetching) di dati, consentendo al client di richiedere esattamente i campi necessari da diverse entità in un'unica richiesta HTTP",
+        "Elimina completamente l'uso di codice lato server e server web",
+        "Garantisce la protezione al 100% da qualsiasi attacco DDoS",
+        "Converte le pagine web in modelli 3D interattivi",
+        "Aumenta automaticamente la velocità del processore sui dispositivi mobili",
+        "Sostituisce il protocollo di trasmissione dati HTTP con Bluetooth"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In REST, per assemblare la schermata del profilo occorre spesso effettuare più chiamate a endpoint diversi (o ricevere byte di campi in eccesso). GraphQL consente di descrivere lo schema esatto della risposta in un'unica richiesta.",
+        "Non corretto. GraphQL richiede la presenza di un server eseguibile (GraphQL Runtime) per analizzare le richieste.",
+        "Non corretto. GraphQL richiede al contrario una protezione aggiuntiva contro richieste complesse e nidificate (Query Depth Limits).",
+        "Non corretto. GraphQL è un linguaggio di query API, non un motore grafico 3D.",
+        "Non corretto. GraphQL funziona a livello di dati software L7 e non modifica la frequenza di clock della CPU.",
+        "Non corretto. GraphQL viene eseguito sui protocolli di rete standard (di solito HTTP POST/WebSocket)."
+      ]
+    },
+    {
+      "id": "it_net_245",
+      "widget_id": "widget_net_245",
+      "topic": "Infrastruttura dei servizi — Architettura orientata agli eventi (Message Broker)",
+      "q": "Perché nell'infrastruttura delle applicazioni distribuite vengono utilizzati i broker di messaggi (Apache Kafka, RabbitMQ) con il pattern «Publisher-Subscriber» (Pub/Sub)?",
+      "hint": "Riflettete sulla comunicazione asincrona, sul disaccoppiamento (decoupling) dei servizi e sull'attenuazione dei picchi di carico.",
+      "options": [
+        "Per l'interazione asincrona tra servizi, il disaccoppiamento delle dipendenze dirette (decoupling) tra i servizi e la livellatura dei picchi di carico (Traffic Leveling / Buffering)",
+        "Per unire fisicamente più cavi di rete a doppino intrecciato in un unico canale aggregato",
+        "Per rimuovere forzatamente i virus dal sistema operativo degli utenti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I broker di messaggi consentono al publisher di pubblicare un evento e proseguire il lavoro senza attendere risposta. I subscriber elaborano i messaggi con il proprio ritmo, mentre il buffer della coda ammortizza i picchi di carico.",
+        "Non corretto. Dell'aggregazione dei canali L2 si occupano protocolli come LACP (802.3ad).",
+        "Non corretto. I broker di messaggi gestiscono i flussi di dati di business all'interno del backend e non sono antivirus."
+      ]
+    },
+    {
+      "id": "it_net_246",
+      "widget_id": null,
+      "topic": "Infrastruttura dei servizi — Terminazione TLS sull'Edge (TLS Termination)",
+      "q": "Quali sono i vantaggi di eseguire la terminazione TLS (TLS Termination) su un gateway (Reverse Proxy / API Gateway) anziché su ciascun microservizio interno?",
+      "hint": "Pensate alla riduzione del carico di decrittografia del traffico sui microservizi e alla gestione centralizzata dei certificati SSL.",
+      "options": [
+        "Sgrava i microservizi dal carico oneroso di cifratura/decifratura e centralizza la gestione dei certificati SSL/TLS al confine della rete",
+        "Consente di trasmettere dati in rete senza utilizzare indirizzi IP",
+        "Protegge automaticamente il database dagli errori nelle query SQL",
+        "Aumenta la quantità di memoria RAM libera sugli smartphone dei clienti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'handshake TLS e la crittografia asimmetrica richiedono molta CPU. La terminazione sul proxy Edge (Nginx, HAProxy, Envoy) consente all'interno del perimetro protetto (VPC) di trasmettere il traffico tra i servizi con il minimo overhead.",
+        "Non corretto. La terminazione L7 non influisce sull'indirizzamento L3.",
+        "Non corretto. TLS Termination gestisce la crittografia del livello di trasporto di rete, non la validazione SQL.",
+        "Non corretto. La terminazione avviene lato server o proxy, non sul client."
+      ]
+    },
+    {
+      "id": "it_net_247",
+      "widget_id": "widget_net_247",
+      "topic": "Infrastruttura dei servizi — Tracciamento distribuito (Distributed Tracing)",
+      "q": "In che modo il tracciamento distribuito (Distributed Tracing, ad esempio OpenTelemetry / Jaeger) consente di monitorare l'esecuzione di una richiesta attraverso decine di microservizi?",
+      "hint": "Pensate al passaggio del contesto di chiamata utilizzando identificatori unici Trace ID e Span ID negli header HTTP/gRPC.",
+      "options": [
+        "Genera un Trace ID univoco all'ingresso della richiesta e lo propaga attraverso gli header delle chiamate (HTTP Headers / gRPC Metadata) tra tutti i servizi per ricomporre un grafico unificato",
+        "Registra un video dello schermo dell'utente al momento della richiesta",
+        "Interrompe l'esecuzione di tutti gli altri processi sul server durante l'elaborazione della richiesta",
+        "Utilizza tracker GPS fisici all'interno dei rack dei server",
+        "Sostituisce il formato dei pacchetti IP con il protocollo ICMP Ping"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Alla ricezione di una richiesta viene creato un Trace ID univoco. Ciascun microservizio, quando chiama il successivo, trasmette questo ID negli header (`traceparent`) e crea il proprio Span ID, inviando le metriche al sistema di tracciamento.",
+        "Non corretto. Il tracciamento distribuito analizza le chiamate di rete tra i microservizi del backend, non registra video.",
+        "Non corretto. Il tracciamento funziona in modo asincrono in background e non blocca l'elaborazione di altre richieste.",
+        "Non corretto. Si tratta di un approccio software per tracciare le richieste logiche nel codice, non legato al GPS.",
+        "Non corretto. Il tracciamento utilizza gli header standard dei protocolli L7 utilizzati."
+      ]
+    },
+    {
+      "id": "it_net_248",
+      "widget_id": null,
+      "topic": "Infrastruttura dei servizi — Autorizzazione nei sistemi distribuiti (JWT vs Redis Session)",
+      "q": "Qual è la differenza principale nello scalare l'autorizzazione con token JWT stateless rispetto alla memorizzazione delle sessioni in un sistema Redis centralizzato?",
+      "hint": "Confrontate la verifica locale e indipendente della firma del token su qualsiasi server senza accedere al database con la possibilità di revoca immediata (Revocation) della sessione.",
+      "options": [
+        "Il JWT viene verificato crittograficamente in locale su qualsiasi server senza accedere al database centrale, ma è difficile da revocare all'istante; la sessione in Redis richiede una chiamata al database per ogni richiesta, ma viene facilmente annullata",
+        "I token JWT possono essere trasmessi solo via cavo, mentre le sessioni Redis solo via Wi-Fi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il JWT contiene al suo interno la firma e i dati (claim), consentendo a qualsiasi microservizio di verificarne l'autenticità senza richieste di rete. Le sessioni in Redis richiedono una query per ogni chiamata HTTP, ma consentono di revocare immediatamente l'accesso (logout/ban).",
+        "Non corretto. Entrambi gli approcci sono astrazioni L7 e sono completamente indipendenti dal mezzo di trasmissione fisico."
+      ]
+    },
+    {
+      "id": "it_net_249",
+      "widget_id": "widget_net_249",
+      "topic": "Infrastruttura dei servizi — Limitazione della frequenza delle richieste (Rate Limiting)",
+      "q": "Con quale scopo all'ingresso di un servizio distribuito (sull'API Gateway) vengono implementati algoritmi di limitazione delle richieste (Rate Limiting, come Token Bucket)?",
+      "hint": "Pensate alla protezione dell'infrastruttura di backend da sovraccarichi, attacchi Brute-Force e abusi di risorse da parte di client malfunzionanti.",
+      "options": [
+        "Per proteggere l'infrastruttura dall'esaurimento delle risorse e da attacchi di sovraccarico (DDoS/Brute-Force) rifiutando (codice 429 Too Many Requests) le richieste in eccesso oltre il limite stabilito",
+        "Per comprimere automaticamente le dimensioni delle immagini caricate dall'utente",
+        "Per raddoppiare la velocità fisica di funzionamento del database",
+        "Per pagare automaticamente le bollette di rete dell'azienda"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il Rate Limiting garantisce la stabilità del servizio (SLA). Se un client invia troppe richieste in un breve intervallo di tempo, l'algoritmo Token/Leaky Bucket blocca il traffico in eccesso restituendo HTTP 429.",
+        "Non corretto. Della compressione delle immagini si occupano media proxy o CDN specializzati.",
+        "Non corretto. Il Rate Limiting protegge il database dal sovraccarico di richieste inutili, ma non ne aumenta la potenza di calcolo.",
+        "Non corretto. È un meccanismo di gestione del traffico di rete L7, non uno strumento finanziario."
+      ]
+    },
+    {
+      "id": "it_net_250",
+      "widget_id": null,
+      "topic": "Infrastruttura dei servizi — Scalabilità dei database (Read Replicas & Connection Pooling)",
+      "q": "In che modo l'architettura dei servizi web distribuiti risolve il problema dell'elevato carico sui database con milioni di utenti contemporanei?",
+      "hint": "Pensate alla separazione delle operazioni di lettura e scrittura (Read/Write splitting), all'uso di repliche di lettura e a un pool di connessioni (Connection Pooler).",
+      "options": [
+        "Separando le operazioni (la scrittura va sul Master, la lettura su molteplici repliche Read) e utilizzando pooler di connessioni (ad esempio PgBouncer) per un utilizzo efficiente dei socket",
+        "Rinunciando completamente ai database a favore della memorizzazione delle informazioni in file di testo sui computer degli utenti",
+        "Impostando il funzionamento del sistema solo nei giorni festivi",
+        "Limitando la lunghezza delle password degli utenti a un massimo di 3 caratteri",
+        "Eliminando tutti i dati più vecchi di 24 ore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La maggior parte dei servizi web esegue molte più operazioni di lettura che di scrittura (Read-Heavy). Separare la lettura su repliche Read allevia il carico sul Master, mentre un Connection Pooler previene il blocco del server dovuto alla creazione di migliaia di connessioni singole.",
+        "Non corretto. Rinunciare al DB a favore di file locali renderebbe impossibile il coordinamento dei dati in un sistema distribuito.",
+        "Non corretto. L'architettura è progettata per garantire il funzionamento del servizio 24/7/365.",
+        "Non corretto. La lunghezza della password non influisce sulla scalabilità architetturale del sistema sotto carico di rete elevato.",
+        "Non corretto. Per l'archiviazione dei dati storici si utilizzano archivi freddi o sistemi OLAP, non l'eliminazione forzata."
+      ]
+    }
+  ]
+}

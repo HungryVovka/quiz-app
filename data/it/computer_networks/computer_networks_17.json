@@ -1,0 +1,597 @@
+{
+  "subject": "Reti",
+  "questions": [
+    {
+      "id": "it_net_511",
+      "widget_id": "widget_net_511",
+      "topic": "Reti di accesso — Struttura HFC (Hybrid Fiber-Coaxial)",
+      "q": "Da quali due principali mezzi fisici di trasmissione dati è composta una rete ibrida fibra-coassiale (HFC)?",
+      "hint": "Fai attenzione al nome stesso della tecnologia HFC (Hybrid Fiber-Coaxial), che indica una combinazione di linee ottiche e in rame.",
+      "options": [
+        "Cavo a fibra ottica (dalla centrale al nodo ottico) e cavo coassiale (dal nodo ottico agli utenti)",
+        "Solo doppino intrecciato Categoria 6A su tutta la rete",
+        "Canale radio satellitare e rete elettrica a 220V",
+        "Wi-Fi wireless e porte a raggi infrarossi",
+        "Solo coppie in rame telefoniche (DSL)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nelle reti HFC, la sezione dorsale dalla Headend al quartiere è realizzata in fibra ottica, mentre la sezione di distribuzione fino agli appartamenti è in cavo coassiale.",
+        "Errato. Il doppino intrecciato viene solitamente utilizzato in Ethernet (FTTB/LAN), non nelle reti HFC via cavo.",
+        "Errato. HFC è una rete terrestre cablata per TV via cavo e Internet.",
+        "Errato. Le porte a raggi infrarossi e il Wi-Fi non formano l'infrastruttura cablata HFC.",
+        "Errato. Le coppie in rame telefoniche vengono utilizzate nella famiglia di tecnologie xDSL."
+      ]
+    },
+    {
+      "id": "it_net_512",
+      "widget_id": null,
+      "topic": "Reti di accesso — Apparati CMTS (Cable Modem Termination System)",
+      "q": "Quale funzione chiave svolge il sistema CMTS (Cable Modem Termination System) situato nella centrale (Headend)?",
+      "hint": "Pensa al dispositivo centrale dell'operatore che aggrega il traffico di numerosi modem via cavo degli utenti e li collega alla rete IP.",
+      "options": [
+        "Gestisce le sessioni, distribuisce la banda e converte i segnali tra i modem cavo degli abbonati e la dorsale IP dell'operatore",
+        "Alimenta con energia elettrica gli elettrodomestici nelle case degli abbonati",
+        "Misura la lunghezza fisica della fibra ottica utilizzando un distanziometro laser"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il CMTS (Cable Modem Termination System) è il dispositivo chiave sul lato operatore, che funge da router/switch per centinaia di modem via cavo degli abbonati.",
+        "Errato. Il CMTS trasmette segnali a radiofrequenza e dati, non energia elettrica per gli elettrodomestici.",
+        "Errato. La misurazione della lunghezza della fibra viene effettuata da strumenti di misura specifici (OTDR/riflettometri)."
+      ]
+    },
+    {
+      "id": "it_net_513",
+      "widget_id": "widget_net_513",
+      "topic": "Reti di accesso — Mezzo condiviso in HFC",
+      "q": "Qual è la caratteristica della topologia del segmento coassiale di una rete HFC nella tratta dal nodo ottico alle abitazioni degli utenti?",
+      "hint": "Pensa a una topologia a bus (o ad albero), in cui diverse case vicine condividono la larghezza di banda totale del cavo coassiale.",
+      "options": [
+        "Il segmento coassiale è un mezzo condiviso (bus/albero), in cui la larghezza di banda è divisa tra gli utenti connessi",
+        "Ogni abbonato riceve un cavo coassiale dedicato e separato direttamente dalla centrale (Headend)",
+        "I dati vengono trasmessi solo a turno: un abbonato al giorno",
+        "Il segnale viene trasmesso esclusivamente da modem a modem in un anello senza l'intervento dell'operatore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sezione coassiale di una rete HFC ha una topologia ad albero e bus (Tree-and-Branch), quindi tutti gli utenti connessi allo stesso segmento coassiale ne condividono la capacità totale.",
+        "Errato. Il collegamento diretto di ciascuna casa alla Headend tramite coassiale non viene utilizzato a causa dell'attenuazione e dei costi.",
+        "Errato. Il multiplexing avviene in frazioni di millisecondi (TDMA/ATDMA), non a giorni.",
+        "Errato. La topologia è ad albero con gestione centralizzata da parte del CMTS."
+      ]
+    },
+    {
+      "id": "it_net_514",
+      "widget_id": null,
+      "topic": "Reti di accesso — Multiplexing a divisione di frequenza (FDM)",
+      "q": "In che modo nelle reti HFC vengono separati il traffico in ingresso (Downstream) e in uscita (Upstream) su un unico cavo coassiale?",
+      "hint": "Ricorda il metodo FDM, in cui i flussi ascendente e discendente sono separati in diverse bande di frequenza del segnale radio.",
+      "options": [
+        "Utilizzando diverse bande di frequenza (Frequency Division Multiplexing): basse frequenze per l'Upstream, frequenze più alte per il Downstream",
+        "Utilizzando un colore diverso per l'isolamento del cavo coassiale per i dati in entrata e in uscita"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In HFC il cavo coassiale trasmette contemporaneamente più canali di frequenza. Lo spettro inferiore (ad es. 5-85 MHz) è riservato all'Upstream, mentre quello superiore (ad es. 108-1220 MHz) al Downstream.",
+        "Errato. Il colore della plastica esterna del cavo non influisce sulla separazione fisica dei segnali all'interno del conduttore in rame."
+      ]
+    },
+    {
+      "id": "it_net_515",
+      "widget_id": "widget_net_515",
+      "topic": "Reti di accesso — Standard DOCSIS",
+      "q": "Che cos'è la famiglia di standard DOCSIS (Data Over Cable Service Interface Specification)?",
+      "hint": "Pensa alle specifiche comunemente accettate che definiscono la trasmissione di dati digitali ad alta velocità sulle reti televisive via cavo esistenti.",
+      "options": [
+        "Un insieme di standard che definiscono le regole per la trasmissione dati su reti televisive via cavo ibride fibra-coassiale (HFC)",
+        "Un protocollo di crittografia delle password nelle reti wireless Bluetooth",
+        "Uno standard per il connettore fisico per il collegamento di schede video alla scheda madre",
+        "Un linguaggio di programmazione per la scrittura di smart contract",
+        "Un formato di compressione audio per la radiodiffusione digitale",
+        "Una guida per la messa a terra dei rack di server metallici"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! DOCSIS è uno standard internazionale sviluppato da CableLabs che descrive le interfacce di trasmissione dati su reti TV via cavo (HFC).",
+        "Errato. Il Bluetooth utilizza specifiche proprie IEEE 802.15.1.",
+        "Errato. Le schede video si collegano tramite bus PCIe.",
+        "Errato. DOCSIS è uno standard di rete per la trasmissione dati, non un linguaggio di programmazione.",
+        "Errato. La compressione audio è regolata da standard come AAC, MP3, FLAC.",
+        "Errato. La messa a terra è descritta dalle norme elettrotecniche (NEC, IEC)."
+      ]
+    },
+    {
+      "id": "it_net_516",
+      "widget_id": null,
+      "topic": "Reti di accesso — Asimmetria della larghezza di banda HFC",
+      "q": "Perché nelle reti HFC/DOCSIS tradizionali la velocità di download (Downstream) è significativamente superiore alla velocità di caricamento dell'utente (Upstream)?",
+      "hint": "Fai attenzione al bilanciamento spettrale storico, in cui al Downstream viene assegnata una banda di frequenza molto più ampia a causa del profilo di consumo dei contenuti.",
+      "options": [
+        "Al flusso discendente (Downstream) è assegnata una banda di frequenza molto più ampia, poiché gli utenti scaricano contenuti più spesso di quanto non li carichino",
+        "La fibra ottica è fisicamente in grado di trasmettere luce solo in una direzione",
+        "Il modem via cavo si surriscalda durante l'invio dei dati in uscita e riduce automaticamente la velocità",
+        "I provider sono legalmente obbligati a limitare la velocità in uscita a 1 Mbit/s"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Storicamente le reti TV sono state progettate per consegnare il segnale televisivo al cliente. In DOCSIS al Downstream è riservata la maggior parte dello spettro radiofrequenza del cavo.",
+        "Errato. La fibra ottica può trasmettere la luce in entrambe le direzioni (duplex su due fibre o WDM su una singola).",
+        "Errato. La velocità è limitata dalla banda di frequenza assegnata, non da fattori termici.",
+        "Errato. Non esistono restrizioni legali a 1 Mbit/s; il limite è dovuto alla larghezza della banda di frequenza."
+      ]
+    },
+    {
+      "id": "it_net_517",
+      "widget_id": null,
+      "topic": "Reti di accesso — Problema del rumore nel canale di uscita (Funnel Effect)",
+      "q": "In cosa consiste il problema dell'«effetto imbuto» (Funnel Effect / Ingress Noise) nel canale di uscita (Upstream) delle reti HFC?",
+      "hint": "Pensa a come i rumori e le interferenze provenienti da tutti gli appartamenti collegati alla rete coassiale ad albero si sommano lungo il percorso verso il CMTS.",
+      "options": [
+        "Le interferenze e i rumori elettromagnetici provenienti da tutte le case collegate si sommano sul cavo coassiale comune lungo il percorso verso la centrale",
+        "L'acqua penetra nel cavo coassiale creando un blocco fisico per le onde radio",
+        "Il nodo ottico si surriscalda a causa di un numero eccessivo di cavi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché il ramo coassiale raccoglie da molti abbonati in un'unica linea (come un imbuto), tutte le interferenze e i rumori del cablaggio domestico si uniscono e arrivano al ricevitore CMTS.",
+        "Errato. L'ingresso di umidità degrada il segnale, ma l'effetto imbuto è la somma fisica dei rumori provenienti dai diversi rami.",
+        "Errato. L'accumulo di rumore è un problema di qualità del segnale radio, non di surriscaldamento del nodo ottico."
+      ]
+    },
+    {
+      "id": "it_net_518",
+      "widget_id": "widget_net_518",
+      "topic": "Reti di accesso — Nodo ottico (Optical Node)",
+      "q": "Quale trasformazione fisica del segnale effettua un nodo ottico (Optical Node) in una rete HFC?",
+      "hint": "Ricorda che il nodo si trova al punto di incontro tra le sezioni in fibra ottica e coassiale della rete.",
+      "options": [
+        "Converte i segnali ottici dalla fibra ottica in segnali elettrici a radiofrequenza (RF) per il cavo coassiale e viceversa",
+        "Converte il traffico di rete digitale nel segnale analogico di un telefono fisso",
+        "Converte la corrente elettrica continua in corrente alternata a 220V",
+        "Aumenta la risoluzione del video trasmesso da 1080p a 4K",
+        "Crittografa tutto il traffico di passaggio utilizzando l'algoritmo AES-256"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il nodo ottico è dotato di ricevitori e trasmettitori che convertono gli impulsi luminosi della fibra ottica in un segnale elettrico a radiofrequenza (RF) per il coassiale in rame.",
+        "Errato. La conversione in telefonia analogica è effettuata da dispositivi VoIP / FXS.",
+        "Errato. Il nodo è un convertitore infocomunicativo, non un inverter di alimentazione.",
+        "Errato. Il nodo ottico è trasparente rispetto al formato dei dati e del video trasmessi.",
+        "Errato. La crittografia in DOCSIS avviene a livello MAC/CMTS, non nel convertitore ottico."
+      ]
+    },
+    {
+      "id": "it_net_519",
+      "widget_id": null,
+      "topic": "Reti di accesso — Evoluzione di DOCSIS 3.1 e 4.0",
+      "q": "Quali innovazioni tecnologiche chiave sono state introdotte in DOCSIS 3.1 e 4.0 per raggiungere velocità multigigabit?",
+      "hint": "Ricorda il passaggio al multiplexing OFDM/OFDMA, ad ordini di modulazione elevati (4096-QAM) e alla trasmissione full-duplex (Full Duplex DOCSIS).",
+      "options": [
+        "Uso di OFDM/OFDMA, ordini elevati di modulazione quadratura d'ampiezza (4096-QAM) e tecnologia Full Duplex (FDX)",
+        "Sostituzione del cavo coassiale con tubi di plastica per l'acqua",
+        "Abbandono dello spettro delle radiofrequenze a favore delle onde ultrasoniche",
+        "Uso di parabole satellitari su ogni modem via cavo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! DOCSIS 3.1 è passato da canali stretti da 6/8 MHz ad ampi blocchi OFDM/OFDMA con modulazione 4096-QAM, mentre DOCSIS 4.0 ha aggiunto la modalità full-duplex (FDX) per velocità gigabit simmetriche.",
+        "Errato. I tubi di plastica non conducono il segnale RF elettromagnetico.",
+        "Errato. Gli ultrasuoni non si propagano nei cavi alla velocità e frequenza necessarie.",
+        "Errato. DOCSIS funziona su reti cablate HFC, non tramite parabole satellitari."
+      ]
+    },
+    {
+      "id": "it_net_520",
+      "widget_id": "widget_net_520",
+      "topic": "Reti di accesso — Amplificatori di linea (RF Amplifiers)",
+      "q": "Perché nella sezione coassiale di una rete HFC vengono installati amplificatori a radiofrequenza bidirezionali (RF Amplifiers)?",
+      "hint": "Pensa all'attenuazione del segnale elettromagnetico ad alta frequenza durante la propagazione lungo la linea coassiale in rame e alla divisione tramite distributori (splitter/tap).",
+      "options": [
+        "Per compensare l'attenuazione del segnale a radiofrequenza durante la sua propagazione lungo il cavo coassiale e attraverso i derivatori (Tap)",
+        "Per filtrare il traffico di virus e malware",
+        "Per convertire il segnale coassiale in un segnale wireless 5G"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il segnale radio si indebolisce (si attenua) lungo il coassiale in rame e sui divisori della tratta. Gli amplificatori bidirezionali aumentano il livello del segnale in entrambe le direzioni (DS/US).",
+        "Errato. Gli amplificatori analogici RF operano al livello fisico e non analizzano il contenuto dei pacchetti IP.",
+        "Errato. Gli amplificatori servono a mantenere i livelli di segnale nel cavo, non per la telefonia mobile 5G."
+      ]
+    },
+    {
+      "id": "it_net_521",
+      "widget_id": "widget_net_521",
+      "topic": "Reti di accesso — Aggregazione dei canali in DOCSIS 3.0 (Channel Bonding)",
+      "q": "In che modo la tecnologia di aggregazione dei canali (Channel Bonding) in DOCSIS 3.0 consente di aumentare significativamente la velocità di trasmissione dati su cavo coassiale?",
+      "hint": "Pensa all'aggregazione parallela di diversi canali a radiofrequenza standard (di ampiezza 6 o 8 MHz) in un'unica dorsale logica.",
+      "options": [
+        "Aggregando logicamente più canali di frequenza fisici (6 o 8 MHz) in un unico flusso virtuale ad alta velocità",
+        "Intrecciando fisicamente più cavi coassiali in un unico cavo spesso nell'appartamento dell'utente",
+        "Aumentando la tensione elettrica nella linea coassiale fino a 220 Volt"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! DOCSIS 3.0 ha introdotto il Channel Bonding, consentendo di raggruppare 4, 8, 16, 32 o più canali RF fisici in un unico canale virtuale, sommando proporzionalmente la loro capacità.",
+        "Errato. L'unione avviene logicamente a livello di segnali in un unico cavo coassiale, non tramite l'attorcigliamento fisico dei cavi.",
+        "Errato. L'aumento della tensione non aumenta la capacità del canale e può bruciare le apparecchiature."
+      ]
+    },
+    {
+      "id": "it_net_522",
+      "widget_id": null,
+      "topic": "Reti di accesso — Modulazione di ampiezza in quadratura (QAM) in HFC",
+      "q": "Cosa caratterizza la modulazione di ampiezza in quadratura (QAM) nelle reti HFC e in che modo l'aumento del suo ordine (ad es. da 64-QAM a 256-QAM o 4096-QAM) influisce sulla trasmissione?",
+      "hint": "Fai attenzione alla relazione tra il numero di bit codificati per simbolo e i requisiti di qualità della linea (rapporto segnale/rumore).",
+      "options": [
+        "La QAM codifica i dati modificando l'ampiezza e la fase del segnale portante; un ordine più elevato codifica più bit per simbolo, ma richiede un canale più pulito con un SNR elevato",
+        "L'ordine QAM determina solo il colore del cavo in fibra ottica sulla dorsale del provider",
+        "Un alto ordine QAM consente di trasmettere dati digitali senza l'uso di onde elettromagnetica",
+        "L'aumento dell'ordine QAM riduce i requisiti di qualità del cavo, consentendo l'uso di vecchie linee danneggiate"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Più alto è l'ordine QAM (64-QAM = 6 bit/simbolo, 256-QAM = 8 bit/simbolo, 4096-QAM = 12 bit/simbolo), maggiore è la densità dei dati, ma la costellazione diventa più vulnerabile al rumore (richiede SNR/MER più elevati).",
+        "Errato. La QAM è un metodo di modulazione dei segnali a radiofrequenza, non il colore dell'isolamento del cavo.",
+        "Errato. La trasmissione di informazioni sul cavo coassiale avviene proprio tramite onde elettromagnetiche.",
+        "Errato. Al contrario, un'elevata modulazione richiede l'assenza di rumore e danni sulla linea."
+      ]
+    },
+    {
+      "id": "it_net_523",
+      "widget_id": "widget_net_523",
+      "topic": "Reti di accesso — Architettura di accesso distribuito (DAA / Remote PHY)",
+      "q": "Qual è la sostanza del concetto DAA (Distributed Access Architecture) e della tecnologia Remote PHY (R-PHY) nelle moderne reti HFC?",
+      "hint": "Pensa allo spostamento delle funzioni hardware di elaborazione del segnale RF fisico (PHY) dalla Headend centrale ai nodi ottici distribuiti nel quartiere.",
+      "options": [
+        "Trasferimento delle funzioni del livello fisico (PHY) o MAC dalla Headend centrale a nodi ottici remoti, trasformando la dorsale in una rete digitale Ethernet/IP (CIN)",
+        "Abbandono totale dei nodi ottici e loro sostituzione con vecchi amplificatori analogici",
+        "Passaggio di tutti gli abbonati via cavo a parabole satellitari individuali",
+        "Posizionamento di un server fisico CMTS all'interno dell'appartamento di ciascun abbonato",
+        "Sostituzione di tutti i protocolli Internet IP con i protocolli ATM per bancomat"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In DAA (Remote PHY / Remote MACPHY) l'ottica analogica viene sostituita da una rete IP digitale (Converged Interconnect Network). Il segnale RF fisico viene generato direttamente nel nodo ottico vicino alle case (RPD), riducendo il rumore e aumentando la velocità.",
+        "Errato. DAA al contrario modernizza i nodi ottici, trasformandoli in punti digitali di generazione RF.",
+        "Errato. DAA sviluppa l'infrastruttura di cavo HFC.",
+        "Errato. I dispositivi RPD/Remote-MACPHY sono installati nei nodi ottici stradali, non negli appartamenti.",
+        "Errato. DAA si basa su reti digitali IP/Ethernet standard."
+      ]
+    },
+    {
+      "id": "it_net_524",
+      "widget_id": null,
+      "topic": "Reti di accesso — Elementi passivi HFC (Splitter e Tap)",
+      "q": "Qual è lo scopo dei divisori passivi (Splitter) e dei derivatori (Tap) nella sezione coassiale di una rete HFC?",
+      "hint": "Pensa alla divisione e alla derivazione meccanica del segnale a radiofrequenza dalla dorsale coassiale principale alle singole case e appartamenti.",
+      "options": [
+        "Derivazione e distribuzione del segnale a radiofrequenza dalla dorsale coassiale principale alle linee di utente (cavi Drop)",
+        "Generazione di nuovi segnali a radiofrequenza e ripristino della tensione attenuata nella rete"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Tap e Splitter sono dispositivi passivi (che non richiedono alimentazione) che dividono l'energia del segnale RF e ne indirizzano una parte dal cavo principale ai cavi di utente.",
+        "Errato. Gli elementi passivi non possono generare segnali o ripristinare la tensione; a tale scopo servono gli amplificatori attivi (Amplifiers)."
+      ]
+    },
+    {
+      "id": "it_net_525",
+      "widget_id": "widget_net_525",
+      "topic": "Reti di accesso — Modem via cavo dell'utente (Cable Modem)",
+      "q": "Quali sono le funzioni principali del modem via cavo dell'utente (Cable Modem) sul lato utente della rete HFC?",
+      "hint": "Fai attenzione alla modulazione/demodulazione delle radiofrequenze, alla sincronizzazione temporale con il CMTS e all'autorizzazione secondo lo standard DOCSIS.",
+      "options": [
+        "Modulazione/demodulazione del segnale RF in pacchetti IP digitali, sincronizzazione temporale con il CMTS ed esecuzione delle procedure di sicurezza e autenticazione (BPI+)",
+        "Conversione del traffico di rete in un raggio laser ottico direttamente nell'appartamento",
+        "Alimentazione degli elettrodomestici in casa dal connettore coassiale",
+        "Traduzione automatica delle pagine web dalle lingue straniere",
+        "Generazione di energia elettrica dalle onde radio della televisione via etere",
+        "Trasmissione di chiamate telefoniche esclusivamente tramite il doppino in rame della centrale telefonica"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il modem via cavo riceve il segnale RF analogico dal cavo coassiale, lo demodula in pacchetti IP digitali (e viceversa per l'Upstream), mantenendo una precisa sincronizzazione temporale con il CMTS e la crittografia BPI+.",
+        "Errato. Il modem lavora con un segnale elettrico a radiofrequenza su cavo coassiale, non con i laser della fibra ottica.",
+        "Errato. Il modem consuma energia dalla presa e non alimenta elettrodomestici.",
+        "Errato. Il modem opera ai livelli L1-L2 dello stack di rete e non si occupa della traduzione linguistica.",
+        "Errato. Il modem non genera energia per usi esterni.",
+        "Errato. La linea telefonica legacy non rientra nelle funzioni del modem DOCSIS."
+      ]
+    },
+    {
+      "id": "it_net_526",
+      "widget_id": null,
+      "topic": "Reti di accesso — Sicurezza in HFC (BPI+ / Baseline Privacy)",
+      "q": "In che modo il protocollo BPI+ (Baseline Privacy Interface Plus) garantisce la protezione del traffico degli utenti in un ambiente coassiale condiviso HFC?",
+      "hint": "Pensa alla crittografia dei dati nell'etere del cavo, impedendo l'intercettazione dei pacchetti altrui da parte dei vicini collegati allo stesso cavo.",
+      "options": [
+        "Crittografa i dati tra il CMTS e ciascun modem via cavo utilizzando chiavi uniche e certificati X.509, impedendo l'intercettazione del traffico da parte dei vicini",
+        "Scherma fisicamente le onde radio all'interno delle pareti dell'appartamento mediante piastre di piombo",
+        "Disconnette forzatamente l'accesso alla rete a tutti i vicini se uno di essi inizia a scaricare un file di grandi dimensioni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché il segmento coassiale HFC è a bus (tutti vedono i frame di tutti), BPI+ crittografa i dati di ciascun modem con una chiave individuale e verifica l'autenticità del modem tramite certificato X.509.",
+        "Errato. BPI+ è un protocollo di rete crittografico, non un isolamento edilizio.",
+        "Errato. I protocolli di sicurezza mirano a proteggere la riservatezza, non a bloccare i vicini."
+      ]
+    },
+    {
+      "id": "it_net_527",
+      "widget_id": "widget_net_527",
+      "topic": "Reti di accesso — Sottoportanti OFDM in DOCSIS 3.1",
+      "q": "Qual è il vantaggio dell'utilizzo della tecnologia OFDM (Orthogonal Frequency Division Multiplexing) in DOCSIS 3.1 rispetto ai canali a banda stretta di DOCSIS 3.0?",
+      "hint": "Ricorda la suddivisione di un ampio spettro (fino a 192 MHz) in centinaia di sottoportanti ortogonali e la possibilità di mascherare (disattivare) le interferenze su singole frequenze.",
+      "options": [
+        "Suddivisione di un ampio spettro in molteplici sottoportanti ortogonali strette, che aumenta l'efficienza spettrale e consente di disattivare in modo flessibile le frequenze affette da rumore",
+        "OFDM annulla completamente la necessità di messa a terra per tutti i modem via cavo",
+        "OFDM elimina la necessità della stazione centrale CMTS dal lato del provider",
+        "OFDM consente la trasmissione dei dati in una sola direzione (esclusivamente Upstream)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In DOCSIS 3.1, invece di canali singoli da 6/8 MHz, si utilizza un blocco OFDM (fino a 192 MHz in DS) con centinaia di sottoportanti (25 o 50 kHz). Ciò consente di mascherare specifiche sottoportanti disturbate senza perdere l'intero canale del blocco.",
+        "Errato. La messa a terra delle reti elettriche rimane un fattore importante per la sicurezza elettrica.",
+        "Errato. Il CMTS gestisce ancora la pianificazione e la distribuzione delle sottoportanti OFDM.",
+        "Errato. OFDM/OFDMA viene applicato sia per il Downstream che per l'Upstream."
+      ]
+    },
+    {
+      "id": "it_net_528",
+      "widget_id": null,
+      "topic": "Reti di accesso — Diagnostica HFC: Parametri SNR e MER",
+      "q": "Cosa mostrano i parametri SNR (Signal-to-Noise Ratio) e MER (Modulation Error Ratio) durante il monitoraggio tecnico della qualità di una rete HFC?",
+      "hint": "Pensa alla misurazione del livello di purezza del segnale a radiofrequenza e al grado della sua distorsione dovuta a rumori e interferenze di fondo.",
+      "options": [
+        "Il rapporto tra la potenza del segnale radio utile e la potenza del rumore, e il grado di deviazione dei punti della costellazione di modulazione dai valori ideali",
+        "La quantità di energia elettrica consumata per il raffreddamento della sala server centrale",
+        "La temperatura fisica dell'ambiente circostante attorno al cavo coassiale in gradi Celsius",
+        "Il costo totale del piano tariffario impostato per un specifico abbonato",
+        "Il numero di router di rete sul percorso dei pacchetti IP nella rete globale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'SNR mostra di quanto il segnale RF utile supera il rumore nel cavo, mentre il MER misura l'errore vettoriale dei punti nella costellazione QAM: più alti sono questi valori in dB, migliore è la qualità della connessione.",
+        "Errato. Questi parametri misurano le caratteristiche fisiche del segnale radio, non il consumo di energia elettrica.",
+        "Errato. SNR e MER si riferiscono alla qualità del segnale elettromagnetico, non alla temperatura dell'aria.",
+        "Errato. Si tratta di indicatori tecnici della qualità di connessione, non di metriche finanziarie.",
+        "Errato. Il numero di router è indicato dalla metrica TTL o Traceroute, non da SNR/MER."
+      ]
+    },
+    {
+      "id": "it_net_529",
+      "widget_id": "widget_net_529",
+      "topic": "Reti di accesso — Modalità Full Duplex DOCSIS (FDX)",
+      "q": "In che modo la tecnologia Full Duplex DOCSIS (FDX) nello standard DOCSIS 4.0 consente la ricezione e trasmissione simultanea sulle stesse frequenze?",
+      "hint": "Pensa all'uso di sistemi di cancellazione dell'eco (Interference Cancellation), che consentono di separare il proprio segnale da quello altrui durante la trasmissione simultanea.",
+      "options": [
+        "Utilizzando algoritmi avanzati di cancellazione dell'eco (Interference Cancellation), che sottraggono il proprio segnale trasmesso dal segnale in ingresso totale",
+        "Posando un secondo cavo coassiale fisico indipendente in ciascun appartamento",
+        "Trasmettendo il traffico in uscita solo nelle ore notturne, quando le trasmissioni TV sono spente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! FDX in DOCSIS 4.0 utilizza la cancellazione dell'eco: il dispositivo sa quale segnale sta trasmettendo e lo sottrae attivamente dall'interferenza fisica sul connettore, isolando il segnale in entrata dalla parte opposta sulla stessa frequenza.",
+        "Errato. FDX funziona su un singolo cavo coassiale esistente.",
+        "Errato. La modalità full-duplex garantisce la trasmissione simultanea continua 24/7."
+      ]
+    },
+    {
+      "id": "it_net_530",
+      "widget_id": null,
+      "topic": "Reti di accesso — Evoluzione da HFC a FTTH",
+      "q": "Qual è la ragione principale che spinge gli operatori di TV via cavo a modernizzare gradualmente le reti HFC verso un'architettura interamente ottica FTTH (Fiber to the Home)?",
+      "hint": "Pensa all'eliminazione degli amplificatori attivi stradali, che richiedevano manutenzione e alimentazione elettrica costanti, e alla rimozione dei limiti di frequenza del coassiale.",
+      "options": [
+        "Eliminazione degli amplificatori attivi stradali, riduzione dei costi operativi (OPEX) e rimozione delle limitazioni di banda del coassiale in rame",
+        "Divieto mondiale totale dell'uso di qualsiasi radiofrequenza per le comunicazioni",
+        "Il cavo coassiale si scioglie rapidamente sotto la pioggia all'aperto",
+        "Il cavo in fibra ottica è in grado di trasmettere elettricità per l'illuminazione degli appartamenti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il passaggio a PON/FTTH rimuove dalla catena centinaia di amplificatori stradali (alimentazione, guasti, rumori) e fornisce un potenziale di capacità quasi illimitato senza asimmetria.",
+        "Errato. Non esiste alcun divieto sull'uso delle radiofrequenze nei cavi o nell'etere.",
+        "Errato. Il cavo coassiale esterno è protetto da una guaina resistente e dura per decenni.",
+        "Errato. La fibra ottica trasmette impulsi luminosi e non conduce corrente elettrica."
+      ]
+    },
+    {
+      "id": "it_net_531",
+      "widget_id": "widget_net_531",
+      "topic": "Reti di accesso — Micro-riflessioni (Micro-reflections) in HFC",
+      "q": "Da cosa hanno origine le micro-riflessioni (Micro-reflections) nella sezione coassiale di una rete HFC e come influiscono sulla qualità del segnale trasmesso?",
+      "hint": "Fai attenzione al disadattamento dell'impedenza caratteristica (75 Ohm) sui connettori e ai danni al cavo, che causano la riflessione delle onde radio verso la sorgente.",
+      "options": [
+        "A causa del disadattamento dell'impedenza (75 Ohm) sui connettori o sulle pieghe del cavo, che causa la riflessione delle onde e la distorsione del segnale",
+        "A causa dell'uso di un cavo in fibra ottica troppo spesso sulla dorsale",
+        "A causa di un'interruzione dell'alimentazione elettrica nella stazione centrale CMTS",
+        "A causa del riscaldamento della fibra ottica al sole durante il periodo estivo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Eventuali connettori allentati, danni o splitter non adattati modificano l'impedenza della linea, riflettendo parte del segnale radio all'indietro. Ciò causa onde stazionarie e interferenza intersimbolica (ISI).",
+        "Errato. Le micro-riflessioni si verificano nel percorso coassiale elettrico, non nell'ottica.",
+        "Errato. Lo spegnimento del CMTS interromperà completamente la connessione, ma non causa micro-riflessioni delle onde.",
+        "Errato. Il riscaldamento della fibra ottica può modificare leggermente l'attenuazione, ma non crea micro-riflessioni RF nel coassiale."
+      ]
+    },
+    {
+      "id": "it_net_532",
+      "widget_id": null,
+      "topic": "Reti di accesso — Pre-equalizzazione adattativa (Adaptive Pre-equalization)",
+      "q": "Qual è il ruolo dell'algoritmo di pre-equalizzazione adattativa (Adaptive Pre-equalization) nel canale di uscita (Upstream) di DOCSIS?",
+      "hint": "Pensa a come il modem dell'utente distorce preventivamente il proprio segnale trasmesso per compensare le distorsioni di ampiezza e fase del percorso coassiale specifico verso il CMTS.",
+      "options": [
+        "Il modem distorce preventivamente la fase e l'ampiezza del segnale trasmesso in modo che, dopo aver attraversato il percorso del cavo, arrivi al CMTS in forma ideale",
+        "Il modem raddoppia automaticamente la velocità di Internet senza l'autorizzazione del provider",
+        "L'algoritmo blocca il trasferimento di tutti i file di grandi dimensioni tramite reti torrent"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il CMTS misura le distorsioni del segnale da uno specifico modem e gli invia i coefficienti digitali. Il modem li applica con un filtro in direzione opposta, compensando l'attenuazione e le micro-riflessioni della linea di cavo.",
+        "Errato. La pre-equalizzazione ripristina la qualità fisica del segnale, non modifica i limiti tariffari.",
+        "Errato. Questo algoritmo funziona a livello fisico (PHY) e non si occupa del filtraggio del traffico applicativo."
+      ]
+    },
+    {
+      "id": "it_net_533",
+      "widget_id": "widget_net_533",
+      "topic": "Reti di accesso — Messaggi MAP e allocazione del tempo (TDMA/ATDMA)",
+      "q": "In che modo il CMTS coordina la trasmissione dati da parte di più modem nel canale di uscita (Upstream), evitando collisioni in modalità TDMA/ATDMA?",
+      "hint": "Ricorda i frame di controllo del servizio inviati regolarmente dal CMTS, in cui sono specificati con precisione gli intervalli di tempo (mini-slot) per ciascun modem.",
+      "options": [
+        "Il CMTS invia regolarmente messaggi di servizio MAP che assegnano quanti di tempo personali (mini-slot) a ciascun modem",
+        "Ogni modem invia dati in un momento casuale e, in caso di collisione, effettua una pausa come in Ethernet",
+        "I modem comunicano direttamente tra loro tramite Wi-Fi e concordano il proprio turno",
+        "Il CMTS interroga i modem mediante un processo lento a turno (Polling) una volta al minuto",
+        "La trasmissione in Upstream avviene rigorosamente in ordine alfabetico dei numeri di serie dei modem"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In DOCSIS l'Upstream è gestito. Il CMTS trasmette continuamente messaggi MAP nel Downstream. In essi è descritta la griglia dei mini-slot: a quale modem, in quale microsecondo e su quale frequenza è consentito trasmettere.",
+        "Errato. L'accesso casuale (CSMA/CD) nelle reti coassiali DOCSIS per la trasmissione dati non viene utilizzato a causa delle elevate latenze.",
+        "Errato. I modem sono isolati gli uni dagli altri e gestiti centralmente tramite il CMTS.",
+        "Errato. L'interrogazione avviene a intervalli di millisecondi tramite la pianificazione dei messaggi MAP.",
+        "Errato. L'assegnazione degli slot temporali dipende dalle richieste di trasmissione (Bandwidth Requests), non dai numeri di serie."
+      ]
+    },
+    {
+      "id": "it_net_534",
+      "widget_id": "widget_net_534",
+      "topic": "Reti di accesso — Filtri diplex (Diplex Filters)",
+      "q": "Quale funzione svolge un filtro diplex (Diplex Filter) all'interno del modem di un utente o di un amplificatore di linea HFC?",
+      "hint": "Ricorda i filtri passa-basso e passa-alto (LPF/HPF) che dividono il percorso a radiofrequenza combinato in due direzioni isolate.",
+      "options": [
+        "Divide un singolo connettore coassiale in due percorsi di frequenza: un filtro passa-basso per l'Upstream e un filtro passa-alto per il Downstream",
+        "Converte la corrente alternata a 220 V in ingresso in corrente continua a 12 V per alimentare il modem"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il diplexore è composto da LPF (Low-Pass Filter) e HPF (High-Pass Filter). Divide lo spettro di frequenza di un cavo, indirizzando le basse frequenze al trasmettitore Upstream e le alte al ricevitore Downstream.",
+        "Errato. La conversione della tensione di rete è effettuata dall'alimentatore (adattatore AC/DC), non da un filtro diplex a radiofrequenza."
+      ]
+    },
+    {
+      "id": "it_net_535",
+      "widget_id": null,
+      "topic": "Reti di accesso — Low-Latency DOCSIS (LLD)",
+      "q": "Grazie a quale meccanismo la tecnologia Low-Latency DOCSIS (LLD) riduce la latenza per il traffico sensibile ai ritardi (giochi online, videochiamate)?",
+      "hint": "Pensa all'utilizzo del concetto di due code parallele (Dual Queue), che separa il traffico interattivo da quello di capacità (bulk) per i download.",
+      "options": [
+        "Separando il traffico in due code parallele (Dual Queue): una accelerata per i pacchetti interattivi e una classica veloce per i download massivi",
+        "Comprimendo forzatamente tutti i giochi online in archivi zip prima dell'invio",
+        "Aumentando la velocità della luce all'interno della fibra ottica del 50%",
+        "Disattivando la crittografia BPI+ per tutti i server di gioco"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Low-Latency DOCSIS separa le code di buffering (Dual Queue). I piccoli pacchetti in tempo reale (giochi, VoIP) passano senza ritardi di bufferizzazione (Non-Queue-Building), mentre lo streaming video e il download di file vengono isolati in un buffer separato.",
+        "Errato. LLD non archivia i dati al volo.",
+        "Errato. La velocità di propagazione delle onde elettromagnetiche è limitata dalle leggi della fisica.",
+        "Errato. L'annullamento della crittografia violerebbe la sicurezza e non risolverebbe il problema della bufferizzazione (Bufferbloat)."
+      ]
+    },
+    {
+      "id": "it_net_536",
+      "widget_id": "widget_net_536",
+      "topic": "Reti di accesso — Architettura Fiber Deep (N+0)",
+      "q": "Cosa significa la designazione N+0 nel contesto dello sviluppo dell'architettura Fiber Deep nelle reti HFC?",
+      "hint": "Pensa al numero di amplificatori a radiofrequenza (Amplifiers) collegati in serie tra il nodo ottico e l'abitazione dell'utente.",
+      "options": [
+        "Assenza totale di amplificatori a radiofrequenza in serie tra il nodo ottico e l'abbonato (Node + 0 Amplifiers)",
+        "Uso di 0 metri di cavo in fibra ottica nell'intera rete dell'operatore",
+        "Connessione di 0 abbonati a un singolo nodo ottico",
+        "Abbandono dell'uso della trasmissione dati digitale a favore della TV analogica",
+        "Uso di 0 volt di tensione su tutte le dorsali",
+        "Presenza di un livello di ritardo del segnale pari a zero (0 millisecondi)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo schema N+0 (Node + 0) indica di portare la fibra il più vicino possibile alle case, rendendo la tratta coassiale breve e senza necessità di amplificatori attivi (Amplifiers).",
+        "Errato. Fiber Deep al contrario implica la posa della fibra ottica più in profondità nei quartieri.",
+        "Errato. Al nodo N+0 si collegano comunque decine di abitazioni di abbonati.",
+        "Errato. N+0 è realizzato proprio per la trasmissione digitale ad alta velocità DOCSIS 3.1/4.0.",
+        "Errato. I nodi N+0 richiedono alimentazione elettrica per funzionare.",
+        "Errato. La latenza viene ridotta, ma non può essere fisicamente pari a zero."
+      ]
+    },
+    {
+      "id": "it_net_537",
+      "widget_id": null,
+      "topic": "Reti di accesso — Manutenzione proattiva della rete (PNM)",
+      "q": "Qual è il vantaggio dell'applicazione del concetto Proactive Network Maintenance (PNM) nelle reti HFC?",
+      "hint": "Fai attenzione alla raccolta di telemetria e coefficienti di equalizzazione da migliaia di modem attivi per individuare tratte di cavo pre-critiche prima dei reclami dei clienti.",
+      "options": [
+        "Analisi della telemetria integrata dei modem per identificare danni ai cavi e connettori serrati male prima che i clienti notino i disservizi",
+        "Invio automatico di tecnici a casa del cliente ogni giorno per un'ispezione visiva",
+        "Sostituzione automatica completa del cavo coassiale ogni 3 anni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! PNM raccoglie i dati dagli equalizzatori dei modem e, tramite analisi matematica (FFT, TDR), localizza con precisione la posizione del danno fisico al cavo o del connettore allentato prima dell'interruzione del servizio.",
+        "Errato. PNM è stato creato proprio per evitare uscite fisiche non pianificate dei tecnici.",
+        "Errato. I cavi vengono sostituiti secondo le effettive necessità, monitorate dal sistema PNM."
+      ]
+    },
+    {
+      "id": "it_net_538",
+      "widget_id": "widget_net_538",
+      "topic": "Reti di accesso — Espansione dello spettro di uscita (High-Split)",
+      "q": "Con quale scopo gli operatori HFC effettuano il passaggio della rete da Sub-Split (fino a 42/65 MHz) a High-Split (fino a 204 MHz)?",
+      "hint": "Pensa all'aumento della gamma di frequenze riservata alla velocità in uscita dall'abbonato (Upstream).",
+      "options": [
+        "Per un'espansione significativa della banda del canale in uscita (Upstream) e il raggiungimento di velocità di invio fino a 1 Gbit/s",
+        "Per la disattivazione totale della possibilità di caricare file su Internet",
+        "Per liberare frequenze a favore della radio analogica in banda FM",
+        "Per ridurre il consumo energetico dei modem di 10 volte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il passaggio a High-Split sposta il limite superiore dell'Upstream da 42/65 MHz a 204 MHz, destinando all'invio una vasta porzione di frequenze per il lancio di piani tariffari simmetrici.",
+        "Errato. High-Split al contrario aumenta la velocità in uscita (Upstream).",
+        "Errato. La banda FM (88-108 MHz) viene eliminata o assorbita dall'Upstream ampliato.",
+        "Errato. Gli split modificano la griglia delle frequenze, non il consumo energetico dei chipset."
+      ]
+    },
+    {
+      "id": "it_net_539",
+      "widget_id": null,
+      "topic": "Reti di accesso — Codifica a controllo di parità a bassa densità (LDPC)",
+      "q": "Perché nello standard DOCSIS 3.1 si è passati dai codici Reed-Solomon ai codici LDPC (Low-Density Parity-Check)?",
+      "hint": "Pensa all'efficienza di correzione degli errori, che consente di operare più vicino al limite di Shannon ad alti ordini di modulazione (QAM).",
+      "options": [
+        "I codici LDPC hanno una capacità di correzione nettamente migliore e si avvicinano al limite di Shannon, garantendo il funzionamento di modulazioni dense (4096-QAM)",
+        "I codici Reed-Solomon richiedono il pagamento di royalty sui brevetti troppo elevate per ogni byte di traffico"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I codici LDPC (Low-Density Parity-Check) combinati con BCH offrono un guadagno energetico superiore di 1,5–2 dB rispetto a Reed-Solomon, necessario per il funzionamento delle modulazioni ad altissima densità di DOCSIS 3.1.",
+        "Errato. La ragione del passaggio è esclusivamente tecnica: il limite fisico di Shannon e l'immunità al rumore."
+      ]
+    },
+    {
+      "id": "it_net_540",
+      "widget_id": null,
+      "topic": "Reti di accesso — Interferenza ottica (OBI in RFoG)",
+      "q": "Che cos'è il fenomeno OBI (Optical Beat Interference) nelle reti RFoG (RF over Glass) / HFC e a cosa porta?",
+      "hint": "Ricorda la situazione in cui due trasmettitori ottici emettono contemporaneamente luce a lunghezze d'onda quasi identiche in un singolo splitter in fibra ottica.",
+      "options": [
+        "Interferenza dovuta alla coincidenza delle lunghezze d'onda ottiche di due trasmettitori Upstream simultanei, che distrugge il segnale a radiofrequenza sul ricevitore",
+        "Surriscaldamento del cavo ottico a contatto con la corrente elettrica",
+        "Perdita di colore nell'immagine televisiva trasmessa",
+        "Rallentamento del processore sul server centrale CMTS",
+        "Malfunzionamenti dei navigatori GPS vicino al nodo ottico stradale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'OBI si verifica quando due trasmettitori ottici Upstream emettono luce con sovrapposizione di lunghezze d'onda (ad es. 1310 nm). I loro battimenti generano un forte rumore RF nel fotoricevitore della Headend, distruggendo i dati.",
+        "Errato. L'OBI è un'interferenza di onde ottiche, non un riscaldamento elettrico.",
+        "Errato. L'OBI porta alla perdita di pacchetti a livello PHY/MAC, non a una perdita selettiva del colore.",
+        "Errato. L'OBI danneggia il segnale fisico nella linea ottica, senza interessare la CPU del CMTS.",
+        "Errato. L'OBI è confinato all'interno del cavo in fibra ottica e non viene irradiato nell'aria per il GPS."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,601 @@
+{
+  "subject": "Reti",
+  "questions": [
+    {
+      "id": "it_net_101",
+      "widget_id": "widget_net_101",
+      "topic": "Reti di calcolatori — Commutazione di pacchetto vs di circuito",
+      "q": "Qual è il vantaggio principale della commutazione di pacchetto (Packet Switching) rispetto alla commutazione di circuito (Circuit Switching) durante il trasferimento di traffico di rete bursty (a raffica)?",
+      "hint": "Pensa all'utilizzo della larghezza di banda nei momenti in cui un nodo non sta temporaneamente trasmettendo dati.",
+      "options": [
+        "Utilizzo più efficiente della capacità della linea grazie al multiplexing statistico e all'assenza di tempi di inattività riservati",
+        "Garanzia di ritardo zero nella trasmissione e assenza totale di perdita di pacchetti",
+        "Completa eliminazione della necessità di utilizzare router nella rete"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella commutazione di pacchetto, i canali non vengono riservati in modo esclusivo. Quando un nodo è inattivo, le risorse della linea vengono immediatamente utilizzate da altri pacchetti (multiplexing statistico).",
+        "Errato. La commutazione di pacchetto è soggetta a ritardi nelle code e a possibili perdite in caso di saturazione del buffer.",
+        "Errato. Le reti a commutazione di pacchetto si basano interamente su switch di pacchetto e router."
+      ]
+    },
+    {
+      "id": "it_net_102",
+      "widget_id": "widget_net_102",
+      "topic": "Reti di calcolatori — Topologia a maglia completa (Full Mesh)",
+      "q": "Quanti collegamenti fisici di comunicazione sono necessari per connettere $N$ nodi in una topologia a maglia completa (Full Mesh)?",
+      "hint": "Ricorda la formula combinatoria per il numero di combinazioni di 2 elementi presi da un insieme di $N$.",
+      "options": [
+        "$\\frac{N(N - 1)}{2}$",
+        "$N - 1$",
+        "$N^2$",
+        "$2^N$",
+        "$\\log_2(N)$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Ciascuno degli $N$ nodi deve connettersi con $(N-1)$ nodi e, poiché ogni link collega due nodi, la formula è $\\frac{N(N - 1)}{2}$.",
+        "Errato. La formula $N-1$ definisce il numero minimo di connessioni per una topologia a stella o ad albero.",
+        "Errato. Il valore $N^2$ sarebbe corretto se ogni nodo fosse connesso a se stesso e con tutti i canali ridondanti.",
+        "Errato. La funzione esponenziale $2^N$ fornisce un sovrastima enorme del numero di link.",
+        "Errato. La dipendenza logaritmica non riflette il numero di connessioni in un grafo."
+      ]
+    },
+    {
+      "id": "it_net_103",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Domini di collisione e di broadcast",
+      "q": "In che modo i dispositivi Hub (ripetitore), Switch (switch L2) e Router (router L3) separano i domini di collisione e di broadcast?",
+      "hint": "Pensa a quale livello del modello OSI opera ciascuno dei tre dispositivi e se bloccano o meno i frame broadcast.",
+      "options": [
+        "L'Hub crea 1 dominio di collisione e 1 dominio di broadcast; lo Switch isola le collisioni su ogni porta, ma mantiene 1 solo dominio di broadcast; il Router separa sia i domini di collisione che i domini di broadcast su ciascuna porta",
+        "L'Hub separa i domini di broadcast, mentre il Router unisce tutti i domini di collisione in uno solo",
+        "Lo Switch crea 1 dominio di collisione per tutte le porte, mentre l'Hub divide i domini di collisione per porta",
+        "Tutti e tre i dispositivi funzionano allo stesso modo e dividono i domini esclusivamente in base al protocollo IP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'Hub (L1) trasmette il segnale elettrico a tutti: 1 dominio di collisione e 1 di broadcast. Lo Switch (L2) isola le collisioni per ciascuna porta, ma inoltra il broadcast. Il Router (L3) isola sia il traffico di collisione che quello di broadcast.",
+        "Errato. L'Hub non è in grado di separare i domini di broadcast.",
+        "Errato. È il contrario: lo switch isola le collisioni sulle porte, mentre l'hub le unisce.",
+        "Errato. I dispositivi operano a livelli OSI differenti (L1, L2, L3) e adottano logiche di gestione del traffico diverse."
+      ]
+    },
+    {
+      "id": "it_net_104",
+      "widget_id": "widget_net_104",
+      "topic": "Reti di calcolatori — Accesso wireless fisso (FWA)",
+      "q": "In cosa consiste la tecnologia di accesso wireless fisso (FWA / Fixed Wireless Access)?",
+      "hint": "Pensa alla sostituzione dell'«ultimo miglio» in rame o fibra con un radiocanale stazionario.",
+      "options": [
+        "Fornitura di accesso a Internet a banda larga ad utenti stazionari tramite radiocanale utilizzando antenne esterne direzionali (CPE) invece della posa di cavi",
+        "Uso del Wi-Fi esclusivamente all'interno di treni passeggeri e aerei in movimento"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'FWA sostituisce il cavo fisico con un radiocanale (5G / WISP) tra la stazione base e un'antenna fissa installata sull'edificio dell'utente.",
+        "Errato. L'FWA è destinata a strutture fisse (filiali, case private) e non ad oggetti in movimento."
+      ]
+    },
+    {
+      "id": "it_net_105",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Virtualizzazione delle funzioni di rete (NFV)",
+      "q": "Qual è il concetto chiave della NFV (Network Functions Virtualization) nelle moderne infrastrutture di rete?",
+      "hint": "Presta attenzione al passaggio da hardware proprietario («scatole nere») a macchine virtuali software eseguite su server x86.",
+      "options": [
+        "Sostituzione di dispositivi hardware specializzati (firewall, router, bilanciatori di carico) con entità virtuali software eseguite su server standard con architettura x86",
+        "Passaggio forzato di tutti i dispositivi di rete all'alimentazione a pannelli solari",
+        "Sostituzione di tutti i cavi fisici con trasmettitori a infrarossi",
+        "Abbandono completo del protocollo IP a favore del trasferimento di frame Ethernet senza indirizzamento",
+        "Cifratura dei microchip fisici degli switch tramite chiavi quantistiche",
+        "Eliminazione automatica dei file utente non utilizzati"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La NFV separa le funzioni di rete (Firewall, NAT, DPI) dall'hardware fisico dedicato, eseguendole come macchine virtuali o container su hardware server standard (COTS).",
+        "Errato. La NFV è un concetto software e architetturale, non un metodo di alimentazione elettrica.",
+        "Errato. La NFV non modifica i mezzi fisici di trasmissione dati.",
+        "Errato. La NFV funziona con lo stack di protocolli di rete esistente.",
+        "Errato. Questo concetto non ha alcuna relazione con la cifratura quantistica fisica dei chip.",
+        "Errato. La gestione dei file utente è un compito del sistema operativo host, non della NFV."
+      ]
+    },
+    {
+      "id": "it_net_106",
+      "widget_id": "widget_net_106",
+      "topic": "Reti di calcolatori — Componenti del ritardo di rete",
+      "q": "Quale componente del ritardo end-to-end ($d_{end-to-end}$) viene calcolata con la formula $d_{trans} = \\frac{L}{R}$, dove $L$ è la dimensione del pacchetto in bit e $R$ è la larghezza di banda del canale in bit/s?",
+      "hint": "Ricorda la differenza tra il tempo necessario per «spingere» i bit del frame nel canale fisico e il tempo di propagazione dell'onda lungo il cavo.",
+      "options": [
+        "Ritardo di trasmissione (Transmission Delay)",
+        "Ritardo di propagazione (Propagation Delay)",
+        "Ritardo di elaborazione (Processing Delay)",
+        "Ritardo di accodamento (Queuing Delay)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ritardo di trasmissione ($d_{trans}$) è il tempo necessario al trasmettitore per immettere tutti i bit di un pacchetto di dimensione $L$ nel canale a una velocità $R$.",
+        "Errato. Il ritardo di propagazione ($d_{prop} = d / s$) è il tempo impiegato dal segnale per viaggiare nel mezzo fisico dal trasmettitore al ricevitore.",
+        "Errato. Il ritardo di elaborazione ($d_{proc}$) è il tempo impiegato dal chip per verificare il checksum e consultare la tabella di instradamento.",
+        "Errato. Il ritardo di accodamento ($d_{queue}$) dipende dal livello di saturazione del buffer davanti all'interfaccia."
+      ]
+    },
+    {
+      "id": "it_net_107",
+      "widget_id": "widget_net_107",
+      "topic": "Reti di calcolatori — Collo di bottiglia del canale (Bottleneck Link)",
+      "q": "Se una catena sequenziale di canali tra server e client è composta da segmenti con velocità di 10 Mbps, 100 Mbps e 2 Mbps, qual è la velocità di trasmissione end-to-end massima di questa connessione?",
+      "hint": "Pensa al concetto di «collo di bottiglia» (Bottleneck) nei tubi di diverso diametro.",
+      "options": [
+        "2 Mbps",
+        "10 Mbps",
+        "100 Mbps",
+        "112 Mbps"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La velocità di trasmissione di una catena sequenziale è limitata dal suo anello più lento (Bottleneck Link), ovvero 2 Mbps.",
+        "Errato. 10 Mbps è un segmento intermedio, ma il collo di bottiglia lascia passare solo 2 Mbps.",
+        "Errato. 100 Mbps è la velocità massima di una singola tratta, ma il flusso end-to-end sarà bloccato dal canale più lento.",
+        "Errato. Le velocità dei canali di comunicazione sequenziali non si sommano."
+      ]
+    },
+    {
+      "id": "it_net_108",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Interazione tra operatori (Peering vs Transit)",
+      "q": "Qual è la differenza fondamentale, sia finanziaria che tecnica, tra un accordo di Transito IP (IP Transit) e uno di Peering?",
+      "hint": "Pensa se l'accordo fornisce accesso a TUTTA la rete Internet globale a pagamento o se si tratta di uno scambio di traffico gratuito SOLO tra i clienti delle due reti.",
+      "options": [
+        "Nel transito il cliente paga l'operatore per l'accesso a tutta Internet globale; nel peering gli operatori scambiano traffico solo tra i propri clienti (spesso senza compensi finanziari)",
+        "Nel transito i dati vengono trasmessi esclusivamente via satellite, mentre nel peering via cavo",
+        "Nel peering la velocità è sempre limitata a 1 Mbps, mentre nel transito non è limitata"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'IP Transit è un servizio a pagamento per l'acquisto dell'intero grafo di instradamento globale. Il Peering è un accordo reciprocamente vantaggioso tra due reti per il transito diretto del traffico tra le proprie sottoreti.",
+        "Errato. Entrambi i tipi di relazione funzionano su qualsiasi mezzo fisico di comunicazione.",
+        "Errato. La velocità è determinata dalla capacità fisica dei collegamenti, non dalla forma giuridica dell'accordo."
+      ]
+    },
+    {
+      "id": "it_net_109",
+      "widget_id": "widget_net_109",
+      "topic": "Reti di calcolatori — Tecnologia MPLS",
+      "q": "In che modo la tecnologia MPLS (Multiprotocol Label Switching) velocizza e semplifica l'inoltro dei pacchetti nei core delle reti degli operatori?",
+      "hint": "Pensa alla sostituzione della complessa analisi dei prefissi IP in un'enorme tabella di instradamento con la semplice commutazione basata su etichette a 20 bit nell'intestazione MPLS.",
+      "options": [
+        "Aggiunge al pacchetto un'etichetta (Label) breve e fissa e commuta il traffico in base all'etichetta, senza la necessità di un'analisi prolungata delle intestazioni IP su ciascun router",
+        "Rimuove dai pacchetti IP tutti i dati dell'applicazione, lasciando solo le intestazioni di servizio",
+        "Esegue la compressione obbligatoria dei flussi video tramite l'algoritmo ZIP",
+        "Converte tutti i pacchetti in onde radio a frequenza lunga",
+        "Elimina completamente l'uso degli standard Ethernet"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! MPLS inserisce un'intestazione con un'etichetta a 20 bit. I nodi intermedi (LSR) commutano rapidamente i pacchetti in base alla tabella delle etichette ($O(1)$) invece di cercare nella tabella dei percorsi IP (Longest Prefix Match).",
+        "Errato. MPLS non modifica né rimuove il carico utile (Payload).",
+        "Errato. MPLS opera a livello collegamento/rete (L2.5) e non comprime i contenuti multimediali.",
+        "Errato. MPLS è una tecnologia logica di commutazione e non è legata alle onde radio.",
+        "Errato. MPLS si incapsula perfettamente all'interno dei frame Ethernet."
+      ]
+    },
+    {
+      "id": "it_net_110",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Topologia ad albero (Tree Topology)",
+      "q": "Qual è la principale vulnerabilità strutturale di una topologia di rete strettamente ad albero (Hierarchical Tree) in assenza di collegamenti di riserva ridondanti?",
+      "hint": "Presta attenzione a ciò che accade all'intero segmento a valle della gerarchia in caso di guasto del nodo radice o del ramo principale.",
+      "options": [
+        "Presenza di un singolo punto di guasto (Single Point of Failure): il guasto di un nodo di livello superiore o dello switch radice isola l'intero ramo della rete sottostante",
+        "Impossibilità di utilizzare cavi di categoria superiore a Cat 5e"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In un albero gerarchico senza ridondanza, il guasto del nodo radice o di uno switch intermedio isola completamente tutto il sottoalbero sottostante.",
+        "Errato. La topologia di rete è uno schema logico e fisico delle connessioni e non limita in alcun modo la categoria fisica dei cavi."
+      ]
+    },
+    {
+      "id": "it_net_111",
+      "widget_id": "widget_net_111",
+      "topic": "Reti di calcolatori — Sistemi Autonomi (AS)",
+      "q": "Che cos'è un Sistema Autonomo (AS — Autonomous System) nel concetto della «Rete delle reti»?",
+      "hint": "Pensa a un grande frammento della rete Internet globale sotto un'unica gestione tecnica con la propria politica di instradamento.",
+      "options": [
+        "Un insieme di reti IP e router sotto un'unica gestione tecnica e amministrativa, avente una politica di instradamento BGP comune",
+        "Un server che distribuisce automaticamente le password Wi-Fi nei luoghi pubblici",
+        "Un pacchetto software per la protezione antivirus locale dell'host",
+        "Un cavo fisico separato che collega due edifici adiacenti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un Sistema Autonomo (AS) è una rete connessa di dispositivi IP con un'unica politica amministrativa, identificata da un numero ASN univoco e che interagisce con altri AS tramite il protocollo BGP.",
+        "Errato. La gestione dell'autenticazione Wi-Fi viene eseguita da controller locali e non ha relazione con il concetto di AS.",
+        "Errato. L'antivirus è un software applicativo installato sull'endpoint.",
+        "Errato. Un cavo fisico è soltanto una linea di comunicazione di livello L1."
+      ]
+    },
+    {
+      "id": "it_net_112",
+      "widget_id": "widget_net_112",
+      "topic": "Reti di calcolatori — Gerarchia dei provider (Tier 1)",
+      "q": "Qual è la caratteristica fondamentale che distingue un operatore di telecomunicazioni globale di primo livello (ISP Tier 1) dai provider di livello Tier 2 e Tier 3?",
+      "hint": "Pensa se un operatore Tier 1 debba acquistare il servizio di transito IP da qualcun altro per accedere all'intera tabella BGP mondiale.",
+      "options": [
+        "I provider Tier 1 hanno accesso all'intera tabella globale BGP esclusivamente tramite peering reciproco gratuito con altri Tier 1 e non acquistano il transito IP",
+        "I provider Tier 1 utilizzano esclusivamente reti cellulari wireless 5G",
+        "I provider Tier 1 servono solo utenti privati e il settore residenziale all'interno di un singolo quartiere"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli operatori Tier 1 costituiscono il core di Internet: sono collegati tra loro da accordi paritari (Peering) e non pagano nessuno per il transito del traffico.",
+        "Errato. Gli operatori Tier 1 possiedono un'imponente infrastruttura cablata e in fibra ottica in tutto il mondo.",
+        "Errato. Gli utenti residenziali sono serviti da operatori Tier 3 o Tier 2."
+      ]
+    },
+    {
+      "id": "it_net_113",
+      "widget_id": "widget_net_113",
+      "topic": "Reti di calcolatori — Linee sottomarine in fibra ottica",
+      "q": "Quale ruolo svolgono i cavi sottomarini in fibra ottica (Subsea Cables) nell'infrastruttura fisica della «Rete delle reti» globale?",
+      "hint": "Presta attenzione alla percentuale di traffico intercontinentale trasmesso sul fondo degli oceani rispetto a quello via satellite.",
+      "options": [
+        "Garantiscono la trasmissione di oltre il 95% di tutto il traffico Internet intercontinentale mondiale",
+        "Vengono utilizzati solo come canali di riserva in caso di disconnessione delle comunicazioni satellitari",
+        "Trasmettono dati esclusivamente tra le navi in rada",
+        "Servono unicamente a fornire alta tensione ai fari costieri",
+        "Collegano tra loro solo le stazioni di ricerca scientifica in Antartide"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Sono proprio le dorsali ottiche sottomarine (Subsea Optical Cables) a gestire la stragrande maggioranza (oltre il 95-99%) del traffico mondiale tra i continenti.",
+        "Errato. I satelliti trasmettono solo una minima frazione del traffico mondiale a causa degli elevati ritardi e della larghezza di banda limitata.",
+        "Errato. I cavi sottomarini collegano le stazioni di atterraggio (Cable Landing Stations) con le dorsali continentali.",
+        "Errato. Il loro compito principale è la trasmissione ottica ad alta velocità dei dati.",
+        "Errato. I cavi sottomarini collegano tutti i continenti abitati della Terra."
+      ]
+    },
+    {
+      "id": "it_net_114",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Eterogeneità e interconnessione di rete",
+      "q": "Grazie a quale principio concettuale dell'architettura TCP/IP la «Rete delle reti» globale è in grado di unire tecnologie fisiche e di collegamento eterogenee (Ethernet, Wi-Fi, 5G, Ottica) in un unico ambiente?",
+      "hint": "Ricorda il modello a «clessidra» (Hourglass Model) e il ruolo del singolo protocollo di rete che nasconde i dettagli del livello di collegamento.",
+      "options": [
+        "Il protocollo IP (Network Layer) fornisce un formato uniforme di indirizzamento e di pacchetto, astraendo le applicazioni sottostanti dalle specificità dei mezzi fisici",
+        "Tutte le reti mondiali sono state forzatamente convertite all'uso di un unico standard universale di cavo in rame"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il protocollo IP funge da elemento di raccordo universale al centro del modello a clessidra (Hourglass Model). Qualsiasi tecnologia L1/L2 trasporta pacchetti IP, garantendo l'eterogeneità della rete.",
+        "Errato. I mezzi fisici sono estremamente vari (ottica, radio, rame) e non sono unificati in un solo cavo."
+      ]
+    },
+    {
+      "id": "it_net_115",
+      "widget_id": "widget_net_116",
+      "topic": "Reti di calcolatori — Punto di presenza (PoP)",
+      "q": "Che cos'è un Punto di presenza (PoP — Point of Presence) nell'architettura di un operatore di dorsale?",
+      "hint": "Pensa a un nodo locale contenente gli apparati del provider a cui si connettono fisicamente i clienti di una regione.",
+      "options": [
+        "Un centro snodo con apparati di rete del provider che garantisce la connessione fisica dei clienti e delle reti regionali alla dorsale",
+        "Una pagina web contenente il contratto di servizio dell'operatore",
+        "Un punto geografico sull'orbita geostazionaria per satelliti di comunicazione",
+        "Una chiave segreta per l'autenticazione dell'amministratore tramite SSH",
+        "L'indirizzo postale fisico della sede centrale del provider",
+        "Un indicatore del livello del segnale sulla scheda di rete"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un PoP (Point of Presence) è una struttura fisico-ingegneristica dell'operatore (con rack, router e switch) in cui avviene l'interconnessione tra la rete dorsale del provider e le reti dei clienti.",
+        "Errato. Un PoP è una struttura fisica di rete e non una pagina web.",
+        "Errato. Le posizioni dei satelliti in orbita sono chiamate slot orbitali.",
+        "Errato. Le chiavi SSH non vengono chiamate PoP.",
+        "Errato. L'indirizzo postale dell'ufficio non è un nodo tecnico di rete.",
+        "Errato. L'indicatore della scheda mostra Link/Activity, non un PoP."
+      ]
+    },
+    {
+      "id": "it_net_116",
+      "widget_id": "widget_net_117",
+      "topic": "Reti di calcolatori — Multi-homing",
+      "q": "Qual è lo scopo principale dell'implementazione del multi-homing per un Sistema Autonomo o un'azienda al momento del collegamento a Internet?",
+      "hint": "Pensa a cosa succede in caso di interruzione dell'unico canale di connessione con il provider e a come una seconda connessione indipendente risolva il problema.",
+      "options": [
+        "Garantire la tolleranza ai guasti e la ridondanza tramite la connessione simultanea a più operatori di rete indipendenti (ISP)",
+        "Raddoppiare automaticamente la quantità di memoria RAM sui server aziendali",
+        "Proteggere fisicamente i cavi dai danneggiamenti durante i lavori stradali",
+        "Ridurre il costo delle licenze software per i sistemi operativi client"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il multi-homing consente a un sistema autonomo di annunciare i propri prefissi IP tramite due o più ISP diversi. In caso di guasto presso un provider, BGP reindirizza automaticamente il traffico verso il secondo.",
+        "Errato. La connessione di rete non altera la quantità di RAM fisica presente sui server.",
+        "Errato. Il multi-homing gestisce l'interruzione di un cavo a livello logico (tramite un altro canale), ma non protegge il cavo fisico dagli scavi.",
+        "Errato. La configurazione di BGP e dei canali non influisce sulle licenze software."
+      ]
+    },
+    {
+      "id": "it_net_117",
+      "widget_id": "widget_net_118",
+      "topic": "Reti di calcolatori — Instradamento Anycast",
+      "q": "In che modo il concetto di Anycast viene utilizzato nella rete globale per ottimizzare le prestazioni e proteggere i servizi critici (come i root server DNS)?",
+      "hint": "Pensa all'assegnazione dello stesso indirizzo IP a più server situati in parti diverse del mondo e alla scelta del percorso BGP più breve.",
+      "options": [
+        "Lo stesso indirizzo IP viene annunciato da più punti nel mondo tramite BGP e la rete indirizza automaticamente il client verso il nodo più vicino in base alla metrica di instradamento",
+        "Le richieste vengono inoltrate sequenzialmente a tutti i server del mondo uno alla volta",
+        "Il traffico viene trasmesso solo nelle ore notturne per risparmiare larghezza di banda"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con Anycast, lo stesso indirizzo IP è assegnato a decine di server in regioni diverse. BGP instrada i pacchetti del client verso il nodo più vicino, localizzando il traffico e distribuendo i carichi/attacchi DDoS.",
+        "Errato. Questa è la descrizione del bilanciamento Round-Robin o della duplicazione, non di Anycast.",
+        "Errato. Anycast funziona continuamente in tempo reale."
+      ]
+    },
+    {
+      "id": "it_net_118",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Default-Free Zone (DFZ)",
+      "q": "Che cos'è la «Zona senza gateway predefinito» (DFZ — Default-Free Zone) nell'instradamento BGP globale?",
+      "hint": "Ricorda i router del core di Internet che non possono inoltrare un pacchetto sconosciuto a un «gateway predefinito», poiché conoscono assolutamente tutte le rotte del mondo.",
+      "options": [
+        "L'insieme dei router del core di Internet che mantengono la tabella completa delle rotte BGP globali (Full View) e non utilizzano un default gateway (`0.0.0.0/0`)",
+        "Una rete locale di un'azienda isolata senza accesso a Internet",
+        "Una zona Wi-Fi senza fili in cui è vietato l'uso della cifratura",
+        "Un segmento di rete in cui il protocollo IP è completamente disattivato",
+        "Un intervallo di indirizzi IP riservato esclusivamente all'esecuzione di test"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I router nella DFZ (router BGP di dorsale) non hanno una rotta di default. Essi devono mantenere in memoria l'elenco completo di tutti i prefissi IP pubblici mondiali (Full View) per prendere decisioni di instradamento.",
+        "Errato. Una rete isolata è una rete Air-Gapped.",
+        "Errato. La DFZ si riferisce alle tabelle di instradamento BGP, non alle impostazioni Wi-Fi.",
+        "Errato. La DFZ si basa interamente sul protocollo IP.",
+        "Errato. Per i test sono riservati intervalli specifici (ad esempio RFC 5737), che non hanno relazione con il concetto di DFZ."
+      ]
+    },
+    {
+      "id": "it_net_119",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Registri Internet Regionali (RIR)",
+      "q": "Quale ruolo svolgono i Registri Internet Regionali (RIR, come RIPE NCC, ARIN, APNIC) nella gestione dell'indirizzamento della «Rete delle reti» globale?",
+      "hint": "Pensa alla distribuzione dei numeri di sistema autonomo (ASN) e dei blocco di indirizzi pubblici IPv4/IPv6 tra gli operatori di rete.",
+      "options": [
+        "Distribuiscono e registrano i blocchi di indirizzi IP pubblici e i numeri di Sistema Autonomo (ASN) nelle rispettive regioni geografiche",
+        "Si occupano della produzione fisica, della vendita e dell'assemblaggio di router e cavi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I RIR sono organizzazioni senza scopo di lucro responsabili dell'assegnazione e della registrazione dei pool di indirizzi IP e degli ASN per i LIR (registri locali) e i provider della propria regione.",
+        "Errato. Della produzione hardware si occupano i vendor (Cisco, Juniper, Huawei, ecc.)."
+      ]
+    },
+    {
+      "id": "it_net_120",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Strumento Looking Glass (LG)",
+      "q": "Per quale scopo gli ingegneri di rete utilizzano i servizi web Looking Glass (LG) messi a disposizione da vari operatori di telecomunicazioni?",
+      "hint": "Pensa alla possibilità di osservare la tabella di instradamento BGP globale attraverso gli «occhi» di un sistema autonomo terzo remoto.",
+      "options": [
+        "Per visualizzare la tabella di instradamento BGP ed eseguire comandi diagnostici (ping, traceroute) dalla rete di un operatore remoto",
+        "Per l'ispezione visiva dei connettori ottici fisici tramite le telecamere del data center",
+        "Per il riavvio a distanza dell'alimentazione elettrica dei server di un provider terzo",
+        "Per misurare la temperatura dell'aria all'interno dei rack del server"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Looking Glass consente a un ingegnere di eseguire in remoto `show ip bgp` o `traceroute` da un router BGP di un altro provider per verificare come la propria rete sia visibile dall'esterno.",
+        "Errato. Looking Glass è un nodo di rete per la diagnostica BGP e non un sistema di videosorveglianza.",
+        "Errato. LG non fornisce diritti amministrativi per gestire l'alimentazione di apparati terzi.",
+        "Errato. Il monitoraggio del clima viene effettuato da sistemi BMS/DCIM, non da Looking Glass."
+      ]
+    },
+    {
+      "id": "it_net_121",
+      "widget_id": "widget_net_121",
+      "topic": "Reti di calcolatori — Protezione dai loop in BGP (AS-PATH)",
+      "q": "In che modo il protocollo di instradamento inter-dominio esterno BGP (Border Gateway Protocol) protegge la «Rete delle reti» dalla formazione di loop di instradamento (Routing Loops)?",
+      "hint": "Presta attenzione a ciò che fa il router quando rileva il proprio numero di Sistema Autonomo (ASN) nell'attributo AS-PATH.",
+      "options": [
+        "Scarta l'annuncio della rotta se nell'attributo AS-PATH è già presente il proprio numero ASN",
+        "Aumenta automaticamente il valore di TTL in tutti i pacchetti IP in ingresso",
+        "Blocca l'invio dei pacchetti sulla porta fisica per 24 ore",
+        "Converte le intestazioni BGP in un frame ARP standard"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! BGP è un protocollo Path Vector. Se un router vede il proprio ASN nell'elenco AS-PATH di un annuncio ricevuto, ciò indica un loop e l'annuncio viene ignorato.",
+        "Errato. Il campo TTL nell'intestazione IP viene decrementato di 1 a ogni salto e BGP non ne aumenta il valore.",
+        "Errato. Il rilevamento di un loop in un annuncio BGP comporta l'ignoramento della rotta, non il blocco della porta fisica.",
+        "Errato. BGP è un protocollo di livello applicativo/rete basato su TCP (porta 179) e non converte i messaggi in frame ARP."
+      ]
+    },
+    {
+      "id": "it_net_122",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Sicurezza dell'instradamento (RPKI)",
+      "q": "Quale principale minaccia alla sicurezza nella «Rete delle reti» risolve l'implementazione della tecnologia crittografica RPKI (Resource Public Key Infrastructure)?",
+      "hint": "Pensa alle situazioni in cui l'annuncio errato o malevolo di un prefisso IP altrui reindirizza il traffico globale verso un Sistema Autonomo contraffatto.",
+      "options": [
+        "Prevenzione dell'intercettazione e del dirottamento dei prefissi IP (BGP Route Hijacking) tramite la convalida del diritto di un AS di annunciare uno specifico intervallo IP",
+        "Protezione dai danni fisici ai cavi sottomarini in fibra ottica",
+        "Compressione automatica dei file durante il loro trasferimento tramite il protocollo HTTP",
+        "Limitazione della velocità massima di download dei dati per gli utenti finali",
+        "Generazione di certificati SSL per la protezione dei siti web lato server"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! RPKI utilizza i certificati (ROA) per verificare se uno specifico Sistema Autonomo ha effettivamente il diritto di annunciare un determinato blocco di indirizzi IP, proteggendo la rete dal BGP Hijacking.",
+        "Errato. RPKI è un protocollo logico di convalida delle rotte BGP e non influisce sull'integrità meccanica dei cavi.",
+        "Errato. Della compressione dei contenuti web si occupano i protocolli di livello applicativo (Gzip, Brotli).",
+        "Errato. La limitazione della velocità (QoS / Rate Limiting) è gestita dagli apparati di accesso.",
+        "Errato. Per i certificati web si utilizza la tradizionale gerarchia Web PKI (X.509 CAs), non RPKI."
+      ]
+    },
+    {
+      "id": "it_net_123",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Ecosistema PeeringDB",
+      "q": "Per quale scopo gli ingegneri di rete e gli operatori utilizzano il database pubblico PeeringDB nell'ecosistema di interconnessione?",
+      "hint": "Pensa allo scambio di informazioni tecniche sui punti di presenza (PoP), i contatti NOC e la presenza agli IXP prima di stabilire un peering.",
+      "options": [
+        "Per ottenere informazioni tecniche sulla politica di peering, i volumi di traffico e i punti di presenza (IXP/PoP) di altri Sistemi Autonomi",
+        "Per il pagamento delle bollette per l'energia elettrica dei data center",
+        "Per il download automatico del firmware del sistema operativo sugli switch"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! PeeringDB è un database pubblico in cui i provider pubblicano i propri requisiti di peering, indirizzi IXP, parametri BGP e contatti dei centri di controllo della rete (NOC).",
+        "Errato. PeeringDB non è un servizio finanziario o di pagamento.",
+        "Errato. Per il download del firmware si utilizzano server TFTP/FTP/HTTP locali dei vendor."
+      ]
+    },
+    {
+      "id": "it_net_124",
+      "widget_id": "widget_net_124",
+      "topic": "Reti di calcolatori — Economia del peering (Tier 2)",
+      "q": "In che modo gli operatori di livello Tier 2 riducono i propri costi finanziari per l'acquisto del transito IP dai provider Tier 1?",
+      "hint": "Ricorda lo scambio di traffico gratuito o paritario con altre reti di pari dimensioni presso i punti di scambio (IXP).",
+      "options": [
+        "Stabiliscono connessioni di peering gratuite (Settlement-Free Peering) con altri operatori Tier 2 presso gli IXP, instradando lì la maggior parte del traffico",
+        "Rinunciano completamente alla connessione ai provider Tier 1 e chiudono l'accesso ai siti esterni"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Organizzando uno scambio paritario gratuito (Peering) con altre reti presso le strutture IXP, il provider riduce il volume di traffico che dovrebbe far passare a pagamento attraverso i canali di transito (IP Transit).",
+        "Errato. La rinuncia al Tier 1 isolerebbe il provider dalle porzioni di Internet non raggiungibili tramite peering diretto."
+      ]
+    },
+    {
+      "id": "it_net_125",
+      "widget_id": "widget_net_125",
+      "topic": "Reti di calcolatori — BGP Communities e gestione del traffico",
+      "q": "Quale ruolo svolgono le BGP Community (BGP Communities) nella gestione dei flussi di traffico (Traffic Engineering) nella rete globale?",
+      "hint": "Pensa alla trasmissione di tag di servizio per interagire con la politica di instradamento del Sistema Autonomo adiacente.",
+      "options": [
+        "Servono come tag numerici trasmessi insieme alla rotta per gestire la politica di elaborazione dei prefissi sui router del vicino",
+        "Aumentano automaticamente la larghezza di banda del cavo a livello di collegamento",
+        "Forniscono un'interfaccia per chat online tra ingegneri di rete di diversi provider",
+        "Fungono da gateway di sicurezza logici per il blocco dello spam",
+        "Definiscono il tipo fisico di connettore (LC, SC, RJ-45) sulla scheda di rete",
+        "Impostano la frequenza di aggiornamento del sistema operativo sul router"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le BGP Community sono attributi/tag (ad esempio `65000:100`) allegati a un prefisso. Il router ricevente del vicino, in base a questi tag, modifica le priorità (Local Preference), blocca gli annunci o altera i parametri di instradamento.",
+        "Errato. Le BGP Community non modificano le proprietà fisiche delle linee di comunicazione.",
+        "Errato. Si tratta di uno strumento di gestione degli attributi BGP, non di una piattaforma di messaggistica.",
+        "Errato. I tag BGP gestiscono la selezione delle rotte, non il filtraggio delle e-mail.",
+        "Errato. I tipi di connettore sono definiti dagli standard del livello fisico (L1).",
+        "Errato. L'aggiornamento del software dello switch avviene al di fuori del contesto degli annunci BGP."
+      ]
+    },
+    {
+      "id": "it_net_126",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Database di instradamento (IRR)",
+      "q": "Che cos'è un Database di instradamento Internet (IRR — Internet Routing Registry)?",
+      "hint": "Pensa a un registro distribuito di oggetti di instradamento (aut-num, route) utilizzato dai provider per generare automaticamente elenchi di prefissi e filtri.",
+      "options": [
+        "Un database distribuito di oggetti delle politiche di instradamento utilizzato per verificare la legittimità degli annunci e generare automaticamente i filtri BGP",
+        "Un database di password degli utenti dei social network",
+        "Un registro centralizzato di numeri di serie delle schede di rete",
+        "Una tabella con i prezzi dei servizi di comunicazione per i consumatori finali"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli IRR (ad esempio RADB, RIPE IRR) contengono record di testo relativi ad oggetti AS e prefissi. Gli operatori automatizzano la creazione dei filtri di sicurezza (Prefix-List) estraendo i dati dagli IRR.",
+        "Errato. I database IRR non memorizzano dati personali né password utente.",
+        "Errato. I numeri di serie delle schede di rete e gli indirizzi MAC non vengono inseriti negli IRR.",
+        "Errato. Le tariffe commerciali non vengono pubblicate nei sistemi IRR."
+      ]
+    },
+    {
+      "id": "it_net_127",
+      "widget_id": "widget_net_127",
+      "topic": "Reti di calcolatori — Stabilizzazione BGP (Route Flap Damping)",
+      "q": "Quale problema nel core della «Rete delle reti» risolve il meccanismo di smorzamento delle rotte instabili (BGP Route Flap Damping)?",
+      "hint": "Pensa alla continua fluttuazione di un link (Up/Down) e al carico sulla CPU dei router dovuto al continuo ricalcolo della tabella BGP.",
+      "options": [
+        "Protegge i router dal sovraccarico della CPU in caso di frequenti fluttuazioni (attivazione/disattivazione) di un canale instabile nascondendo temporaneamente la rotta",
+        "Ripara automaticamente un cavo sottomarino in fibra ottica danneggiato",
+        "Dimezza il ping verso i server dei giochi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se un canale continua a cadere e riattivarsi (flapping), in BGP si genera una valanga di aggiornamenti. Il Flap Damping assegna punti di penalità e nasconde temporaneamente il prefisso, salvaguardando le risorse della CPU nel core della rete.",
+        "Errato. Questo meccanismo software non ripara i danni fisici ai cavi.",
+        "Errato. Lo scopo dell'algoritmo è la stabilità della tabella BGP, non l'ottimizzazione del ping."
+      ]
+    },
+    {
+      "id": "it_net_128",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Standard MANRS",
+      "q": "Che cos'è l'iniziativa globale MANRS (Mutually Agreed Norms for Routing Security)?",
+      "hint": "Pensa a un insieme di regole industriali per gli operatori volta a prevenire la falsificazione degli indirizzi IP (anti-spoofing) e a garantire un corretto filtraggio BGP.",
+      "options": [
+        "Un insieme di raccomandazioni pratiche e standard fondamentali per migliorare la sicurezza dell'instradamento BGP e prevenire l'IP spoofing",
+        "Un protocollo per la trasmissione di video 4K in streaming tramite browser",
+        "Uno standard internazionale per le dimensioni dei rack dei server",
+        "Un linguaggio di programmazione per la scrittura di driver di rete",
+        "Un sistema operativo specializzato per i router domestici"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! MANRS è un'iniziativa che definisce 4 azioni principali per gli operatori: filtraggio degli annunci BGP, protezione dall'IP spoofing (Source Address Validation), coordinamento (contatti NOC) e convalida degli oggetti IRR/RPKI.",
+        "Errato. Il video in streaming viene trasmesso tramite protocolli come HLS, DASH, WebRTC.",
+        "Errato. Le dimensioni dei rack sono definite da standard come EIA-310 (rack da 19 pollici).",
+        "Errato. MANRS è un regolamento tecnico-organizzativo di sicurezza, non un linguaggio di programmazione.",
+        "Errato. I sistemi operativi per router domestici includono OpenWrt e firmware proprietari."
+      ]
+    },
+    {
+      "id": "it_net_129",
+      "widget_id": "widget_net_129",
+      "topic": "Reti di calcolatori — Gestione del traffico BGP (Inbound/Outbound)",
+      "q": "Quale combinazione di attributi BGP viene utilizzata da un Sistema Autonomo rispettivamente per gestire il traffico IN INGRESSO (Inbound) e IN USCITA (Outbound)?",
+      "hint": "Pensa a quale attributo ha effetto solo all'interno dell'AS locale per la scelta dell'uscita (Outbound) e a quale viene inviato ai vicini come indicazione sull'ingresso verso di te (Inbound).",
+      "options": [
+        "Outbound: Local Preference (LOCAL_PREF); Inbound: AS-PATH Prepending o MED (Multi-Exit Discriminator)",
+        "Outbound: indirizzo MAC; Inbound: indirizzo IP",
+        "Outbound: TTL; Inbound: MTU",
+        "Outbound: DNS; Inbound: DHCP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per scegliere il miglior percorso in uscita dalla propria rete si utilizza Local Preference (non trasmesso all'esterno). Per influenzare i sistemi adiacenti sulla scelta dell'ingresso verso di te si utilizza l'allungamento della catena AS-PATH (Prepending) o l'attributo MED.",
+        "Errato. MAC e IP costituiscono l'indirizzamento di base L2/L3 e non fungono da meccanismi di instradamento BGP selettivo.",
+        "Errato. TTL (tempo di vita) e MTU (dimensione del frame) sono campi di servizio del pacchetto.",
+        "Errato. DNS e DHCP sono servizi applicativi e di rete, non attributi BGP."
+      ]
+    },
+    {
+      "id": "it_net_130",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Dimensione della tabella Full View",
+      "q": "Qual è l'ordine di grandezza indicativo del numero di prefissi IPv4 nella tabella BGP globale completa (Full View) del core di Internet ad oggi?",
+      "hint": "Ricorda come la tabella abbia superato la soglia dei 512K nel 2014 e sia cresciuta fino a centinaia di migliaia di prefissi.",
+      "options": [
+        "Nell'ordine di $900\\,000\\text{--}1\\,000\\,000$ prefissi",
+        "Strettamente 256 prefissi",
+        "Circa 100 miliardi di prefissi",
+        "Esattamente 16 prefissi",
+        "La tabella contiene solo 1 prefisso `0.0.0.0/0`",
+        "Circa $10\\,000$ prefissi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La tabella BGP globale IPv4 nel core di Internet (Full View) supera i $900\\,000$ — $950\\,000$ prefissi di instradamento unici e continua a crescere gradualmente.",
+        "Errato. 256 prefissi è la dimensione di una rete `/24` di classe C.",
+        "Errato. 100 miliardi supera l'intero spazio di indirizzamento IPv4 ($2^{32} \\approx 4.3$ miliardi di indirizzi).",
+        "Errato. 16 prefissi sono troppo pochi anche per una piccola azienda locale.",
+        "Errato. I router nella DFZ non hanno una rotta predefinita `0.0.0.0/0` e devono contenere l'intero grafo.",
+        "Errato. $10\\,000$ prefissi è la dimensione della tabella di un piccolo operatore regionale."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,591 @@
+{
+  "subject": "Reti",
+  "questions": [
+    {
+      "id": "it_net_251",
+      "widget_id": "widget_net_251",
+      "topic": "Reti di calcolatori — Ciclo di vita dei socket TCP (accept)",
+      "q": "Qual è il ruolo fondamentale svolto dalla chiamata di sistema accept() durante la gestione delle connessioni TCP in ingresso nella Socket API?",
+      "hint": "Si noti che la chiamata accept() restituisce un descrittore di file completamente nuovo, diverso dal socket in ascolto originale.",
+      "options": [
+        "Estrae dalla coda la prima connessione completata e crea un nuovo socket per la comunicazione con uno specifico client, lasciando il socket originale in ascolto per nuove connessioni",
+        "Alloca fisicamente una larghezza di banda di 1 Gbps sulla scheda di rete del server",
+        "Chiude la porta del server subito dopo la connessione del primo utente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiamata di sistema accept() prende una connessione pronta dalla coda e restituisce un nuovo socket (connected socket) dedicato alla comunicazione con quel client. Il socket originale (listening socket) continua ad attendere nuove chiamate accept().",
+        "Errato. La Socket API lavora con i protocolli L4 e non alloca la larghezza di banda fisica garantita L1.",
+        "Errato. Il socket in ascolto rimane aperto per accettare successive connessioni finché non viene chiamato esplicitamente close()."
+      ]
+    },
+    {
+      "id": "it_net_252",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Tipi di socket (SOCK_STREAM vs SOCK_DGRAM)",
+      "q": "Qual è la differenza fondamentale tra i tipi di socket SOCK_STREAM e SOCK_DGRAM nella programmazione di applicazioni di rete?",
+      "hint": "Ricorda le caratteristiche dei protocolli TCP (orientato al flusso) e UDP (a datagrammi) a livello di trasporto.",
+      "options": [
+        "SOCK_STREAM garantisce una consegna affidabile sotto forma di un flusso continuo di byte (TCP), mentre SOCK_DGRAM invia singoli datagrammi indipendenti preservando i confini dei messaggi (UDP)",
+        "SOCK_STREAM funziona solo all'interno del computer locale (Loopback), mentre SOCK_DGRAM solo tramite connessione satellitare",
+        "SOCK_DGRAM richiede obbligatoriamente la crittografia TLS, mentre SOCK_STREAM trasmette i dati senza protezione",
+        "SOCK_STREAM è destinato esclusivamente all'invio di email SMTP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! SOCK_STREAM si basa su TCP (garanzia di consegna e preservazione dell'ordine dei byte senza confini espliciti di messaggio). SOCK_DGRAM si basa su UDP (invio di singoli blocchi-datagrammi senza garanzie di consegna né instradamento di connessione).",
+        "Errato. Entrambi i tipi di socket possono funzionare sia localmente che attraverso una rete globale.",
+        "Errato. La crittografia TLS non è una proprietà integrata del tipo di socket e viene configurata al di sopra dell'interfaccia socket.",
+        "Errato. SOCK_STREAM è universale e viene utilizzato per HTTP, SSH, FTP e molti altri protocolli su TCP."
+      ]
+    },
+    {
+      "id": "it_net_253",
+      "widget_id": "widget_net_253",
+      "topic": "Reti di calcolatori — Multiplexing dell'I/O (epoll / kqueue)",
+      "q": "Perché i server di rete ad alto carico (come Nginx) utilizzano le chiamate di sistema epoll (Linux) o kqueue (BSD) invece della classica select()?",
+      "hint": "Confronta la scalabilità: una scansione lineare di tutti i socket con complessità O(N) contro un evento O(1) che notifica solo i descrittori di file pronti.",
+      "options": [
+        "epoll/kqueue restituiscono l'elenco dei soli socket pronti per I/O con complessità O(1), mentre select() è costretta a scansionare l'intero array di descrittori con complessità O(N)",
+        "select() funziona solo su sistemi a 32 bit e non supporta i processori a 64 bit",
+        "epoll riscrive automaticamente le pagine web in linguaggio HTML5",
+        "kqueue crittografa forzatamente i dati utilizzando chiavi RSA a 4096 bit",
+        "select() è destinata solo al funzionamento con reti wireless Wi-Fi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con decine di migliaia di socket, scansionare l'intero elenco in select() è estremamente inefficiente. epoll/kqueue utilizzano un approccio orientato agli eventi del kernel del sistema operativo e restituiscono esattamente i descrittori su cui si sono verificati eventi di I/O, garantendo una complessità O(1).",
+        "Errato. La chiamata di sistema select() è disponibile su tutte le architetture (32 e 64 bit).",
+        "Errato. epoll è una chiamata di sistema del kernel per gestire l'I/O, non riguarda il contenuto di livello L7.",
+        "Errato. kqueue è un meccanismo di multiplexing I/O, non di crittografia.",
+        "Errato. select() è universale e funziona con qualsiasi descrittore di file nel sistema operativo."
+      ]
+    },
+    {
+      "id": "it_net_254",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Socket non bloccanti (Non-blocking I/O)",
+      "q": "Come si comporta la chiamata di sistema read() / recv() quando si tenta di leggere da un socket non bloccante (flag O_NONBLOCK) se non ci sono dati nel buffer di rete?",
+      "hint": "Pensa se il thread di esecuzione va in stato di blocco (sleep) o restituisce immediatamente un codice di errore speciale.",
+      "options": [
+        "Restituisce immediatamente il controllo con un errore (EWOULDBLOCK o EAGAIN), senza bloccare il thread di esecuzione dell'applicazione",
+        "Sospende (congela) il thread di esecuzione finché non arriva almeno un byte dal nodo remoto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In modalità non bloccante, l'operazione di I/O non mette a dormire il thread. Se non ci sono dati nel buffer di ricezione, il kernel restituisce `-1` e imposta `errno` su `EWOULDBLOCK` o `EAGAIN`.",
+        "Errato. Questo comportamento è tipico dei socket bloccanti standard."
+      ]
+    },
+    {
+      "id": "it_net_255",
+      "widget_id": "widget_net_255",
+      "topic": "Reti di calcolatori — Opzioni dei socket (SO_REUSEADDR)",
+      "q": "Con quale scopo gli sviluppatori impostano l'opzione di socket SO_REUSEADDR prima di chiamare bind()?",
+      "hint": "Ricorda il problema dei riavvii rapidi del server quando la porta locale rimane bloccata nello stato TIME_WAIT.",
+      "options": [
+        "Consente all'applicazione server di riassociarsi all'IP e alla porta locali nello stato TIME_WAIT dopo un riavvio",
+        "Raddoppia la velocità fisica di trasmissione della scheda di rete",
+        "Vieta la connessione di utenti senza un abbonamento pagato",
+        "Converte gli indirizzi IPv4 nel formato IPv6 direttamente sulla scheda di rete",
+        "Comprime automaticamente i file inviati tramite l'archiviatore ZIP",
+        "Disabilita la verifica del checksum nei pacchetti TCP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Dopo la chiusura di una connessione TCP, il socket passa allo stato TIME_WAIT (di solito 1-2 minuti). Senza SO_REUSEADDR, una nuova chiamata a bind() fallirebbe con l'errore «Address already in use».",
+        "Errato. Le opzioni del socket regolano il comportamento dello stack di rete del kernel e non overcloccano l'hardware.",
+        "Errato. Le opzioni del socket non contengono logica aziendale di fatturazione.",
+        "Errato. La conversione degli indirizzi è gestita da meccanismi come NAT64, non dall'opzione SO_REUSEADDR.",
+        "Errato. La compressione dei dati viene eseguita dalle librerie applicative prima della chiamata a send().",
+        "Errato. Il controllo del checksum garantisce l'integrità L4 e non dipende da SO_REUSEADDR."
+      ]
+    },
+    {
+      "id": "it_net_256",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Socket RAW (SOCK_RAW)",
+      "q": "Quale funzionalità speciale offrono i socket RAW (SOCK_RAW) nello sviluppo di software di rete (ad esempio ping o Wireshark)?",
+      "hint": "Pensa alla possibilità di aggirare l'elaborazione standard dello stack TCP/UDP nel kernel e formattare manualmente gli intestazioni L3/L4.",
+      "options": [
+        "Consentono all'applicazione di costruire o analizzare direttamente gli header di livello di rete (IP) e di trasporto, bypassando l'elaborazione standard dello stack TCP/UDP del kernel",
+        "Traducono automaticamente tutto il codice del programma dal linguaggio C a Python",
+        "Consentono di eseguire socket senza la presenza di un sistema operativo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I socket RAW richiedono privilegi di superutente e vengono utilizzati per compiti di diagnostica, scansione e analisi della sicurezza (ad esempio la formazione di ICMP Echo in ping o il monitoraggio di pacchetti IP personalizzati).",
+        "Errato. I socket RAW sono un tipo di chiamata di sistema dell'API, non un traduttore di linguaggi di programmazione.",
+        "Errato. L'API socket fa parte del sistema operativo."
+      ]
+    },
+    {
+      "id": "it_net_257",
+      "widget_id": "widget_net_257",
+      "topic": "Reti di calcolatori — Parametro backlog in listen()",
+      "q": "Cosa definisce l'argomento backlog nella chiamata di sistema listen(sockfd, backlog)?",
+      "hint": "Pensa alla coda di connessioni TCP completamente stabilite in attesa che l'applicazione le prelevi con una chiamata accept().",
+      "options": [
+        "La lunghezza massima della coda delle connessioni TCP completamente stabilite in attesa di essere accettate dall'applicazione tramite accept()",
+        "Il numero di secondi dopo i quali il socket si chiuderà automaticamente",
+        "La dimensione massima di un singolo pacchetto TCP in byte (MTU)",
+        "Il numero di thread della CPU paralleli allocati per l'elaborazione del socket"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nelle implementazioni moderne (Linux), il parametro backlog imposta la dimensione della coda di connessioni completate (ESTABLISHED) che non sono state ancora prelevate dal processo tramite accept(). Se questa coda si riempie, i nuovi client ricevono un rifiuto di connessione.",
+        "Errato. Il tempo di vita della connessione TCP è regolato dai timeout SO_KEEPALIVE e dai parametri del kernel.",
+        "Errato. La dimensione del pacchetto MTU/MSS viene determinata ai livelli L2/L3/L4 durante l'Handshake.",
+        "Errato. La gestione delle chiamate e dei thread è determinata dall'architettura dell'applicazione stessa (Thread Pool / Event Loop)."
+      ]
+    },
+    {
+      "id": "it_net_258",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Disattivazione dell'algoritmo di Nagle (TCP_NODELAY)",
+      "q": "Perché nelle applicazioni socket con requisiti di latenza minimi (SSH interattivo, giochi online) si attiva l'opzione TCP_NODELAY?",
+      "hint": "Ricorda l'algoritmo di Nagle (Nagle's Algorithm), che ritarda l'invio di piccoli pacchetti TCP in attesa di conferma (ACK).",
+      "options": [
+        "Disabilita l'algoritmo di Nagle, costringendo lo stack ad inviare immediatamente piccole quantità di dati senza attendere l'ACK del pacchetto precedente",
+        "Attiva la compressione automatica dei file dal lato mittente",
+        "Rimuove il checksum dai pacchetti TCP",
+        "Imposta la connessione TCP in modalità di trasferimento file via FTP",
+        "Disabilita la verifica dell'indirizzo IP del destinatario"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'algoritmo di Nagle cerca di unire piccoli buffer prima dell'invio, riducendo l'overhead delle intestazioni. L'opzione TCP_NODELAY disattiva questo ritardo, riducendo la latenza al costo di un numero leggermente maggiore di piccoli pacchetti.",
+        "Errato. TCP_NODELAY influisce sui tempi di buffering TCP, non sulla compressione del contenuto.",
+        "Errato. Il checksum TCP è obbligatorio e non viene disattivato da TCP_NODELAY.",
+        "Errato. Si tratta di un'opzione di basso livello dello stack TCP che non modifica il protocollo applicativo.",
+        "Errato. L'instradamento e l'indirizzamento IP rimangono inalterati."
+      ]
+    },
+    {
+      "id": "it_net_259",
+      "widget_id": "widget_net_259",
+      "topic": "Reti di calcolatori — Differenza tra shutdown() e close()",
+      "q": "Qual è il vantaggio principale dell'uso di shutdown() rispetto alla standard close() per i socket TCP?",
+      "hint": "Fai attenzione alla possibilità di una chiusura parziale (half-close) della connessione, in cui una delle parti interrompe la trasmissione ma continua a ricevere dati.",
+      "options": [
+        "shutdown() consente di eseguire una chiusura parziale della connessione (ad esempio chiudere l'invio SHUT_WR mantenendo la capacità di lettura SHUT_RD), mentre close() chiude completamente il socket in entrambe le direzioni",
+        "shutdown() elimina il file del programma dal disco rigido, mentre close() lo lascia al suo posto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiamata di sistema shutdown(sockfd, SHUT_WR) invia un pacchetto FIN alla parte opposta segnalando la fine della trasmissione, ma lascia il socket aperto per la lettura delle risposte in arrivo.",
+        "Errato. Le chiamate sui socket gestiscono le connessioni di rete in memoria/kernel e non intaccano i file eseguibili su disco."
+      ]
+    },
+    {
+      "id": "it_net_260",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Strutture di indirizzo di rete (AF_INET vs AF_INET6)",
+      "q": "Quale famiglia di indirizzi (Address Family) e struttura vengono utilizzate nella Socket API quando si crea un socket IPv6?",
+      "hint": "Ricorda le costanti del dominio degli indirizzi e la struttura di memorizzazione degli indirizzi IPv6 a 128 bit nel linguaggio C.",
+      "options": [
+        "Famiglia AF_INET6 e struttura sockaddr_in6",
+        "Famiglia AF_INET e struttura sockaddr_in",
+        "Famiglia AF_UNIX e struttura sockaddr_un",
+        "Famiglia AF_BLUETOOTH e struttura sockaddr_rc",
+        "Famiglia AF_PACKET e struttura sockaddr_ll",
+        "Famiglia AF_CAN e struttura sockaddr_can"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando si lavora con IPv6, alla chiamata socket() viene passato il dominio AF_INET6, mentre i parametri di indirizzo e porta vengono compilati nella struttura sockaddr_in6.",
+        "Errato. AF_INET / sockaddr_in sono destinati agli indirizzi IPv4 a 32 bit.",
+        "Errato. AF_UNIX / sockaddr_un viene utilizzato per la comunicazione tra processi locale (Unix Domain Sockets).",
+        "Errato. AF_BLUETOOTH si usa per la gestione dei protocolli wireless Bluetooth.",
+        "Errato. AF_PACKET viene applicato per l'accesso di basso livello ai frame L2 (Ethernet).",
+        "Errato. AF_CAN viene applicato per il bus controller delle reti automobilistiche CAN."
+      ]
+    },
+    {
+      "id": "it_net_261",
+      "widget_id": "widget_net_261",
+      "topic": "Reti di calcolatori — Ordine dei byte di rete (Byte Order & Endianness)",
+      "q": "Perché nella Socket API si utilizzano funzioni di conversione dell'ordine dei byte (htons, htonl, ntohs, ntohl)?",
+      "hint": "Pensa alle differenze tra l'ordine dei byte nella memoria di diverse architetture di CPU (Little-Endian) e l'ordine standard dei byte di rete (Network Byte Order / Big-Endian).",
+      "options": [
+        "Per convertire i numeri a più byte (porte, indirizzi IP) nello standard di rete unico Big-Endian, in modo che macchine con diverse architetture CPU interpretino correttamente le intestazioni",
+        "Per crittografare le intestazioni dei pacchetti utilizzando chiavi casuali",
+        "Per convertire i caratteri dalla codifica ASCII a UTF-8",
+        "Per forzare il taglio degli indirizzi a 64 bit nel formato a 32 bit"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I processori x86/x64 utilizzano l'ordine dei byte Little-Endian, mentre i protocolli di rete (IP/TCP/UDP) richiedono Big-Endian. Le funzioni `htons` (host-to-network-short) e `htonl` garantiscono che i campi di intestazione a due e quattro byte siano interpretati allo stesso modo su qualsiasi dispositivo.",
+        "Errato. La conversione dell'ordine dei byte non è una funzione di sicurezza o crittografia.",
+        "Errato. L'ordine dei byte si riferisce ai valori numerici dei campi nelle intestazioni di rete, non alle codifiche di testo.",
+        "Errato. Queste funzioni modificano solo l'ordine dei byte in memoria, senza alterare le dimensioni dei tipi di dati."
+      ]
+    },
+    {
+      "id": "it_net_262",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Rilevamento di disconnessioni (SO_KEEPALIVE)",
+      "q": "In che modo l'opzione del socket SO_KEEPALIVE aiuta l'applicazione a rilevare una connessione TCP «morta» se la parte remota si disconnette improvvisamente senza inviare pacchetti FIN/RST?",
+      "hint": "Fai attenzione all'invio periodico di sonde di controllo (Keepalive probes) a livello TCP in assenza di attività sul socket.",
+      "options": [
+        "Invia periodicamente sonde TCP di controllo vuote in caso di prolungato silenzio del socket; se la risposta non arriva per diverse volte consecutive, il socket viene contrassegnato come interrotto",
+        "Passa automaticamente il socket a un indirizzo IP di riserva da un elenco predefinito",
+        "Invia una notifica SMS al client chiedendo di riconnettersi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se un host «muore» (interruzione di corrente, cavo staccato), la connessione TCP dall'altra parte potrebbe rimanere in sospeso per sempre. SO_KEEPALIVE fa sì che lo stack invii periodicamente sonde ACK vuote e chiuda il socket se non ci sono risposte.",
+        "Errato. SO_KEEPALIVE funziona a livello di socket per rilevare una connessione morta e non commuta gli indirizzi IP.",
+        "Errato. Lo stack di rete del kernel lavora a livello di trasporto e non ha collegamenti con i servizi SMS."
+      ]
+    },
+    {
+      "id": "it_net_263",
+      "widget_id": "widget_net_263",
+      "topic": "Reti di calcolatori — Zero-Copy e sendfile",
+      "q": "Qual è il vantaggio di utilizzare la chiamata di sistema sendfile() (Zero-Copy) durante il trasferimento di file statici a un socket di rete?",
+      "hint": "Confronta la copia tradizionale dei dati dal kernel al buffer utente (User Space) e viceversa con il trasferimento diretto delle pagine di memoria all'interno del kernel.",
+      "options": [
+        "Trasferisce i dati direttamente dalla cache del disco del kernel al buffer del socket senza copie inutili nello spazio utente (User Space) e senza cambi di contesto del processore",
+        "Comprime il file trasmesso con l'algoritmo GZIP direttamente durante la lettura dal disco",
+        "Crittografa automaticamente il file utilizzando gli algoritmi hardware della scheda video",
+        "Elimina completamente l'uso delle intestazioni TCP",
+        "Impedisce l'eliminazione del file dal disco durante il trasferimento"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'approccio tradizionale richiede 4 cambi di contesto e 4 copie di dati (`read` dal file al buffer dell'applicazione, `write` dal buffer dell'applicazione al socket). `sendfile()` trasferisce le pagine direttamente al buffer del kernel, risparmiando notevolmente CPU e memoria.",
+        "Errato. `sendfile()` si occupa del trasferimento rapido dei dati e non effettua l'archiviazione.",
+        "Errato. Questa chiamata di sistema ottimizza l'I/O del kernel e non coinvolge il processore grafico.",
+        "Errato. Le intestazioni di livello trasporto vengono create normalmente.",
+        "Errato. I permessi di accesso ai file sono gestiti dal VFS, non dal meccanismo Zero-Copy."
+      ]
+    },
+    {
+      "id": "it_net_264",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — I/O asincrono di nuova generazione (io_uring)",
+      "q": "Qual è la differenza chiave tra la nuovissima interfaccia di I/O asincrono io_uring (in Linux) e le classiche chiamate di sistema epoll per il lavoro con i socket di rete?",
+      "hint": "Pensa ai buffer ad anello condivisi (Submission/Completion Queue) tra il kernel e l'applicazione, che consentono di effettuare chiamate di sistema senza cambio di contesto (syscall-less I/O).",
+      "options": [
+        "io_uring utilizza due buffer ad anello condivisi nella memoria comune per l'invio e la ricezione di eventi, permettendo di eseguire I/O di rete a blocchi senza chiamate di sistema (syscall-less)",
+        "io_uring funziona solo con reti wireless Wi-Fi, mentre epoll solo con Ethernet via cavo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `epoll` richiede la chiamata `epoll_wait` e le successive `read()` / `write()` (che comporta chiamate di sistema per ogni operazione). `io_uring` utilizza gli anelli `SQ` (Submission Queue) e `CQ` (Completion Queue) in una memoria condivisa sicura per i thread, riducendo al minimo il costoso overhead delle `syscall`.",
+        "Errato. Entrambi i meccanismi sono astrazioni universali di I/O del kernel Linux per qualsiasi tipo di descrittore di file."
+      ]
+    },
+    {
+      "id": "it_net_265",
+      "widget_id": "widget_net_265",
+      "topic": "Reti di calcolatori — Risoluzione dei nomi indipendente dal protocollo (getaddrinfo)",
+      "q": "Perché nella moderna programmazione di rete si raccomanda di utilizzare la funzione di sistema getaddrinfo() al posto delle obsolete gethostbyname() e gethostbyaddr()?",
+      "hint": "Pensa al supporto unificato dei protocolli IPv4 e IPv6 (Protocol Independence) e al riempimento indipendente dal protocollo delle strutture di indirizzo.",
+      "options": [
+        "getaddrinfo() è una chiamata indipendente dal protocollo che restituisce una lista concatenata di strutture, consentendo di scrivere codice unico per IPv4 e IPv6",
+        "gethostbyname() funziona 100 volte più lentamente a causa dell'uso di algoritmi di apprendimento automatico",
+        "getaddrinfo() paga automaticamente l'affitto dei nomi di dominio su Internet",
+        "gethostbyname() è vietata in tutti i moderni sistemi operativi a livello hardware"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `gethostbyname` è orientata esclusivamente a IPv4 (struttura `hostent`). La funzione `getaddrinfo` accetta il nome dell'host e del servizio (porta), restituendo un elenco pronto di strutture `addrinfo` con cui chiamare in modo trasparente `socket()` e `connect()` sia per IPv4 che per IPv6.",
+        "Errato. `gethostbyname` è obsoleta non per la velocità o l'IA, ma per la mancanza del supporto nativo a IPv6 e per la non sicurezza nei thread.",
+        "Errato. La risoluzione dei nomi in indirizzi IP non è legata a transazioni finanziarie.",
+        "Errato. `gethostbyname` è ancora presente nelle librerie C per retrocompatibilità, ma è considerata deprecata."
+      ]
+    },
+    {
+      "id": "it_net_266",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Natura a flusso dei socket TCP (Framing)",
+      "q": "Per quale motivo, lavorando con socket TCP (SOCK_STREAM), l'applicazione non può fare affidamento sul fatto che una singola chiamata read() / recv() riceverà esattamente la quantità di byte inviata da una singola chiamata write() / send()?",
+      "hint": "Ricorda che TCP è un protocollo di tipo orientato al flusso (Stream-oriented) e non preserva i confini dei messaggi, frammentando o unendo i dati nei buffer.",
+      "options": [
+        "TCP tratta i dati come un flusso continuo di byte e può frammentare o unire i blocchi inviati in base alla dimensione MTU/MSS e allo stato dei buffer di rete",
+        "Il protocollo TCP mescola forzatamente i byte in ordine casuale prima della trasmissione",
+        "Perché la chiamata write() invia sempre il doppio dei dati rispetto a quanto passato negli argomenti",
+        "Questa limitazione riguarda solo il SO Windows, su Linux la chiamata recv() riceve sempre esattamente un messaggio inviato",
+        "Ciò è dovuto al costante cambio dell'indirizzo IP del mittente durante il processo di trasmissione",
+        "La scheda di rete elimina un messaggio su due per prevenire il surriscaldamento"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza di UDP, che preserva i confini dei datagrammi, TCP è un protocollo orientato al flusso (Byte Stream). L'invio di 100 byte in una singola `send()` può arrivare al destinatario in due chiamate `recv()` da 50 byte o viceversa, pertanto le applicazioni devono implementare un framing personalizzato (Framing).",
+        "Errato. TCP garantisce rigorosamente l'ordine dei byte nel flusso.",
+        "Errato. `write()` trasmette esattamente il numero di byte inserito nel buffer e accettato dal kernel.",
+        "Errato. La natura a flusso del TCP è uno standard di protocollo (RFC 793) indipendente dal sistema operativo.",
+        "Errato. L'indirizzo IP della sessione all'interno di un socket rimane invariato.",
+        "Errato. Le perdite di pacchetti vengono gestite tramite reinvii; la scheda di rete non elimina nulla intenzionalmente."
+      ]
+    },
+    {
+      "id": "it_net_267",
+      "widget_id": "widget_net_267",
+      "topic": "Reti di calcolatori — Socket UDP connessi (Connected UDP)",
+      "q": "Cosa succede quando si chiama connect() su un socket di tipo UDP (SOCK_DGRAM) nella Socket API?",
+      "hint": "Ricorda che UDP è un protocollo senza connessione, quindi connect() non invia pacchetti sulla rete, ma associa semplicemente il socket a uno specifico IP/porta di destinazione nel kernel.",
+      "options": [
+        "Il socket viene associato a uno specifico indirizzo IP e porta di destinazione nel kernel, consentendo di utilizzare le funzioni read()/send() e di filtrare i pacchetti in arrivo da altri indirizzi",
+        "Viene avviata la procedura di handshake a tre vie (TCP Handshake)",
+        "Il socket UDP si trasforma automaticamente in un socket TCP a flusso"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per UDP, la chiamata `connect()` non genera traffico di rete. Si limita a fissare l'indirizzo di destinazione nella struttura del socket nel kernel. Ciò consente di chiamare `send()` al posto di `sendto()` e di ignorare i datagrammi provenienti da IP terzi.",
+        "Errato. UDP è un protocollo non affidabile senza connessione, l'handshake non viene eseguito.",
+        "Errato. Il tipo di socket (SOCK_DGRAM) rimane invariato."
+      ]
+    },
+    {
+      "id": "it_net_268",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Dati fuori banda in TCP (Out-Of-Band Data / MSG_OOB)",
+      "q": "A cosa serve il flag MSG_OOB durante l'invio di dati tramite la chiamata send() nei socket TCP?",
+      "hint": "Pensa alla trasmissione di dati urgenti (Out-Of-Band) che aggirano la coda principale del flusso standard di byte.",
+      "options": [
+        "Per la trasmissione di dati urgenti (Out-Of-Band), che devono essere elaborati dal destinatario con priorità (utilizzando il meccanismo TCP Urgent Pointer)",
+        "Per l'invio di dati tramite un secondo adattatore di rete fisico del computer",
+        "Per sospendere temporaneamente la trasmissione dei dati sul socket",
+        "Per l'invio di dati senza l'uso dell'instradamento IP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il flag `MSG_OOB` imposta il flag URG nell'intestazione TCP e l'Urgent Pointer. Ciò consente di inviare segnali di controllo (ad esempio l'annullamento di un'operazione in Telnet/SSH) superando i byte bloccati nel buffer di ricezione standard.",
+        "Errato. Il flag `MSG_OOB` non gestisce la scelta dell'interfaccia fisica.",
+        "Errato. La sospensione della trasmissione è gestita dal meccanismo di Flow Control (Window Size), non dai dati fuori banda.",
+        "Errato. Qualsiasi dato del socket viene incapsulato in pacchetti IP standard."
+      ]
+    },
+    {
+      "id": "it_net_269",
+      "widget_id": "widget_net_269",
+      "topic": "Reti di calcolatori — Socket UNIX locali (AF_UNIX vs AF_INET)",
+      "q": "Qual è il vantaggio principale dell'uso dei socket UNIX Domain (AF_UNIX) rispetto ai socket di rete Loopback (AF_INET / 127.0.0.1) per l'interazione tra processi sulla stessa macchina?",
+      "hint": "Fai attenzione all'assenza dell'overhead dello stack di rete (calcolo checksum, creazione intestazioni IP/TCP, checksum) con il trasferimento diretto dei dati tramite la memoria del kernel.",
+      "options": [
+        "AF_UNIX trasmette i dati direttamente nella memoria del kernel senza incapsulamento in intestazioni IP/TCP, calcolo del checksum né passaggio attraverso lo stack di rete, offrendo velocità maggiore e latenza inferiore",
+        "AF_UNIX consente di trasmettere dati tra computer tramite rete wireless senza un router Wi-Fi",
+        "AF_UNIX crittografa automaticamente i dati con algoritmi quantistici",
+        "I socket AF_INET non sono in grado di trasmettere dati binari",
+        "AF_UNIX funziona solo sui server della società Apple"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I socket `AF_UNIX` (o `AF_LOCAL`) sono ottimizzati per l'IPC all'interno dello stesso kernel. Bypassano l'incapsulamento di rete, i controlli del checksum e le tabelle di instradamento, copiando i dati direttamente dal buffer di un processo all'altro.",
+        "Errato. I socket `AF_UNIX` funzionano esclusivamente all'interno dello stesso host e non possono trasmettere dati in rete.",
+        "Errato. La crittografia non fa parte dell'implementazione di base dei socket IPC del kernel.",
+        "Errato. I socket `AF_INET` trasmettono perfettamente qualsiasi byte binario.",
+        "Errato. `AF_UNIX` è uno standard POSIX supportato da Linux, BSD, macOS e persino dalle versioni moderne di Windows."
+      ]
+    },
+    {
+      "id": "it_net_270",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Buffering e Bandwidth-Delay Product (SO_RCVBUF)",
+      "q": "In che modo la dimensione dei buffer di sistema del socket (SO_RCVBUF e SO_SNDBUF) influisce sulla velocità massima di trasmissione dati nelle reti ad alta velocità con elevata latenza (High Bandwidth-Delay Product)?",
+      "hint": "Pensa alla dimensione della finestra scorrevole TCP (TCP Window Size) e se il mittente può continuare a trasmettere senza attendere la conferma ACK se il buffer del socket è piccolo.",
+      "options": [
+        "La dimensione del buffer di ricezione (SO_RCVBUF) limita la dimensione massima della finestra TCP annunciata (TCP Window Size); se il buffer è piccolo, il mittente è costretto a rimanere inattivo in attesa di ACK, non riuscendo a sfruttare l'intera ampiezza del canale",
+        "L'aumento di SO_RCVBUF provoca il danneggiamento fisico della scheda di rete a causa dell'eccessivo sovraccarico"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il prodotto della larghezza di banda per la latenza (BDP = Bandwidth × RTT) determina la quantità di dati «in volo». Se `SO_RCVBUF` è inferiore al BDP, la finestra TCP si chiuderà e il trasmettitore interromperà l'invio dei pacchetti fino all'arrivo dell'ACK, riducendo la velocità reale.",
+        "Errato. Le opzioni per la dimensione dei buffer si limitano ad allocare memoria RAM per le esigenze del kernel e non danneggiano l'hardware."
+      ]
+    },
+    {
+      "id": "it_net_271",
+      "widget_id": "widget_net_271",
+      "topic": "Configurazione del client TCP in C — Creazione del socket (socket)",
+      "q": "Cosa significano gli argomenti AF_INET e SOCK_STREAM quando si chiama la funzione socket() per creare un socket di rete client in C?",
+      "hint": "Pensa alla famiglia di indirizzi di rete IPv4 e al protocollo di livello di trasporto affidabile e orientato al flusso (TCP).",
+      "options": [
+        "AF_INET indica l'uso della famiglia di indirizzi IPv4, mentre SOCK_STREAM indica un protocollo orientato al flusso con consegna garantita (TCP)",
+        "AF_INET imposta una connessione wireless Wi-Fi, mentre SOCK_STREAM indica la trasmissione di dati tramite datagrammi (UDP)",
+        "AF_INET attiva la crittografia TLS, mentre SOCK_STREAM abilita la compressione del traffico"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! `AF_INET` imposta la famiglia di indirizzi IPv4 (Address Family Internet), mentre `SOCK_STREAM` definisce il tipo di socket a flusso corrispondente al protocollo TCP. Il terzo parametro `0` seleziona il protocollo predefinito (IPPROTO_TCP).",
+        "Errato. Il tipo `SOCK_STREAM` corrisponde a TCP, mentre i datagrammi UDP vengono creati con il flag `SOCK_DGRAM`. La tecnologia del canale fisico (Wi-Fi/Ethernet) è nascosta ai livelli L1/L2.",
+        "Errato. Le funzioni per la creazione del socket di base lavorano con lo stack TCP/IP nel kernel e non includono la crittografia TLS né la compressione."
+      ]
+    },
+    {
+      "id": "it_net_272",
+      "widget_id": null,
+      "topic": "Configurazione del client TCP in C — Conversione degli indirizzi (inet_pton)",
+      "q": "Qual è lo scopo della funzione inet_pton() durante la preparazione della struttura di indirizzo del server nel codice di un client C?",
+      "hint": "Decodifica il nome pton come «presentation to network» — conversione di un testo IPv4/IPv6 in formato binario di rete.",
+      "options": [
+        "Converte una stringa di testo con l'indirizzo IP (ad esempio \"192.168.1.1\") nel formato binario di rete e lo scrive nella struttura dell'indirizzo",
+        "Esegue la ricerca del nome di dominio tramite i server DNS",
+        "Apre il socket in ascolto sulle porte in ingresso",
+        "Crittografa l'indirizzo IP con una chiave pubblica RSA"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il nome `inet_pton` sta per «presentation to network». La funzione traduce una stringa di caratteri di un indirizzo IP nella sua rappresentazione binaria nell'ordine dei byte di rete (Big-Endian) per salvarlo in `sin_addr`.",
+        "Errato. La risoluzione dei nomi di dominio (ad es. `example.com`) è gestita dalla funzione `getaddrinfo()`, non da `inet_pton()`.",
+        "Errato. L'ascolto delle porte è gestito dalla chiamata di sistema `listen()`, applicata lato server.",
+        "Errato. La funzione esegue una conversione numerica standard da stringa IP a byte senza alcuna crittografia."
+      ]
+    },
+    {
+      "id": "it_net_273",
+      "widget_id": "widget_net_273",
+      "topic": "Configurazione del client TCP in C — Stabilire la connessione (connect)",
+      "q": "Cosa succede a livello di rete in caso di esito positivo della chiamata alla funzione connect() in un client TCP?",
+      "hint": "Ricorda la procedura standard di instradamento di una sessione TCP tra client e server (3-way Handshake).",
+      "options": [
+        "Il sistema operativo del client avvia l'handshake a tre vie TCP (SYN, SYN-ACK, ACK) con il server specificato",
+        "Il server invia immediatamente al client l'intero contenuto del database"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiamata di sistema `connect()` invia un segmento SYN all'IP e alla porta di destinazione, attende il SYN-ACK dal server e completa l'Handshake inviando un ACK, portando il socket nello stato ESTABLISHED.",
+        "Errato. La chiamata `connect()` stabilisce solo la connessione di trasporto L4. Il trasferimento dei dati applicativi inizierà solo dopo chiamate esplicite a `send()`/`recv()`."
+      ]
+    },
+    {
+      "id": "it_net_274",
+      "widget_id": "widget_net_274",
+      "topic": "Configurazione del client TCP in C — Invio parziale dei dati (send)",
+      "q": "Perché durante l'invio di una richiesta HTTP tramite la chiamata send() in C è necessario un ciclo che tracci il numero di byte effettivamente inviati?",
+      "hint": "Pensa alle situazioni in cui il buffer di invio del socket di sistema è pieno e `send()` invia solo una parte dell'array richiesto.",
+      "options": [
+        "send() non garantisce l'invio dell'intero buffer in una sola chiamata e può restituire un numero di byte inferiore a quello richiesto se il buffer del kernel si è riempito",
+        "Perché la chiamata send() in C sa inviare rigorosamente 1 byte alla volta",
+        "Il ciclo è richiesto per la verifica obbligatoria dell'integrità della memoria RAM del processore",
+        "La scheda di rete blocca le chiamate send() più lunghe di 10 byte",
+        "Questo protegge il codice dal blocco del sistema operativo in caso di interruzione dell'alimentazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiamata `send()` restituisce il numero di byte effettivamente scritti nel buffer del kernel (`ssize_t`). Se la dimensione del buffer è limitata, `send()` invierà solo parte dei dati, quindi il programmatore deve spostare il puntatore del buffer e ripetere l'invio della parte restante in un ciclo.",
+        "Errato. `send()` tenta di inviare la quantità massima possibile di dati in una singola chiamata entro lo spazio disponibile nel buffer del socket.",
+        "Errato. Il controllo della memoria fisica è un compito dell'hardware e del sistema, non del ciclo di rete.",
+        "Errato. Il limite sulla dimensione del pacchetto a livello L2/L3 (MTU) è gestito dalla frammentazione nel kernel, non da limiti artificiali di 10 byte.",
+        "Errato. I cicli nel codice utente non possono prevenire guasti hardware di alimentazione."
+      ]
+    },
+    {
+      "id": "it_net_275",
+      "widget_id": null,
+      "topic": "Configurazione del client TCP in C — Terminatore di stringa in C (recv & null-terminator)",
+      "q": "Perché quando si riceve una risposta testuale (ad es. intestazioni HTTP) tramite recv() occorre lasciare spazio nel buffer per il carattere '\\0' (null-terminator)?",
+      "hint": "Ricorda se la chiamata di rete `recv()` aggiunge un byte nullo alla fine dei dati grezzi ricevuti dalla rete quando stampati con le funzioni di stringa standard del C (`printf`, `strcmp`).",
+      "options": [
+        "recv() legge i byte grezzi senza aggiungere il terminatore nullo; per gestire correttamente il buffer come una stringa in C, il carattere nullo deve essere inserito manualmente",
+        "Il carattere '\\0' viene inviato al server per confermare la ricezione del pacchetto",
+        "Senza '\\0', il sistema operativo riavvierà forzatamente il computer"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il livello di rete non conosce i tipi di dati applicativi (stringhe C). `recv()` si limita a copiare `N` byte nel buffer. Se si tenta di stampare il buffer tramite `printf(\"%s\")` senza inserire `buffer[bytes_received] = '\\0'`, si verificherà un accesso oltre i limiti della memoria allocata (Buffer Overread).",
+        "Errato. Il terminatore nullo è una caratteristica della rappresentazione delle stringhe in C e non viene reinviato sulla rete.",
+        "Errato. L'errore porterà a un comportamento indefinito dell'applicazione (Segmentation Fault), ma non al riavvio del sistema operativo."
+      ]
+    },
+    {
+      "id": "it_net_276",
+      "widget_id": "widget_net_276",
+      "topic": "Configurazione del client TCP in C — Rilevamento della chiusura della connessione (recv == 0)",
+      "q": "Cosa significa il valore restituito 0 per la funzione recv(sockfd, buffer, len, 0) in un client TCP bloccante?",
+      "hint": "Pensa al segnale inviato dal server al termine corretto della trasmissione dei dati (invio del segmento FIN).",
+      "options": [
+        "Il nodo remoto (server) ha chiuso regolarmente la connessione TCP (ha inviato un segmento FIN)",
+        "Si è verificato un errore critico della scheda di rete sul lato client",
+        "Non ci sono ancora dati nel buffer di ricezione, ma la connessione rimane attiva",
+        "Il server richiede il reinvio dell'ultimo pacchetto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella Socket API, il valore `0` restituito da `recv()` è il segnale standard di End-Of-File (EOF) per il socket, che indica che la parte opposta ha chiamato `close()` o `shutdown()` e ha chiuso la scrittura.",
+        "Errato. Per gli errori di rete, `recv()` restituisce `-1` e imposta la variabile `errno`.",
+        "Errato. In modalità bloccante, in assenza di dati `recv()` attende il loro arrivo anziché restituire 0.",
+        "Errato. Le richieste di reinvio (ACK/NACK) sono gestite dallo stack TCP del kernel in modo trasparente per l'applicazione."
+      ]
+    },
+    {
+      "id": "it_net_277",
+      "widget_id": null,
+      "topic": "Configurazione del client TCP in C — Rilascio delle risorse (close)",
+      "q": "Quali sono le conseguenze della chiamata close(sockfd) al termine del lavoro con il client TCP?",
+      "hint": "Fai attenzione al fatto che il socket è un normale descrittore di file nei sistemi POSIX.",
+      "options": [
+        "Viene rilasciato il descrittore di file nel SO, vengono chiusi i buffer di ricezione/invio e viene avviata la procedura di chiusura della sessione TCP (invio di FIN)",
+        "Il sistema operativo blocca la scheda di rete per tutti gli altri programmi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nei sistemi Unix-like, un socket è un descrittore di file. La chiamata `close()` distrugge il descrittore del processo, libera la memoria di sistema dei buffer e invia un segmento FIN al nodo opposto.",
+        "Errato. La chiamata `close()` libera le risorse solo dello specifico socket del processo interessato e non interferisce con le altre applicazioni."
+      ]
+    },
+    {
+      "id": "it_net_278",
+      "widget_id": null,
+      "topic": "Configurazione del client TCP in C — Gestione degli errori di connessione (errno)",
+      "q": "Quale valore assume la variabile globale errno se la chiamata connect() fallisce perché sul server di destinazione non è attivo alcun servizio sulla porta specificata?",
+      "hint": "Il server invierà un pacchetto RST in risposta al SYN, il che porterà all'errore di connessione rifiutata.",
+      "options": [
+        "ECONNREFUSED (Connection refused)",
+        "ETIMEDOUT (Connection timed out)",
+        "EHOSTUNREACH (No route to host)",
+        "EINTR (Interrupted system call)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se sull'IP di destinazione non c'è alcun processo in ascolto su quella porta, lo stack TCP del server risponde con un segmento RST. Il kernel del client interpreta questo come errore `ECONNREFUSED` (connessione rifiutata).",
+        "Errato. `ETIMEDOUT` si verifica se il server o un firewall intermedio ignorano completamente i pacchetti SYN e non arriva alcuna risposta.",
+        "Errato. `EHOSTUNREACH` indica l'assenza di un instradamento verso l'IP di destinazione a livello L3.",
+        "Errato. `EINTR` si verifica in caso di interruzione della chiamata di sistema da parte di un segnale del SO."
+      ]
+    },
+    {
+      "id": "it_net_279",
+      "widget_id": "widget_net_279",
+      "topic": "Configurazione del client TCP in C — Inizializzazione della struttura sockaddr_in",
+      "q": "Perché prima di chiamare connect() è consigliabile pulire la memoria della struttura sockaddr_in tramite memset()?",
+      "hint": "Pensa alla presenza di campi di allineamento non utilizzati (padding / sin_zero) nella struttura `sockaddr_in`, che potrebbero contenere valori spazzatura dallo stack.",
+      "options": [
+        "Per azzerare il campo di servizio sin_zero e prevenire comportamenti indefiniti durante il casting al tipo (struct sockaddr*)",
+        "Per scansionare automaticamente i server disponibili nella rete locale",
+        "Per svuotare la cache DNS sul computer del client",
+        "memset() è richiesto solo per i compilatori C++",
+        "Per crittografare i dati prima dell'invio"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La struttura `sockaddr_in` contiene un campo di padding `sin_zero` inserito per allineare la dimensione con la struttura `sockaddr`. Riempire la struttura di zeri tramite `memset(&serv_addr, 0, sizeof(serv_addr))` garantisce l'assenza di byte «spazzatura».",
+        "Errato. `memset()` è una funzione base del C per riempire un blocco di memoria con zeri; non esegue operazioni di rete.",
+        "Errato. La pulizia della memoria della struttura non ha alcuna relazione con il caching DNS.",
+        "Errato. L'azzeramento delle strutture prima dell'uso è una prassi standard sia in C che in C++.",
+        "Errato. `memset()` imposta a zero una variabile locale in RAM e non crittografa il traffico di rete."
+      ]
+    },
+    {
+      "id": "it_net_280",
+      "widget_id": null,
+      "topic": "Configurazione del client TCP in C — Verifica dello stato di connect() non bloccante",
+      "q": "In un client C non bloccante, come si verifica se la connessione connect() si è conclusa con successo dopo che select() o poll() hanno segnalato la disponibilità del socket alla scrittura?",
+      "hint": "Pensa a chiamare `getsockopt` con il parametro di livello `SOL_SOCKET` e l'opzione `SO_ERROR` per ottenere l'errore in sospeso del socket.",
+      "options": [
+        "Chiamare getsockopt(sockfd, SOL_SOCKET, SO_ERROR, &error, &len) e assicurarsi che il valore di error sia pari a 0",
+        "Chiamare nuovamente socket() con gli stessi parametri",
+        "Eseguire un riavvio forzato dell'adattatore di rete"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In modalità non bloccante, `connect()` restituisce immediatamente `-1` con `EINPROGRESS`. Quando la connessione viene stabilita (o rifiutata), il socket diventa scrivibile. La verifica dell'esito positivo si effettua con `getsockopt` usando il flag `SO_ERROR`.",
+        "Errato. Richiamare `socket()` creerebbe un socket completamente nuovo e inutilizzato.",
+        "Errato. Il riavvio dell'hardware non è un metodo per ottenere lo stato di un'operazione di sistema asincrona."
+      ]
+    }
+  ]
+}

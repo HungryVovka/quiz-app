@@ -1,0 +1,597 @@
+{
+  "subject": "Reti",
+  "questions": [
+    {
+      "id": "it_net_71",
+      "widget_id": "widget_net_71",
+      "topic": "Reti di calcolatori — Cavi UTP/STP (Doppino intrecciato)",
+      "q": "Perché i conduttori in rame all'interno di un cavo UTP (Unshielded Twisted Pair) sono attorcigliati a coppie tra loro?",
+      "hint": "Rifletti su come l'attorcigliamento simmetrico influisce sulle interferenze elettromagnetiche e sui disturbi provenienti dai conduttori adiacenti.",
+      "options": [
+        "Per la compensazione reciproca delle interferenze elettromagnetiche e della diafonia (crosstalk)",
+        "Per rafforzare fisicamente i conduttori in rame contro le rotture",
+        "Per ridurre la resistenza ohmica alla corrente continua",
+        "Per proteggere il segnale ottico da perdite all'esterno del cavo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'attorcigliamento dei fili fa sì che le interferenze elettromagnetiche esterne indotte creino la stessa corrente in entrambi i conduttori, neutralizzando reciprocamente la loro differenza al ricevitore (segnale differenziale).",
+        "Errato. L'intreccio ha un impatto minimo sulla resistenza fisica del cavo; a tale scopo si utilizzano guanti esterne o elementi di rinforzo.",
+        "Errato. La resistenza di un conduttore di rame dipende dalla sua sezione trasversale e dal materiale, non dal passo di avvolgimento.",
+        "Errato. I cavi UTP trasmettono segnali elettrici, non ottici."
+      ]
+    },
+    {
+      "id": "it_net_72",
+      "widget_id": "widget_net_72",
+      "topic": "Reti di calcolatori — Cavo coassiale",
+      "q": "Qual è la principale differenza costruttiva del cavo coassiale che gli garantisce una maggiore immunità ai disturbi rispetto al doppio intrecciato non schermato (UTP)?",
+      "hint": "Fai attenzione alla disposizione geometrica e alla forma dello strato schermante rispetto al conduttore centrale.",
+      "options": [
+        "La presenza di uno schermo/treccia metallica conduttiva situato coassialmente attorno al conduttore centrale",
+        "L'uso di vetro al quarzo conduttore di luce al posto del rame",
+        "Un sistema integrato di alimentazione autonoma per la rigenerazione del segnale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo schermo coassiale in rame o lamina circonda completamente il conduttore centrale, schermandolo dai campi elettromagnetici esterni.",
+        "Errato. Il vetro al quarzo viene utilizzato nella fibra ottica, non nel cavo coassiale.",
+        "Errato. Il cavo coassiale è un mezzo di trasmissione passivo e non contiene elementi di alimentazione integrati."
+      ]
+    },
+    {
+      "id": "it_net_73",
+      "widget_id": "widget_net_73",
+      "topic": "Reti di calcolatori — Linee in fibra ottica (SMF vs MMF)",
+      "q": "Quale delle seguenti affermazioni è corretta quando si confrontano le fibre ottiche monomodali (Single-Mode Fiber, SMF) e multimodali (Multi-Mode Fiber, MMF)?",
+      "hint": "Rifletti sullo spessore del nucleo della fibra e sul fenomeno della dispersione modale (allargamento dell'impulso luminoso).",
+      "options": [
+        "La MMF ha un nucleo molto sottile ed è utilizzata esclusivamente per dorsali superiori a 100 km",
+        "La SMF ha un nucleo molto stretto, trasmettendo un solo raggio di luce, il che elimina quasi del tutto la dispersione modale e consente la trasmissione di dati a decine di chilometri",
+        "La SMF utilizza LED economici come sorgente luminosa, mentre la MMF utilizza esclusivamente laser",
+        "La MMF non è soggetta ad attenuazione del segnale indipendentemente dalla lunghezza del cavo",
+        "La SMF trasmette dati tramite corrente elettrica, mentre la MMF tramite luce"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Al contrario: la MMF ha un nucleo spesso (50-62,5 µm) e, a causa della dispersione modale, è limitata a brevi distanze (fino a 500 m).",
+        "Corretto! Il nucleo stretto della SMF (~8-10 µm) consente il passaggio di un solo modo (raggio), eliminando l'allargamento dell'impulso dovuto alla dispersione intermodale.",
+        "Errato. La SMF utilizza laser a semiconduttore di precisione, mentre la MMF può utilizzare LED.",
+        "Errato. Tutti i tipi di fibra ottica presentano attenuazione (assorbimento e dispersione della luce).",
+        "Errato. Entrambi i tipi di fibra trasmettono un segnale ottico (luce)."
+      ]
+    },
+    {
+      "id": "it_net_74",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Canali satellitari (GEO vs LEO)",
+      "q": "Qual è il principale преимущество di rete delle costellazioni satellitari a orbita bassa (LEO) rispetto ai satelliti geostazionari (GEO)?",
+      "hint": "Ricorda la differenza di distanza dalla superficie terrestre (altitudine ~500–1200 km contro ~35 786 km) e il suo impatto sul ritardo fisico di propagazione $d_{prop}$.",
+      "options": [
+        "Ritardo di propagazione del segnale notevolmente inferiore ($d_{prop} \\approx 20\\text{--}40$ ms rispetto a $\\approx 240\\text{--}280$ ms dei GEO)",
+        "Totale assenza della necessità di utilizzare terminali utente terrestri"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Poiché i satelliti LEO sono molto più vicini alla Terra, il tempo di percorrenza del segnale radio all'andata e al ritorno è drasticamente inferiore rispetto ai GEO.",
+        "Errato. Per comunicare con i satelliti LEO, l'utente necessita comunque di una stazione/antenna ricevente."
+      ]
+    },
+    {
+      "id": "it_net_75",
+      "widget_id": "widget_net_75",
+      "topic": "Reti di calcolatori — Velocità di propagazione del segnale",
+      "q": "Qual è la velocità di propagazione di un segnale elettromagnetico o ottico ($s$) nei mezzi di trasmissione fisici cablati e ottici?",
+      "hint": "Ricorda il rapporto tra la velocità del segnale nel mezzo fisico (rame/vetro) e la velocità della luce nel vuoto ($c \\approx 3 \\cdot 10^8$ m/s).",
+      "options": [
+        "Pari alla velocità del suono nell'aria (circa 343 m/s)",
+        "Circa $2 \\cdot 10^8$ — $3 \\cdot 10^8$ m/s (circa $2/3$ della velocità della luce nel vuoto)",
+        "Esattamente $10^5$ m/s per qualsiasi mezzo",
+        "Dipende unicamente dalla dimensione del file trasmesso",
+        "Pari a esattamente $3 \\cdot 10^{12}$ m/s",
+        "Pari alla velocità di deriva degli elettroni nel rame (circa 1 mm/s)"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. La velocità del suono è molto inferiore alla velocità di propagazione delle onde elettromagnetiche.",
+        "Corretto! Nella maggior parte dei cavi (rame, fibra ottica), la velocità dell'onda elettromagnetica è di circa $2 \\cdot 10^8$ m/s ($2/3 \\cdot c$).",
+        "Errato. La costante $10^5$ m/s non corrisponde alla velocità delle oscillazioni elettromagnetiche.",
+        "Errato. La velocità di propagazione dell'onda nel mezzo è una proprietà fisica del mezzo stesso, non del formato dei dati.",
+        "Errato. Una tale velocità supererebbe la velocità della luce nel vuoto, cosa impossibile secondo le leggi della fisica.",
+        "Errato. Non bisogna confondere la velocità dell'onda elettromagnetica con la velocità di deriva caotica degli elettroni."
+      ]
+    },
+    {
+      "id": "it_net_76",
+      "widget_id": "widget_net_76",
+      "topic": "Reti di calcolatori — Canali wireless e distorsioni",
+      "q": "Quale effetto fisico nei mezzi wireless fa sì che il segnale radio raggiunga il ricevitore attraverso più percorsi con ritardi diversi, causando distorsioni di fase?",
+      "hint": "Rifletti sulla riflessione delle onde radio da edifici, terreno e ostacoli lungo il percorso verso l'antenna.",
+      "options": [
+        "Propagazione multi-percorso (Multipath Fading / Propagation)",
+        "Degenerazione quantistica dei fotoni",
+        "Rifrazione nella fibra ottica",
+        "Incapsulamento hardware L2"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella propagazione multi-percorso, le onde riflesse da pareti o dal terreno arrivano con un ritardo rispetto al raggio diretto e si sommano in sfasamento.",
+        "Errato. Questo termine della fisica quantistica non descrive gli effetti di propagazione delle onde radio.",
+        "Errato. La rifrazione nella fibra ottica si riferisce a mezzi ottici cablati.",
+        "Errato. L'incapsulamento è un processo logico di formazione dei pacchetti nello stack di rete."
+      ]
+    },
+    {
+      "id": "it_net_77",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Classificazione dei mezzi (Guided vs Unguided)",
+      "q": "A quale categoria appartiene lo spazio aperto (atmosfera, vuoto) nella trasmissione dati tramite Wi-Fi, Bluetooth o rete cellulare?",
+      "hint": "Distingui tra mezzi con cavo di guida fisico (Guided) e mezzi aperti senza confini definiti (Unguided).",
+      "options": [
+        "Mezzo di trasmissione guidato (Guided Media)",
+        "Mezzo di trasmissione non guidato (Unguided Media)",
+        "Mezzo di trasmissione virtuale (Virtual Media)"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. I Guided Media includono i cavi (doppino intrecciato, coassiale, fibra ottica) che localizzano il segnale al loro interno.",
+        "Corretto! I canali wireless utilizzano mezzi non guidati (Unguided Media), in cui il segnale si propaga nello spazio in tutte le direzioni o per settori.",
+        "Errato. Il termine Virtual Media viene utilizzato per l'emulazione software delle unità di memoria."
+      ]
+    },
+    {
+      "id": "it_net_78",
+      "widget_id": "widget_net_78",
+      "topic": "Reti di calcolatori — Teorema di Shannon (Capacità limite)",
+      "q": "Secondo il teorema di Shannon-Hartley $C = B \\cdot \\log_2(1 + S/N)$, da quali due caratteristiche fondamentali dipende la massima capacità teorica ($C$) di un canale rumoroso?",
+      "hint": "Ricorda la larghezza di banda dello spettro di frequenza del canale e il livello del segnale utile rispetto al rumore.",
+      "options": [
+        "Larghezza di banda ($B$) e rapporto segnale/rumore ($S/N$)",
+        "Lunghezza dell'indirizzo MAC e frequenza del processore della scheda di rete",
+        "Numero di router intermedi e dimensione della finestra TCP",
+        "Lunghezza del frame Ethernet e protocollo di livello applicativo utilizzato",
+        "Quantità di memoria RAM dell'host e maschera di sottorete"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La capacità del canale $C$ dipende linearmente dalla larghezza di banda $B$ (in Hz) e logaritmicamente dal rapporto tra potenza del segnale e potenza del rumore $S/N$.",
+        "Errato. Le proprietà hardware del processore e gli indirizzi L2 non rientrano nella legge fisica di Shannon.",
+        "Errato. Ritardi e parametri TCP appartengono ai livelli superiori dello stack.",
+        "Errato. La lunghezza del frame non determina il limite fisico di capacità del mezzo.",
+        "Errato. La memoria dell'host e le maschere sono parametri software/logici."
+      ]
+    },
+    {
+      "id": "it_net_79",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Modalità duplex (Half-Duplex)",
+      "q": "Quale delle seguenti descrizioni caratterizza meglio la modalità semi-duplex (Half-Duplex) di un canale di comunicazione?",
+      "hint": "Ricorda il principio di funzionamento dei Walkie-Talkie: entrambi i partecipanti possono parlare, ma non contemporaneamente.",
+      "options": [
+        "La trasmissione dei dati è possibile solo in una direzione fissa, strettamente dal trasmettitore al ricevitore",
+        "La trasmissione dei dati è possibile in entrambe le direzioni, ma solo alternativamente (in un dato istante trasmette una sola parte)",
+        "La trasmissione dei dati avviene simultaneamente in entrambe le direzioni senza limitazioni",
+        "La trasmissione dei dati avviene senza l'uso fisico di un mezzo di comunicazione"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. La trasmissione monodirezionale (ad esempio la radiodiffusione) è detta simplex (Simplex).",
+        "Corretto! In modalità Half-Duplex un nodo può sia inviare che ricevere dati, ma non contemporaneamente (esempio: Ethernet su coassiale con CSMA/CD).",
+        "Errato. La trasmissione simultanea bidirezionale è detta full-duplex (Full-Duplex).",
+        "Errato. Qualsiasi trasmissione richiede un mezzo fisico (guided o unguided)."
+      ]
+    },
+    {
+      "id": "it_net_80",
+      "widget_id": "widget_net_80",
+      "topic": "Reti di calcolatori — Attenuazione del segnale (Attenuation)",
+      "q": "Come si chiama il fenomeno fisico di riduzione della potenza (ampiezza) di un segnale man mano che si propaga lungo il mezzo di trasmissione a distanze maggiori?",
+      "hint": "Rifletti sulla perdita di energia dell'onda dovuta alla resistenza del mezzo, all'assorbimento o alla dispersione.",
+      "options": [
+        "Attenuazione del segnale (Attenuation)",
+        "Jitter del ritardo (Jitter)",
+        "Quantizzazione del segnale (Quantization)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'attenuazione (Attenuation) comporta l'indebolimento del segnale elettrico o ottico con la distanza, limitando la lunghezza massima del segmento della linea di comunicazione.",
+        "Errato. Il Jitter è la variazione/dispersione del tempo di ritardo nella consegna dei pacchetti.",
+        "Errato. La quantizzazione è il processo di conversione di un segnale analogico in forma digitale."
+      ]
+    },
+    {
+      "id": "it_net_81",
+      "widget_id": "widget_net_81",
+      "topic": "Reti di calcolatori — Multiplexing WDM / DWDM",
+      "q": "Quale tecnologia di multiplexing consente di trasmettere simultaneamente più canali di informazione indipendenti su una singola fibra ottica utilizzando diverse lunghezze d'onda della luce?",
+      "hint": "Pensa all'analogo di FDM nel campo dello spettro ottico, dove ogni \"frequenza\" rappresenta un colore distinto del raggio di luce.",
+      "options": [
+        "WDM / DWDM (Wavelength Division Multiplexing)",
+        "TDM (Time Division Multiplexing)",
+        "CDMA (Code Division Multiple Access)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La tecnologia WDM (DWDM) suddivide il cavo ottico in molteplici canali indipendenti, combinando segnali laser di diverse lunghezze d'onda (colori) in un'unica fibra.",
+        "Errato. TDM suddivide un singolo canale in slot temporali, non per lunghezze d'onda spettrali.",
+        "Errato. CDMA separa gli utenti della rete mediante sequenze di codici nell'etere radio."
+      ]
+    },
+    {
+      "id": "it_net_82",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Tasso di errore sui bit (BER)",
+      "q": "Cosa caratterizza la metrica Bit Error Rate (BER) utilizzata per valutare la qualità di un canale fisico di comunicazione?",
+      "hint": "Fai attenzione al rapporto tra il numero di bit errati (uno/zero alterati) e il numero totale di bit trasmessi.",
+      "options": [
+        "Il numero di byte trasmessi dall'adattatore in un secondo",
+        "Il rapporto tra il numero di bit corrotti (errati) e il numero totale di bit trasmessi nell'intervallo di tempo osservato",
+        "La percentuale di tempo in cui il cavo fisico è rimasto privo di tensione elettrica",
+        "Il ritardo di propagazione dell'onda elettromagnetica dalla sorgente al ricevitore",
+        "La massima larghezza dello spettro del segnale in hertz"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Questa è la definizione di larghezza di banda / throughput (Bandwidth / Throughput).",
+        "Corretto! BER (Bit Error Rate) è un indicatore chiave di affidabilità di L1: il rapporto tra i bit ricevuti con errori e il totale dei bit trasmessi (ad esempio $10^{-9}$ significa 1 errore ogni miliardo di bit).",
+        "Errato. L'inattività della linea non viene misurata dall'indice BER.",
+        "Errato. Il tempo di propagazione dell'onda è determinato dal ritardo $d_{prop}$.",
+        "Errato. La larghezza dello spettro in hertz è la larghezza di banda (Bandwidth)."
+      ]
+    },
+    {
+      "id": "it_net_83",
+      "widget_id": "widget_net_83",
+      "topic": "Reti di calcolatori — Teoremi di Nyquist e Shannon",
+      "q": "Qual è la differenza fondamentale nelle condizioni di applicazione della formula di Nyquist e del teorema di Shannon nel calcolo della velocità massima di trasmissione dati?",
+      "hint": "Rifletti su quale delle due formule è pensata per un canale perfettamente privo di rumore e quale tiene conto del rumore fisico e dei disturbi.",
+      "options": [
+        "La formula di Nyquist determina la velocità limite per un canale ideale SENZA rumore, mentre il teorema di Shannon tiene conto della presenza di rumore casuale/termico (S/N)",
+        "La formula di Nyquist si applica solo alla fibra ottica, mentre la formula di Shannon si applica esclusivamente alle reti wireless"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nyquist calcola il baud rate limite di un canale ideale privo di rumore con livello di segnale $V$, mentre Shannon stabilisce il limite fisico assoluto di velocità per qualsiasi canale rumoroso dato un rapporto $S/N$.",
+        "Errato. Entrambi i teoremi sono leggi universali della fisica e della teoria dell'informazione e sono applicabili a qualsiasi mezzo fisico."
+      ]
+    },
+    {
+      "id": "it_net_84",
+      "widget_id": "widget_net_84",
+      "topic": "Reti di calcolatori — Alimentazione tramite Ethernet (PoE)",
+      "q": "Quale tecnologia consente di trasmettere corrente elettrica continua per alimentare i dispositivi finali (telecamere IP, access point Wi-Fi, telefoni IP) sullo stesso cavo a doppio intrecciato in cui viaggiano i dati?",
+      "hint": "Ricorda lo standard IEEE 802.3af/at/bt, che evita la necessità di posare una presa elettrica a 220V per il dispositivo.",
+      "options": [
+        "PLC (Powerline Communication)",
+        "PoE (Power over Ethernet)",
+        "Energy Efficient Ethernet (EEE)",
+        "Wake-on-LAN (WoL)"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. PLC trasmette dati di rete sulla rete elettrica esistente a 220V, non il contrario.",
+        "Corretto! La tecnologia Power over Ethernet (PoE) fornisce tensione continua sui conduttori liberi o dati del cavo UTP/STP per alimentare gli host collegati.",
+        "Errato. EEE (802.3az) riduce il consumo energetico delle schede di rete stesse durante i periodi di inattività.",
+        "Errato. Wake-on-LAN è una tecnologia per l'accensione remota del computer tramite uno speciale frame di rete (Magic Packet)."
+      ]
+    },
+    {
+      "id": "it_net_85",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Trasmissione in banda base vs banda larga (Baseband vs Broadband)",
+      "q": "Qual è la caratteristica chiave della trasmissione di segnali in banda base (Baseband Transmission) rispetto alla trasmissione a banda larga (Broadband)?",
+      "hint": "Rifletti se vengono utilizzate frequenze portanti modulanti e quanti canali possono coesistere simultaneamente nel cavo durante la trasmissione in banda base (Baseband).",
+      "options": [
+        "In Baseband, il segnale digitale viene trasmesso nella sua forma originale senza modulazione della portante, occupando l'intera larghezza di banda del mezzo per un singolo canale",
+        "In Baseband, i dati vengono trasmessi simultaneamente su 100 frequenze indipendenti",
+        "Baseband utilizza esclusivamente intervalli di onde ottiche",
+        "In Baseband, la velocità di trasmissione è limitata a esattamente 10 Kbps",
+        "Baseband richiede l'uso obbligatorio di antenne satellitari",
+        "Baseband crittografa automaticamente il traffico a livello L1"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella trasmissione Baseband (ad esempio Ethernet classico), gli impulsi digitali discreti senza modulazione utilizzano l'intero spettro di frequenza del cavo per trasmettere un solo segnale alla volta.",
+        "Errato. La trasmissione su più frequenze in parallelo (FDM/OFDM) è una proprietà dei sistemi Broadband.",
+        "Errato. La tecnologia Baseband è ampiamente utilizzata anche nei cavi in rame.",
+        "Errato. La velocità dei sistemi Baseband può raggiungere valori di gigabit e terabit.",
+        "Errato. I satelliti utilizzano sempre la modulazione a banda larga di una frequenza portante (Broadband).",
+        "Errato. Il metodo di codifica dei segnali L1 non esegue la crittografia dei dati."
+      ]
+    },
+    {
+      "id": "it_net_86",
+      "widget_id": "widget_net_86",
+      "topic": "Reti di calcolatori — Perdite per curvatura nella fibra ottica",
+      "q": "A causa della violazione di quale fenomeno fisico si verifica una drastica attenuazione e rifrazione del raggio di luce verso l'esterno quando viene superato il raggio di curvatura minimo consentito per un cavo in fibra ottica?",
+      "hint": "Ricorda l'effetto grazie al quale la luce viene trattenuta all'interno del nucleo della fibra ottica.",
+      "options": [
+        "Riflessione totale interna (Total Internal Reflection)",
+        "Effetto Doppler",
+        "Effetto fotoelettrico",
+        "Induzione elettromagnetica"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La luce si propaga nella fibra grazie alla riflessione totale interna all'interfaccia nucleo-mantello. Una curvatura eccessiva modifica l'angolo di incidenza del raggio, facendo uscire la luce attraverso il mantello (perdite per curvatura).",
+        "Errato. L'effetto Doppler descrive la variazione della frequenza di un'onda dovuta al movimento della sorgente o dell'osservatore.",
+        "Errato. L'effetto fotoelettrico riguarda l'emissione di elettroni da parte della materia sotto l'azione della luce.",
+        "Errato. L'induzione si riferisce ai campi magnetici variabili nei conduttori in rame."
+      ]
+    },
+    {
+      "id": "it_net_87",
+      "widget_id": "widget_net_87",
+      "topic": "Reti di calcolatori — Modulazione di ampiezza in quadratura (QAM)",
+      "q": "Quale tecnologia di modulazione combina la variazione simultanea sia dell'ampiezza che della fase di un segnale analogico portante per codificare più bit in un singolo simbolo?",
+      "hint": "Pensa al diagramma di costellazione vettoriale (Constellation Diagram) con i segnali I (In-phase) e Q (Quadrature).",
+      "options": [
+        "QAM (Quadrature Amplitude Modulation)",
+        "ASK (Amplitude Shift Keying)",
+        "FSK (Frequency Shift Keying)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! QAM codifica i dati modificando sia l'ampiezza che lo sfasamento del segnale portante (ad esempio, 256-QAM codifica 8 bit di informazione in ciascun simbolo).",
+        "Errato. ASK modifica solo l'ampiezza del segnale, lasciando inalterate la fase e la frequenza.",
+        "Errato. FSK modifica solo la frequenza della portante."
+      ]
+    },
+    {
+      "id": "it_net_88",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Punto-punto vs Mezzo condiviso",
+      "q": "Qual è la differenza principale tra i canali di tipo \"punto-punto\" (Point-to-Point) e i canali condivisi (Broadcast / Shared Medium)?",
+      "hint": "Rifletti sul numero di dispositivi fisicamente connessi al medesimo mezzo di comunicazione e sul rischio di collisioni.",
+      "options": [
+        "Un canale \"punto-punto\" collega esattamente due nodi senza rischio di collisioni, mentre in un canale condiviso un unico mezzo è utilizzato contemporaneamente da più dispositivi",
+        "Un canale \"punto-punto\" è sempre wireless, mentre un canale condiviso è sempre cablato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In una connessione Point-to-Point (ad esempio un link diretto in fibra ottica), il mezzo è ad uso esclusivo di due nodi. In un Shared Medium (ad esempio Wi-Fi o Ethernet su hub), il mezzo è condiviso tra più nodi, richiedendo meccanismi come CSMA/CD o CSMA/CA.",
+        "Errato. Entrambi i tipi di canale possono essere sia cablati che wireless."
+      ]
+    },
+    {
+      "id": "it_net_89",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Categorie di cavi a doppio intrecciato",
+      "q": "Quale categoria di doppio intrecciato non schermato/schermato ha introdotto per la prima volta ufficialmente il supporto per una larghezza di banda fino a 250 MHz per il funzionamento garantito delle reti 1000BASE-T e 10GBASE-T (fino a 55 m)?",
+      "hint": "Ricorda lo standard di cavi immediatamente successivo al diffuso Cat 5e.",
+      "options": [
+        "Category 3 (Cat 3)",
+        "Category 5e (Cat 5e)",
+        "Category 6 (Cat 6)",
+        "Category 1 (Cat 1)",
+        "Category 8.1 (Cat 8.1)"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Errato. La Cat 3 è progettata per frequenze fino a 16 MHz (utilizzata in 10BASE-T).",
+        "Errato. La Cat 5e è testata su frequenze fino a 100 MHz ed è progettata per 1GBASE-T.",
+        "Corretto! Lo standard Category 6 (Cat 6) ha una larghezza di banda di 250 MHz e supporta la trasmissione a 10 Gbps su distanze fino a 55 metri.",
+        "Errato. La Cat 1 è usata solo per la telefonia analogica.",
+        "Errato. La Cat 8.1 supporta frequenze fino a 2000 MHz per Data Center (40GBASE-T)."
+      ]
+    },
+    {
+      "id": "it_net_90",
+      "widget_id": "widget_net_90",
+      "topic": "Reti di calcolatori — Ricetrasmettitori ottici (SFP/QSFP)",
+      "q": "Quale funzione principale svolgono i moduli ricetrasmettitori rimovibili (ad esempio SFP, SFP+, QSFP) inseriti in slot dedicati di schede di rete e switch?",
+      "hint": "Rifletti sull'adattamento dell'elettronica del dispositivo con la fibra ottica o con uno specifico canale fisico cablato L1.",
+      "options": [
+        "Conversione fisica dei segnali elettrici interni del chip del dispositivo in segnali ottici (o elettrici specifici) per la trasmissione nel mezzo",
+        "Calcolo e ottimizzazione automatica delle tabelle di routing BGP",
+        "Memorizzazione delle copie di backup del sistema operativo dello switch",
+        "Generazione di chiavi casuali per la crittografia del protocollo SSH"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I moduli rimovibili (Small Form-factor Pluggable) sono convertitori hardware di livello fisico (L1) che trasformano i segnali elettrici della scheda in impulsi ottici per la fibra ottica.",
+        "Errato. Il routing BGP è una funzione L3 eseguita dalla CPU/processore dello switch.",
+        "Errato. Il salvataggio del SO avviene nella memoria flash interna del dispositivo.",
+        "Errato. La crittografia SSH avviene a livello software/applicazione."
+      ]
+    },
+    {
+      "id": "it_net_91",
+      "widget_id": "widget_net_91",
+      "topic": "Reti di calcolatori — Reti di archiviazione dati (SAN vs LAN)",
+      "q": "Qual è lo scopo principale di una rete di archiviazione dedicata (SAN — Storage Area Network) rispetto a una normale rete locale (LAN)?",
+      "hint": "Rifletti su come sgravare la rete utente da enormi volumi di traffico durante le letture/scritture a blocchi sugli array di dischi.",
+      "options": [
+        "Fornire un'infrastruttura isolata ad alta velocità per l'accesso a blocchi dei server ai sistemi di archiviazione dati (SAN/storage) senza caricare il traffico LAN",
+        "Fornire accesso Wi-Fi wireless per i dispositivi mobili degli utenti",
+        "Filtrare messaggi di spam e file dannosi sui server di posta"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Una SAN consolida i sistemi di archiviazione (tramite Fibre Channel o iSCSI), fornendo ai server un accesso a blocchi ad alta velocità ai dischi in una rete dedicata separata.",
+        "Errato. Dell'accesso wireless si occupano le reti locali wireless (WLAN).",
+        "Errato. Il filtraggio dei contenuti è un compito dei gateway di sicurezza software e dei sistemi antispam."
+      ]
+    },
+    {
+      "id": "it_net_92",
+      "widget_id": "widget_net_92",
+      "topic": "Reti di calcolatori — Architettura Spine-Leaf",
+      "q": "Perché la moderna architettura a due livelli Spine-Leaf sta sostituendo il modello tradizionale a tre livelli (Core-Aggregation-Access) nei Data Center?",
+      "hint": "Fai attenzione alla prevalenza del traffico tra i server stessi (traffico East-West) e al numero fisso di switch lungo il percorso del pacchetto.",
+      "options": [
+        "Spine-Leaf garantisce una latenza prevedibile e identica e esattamente 2 hop tra due server qualsiasi del Data Center durante la trasmissione del traffico East-West",
+        "Spine-Leaf elimina completamente la necessità di utilizzare cavi di rete grazie a un sistema laser d'aria integrato",
+        "Spine-Leaf è progettata esclusivamente per il collegamento di periferiche d'ufficio (stampanti e scanner)",
+        "Spine-Leaf riduce il numero di server nei rack a uno solo per armadio"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella topologia Spine-Leaf ciascun switch Leaf è collegato a tutti gli switch Spine. Qualsiasi coppia di server si trova a una distanza di esattamente due hop (Leaf -> Spine -> Leaf), garantendo una scalabilità ideale e una latenza fissa.",
+        "Errato. Spine-Leaf si basa su linee di connessione cablate standard (10G/100G/400G).",
+        "Errato. Spine-Leaf viene utilizzata per fabric di server ad alto carico nei Data Center, non per le periferiche d'ufficio.",
+        "Errato. Questa architettura consente al contrario di alloggiare densamente migliaia di server."
+      ]
+    },
+    {
+      "id": "it_net_93",
+      "widget_id": "widget_net_93",
+      "topic": "Reti di calcolatori — Reti Underlay e Overlay (VXLAN)",
+      "q": "Qual è la differenza concettuale tra una rete fisica (Underlay) e una rete virtuale sovrapposta (Overlay, ad esempio VXLAN)?",
+      "hint": "Rifletti su chi si occupa dell'effettivo instradamento dei pacchetti IP tra switch hardware e chi crea tunnel virtuali L2 su L3.",
+      "options": [
+        "Underlay è responsabile dell'routing IP fisico tra le apparecchiature, mentre Overlay incapsula reti L2/L3 virtuali sopra l'infrastruttura fisica",
+        "Underlay è una rete esclusivamente wireless, mentre Overlay è sempre in fibra ottica",
+        "Overlay sostituisce completamente gli switch fisici con codice software senza il coinvolgimento dell'hardware reale",
+        "Underlay viene utilizzata solo sui router domestici, mentre Overlay nelle comunicazioni spaziali",
+        "Nelle reti Overlay è fisicamente impossibile utilizzare la crittografia dei dati"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Underlay è la rete fisica (cavi, router, fabric IP). Overlay (ad esempio VXLAN) incapsula i frame delle macchine virtuali sopra l'Underlay, consentendo di astrarre la rete virtuale dalla topologia fisica.",
+        "Errato. Entrambi i concetti non sono legati a uno specifico mezzo fisico (rame, fibra o radio).",
+        "Errato. Overlay richiede una rete Underlay fisica funzionante per trasmettere i pacchetti incapsulati.",
+        "Errato. Entrambe le tecnologie sono utilizzate nei moderni Data Center e nelle reti aziendali.",
+        "Errato. Il traffico nelle reti Overlay può essere facilmente crittografato (ad esempio tramite IPsec)."
+      ]
+    },
+    {
+      "id": "it_net_94",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Reti per la consegna dei contenuti (CDN)",
+      "q": "Quale ruolo svolgono i server edge e i nodi (Edge Server / PoP) nella struttura geograficamente distribuita di una CDN?",
+      "hint": "Ricorda il ritardo RTT e da dove è più vicino e veloce per l'utente scaricare un'immagine statica o un video.",
+      "options": [
+        "Memorizzano in cache e servono i contenuti agli utenti con la minima latenza dal punto fisico più vicino a loro, riducendo il carico sul server di origine (Origin)",
+        "Fungono da unico luogo di archiviazione dei file originali del sito web, sostituendo completamente i database"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I server Edge sono posizionati il più vicino possibile agli utenti sui nodi dei provider per gestire le richieste localmente senza interpellare il server di origine remoto (Origin).",
+        "Errato. I dati originali sono conservati sul server Origin, mentre i nodi CDN Edge memorizzano solo copie in cache."
+      ]
+    },
+    {
+      "id": "it_net_95",
+      "widget_id": "widget_net_95",
+      "topic": "Reti di calcolatori — Punti di interscambio del traffico (IXP)",
+      "q": "Quale funzione svolgono i punti di interscambio del traffico Internet (IXP — Internet Exchange Point) nella struttura fisica di Internet a livello globale?",
+      "hint": "Pensa a un luogo in cui centinaia di operatori di rete (AS) si collegano a una singola switching fabric per scambiare direttamente il traffico (peering).",
+      "options": [
+        "Forniscono un'infrastruttura di switching neutrale che consente a diversi Sistemi Autonomi (AS) di scambiare direttamente traffico (peering) senza acquistare transito",
+        "Sostituiscono i cavi ottici transoceanici internazionali",
+        "Eseguono la censura forzata e il filtraggio di tutti i siti non crittografati nel mondo",
+        "Convertono i segnali ottici digitali in un segnale radio analogico in banda FM",
+        "Fungono da unico server centrale che gestisce il funzionamento dell'intero Internet mondiale",
+        "Distribuiscono indirizzi IP agli utenti domestici finali tramite il protocollo DHCP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli IXP sono siti fisici con potenti switch in cui provider Internet, CDN e generatori di contenuti si collegano direttamente per scambiarsi il traffico.",
+        "Errato. Gli IXP sono nodi di scambio del traffico, non linee fisiche dorsali di comunicazione.",
+        "Errato. Gli IXP sono strutture infrastrutturali commerciali e tecnicamente neutrali.",
+        "Errato. Gli IXP lavorano con commutazione digitale ad alta velocità (Ethernet/Ottica).",
+        "Errato. Internet non ha un unico server di gestione centrale.",
+        "Errato. Il DHCP per gli utenti domestici viene fornito dai provider di servizi Internet locali (ISP), non dagli IXP."
+      ]
+    },
+    {
+      "id": "it_net_96",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Reti mesh wireless (Wireless Mesh)",
+      "q": "In cosa differisce la topologia mesh (Mesh) nelle reti wireless dalla tradizionale topologia infrastrutturale con un access point di base?",
+      "hint": "Rifletti se ciascun nodo debba avere una connessione cablata allo switch o se i nodi possano ritrasmettere i dati l'uno attraverso l'altro.",
+      "options": [
+        "I nodi di una rete Mesh possono ritrasmettere dinamicamente il traffico attraverso nodi vicini a staffetta senza la connessione cablata diretta di ciascun nodo alla rete",
+        "Le reti Mesh funzionano solo in totale assenza di alimentazione elettrica sui nodi",
+        "Nelle reti Mesh è consentito trasmettere dati solo in una direzione (Simplex)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In una rete Mesh ogni nodo agisce sia da client che da router, trasmettendo a staffetta i pacchetti verso il punto che ha un'uscita cablata in rete.",
+        "Errato. Qualsiasi apparecchiatura radio richiede una fonte di alimentazione elettrica.",
+        "Errato. Le reti Mesh supportano la trasmissione bidirezionale completa dei dati."
+      ]
+    },
+    {
+      "id": "it_net_97",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Isolamento di rete (Air-Gap)",
+      "q": "In cosa consiste l'isolamento di una rete tramite il metodo Air-Gap (\"divario d'aria\")?",
+      "hint": "Ricorda i requisiti di sicurezza per le infrastrutture critiche (centrali nucleari, sistemi militari), dove mancano completamente connessioni fisiche o wireless con il mondo esterno.",
+      "options": [
+        "Il completo isolamento fisico della rete protetta da Internet pubblica e da qualsiasi rete esterna di terze parti",
+        "L'uso esclusivo di canali Wi-Fi wireless al posto dei cavi",
+        "Il raffreddamento forzato dei rack di server tramite potenti sistemi ad aria",
+        "La trasmissione dei dati tra computer tramite altoparlanti audio"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Air-Gap significa la totale assenza di qualsiasi connessione fisica (cavi) o wireless (Wi-Fi, Bluetooth) tra la rete isolata e le risorse esterne.",
+        "Errato. I canali Wi-Fi al contrario creano una copertura radio e non costituiscono un isolamento fisico.",
+        "Errato. Il raffreddamento è un sistema tecnico-climatico, non un metodo di isolamento di rete.",
+        "Errato. La trasmissione tramite suono è un vettore di attacco esotico, non un principio di costruzione di reti isolate."
+      ]
+    },
+    {
+      "id": "it_net_98",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Reti metropolitane (MAN) e topologia ad anello",
+      "q": "Perché nella costruzione delle reti dorsali metropolitane (MAN — Metropolitan Area Network) basate su DWDM viene spesso utilizzata una topologia ad anello?",
+      "hint": "Rifletti su cosa accade al flusso di traffico se uno scavatore taglia accidentalmente il cavo in fibra ottica in un punto dell'anello.",
+      "options": [
+        "Fornisce un'elevata tolleranza ai guasti: in caso di singola interruzione del cavo, il traffico viene reindirizzato istantaneamente nella direzione opposta lungo l'anello",
+        "La topologia ad anello richiede 10 volte meno cavo rispetto a qualsiasi altro schema",
+        "Nella topologia ad anello c'è una totale assenza di ritardo fisico nella trasmissione dei dati",
+        "La topologia ad anello elimina la necessità di utilizzare switch e router di rete",
+        "Il segnale nell'anello viene trasmesso esclusivamente via etere senza l'uso della fibra ottica"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Una struttura ad anello con meccanismo di protezione (ad esempio APS) consente, in caso di guasto al cavo, di commutare istantaneamente la direzione di trasmissione del traffico sul secondo ramo dell'anello.",
+        "Errato. Il consumo di cavo per un anello è spesso superiore rispetto a un posamento radiale.",
+        "Errato. Il ritardo è determinato dalla velocità della luce nella fibra e dalla distanza.",
+        "Errato. Switch e ricetrasmettitori sono necessari in ogni nodo dell'anello.",
+        "Errato. Gli anelli MAN si basano principalmente su linee sotterranee in fibra ottica."
+      ]
+    },
+    {
+      "id": "it_net_99",
+      "widget_id": "widget_net_99",
+      "topic": "Reti di calcolatori — SD-WAN (Software-Defined WAN)",
+      "q": "Qual è il vantaggio principale della tecnologia SD-WAN nell'interconnessione delle filiali aziendali rispetto ai vecchi canali dedicati MPLS?",
+      "hint": "Rifletti sulla possibilità di combinare dinamicamente l'Internet pubblico economico (Broadband, LTE/5G) e l'MPLS in un unico canale virtuale protetto con bilanciamento automatico.",
+      "options": [
+        "SD-WAN consente di combinare e bilanciare dinamicamente il traffico su qualsiasi canale disponibile (Broadband, 5G, MPLS) mediante un controllo software centralizzato",
+        "SD-WAN aumenta fisicamente di 2 volte la velocità di propagazione del segnale nei cavi",
+        "SD-WAN elimina completamente la necessità di acquistare router e sottoscrivere connettività Internet"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! SD-WAN astrae via software i canali di comunicazione fisici, selezionando automaticamente in tempo reale il percorso migliore per ciascun tipo di applicazione (VoIP, video, web).",
+        "Errato. La velocità del segnale è limitata dalle leggi della fisica e dalle proprietà del mezzo.",
+        "Errato. Per il funzionamento di SD-WAN sono comunque necessari canali di comunicazione forniti dai provider e dispositivi fisici (SD-WAN Edge)."
+      ]
+    },
+    {
+      "id": "it_net_100",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Classificazione delle reti per estensione географической",
+      "q": "Disponi i tipi di rete (LAN, MAN, PAN, WAN) in ordine CRESCENTE di copertura geografica.",
+      "hint": "Ricorda la copertura di ciascun tipo: personale/corporea, edificio/ufficio, città, mondo intero.",
+      "options": [
+        "PAN (personale) -> LAN (locale) -> MAN (metropolitana) -> WAN (geografica/globale)",
+        "WAN (geografica/globale) -> MAN (metropolitana) -> LAN (locale) -> PAN (personale)",
+        "LAN (locale) -> PAN (personale) -> WAN (geografica/globale) -> MAN (metropolitana)",
+        "MAN (metropolitana) -> LAN (locale) -> PAN (personale) -> WAN (geografica/globale)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! PAN (metri, Bluetooth) -> LAN (decine/centinaia di metri, edificio) -> MAN (chilometri, città) -> WAN (migliaia di chilometri, paesi e continenti).",
+        "Errato. Questa sequenza è in ordine decrescente, non crescente.",
+        "Errato. PAN è più piccola di LAN e MAN è più piccola di WAN.",
+        "Errato. L'ordine non è corretto: MAN è notevolmente più grande di LAN e PAN."
+      ]
+    }
+  ]
+}

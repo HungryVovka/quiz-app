@@ -1,0 +1,597 @@
+{
+  "subject": "Reti",
+  "questions": [
+    {
+      "id": "it_net_131",
+      "widget_id": "widget_net_131",
+      "topic": "Reti di calcolatori — Architettura P2P vs Client-Server",
+      "q": "In che modo il ruolo dei sistemi finali (host) nell'architettura Peer-to-Peer (P2P) differisce concettualmente da quello nella classica architettura «Client-Server»?",
+      "hint": "Pensa a se i nodi sono rigidamente divisi in richiedenti e fornitori di risorse, o se un singolo nodo unisce entrambe le funzioni.",
+      "options": [
+        "Nel P2P ciascun host (peer) può fungere contemporaneamente sia da client (richiedere risorse) sia da server (fornire risorse ad altri nodi)",
+        "Nel P2P gli host non richiedono connessioni a linee fisiche di comunicazione e trasmettono dati tramite un campo magnetico",
+        "Nel P2P gli host funzionano esclusivamente nello spazio kernel del sistema operativo, ignorando lo strato utente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nelle reti P2P gli host sono simmetrici (chiamati «peer» o «servent»). I nodi richiedono e distribuiscono in modo decentralizzato frammenti di dati.",
+        "Errato. Il P2P è un'architettura logica di livello applicativo che utilizza standard canali di comunicazione fisici e di rete.",
+        "Errato. Le applicazioni P2P (ad esempio i client BitTorrent) vengono eseguite nello spazio utente (User Space)."
+      ]
+    },
+    {
+      "id": "it_net_132",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Socket software (Socket API)",
+      "q": "Che cos'è un socket dal punto di vista del sistema finale (host) e del suo sistema operativo?",
+      "hint": "Pensa a una porta d'accesso astratta tra processi (API) tra l'applicazione in User Space e lo stack di trasporto del sistema operativo.",
+      "options": [
+        "Un'interfaccia di programmazione (API) e un'astrazione del sistema operativo che collega un processo di livello applicativo con lo stack di protocolli di rete (indirizzo IP + numero di porta)",
+        "Un connettore fisico sulla scheda madre per collegare un cavo di rete RJ-45",
+        "Un microcontrollore hardware all'interno della NIC che calcola i checksum dei pacchetti",
+        "Un database di record DNS memorizzato nella cache del processore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un socket è un'astrazione software del sistema operativo, un punto d'ingresso/uscita software attraverso il quale un processo trasmette e riceve dati dalla rete tramite il livello di trasporto (TCP/UDP).",
+        "Errato. Il connettore fisico per il cavo a doppino intrecciato è chiamato porta 8P8C (RJ-45).",
+        "Errato. Il controller hardware della NIC è un circuito integrato separato della scheda di rete.",
+        "Errato. La cache DNS è una struttura dati presente in un servizio di sistema o in una libreria resolver."
+      ]
+    },
+    {
+      "id": "it_net_133",
+      "widget_id": "widget_net_133",
+      "topic": "Reti di calcolatori — Offload hardware (TSO / NIC Offloading)",
+      "q": "Quale compito svolge la tecnologia TCP Segmentation Offload (TSO) sulla scheda di rete (NIC) di un sistema finale?",
+      "hint": "Presta attenzione a quale chip si fa carico di suddividere un grande buffer di dati in singoli frame basati sulla MTU.",
+      "options": [
+        "Trasferisce il compito di suddividere grandi blocchi di dati in singoli segmenti TCP dalla CPU al chip hardware della scheda di rete (NIC)",
+        "Inoltra automaticamente i pacchetti TCP in ingresso al modulo Wi-Fi fisico in caso di sovraccarico della linea Ethernet"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La TSO consente alla CPU di formare un unico grande frame (fino a 64 KB) e di passarlo alla scheda di rete. La suddivisione in frame da 1500 byte (MTU) e il calcolo dei campi di intestazione vengono eseguiti dalla NIC stessa.",
+        "Errato. La TSO non commuta le interfacce fisiche (Ethernet/Wi-Fi), ma solleva la CPU dal carico di segmentazione del traffico TCP."
+      ]
+    },
+    {
+      "id": "it_net_134",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Porte efimere (Ephemeral Ports)",
+      "q": "Per quale motivo un sistema finale (host client) utilizza le cosiddette porte «efimere» (dinamiche) per le connessioni in uscita?",
+      "hint": "Pensa a come il sistema operativo identifica in modo univoco una specifica sessione e processo client tra le molteplici schede aperte del browser.",
+      "options": [
+        "Per l'identificazione temporanea e univoca del processo client locale durante l'invio di richieste a porte note dei server",
+        "Per la registrazione permanente della scheda di rete nel registro globale IANA",
+        "Per riservare la larghezza di banda fisica sul router del provider",
+        "Per cifrare il traffico a livello fisico L1",
+        "Per misurare la temperatura della CPU durante il trasferimento dei file"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il sistema operativo assegna automaticamente un numero di porta a breve durata (efimera) da un intervallo dedicato (ad esempio 49152–65535) per ogni nuovo socket client, formando una quadrupla univoca `(IP_src, Port_src, IP_dst, Port_dst)`.",
+        "Errato. L'IANA non registra le porte dinamiche dei singoli host.",
+        "Errato. Le porte efimere sono un'astrazione locale del sistema operativo dell'host e non riservano banda sui router.",
+        "Errato. Le porte operano al livello di trasporto (L4) e non hanno relazione con la cifratura L1.",
+        "Errato. Le porte servono per l'indirizzamento dei processi di rete, non per il monitoraggio dell'hardware."
+      ]
+    },
+    {
+      "id": "it_net_135",
+      "widget_id": "widget_net_135",
+      "topic": "Reti di calcolatori — Accesso diretto alla rete (Kernel Bypass / DPDK)",
+      "q": "Qual è l'obiettivo principale delle tecnologie di Kernel Bypass (ad es. DPDK, AF_XDP) nell'elaborazione del traffico da parte di sistemi ad alto carico?",
+      "hint": "Pensa all'eliminazione dell'overhead dovuto all'elaborazione delle interruzioni del kernel e al riassestamento dei dati tra Kernel Space e User Space.",
+      "options": [
+        "Eliminazione dei ritardi e dei costi di cambio contesto del kernel del sistema operativo mediante il trasferimento diretto dei pacchetti dalla NIC alla memoria dell'applicazione utente",
+        "Abbandono completo dell'uso della memoria RAM a favore della cache L1 del processore",
+        "Conversione automatica del protocollo IPv4 in IPv6 senza il coinvolgimento del router",
+        "Cifratura di tutti i pacchetti in ingresso tramite l'algoritmo hardware AES-256"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il Kernel Bypass aggira lo stack di rete standard del kernel Linux/Windows, inoltrando i buffer ad anello della NIC direttamente nello spazio utente (User Space). Questo riduce al minimo la latenza (Latency) e le chiamate di sistema.",
+        "Errato. DPDK utilizza attivamente la RAM standard, in particolare le pagine di memoria enormi (Hugepages).",
+        "Errato. Il Kernel Bypass non modifica i protocolli di rete L3 e non gestisce la traduzione automatica tra IPv4 e IPv6.",
+        "Errato. La cifratura non è la funzione principale delle tecnologie di classe Kernel Bypass."
+      ]
+    },
+    {
+      "id": "it_net_136",
+      "widget_id": "widget_net_136",
+      "topic": "Reti di calcolatori — Stato TCP TIME_WAIT",
+      "q": "Perché un host che ha avviato la chiusura attiva di una connessione TCP passa allo stato TIME_WAIT e vi rimane per un tempo pari a $2 \\times \\text{MSL}$ (Maximum Segment Lifetime)?",
+      "hint": "Pensa al destino dei pacchetti ritardati nella rete appartenenti alla vecchia connessione e a cosa accadrebbe se si aprisse subito una nuova connessione sulle stesse porte.",
+      "options": [
+        "Per garantire la consegna del pacchetto ACK finale e prevenire la sovrapposizione di vecchi segmenti ritardati su una nuova connessione con le stesse porte",
+        "Per attendere la liberazione del cavo fisico da parte di un altro dispositivo nella rete",
+        "Per consentire alla CPU di raffreddarsi dopo un elevato carico di rete",
+        "Per verificare automaticamente il saldo dell'account del provider Internet",
+        "Per bloccare il riavvio del sistema operativo fino al riavvio del sistema",
+        "Per eseguire la pulizia dei log di sistema e del registro di sistema"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il tempo $2 \\times \\text{MSL}$ (di solito 1-2 minuti) garantisce che tutti i pacchetti della connessione chiusa «scadano» nella rete e non vengano erroneamente accettati da una nuova connessione che riutilizza la stessa quadrupla `(IP_src, Port_src, IP_dst, Port_dst)`.",
+        "Errato. La linea fisica viene liberata immediatamente e non è legata agli stati logici del TCP.",
+        "Errato. Gli stati dello stack TCP sono definiti dalla logica di rete e non dallo stato termico della CPU.",
+        "Errato. Il protocollo TCP non include controlli di fatturazione integrati.",
+        "Errato. Lo stato TIME_WAIT riguarda unicamente lo specifico socket di rete.",
+        "Errato. Lo stato TIME_WAIT non si occupa della manutenzione dei file log del sistema operativo."
+      ]
+    },
+    {
+      "id": "it_net_137",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Virtualizzazione dell'I/O di rete (SR-IOV)",
+      "q": "Quale vantaggio offre la tecnologia SR-IOV (Single Root I/O Virtualization) su un host di virtualizzazione quando lavora con macchine virtuali (VM)?",
+      "hint": "Presta attenzione a come la macchina virtuale ottiene l'accesso PCI diretto alle funzioni virtuali della scheda di rete fisica, bypassando il vSwitch software.",
+      "options": [
+        "Fornisce alle macchine virtuali un accesso fisico diretto alle funzioni virtuali (VF) della scheda di rete, bypassando l'hypervisor software e il vSwitch",
+        "Aumenta automaticamente la quantità di memoria video dell'acceleratore grafico sull'host",
+        "Consente di combinare schede di rete fisiche di diversi produttori in un unico router Wi-Fi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! SR-IOV suddivide una singola scheda di rete fisica (Physical Function) in multiple funzioni virtuali (Virtual Functions). La VM lavora direttamente con le VF tramite PCIe Passthrough, riducendo il carico sulla CPU dell'hypervisor e diminuendo la latenza.",
+        "Errato. SR-IOV riguarda la partizione hardware dell'I/O di rete e non la memoria della GPU.",
+        "Errato. L'aggregazione delle interfacce si chiama Bonding/LACP, e SR-IOV non le trasforma in router Wi-Fi."
+      ]
+    },
+    {
+      "id": "it_net_138",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Interfaccia di Loopback",
+      "q": "Qual è la caratteristica fondamentale del funzionamento dell'interfaccia di rete Loopback (`127.0.0.1` per IPv4, `::1` per IPv6) su un sistema finale?",
+      "hint": "Pensa se i pacchetti IP inviati a questo indirizzo escono nel cavo fisico o se vengono elaborati all'interno dello stack di rete del sistema operativo.",
+      "options": [
+        "Il traffico viene reindirizzato internamente allo stack di rete del sistema operativo dell'host e non viene mai inviato alla scheda di rete fisica o al cavo",
+        "Tutti i pacchetti inviati ad essa vengono duplicati verso il router più vicino del provider per il controllo della qualità della connessione",
+        "Questa interfaccia è accessibile solo quando è collegato un token di sicurezza USB esterno",
+        "Serve per testare fisicamente l'integrità del conduttore in rame nel cavo a doppino intrecciato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'interfaccia Loopback è un'interfaccia virtuale ad anello. I pacchetti inviati a `127.0.0.1` vengono rinviati al livello dello stack IP del sistema operativo direttamente dal trasmettitore al ricevitore sullo stesso host.",
+        "Errato. Il traffico di Loopback è strettamente locale e non abbandona mai la memoria RAM del dispositivo.",
+        "Errato. Loopback è un'interfaccia software di base integrata in qualsiasi sistema operativo di rete.",
+        "Errato. Poiché i pacchetti non passano attraverso il cavo, non è possibile verificare il conduttore fisico tramite Loopback."
+      ]
+    },
+    {
+      "id": "it_net_139",
+      "widget_id": "widget_net_139",
+      "topic": "Reti di calcolatori — Tecnologia Zero-Copy",
+      "q": "In che modo il meccanismo Zero-Copy (ad esempio la chiamata di sistema `sendfile()` in Linux) ottimizza il lavoro del sistema finale durante la distribuzione dei file da parte di un'applicazione di rete?",
+      "hint": "Pensa all'eliminazione della copia intermedia dei dati dalla cache del kernel al buffer dell'applicazione (User Space) e alla successiva copia nel buffer del socket.",
+      "options": [
+        "Trasferisce i dati direttamente dalla cache dei file del kernel al buffer della scheda di rete (tramite DMA), eliminando le copie superflue verso lo spazio utente (User Space)",
+        "Rimuove tutti i bit pari a zero dal file trasmesso per risparmiare il volume del traffico",
+        "Esegue l'invio dei pacchetti senza creare le intestazioni TCP e IP",
+        "Vieta la scrittura dei dati in ingresso sul disco rigido dell'host"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con l'approccio standard `read()`/`write()`, i dati vengono copiati: Disco -> Kernel -> User Space -> Kernel (Socket Buffer) -> NIC. La tecnologia Zero-Copy consente di passare i dati dal Disco/PageCache direttamente alla NIC tramite DMA, alleggerendo CPU e memoria.",
+        "Errato. «Zero-Copy» significa «zero operazioni di copia in memoria» e non eliminazione degli zeri dai dati binari.",
+        "Errato. Lo stack di protocolli continua a generare le intestazioni standard L3/L4.",
+        "Errato. La tecnologia ottimizza lo spostamento dei dati in RAM durante la lettura e trasmissione, non vieta la scrittura su disco."
+      ]
+    },
+    {
+      "id": "it_net_140",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Elaborazione al margine (Edge Computing)",
+      "q": "Qual è il vantaggio chiave dello spostamento delle elaborazioni verso i dispositivi periferici (Edge Devices / Fog Computing) rispetto all'invio di tutti i dati ad un cloud remoto?",
+      "hint": "Pensa alla latenza (Latency) nel trasferimento dei dati attraverso l'intera rete Internet e al carico sui canali dorsali.",
+      "options": [
+        "Riduzione della latenza (Latency) e risparmio della larghezza di banda dorsale grazie all'elaborazione dei dati nelle immediate vicinanze della fonte in cui vengono generati",
+        "Passaggio garantito di tutte le connessioni di rete dell'host a canali di comunicazione quantistici",
+        "Completa eliminazione della necessità di utilizzare sistemi operativi sui dispositivi periferici",
+        "Aumento automatico della capacità fisica delle batterie dei dispositivi mobili",
+        "Fornitura gratuita di memoria RAM illimitata sui dispositivi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'Edge Computing elabora i dati (ad esempio l'analisi video da telecamere o sensori IoT) direttamente sull'host locale o sul server periferico, eliminando i ritardi legati all'invio ai data center cloud.",
+        "Errato. L'Edge Computing non è legato a metodi di trasmissione quantistica dei dati.",
+        "Errato. I dispositivi Edge richiedono sistemi operativi di gestione (Linux, RTOS, ecc.).",
+        "Errato. I calcoli non modificano la capacità fisico-chimica della batteria.",
+        "Errato. La quantità di RAM è limitata dai chip installati nel dispositivo."
+      ]
+    },
+    {
+      "id": "it_net_141",
+      "widget_id": "widget_net_141",
+      "topic": "Reti di calcolatori — Tecnologia Receive Side Scaling (RSS)",
+      "q": "Quale compito svolge la tecnologia Receive Side Scaling (RSS) sulla scheda di rete (NIC) di un host multi-core?",
+      "hint": "Pensa all'elaborazione parallela dei pacchetti da diversi flussi TCP/UDP da parte di più core del processore.",
+      "options": [
+        "Distribuisce il carico di rete in ingresso tra più code hardware RX della scheda di rete e i core della CPU basandosi sull'hashing delle intestazioni dei pacchetti",
+        "Cifra tutto il traffico dell'host utilizzando una chiave hardware del processore",
+        "Modifica l'indirizzo MAC della scheda di rete ad ogni nuova connessione TCP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! RSS calcola un hash (ad esempio Toeplitz hash) dalla quadrupla `(IP_src, IP_dst, Port_src, Port_dst)` e indirizza il pacchetto alla corrispondente coda hardware RX associata a uno specifico core della CPU.",
+        "Errato. RSS non ha alcuna relazione con la cifratura dei dati.",
+        "Errato. RSS gestisce le code hardware di ricezione e non lo spoofing degli indirizzi MAC."
+      ]
+    },
+    {
+      "id": "it_net_142",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Gestione delle tempeste di interruzioni (Linux NAPI)",
+      "q": "In che modo il meccanismo ibrido NAPI (New API) nel kernel Linux previene il sovraccarico della CPU causato dalle interruzioni (Interrupt Storm) in presenza di un elevato traffico di rete in ingresso?",
+      "hint": "Pensa al passaggio della modalità di lavoro del kernel dall'elaborazione delle singole interruzioni hardware al polling attivo (Polling) in caso di carico elevato.",
+      "options": [
+        "Passa l'elaborazione dei pacchetti dalle interruzioni generate dall'hardware alla modalità di polling attivo (Polling) del buffer ad anello al superamento di una soglia di intensità del traffico",
+        "Disattiva completamente la scheda di rete fino a quando la temperatura del processore non si abbassa",
+        "Reindirizza tutto il traffico in ingresso sul disco rigido senza elaborarlo in RAM",
+        "Riduce forzatamente la dimensione di tutti i pacchetti IP in ingresso a 64 byte",
+        "Blocca tutti i pacchetti UDP, lasciando solo la consegna garantita tramite TCP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con un elevato PPS (Packets Per Second), le continue interruzioni hardware paralizzano la CPU. NAPI disabilita le interruzioni dalla NIC dopo il primo pacchetto e passa alla modalità polling fino allo svuotamento del buffer.",
+        "Errato. NAPI ottimizza l'elaborazione dei pacchetti nel sistema operativo e non disattiva la scheda di rete.",
+        "Errato. L'elaborazione dei pacchetti avviene esclusivamente nella memoria RAM.",
+        "Errato. La dimensione dei pacchetti è stabilita dal mittente e dai nodi intermedi; NAPI non modifica la lunghezza dei pacchetti.",
+        "Errato. NAPI opera a livello di driver L2/L3 ed è neutrale rispetto ai protocolli di livello trasporto (TCP/UDP)."
+      ]
+    },
+    {
+      "id": "it_net_143",
+      "widget_id": "widget_net_143",
+      "topic": "Reti di calcolatori — Determinazione del Path MTU (PMTUD)",
+      "q": "Qual è il meccanismo di funzionamento del Path MTU Discovery (PMTUD) utilizzato dall'host mittente per determinare la dimensione massima del pacchetto senza frammentazione?",
+      "hint": "Ricorda il ruolo del flag Don't Fragment (DF=1) nell'intestazione IP e i messaggi ICMP di servizio inviati dai router intermedi.",
+      "options": [
+        "L'host invia pacchetti con il flag DF=1 impostato; se un router non può trasmettere il pacchetto a causa di una MTU del canale inferiore, lo scarta e restituisce un messaggio ICMP Destination Unreachable (Fragmentation Needed), indicando la MTU consentita",
+        "L'host interroga il server DNS centrale per ottenere l'elenco delle MTU di tutti i router intermedi",
+        "L'host aumenta gradualmente la dimensione del frame fino a 64 KB, finché il cavo fisico non si interrompe",
+        "L'host utilizza il protocollo DHCP per richiedere il parametro MTU a tutti i provider di transito"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Inviando un pacchetto con DF=1, il router la cui MTU è inferiore alla lunghezza del pacchetto lo scarta e invia un messaggio ICMP Type 3 Code 4 contenente il valore della MTU del proprio canale limitato. L'host riduce la dimensione del pacchetto e riprova.",
+        "Errato. Il DNS memorizza i record dei nomi di dominio e degli indirizzi IP, ma non i parametri MTU dei canali intermedi.",
+        "Errato. La dimensione dei frame è limitata dalle specifiche tecnologiche e dalle impostazioni dell'hardware, non da interruzioni meccaniche.",
+        "Errato. DHCP funziona solo nella rete locale del client per l'assegnazione dell'IP iniziale e delle opzioni."
+      ]
+    },
+    {
+      "id": "it_net_144",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Ridimensionamento della finestra TCP (Window Scaling)",
+      "q": "Per quale motivo nello stack di rete dell'host viene utilizzata l'opzione TCP Window Scaling (RFC 1323 / RFC 7323)?",
+      "hint": "Ricorda l'originale campo a 16 bit della finestra nell'intestazione TCP e il suo limite di 65 535 byte per canali ad alta velocità e con elevata latenza.",
+      "options": [
+        "Consente di aumentare la dimensione massima della finestra scorrevole TCP da 65 535 byte fino a 1 GB tramite un fattore di scala (Scale Factor), che è critico per canali ad alta velocità con un elevato BDP (Bandwidth-Delay Product)",
+        "Limita il numero di applicazioni di rete aperte contemporaneamente sul dispositivo finale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il campo standard da 16 bit della finestra TCP è limitato a 65 KB. L'opzione Window Scale specifica una potenza di due (fino a $2^{14}$) per la quale viene moltiplicato il valore della finestra, consentendo di sfruttare velocità gigabit su canali ad alta latenza.",
+        "Errato. Questa opzione riguarda il protocollo TCP e la dimensione dei suoi buffer di ricezione, non la limitazione del numero di processi."
+      ]
+    },
+    {
+      "id": "it_net_145",
+      "widget_id": "widget_net_145",
+      "topic": "Reti di calcolatori — Elaborazione ad alta velocità XDP / eBPF",
+      "q": "Qual è il vantaggio principale della tecnologia Express Data Path (XDP / eBPF) nell'elaborazione dei pacchetti sull'host rispetto allo stack di rete standard del kernel Linux?",
+      "hint": "Pensa a in quale fase (direttamente nel driver NIC prima dell'allocazione di memoria per le strutture di sistema `sk_buff`) vengono eseguiti i programmi eBPF/XDP.",
+      "options": [
+        "I programmi XDP vengono eseguiti direttamente nel driver della NIC all'arrivo del frame, prima dell'allocazione della struttura `sk_buff` e del costoso processo di elaborazione dello stack del kernel",
+        "XDP richiede l'installazione obbligatoria di acceleratori grafici specializzati (GPU) per l'elaborazione dei pacchetti",
+        "XDP sposta l'intero stack di rete verso i servizi cloud di aziende terze",
+        "XDP sostituisce il protocollo IP standard con un protocollo proprietario di Microsoft",
+        "XDP disabilita la possibilità di utilizzare la cifratura TLS",
+        "XDP funziona esclusivamente su dispositivi mobili con sistema operativo iOS"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! XDP consente di eseguire codice eBPF verificato nella fase iniziale, direttamente nel ring RX del driver della scheda di rete. Ciò permette di scartare (DROP) o reindirizzare (REDIRECT) milioni di pacchetti al secondo senza l'overhead del kernel.",
+        "Errato. XDP viene eseguito su CPU standard nel contesto del driver della scheda di rete.",
+        "Errato. XDP funziona localmente sull'host all'interno del kernel Linux.",
+        "Errato. XDP non modifica i protocolli di rete, ma garantisce la loro elaborazione ad alta velocità.",
+        "Errato. XDP è neutrale rispetto al contenuto del payload e non annulla il TLS.",
+        "Errato. XDP è un sottosistema del kernel Linux e viene utilizzato su server e dispositivi di rete."
+      ]
+    },
+    {
+      "id": "it_net_146",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Modelli di host Weak vs Strong",
+      "q": "Qual è la differenza tra il «Modello di host debole» (Weak Host Model) e il «Modello di host forte» (Strong Host Model) nell'elaborazione dei pacchetti da parte dello stack di rete di un host con interfacce multiple?",
+      "hint": "Presta attenzione se l'host verifica la corrispondenza dell'interfaccia fisica di arrivo del pacchetto con l'indirizzo IP di destinazione.",
+      "options": [
+        "Nel Weak Host Model l'host accetta un pacchetto indirizzato a uno qualsiasi dei suoi indirizzi IP, indipendentemente dall'interfaccia di rete da cui è arrivato; nel Strong Host Model il pacchetto viene accettato solo se è arrivato sull'interfaccia a cui è assegnato quell'IP",
+        "Il Weak Host Model viene applicato solo per le reti wireless Wi-Fi, mentre il Strong Host Model esclusivamente per le fibre ottiche",
+        "Il Strong Host Model indica la presenza di uno chassis metallico nel server, mentre il Weak Host Model uno in plastica"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel Weak Host Model (predefinito in Linux) l'host è considerato come un unico nodo di rete: se l'IP appartiene all'host, il pacchetto viene accettato da qualsiasi interfaccia. Nel Strong Host Model (predefinito in Windows Server) viene verificata la stretta corrispondenza tra interfaccia e IP.",
+        "Errato. I modelli di host definiscono la logica dello stack di rete del sistema operativo e non dipendono dal mezzo fisico L1.",
+        "Errato. I termini si riferiscono all'architettura software dello stack di rete del SO, non ai materiali dello chassis."
+      ]
+    },
+    {
+      "id": "it_net_147",
+      "widget_id": "widget_net_147",
+      "topic": "Reti di calcolatori — Overrun del buffer RX Ring",
+      "q": "Cosa succede sul sistema finale (host) se la velocità di arrivo dei pacchetti in ingresso supera la velocità con cui vengono prelevati dal processore dal buffer ad anello del ricevitore (RX Ring Buffer)?",
+      "hint": "Pensa a cosa fa la scheda di rete quando i descrittori liberi nel buffer ad anello della memoria DMA sono esauriti.",
+      "options": [
+        "Il buffer si satura (RX Ring Full) e la scheda di rete inizia a scartare i pacchetti in ingresso a livello hardware (si verificano RX drops/overruns)",
+        "La scheda di rete reindirizza automaticamente i pacchetti in eccesso nella memoria RAM di un server adiacente tramite Wi-Fi",
+        "La CPU aumenta automaticamente la propria frequenza di clock di 10 volte per svuotare il buffer",
+        "L'host invia un comando al router per interrompere completamente la trasmissione dei dati per 24 ore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il buffer RX Ring ha una dimensione fissa. Se il processore non riesce a prelevare i pacchetti in tempo (ad esempio durante un picco di traffico o un blocco nel kernel), l'anello si riempie e i nuovi pacchetti vengono immediatamente scartati dalla NIC (drop).",
+        "Errato. L'adattatore non può scaricare dati su dispositivi esterni casuali via radio.",
+        "Errato. La frequenza della CPU è regolata dai sistemi di alimentazione dinamica (P-states/Turbo Boost) e non dalla dimensione della coda della NIC.",
+        "Errato. L'host può inviare un frame di pausa (Ethernet Flow Control 802.3x), ma non blocca il router per un'intera giornata."
+      ]
+    },
+    {
+      "id": "it_net_148",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Namespace di rete (Network Namespaces)",
+      "q": "Quale funzione svolgono i namespace di rete (Network Namespaces / netns) nel sistema operativo di un sistema finale?",
+      "hint": "Ricorda l'architettura dei container (Docker, LXC) e la virtualizzazione dello stack di rete (tabelle di instradamento, interfacce e socket).",
+      "options": [
+        "L'isolamento dello stack di rete (interfacce virtuali proprie, tabelle di instradamento, regole del firewall e socket) per processi o container indipendenti sullo stesso host",
+        "L'assegnazione automatica dei nomi di dominio nella zona `.internal` per tutti i computer aziendali",
+        "La separazione fisica del disco rigido in più partizioni protette",
+        "L'unione dei processori di calcolo di più computer in un unico cluster",
+        "L'installazione automatica degli aggiornamenti di sicurezza per i driver della scheda di rete"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I Network Namespaces isolano il sottosistema di rete di Linux. Ogni namespace ha il proprio insieme di dispositivi di rete (veth, loopback), le proprie tabelle di instradamento, porte e regole iptables/nftables, basi del funzionamento di Docker e Kubernetes.",
+        "Errato. L'assegnazione dei nomi di dominio è gestita dal servizio DNS, non dai namespace di rete del kernel.",
+        "Errato. La partizione del disco è un compito dei sistemi di partizionamento (GPT/MBR) e dei file system.",
+        "Errato. Il clustering dei processori viene effettuato da sistemi di calcolo distribuito (MPI, HPC).",
+        "Errato. L'aggiornamento dei driver è gestito dal gestore pacchetti del sistema operativo."
+      ]
+    },
+    {
+      "id": "it_net_149",
+      "widget_id": "widget_net_149",
+      "topic": "Reti di calcolatori — Processo DHCP (DORA)",
+      "q": "Qual è la corretta sequenza di messaggi scambiati per l'acquisizione automatica delle impostazioni di rete da parte dell'host tramite protocollo DHCP (processo DORA)?",
+      "hint": "Ricorda l'ordine delle fasi: Individuazione -> Offerta -> Richiesta -> Conferma.",
+      "options": [
+        "DHCPDISCOVER ──► DHCPOFFER ──► DHCPREQUEST ──► DHCPACK",
+        "DHCPREQUEST ──► DHCPOFFER ──► DHCPDISCOVER ──► DHCPACK"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La sequenza DORA è: 1) Il client cerca il server (Discover), 2) Il server offre un IP (Offer), 3) Il client richiede l'IP offerto (Request), 4) Il server conferma la locazione (ACK).",
+        "Errato. Il client non può inviare una Request prima di aver individuato il server (Discover) e ricevuto una proposta (Offer)."
+      ]
+    },
+    {
+      "id": "it_net_150",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Sincronizzazione precisa dell'ora (PTP / IEEE 1588)",
+      "q": "Qual è il vantaggio principale del protocollo Precision Time Protocol (PTP / IEEE 1588) rispetto al protocollo NTP (Network Time Protocol) sui sistemi finali?",
+      "hint": "Pensa all'uso di timestamp hardware (Hardware Timestamping) sulle schede di rete e alla precisione raggiunta (millisecondi vs nanosecondi).",
+      "options": [
+        "PTP utilizza timestamp hardware a livello PHY/MAC della scheda di rete, garantendo una precisione di sincronizzazione dell'ora nell'ordine dei nanosecondi/sub-microsecondi",
+        "PTP trasmette le informazioni sull'ora senza utilizzare pacchetti di rete, sfruttando i LED sullo chassis",
+        "PTP è progettato esclusivamente per visualizzare l'ora solare sugli schermi degli smartphone",
+        "PTP elimina completamente la necessità di disporre di un orologio di sistema sull'host"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza di NTP (timestamp software nel SO, precisione in unita/decine di ms), PTP registra l'ora di passaggio dei frame direttamente a livello hardware della NIC (Hardware Timestamping), offrendo una precisione nell'ordine dei nanosecondi, necessaria per il trading HFT e le reti 5G.",
+        "Errato. PTP è un protocollo di rete standard che trasmette specifici frame Ethernet/UDP.",
+        "Errato. PTP viene impiegato in sistemi industriali, finanziari e di telecomunicazione ad alta precisione.",
+        "Errato. PTP sincronizza l'orologio hardware e di sistema dell'host, senza sostituirlo."
+      ]
+    },
+    {
+      "id": "it_net_151",
+      "widget_id": "widget_net_151",
+      "topic": "Reti di calcolatori — Modalità di commutazione (Store-and-Forward vs Cut-Through)",
+      "q": "Qual è la differenza fondamentale tra la commutazione immediata (Cut-Through Switching) e la commutazione con memorizzazione intermedia (Store-and-Forward Switching) negli switch?",
+      "hint": "Pensa se lo switch attende la ricezione completa del frame e la verifica del checksum (FCS/CRC) prima di iniziare la trasmissione sulla porta di uscita.",
+      "options": [
+        "La modalità Cut-Through inizia a trasmettere il frame sulla porta di uscita subito dopo aver letto l'indirizzo MAC di destinazione (i primi 6 byte), senza verificare gli errori CRC, mentre la Store-and-Forward memorizza l'intero frame per verificarne l'integrità",
+        "La Cut-Through esegue la cifratura obbligatoria del frame a livello fisico, mentre la Store-and-Forward trasmette i dati in chiaro",
+        "La Store-and-Forward funziona esclusivamente in reti Wi-Fi, mentre la Cut-Through si applica solo alle linee ottiche",
+        "La Cut-Through riduce la latenza rimuovendo l'intestazione IP dal frame Ethernet"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La Cut-Through legge solo l'intestazione L2 (6 byte dell'indirizzo MAC di destinazione) e rinvia immediatamente il frame. Questo riduce al minimo la latenza (Latency), ma può far passare frame corrotti (con errori CRC). La Store-and-Forward riceve prima l'intero frame, controlla il CRC e solo dopo lo invia.",
+        "Errato. Nessuna delle due modalità di commutazione L2 si occupa della cifratura dei dati.",
+        "Errato. Entrambi i metodi sono approcci architetturali per l'elaborazione dei frame sugli switch cablati L2.",
+        "Errato. La Cut-Through non modifica né rimuove la struttura del frame o le intestazioni."
+      ]
+    },
+    {
+      "id": "it_net_152",
+      "widget_id": "widget_net_152",
+      "topic": "Reti di calcolatori — Blocco in testa alla coda (HOL Blocking)",
+      "q": "Quale problema si verifica nei buffer di ingresso di uno switch a causa del cosiddetto «blocco in testa alla coda» (Head-of-Line / HOL Blocking)?",
+      "hint": "Presta attenzione alla situazione in cui il primo pacchetto in una coda FIFO attende la liberazione di una porta di uscita occupata, bloccando tutti i pacchetti successivi.",
+      "options": [
+        "Il pacchetto in testa alla coda, in attesa della liberazione di una porta di uscita occupata, blocca l'avanzamento di tutti i pacchetti successivi, anche se le loro porte di uscita sono completamente libere",
+        "Il primo pacchetto nella coda distrugge tutti i pacchetti successivi in caso di surriscaldamento dello switch",
+        "L'intestazione del pacchetto viene cancellata dalla RAM, facendo perdere allo switch l'indirizzo IP di destinazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In una semplice coda FIFO su una porta d'ingresso, un pacchetto in prima posizione destinato alla porta occupata N.3 costringe a credere in attesa i pacchetti N.2 e N.3, anche se le loro porte di destinazione N.1 e N.2 sono libere. Ciò riduce le prestazioni dello switch.",
+        "Errato. Il blocco HOL è un problema logico di gestione delle code e non un danno hardware/termico ai dati.",
+        "Errato. Questo problema non causa la cancellazione o la corruzione delle intestazioni dei pacchetti."
+      ]
+    },
+    {
+      "id": "it_net_153",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Memoria TCAM nei router",
+      "q": "Perché per la ricerca hardware delle rotte e l'applicazione delle liste di controllo accessi (ACL) negli switch e router ad alte prestazioni si utilizza la memoria ternaria TCAM (Ternary Content-Addressable Memory)?",
+      "hint": "Pensa alla ricerca hardware in 1 ciclo di clock ($O(1)$) e alla capacità di questa memoria di supportare il terzo stato «Don't Care» (maschera del bit `*`).",
+      "options": [
+        "La TCAM consente di effettuare la ricerca parallela nell'intera tabella in $O(1)$ cicli e supporta 3 stati del bit (`0`, `1`, `X` — Don't Care) per gestire maschere di sottorete e wildcard",
+        "La TCAM consuma 10 volte meno energia elettrica rispetto alla normale memoria SRAM",
+        "La TCAM consente di memorizzare file video direttamente nel sistema operativo dello switch",
+        "La TCAM sostituisce la CPU centrale ed esegue codice C++ compilato",
+        "La TCAM elimina la necessità di utilizzare ricetrasmettitori ottici sulle porte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza della CAM binaria (valori `0` e `1`), la TCAM supporta un terzo stato (`X` — Don't Care). Questo consente di confrontare in un solo ciclo di clock l'indirizzo IP con tutti i prefissi di diversa lunghezza e scegliere il Longest Prefix Match.",
+        "Errato. Al contrario, la TCAM consuma molta più energia e genera un alto calore a causa del funzionamento parallelo di migliaia di circuiti di confronto.",
+        "Errato. La TCAM è una memoria costosa e altamente specializzata per tabelle di rete (FIB/ACL), non un archivio multimediale.",
+        "Errato. La TCAM è una struttura di memoria con comparatori hardware, non un processore di calcolo.",
+        "Errato. La TCAM lavora all'interno dei chip di inoltro e non sostituisce i ricetrasmettitori fisici (SFP/QSFP)."
+      ]
+    },
+    {
+      "id": "it_net_154",
+      "widget_id": "widget_net_154",
+      "topic": "Reti di calcolatori — Code di uscita virtuali (VOQ)",
+      "q": "In che modo l'architettura delle code di uscita virtuali (VOQ — Virtual Output Queuing) elimina completamente il problema del blocco HOL sulle porte d'ingresso?",
+      "hint": "Pensa alla separazione della singola coda d'ingresso in sotto-code indipendenti per ciascuna possibile porta di uscita.",
+      "options": [
+        "La porta d'ingresso gestisce code separate e indipendenti per ciascuna porta di uscita, per cui un ritardo nella coda per la porta A non blocca l'invio di pacchetti destinati alla porta B",
+        "Tutti i pacchetti in arrivo vengono compressi in un unico archivio prima dell'invio e trasmessi senza suddivisione in porte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con la tecnologia VOQ, su ogni porta d'ingresso vengono create $N$ code virtuali (una per ciascuna delle $N$ porte di uscita). Se la porta di uscita N.3 è bloccata, l'arbitro della matrice di commutazione seleziona un pacchetto dalla VOQ N.1 o VOQ N.2.",
+        "Errato. La VOQ regola la struttura delle code nel buffer e non si occupa dell'archiviazione o della compressione dei dati."
+      ]
+    },
+    {
+      "id": "it_net_155",
+      "widget_id": "widget_net_155",
+      "topic": "Reti di calcolatori — Control Plane vs Data Plane",
+      "q": "Come sono distribuite le funzioni tra il piano di controllo (Control Plane) e il piano di inoltro dati (Data/Forwarding Plane) nell'architettura di un moderno router?",
+      "hint": "Pensa a quale piano calcola le tabelle di instradamento (BGP/OSPF) sulla CPU e quale esegue l'inoltro hardware dei pacchetti sui chip ASIC.",
+      "options": [
+        "Il Control Plane gestisce i protocolli di instradamento (OSPF, BGP) e la costruzione della tabella RIB sulla CPU; il Data Plane esegue la commutazione rapida dei pacchetti sugli ASIC/NPU basandosi sulla tabella FIB",
+        "Il Data Plane gestisce la generazione delle chiavi di cifratura, mentre il Control Plane controlla i checksum CRC di ogni frame",
+        "Il Control Plane si trova presso il provider, mentre il Data Plane viene installato fisicamente presso il cliente",
+        "Entrambi i piani eseguono lo stesso lavoro e duplicano i pacchetti per aumentare l'affidabilità"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il Control Plane (il cervello) lavora sulla CPU: costruisce la tabella delle rotte (RIB), scambia informazioni BGP/OSPF e invia la tabella finale (FIB) al Data Plane (i muscoli). Il Data Plane, basato su chip specializzati (ASIC), inoltra i pacchetti alla velocità della linea.",
+        "Errato. La verifica del CRC dei frame viene eseguita a livello del Data Plane (dai chip PHY/MAC), non dal Control Plane.",
+        "Errato. Si tratta di due sottosistemi interni dell'architettura dello stesso dispositivo di rete.",
+        "Errato. La separazione dei piani (Disaggregation/Separation) è creata proprio per distinguere chiaramente i compiti di calcolo ed inoltro del traffico."
+      ]
+    },
+    {
+      "id": "it_net_156",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Tipi di matrici di commutazione (Shared Bus)",
+      "q": "Quale limite fondamentale di prestazioni presenta una matrice di commutazione basata su bus condiviso (Shared Bus) rispetto a una matrice Crossbar?",
+      "hint": "Pensa a quante coppie di porte possono trasmettere dati contemporaneamente attraverso un bus condiviso senza generare collisioni.",
+      "options": [
+        "In un dato istante può essere trasmesso solo un pacchetto attraverso il bus condiviso, limitando la capacità complessiva dello switch alla velocità di tale bus",
+        "Il bus condiviso supporta solo il protocollo IPv6 e blocca l'IPv4",
+        "Il bus condiviso richiede l'installazione obbligatoria di un raffreddamento a liquido su ogni scheda",
+        "Utilizzando un bus condiviso la lunghezza massima del cavo Ethernet si riduce a 1 metro",
+        "Il bus può funzionare solo a velocità non superiori a 10 Mbps",
+        "Il bus condiviso disabilita la possibilità di utilizzare le VLAN sulle porte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nell'architettura Shared Bus tutte le porte di ingresso e uscita condividono un unico bus interno. In ogni istante solo una coppia di porte può trasmettere dati ($1$ pacchetto per ciclo). In una matrice Crossbar sono possibili fino a $N$ trasmissioni parallele.",
+        "Errato. L'architettura della matrice di commutazione è completamente neutrale rispetto ai protocolli di rete L3.",
+        "Errato. Il tipo di matrice non impone l'uso del raffreddamento a liquido.",
+        "Errato. La lunghezza dei cavi esterni è definita dagli standard L1 (ad es. 100m per 1000BASE-T), non dalla matrice interna.",
+        "Errato. I bus possono funzionare a velocità di decine di gigabit, ma incontrano un limite nella prestazione complessiva.",
+        "Errato. La logica VLAN viene elaborata prima o dopo il passaggio attraverso la matrice di commutazione."
+      ]
+    },
+    {
+      "id": "it_net_157",
+      "widget_id": "widget_net_157",
+      "topic": "Reti di calcolatori — Gestione attiva della coda (RED)",
+      "q": "Qual è l'obiettivo principale dell'algoritmo di gestione attiva della coda RED (Random Early Detection) nei buffer di switch e router?",
+      "hint": "Ricorda il problema della «sincronizzazione globale TCP», in cui la saturazione del buffer (Tail Drop) causa la riduzione simultanea della velocità di tutte le sessioni TCP.",
+      "options": [
+        "Prevenire la saturazione del buffer e la probabilità di sincronizzazione globale TCP tramite lo scarto casuale preventivo dei pacchetti prima che il buffer sia completamente pieno",
+        "Eliminazione automatica di tutti i pacchetti con indirizzi IP dispari durante il sovraccarico",
+        "Cifratura forzata dei pacchetti che si trovano in fondo alla coda"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con il Tail Drop tradizionale l'intera coda finale viene scartata, costringendo centinaia di sessioni TCP a ridurre contemporaneamente la finestra (Global Synchronization). RED inizia a scartare casualmente una piccola quota di pacchetti al raggiungimento della soglia `Min_Th`, spingendo le singole sessioni a ridurre gradualmente la velocità.",
+        "Errato. RED calcola la probabilità di scarto basandosi sulla lunghezza media della coda, non sulla parità degli IP.",
+        "Errato. RED scarta o contrassegna (ECN) i pacchetti per gestire la congestione, non li cifra."
+      ]
+    },
+    {
+      "id": "it_net_158",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Inoltro di un frame Unicast sconosciuto",
+      "q": "Cosa succede in uno switch L2 se un frame Unicast in ingresso è indirizzato a un indirizzo MAC che attualmente non è presente nella sua tabella di commutazione (tabella CAM/MAC)?",
+      "hint": "Ricorda il meccanismo di trasmissione del traffico mono-destinatario sconosciuto (Unknown Unicast Flooding).",
+      "options": [
+        "Lo switch invia il frame a valanga a tutte le porte appartenenti alla VLAN, tranne la porta da cui il frame è stato ricevuto (Unknown Unicast Flooding)",
+        "Il frame viene immediatamente scartato e al mittente viene inviato un messaggio di errore ICMP",
+        "Lo switch invia una richiesta a un server DNS per conoscere la porta",
+        "Lo switch blocca la porta di ingresso per 300 secondi"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se l'indirizzo di destinazione non è presente nella tabella MAC, lo switch L2 lo gestisce come Unknown Unicast e lo duplica (flooding) su tutte le porte della VLAN, eccetto la porta di origine.",
+        "Errato. Gli switch L2 non scartano i frame con indirizzi MAC di destinazione sconosciuti, ma li propagano a valanga.",
+        "Errato. Il DNS non memorizza le associazioni degli indirizzi MAC con le porte fisiche dello switch.",
+        "Errato. Un Unicast sconosciuto è una situazione normale di funzionamento della rete (ad esempio dopo la scadenza del timer di aging)."
+      ]
+    },
+    {
+      "id": "it_net_159",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Limiti Pps vs Bps",
+      "q": "In quale caso uno switch di pacchetti raggiungerà il limite di prestazioni sul numero di pacchetti elaborati al secondo (Pps — Packets Per Second) prima del limite della larghezza di banda (Bps — Bits Per Second)?",
+      "hint": "Pensa all'overhead dell'elaborazione delle intestazioni di un singolo pacchetto in un flusso di pacchetti piccoli (64 byte) rispetto a pacchetti grandi (1500 byte).",
+      "options": [
+        "Durante la trasmissione di un flusso continuo di pacchetti di dimensione minima (64 byte), poiché l'overhead dell'ASIC per l'elaborazione dell'intestazione non dipende dalla dimensione del payload",
+        "Durante la trasmissione esclusiva di frame Jumbo di dimensione pari a 9000 byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Ogni pacchetto (che sia da 64 o 1500 byte) richiede la ricerca in TCAM/FIB, il controllo delle ACL, l'aggiornamento del TTL e l'hashing. Con pacchetti da 64 byte, il limite Mpps (milioni di pacchetti al secondo) viene raggiunto a un volume di bit/s molto inferiore.",
+        "Errato. Con frame Jumbo (9000 byte), il volume Bps cresce rapidamente, mentre il numero di Pps rimane basso, per cui si esaurirà prima la larghezza di banda (Bps)."
+      ]
+    },
+    {
+      "id": "it_net_160",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Gestione delle eccezioni (Slow Path)",
+      "q": "Che cos'è il «percorso lento» (Slow Path / Process Switching) in un router e in quale caso un pacchetto viene reindirizzato ad esso dal «percorso veloce» (Fast Path / Hardware Forwarding)?",
+      "hint": "Pensa a situazioni eccezionali che richiedono l'intervento della CPU (ad esempio pacchetti con TTL=1 in scadenza, IP Options o protocolli di servizio).",
+      "options": [
+        "Il trasferimento del pacchetto alla CPU centrale per l'elaborazione software, qualora richieda una gestione speciale (TTL=1, opzioni IP, richieste ARP, pacchetti BGP) che l'ASIC non può eseguire via hardware",
+        "Una modalità in cui tutti i pacchetti vengono trasmessi a una velocità non superiore a 9600 baud tramite un cavo console",
+        "Il processo di ritardo dei pacchetti in memoria per la scansione antivirus tramite uno scanner integrato",
+        "La scrittura del pacchetto in arrivo su una scheda SD esterna dello switch",
+        "Il reindirizzamento del pacchetto a un cavo in rame lento in caso di guasto dell'interfaccia ottica"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il Fast Path viene eseguito a livello hardware su ASIC/NPU. Se un pacchetto genera un'eccezione (TTL=1 — occorre inviare ICMP Time Exceeded; contiene opzioni IP; è indirizzato al router stesso), viene passato al Slow Path (CPU Control Plane).",
+        "Errato. Il Slow Path è un trasferimento alla CPU del router all'interno del sistema, non una porta console RS-232.",
+        "Errato. I router di dorsale e gli switch L3 non scansionano i pacchetti con un antivirus nel Slow Path.",
+        "Errato. Il Slow Path si occupa della logica software dello stack di rete, non dell'I/O su disco.",
+        "Errato. Il termine descrive l'architettura di elaborazione interna del dispositivo e non la scelta del cavo fisico."
+      ]
+    }
+  ]
+}

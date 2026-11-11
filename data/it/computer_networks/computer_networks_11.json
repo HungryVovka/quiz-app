@@ -1,0 +1,601 @@
+{
+  "subject": "Reti",
+  "questions": [
+    {
+      "id": "it_net_341",
+      "widget_id": "widget_net_341",
+      "topic": "Protocolli di rete — Gestione in-band e out-of-band (In-band vs Out-of-band)",
+      "q": "Qual è la differenza tra la trasmissione in-band e out-of-band dei comandi di controllo nei protocolli?",
+      "hint": "Pensate se i comandi di servizio vengono trasmessi nello stesso canale logico con i dati utente o in una connessione separata.",
+      "options": [
+        "In-band trasmette i comandi di controllo e i dati utente all'interno della stessa connessione, mentre Out-of-band utilizza un canale separato per i messaggi di servizio",
+        "In-band si usa solo nelle reti wireless, mentre Out-of-band esclusivamente in quelle cablate",
+        "Out-of-band garantisce l'assenza assoluta di ritardi, mentre In-band aumenta il ping di 10 volte",
+        "In-band non utilizza le intestazioni dei pacchetti, a differenza di Out-of-band"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con In-band (ad esempio HTTP, Telnet) i dati di controllo (intestazioni, comandi) vengono trasmessi nello stesso flusso/connessione del Payload. Con Out-of-band (ad esempio FTP) i comandi passano attraverso una connessione TCP separata (porta 21), mentre i dati su canali distinti (porta 20/porte passive).",
+        "Errato. Entrambi i metodi riguardano l'architettura del protocollo e la logica di controllo, non il mezzo fisico (Wi-Fi/cavo).",
+        "Errato. Il metodo di trasmissione dei comandi non fornisce coefficienti fissi garantiti di riduzione del ping.",
+        "Errato. Le intestazioni vengono utilizzate in entrambi gli approcci ai rispettivi livelli di astrazione."
+      ]
+    },
+    {
+      "id": "it_net_342",
+      "widget_id": null,
+      "topic": "Protocolli di rete — Unità di dati del protocollo (PDU) ed Incapsulamento",
+      "q": "In che modo le regole di formattazione dei protocolli definiscono il termine PDU (Protocol Data Unit) lungo lo stack di rete?",
+      "hint": "Notate come un singolo blocco di dati cambia nome e struttura delle intestazioni a ciascun livello OSI/TCP-IP.",
+      "options": [
+        "PDU è un blocco completo di informazioni di servizio e utente di uno specifico livello, che include l'intestazione del protocollo corrente e i dati del livello superiore",
+        "PDU è un cavo fisico speciale per collegare due router",
+        "PDU è il tempo massimo di vita di un pacchetto in millisecondi",
+        "PDU indica una chiave digitale permanente per decifrare il traffico",
+        "PDU è un chip hardware all'interno della scheda di rete per il calcolo dei checksum"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! PDU rappresenta l'unità strutturale di un determinato livello: al livello applicativo è Message/Data, al livello di trasporto è Segment/Datagram, al livello di rete è Packet, al livello dati è Frame. Ogni PDU è racchiuso nell'intestazione del rispettivo protocollo.",
+        "Errato. PDU è un'unità di dati astratta a livello logico dello stack di rete.",
+        "Errato. Il tempo di vita di un pacchetto è indicato come TTL (Time To Live) o Hop Limit.",
+        "Errato. Le chiavi di crittografia riguardano la crittografia (TLS/IPsec), non il termine PDU.",
+        "Errato. Il chip hardware per lo scaricamento dei calcoli si chiama NIC/Offload Engine."
+      ]
+    },
+    {
+      "id": "it_net_333",
+      "widget_id": "widget_net_343",
+      "topic": "Protocolli di rete — Controllo del flusso vs Controllo della congestione (Flow vs Congestion Control)",
+      "q": "Qual è la differenza fondamentale nelle azioni di un protocollo durante l'implementazione di Flow Control e Congestion Control?",
+      "hint": "Distinguete il troppopieno del buffer di ricezione del destinatario dal sovraccarico dei canali intermedi/router della rete.",
+      "options": [
+        "Flow Control protegge uno specifico destinatario dal sovraccarico del suo buffer di ricezione, mentre Congestion Control protegge la rete intermedia dal sovraccarico di canali e router",
+        "Flow Control regola la velocità della CPU del destinatario, mentre Congestion Control determina la dimensione del file su disco",
+        "Flow Control si applica esclusivamente al protocollo UDP, mentre Congestion Control solo al protocollo IP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Flow Control (controllo del flusso) coordina la velocità tra un mittente e un destinatario (in base allo spazio libero nel buffer del destinatario). Congestion Control (controllo della congestione) limita la frequenza di invio per non sovraccaricare l'infrastruttura di rete intermedia.",
+        "Errato. Il buffer di ricezione si trova nella memoria del kernel, Flow Control non misura direttamente la frequenza della CPU.",
+        "Errato. UDP per impostazione predefinita non possiede meccanismi di Flow Control e Congestion Control (sono implementati in TCP)."
+      ]
+    },
+    {
+      "id": "it_net_344",
+      "widget_id": null,
+      "topic": "Protocolli di rete — Regole di handshake (Handshake Protocol Rules)",
+      "q": "Con quale scopo principale le regole di sequenza dei messaggi prescrivono l'esecuzione della fase di «Handshake» (stretta di mano) prima dell'inizio della trasmissione dei dati principali?",
+      "hint": "Pensate al concordare i parametri della connessione (numeri di sequenza iniziali, dimensioni delle finestre, chiavi) e alla verifica della disponibilità reciproca.",
+      "options": [
+        "Per negoziare i parametri della sessione, sincronizzare gli stati iniziali di entrambe le parti e verificare la reciproca disponibilità dei nodi prima di scambiare il payload",
+        "Per scaricare automaticamente gli aggiornamenti del sistema operativo",
+        "Per ridurre al minimo il consumo energetico dell'adattatore di rete",
+        "Per modificare fisicamente la lunghezza del cavo di rete",
+        "Per bloccare l'accesso alla rete locale agli utenti esterni",
+        "Per formattare il disco rigido del server prima di ricevere i file"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'Handshake (ad esempio TCP 3-Way Handshake o TLS Handshake) consente alle entità di scambiarsi informazioni di servizio, concordare i parametri (ISN, MSS, Cipher Suites) e assicurarsi che entrambe le parti siano pronte a ricevere ed elaborare i dati.",
+        "Errato. Il download degli aggiornamenti è un compito del software applicativo.",
+        "Errato. Il risparmio energetico è regolato da specifiche dei livelli fisico e dati (ad esempio IEEE 802.3az), non dall'Handshake logico.",
+        "Errato. La lunghezza del cavo è un parametro fisico immutabile.",
+        "Errato. Il blocco degli accessi viene eseguito dai firewall (Firewall/ACL), non dalla procedura di Handshake.",
+        "Errato. L'handshake non esegue operazioni distruttive sul file system."
+      ]
+    },
+    {
+      "id": "it_net_345",
+      "widget_id": "widget_net_345",
+      "topic": "Protocolli di rete — Azioni in caso di errori di integrità (Checksum Failure)",
+      "q": "Qual è l'unica azione corretta prescritta dalla regola della maggior parte dei protocolli dei livelli di trasporto e rete (IP/UDP/TCP) quando viene rilevata una discrepanza nella checksum?",
+      "hint": "Pensate all'affidabilità delle informazioni in un'intestazione danneggiata, compresi gli indirizzi e i numeri di porta.",
+      "options": [
+        "Scartare immediatamente (drop) il pacchetto danneggiato senza elaborazione e senza inviare notifiche di errore",
+        "Tentare di ripristinare i bit del pacchetto tirando a indovinare e passarlo all'applicazione"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se la checksum non corrisponde, i dati del pacchetto sono considerati corrotti. Poiché l'intestazione potrebbe essere danneggiata (inclusi indirizzi IP e porte), il protocollo non può fidarsi degli indirizzi del mittente e scarta semplicemente (drop) il pacchetto in silenzio.",
+        "Errato. Le normali checksum (Checksum/CRC) rilevano gli errori ma non eseguono il ripristino euristico dei dati (a differenza dei codici di correzione speciali FEC)."
+      ]
+    },
+    {
+      "id": "it_net_346",
+      "widget_id": null,
+      "topic": "Protocolli di rete — Meccanismo Keep-Alive / Heartbeat",
+      "q": "Quale compito svolgono i messaggi di servizio regolari di tipo Keep-Alive / Heartbeat secondo le regole di mantenimento delle sessioni?",
+      "hint": "Ricordate la necessità di verificare la funzionalità del partner silenzioso e di azzerare i timer di inattività nei dispositivi di rete (NAT/Firewall).",
+      "options": [
+        "Verificano che l'entità remota rimanga raggiungibile in assenza di traffico attivo e prevengono l'interruzione della sessione da parte di NAT/Firewall intermedi per timeout",
+        "Raddoppiano la larghezza di banda della connessione comprimendo l'aria",
+        "Misurano la temperatura della CPU sul server remoto",
+        "Consentono di trasferire file di grandi dimensioni senza utilizzare il TCP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I messaggi Keep-Alive / Heartbeat vengono inviati nei periodi di inattività per: 1) assicurarsi che l'host non sia caduto in seguito a un guasto; 2) mantenere le voci nelle tabelle di traslazione NAT e nei firewall che prevedono un timeout di inattività.",
+        "Errato. La larghezza di banda fisica è determinata dallo standard di comunicazione e non aumenta con i messaggi Heartbeat.",
+        "Errato. Il monitoraggio dei sensori hardware viene eseguito da protocolli specializzati (ad esempio SNMP).",
+        "Errato. Il trasferimento di file richiede protocolli di trasporto per il trasferimento dati."
+      ]
+    },
+    {
+      "id": "it_net_347",
+      "widget_id": "widget_net_347",
+      "topic": "Protocolli di rete — Formato dei campi Type-Length-Value (TLV)",
+      "q": "Qual è il vantaggio principale offerto dal formato TLV (Type-Length-Value) nella progettazione di regole sintattiche flessibili per i protocolli?",
+      "hint": "Pensate all'aggiunta di nuovi campi opzionali e alla retrocompatibilità dei vecchi client con le nuove versioni del protocollo.",
+      "options": [
+        "Consente di estendere facilmente il protocollo con nuove opzioni senza compromettere la retrocompatibilità: i vecchi parser possono ignorare i campi Type sconosciuti conoscendone la dimensione Length",
+        "Obbliga tutti i pacchetti ad avere una dimensione strettamente fissa di 64 byte",
+        "Elimina completamente la necessità di utilizzare indirizzi IP",
+        "Riduce la dimensione delle intestazioni a zero bit",
+        "Converte i dati binari in codice in linguaggio Python"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! TLV è uno schema di codifica molto diffuso (in TLS, DHCP, IPv6 Extension Headers). Se il parser incontra un codice `Type` sconosciuto, legge il campo `Length` e salta correttamente i byte non compresi fino al campo successivo.",
+        "Errato. TLV punta a una dimensione variabile e flessibile dei campi, non fissa.",
+        "Errato. TLV definisce la sintassi all'interno del Payload o dell'intestazione, non annulla l'indirizzamento.",
+        "Errato. I campi Type e Length occupano essi stessi byte nell'intestazione.",
+        "Errato. TLV codifica dati strutturati in byte e non genera codice sorgente."
+      ]
+    },
+    {
+      "id": "it_net_348",
+      "widget_id": null,
+      "topic": "Protocolli di rete — Framing: Delimitatori vs Prefissi di lunghezza (Framing)",
+      "q": "In che modo le regole di sintassi del protocollo risolvono il problema della delimitazione dei messaggi (Framing) in un flusso continuo di byte?",
+      "hint": "Confrontate l'uso di caratteri speciali delimitatori (come `\\r\\n` in HTTP/1.1) e l'indicazione esplicita della dimensione del messaggio nell'intestazione.",
+      "options": [
+        "Utilizzano un indicatore esplicito di lunghezza nell'intestazione (Length-Prefixing) oppure caratteri delimitatori speciali (Delimiter-based) con escape dei byte",
+        "Tutti i messaggi hanno sempre una lunghezza esatta di 1024 byte, quindi i confini vengono calcolati automaticamente",
+        "I confini dei messaggi vengono calcolati in base all'intensità della tensione elettrica nel cavo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nei protocolli orientati al flusso (come TCP) i dati scorrono come un array continuo di byte. I protocolli di livello superiore definiscono i confini tramite un prefisso di lunghezza (ad esempio i primi 4 byte = `Content-Length`) oppure con caratteri delimitatori (ad esempio `CRLF` nei protocolli testuali).",
+        "Errato. La lunghezza dei messaggi varia da pochi byte a diversi megabyte.",
+        "Errato. Il concetto di confine del frame/messaggio è una regola logica del protocollo, non una misurazione del voltaggio."
+      ]
+    },
+    {
+      "id": "it_net_349",
+      "widget_id": "widget_net_349",
+      "topic": "Protocolli di rete — Multiplazione e Demultiplazione",
+      "q": "Quali campi di servizio della sintassi dei protocolli consentono di eseguire la demultiplazione del traffico in entrata su una singola entità di rete?",
+      "hint": "Ricordate come il livello di trasporto comprende a quale specifica applicazione (processo) trasmettere il pacchetto ricevuto.",
+      "options": [
+        "I numeri di porta sorgente e destinazione (Source/Destination Ports) nell'intestazione del livello di trasporto",
+        "La dimensione della cache L3 della CPU",
+        "Il nome dell'account utente nel sistema operativo",
+        "Il numero di serie della scheda madre"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La demultiplazione consiste nell'indirizzare il pacchetto ricevuto al processo/applicazione corretto. Le regole TCP/UDP richiedono la presenza dei campi Destination Port nell'intestazione, sui quali il SO si basa per identificare il destinatario.",
+        "Errato. La cache del processore è memoria hardware e non partecipa all'indirizzamento dei messaggi.",
+        "Errato. La logica delle porte di rete funziona indipendentemente dagli utenti del sistema.",
+        "Errato. I numeri di serie dell'hardware non vengono trasmessi nelle intestazioni dei pacchetti di rete."
+      ]
+    },
+    {
+      "id": "it_net_350",
+      "widget_id": null,
+      "topic": "Protocolli di rete — Idempotenza delle operazioni di rete",
+      "q": "Cosa prescrive la regola dell'«idempotenza» nel contesto delle azioni del protocollo in caso di reinvio della stessa richiesta?",
+      "hint": "Pensate se il risultato finale sul server cambierà quando si ripete più volte la stessa operazione.",
+      "options": [
+        "L'esecuzione ripetuta della stessa richiesta idempotente porta al medesimo risultato sul server e non genera effetti collaterali aggiuntivi",
+        "A ogni richiesta ripetuta il server è obbligato a creare una nuova copia dei dati su disco"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un'operazione idempotente (ad esempio HTTP GET o PUT), se ripetuta più volte, lascia il sistema nello stesso stato di una singola chiamata. È una regola fondamentale per il reinvio sicuro dei pacchetti in caso di guasti di rete.",
+        "Errato. La creazione di nuove risorse ad ogni ripetizione è tipica delle operazioni non idempotenti (ad esempio HTTP POST)."
+      ]
+    },
+    {
+      "id": "it_net_351",
+      "widget_id": "widget_net_351",
+      "topic": "Confronto tra protocolli umani e di rete — Analogia del tre-way handshake",
+      "q": "Quale combinazione di battute in un dialogo umano riproduce più fedelmente la logica del tre-way handshake (3-way handshake) del protocollo TCP?",
+      "hint": "Pensate alla sequenza: avvio del saluto, conferma con saluto di risposta e conferma della disponibilità a passare all'argomento.",
+      "options": [
+        "«Ciao!» → «Ciao! Ti ascolto» → «Puoi dirmi che ora è, per favore?»",
+        "«Che ora è?» → «Le dodici»",
+        "Invio di una lettera raccomandata tramite l'ufficio postale senza una telefonata preventiva"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nel protocollo umano avviene prima lo stabilimento reciproco del contatto («Ciao!» = SYN, «Ciao! Ti ascolto» = SYN-ACK), dopodiché si passa al punto («Che ora è?» = ACK + Payload). È un'analogia diretta del 3-way handshake in TCP.",
+        "Errato. Gridare una domanda senza salutare e senza verificare la disponibilità dell'ascoltatore assomiglia di più a un protocollo senza connessione (UDP).",
+        "Errato. L'invio di una lettera senza verificare la disponibilità del destinatario è l'analogo della trasmissione asincrona di messaggi, non di un handshake interattivo."
+      ]
+    },
+    {
+      "id": "it_net_352",
+      "widget_id": null,
+      "topic": "Confronto tra protocolli umani e di rete — Gestione del timeout nell'attesa cortese",
+      "q": "In che modo una persona in un dialogo risolve il problema della mancanza di risposta alla domanda «Che ora è?», e qual è l'equivalente di rete di questa azione?",
+      "hint": "Notate che in mancanza di risposta la persona ripete la domanda dopo una pausa, in modo analogo al meccanismo di reattraversamento/reinvio.",
+      "options": [
+        "La persona rispetta una pausa di attesa e ripete la domanda; l'equivalente di rete è lo scatto del Retransmission Timeout (RTO) e il reinvio del pacchetto",
+        "La persona inizia all'istante a parlare in una lingua straniera; l'equivalente di rete è il cambio dell'indirizzo MAC",
+        "La persona dimentica tutte le conoscenze sul mondo; l'equivalente di rete è la pulizia della memoria RAM",
+        "La persona va a dormire per 8 ore; l'equivalente di rete è lo spegnimento dell'alimentazione del server"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se l'interlocutore non risponde entro un tempo ragionevole (timeout), la persona ripete la domanda. Nei protocolli di rete (ad esempio TCP) lo scadere del timer RTO costringe il mittente a ritrasmettere (retransmit) il pacchetto non confermato.",
+        "Errato. Il cambio di lingua non è una reazione standard al silenzio dell'interlocutore.",
+        "Errato. Il silenzio dell'interlocutore non causa una perdita totale di memoria.",
+        "Errato. Una pausa nella risposta non deve causare lo spegnimento hardware del nodo."
+      ]
+    },
+    {
+      "id": "it_net_353",
+      "widget_id": "widget_net_353",
+      "topic": "Confronto tra protocolli umani e di rete — Negoziazione di sintassi e lingua",
+      "q": "A quale fase di configurazione di una connessione di rete corrisponde la frase «Do you speak English?», pronunciata prima di iniziare la conversazione tra due persone?",
+      "hint": "Pensate al processo di negoziazione delle funzionalità, delle codifiche o dei set di cifrari (Negotiation) prima di iniziare la trasmissione delle informazioni.",
+      "options": [
+        "Alla negoziazione del protocollo supportato, della lingua o dei parametri di crittografia (Protocol/Cipher Negotiation)",
+        "Alla determinazione del percorso fisico seguito dai pacchetti (Routing)",
+        "Al calcolo della checksum della proposta ricevuta (Checksum Validation)",
+        "Alla configurazione della dimensione massima del frame Ethernet (MTU)",
+        "Alla chiusura della connessione e al saluto finale (Connection Teardown)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiarificazione della lingua è una negoziazione del formato e delle regole di codifica (Negotiation). Nei protocolli di rete (ad esempio TLS Handshake) le parti si scambiano in modo analogo gli elenchi delle versioni di protocollo e dei set di cifrari supportati.",
+        "Errato. La scelta della lingua non ha a che fare con la ricerca del percorso fisico attraverso i nodi intermedi.",
+        "Errato. La verifica della checksum risponde dell'integrità dei frame, non della scelta della lingua.",
+        "Errato. La dimensione MTU riguarda i limiti di lunghezza del frame a livello dati.",
+        "Errato. Questa frase viene pronunciata all'inizio della conversazione, non al momento del saluto finale."
+      ]
+    },
+    {
+      "id": "it_net_354",
+      "widget_id": null,
+      "topic": "Confronto tra protocolli umani e di rete — Reazione a un messaggio incomprensibile",
+      "q": "Cosa fa un'entità di rete quando riceve un pacchetto con dati danneggiati o illeggibili, confrontando questo comportamento con una persona che sente un rumore sconnesso invece di una risposta?",
+      "hint": "Pensate al fatto che il messaggio danneggiato viene ignorato (in modo che il mittente lo ripeta allo scadere del timeout) oppure viene inviato un segnale di errore (NACK/ICMP).",
+      "options": [
+        "Invia una notifica di errore / conferma negativa (NACK/ICMP) oppure scarta il pacchetto, costringendo il mittente a rinviarlo dopo il timeout",
+        "Riavvia l'hardware di rete fisico e cancella i file sul disco rigido"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Così come una persona dice «Non ho sentito bene, puoi ripetere?», un protocollo di rete o richiede esplicitamente la ripetizione (NACK) o scarta il pacchetto danneggiato, provocando un timeout di reinvio presso la sorgente.",
+        "Errato. I normali rumori nel canale di comunicazione non devono provocare il riavvio delle apparecchiature o l'eliminazione dei dati."
+      ]
+    },
+    {
+      "id": "it_net_355",
+      "widget_id": "widget_net_355",
+      "topic": "Confronto tra protocolli umani e di rete — Gestione della velocità di parlato (Flow Control)",
+      "q": "La richiesta umana «Parla più lentamente, non riesco a prendere appunti!» è l'analogia diretta di quale meccanismo di rete?",
+      "hint": "Ricordate il meccanismo che protegge il buffer del ricevente dal sovraccarico riducendo la dimensione della finestra (Window Size).",
+      "options": [
+        "Del controllo del flusso (Flow Control), in cui il ricevente segnala la riduzione della dimensione della finestra (Window Size) a causa del riempimento del proprio buffer",
+        "Della ricerca del percorso più breve nel routing dinamico (OSPF)",
+        "Della crittografia simmetrica dei dati con l'algoritmo AES-256",
+        "Della conversione di un nome di dominio in un indirizzo IP tramite DNS",
+        "Del mascheramento degli indirizzi IP privati tramite NAT",
+        "Della determinazione automatica dell'indirizzo MAC tramite il protocollo ARP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La richiesta di parlare più lentamente per mancanza di tempo nella scrittura è il Flow Control. In TCP il destinatario comunica al mittente un `Receive Window` inferiore, indicando che il buffer è saturo e la velocità deve essere ridotta.",
+        "Errato. Il routing OSPF sceglie il percorso ottimale ma non regola la velocità di scrittura nel buffer.",
+        "Errato. La crittografia AES garantisce la riservatezza, non la regolazione del ritmo di trasmissione.",
+        "Errato. DNS traduce i nomi dei siti in indirizzi IP.",
+        "Errato. NAT sostituisce gli indirizzi IP nelle intestazioni per risparmiare lo spazio di indirizzi pubblici.",
+        "Errato. ARP associa un indirizzo IP a un indirizzo MAC fisico."
+      ]
+    },
+    {
+      "id": "it_net_356",
+      "widget_id": null,
+      "topic": "Confronto tra protocolli umani e di rete — Distorsione delle informazioni e rumori",
+      "q": "Se un forte rumore esterno distorce una parte della parola pronunciata, la persona chiede di rispiegare quanto detto. In che modo un protocollo di rete determina che il messaggio ricevuto contiene bit corrotti?",
+      "hint": "Pensate a un valore matematico speciale nell'intestazione del pacchetto calcolato in base ai dati trasmessi.",
+      "options": [
+        "Calcola la checksum (Checksum / CRC) del messaggio ricevuto e la confronta con il valore presente nell'intestazione",
+        "Richiede una nuova tabella di routing al provider",
+        "Modifica in modo casuale il numero di porta del mittente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il controllo della checksum (CRC/Checksum) consente di verificare se i bit sono stati alterati dal rumore nel canale. Se il valore calcolato non corrisponde a quello nell'intestazione, il messaggio è considerato corrotto.",
+        "Errato. La tabella di routing definisce i percorsi dei pacchetti nella rete e non verifica le alterazioni all'interno di un singolo frame.",
+        "Errato. Modificare la porta non aiuta a rilevare alterazioni in un frame già ricevuto."
+      ]
+    },
+    {
+      "id": "it_net_357",
+      "widget_id": "widget_net_357",
+      "topic": "Confronto tra protocolli umani e di rete — Saluto di chiusura corretto (Connection Teardown)",
+      "q": "Quale sequenza di salutarsi in modo cortese tra persone («Arrivederci!» → «Arrivederci!») rispecchia più accuratamente la procedura di chiusura corretta di una connessione TCP?",
+      "hint": "Ricordate il processo di scambio dei segmenti FIN e ACK da entrambe le parti per la conclusione bidirezionale.",
+      "options": [
+        "L'iniziatore invia un FIN («Ho detto tutto»), l'altra parte conferma con un ACK e invia il proprio FIN («Anch'io ho detto tutto»), l'iniziatore conferma con un ACK finale",
+        "Una parte riattacca in silenzio a metà frase senza preavviso",
+        "Entrambi gli interlocutori iniziano contemporaneamente a urlare la stessa frase 100 volte",
+        "Una parte richiede la ripetizione di tutte le frasi dall'inizio del dialogo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La chiusura bidirezionale in TCP richiede che ciascuna parte dichiari il termine della trasmissione (FIN) e riceva la relativa conferma (ACK). È l'equivalente di salutarsi prima di separarsi.",
+        "Errato. Un'interruzione improvvisa senza l'invio del FIN corrisponde a un'interruzione anomala della connessione o all'invio di un pacchetto RST.",
+        "Errato. La ripetizione a ciclo continuo è un'anomalia (storm di traffico in loop).",
+        "Errato. Ricominciare il dialogo da capo significa ripristinare la connessione, non chiuderla garbatamente."
+      ]
+    },
+    {
+      "id": "it_net_358",
+      "widget_id": null,
+      "topic": "Confronto tra protocolli umani e di rete — Interruzioni e collisioni",
+      "q": "Quando due persone iniziano a parlare contemporaneamente, entrambe tacciono, fanno una pausa casuale e provano a parlare di nuovo. A quale algoritmo di rete corrisponde questo comportamento?",
+      "hint": "Pensate al protocollo di accesso condiviso al mezzo con rilevamento delle collisioni (CSMA/CD) in Ethernet classico.",
+      "options": [
+        "CSMA/CD (Carrier Sense Multiple Access with Collision Detection) con algoritmo di ritardo casuale (Exponential Backoff)",
+        "DNS (Domain Name System) per la risoluzione dei nomi simbolici",
+        "TLS (Transport Layer Security) per la verifica del certificato SSL",
+        "BGP (Border Gateway Protocol) per lo scambio di rotte tra sistemi autonomi",
+        "DHCP (Dynamic Host Configuration Protocol) per l'assegnazione degli indirizzi IP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'algoritmo CSMA/CD in Ethernet half-duplex funziona esattamente così: al rilevamento di una collisione (trasmissione simultanea) i nodi interrompono la trasmissione, generano un segnale di jam e attendono un intervallo casuale prima di riprovare.",
+        "Errato. DNS converte i nomi di dominio in indirizzi e non gestisce le collisioni nel cavo condiviso.",
+        "Errato. TLS è responsabile della crittografia e dell'autenticazione a livello applicativo/presentazione.",
+        "Errato. BGP serve per il routing interdominio tra provider.",
+        "Errato. DHCP viene utilizzato per la configurazione automatica dei parametri di rete dei client."
+      ]
+    },
+    {
+      "id": "it_net_359",
+      "widget_id": "widget_net_359",
+      "topic": "Confronto tra protocolli umani e di rete — Nome e Indirizzo",
+      "q": "In cosa consiste la differenza tra rivolgersi a una persona per nome («Alex») e inviarle una lettera a un indirizzo postale fisico in termini di identificatori di rete?",
+      "hint": "Confrontate il nome comodo per l'uomo con il nome di dominio simbolico (URL/DNS), e il codice postale/indirizzo con l'indirizzo IP di rete.",
+      "options": [
+        "Il nome è un nome di dominio simbolico (URL/DNS) comodo per l'uomo, mentre l'indirizzo postale è un indirizzo IP numerico necessario al sistema per il routing",
+        "Il nome è un cavo fisico in rame, mentre l'indirizzo postale è la marca del processore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il nome umano («example.com») è facile da memorizzare, ma i router di rete per consegnare il pacchetto necessitano dell'indirizzo numerico esatto («192.0.2.1»), esattamente come un servizio postale richiede CAP, città e via.",
+        "Errato. Nome e indirizzo sono concetti logici di identificazione e indirizzamento che non hanno relazione con cavi fisici e modelli di processore."
+      ]
+    },
+    {
+      "id": "it_net_360",
+      "widget_id": null,
+      "topic": "Confronto tra protocolli umani e di rete — Principio di Postel (Robustness Principle)",
+      "q": "La legge di Postel afferma: «Sii conservativo in ciò che invii e liberale in ciò che ricevi». Come si manifesta questo principio nella comunicazione humana cortese e in quella di rete affidabile?",
+      "hint": "Pensate al fatto che il mittente deve rispettare rigorosamente gli standard di formato, ma al tempo stesso saper elaborare correttamente i messaggi in arrivo con piccole deviazioni.",
+      "options": [
+        "Seguire rigorosamente le regole sintattiche nella composizione dei propri messaggi, ma mostrare flessibilità nel cercare di analizzare i messaggi in entrata anche in presenza di deviazioni non critiche",
+        "Ignorare qualsiasi messaggio in entrata se manca anche una sola virgola",
+        "Inviare dati in un formato caotico non valido pretendo una risposta perfetta",
+        "Rinunciare completamente a qualsiasi standard e specifica di protocollo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il principio di Postel (RFC 793) garantisce un'elevata compatibilità tra i sistemi: nella generazione dei propri pacchetti occorre attenersi rigorosamente alla RFC, mentre nella ricezione occorre cercare di elaborare correttamente i dati in entrata anche se l'implementazione altrui ha commesso piccoli errori.",
+        "Errato. Lo scarto eccessivamente rigido dei pacchetti al minimo difetto formale rende la rete non funzionale a causa di lievi differenze di implementazione dei client.",
+        "Errato. La violazione delle regole di invio (mancanza di conservatività) distrugge la compatibilità.",
+        "Errato. L'abbandono degli standard renderebbe impossibile l'interazione in rete."
+      ]
+    },
+    {
+      "id": "it_net_361",
+      "widget_id": "widget_net_361",
+      "topic": "Confronto tra protocolli umani e di rete — Analisi del dialogo «Saluto → Richiesta → Risposta»",
+      "q": "Quale fase dell'interazione di rete corrisponde alla fase di «Saluto» in un dialogo umano prima dell'invio di una richiesta di contenuto (ad esempio HTTP GET)?",
+      "hint": "Pensate alla fase iniziale della connessione, in cui le parti stabiliscono soltanto il contatto e verificano la disponibilità al dialogo.",
+      "options": [
+        "Lo stabilimento della connessione e la negoziazione dei parametri (ad esempio TCP 3-Way Handshake o TLS Handshake)",
+        "La formattazione del disco rigido del web server",
+        "Il routing dei pacchetti IP attraverso sistemi autonomi BGP",
+        "La memorizzazione nella cache dei dati statistici sul client"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La fase di saluto nella comunicazione umana prepara i canali di comunicazione. Nei protocolli di rete ad essa corrisponde la fase di instaurazione della connessione (Handshake), durante la quale viene verificata la raggiungibilità dei nodi e vengono negoziati i parametri iniziali.",
+        "Errato. La formattazione del disco non è correlata ai protocolli di trasmissione dati.",
+        "Errato. BGP si occupa del routing interrete tra provider, non del dialogo primario tra due nodi.",
+        "Errato. La memorizzazione nella cache conserva copie locali delle risposte, non stabilisce una connessione attiva."
+      ]
+    },
+    {
+      "id": "it_net_362",
+      "widget_id": null,
+      "topic": "Confronto tra protocolli umani e di rete — Gestione dei ritardi di risposta (Timeout)",
+      "q": "Cosa succede nel protocollo di comunicazione umano se dopo la domanda «Che ora è?» l'interlocutore tace troppo a lungo, e qual è l'analogo di questo comportamento nello stack di rete?",
+      "hint": "Prestate attenzione all'impostazione di un limite di tempo di attesa e alla reazione al suo superamento.",
+      "options": [
+        "La persona ripete la domanda o conclude il dialogo; nei protocolli di rete scatta il timer di timeout (Timeout), portando alla re-trasmissione o alla chiusura della connessione",
+        "La persona cambia automaticamente nome; in rete avviene il cambio dell'indirizzo MAC del router",
+        "La persona dimentica all'istante la lingua di comunicazione; in rete si disattivano i driver fisici"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se non arriva risposta entro un tempo ragionevole, la persona prende atto del silenzio (timeout) e ripete la domanda o se ne va. Superato il timeout di risposta, il protocollo di rete riesegue la trasmissione del pacchetto oppure chiude la sessione.",
+        "Errato. Il nome della persona e l'indirizzo MAC del dispositivo non cambiano a seguito del silenzio prolungato dell'interlocutore.",
+        "Errato. Il timeout di risposta non comporta l'eliminazione dei protocolli dal sistema."
+      ]
+    },
+    {
+      "id": "it_net_363",
+      "widget_id": "widget_net_363",
+      "topic": "Confronto tra protocolli umani e di rete — Autenticazione e rappresentanza",
+      "q": "L'ostensione di un documento (ad esempio un passaporto o un tesserino) alla frase «Buongiorno, sono il rappresentante dell'azienda X» è l'analogia diretta di quale procedura nei protocolli di rete?",
+      "hint": "Pensate alla procedura di esibizione di un documento digitale che conferma l'autenticità del server.",
+      "options": [
+        "Alla verifica del certificato digitale X.509 del server tramite un'autorità di certificazione (CA) fidata in TLS/HTTPS",
+        "Alla compressione delle immagini con algoritmo JPEG",
+        "Alla determinazione della dimensione MTU a livello dati",
+        "All'assegnazione di un indirizzo IP dinamico tramite DHCP",
+        "Alla pulizia della tabella di routing sullo switch"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La presentazione di un documento per la verifica dell'identità è l'equivalente diretto della verifica del certificato digitale X.509 durante l'instaurazione di una connessione sicura TLS.",
+        "Errato. La compressione dei file serve a ridurre il volume dei dati, non a confermare l'autenticità.",
+        "Errato. Il valore MTU definisce la dimensione massima del frame.",
+        "Errato. DHCP assegna le impostazioni di rete al client.",
+        "Errato. La pulizia delle tabelle di routing è una procedura operativa delle apparecchiature di rete."
+      ]
+    },
+    {
+      "id": "it_net_364",
+      "widget_id": null,
+      "topic": "Confronto tra protocolli umani e di rete — Ricevuta e conferma di ricezione (ACK)",
+      "q": "Le brevi frasi di conferma («Sì», «Ho capito», un cenno del capo) da parte dell'ascoltatore durante un lungo monologo dell'interlocutore svolgono la funzione di quale meccanismo nei protocolli?",
+      "hint": "Pensate alle conferme che informano il mittente che una porzione di informazioni è stata ricevuta con successo.",
+      "options": [
+        "Della ricevuta / conferma di ricezione dei dati (ACK - Acknowledgement)",
+        "Della crittografia a chiave pubblica"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un cenno con la testa o la parola «Ho capito» informa chi parla che quanto detto è stato udito e compreso. Nei protocolli a consegna garantita (ad esempio TCP) questo ruolo è svolto dai pacchetti ACK.",
+        "Errato. La conferma di ricezione non si occupa della crittografia dei messaggi."
+      ]
+    },
+    {
+      "id": "it_net_365",
+      "widget_id": "widget_net_365",
+      "topic": "Confronto tra protocolli umani e di rete — Interferenze esterne e richiesta di ripetizione",
+      "q": "Se durante la conversazione tra due persone passa un treno rumoroso e copre una frase, l'ascoltatore dice: «Scusa, per il rumore non ho sentito, ripeti l'ultima frase». A quale processo di rete corrisponde questo comportamento?",
+      "hint": "Pensate al rilevamento di errori a livello fisico/dati e alla richiesta di ritrasmissione (ARQ / Retransmission).",
+      "options": [
+        "Al rilevamento di distorsioni/perdite del frame a causa dell'alto livello di rumore (SNR) e all'attivazione della procedura di ritrasmissione (Retransmission / ARQ)",
+        "Alla formattazione della memoria RAM del client",
+        "Al passaggio da una connessione internet via cavo a una satellitare",
+        "Al cambio dell'indirizzo MAC della scheda di rete",
+        "All'eliminazione del sistema operativo del server",
+        "Alla generazione di un nuovo numero casuale per la chiave di crittografia"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le interferenze riducono il rapporto segnale/rumore (SNR), provocando l'alterazione dei bit. Il protocollo rileva l'errore (ad esempio tramite CRC) e richiede la ritrasmissione (ARQ / Retransmission), proprio come la persona che chiede di ripetere la frase.",
+        "Errato. Gli errori di trasmissione non provocano la formattazione della RAM.",
+        "Errato. Il rumore nel canale non comporta il cambio automatico del mezzo fisico di trasmissione.",
+        "Errato. L'indirizzo MAC è integrato nell'adattatore di rete e non cambia con le interferenze.",
+        "Errato. Il rumore durante la trasmissione non distrugge il software del server.",
+        "Errato. La ritrasmissione di un pacchetto avviene nel contesto corrente e non richiede la rigenerazione delle chiavi."
+      ]
+    },
+    {
+      "id": "it_net_366",
+      "widget_id": null,
+      "topic": "Confronto tra protocolli umani e di rete — Confini dei messaggi (Framing)",
+      "q": "L'intonazione, le pause e i punti nel linguaggio umano servono a separare una frase dall'altra. In che modo i protocolli di rete determinano i confini di un singolo messaggio in un flusso di byte?",
+      "hint": "Prestate attenzione ai meccanismi di delimitazione (Framing), come i caratteri speciali o l'indicazione della lunghezza del messaggio.",
+      "options": [
+        "Attraverso meccanismi di delimitazione (Framing): l'indicazione della lunghezza del messaggio nell'intestazione o l'uso di caratteri delimitatori speciali (CRLF, Null-byte)",
+        "Misurando la temperatura del cavo di rete",
+        "Riavviando continuamente l'adattatore di rete ogni 5 secondi",
+        "I confini dei messaggi non possono essere determinati, tutti i dati vengono trasmessi come un unico array perpetuo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In un flusso continuo di byte i confini sono definiti da un prefisso di lunghezza (Length-Prefixing) oppure da delimitatori speciali (Delimiters), l'equivalente delle pause e della punteggiatura nel linguaggio umano.",
+        "Errato. La temperatura del cavo non trasporta informazioni logiche sui confini dei frame.",
+        "Errato. Il riavvio della scheda di rete causerebbe la disconnessione di tutte le sessioni.",
+        "Errato. Senza definire i confini dei messaggi, i protocolli di livello superiore non potrebbero analizzare i comandi in entrata."
+      ]
+    },
+    {
+      "id": "it_net_367",
+      "widget_id": "widget_net_367",
+      "topic": "Confronto tra protocolli umani e di rete — Modalità di indirizzamento (Unicast vs Broadcast)",
+      "q": "In che modo l'annuncio a voce alta di un relatore in una sala («Attenzione a tutti i presenti!») differisce da un sussurro all'orecchio di una sola persona, se confrontato con i tipi di indirizzamento di rete?",
+      "hint": "Confrontate l'indirizzamento a uno specifico e unico destinatario (Unicast) e la trasmissione broadcast a tutti i nodi della rete (Broadcast).",
+      "options": [
+        "L'annuncio a tutti è un indirizzamento broadcast (Broadcast), mentre il sussurro a una persona è un indirizzamento individuale (Unicast)",
+        "L'annuncio a tutti è la crittografia RSA, mentre il sussurro è l'uso del protocollo UDP",
+        "Il sussurro a una persona è un errore anomalo delle apparecchiature di rete"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Parlare all'intera sala è l'equivalente di Broadcast (il pacchetto è indirizzato a tutti i nodi del segmento), mentre rivolgersi a una persona specifica è Unicast (indirizzato a un solo nodo unico).",
+        "Errato. Il volume e la destinazione della voce corrispondono a tipi di indirizzamento, non ad algoritmi di crittografia.",
+        "Errato. L'indirizzamento Unicast è la modalità di trasmissione base e standard nelle reti."
+      ]
+    },
+    {
+      "id": "it_net_368",
+      "widget_id": null,
+      "topic": "Confronto tra protocolli umani e di rete — Traduttori e Interpreti (Gateway / Proxy)",
+      "q": "Se due persone non conoscono la lingua l'una dell'altra e comunicano tramite un interprete, quale dispositivo o servizio di rete svolge l'analogo ruolo di conversione di formati e protocolli?",
+      "hint": "Pensate a un nodo che riconverte o traduce formati e protocolli da un tipo all'altro (Gateway / Proxy / Protocol Translator).",
+      "options": [
+        "Un gateway (Gateway) o un server proxy (Proxy) che esegue la conversione di protocolli e codifiche tra reti eterogenee",
+        "Un cavo in fibra ottica",
+        "Un patch panel in un armadio rack",
+        "Un tappo di chiusura per presa RJ-45",
+        "Un gruppo di continuità (UPS)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un gateway (Protocol Gateway / Proxy) riceve messaggi in un protocollo/codifica, li traduce nel formato di un altro protocollo e li trasmette al destinatario, agendo come diretto equivalente di un interprete.",
+        "Errato. La fibra ottica trasmette impulsi luminosi a livello fisico senza modificare il formato.",
+        "Errato. Il patch panel è un'apparecchiatura di permutazione passiva.",
+        "Errato. Il tappo di protezione non partecipa all'elaborazione dei dati di rete.",
+        "Errato. L'UPS fornisce l'alimentazione elettrica alle apparecchiature."
+      ]
+    },
+    {
+      "id": "it_net_369",
+      "widget_id": "widget_net_369",
+      "topic": "Confronto tra protocolli umani e di rete — Prioritizzazione e qualità del servizio (QoS)",
+      "q": "Se durante una normale conversazione qualcuno grida «Incendio!», gli interlocutori interrompono immediatamente il dialogo. A quale meccanismo di rete corrisponde la gestione dei messaggi di emergenza fuori dalla coda generale?",
+      "hint": "Ricordate i meccanismi di Quality of Service (QoS) e la coda prioritaria per il traffico critico.",
+      "options": [
+        "Alla prioritizzazione del traffico e alla qualità del servizio (QoS / Prioritization), in cui i pacchetti sensibili o critici vengono elaborati saltando la coda",
+        "All'archiviazione dei file in un archivio ZIP",
+        "All'aumento della lunghezza fisica del cavo Ethernet",
+        "Al ripristino delle impostazioni BIOS sulla scheda madre"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In QoS il traffico importante (voce, segnali di controllo urgenti) viene inserito in code prioritarie ed elaborato prima del traffico ordinario (email, download file), proprio come un grido di pericolo interrompe una conversazione informale.",
+        "Errato. L'archiviazione ZIP non ha alcuna relazione con le priorità di gestione del traffico.",
+        "Errato. La lunghezza del cavo non influisce sulle priorità logiche dei pacchetti.",
+        "Errato. Le impostazioni del BIOS non gestiscono al volo le priorità dei pacchetti di rete."
+      ]
+    },
+    {
+      "id": "it_net_370",
+      "widget_id": null,
+      "topic": "Confronto tra protocolli umani e di rete — Accesso a token (Token Passing)",
+      "q": "La regola di discussione «Parla solo chi tiene in mano l'oggetto passato (il microfono)» è l'analogo di quale metodo di controllo dell'accesso al mezzo di rete?",
+      "hint": "Ricordate le reti con trasmissione del diritto di parola tramite token (Token Passing / Token Ring).",
+      "options": [
+        "Dell'accesso a token (Token Passing / Token Ring), in cui ha diritto a trasmettere i dati solo il nodo che possiede uno speciale frame di servizio (token)",
+        "Dell'accesso casuale senza ascolto della portante (ALOHA)",
+        "Della crittografia tramite cifrario a blocco unico (One-Time Pad)",
+        "Della formattazione del disco rigido del rack del server",
+        "Dell'assegnazione dinamica degli indirizzi tramite IPv6 SLAAC",
+        "Del raffreddamento della sala server con azoto liquido"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il metodo Token Passing previene le collisioni: il token che circola (Token) attribuisce un diritto deterministico all'invio del frame. È la completa analogia del passaggio del microfono in un dibattito umano ordinato.",
+        "Errato. In ALOHA i nodi trasmettono dati in modo caotico senza aver ottenuto preventivamente il diritto di parola.",
+        "Errato. La crittografia garantisce la riservatezza, non l'accesso deterministico al mezzo.",
+        "Errato. La cancellazione del disco non è un metodo di gestione del mezzo trasmissivo.",
+        "Errato. SLAAC è un protocollo di autoconfigurazione degli indirizzi IPv6.",
+        "Errato. Il raffreddamento è un'infrastruttura ingegneristica del data center."
+      ]
+    }
+  ]
+}

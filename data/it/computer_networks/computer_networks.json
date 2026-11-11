@@ -1,0 +1,607 @@
+{
+  "subject": "Reti",
+  "questions": [
+    {
+      "id": "it_net_01",
+      "widget_id": "widget_net_01",
+      "topic": "Reti informatiche — Modello OSI",
+      "q": "A quale livello del modello OSI opera un router classico che prende decisioni sulla base degli indirizzi IP?",
+      "hint": "Ricorda quale livello del modello OSI è responsabile dell'instradamento di rete e della gestione degli indirizzi IP.",
+      "options": [
+        "Livello di collegamento dati (Data Link Layer)",
+        "Livello di rete (Network Layer)",
+        "Livello di trasporto (Transport Layer)",
+        "Livello di applicazione (Application Layer)"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Al livello di collegamento dati (L2) operano switch e schede di rete, che utilizzano gli indirizzi MAC.",
+        "Corretto! I router operano al 3° livello (rete) dell'OSI, elaborando i pacchetti IP e determinando il percorso ottimale nella rete.",
+        "Errato. Al livello di trasporto (L4) operano i protocolli TCP e UDP, che garantiscono il trasferimento dei segmenti/datagrammi tra processi.",
+        "Errato. Il livello di applicazione (L7) è responsabile del funzionamento dei protocolli utente (HTTP, FTP, DNS) e non si occupa dell'instradamento dei pacchetti."
+      ]
+    },
+    {
+      "id": "it_net_02",
+      "widget_id": "widget_net_02",
+      "topic": "Reti informatiche — Livello di trasporto",
+      "q": "Qual è la differenza chiave del protocollo UDP rispetto al TCP mostrata nello schema di trasmissione dati?",
+      "hint": "Pensa a quali procedure di negoziazione e controllo il protocollo rinuncia per ottenere la massima velocità di trasmissione dei dati.",
+      "options": [
+        "Handshake a tre vie obbligatorio (Three-way handshake)",
+        "Trasmissione dati senza stabilire una connessione preventiva (Connectionless)",
+        "Ordine di consegna dei pacchetti garantito mediante numeri di conferma (ACK)",
+        "Meccanismi integrati di controllo della congestione dei canali di comunicazione (Congestion Control)"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. L'handshake a tre vie (SYN, SYN-ACK, ACK) è tipico solo del TCP.",
+        "Corretto! UDP non stabilisce una sessione prima dell'invio, non invia conferme (ACK) e non garantisce l'ordine di consegna, garantendo ritardi minimi.",
+        "Errato. La garanzia dell'ordine e la conferma di ricezione sono fornite dal protocollo TCP.",
+        "Errato. UDP non contiene meccanismi integrati per il controllo della congestione di rete."
+      ]
+    },
+    {
+      "id": "it_net_03",
+      "widget_id": null,
+      "topic": "Reti informatiche — IPv4 e sottoreti",
+      "q": "Quanti indirizzi IPv4 utili (assegnabili agli host) contiene una sottorete con prefisso di maschera /28?",
+      "hint": "Ricorda la formula per il calcolo degli host disponibili $2^{(32 - N)} - 2$, dove $N$ è la lunghezza del prefisso della maschera.",
+      "options": [
+        "14",
+        "16",
+        "30",
+        "62"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La maschera /28 lascia 4 bit per gli indirizzi degli host ($2^4 = 16$). Sottraendo l'indirizzo di rete (il primo) e il broadcast (l'ultimo): 16 - 2 = 14 indirizzi.",
+        "Errato. 16 è il numero totale di indirizzi nel blocco /28, inclusi 2 di servizio.",
+        "Errato. 30 indirizzi utili sono contenuti in una sottorete con maschera /27 ($2^5 - 2$).",
+        "Errato. 62 indirizzi utili sono assegnati in una sottorete con maschera /26 ($2^6 - 2$)."
+      ]
+    },
+    {
+      "id": "it_net_04",
+      "widget_id": null,
+      "topic": "Reti informatiche — Servizio DNS",
+      "q": "Quale tipo di record DNS (DNS Resource Record) viene utilizzato per associare un nome di dominio a un indirizzo IPv4?",
+      "hint": "Ricorda il record base a una sola lettera, il cui nome deriva dalla parola «Address».",
+      "options": [
+        "CNAME",
+        "A",
+        "AAAA",
+        "MX",
+        "PTR"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Il record CNAME (Canonical Name) crea un alias per un altro nome di dominio e non indica direttamente l'IP.",
+        "Corretto! Il record di tipo 'A' (Address Record) associa un nome di dominio al corrispondente indirizzo IPv4.",
+        "Errato. Il record 'AAAA' viene utilizzato per convertire un nome in un indirizzo IPv6.",
+        "Errato. Il record 'MX' (Mail Exchange) indica i server di posta che gestiscono tale dominio.",
+        "Errato. Il record 'PTR' esegue la risoluzione DNS inversa (dall'indirizzo IP al nome di dominio)."
+      ]
+    },
+    {
+      "id": "it_net_05",
+      "widget_id": "widget_net_05",
+      "topic": "Reti informatiche — Protocollo ARP",
+      "q": "A cosa serve il protocollo ARP (Address Resolution Protocol) nelle reti locali Ethernet?",
+      "hint": "Ricorda come gli host della rete locale associano gli indirizzi logici L3 agli indirizzi hardware L2.",
+      "options": [
+        "Determinare l'indirizzo IP da un nome di dominio noto",
+        "Determinare l'indirizzo MAC da un indirizzo IP noto",
+        "Routing dei pacchetti tra reti indipendenti",
+        "Assegnazione automatica dell'indirizzo IP a un client"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Della conversione del nome di dominio in indirizzo IP si occupa il servizio DNS.",
+        "Corretto! ARP invia una richiesta broadcast nel segmento L2 per conoscere l'indirizzo MAC del nodo con un determinato indirizzo IP.",
+        "Errato. Dell'instradamento al 3° livello si occupano il protocollo IP e gli algoritmi di routing (RIP, OSPF, BGP).",
+        "Errato. Dell'assegnazione automatica degli indirizzi IP si occupa il protocollo DHCP."
+      ]
+    },
+    {
+      "id": "it_net_06",
+      "widget_id": null,
+      "topic": "Reti informatiche — Protocollo HTTP",
+      "q": "Quale codice di stato della risposta HTTP viene restituito dal server a seguito dell'elaborazione corretta della richiesta del client?",
+      "hint": "Ricorda il codice di stato base della famiglia 2xx che conferma la corretta elaborazione della richiesta.",
+      "options": [
+        "200 OK",
+        "301 Moved Permanently",
+        "404 Not Found",
+        "500 Internal Server Error"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il codice 200 OK indica che la richiesta del client è stata elaborata con successo e il server ha restituito i dati richiesti.",
+        "Errato. Il codice 301 indica un reindirizzamento permanente verso un altro URL.",
+        "Errato. Il codice 404 indica che la risorsa richiesta non è stata trovata sul server.",
+        "Errato. Il codice 500 indica un errore interno del server web stesso."
+      ]
+    },
+    {
+      "id": "it_net_07",
+      "widget_id": "widget_net_07",
+      "topic": "Reti informatiche — Concetto di MTU e frammentazione",
+      "q": "Cosa succede se la dimensione di un pacchetto IP supera la MTU di un router intermedio e nell'intestazione IP è impostato il flag DF (Don't Fragment)?",
+      "hint": "Pensa a cosa accade al pacchetto quando non è possibile suddividerlo e come il mittente viene a conoscenza del problema verificatosi.",
+      "options": [
+        "Il router ridurrà la velocità, ma trasmetterà il pacchetto per intero",
+        "Il pacchetto verrà scartato e al mittente verrà restituito un messaggio ICMP «Fragmentation Needed»",
+        "Il router ignorerà il flag DF e frammenterà forzatamente il pacchetto",
+        "Il pacchetto verrà reindirizzato tramite un canale di comunicazione satellitare"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Una dimensione del pacchetto eccessiva non può passare fisicamente attraverso un'interfaccia con una MTU inferiore senza frammentazione.",
+        "Corretto! Il router scarta il pacchetto e invia al client un errore ICMP (Type 3, Code 4), suggerendo di ridurre MSS/MTU.",
+        "Errato. Il flag DF è un requisito rigido degli standard IP, il router non può ignorarlo.",
+        "Errato. L'instradamento non cambia automaticamente a causa della dimensione del pacchetto."
+      ]
+    },
+    {
+      "id": "it_net_08",
+      "widget_id": null,
+      "topic": "Reti informatiche — Struttura dell'indirizzo MAC",
+      "q": "Qual è la lunghezza (in bit) di un indirizzo MAC fisico standard di una scheda di rete?",
+      "hint": "Ricorda da quanti byte (ottetti) è composto un indirizzo fisico e quanti bit contiene ogni byte.",
+      "options": [
+        "32 bit",
+        "48 bit",
+        "64 bit",
+        "128 bit"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. 32 bit è la lunghezza di un indirizzo IPv4.",
+        "Corretto! L'indirizzo MAC è composto da 6 byte (48 bit), dove i primi 3 byte indicano il produttore (OUI) e gli ultimi 3 il numero univoco del dispositivo.",
+        "Errato. 64 bit sono utilizzati negli identificatori EUI-64 per IPv6, ma non nel MAC classico.",
+        "Errato. 128 bit è la lunghezza di un indirizzo IPv6."
+      ]
+    },
+    {
+      "id": "it_net_09",
+      "widget_id": "widget_net_09",
+      "topic": "Reti informatiche — Tempo di vita del pacchetto (TTL)",
+      "q": "Quale campo dell'intestazione IPv4 viene decrementato di 1 da ogni router per prevenire i loop dei pacchetti?",
+      "hint": "Ricorda il contatore che si decrementa a ogni hop per evitare la circolazione infinita del pacchetto.",
+      "options": [
+        "TTL (Time to Live)",
+        "Header Checksum",
+        "Protocol",
+        "Total Length"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il campo TTL viene decrementato ad ogni passaggio (hop). Se il TTL raggiunge lo 0, il pacchetto viene eliminato con l'invio di una notifica ICMP 'Time Exceeded'.",
+        "Errato. Checksum è la somma di controllo dell'intestazione, ricalcolata a ogni hop, ma non sostituisce il contatore del tempo di vita.",
+        "Errato. Il campo Protocol indica quale protocollo del livello superiore (TCP, UDP, ICMP) si trova all'interno del pacchetto IP.",
+        "Errato. Total Length indica la dimensione totale del pacchetto IP in byte."
+      ]
+    },
+    {
+      "id": "it_net_10",
+      "widget_id": "widget_net_10",
+      "topic": "Reti informatiche — Protocollo DHCP",
+      "q": "Qual è la sequenza di messaggi (processo DORA) utilizzata per l'assegnazione corretta di un indirizzo IP a un client tramite il protocollo DHCP?",
+      "hint": "Ricorda la logica dell'interazione DORA: dalla ricerca iniziale del server da parte del client fino alla ricezione della conferma del lease.",
+      "options": [
+        "DHCPDiscover -> DHCPOffer -> DHCPRequest -> DHCPAck",
+        "DHCPDiscover -> DHCPRequest -> DHCPOffer -> DHCPAck",
+        "DHCPRequest -> DHCPDiscover -> DHCPOffer -> DHCPAck",
+        "DHCPOffer -> DHCPDiscover -> DHCPAck -> DHCPRequest"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il client cerca il server (Discover), il server propone un indirizzo (Offer), il client lo richiede (Request) e il server conferma il lease (Ack).",
+        "Errato. La richiesta (Request) viene inviata solo dopo aver ricevuto l'offerta (Offer) dal server.",
+        "Errato. Il processo non può iniziare con Request, in quanto il client non conosce ancora i server disponibili.",
+        "Errato. Il server non invia Offer prima di aver ricevuto il Discover iniziale dal client."
+      ]
+    },
+    {
+      "id": "it_net_11",
+      "widget_id": null,
+      "topic": "Reti informatiche — Topologie di rete",
+      "q": "Quale tra le seguenti topologie di rete fisica possiede la massima ridondanza e tolleranza ai guasti?",
+      "hint": "Pensa alla topologia in cui esistono collegamenti di riserva diretti tra tutti i nodi.",
+      "options": [
+        "Bus",
+        "Stella (Star)",
+        "Anello (Ring)",
+        "Maglia completa (Full Mesh)"
+      ],
+      "ans": 3,
+      "explanations": [
+        "Errato. Nella topologia a «Bus», l'interruzione del cavo comune causa il blocco dell'intera rete.",
+        "Errato. Nella topologia a «Stella», il guasto dello switch centrale isola tutti i nodi.",
+        "Errato. Nel classico «Anello» monodirezionale, il danneggiamento di una tratta interrompe la comunicazione.",
+        "Corretto! Nella topologia Full Mesh ciascun nodo è collegato direttamente a tutti gli altri. Il guasto di un qualsiasi canale non isola i nodi."
+      ]
+    },
+    {
+      "id": "it_net_12",
+      "widget_id": null,
+      "topic": "Reti informatiche — Protocollo ICMP",
+      "q": "Quale tipo di messaggio ICMP genera l'utility ping per verificare la connettività di rete con un nodo remoto?",
+      "hint": "Ricorda il nome della prima richiesta del test di eco a cui il nodo deve rispondere.",
+      "options": [
+        "Echo Request (Type 8)",
+        "Destination Unreachable (Type 3)",
+        "Redirect (Type 5)",
+        "Time Exceeded (Type 11)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'utility ping invia un ICMP Echo Request (Type 8), al quale il nodo destinatario deve rispondere con un ICMP Echo Reply (Type 0).",
+        "Errato. Il Type 3 viene inviato da un router quando la destinazione è irraggiungibile.",
+        "Errato. Il Type 5 viene utilizzato dai router per informare l'host di un percorso più ottimale.",
+        "Errato. Il Type 11 viene restituito quando il tempo di vita del pacchetto è scaduto (TTL = 0)."
+      ]
+    },
+    {
+      "id": "it_net_13",
+      "widget_id": null,
+      "topic": "Reti informatiche — Commutazione di pacchetto vs Commutazione di circuito",
+      "q": "Qual è il vantaggio chiave della commutazione di pacchetto (Packet Switching) rispetto alla commutazione di circuito (Circuit Switching)?",
+      "hint": "Pensa a come viene condiviso il mezzo di trasmissione se i dati vengono trasmessi in blocchi indipendenti anziché attraverso un canale fisico dedicato.",
+      "options": [
+        "Uso più efficiente e dinamico delle risorse di rete da parte di più utenti",
+        "Velocità di trasmissione costante e garantita senza ritardi",
+        "Assenza di necessità di intestazioni di servizio",
+        "Assenza totale di perdita di dati"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La commutazione di pacchetto impegna la banda solo durante l'effettiva trasmissione dei dati, consentendo di multiplexare i canali.",
+        "Errato. La qualità e il ritardo fissi e garantiti sono la caratteristica chiave della commutazione di circuito (reti telefoniche).",
+        "Errato. Nella commutazione di pacchetto ogni pacchetto contiene intestazioni di servizio con gli indirizzi.",
+        "Errato. In caso di saturazione dei buffer dei router, i pacchetti possono andare persi."
+      ]
+    },
+    {
+      "id": "it_net_14",
+      "widget_id": "widget_net_14",
+      "topic": "Reti informatiche — TLS/SSL e HTTPS",
+      "q": "In quale fase del protocollo HTTPS avvengono l'autenticazione del server e la negoziazione delle chiavi di crittografia simmetrica?",
+      "hint": "Considera che la protezione del livello applicativo viene configurata dopo lo stabilimento iniziale della connessione al livello di trasporto.",
+      "options": [
+        "Durante l'esecuzione dell'handshake a tre vie TCP (SYN/ACK)",
+        "Dopo lo stabilimento della connessione TCP durante il processo di TLS Handshake",
+        "Prima dell'invio del primo pacchetto TCP SYN",
+        "Al momento della risoluzione del nome DNS"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. L'handshake TCP opera al livello L4 e stabilisce una sessione di trasmissione byte di base, senza gestire certificati o crittografia.",
+        "Corretto! Prima viene stabilita una connessione TCP di base, dopodiché client e server eseguono il TLS Handshake per scambiarsi certificati e chiavi.",
+        "Errato. Senza una connessione TCP pronta, la trasmissione del contesto TLS non è possibile.",
+        "Errato. Il DNS restituisce solo l'indirizzo IP corrispondente al nome dell'host."
+      ]
+    },
+    {
+      "id": "it_net_15",
+      "widget_id": null,
+      "topic": "Reti informatiche — Protocollo BGP",
+      "q": "A quale tipo di protocolli di routing appartiene il BGP (Border Gateway Protocol)?",
+      "hint": "Pensa alla categoria di protocolli che operano tra sistemi autonomi (AS) indipendenti.",
+      "options": [
+        "IGP (Interior Gateway Protocol) — protocolli di gateway interno",
+        "EGP / Path-Vector — protocolli di gateway esterno basati sul vettore di percorso",
+        "Protocolli Link-State esclusivamente per reti locali",
+        "Protocolli Distance-Vector con metrica basata sul numero di hop"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. Gli IGP (OSPF, IS-IS) vengono utilizzati all'interno di un singolo sistema autonomo.",
+        "Corretto! BGP è il principale protocollo di gateway esterno (EGP), che utilizza l'algoritmo Path-Vector per collegare i sistemi autonomi (AS).",
+        "Errato. BGP appartiene al routing interdominio e non è un protocollo puramente Link-State.",
+        "Errato. BGP opera su un elenco di sistemi autonomi (AS-Path) e non sul semplice conteggio degli hop dei router."
+      ]
+    },
+    {
+      "id": "it_net_16",
+      "widget_id": null,
+      "topic": "Reti informatiche — Porte TCP/UDP",
+      "q": "Quale porta di rete è riservata di default per il protocollo web sicuro HTTPS?",
+      "hint": "Ricorda la porta standard per le connessioni web protette, che segue le porte note delle porte di servizio email e traffico web non crittografato.",
+      "options": [
+        "22",
+        "80",
+        "443",
+        "8080"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Errato. La porta 22 è utilizzata per SSH (Secure Shell).",
+        "Errato. La porta 80 è utilizzata per il protocollo HTTP non crittografato.",
+        "Corretto! Il protocollo crittografato HTTPS funziona di default tramite la porta TCP 443.",
+        "Errato. La porta 8080 viene spesso utilizzata come porta alternativa per proxy o server web alternativi."
+      ]
+    },
+    {
+      "id": "it_net_17",
+      "widget_id": null,
+      "topic": "Reti informatiche — Indirizzamento IPv6",
+      "q": "Quale notazione corrisponde all'indirizzo di loopback (Loopback / localhost) nel protocollo IPv6?",
+      "hint": "Ricorda la forma abbreviata dell'indirizzo locale di controllo ad anello in IPv6.",
+      "options": [
+        "::1",
+        "ff02::1",
+        "fe80::1",
+        "::/0"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'indirizzo `::1` (forma completa: `0:0:0:0:0:0:0:1`) è l'equivalente di `127.0.0.1` in IPv6.",
+        "Errato. `ff02::1` è un indirizzo multicast che indirizza «tutti i nodi» all'interno del segmento (Link-Local All-Nodes).",
+        "Errato. L'intervallo `fe80::/10` viene utilizzato per gli indirizzi Link-Local.",
+        "Errato. `::/0` indica la rotta predefinita (default route) in IPv6."
+      ]
+    },
+    {
+      "id": "it_net_18",
+      "widget_id": "widget_net_18",
+      "topic": "Reti informatiche — Controllo del flusso in TCP",
+      "q": "Qual è la funzione principale del meccanismo della «finestra scorrevole» (Sliding Window) nel protocollo TCP?",
+      "hint": "Fai attenzione all'accordo dinamico sulla quantità di dati che un nodo può accettare senza sovraccaricare il proprio buffer.",
+      "options": [
+        "Controllo del flusso (Flow Control) in base alla capacità del buffer del ricevente",
+        "Determinazione del percorso più breve per la consegna dei pacchetti attraverso Internet",
+        "Crittografia dei dati a livello applicativo",
+        "Conversione del nome di dominio in un indirizzo IP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La finestra scorrevole regola il volume di dati che il mittente può trasmettere senza ricevere una conferma (ACK), evitando il saturamento del buffer del destinatario.",
+        "Errato. La scelta del percorso più breve è compito dei protocolli di routing (L3).",
+        "Errato. La crittografia viene eseguita dai protocolli TLS/SSL (L6/L7).",
+        "Errato. La conversione dei nomi è una funzione del DNS."
+      ]
+    },
+    {
+      "id": "it_net_19",
+      "widget_id": null,
+      "topic": "Reti informatiche — Reti wireless Wi-Fi",
+      "q": "Per risolvere quale problema nelle reti wireless (802.11) vengono utilizzati i frame RTS/CTS (Request to Send / Clear to Send)?",
+      "hint": "Ricorda il problema specifico dell'etere radio quando i nodi wireless non si sentono a vicenda provocando collisioni sull'access point.",
+      "options": [
+        "Problema del nodo nascosto (Hidden Node Problem)",
+        "Problema dei loop di routing (Routing Loop)",
+        "Problema del broadcast storm (Broadcast Storm)",
+        "Saturazione della tabella degli indirizzi MAC"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il problema del nodo nascosto si verifica quando i client non sentono le trasmissioni reciproche e causano collisioni sull'access point. RTS/CTS riserva il canale radio prima della trasmissione.",
+        "Errato. I loop di routing vengono risolti dai protocolli STP (L2) o dal campo TTL (L3).",
+        "Errato. I broadcast storm vengono evitati dal protocollo Spanning Tree Protocol (STP).",
+        "Errato. La saturazione della tabella MAC è una vulnerabilità degli switch cablati (MAC Flooding)."
+      ]
+    },
+    {
+      "id": "it_net_20",
+      "widget_id": null,
+      "topic": "Reti informatiche — Tecnologia NAT",
+      "q": "Quale variante di NAT consente a più host di una rete privata di accedere a Internet tramite un UNICO indirizzo IP pubblico condiviso?",
+      "hint": "Pensa alla modifica di NAT che utilizza le porte di trasporto per risparmiare indirizzi IPv4 pubblici.",
+      "options": [
+        "NAT statico (Static NAT 1:1)",
+        "NAT dinamico (Dynamic NAT senza PAT)",
+        "PAT / NAPT (Port Address Translation / Overload NAT)",
+        "Double NAT"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Errato. Il NAT statico associa in modo rigido un unico IP privato a un unico IP pubblico.",
+        "Errato. Il NAT dinamico senza traduzione delle porte richiede un pool di indirizzi IP pubblici pari al numero di dispositivi attivi.",
+        "Corretto! PAT (NAPT) utilizza i numeri di porta TCP/UDP, permettendo a centinaia di dispositivi di uscire in rete tramite un singolo IP esterno.",
+        "Errato. Double NAT è una configurazione indesiderata con doppia traduzione degli indirizzi."
+      ]
+    },
+    {
+      "id": "it_net_21",
+      "widget_id": "widget_net_21",
+      "topic": "Reti informatiche — Protocollo STP (Spanning Tree Protocol)",
+      "q": "Quale problema principale risolvono gli switch al livello di collegamento (L2) mediante il protocollo Spanning Tree Protocol (STP)?",
+      "hint": "Fai attenzione al pericolo della circolazione infinita dei frame del livello di collegamento (L2) in presenza di collegamenti ridondanti.",
+      "options": [
+        "Prevenzione dei loop di frame (loop L2) e dei broadcast storm in presenza di collegamenti ridondanti",
+        "Protezione della rete dallo spoofing degli indirizzi IP (IP Spoofing) al livello di rete",
+        "Accelerazione della trasmissione dati mediante frammentazione automatica dei frame Ethernet",
+        "Assegnazione dinamica degli indirizzi IP ai nuovi dispositivi nella rete"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nell'intestazione del frame Ethernet (L2) non c'è il campo TTL. Senza STP, i frame broadcast circolerebbero all'infinito nei collegamenti a anello, causando broadcast storm e il blocco della rete.",
+        "Errato. Della protezione da IP Spoofing si occupano meccanismi come DHCP Snooping e Dynamic ARP Inspection, non STP.",
+        "Errato. STP non si occupa della frammentazione o dell'accelerazione dei frame, blocca soltanto le porte ridondanti.",
+        "Errato. Dell'assegnazione degli indirizzi IP si occupa il protocollo DHCP."
+      ]
+    },
+    {
+      "id": "it_net_22",
+      "widget_id": "widget_net_22",
+      "topic": "Reti informatiche — VLAN e tagging 802.1Q",
+      "q": "Qual è la dimensione dell'intestazione (tag) IEEE 802.1Q inserita in un frame Ethernet per identificare l'appartenenza a una rete virtuale (VLAN)?",
+      "hint": "Somma la dimensione dei campi TPID e TCI aggiunti alla struttura del frame Ethernet per l'etichettatura delle VLAN.",
+      "options": [
+        "2 byte",
+        "4 byte",
+        "8 byte",
+        "16 byte"
+      ],
+      "ans": 1,
+      "explanations": [
+        "Errato. 2 byte è la dimensione di uno solo dei campi del tag (ad esempio, TPID).",
+        "Corretto! L'intestazione IEEE 802.1Q occupa esattamente 4 byte: 2 byte per TPID (Tag Protocol Identifier, 0x8100) e 2 byte per TCI (Tag Control Information, contenente la priorità 802.1p, DEI e l'ID VLAN a 12 bit).",
+        "Errato. 8 byte è una dimensione eccessiva, corrisponde alla dimensione del preambolo di un frame Ethernet.",
+        "Errato. 16 byte non vengono utilizzati per l'incapsulamento 802.1Q."
+      ]
+    },
+    {
+      "id": "it_net_23",
+      "widget_id": "widget_net_23",
+      "topic": "Reti informatiche — Protocollo ARP (Address Resolution Protocol)",
+      "q": "A quale scopo è destinato il protocollo ARP nelle reti IPv4?",
+      "hint": "Pensa a quale identificatore è richiesto dal livello di collegamento per inviare un frame a una scheda fisica nel segmento L2.",
+      "options": [
+        "Determinazione dell'indirizzo MAC di destinazione da un indirizzo IP noto all'interno della rete locale",
+        "Conversione di un nome di dominio (ad esempio, example.com) in un indirizzo IP",
+        "Routing dinamico dei pacchetti tra sistemi autonomi",
+        "Crittografia del traffico utente al livello di trasporto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! ARP (Address Resolution Protocol) collega il livello di rete (L3) e di collegamento (L2), richiedendo l'indirizzo MAC di un nodo dal suo indirizzo IP tramite una richiesta broadcast.",
+        "Errato. Della conversione dei nomi di dominio in indirizzi IP si occupa il protocollo DNS.",
+        "Errato. Del routing si occupano protocolli quali BGP, OSPF o RIP.",
+        "Errato. ARP funziona in chiaro e non esegue alcuna crittografia."
+      ]
+    },
+    {
+      "id": "it_net_24",
+      "widget_id": "widget_net_24",
+      "topic": "Reti informatiche — Protocollo DHCP (Processo DORA)",
+      "q": "Qual è la sequenza corretta dei messaggi durante l'ottenimento delle impostazioni di rete da parte di un client tramite il protocollo DHCP?",
+      "hint": "Pensa alla logica dell'interazione: dalla ricerca iniziale del server da parte del client fino alla ricezione della conferma del lease.",
+      "options": [
+        "DHCPDISCOVER -> DHCPOFFER -> DHCPREQUEST -> DHCPACK",
+        "DHCPOFFER -> DHCPDISCOVER -> DHCPACK -> DHCPREQUEST",
+        "DHCPREQUEST -> DHCPACK -> DHCPDISCOVER -> DHCPOFFER",
+        "DHCPDISCOVER -> DHCPREQUEST -> DHCPOFFER -> DHCPACK"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il client cerca il server (Discover), il server propone l'IP (Offer), il client ne richiede l'uso (Request) e il server conferma il lease dell'indirizzo (ACK).",
+        "Errato. Il server non può proporre un indirizzo (Offer) prima che il client abbia inviato la ricerca (Discover).",
+        "Errato. La richiesta dell'indirizzo (Request) avviene solo dopo aver ricevuto l'offerta (Offer).",
+        "Errato. Il server deve inviare l'offerta dell'indirizzo (Offer) prima che il client possa richiederlo (Request)."
+      ]
+    },
+    {
+      "id": "it_net_25",
+      "widget_id": "widget_net_25",
+      "topic": "Reti informatiche — Livello di rete (L3) e routing",
+      "q": "A quale livello del modello di riferimento OSI operano i router di rete (Router), che prendono decisioni sull'inoltro dei dati in base agli indirizzi IP?",
+      "hint": "Ricorda il livello del modello OSI in cui avvengono l'elaborazione degli indirizzi IP e l'instradamento dei pacchetti.",
+      "options": [
+        "Livello fisico (L1)",
+        "Livello di collegamento dati (L2)",
+        "Livello di rete (L3)",
+        "Livello di trasporto (L4)"
+      ],
+      "ans": 2,
+      "explanations": [
+        "Errato. Al livello L1 operano ripetitori e hub, che trasmettono il flusso di bit.",
+        "Errato. Al livello L2 operano i normali switch, che utilizzano gli indirizzi MAC.",
+        "Corretto! I router funzionano al livello di rete (Network Layer / L3) del modello OSI, gestendo pacchetti IP e tabelle di instradamento.",
+        "Errato. Il livello L4 (Trasporto) è responsabile delle porte e della consegna end-to-end delle sessioni (TCP/UDP)."
+      ]
+    },
+    {
+      "id": "it_net_26",
+      "widget_id": "widget_net_26",
+      "topic": "Reti informatiche — Sottoreti IPv4 e maschere CIDR",
+      "q": "Quanti indirizzi IP al massimo per l'assegnazione agli host (hosts) fornisce una maschera di sottorete /26 (255.255.255.192)?",
+      "hint": "Ricorda quanti bit sono riservati all'indirizzamento degli host in un blocco /26 e quanti degli indirizzi ottenuti non possono essere assegnati ai dispositivi.",
+      "options": [
+        "62",
+        "64",
+        "126",
+        "254"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con una maschera /26 rimangono $32 - 26 = 6$ bit per gli host. Indirizzi totali $2^6 = 64$. Meno 2 di servizio (indirizzo di rete e broadcast) si ottengono 62 indirizzi per gli host.",
+        "Errato. 64 è il numero totale di indirizzi IP nel blocco, inclusi l'indirizzo di rete e il broadcast.",
+        "Errato. 126 host sono forniti da una maschera /25 ($2^7 - 2$).",
+        "Errato. 254 host sono forniti da una maschera standard /24 ($2^8 - 2$)."
+      ]
+    },
+    {
+      "id": "it_net_27",
+      "widget_id": "widget_net_27",
+      "topic": "Reti informatiche — Confronto tra TCP e UDP",
+      "q": "Quale differenza chiave del protocollo UDP rispetto al TCP ne determina la scelta per i giochi online e le videoconferenze in tempo reale?",
+      "hint": "Fai attenzione alle caratteristiche della trasmissione dati senza l'overhead per lo stabilimento della sessione e il rinvio dei pacchetti.",
+      "options": [
+        "UDP trasmette i dati senza stabilire una connessione e senza ri-richiedere i pacchetti persi, minimizzando i ritardi (overhead)",
+        "UDP crittografa automaticamente tutti i dati utilizzando l'algoritmo AES-256",
+        "UDP garantisce la consegna rigorosamente ordinata al cento per cento di ciascun pacchetto",
+        "UDP funziona direttamente sul cavo fisico senza il coinvolgimento del sistema operativo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! UDP è un protocollo senza connessione (connectionless) e senza garanzia di consegna. L'assenza di ritrasmissioni dei pacchetti persi riduce la latenza (latency), aspetto critico per il traffico interattivo.",
+        "Errato. UDP non contiene meccanismi di crittografia integrati.",
+        "Errato. La garanzia di consegna e l'ordine dei pacchetti sono forniti da TCP, non da UDP.",
+        "Errato. UDP è un protocollo del livello di trasporto (L4) elaborato dallo stack di protocolli del sistema operativo."
+      ]
+    },
+    {
+      "id": "it_net_28",
+      "widget_id": "widget_net_28",
+      "topic": "Reti informatiche — Handshake a tre vie TCP (3-Way Handshake)",
+      "q": "Quale sequenza di combinazioni di flag viene inviata nei segmenti TCP per stabilire con successo una connessione?",
+      "hint": "Ricorda la sequenza di gestione dei flag durante l'inizializzazione di una sessione TCP: sincronizzazione, risposta con conferma, conferma finale.",
+      "options": [
+        "SYN -> SYN-ACK -> ACK",
+        "SYN -> ACK -> FIN",
+        "FIN -> FIN-ACK -> ACK",
+        "RST -> SYN -> ACK"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'handshake TCP si compone di 3 passaggi: il client invia SYN, il server risponde con SYN-ACK, il client conferma con il flag ACK. Dopodiché la connessione passa allo stato ESTABLISHED.",
+        "Errato. Il flag FIN viene utilizzato per chiudere una connessione, non per aprirla.",
+        "Errato. La sequenza con FIN è responsabile della corretta chiusura della connessione.",
+        "Errato. Il flag RST resetta la connessione in modo di emergenza in caso di errori."
+      ]
+    },
+    {
+      "id": "it_net_29",
+      "widget_id": "widget_net_29",
+      "topic": "Reti informatiche — Record del protocollo DNS",
+      "q": "Quale tipo di record di risorsa DNS serve ad associare un nome di dominio a un indirizzo IPv4?",
+      "hint": "Ricorda il nome del record base per l'associazione di un nome host a un indirizzo IPv4 a 32 bit.",
+      "options": [
+        "Record A",
+        "Record AAAA",
+        "Record MX",
+        "Record CNAME"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il record di tipo A (Address) associa un nome host a un indirizzo IPv4 a 32 bit.",
+        "Errato. Il record AAAA associa un nome di dominio a un indirizzo IPv6 a 128 bit.",
+        "Errato. Il record MX (Mail Exchange) indica i server di posta del dominio.",
+        "Errato. Il record CNAME (Canonical Name) crea un alias per un altro nome di dominio."
+      ]
+    },
+    {
+      "id": "it_net_30",
+      "widget_id": "widget_net_30",
+      "topic": "Reti informatiche — Meccanismo NAT / PAT",
+      "q": "Quale compito primario svolge la tecnologia NAT / PAT sul router di confine?",
+      "hint": "Pensa al problema dell'esaurimento dello spazio degli indirizzi IPv4 e al collegamento degli indirizzi privati della rete locale con Internet.",
+      "options": [
+        "Converte gli indirizzi IP privati (grigi) interni della rete locale in indirizzi IP pubblici (bianchi) per l'accesso a Internet",
+        "Filtra automaticamente lo spam e i malware nei messaggi e-mail",
+        "Aumenta la larghezza di banda del cavo ottico fisico",
+        "Sincronizza l'ora esatta di sistema tra i server di rete"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! NAT (Network Address Translation) / PAT traduce molteplici indirizzi IP privati (RFC 1918) dalla LAN in uno o più indirizzi IP pubblici WAN, consentendo di risparmiare indirizzi IPv4.",
+        "Errato. Della filtrazione dei contenuti e dello spam si occupano i firewall e i gateway antivirus.",
+        "Errato. NAT è una trasformazione logica delle intestazioni IP e non modifica la velocità fisica della linea.",
+        "Errato. Della sincronizzazione dell'ora si occupa il protocollo NTP (Network Time Protocol)."
+      ]
+    }
+  ]
+}

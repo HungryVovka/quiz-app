@@ -1,0 +1,595 @@
+{
+  "subject": "Reti",
+  "questions": [
+    {
+      "id": "it_net_541",
+      "widget_id": "widget_net_541",
+      "topic": "Reti di accesso — Principio della multiplazione a divisione di frequenza (FDM)",
+      "q": "Qual è il principio fondamentale della multiplazione a divisione di frequenza (FDM) nella trasmissione simultanea del segnale televisivo e dei dati Internet su cavo coassiale?",
+      "hint": "Pensate a come i diversi segnali vengono distribuiti su bande di frequenza isolate per essere trasmessi in parallelo senza interferenze reciproche.",
+      "options": [
+        "Divisione dello spettro di banda disponibile del cavo in canali di frequenza isolati, consentendo la trasmissione simultanea di TV e dati su diverse frequenze portanti",
+        "Trasmissione alternata di TV e dati in quanti di tempo di millisecondi sulla stessa frequenza",
+        "Isolamento fisico dei conduttori del cavo coassiale: i dati scorrono lungo il conduttore centrale e la TV lungo la calza metallica",
+        "Conversione di tutti i segnali in audio digitale prima dell'invio sul cavo",
+        "Uso di impulsi luminosi di colore diverso all'interno del conduttore in rame"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con l'FDM, l'intero spettro disponibile del cavo coassiale (da 5 MHz a 1 GHz+) viene diviso in bande. Ogni banda è assegnata a un compito specifico (trasmissione TV, DOCSIS Upstream o Downstream).",
+        "Errato. La trasmissione alternata nel tempo si chiama TDM (Time Division Multiplexing), non FDM.",
+        "Errato. Il conduttore centrale e la calza di schermatura formano un'unica linea di trasmissione ad alta frequenza, non due canali isolati.",
+        "Errato. L'FDM lavora con lo spettro elettromagnetico a radiofrequenza, non con segnali audio.",
+        "Errato. Gli impulsi luminosi di colori diversi (WDM) sono usati nella fibra ottica, non nel cavo coassiale in rame."
+      ]
+    },
+    {
+      "id": "it_net_542",
+      "widget_id": null,
+      "topic": "Reti di accesso — Bande di guardia (Guard Bands) nell'FDM",
+      "q": "Perché nelle reti FDM vengono lasciate bande di spettro non utilizzate, chiamate bande di guardia (Guard Bands), tra canali di frequenza adiacenti?",
+      "hint": "Ricordate l'imperfezione dei filtri passa-banda analogici e digitali reali (impossibilità di un taglio netto istantaneo dello spettro).",
+      "options": [
+        "Per compensare la non idealità della pendenza di taglio dei filtri passa-banda e prevenire la sovrapposizione degli spettri dei canali adiacenti (interferenza intercanale)",
+        "Per trasmettere l'alimentazione di emergenza in corrente continua alle apparecchiature del provider",
+        "Per accelerare il movimento delle onde radio all'interno dello spazio del cavo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I filtri fisici presentano un degrado graduale della risposta in frequenza. Senza bande di guardia (Guard Bands), le frequenze estreme di un canale si sovrapporrebbero a quelle del canale adiacente, causando interferenze.",
+        "Errato. Le bande di guardia sono sezioni fisicamente vuote dello spettro a radiofrequenza e non trasmettono corrente continua.",
+        "Errato. Le bande di guardia non modificano la velocità di propagazione delle onde elettromagnetiche nel mezzo."
+      ]
+    },
+    {
+      "id": "it_net_543",
+      "widget_id": "widget_net_543",
+      "topic": "Reti di accesso — Coesistenza di DVB-C e DOCSIS nell'FDM",
+      "q": "In che modo viene organizzata la coesistenza della televisione digitale (DVB-C) e della connessione Internet (DOCSIS) in un singolo cavo HFC?",
+      "hint": "Fai attenzione alla griglia dei canali di frequenza, in cui una parte dei canali è riservata alla trasmissione TV e un'altra al trasferimento di dati IP.",
+      "options": [
+        "A ciascun flusso TV DVB-C e a ciascun canale DOCSIS viene assegnato un proprio intervallo di frequenza fisso nella griglia di frequenza comune",
+        "I segnali TV bloccano il funzionamento di Internet durante la trasmissione di programmi televisivi popolari",
+        "Il modem via cavo decodifica il segnale televisivo e lo converte in pagine HTML",
+        "DOCSIS viene trasmesso solo quando tutti i televisori della casa sono scollegati dalla presa"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In una rete HFC, l'headend genera un unico segnale RF in cui, ad esempio, le frequenze 300-500 MHz sono destinate alle trasmissioni DVB-C e 550-850 MHz al DOCSIS Downstream.",
+        "Errato. Nell'FDM i canali sono isolati per frequenza, quindi il funzionamento della TV non interferisce con il traffico Internet.",
+        "Errato. Il modem e il ricevitore TV demodulano solo le bande di frequenza di loro competenza.",
+        "Errato. La trasmissione dati e la trasmissione TV avvengono in parallelo e in modo indipendente 24/7."
+      ]
+    },
+    {
+      "id": "it_net_544",
+      "widget_id": null,
+      "topic": "Reti di accesso — Larghezza di canale: DOCSIS (6 MHz) vs EuroDOCSIS (8 MHz)",
+      "q": "Da cosa è determinata la differenza nella larghezza del canale di frequenza base tra lo standard americano DOCSIS (6 MHz) e quello europeo EuroDOCSIS (8 MHz)?",
+      "hint": "Pensate agli storici standard regionali di trasmissione televisiva analogica (NTSC contro PAL/SECAM).",
+      "options": [
+        "Dalla storica griglia di frequenza della TV analogica: 6 MHz nelle reti NTSC (Nord America) e 8 MHz nelle reti PAL/SECAM (Europa)",
+        "Dalla differenza nello spessore del conduttore in rame del cavo coassiale utilizzato in Europa e negli USA"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Gli standard DOCSIS sono stati progettati per integrarsi nelle griglie di trasmissione della TV via cavo esistenti: canali da 6 MHz NTSC negli USA e da 8 MHz PAL/SECAM in Europa.",
+        "Errato. La larghezza del canale di frequenza è determinata dallo standard di modulazione e dalla griglia di trasmissione, non dallo spessore del conduttore."
+      ]
+    },
+    {
+      "id": "it_net_545",
+      "widget_id": "widget_net_545",
+      "topic": "Reti di accesso — Splitter/Diplexer dell'abbonato",
+      "q": "Qual è il ruolo del separatore di frequenza selettivo (Diplexer/Splitter) dell'abbonato all'ingresso del cavo nell'appartamento?",
+      "hint": "Pensate all'instradamento delle bande di frequenza necessarie verso l'apparecchiatura terminale corrispondente (ricevitore TV o modem via cavo).",
+      "options": [
+        "Dirige la banda ad alta frequenza dei dati al modem via cavo e la banda delle frequenze televisive al decoder TV/televisore",
+        "Amplifica il segnale radio di 100 volte grazie a una batteria integrata",
+        "Converte il segnale radio analogico in un raggio laser ottico",
+        "Determina le coordinate geografiche dell'appartamento dell'abbonato",
+        "Crittografa le password della rete Wi-Fi domestica",
+        "Blocca automaticamente le pubblicità durante la visione dei programmi TV"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il separatore di frequenza (diplexer) contiene filtri che lasciano passare verso la porta del modem l'intera banda necessaria (inclusi Upstream/Downstream) e verso la porta TV solo la banda di trasmissione televisiva.",
+        "Errato. Uno splitter/diplexer passivo non contiene elementi di amplificazione né batterie.",
+        "Errato. Della conversione in luce si occupano i nodi ottici, non il separatore dell'abbonato.",
+        "Errato. Il separatore è un componente a radiofrequenza passivo e non ha funzioni GPS/geolocalizzazione.",
+        "Errato. Il dispositivo opera a livello fisico (RF) e non gestisce il Wi-Fi né le password.",
+        "Errato. Il separatore non analizza i contenuti video e non blocca la pubblicità."
+      ]
+    },
+    {
+      "id": "it_net_546",
+      "widget_id": null,
+      "topic": "Reti di accesso — Interferenza intercanale con sovrapposizione di frequenze",
+      "q": "Cosa accade alle informazioni trasmesse se si tenta di trasmettere un canale TV e dati DOCSIS sulla stessa frequenza portante nello stesso cavo?",
+      "hint": "Pensate alla sovrapposizione di due segnali elettromagnetici della stessa frequenza in un unico mezzo cablato.",
+      "options": [
+        "Si verifica una sovrapposizione reciproca dei segnali (collisione/interferenza distruttiva), rendendo impossibile la ricezione sia della TV che dei dati",
+        "Il modem via cavo unisce automaticamente l'immagine TV e le pagine Internet in un unico flusso video",
+        "La velocità di Internet raddoppia grazie alla potenza del segnale televisivo",
+        "Il segnale viene reindirizzato automaticamente nell'etere wireless"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando due segnali indipendenti coincidono in frequenza nello stesso conduttore, si verifica un'interferenza. Il ricevitore non sarà in grado di separare le loro costellazioni di modulazione, causando distorsione e perdita di dati.",
+        "Errato. La sovrapposizione delle frequenze porta a interferenze fatali, non a un'unione logica dei contenuti.",
+        "Errato. La sovrapposizione aumenta il livello di rumore e armoniche, distruggendo completamente l'informazione utile.",
+        "Errato. Il segnale rimane all'interno del cavo schermato e non si disperde nell'aria."
+      ]
+    },
+    {
+      "id": "it_net_547",
+      "widget_id": "widget_net_547",
+      "topic": "Reti di accesso — Frequenze portanti (Carrier Frequencies)",
+      "q": "Quale funzione svolge la frequenza portante (Carrier Frequency) nella modulazione di frequenza (FDM) di un flusso di dati digitale?",
+      "hint": "Pensate al «trasporto» del segnale utile a bassa frequenza in una specifica sezione ad alta frequenza dello spettro del cavo.",
+      "options": [
+        "Funge da oscillazione armonica ad alta frequenza i cui parametri (ampiezza, fase) vengono modificati per trasferire il segnale in una determinata porzione dello spettro",
+        "Determina l'indirizzo IP del dispositivo finale nella rete",
+        "Viene utilizzata esclusivamente per il raffreddamento dei chipset a radiofrequenza"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La frequenza portante è un segnale di base ad alta frequenza di una determinata frequenza $f_c$. Durante la modulazione (QAM/OFDM), il flusso informativo ne modifica i parametri, spostando i dati nel canale di frequenza FDM desiderato.",
+        "Errato. L'indirizzo IP è un identificatore di rete di livello L3, non legato alla frequenza portante di livello L1.",
+        "Errato. La frequenza portante è un'oscillazione elettromagnetica, non un sistema di raffreddamento."
+      ]
+    },
+    {
+      "id": "it_net_548",
+      "widget_id": null,
+      "topic": "Reti di accesso — Distorsioni non lineari FDM (CSO e CTB)",
+      "q": "In che modo i fenomeni di distorsione non lineare CSO (Composite Second Order) e CTB (Composite Triple Beat) influenzano la qualità delle reti FDM con centinaia di canali di frequenza?",
+      "hint": "Pensate al passaggio di molteplici segnali ad alta frequenza attraverso amplificatori non lineari, che porta alla generazione di armoniche parassite esterne.",
+      "options": [
+        "Le non linearità degli amplificatori creano frequenze di combinazione (armoniche parassite) che ricadono sulle frequenze dei canali FDM adiacenti creando rumore di intermodulazione",
+        "CSO e CTB eliminano automaticamente dal cavo qualsiasi interferenza elettromagnetica esterna",
+        "Questi fenomeni raddoppiano la capacità di trasmissione di ciascun canale FDM",
+        "Portano alla fusione fisica del cavo coassiale al superamento dei 50 canali",
+        "Cambiano il protocollo di trasmissione da TCP a UDP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Quando si sommano centinaia di portanti in uno stadio di amplificazione non lineare, si generano interferenze di combinazione di secondo (CSO) e terzo (CTB) ordine. Queste ricadono sulle frequenze degli altri canali, riducendo MER/SNR.",
+        "Errato. CSO e CTB sono essi stessi fonti di pesanti interferenze di intermodulazione.",
+        "Errato. Le distorsioni di intermodulazione peggiorano la qualità della connessione e riducono l'ordine di QAM utilizzabile.",
+        "Errato. Si tratta di effetti di distorsione del segnale radio, non di riscaldamento termodinamico del conduttore in rame.",
+        "Errato. Le distorsioni non lineari avvengono a livello fisico L1 e non modificano i protocolli L4."
+      ]
+    },
+    {
+      "id": "it_net_549",
+      "widget_id": "widget_net_549",
+      "topic": "Reti di accesso — Ottimizzazione dello spettro (Spectrum Refarming)",
+      "q": "Perché i moderni operatori via cavo effettuano la procedura di «refarming» dello spettro (Spectrum Refarming), dismettendo i vecchi canali TV analogici?",
+      "hint": "Confrontate l'efficienza spettrale: un singolo canale TV analogico occupa 8 MHz, su cui in formato digitale si possono posizionare decine di canali HD o un enorme blocco DOCSIS 3.1.",
+      "options": [
+        "Un singolo canale analogico occupa ben 6-8 MHz di banda; liberare questo spettro permette di allocare blocchi digitali multigigabit DOCSIS 3.1 / 4.0 o decine di canali HD digitali",
+        "La legge proibisce la trasmissione del segnale analogico su cavi cablati",
+        "Il segnale TV analogico distrugge le dorsali in fibra ottica del provider",
+        "L'abbandono della TV analogica permette di ridurre il peso del cavo coassiale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La TV analogica è estremamente inefficiente in termini di spettro. Liberare la banda di 8 MHz da un canale analogico consente di assegnarla al 256-QAM/OFDM, ottenendo ~50 Mbit/s di capacità digitale.",
+        "Errato. Il motivo della dismissione è l'efficienza spettrale economica e tecnica, non un divieto fisico o legislativo.",
+        "Errato. I segnali analogici vengono convertiti in luce esattamente come quelli digitali e non danneggiano il vetro.",
+        "Errato. Il peso del cavo è determinato dai materiali fisici (rame, plastica), non dalla forma del segnale."
+      ]
+    },
+    {
+      "id": "it_net_550",
+      "widget_id": null,
+      "topic": "Reti di accesso — Confronto tra FDM e TDM",
+      "q": "Qual è la differenza principale tra la multiplazione a divisione di frequenza (FDM) e la multiplazione a divisione di tempo (TDM)?",
+      "hint": "Prestate attenzione a quale risorsa viene condivisa tra utenti/canali: lo spettro delle frequenze o gli intervalli di tempo.",
+      "options": [
+        "FDM suddivide la trasmissione sullo spettro delle frequenze (in parallelo nel tempo su frequenze diverse), mentre TDM la suddivide in quanti di tempo (in parallelo sulla frequenza in momenti diversi)",
+        "FDM viene utilizzato solo nelle comunicazioni satellitari, mentre TDM solo nella fibra ottica"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! FDM (Frequency Division) divide il dominio della frequenza: tutti i canali sono trasmessi contemporaneamente, ma ciascuno sulla propria frequenza. TDM (Time Division) divide il dominio del tempo: tutti i canali usano la stessa frequenza, ma a turno.",
+        "Errato. Entrambe le tecnologie sono ampiamente utilizzate in vari mezzi di trasmissione (coassiale, etere radio, ottica)."
+      ]
+    },
+    {
+      "id": "it_net_551",
+      "widget_id": "widget_net_551",
+      "topic": "Reti di accesso — Confronto tra FDM e WDM (Multiplazione a divisione di frequenza vs di lunghezza d'onda)",
+      "q": "Qual è la differenza fondamentale tra la multiplazione a divisione di frequenza (FDM) in una rete coassiale e la multiplazione a divisione di lunghezza d'onda (WDM) in una dorsale ottica HFC?",
+      "hint": "Pensate a quali tipi di onde lavorano queste tecnologie: con segnali elettrici a radiofrequenza in un mezzo di rame o con onde luminose (lunghezze d'onda) in un mezzo di vetro.",
+      "options": [
+        "FDM suddivide lo spettro a radiofrequenza del segnale elettrico nel cavo coassiale, mentre WDM suddivide lo spettro delle lunghezze d'onda della luce (laser) nella fibra ottica",
+        "WDM è applicato esclusivamente per la trasmissione di TV analogica, mentre FDM per Internet digitale",
+        "FDM richiede l'uso di fibre di vetro, mentre WDM di conduttori in rame",
+        "WDM funziona solo a basse frequenze fino a 10 MHz, mentre FDM a frequenze superiori a 10 GHz",
+        "FDM annulla completamente le leggi dell'attenuazione fisica del segnale nel cavo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! FDM divide la banda a radiofrequenza (MHz/GHz) del segnale elettrico nel coassiale in rame. WDM divide lo spettro della radiazione ottica in diverse lunghezze d'onda della luce (nanometri) all'interno della fibra ottica.",
+        "Errato. Entrambe le tecnologie sono in grado di trasmettere sia contenuti TV che dati IP digitali.",
+        "Errato. Al contrario, FDM è una tecnologia per coassiale/etere, mentre WDM per fibra ottica.",
+        "Errato. WDM lavora con la luce (centinaia di THz), mentre FDM in HFC lavora fino a 1,2–1,8 GHz.",
+        "Errato. L'FDM è soggetto all'attenuazione fisica del segnale, come qualsiasi metodo a radiofrequenza."
+      ]
+    },
+    {
+      "id": "it_net_552",
+      "widget_id": "widget_net_552",
+      "topic": "Reti di accesso — Pendenza della risposta in frequenza (Tilt) e attenuazione di frequenza nel cavo coassiale",
+      "q": "In che modo le proprietà fisiche del cavo coassiale influenzano l'attenuazione delle diverse frequenze dello spettro FDM (fenomeno del Tilt)?",
+      "hint": "Si noti che i segnali radio ad alta frequenza si attenuano nel conduttore in rame molto più velocemente rispetto a quelli a bassa frequenza.",
+      "options": [
+        "Le alte frequenze dello spettro FDM si attenuano nel cavo coassiale più delle basse frequenze, creando una pendenza (Tilt) della risposta in frequenza che richiede l'uso di equalizzatori (Equalizers)",
+        "Le basse frequenze si attenuano del 100%, mentre le alte frequenze vengono trasmesse senza alcuna perdita di potenza",
+        "L'attenuazione è esattamente la stessa su tutte le frequenze FDM da 5 MHz a 1200 MHz"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'attenuazione nel coassiale è proporzionale alla radice quadrata della frequenza (effetto pelle e perdite dielettriche). Le alte frequenze si indeboliscono più rapidamente, creando un dislivello (Tilt) compensato dagli equalizzatori.",
+        "Errato. In realtà è il contrario: sono proprio le alte frequenze a subire la massima attenuazione.",
+        "Errato. L'attenuazione è disomogenea e dipende fortemente dalla frequenza del segnale radio."
+      ]
+    },
+    {
+      "id": "it_net_553",
+      "widget_id": null,
+      "topic": "Reti di accesso — Canali di servizio e controllo fuori banda (Out-of-Band / OOB)",
+      "q": "Per quale scopo nelle reti FDM di TV via cavo vengono riservati canali fuori banda specializzati (Out-of-Band, OOB)?",
+      "hint": "Pensate all'invio di comandi di gestione di servizio, aggiornamenti software e chiavi di decodifica ai decoder degli abbonati indipendentemente dal flusso video.",
+      "options": [
+        "Per la trasmissione di informazioni di servizio, comandi di gestione, firmware e chiavi di accesso condizionato ai decoder TV al di fuori dei canali video principali",
+        "Per la trasmissione di alimentazione elettrica di riserva al televisore dell'abbonato via etere"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I canali OOB (ad esempio secondo gli standard SCTE 55-1 / SCTE 55-2) vengono assegnati su frequenze FDM separate per la trasmissione in background di EPG (guida ai programmi), firmware e comandi di attivazione dei decoder.",
+        "Errato. I canali OOB trasmettono esclusivamente dati digitali di controllo, non l'alimentazione elettrica domestica."
+      ]
+    },
+    {
+      "id": "it_net_554",
+      "widget_id": "widget_net_554",
+      "topic": "Reti di accesso — Distribuzione dei pacchetti sui canali FDM",
+      "q": "In che modo il modem via cavo ricompone un unico flusso di pacchetti IP quando vengono utilizzate più frequenze FDM Downstream (Channel Bonding)?",
+      "hint": "Pensate a come il CMTS divide un grande flusso IP in segmenti, li frammenta e li trasmette in parallelo su diverse frequenze FDM, mentre il modem ripristina l'ordine originale.",
+      "options": [
+        "Il CMTS frammenta i pacchetti IP e li distribuisce su più frequenze FDM in parallelo, mentre il modem ripristina l'ordine originale in base ai numeri di sequenza",
+        "Ogni frequenza FDM trasmette solo un sito web fisso (ad esempio, una frequenza per il motore di ricerca, un'altra per i video)",
+        "Il modem sceglie una frequenza casuale ogni 10 secondi e interrompe la connessione sulle altre",
+        "I pacchetti vengono trasmessi in copie duplicate su tutti i canali FDM contemporaneamente per filtrare i virus"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il CMTS a livello MAC contrassegna i frame con intestazioni di sequenza e li invia in parallelo a diversi modulatori QAM su frequenze diverse. Il modem riceve tutte le frequenze e le ricompone nell'ordine corretto.",
+        "Errato. I canali di rete trasmettono pacchetti IP generici e non sono legati a domini o siti specifici.",
+        "Errato. Con il Channel Bonding, tutti i canali vengono usati contemporaneamente e continuamente.",
+        "Errato. La duplicazione non viene utilizzata in quanto ridurrebbe la capacità utile complessiva della rete."
+      ]
+    },
+    {
+      "id": "it_net_555",
+      "widget_id": null,
+      "topic": "Reti di accesso — Problema del rumore nella banda a bassa frequenza FDM (Ingress Noise)",
+      "q": "Perché nello spettro FDM delle reti HFC le basse frequenze (5–42/85 MHz) sono destinate al flusso in uscita (Upstream) e a quale problema principale è legata questa scelta?",
+      "hint": "Prestare attenzione all'elevata sensibilità della banda sotto i 50 MHz alle interferenze elettromagnetiche domestiche (interferenze da reti elettriche, motori, radio a onde corte).",
+      "options": [
+        "Le basse frequenze richiedono meno potenza per la trasmissione dall'abbonato, ma questa banda è altamente vulnerabile alle interferenze elettromagnetiche domestiche (Ingress Noise)",
+        "Le basse frequenze sono vietate per il download di programmi TV dal diritto internazionale",
+        "Alle basse frequenze il cavo coassiale può fondersi ad un'elevata velocità in uscita",
+        "Questa banda è riservata esclusivamente alla trasmissione di messaggi telefonici in codice Morse",
+        "Le basse frequenze sono completamente protette da qualsiasi interferenza e rumore nell'universo",
+        "In questa banda la velocità della luce nel cavo diventa 10 volte superiore al normale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le basse frequenze subiscono un'attenuazione minore, il che è comodo per il trasmettitore a bassa potenza del modem. Tuttavia, la banda 5-42 MHz raccoglie tutte le interferenze impulsive degli elettrodomestici e delle radio a onde corte (Ingress Noise).",
+        "Errato. Non ci sono divieti legali sulle trasmissioni TV in questa banda; la limitazione è causata dall'elevata rumorosità.",
+        "Errato. La frequenza del segnale radio non provoca la fusione del cavo.",
+        "Errato. La banda viene utilizzata per i frame digitali standard DOCSIS Upstream.",
+        "Errato. Al contrario, questa banda è la più rumorosa dell'intera rete HFC.",
+        "Errato. La velocità di propagazione dell'onda dipende dal dielettrico del cavo, non dall'assegnazione della frequenza."
+      ]
+    },
+    {
+      "id": "it_net_556",
+      "widget_id": null,
+      "topic": "Reti di accesso — Griglie di frequenza e raster (Frequency Rasters)",
+      "q": "Che cos'è un raster di frequenza (Frequency Raster) nei sistemi FDM di trasmissione via cavo?",
+      "hint": "Pensate a un passo standardizzato della griglia di frequenza in cui viene suddiviso l'intero spettro del cavo per ospitare le portanti.",
+      "options": [
+        "Una griglia a passo standardizzato con un intervallo fisso (ad esempio 6 o 8 MHz) che determina le frequenze centrali per l'alloggiamento dei canali",
+        "Uno strumento per lo spelamento meccanico del cavo coassiale durante l'installazione",
+        "Uno schema per la posa fisica dei cavi lungo le pareti di un edificio"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un raster di frequenza definisce una griglia a passo rigido (ad es. 8 MHz in Europa) in modo che le frequenze centrali dei canali QAM/DVB adiacenti non si sovrappongano e siano facilmente sintonizzabili dai tuner.",
+        "Errato. Il raster di frequenza è una divisione logica dello spettro radio, non uno strumento di montaggio.",
+        "Errato. Il raster non si riferisce al tracciato fisico del sistema di cablaggio."
+      ]
+    },
+    {
+      "id": "it_net_557",
+      "widget_id": "widget_net_557",
+      "topic": "Reti di accesso — Segnali pilota e controllo automatico del guadagno (AGC)",
+      "q": "Per quale motivo nello spettro FDM della rete via cavo vengono allocate frequenze di riferimento costanti — i segnali pilota (Pilot Tones)?",
+      "hint": "Pensate al monitoraggio automatico del livello del segnale da parte degli amplificatori stradali e alla regolazione del coefficiente di guadagno alle variazioni di temperatura.",
+      "options": [
+        "Gli amplificatori di linea utilizzano i segnali pilota per il controllo automatico continuo del guadagno (AGC) e per compensare le variazioni di temperatura",
+        "I segnali pilota vengono utilizzati per le comunicazioni vocali degli ingegneri durante i lavori di riparazione",
+        "Trasmettono annunci pubblicitari sui televisori degli utenti",
+        "I segnali pilota servono per la ricarica automatica della batteria del modem via cavo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La temperatura dell'aria modifica l'attenuazione del cavo. Gli amplificatori stradali misurano l'ampiezza di portanti di riferimento note (Pilot Tones) e correggono automaticamente il guadagno (AGC/ALS).",
+        "Errato. I segnali pilota sono sinusoidi di servizio pure senza informazioni vocali.",
+        "Errato. I segnali pilota non trasportano contenuti utente o pubblicità.",
+        "Errato. I segnali radio dei toni pilota non sono destinati alla ricarica wireless delle batterie."
+      ]
+    },
+    {
+      "id": "it_net_558",
+      "widget_id": null,
+      "topic": "Reti di accesso — Rumore di fase negli eterodini FDM",
+      "q": "In che modo un alto livello di rumore di fase (Phase Noise) negli eterodini e nei modulatori delle apparecchiature FDM influisce sulla ricezione delle modulazioni d'ordine elevato (256-QAM / 4096-QAM)?",
+      "hint": "Ricordate che la modulazione di ampiezza in quadratura dipende in modo critico dalla misurazione precisa della fase del segnale; una sfocatura della fase porta a errori di decodifica.",
+      "options": [
+        "Il rumore di fase sfuoca i punti di segnale del diagramma di costellazione (Constellation Diagram) in modo circolare, portando a decisioni errate del demodulatore e all'aumento del BER",
+        "Il rumore di fase aumenta automaticamente la velocità di trasmissione dati e rende l'immagine TV più nitida"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con costellazioni dense (ad es. 4096-QAM), i punti di segnale sono situati molto vicini. Il jitter di fase (rumore di fase) ruota i punti attorno al centro, causando una lettura errata dei bit (Bit Error Rate).",
+        "Errato. Il rumore di fase è una distorsione distruttiva e riduce la qualità e la velocità di trasmissione."
+      ]
+    },
+    {
+      "id": "it_net_559",
+      "widget_id": null,
+      "topic": "Reti di accesso — Riassegnazione dinamica dello spettro FDM (Switched Digital Video — SDV)",
+      "q": "Qual è l'idea chiave della tecnologia Switched Digital Video (SDV) nell'ottimizzazione dello spettro FDM della TV via cavo?",
+      "hint": "Notare se i canali televisivi rari vengono trasmessi costantemente su tutto l'albero o se vengono trasmessi nel canale FDM solo quando qualcuno li sta guardando.",
+      "options": [
+        "Il canale TV viene inserito nello spettro FDM di uno specifico nodo ottico solo quando almeno un abbonato di quel nodo passa a quel canale",
+        "Tutti i canali televisivi del mondo vengono trasmessi ininterrottamente 24/7 in ogni appartamento, indipendentemente dai desideri degli utenti",
+        "SDV disattiva la connessione Internet ogni volta che l'utente accende la televisione",
+        "SDV converte tutti i flussi video su supporti cartacei fisici",
+        "La tecnologia SDV richiede la posa di tre cavi coassiali aggiuntivi verso ciascun televisore"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Invece di trasmettere costantemente oltre 500 canali, SDV trasmette i canali non popolari solo «su richiesta». Se nessuno nel segmento guarda il canale, la sua frequenza FDM viene liberata per Internet DOCSIS.",
+        "Errato. La trasmissione continua di tutti i canali è la classica TV broadcast, inefficiente dal punto di vista dello spettro.",
+        "Errato. SDV libera lo spettro, aiutando la trasmissione Internet anziché disattivarla.",
+        "Errato. SDV è un meccanismo di rete digitale per la gestione delle frequenze.",
+        "Errato. SDV funziona nell'infrastruttura HFC a cavo singolo esistente."
+      ]
+    },
+    {
+      "id": "it_net_560",
+      "widget_id": "widget_net_560",
+      "topic": "Reti di accesso — Dispositivi Edge QAM (EQAM)",
+      "q": "Quale ruolo svolgono i dispositivi Edge QAM (EQAM) nella fase di passaggio del traffico IP nello spettro FDM della rete via cavo?",
+      "hint": "Pensate alla conversione dei flussi IP digitali (MPEG-TS, DOCSIS) in segnali modulati QAM a radiofrequenza su frequenze FDM specificate.",
+      "options": [
+        "Ricezione di flussi IP digitali dalla rete del provider, loro modulazione (QAM) e sintesi dello spettro RF FDM per la trasmissione su cavo coassiale",
+        "Conversione del cavo coassiale in fibra ottica senza l'uso di elettronica",
+        "Spegnimento automatico dei televisori dei clienti durante la notte",
+        "Backup del sistema operativo dell'utente sui server del provider"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Edge QAM è un modulatore/grabber di rete di confine. Riceve i pacchetti IP multiplati via Ethernet e li converte in uno spettro RF analogico con modulazione QAM su frequenze FDM assegnate.",
+        "Errato. Non esistono convertitori rame-ottica passivi privi di elettronica.",
+        "Errato. I dispositivi EQAM si occupano della modulazione del segnale e non gestiscono l'alimentazione della TV.",
+        "Errato. Il dispositivo lavora nella catena di consegna di video e dati (L1-L3), senza effettuare il backup dei PC."
+      ]
+    },
+    {
+      "id": "it_net_561",
+      "widget_id": "widget_net_561",
+      "topic": "Reti di accesso — Frequenza di incrocio (Crossover) del filtro diplexer in FDM",
+      "q": "Cosa determina la frequenza di incrocio (crossover frequency) del filtro diplexer in un sistema di accesso via cavo FDM?",
+      "hint": "Pensate alla frequenza limite che separa lo spettro nella banda del flusso ascendente (Upstream) e nella banda del flusso discendente (Downstream).",
+      "options": [
+        "La frequenza limite di separazione dello spettro tra la banda del flusso ascendente (Upstream) e discendente (Downstream)",
+        "La velocità massima di trasmissione dati sulla dorsale in fibra ottica del provider",
+        "La tensione massima ammissibile di corrente continua nella presa dell'abbonato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La frequenza di incrocio (crossover) determina la banda di separazione tra il filtro passa-alto (HPF) e il filtro passa-basso (LPF), definendo i confini delle bande Upstream e Downstream.",
+        "Errato. Il filtro diplexer lavora con lo spettro elettrico del cavo coassiale, non con la velocità della fibra ottica.",
+        "Errato. La frequenza di incrocio si riferisce allo spettro a radiofrequenza, non all'alimentazione di rete."
+      ]
+    },
+    {
+      "id": "it_net_562",
+      "widget_id": null,
+      "topic": "Reti di accesso — Capacità di canale 256-QAM in FDM",
+      "q": "Qual è la capacità utile approssimativa di un singolo canale di frequenza FDM europeo da 8 MHz quando si utilizza la modulazione digitale 256-QAM?",
+      "hint": "Ogni punto della costellazione 256-QAM codifica 8 bit di informazione per simbolo, tenendo conto del ridondanza della codifica di correzione d'errore (FEC).",
+      "options": [
+        "Circa 50–53 Mbit/s per un singolo canale da 8 MHz",
+        "Circa 1 Mbit/s per un singolo canale da 8 MHz",
+        "Circa 10 Gbit/s per un singolo canale da 8 MHz",
+        "Esattamente 100 Kbit/s indipendentemente dalla modulazione",
+        "Circa 1 Tbit/s per un singolo canale da 8 MHz"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con un symbol rate di circa 6,9 Msimb/s e modulazione 256-QAM (8 bit/simbolo), la velocità grezza è di ~55,2 Mbit/s che, al netto del carico utile FEC, fornisce ~50–53 Mbit/s di traffico utile.",
+        "Errato. 1 Mbit/s è una velocità troppo bassa per una banda di 8 MHz con modulazione elevata.",
+        "Errato. È impossibile far rientrare 10 Gbit/s in un singolo canale da 8 MHz a causa del limite di Shannon.",
+        "Errato. La modulazione 256-QAM fornisce una velocità decine di volte superiore a 100 Kbit/s.",
+        "Errato. Le velocità terabit richiedono bande di spettro nell'ordine dei gigahertz nella fibra ottica."
+      ]
+    },
+    {
+      "id": "it_net_563",
+      "widget_id": "widget_net_563",
+      "topic": "Reti di accesso — Accesso multiplo OFDMA in FDM",
+      "q": "In che modo l'OFDMA (Orthogonal Frequency Division Multiple Access) differisce dal classico FDM/TDMA nella trasmissione di dati nel canale in uscita?",
+      "hint": "Pensate all'allocazione simultanea di singole sottoportanti ortogonali (subcarriers) tra più utenti nello stesso istante temporale.",
+      "options": [
+        "Più abbonati possono trasmettere dati contemporaneamente utilizzando sottoinsiemi diversi di sottoportanti all'interno di un unico blocco di canale",
+        "OFDMA vieta la connessione simultanea di più di un modem per l'intero quartiere",
+        "OFDMA converte la trasmissione dati dalle onde radio alle vibrazioni sonore",
+        "Con OFDMA i dati vengono trasmessi esclusivamente tramite supporti di memoria flash fisici"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza del TDMA, dove gli abbonati occupano a turno l'intero canale nel tempo, l'OFDMA divide un ampio canale OFDM in sottoportanti e assegna diversi gruppi di sottoportanti (Resource Units) a diversi utenti contemporaneamente.",
+        "Errato. L'OFDMA è stato creato proprio per il funzionamento simultaneo ed efficiente di più clienti.",
+        "Errato. L'OFDMA è un metodo di modulazione radio ad alta frequenza in un mezzo cablato o wireless.",
+        "Errato. L'OFDMA è un protocollo di rete del livello fisico (PHY)."
+      ]
+    },
+    {
+      "id": "it_net_564",
+      "widget_id": null,
+      "topic": "Reti di accesso — Distorsioni di intermodulazione in FDM",
+      "q": "Quale problema sorge durante la trasmissione simultanea di molteplici portanti di frequenza attraverso elementi non lineari (amplificatori) in un sistema FDM?",
+      "hint": "Pensate alla generazione di frequenze parassite di combinazione che si sommano e si sottraggono dalle portanti esistenti.",
+      "options": [
+        "Insorgenza di interferenze di intermodulazione (armoniche) che ricadono nelle bande dei canali utili adiacenti distorcendoli",
+        "Scomparsa totale della corrente elettrica nel cavo coassiale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Durante il passaggio di un segnale FDM multifrequenza attraverso un amplificatore non lineare, si generano frequenze di combinazione ($f_1 \\pm f_2$, $2f_1 - f_2$, ecc.) che riempiono gli intervalli di guardia e i canali adiacenti con rumore di intermodulazione.",
+        "Errato. La comparsa di armoniche distorce il segnale a radiofrequenza, ma non interrompe l'alimentazione in corrente continua sulla linea."
+      ]
+    },
+    {
+      "id": "it_net_565",
+      "widget_id": "widget_net_565",
+      "topic": "Reti di accesso — Efficienza spettrale dell'FDM",
+      "q": "Quale metrica viene utilizzata per valutare l'efficienza dell'uso dello spettro di frequenza FDM nelle reti via cavo?",
+      "hint": "La metrica mostra quanti bit al secondo si riescono a trasmettere in ogni Hertz della banda di frequenza allocata.",
+      "options": [
+        "L'efficienza spettrale, misurata in bit/s/Hz",
+        "Il coefficiente di attenuazione del cavo, misurato in Volt al metro",
+        "La frequenza di clock della CPU del router in GHz",
+        "Il peso totale del modem via cavo in grammi",
+        "La temperatura di riscaldamento del nodo ottico in Fahrenheit",
+        "La lunghezza della linea in fibra ottica in miglia nautiche"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'efficienza spettrale (\\text{bit/s/Hz}) mostra quanto densamente i dati sono impacchettati nella banda di frequenza assegnata. Maggiore è l'ordine di QAM/OFDM, maggiore sarà questa metrica.",
+        "Errato. L'attenuazione si misura in dB/m o dB/km, non in Volt al metro.",
+        "Errato. La frequenza del processore si riferisce alla potenza di calcolo del chip, non all'efficienza dello spettro radio.",
+        "Errato. La massa del dispositivo non riguarda le caratteristiche di trasmissione dati.",
+        "Errato. La temperatura del nodo è una metrica operativa fisica.",
+        "Errato. La lunghezza della linea è un parametro geometrico del tracciato."
+      ]
+    },
+    {
+      "id": "it_net_566",
+      "widget_id": null,
+      "topic": "Reti di accesso — Interferenze della banda radio FM (Ingress in FDM)",
+      "q": "In che modo il danneggiamento della guaina di schermatura del cavo coassiale influisce sul funzionamento del sistema FDM nell'intervallo di frequenze 88–108 MHz?",
+      "hint": "Ricordate quali segnali vengono trasmessi in etere su queste frequenze e come penetrano in un cavo danneggiato.",
+      "options": [
+        "I segnali delle trasmissioni radio FM penetrate all'interno del cavo (Ingress) creano interferenze fatali per il canale FDM che lavora su quella frequenza",
+        "Il cavo inizia a trasmettere programmi TV nell'aria circostante come un potente trasmettitore radio per 100 chilometri",
+        "La velocità di Internet su questa frequenza aumenta automaticamente fino a 10 Gbit/s",
+        "Il modem passa automaticamente alla ricezione del segnale satellitare"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La banda 88–108 MHz è occupata dalle trasmissioni radio FM. Con una cattiva schermatura del cavo, le torri radio FM emettono interferenze (Ingress Noise) che distruggono i canali FDM ricadenti in questo spettro.",
+        "Errato. Un cavo danneggiato può effettivamente irradiare (Egress), ma non si trasforma in una potente torre radio a lungo raggio.",
+        "Errato. Le interferenze riducono il rapporto segnale/rumore (SNR) e fanno calare la velocità di trasmissione.",
+        "Errato. Per la ricezione del segnale satellitare è necessaria un'antenna parabolica (LNB), non un cavo coassiale danneggiato."
+      ]
+    },
+    {
+      "id": "it_net_567",
+      "widget_id": "widget_net_567",
+      "topic": "Reti di accesso — Ricevitori Full Spectrum Capture (FSC)",
+      "q": "Qual è il principale vantaggio dei sintonizzatori digitali Full Spectrum Capture (FSC) utilizzati nei moderni modem via cavo?",
+      "hint": "Pensate alla digitalizzazione dell'intero spettro a radiofrequenza del cavo coassiale tramite un unico ADC senza dover utilizzare decine di sintonizzatori analogici separati.",
+      "options": [
+        "L'ADC digitalizza l'intero spettro di frequenza del cavo (fino a 1,2 GHz), consentendo di demodulare via software qualsiasi canale FDM non contiguo",
+        "Il tuner FSC elimina completamente la necessità di collegare il modem alla rete elettrica",
+        "Il tuner FSC converte il cavo coassiale in rame in fibra ottica a livello molecolare"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il tuner FSC, grazie a un ADC ultraveloce, digitalizza l'intero spettro RF (5–1200 MHz). Successivamente il DSP ritaglia e decodifica via software tutti i canali necessari, eliminando i limiti dei vecchi tuner hardware a banda stretta.",
+        "Errato. Gli ADC ad alta velocità e il processore DSP richiedono un'alimentazione elettrica continua.",
+        "Errato. FSC è un'architettura di elaborazione digitale dei segnali e non modifica la composizione chimica del rame."
+      ]
+    },
+    {
+      "id": "it_net_568",
+      "widget_id": null,
+      "topic": "Reti di accesso — Rapporto portante/rumore (CNR) in FDM",
+      "q": "Come cambiano i requisiti per il rapporto minimo portante/rumore (CNR / Carrier-to-Noise Ratio) quando un canale FDM passa a ordini di modulazione più elevati (ad esempio da 64-QAM a 4096-QAM)?",
+      "hint": "Più densamente sono posizionati i punti nella costellazione di modulazione, più il ricevitore è sensibile al rumore e maggiore deve essere il rapporto CNR.",
+      "options": [
+        "I requisiti per il CNR minimo aumentano significativamente, richiedendo un segnale notevolmente più pulito con un basso livello di rumore",
+        "I requisiti per il CNR scendono a zero, consentendo la trasmissione dei dati anche in presenza di rumore prevalente sul segnale",
+        "L'ordine di modulazione non è in alcun modo collegato al parametro CNR",
+        "Il CNR si fissa automaticamente a 10 dB per tutti i tipi di modulazione",
+        "Per il 4096-QAM è richiesto un valore di CNR negativo (inferiore a -50 dB)"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per il 64-QAM è richiesto un CNR nell'ordine di ~22 dB, per il 256-QAM ~28 dB e per il 4096-QAM oltre 40 dB. Maggiore è la densità della costellazione, minore è il raggio di errore del punto consentito dal rumore.",
+        "Errato. Con un basso CNR le costellazioni dense (4096-QAM) vengono completamente distrutte dal rumore.",
+        "Errato. L'ordine di modulazione è direttamente legato al limite di Shannon e al livello CNR richiesto.",
+        "Errato. Un valore CNR di 10 dB non è sufficiente neanche per il funzionamento stabile di modulazioni semplici come il 16-QAM.",
+        "Errato. Un CNR negativo significa che il rumore è più forte del segnale: in queste condizioni funzionano solo le specifiche a spettro espanso (DSSS/CDMA), ma non il QAM ad alta densità."
+      ]
+    },
+    {
+      "id": "it_net_569",
+      "widget_id": "widget_net_569",
+      "topic": "Reti di accesso — Distorsione del ritardo di gruppo (Group Delay Distortion)",
+      "q": "Da cosa è causata la distorsione del ritardo di gruppo (Group Delay Distortion) nelle reti FDM e dove è maggiormente pronunciata?",
+      "hint": "Pensate alla non linearità della risposta in frequenza della fase dei filtri analogici ai bordi della banda di frequenza passante.",
+      "options": [
+        "Dalla non linearità della caratteristica di fase dei filtri analogici ai bordi di taglio della banda (vicino alle frequenze di separazione del diplexer)",
+        "Dal superamento della lunghezza del cavo in fibra ottica oltre i 10.000 chilometri",
+        "Dall'ebollizione dell'acqua all'interno del cavo coassiale chiuso",
+        "Dall'uso di password di autorizzazione di rete troppo complesse"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I filtri diplexer analogici hanno una caratteristica di fase non lineare vicino alla frequenza di taglio (regione di Roll-off). I segnali di frequenze diverse sul bordo della banda subiscono ritardi differenti, causando interferenza intersimbolica (ISI).",
+        "Errato. Il ritardo di gruppo del filtro è dovuto alle caratteristiche di fase degli elementi passa-banda, non alla lunghezza della dorsale.",
+        "Errato. È un effetto di distorsione di fase dell'onda elettromagnetica nel filtro.",
+        "Errato. Le password di autorizzazione appartengono al livello software di autenticazione."
+      ]
+    },
+    {
+      "id": "it_net_570",
+      "widget_id": null,
+      "topic": "Reti di accesso — Finestratura (Windowing) in OFDM/FDM",
+      "q": "Qual è lo scopo dell'applicazione delle funzioni di finestratura (Windowing) nei sistemi a divisione di frequenza OFDM/DOCSIS 3.1?",
+      "hint": "Pensate alla soppressione dei lobi laterali dello spettro (emissioni fuori banda) per prevenire interferenze sui canali FDM adiacenti.",
+      "options": [
+        "Riduzione del livello dei lobi laterali dell'emissione radio all'esterno del blocco OFDM assegnato per prevenire interferenze ai canali FDM adiacenti",
+        "Pulizia dello schermo del televisore dell'abbonato dalla polvere tramite onde ultrasoniche",
+        "Chiusura automatica delle finestre del browser inutilizzate sul computer dell'utente"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I simboli OFDM rettangolari generano alti lobi laterali nel dominio della frequenza ($sin(x)/x$). L'arrotondamento dei bordi del simbolo tramite una funzione di finestratura (Windowing) riduce l'emissione fuori banda e protegge i canali FDM adiacenti.",
+        "Errato. La finestratura è un'operazione matematica sui segnali digitali prima dell'IFFT, non la pulizia fisica dello schermo.",
+        "Errato. Questo processo avviene a livello fisico (PHY) della modulazione e non è legato alle finestre del browser web."
+      ]
+    }
+  ]
+}

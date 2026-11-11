@@ -1,0 +1,597 @@
+{
+  "subject": "Reti",
+  "questions": [
+    {
+      "id": "it_net_161",
+      "widget_id": "widget_net_161",
+      "topic": "Reti di calcolatori — Matrice di commutazione Crossbar",
+      "q": "Qual è il principio di funzionamento di una matrice di commutazione di tipo Crossbar negli switch di pacchetto moderni?",
+      "hint": "Si pensi a una griglia di intersezione tra linee di porte di ingresso e uscita, in cui la chiusura di un determinato punto consente la trasmissione di pacchetti senza un bus condiviso.",
+      "options": [
+        "Consiste in una griglia $N \\times N$ di punti d'incrocio (crosspoint) che consentono la commutazione simultanea di pacchetti da qualsiasi porta di ingresso libera a qualsiasi porta di uscita libera",
+        "Utilizza una CPU centrale per copiare a turno ogni pacchetto su un disco di memoria",
+        "Unisce tutte le porte in un collegamento radio comune all'interno dello chassis dello switch"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La matrice Crossbar crea una griglia a semiconduttore controllata. Se la porta 1 trasmette alla porta 3 e la porta 2 alla porta 2, l'apertura e la chiusura dei nodi corrispondenti consentono di eseguire $N$ trasmissioni parallele simultaneamente.",
+        "Errato. La matrice di commutazione esegue la commutazione via hardware senza coinvolgere il sottosistema del disco.",
+        "Errato. La trasmissione avviene attraverso le piste conduttive elettroniche interne del chip, non via radio."
+      ]
+    },
+    {
+      "id": "it_net_162",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Regola di Longest Prefix Match (LPM)",
+      "q": "In base a quale regola il router seleziona una voce dalla tabella di inoltro (FIB) quando vi sono più prefissi corrispondenti per l'indirizzo IP di destinazione di un pacchetto?",
+      "hint": "Si ricordi il concetto di Longest Prefix Match (LPM) e si confrontino le maschere `/16`, `/24` e `/28`.",
+      "options": [
+        "Seleziona la rotta con la maschera di sottorete più lunga (Longest Prefix Match — LPM), poiché definisce l'indirizzo più specifico",
+        "Seleziona la voce scritta per prima nella memoria del file di configurazione",
+        "Seleziona la rotta con la maschera di sottorete più breve (ad esempio, `/8` invece di `/24`)",
+        "Distribuisce in modo casuale i pacchetti tra tutte le voci corrispondenti"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se per l'indirizzo IP `192.168.1.10` esistono le rotte `192.168.0.0/16` e `192.168.1.0/24`, il router sceglierà `/24` poiché questa maschera contiene un numero maggiore di bit corrispondenti (rotta più specifica).",
+        "Errato. L'ordine di inserimento nel file di configurazione non ha importanza; la scelta è dettata dalla lunghezza del prefisso LPM.",
+        "Errato. Una maschera più breve (ad esempio `/8`) descrive una rete più ampia, mentre LPM richiede la maschera più specifica (lunga).",
+        "Errato. La selezione casuale/bilanciata (ECMP) si usa solo in caso di perfetta uguaglianza tra lunghezza del prefisso e metrica."
+      ]
+    },
+    {
+      "id": "it_net_163",
+      "widget_id": "widget_net_163",
+      "topic": "Reti di calcolatori — Problema del Bufferbloat",
+      "q": "A quale effetto negativo porta il fenomeno del Bufferbloat (eccessiva bufferizzazione) nelle porte di uscita di switch e router?",
+      "hint": "Si pensi a cosa accade alla latenza (RTT) e al jitter del traffico interattivo (VoIP, gaming) quando un enorme buffer è completamente pieno di pacchetti.",
+      "options": [
+        "Aumento drammatico della latenza (Latency) e del jitter dei pacchetti a causa della permanenza in lunghe code senza un tempestivo segnale di congestione per il TCP",
+        "Guasto fisico immediato delle schede di rete di tutti gli host collegati"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Buffer enormi prevengono la perdita di pacchetti ma creano code gigantesche. Un pacchetto può rimanere bloccato nel buffer per centinaia di millisecondi, impedendo al TCP di ridurre la velocità (assenza di segnale di drop) e causando lag nelle applicazioni interattive.",
+        "Errato. Il Bufferbloat è un problema di prestazioni legato a code e latenze; non danneggia l'hardware fisico."
+      ]
+    },
+    {
+      "id": "it_net_164",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Scheduling delle code (WFQ / DRR)",
+      "q": "Qual è il compito principale del meccanismo Weighted Fair Queuing (WFQ / DRR) sulle porte di uscita degli switch?",
+      "hint": "Si pensi alla prevenzione della monopolizzazione della banda da parte di un singolo flusso aggressivo bilanciando il servizio in base a priorità/pesi.",
+      "options": [
+        "Distribuisce equamente la banda disponibile tra flussi di traffico paralleli in base ai pesi (priorità) assegnati, impedendo a un singolo flusso di monopolizzare il canale",
+        "Comprime automaticamente i dati nei pacchetti IP mediante l'algoritmo zip",
+        "Crittografa gli header L3 per proteggere dall'intercettazione",
+        "Converte i frame Ethernet nel protocollo ATM",
+        "Misura la lunghezza fisica del cavo ottico collegato"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Una semplice coda FIFO consente a un flusso ad alta intensità di estromettere gli altri. Il WFQ classifica i pacchetti in base ai flussi e seleziona i dati in base ai pesi assegnati.",
+        "Errato. Gli scheduler di coda gestiscono l'ordine di invio dei pacchetti, non comprimono il loro contenuto.",
+        "Errato. Gli algoritmi di gestione delle code (Queuing) non eseguono operazioni crittografiche.",
+        "Errato. Il WFQ non si occupa dell'incapsulamento né del cambio di protocolli di livello di collegamento.",
+        "Errato. La riflettometria (TDR) viene utilizzata per misurare la lunghezza dei cavi e non ha nulla a che fare con il WFQ."
+      ]
+    },
+    {
+      "id": "it_net_165",
+      "widget_id": "widget_net_165",
+      "topic": "Reti di calcolatori — Prevenzione dei loop (Spanning Tree Protocol)",
+      "q": "Perché sui commutatori L2 si applica il protocollo Spanning Tree (STP, IEEE 802.1D/802.1w) in presenza di collegamenti fisici ridondanti tra gli switch?",
+      "hint": "Si noti il comportamento di un frame con indirizzo MAC Broadcast (`FF:FF:FF:FF:FF:FF`) in un anello chiuso di switch.",
+      "options": [
+        "Blocca logicamente le porte ridondanti per costruire una topologia ad albero priva di loop, prevenendo tempeste di broadcast (Broadcast Storms)",
+        "Aumenta automaticamente la velocità della porta da 1 Gbps a 10 Gbps in presenza di un anello",
+        "Distribuisce indirizzi IP agli host della rete locale tramite il protocollo DHCP",
+        "Sincronizza l'ora di sistema di tutti gli switch con un orologio atomico"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza del livello L3, i frame L2 non hanno un campo TTL. Senza STP, un frame di broadcast circolerebbe all'infinito nell'anello, paralizzando completamente la rete (Broadcast Storm).",
+        "Errato. L'STP blocca la porta per prevenire i loop, ma non modifica la velocità fisica dell'interfaccia.",
+        "Errato. L'assegnazione degli indirizzi IP è gestita dal protocollo DHCP.",
+        "Errato. Per la sincronizzazione dell'ora si utilizzano i protocolli NTP e PTP."
+      ]
+    },
+    {
+      "id": "it_net_166",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Gestione del campo TTL nei router",
+      "q": "Cosa fa un router L3 con il campo TTL (Time to Live) nell'header IPv4 (o Hop Limit in IPv6) durante l'inoltro del pacchetto e quale azione viene intrapresa se questo valore diventa pari a 0?",
+      "hint": "Si pensi alla protezione della rete dalla circolazione infinita di pacchetti in loop e alla notifica ICMP Time Exceeded.",
+      "options": [
+        "Decrementa il valore del TTL di 1; se il TTL diventa 0, il pacchetto viene scartato e viene inviato un messaggio ICMP Time Exceeded al mittente",
+        "Incrementa il TTL di 1 per ogni nodo attraversato al fine di misurare la distanza totale",
+        "Riscrive il valore del TTL a 255 e invia il pacchetto all'indirizzo di destinazione",
+        "Mantiene il TTL invariato, poiché la modifica dell'header richiederebbe il ricalcolo del checksum CRC del frame L2",
+        "Converte il TTL nel numero di porta TCP sorgente",
+        "Registra il valore del TTL nel database BGP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Ogni router lungo il percorso decrementa il TTL (Hop Limit) di 1. Ciò previene il loop infinito dei pacchetti in caso di errori di instradamento. Quando raggiunge lo 0, il pacchetto viene scartato e il router invia un messaggio ICMP Type 11 (Time Exceeded).",
+        "Errato. Il TTL viene gestito come un contatore alla rovescia e viene decrementato, non incrementato.",
+        "Errato. Sovrascrivere il TTL a 255 annullerebbe la protezione contro i loop di instradamento.",
+        "Errato. Il router ha l'obbligo di decrementare il TTL e ricalcolare il checksum dell'header IP (Header Checksum).",
+        "Errato. Il campo TTL non viene trasformato in porte TCP.",
+        "Errato. Questo campo viene elaborato nel Data Plane durante l'inoltro di ogni singolo pacchetto."
+      ]
+    },
+    {
+      "id": "it_net_167",
+      "widget_id": "widget_net_167",
+      "topic": "Reti di calcolatori — Architettura Shared Memory Switch",
+      "q": "Qual è la caratteristica principale dell'architettura di uno switch a memoria condivisa (Shared Memory Switch)?",
+      "hint": "Si pensi a un unico pool dinamico di memoria RAM da cui vengono allocati i buffer per i pacchetti di tutte le porte.",
+      "options": [
+        "Tutte le porte d'ingresso e di uscita utilizzano una memoria buffer comune, distribuendone dinamicamente il volume in base al carico sulle singole porte",
+        "Ogni porta dispone di un chip ROM strettamente isolato senza possibilità di ridistribuzione dinamica",
+        "La memoria dello switch si sincronizza tramite un servizio cloud del provider in tempo reale"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I pacchetti provenienti da qualsiasi porta d'ingresso vengono salvati in un pool di memoria comune, mentre il chip di controllo gestisce i puntatori nelle code delle rispettive porte di uscita. Ciò risulta più efficiente rispetto ai buffer isolati per ogni porta.",
+        "Errato. La caratteristica della Shared Memory è proprio l'assenza di un isolamento rigido della memoria tra le porte.",
+        "Errato. La bufferizzazione dei frame avviene tramite moduli hardware interni al dispositivo stesso."
+      ]
+    },
+    {
+      "id": "it_net_168",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Timer di decadimento della tabella MAC (Aging Time)",
+      "q": "Perché nella tabella di commutazione (MAC Address Table / CAM) di uno switch viene utilizzato un timer di invecchiamento delle voci (Aging Time, di default solitamente 300 secondi)?",
+      "hint": "Si pensi al ricollegamento di un dispositivo a un'altra porta o alla liberazione di memoria in seguito a variazioni della topologia.",
+      "options": [
+        "Per rimuovere automaticamente le corrispondenze obsolete Indirizzo MAC ──► Porta, in modo da rispondere allo spostamento dei dispositivi e non saturare la memoria CAM",
+        "Per calcolare il numero di byte trasmessi dall'utente durante un mese di utilizzo di Internet",
+        "Per interrompere forzatamente tutte le sessioni TCP attive ogni 5 minuti",
+        "Per riavviare il sistema operativo dello switch"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Se un dispositivo viene scollegato o spostato su un'altra porta, la vecchia voce deve essere eliminata allo scadere dell'Aging Time. In caso contrario, lo switch continuerebbe a inoltrare i frame verso la porta errata.",
+        "Errato. La tabella CAM non gestisce il bilancio o la contabilizzazione del traffico.",
+        "Errato. Uno switch L2 è trasparente per le connessioni TCP e non ne traccia lo stato.",
+        "Errato. Il timer di Aging pulisce specifiche righe della tabella CAM, non riavvia il dispositivo."
+      ]
+    },
+    {
+      "id": "it_net_169",
+      "widget_id": "widget_net_169",
+      "topic": "Reti di calcolatori — Notifica esplicita di congestione (ECN)",
+      "q": "Qual è il principio di funzionamento del meccanismo di notifica esplicita di congestione (Explicit Congestion Notification — ECN) sui router L3?",
+      "hint": "Si pensi a come il router segnala agli host finali il riempimento del buffer senza scartare il pacchetto stesso.",
+      "options": [
+        "In caso di congestione, il router modifica il flag nell'header IP del pacchetto in transito in CE (Congestion Encountered), informando il destinatario e il mittente della necessità di ridurre la velocità senza scartare il pacchetto",
+        "Il router invia un messaggio SMS all'amministratore di rete quando la coda si riempie al 50%"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A differenza del classico scarto (Tail Drop), l'ECN imposta i bit `11` (CE) nel campo a 2 bit ECN dell'header IP. Il destinatario, rilevando il CE, invia al mittente il flag TCP ECE (ECN-Echo), spingendolo a ridurre la finestra di congestione.",
+        "Errato. L'ECN funziona a livello dei protocolli di rete (L3/L4) in tempo reale, non tramite notifiche esterne."
+      ]
+    },
+    {
+      "id": "it_net_170",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Etichettatura del traffico IEEE 802.1Q (VLAN Tagging)",
+      "q": "In che modo gli switch elaborano i frame Ethernet durante la loro trasmissione attraverso una porta trunk secondo lo standard IEEE 802.1Q?",
+      "hint": "Si noti l'inserimento di un tag 802.1Q di 4 byte (contenente il VLAN ID) all'interno della struttura del frame Ethernet.",
+      "options": [
+        "Inseriscono nell'header del frame Ethernet un tag 802.1Q di 4 byte contenente l'ID della VLAN (VLAN ID) e la priorità (802.1p)",
+        "Incapsulano l'intero frame Ethernet in un tunnel crittografato IPsec",
+        "Rimuovono l'indirizzo MAC sorgente originale sostituendolo con l'indirizzo IP dello switch",
+        "Convertono il frame Ethernet in un codice Morse seriale",
+        "Dividono il frame in 8 piccoli frammenti inviandoli su diversi conduttori del doppino"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Per separare il traffico di diverse VLAN su un singolo canale, l'802.1Q aggiunge 4 byte tra l'indirizzo MAC sorgente e il campo EtherType. Il tag contiene un VLAN ID a 12 bit (consentendo fino a 4094 reti virtuali).",
+        "Errato. L'802.1Q è uno standard per l'etichettatura dei frame L2 e non esegue la crittografia IPsec.",
+        "Errato. Gli indirizzi MAC sorgente e destinazione rimangono invariati.",
+        "Errato. La trasmissione del frame avviene con i segnali fisici Ethernet standard (L1).",
+        "Errato. Il frame viene trasmesso per intero, senza essere suddiviso su singoli conduttori fisici."
+      ]
+    },
+    {
+      "id": "it_net_171",
+      "widget_id": "widget_net_171",
+      "topic": "Reti di calcolatori — Teorema di Shannon-Hartley",
+      "q": "Cosa determina fondamentalmente il teorema di Shannon-Hartley ($C = B \\log_2 (1 + \\text{SNR})$) per un canale di comunicazione fisico?",
+      "hint": "Si ricordi la relazione tra la larghezza di banda in Hertz e il rapporto segnale/rumore (SNR).",
+      "options": [
+        "La massima velocità teorica di trasmissione dati (capacità di canale) su un canale affetto da rumore bianco continuo",
+        "Il numero minimo di switch necessari per collegare due host",
+        "La lunghezza fisica massima del cavo in metri prima della sua rottura",
+        "Il tempo necessario al processore per crittografare un frame di rete"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il teorema di Shannon stabilisce il limite massimo assoluto della velocità di trasmissione delle informazioni (in bit/s) senza errori attraverso un canale fisico con banda $B$ (in Hz) in presenza di rumore $\\text{SNR}$.",
+        "Errato. La formula descrive il mezzo fisico di trasmissione, non la topologia della rete o il numero di switch.",
+        "Errato. Il teorema definisce la velocità di trasmissione dati, non la resistenza geometrica o meccanica del cavo.",
+        "Errato. Il teorema di Shannon riguarda le caratteristiche del canale di comunicazione, non la potenza di calcolo della CPU."
+      ]
+    },
+    {
+      "id": "it_net_172",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Ritardo di trasmissione vs Ritardo di propagazione",
+      "q": "Qual è la differenza fondamentale tra il ritardo di trasmissione ($d_{\\text{trans}}$) e il ritardo di propagazione ($d_{\\text{prop}}$)?",
+      "hint": "Si pensi alla differenza tra il tempo necessario a immettere i bit del frame nel cavo e il tempo di volo del segnale lungo il cavo.",
+      "options": [
+        "$d_{\\text{trans}} = L/R$ è il tempo necessario al trasmettitore per 'immettere' tutti i bit di un pacchetto di lunghezza $L$ nel canale a velocità $R$; $d_{\\text{prop}} = d/s$ è il tempo di percorrenza di un bit dalla sorgente al destinatario alla velocità della luce nel mezzo $s$ per una distanza $d$",
+        "$d_{\\text{trans}}$ si misura esclusivamente nella fibra ottica, mentre $d_{\\text{prop}}$ solo nei cavi in rame",
+        "$d_{\\text{trans}}$ dipende dalla distanza tra i nodi, mentre $d_{\\text{prop}}$ dipende esclusivamente dalla lunghezza del pacchetto in byte"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il ritardo di trasmissione ($L/R$) è determinato dalla dimensione del pacchetto e dalla larghezza di banda della porta. Il ritardo di propagazione ($d/s$) dipende unicamente dalla lunghezza fisica del cavo e dalla velocità dell'onda elettromagnetica nel mezzo.",
+        "Errato. Entrambi i tipi di ritardo sono presenti in qualsiasi mezzo di trasmissione (rame, fibra ottica, radio).",
+        "Errato. È l'opposto: il ritardo di trasmissione dipende dalla dimensione del pacchetto $L$, mentre il ritardo di propagazione dipende dalla distanza fisica $d$."
+      ]
+    },
+    {
+      "id": "it_net_173",
+      "widget_id": "widget_net_173",
+      "topic": "Reti di calcolatori — Fibra ottica monomodale vs multimodale",
+      "q": "Perché la fibra ottica monomodale (Single-mode Fiber — SMF) consente di trasmettere dati a distanze notevolmente superiori rispetto a quella multimodale (Multi-mode Fiber — MMF)?",
+      "hint": "Si noti il diametro del nucleo (core) e l'effetto della dispersione modale.",
+      "options": [
+        "La fibra SMF presenta un diametro del nucleo molto stretto (~9 µm), permettendo al raggio di luce di propagarsi lungo una singola traiettoria (modo) ed eliminando la dispersione intermodale",
+        "La fibra SMF è realizzata in oro puro, il che elimina completamente l'attenuazione del segnale",
+        "La fibra SMF trasmette onde radio anziché impulsi luminosi",
+        "La fibra MMF utilizza laser ad alta potenza che fondono il cavo a distanze superiori a 500 metri",
+        "Nella fibra SMF la luce viaggia più velocemente rispetto alla velocità della luce nel vuoto"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella fibra MMF (nucleo di 50–62.5 µm) i raggi luminosi si riflettono con angoli diversi (modi differenti) giungendo al ricevitore in tempi diversi, causando la sovrapposizione degli impulsi (dispersione intermodale). Nella stretta fibra SMF (9 µm) è possibile un solo modo.",
+        "Errato. La fibra ottica è realizzata in vetro di silice fusa ad altissima purezza (SiO2).",
+        "Errato. Qualsiasi fibra ottica trasmette radiazioni elettromagnetiche nel campo ottico (visibile/infrarosso).",
+        "Errato. La fibra MMF utilizza di solito LED economici o VCSEL; la limitazione della distanza è dovuta alla dispersione e non alla fusione.",
+        "Errato. La velocità della luce nel nucleo in vetro è pari a circa $2 \\cdot 10^8$ m/s, inferiore alla velocità nel vuoto."
+      ]
+    },
+    {
+      "id": "it_net_174",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Fisica del doppio trecciato (Twisted Pair)",
+      "q": "Per quale scopo i conduttori nel cavo di tipo 'doppino ritorto' (Category 5e/6/6A) vengono intrecciati a coppie con passi differenti?",
+      "hint": "Si pensi all'induzione di correnti opposte per la soppressione delle interferenze.",
+      "options": [
+        "Per l'elisione reciproca delle interferenze elettromagnetiche e la riduzione della diafonia (Crosstalk) tra coppie adiacenti",
+        "Per aumentare la flessibilità ed evitare rotture accidentali del filo di rame",
+        "Per rallentare la velocità di propagazione della corrente nel cavo fino al livello di 50 Hz",
+        "Per inserire il cavo in una guaina di plastica rotonda"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! L'intreccio dei conduttori fa sì che le interferenze elettromagnetiche esterne inducano correnti quasi identiche in entrambi i fili della coppia. Il ricevitore differenziale sottrae i segnali, annullando rumori e diafonia.",
+        "Errato. La flessibilità meccanica è un utile effetto collaterale, ma il motivo fisico principale dell'intreccio è la protezione dalle interferenze.",
+        "Errato. L'intreccio non mira a rallentare la corrente; i segnali vengono trasmessi a frequenze di decine o centinaia di megahertz.",
+        "Errato. La forma dell'isolamento si adatta al cavo, non il contrario."
+      ]
+    },
+    {
+      "id": "it_net_175",
+      "widget_id": "widget_net_175",
+      "topic": "Reti di calcolatori — Topologie dei canali di comunicazione (Punto-Punto vs Mezzo Condiviso)",
+      "q": "Qual è la differenza fondamentale nell'accesso al mezzo tra un canale di comunicazione dedicato (Punto-Punto) e uno condiviso (Mezzo Condiviso)?",
+      "hint": "Si pensi alla necessità o meno per i nodi di competere per lo stesso mezzo di trasmissione fisico.",
+      "options": [
+        "In un canale Punto-Punto la larghezza di banda appartiene interamente ai due nodi collegati, mentre in un Mezzo Condiviso la capacità del canale viene divisa tra più host, richiedendo protocolli di accesso multiplo (MAC)",
+        "Nel Mezzo Condiviso i dati vengono trasmessi senza l'uso di schede di rete"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nei canali dedicati (ad es. fibra diretta) l'intera risorsa della linea è disponibile per due dispositivi. Nei mezzi condivisi (Wi-Fi, Ethernet su hub) i nodi condividono la banda comune, il che può causare collisioni e richiede un arbitraggio (CSMA/CD, CSMA/CA).",
+        "Errato. Qualsiasi connessione a un mezzo fisico richiede l'uso di un'interfaccia di rete (NIC)."
+      ]
+    },
+    {
+      "id": "it_net_176",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Modalità di trasmissione (Full-Duplex vs Half-Duplex)",
+      "q": "Quale affermazione caratterizza correttamente il funzionamento di un canale di comunicazione in modalità duplex (Full-Duplex) e semiduplex (Half-Duplex)?",
+      "hint": "Si ricordi la differenza tra il traffico a doppio senso su due corsie e il traffico alternato su una sola corsia.",
+      "options": [
+        "Il Full-Duplex consente la trasmissione e la ricezione simultanea dei dati in entrambe le direzioni; l'Half-Duplex consente la trasmissione in entrambe le direzioni, ma solo alternativamente in un singolo momento",
+        "L'Half-Duplex trasmette i dati 10 volte più velocemente del Full-Duplex",
+        "Il Full-Duplex può essere utilizzato solo nei canali di comunicazione satellitare",
+        "L'Half-Duplex elimina completamente la possibilità di collisioni nel mezzo",
+        "Il Full-Duplex richiede l'uso obbligatorio del protocollo CSMA/CD",
+        "L'Half-Duplex vieta la trasmissione delle informazioni di header del protocollo IP"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! In Full-Duplex (ad esempio Ethernet moderno su doppio trecciato con coppie dedicate di ricezione e trasmissione) le trasmissioni avvengono simultaneamente. In Half-Duplex (ricetrasmittenti, vecchio Ethernet su coassiale/hub) un nodo può solo ascoltare o solo trasmettere.",
+        "Errato. Il Full-Duplex è più efficiente poiché raddoppia la capacità teorica totale.",
+        "Errato. Il Full-Duplex è ampiamente utilizzato nelle reti cablate Ethernet, fibra ottica, ecc.",
+        "Errato. Le collisioni si verificano proprio nei mezzi Half-Duplex quando più nodi tentano di trasmettere contemporaneamente.",
+        "Errato. Il protocollo CSMA/CD è necessario nei mezzi Half-Duplex per rilevare le collisioni; in Full-Duplex viene disattivato.",
+        "Errato. La modalità L1/L2 è trasparente rispetto alla struttura dei pacchetti IP."
+      ]
+    },
+    {
+      "id": "it_net_177",
+      "widget_id": "widget_net_177",
+      "topic": "Reti di calcolatori — Attenuazione del segnale (Attenuation)",
+      "q": "Quale tra i seguenti fattori costituisce la causa principale della limitazione della lunghezza fisica massima di un segmento di cavo (ad esempio 100 metri per il doppino 1000BASE-T)?",
+      "hint": "Si pensi al motivo per cui la lunghezza del segmento di doppino è limitata a 100 metri (ad es. 1000BASE-T).",
+      "options": [
+        "L'attenuazione (Attenuation) — l'indebolimento esponenziale della potenza del segnale lungo la distanza dovuto alla resistenza ohmica del conduttore e alla dispersione di energia",
+        "I privilegi di accesso imposti dal sistema operativo sulla lunghezza del cavo fisico",
+        "Il limite della velocità della luce nel vuoto che impedisce ai segnali di percorrere più di 100 metri",
+        "Il blocco automatico delle porte da parte dei provider di servizi Internet"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! A causa della resistenza del rame, delle perdite dielectriche e dell'irradiazione, la potenza del segnale elettromagnetico diminuisce con la distanza. Oltre i 100 m, il ricevitore non è in grado di distinguere in modo affidabile il segnale dal rumore (l'SNR diventa troppo basso).",
+        "Errato. La limitazione è dovuta alle leggi della fisica e dell'elettrodinamica, non alle impostazioni del sistema operativo.",
+        "Errato. La velocità della luce limita il ritardo di propagazione (propagation delay), non la potenza del segnale a 100 metri.",
+        "Errato. La lunghezza della linea del cavo è un parametro fisico locale dell'infrastruttura L1."
+      ]
+    },
+    {
+      "id": "it_net_178",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Multiplexing WDM / DWDM",
+      "q": "Qual è il principio di funzionamento della tecnologia di multiplexing a divisione di lunghezza d'onda (WDM / DWDM) nei canali di comunicazione ottici?",
+      "hint": "Si noti la trasmissione di diversi 'colori' (lunghezze d'onda) laser su una singola fibra ottica.",
+      "options": [
+        "La trasmissione di più flussi di informazioni indipendenti su una singola fibra ottica contemporaneamente mediante l'uso di laser con diverse lunghezze d'onda (diversi 'colori' della luce)",
+        "La suddivisione del cavo ottico in conduttori di rame fisicamente isolati all'interno della guaina",
+        "La conversione del segnale luminoso in vibrazioni sonore all'interno del cavo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il WDM (Wavelength Division Multiplexing) consente di multiplexare decine e centinaia di canali luminosi indipendenti (ciascuno sulla propria lunghezza d'onda, ad es. 1550 nm) in un'unica fibra fisica, moltiplicandone la capacità di centinaia di volte.",
+        "Errato. Il WDM è una tecnologia ottica di multiplexing in fibra di vetro; i conduttori in rame non vengono utilizzati.",
+        "Errato. Tutta la trasmissione dati avviene rigorosamente nella banda ottica delle onde elettromagnetiche."
+      ]
+    },
+    {
+      "id": "it_net_179",
+      "widget_id": "widget_net_179",
+      "topic": "Reti di calcolatori — Capacità del collo di bottiglia (Bottleneck Link)",
+      "q": "A cosa equivale la velocità di trasmissione end-to-end (End-to-End Throughput) durante il trasferimento di un file dall'host A all'host B attraverso una sequenza di $N$ canali di comunicazione con capacità $R_1, R_2, \\dots, R_N$?",
+      "hint": "Si ricordi la regola del 'collo di bottiglia' (bottleneck link) lungo il percorso dalla sorgente alla destinazione.",
+      "options": [
+        "Alla capacità minima tra tutti i canali lungo il percorso: $\\min(R_1, R_2, \\dots, R_N)$",
+        "Alla somma delle capacità di tutti i canali: $R_1 + R_2 + \\dots + R_N$",
+        "Alla media aritmetica delle capacità di tutti i canali",
+        "Alla capacità massima tra tutti i canali: $\\max(R_1, R_2, \\dots, R_N)$",
+        "Al prodotto di tutte le capacità: $R_1 \\times R_2 \\times \\dots \\times R_N$"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La capacità di un percorso composito è limitata dal canale più lento (Bottleneck Link). Indipendentemente dalla velocità del canale di dorsale (ad es. 10 Gbps), se l'ultimo miglio ha una velocità di 1.5 Mbps, la velocità finale non supererà 1.5 Mbps.",
+        "Errato. Le velocità dei canali non si sommano in un collegamento in serie.",
+        "Errato. La media aritmetica fornisce una stima per eccesso, ignorando il reale collo di bottiglia.",
+        "Errato. La velocità del canale più rapido non compensa le strozzature nei canali più lenti.",
+        "Errato. La moltiplicazione dei valori non ha alcun significato fisico nel calcolo della velocità."
+      ]
+    },
+    {
+      "id": "it_net_180",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Formula di Nyquist per un canale ideale",
+      "q": "Per quale tipo di canali fisici si applica la formula di Nyquist ($C = 2B \\log_2 M$) e quale grandezza calcola?",
+      "hint": "Si noti che la formula di Nyquist si applica a un canale ideale *senza rumore* e dipende dal numero di livelli del segnale.",
+      "options": [
+        "Calcola la massima velocità di trasmissione su un canale ideale SENZA rumore in presenza di $M$ livelli discreti di segnale e una larghezza di banda $B$",
+        "Calcola il livello di rumore in dB per un canale Wi-Fi wireless reale",
+        "Determina il peso fisico del cavo ottico per 1 chilometro di lunghezza",
+        "Calcola lo spazio su disco necessario per salvare i log del router"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La formula di Nyquist determina la velocità di trasmissione binaria massima per un canale ideale (senza rumore) con banda $B$ Hz e $M$ livelli di codifica del segnale. Per i canali reali con rumore si applica il teorema di Shannon.",
+        "Errato. La formula di Nyquist è derivata per un ipotetico canale ideale privo di rumore.",
+        "Errato. La formula riguarda la teoria dell'informazione e delle comunicazioni, non le proprietà meccaniche dei materiali.",
+        "Errato. La formula calcola la velocità di trasmissione dati a livello fisico/di collegamento, non lo spazio su disco."
+      ]
+    },
+    {
+      "id": "it_net_181",
+      "widget_id": "widget_net_181",
+      "topic": "Reti di calcolatori — Modulazione di segnale (QAM / PSK)",
+      "q": "In che modo l'uso della modulazione di ampiezza in quadratura (ad es. 256-QAM) consente di aumentare la velocità di trasmissione dati su un canale di comunicazione senza ampliare la larghezza di banda ($B$)?",
+      "hint": "Si pensi alla differenza tra il baud rate (Baud Rate, numero di simboli al secondo) e il bit rate (Bit Rate).",
+      "options": [
+        "Codificando più bit di dati in ogni simbolo (ad es. 8 bit per simbolo in 256-QAM) mediante la modifica simultanea di fase e ampiezza della frequenza portante",
+        "Aumentando la tensione fisica della corrente nel conduttore di 256 volte",
+        "Aumentando fisicamente la lunghezza del cavo",
+        "Disattivando i protocolli di controllo degli errori ai livelli L2/L3"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con la 256-QAM ogni simbolo trasmesso possiede una delle $256$ combinazioni di fase e ampiezza, consentendo di trasmettere $\\log_2(256) = 8$ bit di informazione per singola variazione di segnale (in un baud).",
+        "Errato. La modulazione varia la fase e l'ampiezza relativa della frequenza portante, non aumenta la tensione di centinaia di volte.",
+        "Errato. La lunghezza del cavo non ha alcuna relazione con gli schemi di modulazione digitale.",
+        "Errato. Al contrario, le modulazioni ad alto ordine (256-QAM) sono più sensibili alle interferenze e richiedono l'uso di codici di correzione di errore (FEC)."
+      ]
+    },
+    {
+      "id": "it_net_182",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Propagazione cammini multipli e fading (Multipath Fading)",
+      "q": "Quale problema si verifica nei canali di comunicazione wireless a causa dell'effetto di propagazione a cammini multipli (Multipath Propagation) delle onde radio?",
+      "hint": "Si noti la riflessione delle onde radio da pareti e ostacoli, che porta alla sovrapposizione di copie dello stesso segnale.",
+      "options": [
+        "Il segnale raggiunge l'antenna del ricevitore attraverso percorsi diversi con ritardi e fasi differenti, causando interferenza intersimbolica (ISI) e dissolvenze (fading)",
+        "L'onda radio si trasforma istantaneamente in corrente elettrica con una tensione di 220 V",
+        "Il router Wi-Fi sovraccarica il suo processore e cancella i file del sistema operativo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Le riflessioni da edifici e pareti creano più copie del segnale. Arrivando al ricevitore sfasate nel tempo, possono sommarsi in opposizione di fase (annullando il segnale — fading) o sovrapporsi ai simboli adiacenti (interferenza intersimbolica).",
+        "Errato. L'effetto cammini multipli è un fenomeno fisico di interferenza delle onde elettromagnetiche nello spazio, non una generazione di corrente ad alta tensione.",
+        "Errato. Le riflessioni dei segnali vengono elaborate dal circuito a radiofrequenza e dal processore DSP, senza provocare l'eliminazione del sistema operativo."
+      ]
+    },
+    {
+      "id": "it_net_183",
+      "widget_id": "widget_net_183",
+      "topic": "Reti di calcolatori — Tecnologia Power over Ethernet (PoE)",
+      "q": "In che modo la tecnologia Power over Ethernet (PoE / IEEE 802.3af/at/bt) consente di trasmettere corrente continua (DC) per l'alimentazione dei dispositivi attraverso lo stesso cavo 'doppino ritorto' su cui vengono trasmessi i dati ad alta frequenza Ethernet?",
+      "hint": "Si ricordi il metodo differenziale di trasmissione dati in Ethernet e l'uso dei trasformatori di disaccoppiamento (alimentazione phantom).",
+      "options": [
+        "La corrente continua viene applicata alle prese centrali dei trasformatori di accoppiamento (Phantom Powering) o sulle coppie inutilizzate, per cui il segnale dati differenziale ad alta frequenza non viene distorto",
+        "La corrente continua viene trasmessa solo in assenza di trasmissione dei pacchetti di rete",
+        "Il PoE disattiva completamente la trasmissione dati e utilizza il cavo solo come prolunga elettrica",
+        "La corrente viene trasmessa sotto forma di impulsi ad alta tensione da 10 000 V",
+        "Il PoE richiede la sostituzione obbligatoria dei fili di rame del doppio trecciato con fili d'argento"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! I dati vengono trasmessi come segnale differenziale alternato ad alta frequenza tramite trasformatori. La tensione continua PoE (48 V) viene applicata alle prese centrali di tali trasformatori, fluendo con lo stesso potenziale su entrambi i fili della coppia, annullando l'effetto della corrente continua sul segnale dati.",
+        "Errato. L'alimentazione dei dispositivi avviene in modo continuo e parallelo alla trasmissione dei dati.",
+        "Errato. Il vantaggio principale del PoE è la trasmissione simultanea sia dell'alimentazione che dei dati Ethernet.",
+        "Errato. La tensione nominale del PoE è di circa 44–57 V in corrente continua per garantire la sicurezza.",
+        "Errato. Il PoE è standardizzato per funzionare sui comuni cavi a doppio trecciato in rame (Cat5e/6/6A)."
+      ]
+    },
+    {
+      "id": "it_net_184",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Schermatura dei cavi (UTP vs STP/FTP)",
+      "q": "Qual è il principale vantaggio pratico dell'uso del doppino schermato (STP/FTP) rispetto a quello non schermato (UTP) in ambienti industriali?",
+      "hint": "Si pensi alla protezione del conduttore in rame dai campi elettromagnetici dei cavi di potenza e dei motori elettrici.",
+      "options": [
+        "Lo strato metallico di schermatura (foglio o calza) protegge il segnale dalle interferenze elettromagnetiche esterne (EMI) e riduce la diafonia tra cavi adiacenti nello stesso fascio (Alien Crosstalk)",
+        "Il cavo schermato consente di aumentare la lunghezza fisica massima della linea Ethernet da 100 metri a 10 chilometri senza ripetitori"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Lo schermo metallico (se correttamente messo a terra) devia le interferenze elettromagnetiche esterne prodotte da apparecchiature industriali e linee di alimentazione, oltre a ridurre le interferenze reciproche tra cavi posati in parallelo.",
+        "Errato. La schermatura protegge dai disturbi, ma non elimina l'attenuazione del segnale e i limiti del tempo di propagazione; pertanto, il limite dei 100 metri rimane valido."
+      ]
+    },
+    {
+      "id": "it_net_185",
+      "widget_id": "widget_net_185",
+      "topic": "Reti di calcolatori — Satelliti di comunicazione LEO vs GEO (Ritardo di propagazione)",
+      "q": "Perché le costellazioni satellitari ad orbita bassa (LEO, ad es. Starlink) garantiscono una latenza (RTT) notevolmente inferiore rispetto ai tradizionali satelliti geostazionari (GEO)?",
+      "hint": "Si ricordi la formula del ritardo di propagazione $d_{\\text{prop}} = d / s$ e si confrontino le distanze delle orbite.",
+      "options": [
+        "I satelliti a orbita bassa si trovano a un'altitudine di soli 500–1200 km (percorso del segnale più breve), mentre quelli geostazionari sono in orbita a 35 786 km, il che genera un ritardo fondamentale 'terra-satellite-terra' di centinaia di millisecondi",
+        "I satelliti LEO trasmettono dati a una velocità 10 volte superiore alla velocità della luce",
+        "I satelliti geostazionari trasmettono dati solo tramite cavi in rame calati sulla Terra",
+        "I satelliti LEO utilizzano il protocollo UDP, mentre i satelliti GEO funzionano obbligatoriamente solo con il protocollo NetBIOS"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Il segnale radio viaggia alla velocità della luce ($c \\approx 300\\,000$ km/s). La distanza verso la linea GEO (35 786 km) causa un ritardo di propagazione dell'onda radio di circa 240 ms in una sola direzione (RTT $> 500$ ms). Per la LEO (550 km) il percorso fisico è decine di volte più breve (RTT ~ 20–40 ms).",
+        "Errato. La velocità di propagazione delle onde radio nel vuoto è pari alla velocità fondamentale della luce $c$.",
+        "Errato. Tutti i satelliti di comunicazione utilizzano canali a radiofrequenza wireless o laser.",
+        "Errato. I protocolli di rete L4/L7 sono universali e non dipendono dall'altitudine dell'orbita del satellite."
+      ]
+    },
+    {
+      "id": "it_net_186",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Trasmissione Baseband vs Broadband",
+      "q": "Qual è la differenza tra la trasmissione in banda base (Baseband Transmission) e la trasmissione a banda larga (Broadband Transmission)?",
+      "hint": "Si pensi a come l'Ethernet convenzionale (Baseband) utilizzi l'intera banda del cavo per un singolo segnale digitale, mentre la TV via cavo/DOCSIS (Broadband) suddivida il mezzo in più canali di frequenza.",
+      "options": [
+        "La Baseband trasmette il segnale digitale direttamente nell'intervallo di frequenze originale (occupando l'intera banda del mezzo), mentre la Broadband utilizza frequenze portanti e modulazione per trasmettere più canali indipendenti contemporaneamente nello stesso mezzo",
+        "La Baseband viene utilizzata solo nei canali satellitari, mentre la Broadband esclusivamente nei bus interni della CPU",
+        "La Baseband rimuove gli header IP dai pacchetti, mentre la Broadband rimuove gli indirizzi MAC",
+        "La Baseband trasmette solo file di testo, mentre la Broadband solo audio e video",
+        "La Broadband elimina completamente il rumore termico nel canale",
+        "La Baseband richiede il collegamento a una rete elettrica trifase"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Nella trasmissione Baseband (Ethernet tradizionale) l'intero canale fisico è monopolizzato da un unico segnale digitale discreto. Nella Broadband (DOCSIS, TV via cavo, DSL) la banda viene divisa in più frequenze portanti tramite modulazione, consentendo di trasmettere canali diversi in parallelo.",
+        "Errato. La Baseband è la tecnologia standard per le reti locali (Ethernet), mentre la Broadband si applica nelle reti di provider e multimediali.",
+        "Errato. Entrambi i metodi appartengono al livello fisico (L1) e non modificano gli header L2/L3.",
+        "Errato. Il metodo di trasmissione L1 è del tutto neutrale rispetto al tipo di contenuto utente trasmesso.",
+        "Errato. Il rumore termico è determinato dalla fisica del conduttore (formula di Johnson-Nyquist) e non scompare con la Broadband.",
+        "Errato. Il metodo di trasmissione non definisce i requisiti di alimentazione elettrica dei sistemi."
+      ]
+    },
+    {
+      "id": "it_net_187",
+      "widget_id": "widget_net_187",
+      "topic": "Reti di calcolatori — Multiplexing FDM vs TDM",
+      "q": "Qual è la differenza tra il multiplexing a divisione di frequenza (FDM) e il multiplexing a divisione di tempo (TDM) nella suddivisione di un canale fisico?",
+      "hint": "Si pensi alle stazioni radio (ciascuna sulla propria frequenza in modo continuo) e alla conversazione alternata su un ricetrasmettitore (ciascuno nel proprio intervallo di tempo).",
+      "options": [
+        "L'FDM suddivide la larghezza di banda del canale in bande di frequenza non sovrapposte (continue nel tempo), mentre il TDM assegna alla sorgente l'intera larghezza di banda, ma in intervalli di tempo ciclicamente ripetuti (timeslot)",
+        "L'FDM si applica solo nella fibra ottica, mentre il TDM solo nelle reti wireless Wi-Fi",
+        "Il TDM raddoppia automaticamente la lunghezza fisica del cavo"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Con l'FDM (Frequency Division Multiplexing) ciascun segnale occupa una banda di frequenza distinta per tutto il tempo. Con il TDM (Time Division Multiplexing) l'intero spettro di frequenze viene assegnato a un singolo canale, ma solo per una frazione di tempo rigorosamente riservata (timeslot).",
+        "Errato. Entrambe le tecnologie vengono utilizzate in diversi mezzi (rame, radio, fibra ottica).",
+        "Errato. Il multiplexing condivide le risorse del canale tra gli utenti, ma non ne altera la geometria."
+      ]
+    },
+    {
+      "id": "it_net_188",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Attenuazione del segnale nello spazio libero (FSPL)",
+      "q": "Come aumenta l'attenuazione del segnale radio nello spazio libero (Free Space Path Loss — FSPL) all'aumentare della distanza ($d$) e della frequenza portante ($f$)?",
+      "hint": "Si ricordi la legge del quadrato inverso e il motivo per cui i segnali a 2.4 GHz si propagano più lontano e penetrano meglio gli ostacoli rispetto a quelli a 5 GHz o 60 GHz.",
+      "options": [
+        "L'FSPL aumenta in modo proporzionale al quadrato della distanza ($d^2$) e al quadrato della frequenza ($f^2$), pertanto i segnali ad alta frequenza (5 GHz / 6 GHz) si attenuano più velocemente rispetto a quelli a bassa frequenza (2.4 GHz o 700 MHz)",
+        "L'FSPL scende a zero all'aumentare della frequenza oltre i 10 GHz",
+        "L'FSPL dipende esclusivamente dalla marca della scheda di rete e non dipende dalla frequenza",
+        "L'FSPL cresce in modo lineare, riducendo la potenza del segnale di 1 dB ogni 1000 chilometri"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! La formula dell'FSPL include il fattore $(4\\pi d f / c)^2$. A causa della dipendenza quadratica da distanza e frequenza, le onde radio ad alta frequenza hanno un'area efficace dell'antenna molto inferiore e si attenuano maggiormente durante la propagazione.",
+        "Errato. Con l'aumentare della frequenza, l'attenuazione nello spazio libero aumenta, non diminuisce.",
+        "Errato. L'FSPL è un parametro fisico fondamentale della propagazione delle onde nello spazio.",
+        "Errato. Le perdite di potenza del segnale dovute alla divergenza geometrica del fronte d'onda seguono una legge quadratica."
+      ]
+    },
+    {
+      "id": "it_net_189",
+      "widget_id": "widget_net_189",
+      "topic": "Reti di calcolatori — Cavi in rame a connessione diretta (DAC) vs Transceiver ottici",
+      "q": "Qual è la limitazione principale dei cavi in rame economici a connessione diretta (Direct Attach Copper — DAC) rispetto ai transceiver ottici (SFP+/QSFP+ + Fibra Ottica)?",
+      "hint": "Si pensi all'elevata frequenza di trasmissione (10G/25G/100G) su conduttori in rame passivi e al motivo per cui vengono utilizzati all'interno di un singolo rack del server (Top of Rack).",
+      "options": [
+        "I cavi DAC hanno una lunghezza di applicazione estremamente limitata (solitamente fino a 3–7 metri) a causa della forte attenuazione del segnale ad alta frequenza nel rame, pertanto vengono impiegati solo all'interno dello stesso rack (ToR)",
+        "I cavi DAC non supportano il protocollo IP e funzionano solo con l'interfaccia USB",
+        "I cavi DAC richiedono un'alimentazione esterna da una presa a 220 V per funzionare",
+        "È vietato utilizzare i cavi DAC nelle sale server a causa dell'emissione di ozono",
+        "I cavi DAC riducono la velocità del processore centrale del server"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Un cavo DAC consiste in un filo di rame con moduli SFP+ integrati. A velocità di 10–100 Gbps l'attenuazione nel rame è enorme, quindi la lunghezza del DAC passivo è limitata a 3–5 metri (attivo fino a 7–10 m). La fibra ottica trasmette invece i segnali per chilometri.",
+        "Errato. Il cavo DAC è del tutto trasparente per i protocolli Ethernet e IP.",
+        "Errato. I cavi DAC passivi non consumano alcuna energia elettrica.",
+        "Errato. I cavi DAC sono normali conduttori isolati in una guaina che non emettono ozono.",
+        "Errato. Il cavo DAC non influisce sulla CPU dell'host."
+      ]
+    },
+    {
+      "id": "it_net_190",
+      "widget_id": null,
+      "topic": "Reti di calcolatori — Accesso wireless CSMA/CA",
+      "q": "Perché nei canali di comunicazione wireless (Wi-Fi / IEEE 802.11) si utilizza il protocollo CSMA/CA (Collision Avoidance — prevenzione delle collisioni) invece del CSMA/CD (Collision Detection — rilevamento delle collisioni)?",
+      "hint": "Si noti l'impossibilità fisica per un ricetrasmettitore wireless di rilevare in modo affidabile una collisione sulla propria antenna durante la trasmissione.",
+      "options": [
+        "Un trasmettitore wireless non può emettere un segnale forte e contemporaneamente 'ascoltare' le deboli collisioni provenienti da altri nodi sulla stessa frequenza (problema di cecità radio), pertanto le collisioni vengono prevenute in anticipo (Avoidance)",
+        "Il CSMA/CA viene utilizzato per ridurre il costo di licenza dello spettro a radiofrequenza"
+      ],
+      "ans": 0,
+      "explanations": [
+        "Corretto! Durante la trasmissione, il segnale radio locale copre i segnali in arrivo. Il nodo non può rilevare una collisione durante la trasmissione (a differenza di Ethernet cablato). Pertanto il Wi-Fi utilizza il CSMA/CA (ascolto del mezzo, Backoff casuale, conferme ACK e frame RTS/CTS).",
+        "Errato. Il CSMA/CA è un algoritmo dei livelli L1/L2 per la gestione dell'accesso a un mezzo condiviso e non ha alcun legame con la concessione di licenze legali."
+      ]
+    }
+  ]
+}
